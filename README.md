@@ -7,7 +7,7 @@ I'm not a native speeker
 
 
 
-![GUI](https://github.com/actionschnitzel/ActionPi/blob/main/piaid!!!!.png?raw=true)
+![GUI](https://github.com/actionschnitzel/PiGro-Aid-/blob/main/GUI.png?raw=true)
 
 
 
@@ -15,7 +15,7 @@ I'm not a native speeker
 
 Tested it.... You will not break the system ;-)
 
-git clone https://github.com/actionschnitzel/ActionPi.git
+git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 ***
 cd ActionPi
 ***
