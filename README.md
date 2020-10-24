@@ -1,0 +1,24 @@
+# PiGro+Aid+
+
+I love making cool things out of the pi. I mainly use Raspbian / RaspberryOS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. Because I was bored, I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
+
+Excuse my English
+I'm not a native speeker
+
+
+
+![GUI](https://github.com/actionschnitzel/ActionPi/blob/main/piaid!!!!.png?raw=true)
+
+
+
+
+
+Tested it.... You will not break the system ;-)
+
+git clone https://github.com/actionschnitzel/ActionPi.git
+***
+cd ActionPi
+***
+sudo chmod +x install.sh
+***
+sudo ./install.sh
