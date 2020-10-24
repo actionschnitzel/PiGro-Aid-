@@ -28,7 +28,11 @@ def button_action4():
 def button_action5():   
     os.system ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
 
+def button_action6():   
+    os.system ("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
     
+def button_action7():   
+    os.system ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
 #############################################################################
 #MAIN
     
@@ -69,6 +73,11 @@ button4 = Button(main,text="Edit Source                  ",foreground="white", c
 button4['background']='grey10'
 button5 = Button(main,text="Install Pikiss                 ",foreground="white", command=button_action5, image = photoimage4 ,compound = LEFT)
 button5['background']='grey10'
+button6 = Button(main,text="Install Compiz             ",foreground="white", command=button_action6, image = photoimage ,compound = LEFT)
+button6['background']='grey10'
+button7 = Button(main,text="Nano Config.txt           ",foreground="white", command=button_action7, image = photoimage2 ,compound = LEFT)
+button7['background']='grey10'
+
 #####
 #newwin
 
@@ -82,6 +91,9 @@ button1.place(x = 0, y = 60, width=200, height=30)
 button3.place(x = 0, y = 90, width=200, height=30)
 button4.place(x = 0, y = 120, width=200, height=30)
 button5.place(x = 0, y = 150, width=200, height=30)
+button6.place(x = 0, y = 180, width=200, height=30)
+button7.place(x = 0, y = 210, width=200, height=30)
 ###################################################################################################
 main.mainloop()
+
 
