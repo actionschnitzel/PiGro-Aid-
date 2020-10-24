@@ -20,7 +20,7 @@ def button_action2():
    os.system ("lxterminal -e 'bash -c \"sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove -y && sudo apt autoclean; exec bash\"'")
     
 def button_action3():
-    os.system ("lxterminal -e 'bash -c \"~/PiGro/scripts/lxappearance.sh; exec bash\"'")
+    os.system ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/lxappearance.sh; exec bash\"'")
     
 def button_action4():
     os.system ("lxterminal -e 'bash -c \"sudo nano /etc/apt/sources.list; exec bash\"'")
@@ -37,19 +37,19 @@ main.title("PiGro+Aid+")
 main.geometry("455x300")
 main['background']='grey10'
 
-photo = PhotoImage(file = r"/home/pi/ActionPi/icons/emblem-debian.png") 
+photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/emblem-debian.png") 
 photoimage = photo.subsample(3,3) 
 
-photo = PhotoImage(file = r"/home/pi/ActionPi/icons/rpi-logo.png") 
+photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/rpi-logo.png") 
 photoimage2 = photo.subsample(2,2) 
 
-photo = PhotoImage(file = r"/home/pi/ActionPi/icons/879px-Bleachbit_logo.svg.png") 
+photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/879px-Bleachbit_logo.svg.png") 
 photoimage3 = photo.subsample(30,25)
 
-photo = PhotoImage(file = r"/home/pi/ActionPi/icons/logo_pikiss_400.png") 
+photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/logo_pikiss_400.png") 
 photoimage4 = photo.subsample(15,15) 
 
-i=Image.open('/home/pi/PiGro/raspi-aid.png')
+i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
 p=ImageTk.PhotoImage(i)
 l=Label(main,image = p)
 l.image = p
