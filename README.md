@@ -17,7 +17,7 @@ Tested it.... You will not break the system ;-)
 
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 ***
-cd PiGro
+cd PiGro-Aid-
 ***
 sudo chmod +x install.sh
 ***
