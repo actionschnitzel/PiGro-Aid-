@@ -33,6 +33,8 @@ def button_action6():
     
 def button_action7():   
     os.system ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
+def button_action8():   
+    os.system ("lxterminal -e 'bash -c \"display /home/pi/PiGro-Aid-/icons/funkyfresh.jpg; exec bash\"'")
 #############################################################################
 #MAIN
     
@@ -51,7 +53,10 @@ photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/879px-Bleachbit_logo.svg.p
 photoimage3 = photo.subsample(30,25)
 
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/logo_pikiss_400.png") 
-photoimage4 = photo.subsample(15,15) 
+photoimage4 = photo.subsample(15,15)
+
+photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/tux.png") 
+photoimage5 = photo.subsample(15,15) 
 
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
 p=ImageTk.PhotoImage(i)
@@ -77,7 +82,8 @@ button6 = Button(main,text="Install Compiz             ",foreground="white", com
 button6['background']='grey10'
 button7 = Button(main,text="Nano Config.txt           ",foreground="white", command=button_action7, image = photoimage2 ,compound = LEFT)
 button7['background']='grey10'
-
+button8 = Button(main,text="$sudo rm -rf/(Don't klick)    ",foreground="white", command=button_action8, image = photoimage5 ,compound = LEFT)
+button8['background']='grey10'
 #####
 #newwin
 
@@ -93,6 +99,7 @@ button4.place(x = 0, y = 120, width=200, height=30)
 button5.place(x = 0, y = 150, width=200, height=30)
 button6.place(x = 0, y = 180, width=200, height=30)
 button7.place(x = 0, y = 210, width=200, height=30)
+button8.place(x = 0, y = 240, width=200, height=30)
 ###################################################################################################
 main.mainloop()
 
