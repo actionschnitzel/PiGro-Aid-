@@ -22,3 +22,17 @@ cd PiGro-Aid-
 sudo chmod +x install.sh
 ***
 sudo ./install.sh
+
+#New Additions
+
+:metal: sources.list
+***
+:metal: install compiz
+***
+:metal: config.txt
+***
+:metal: tasksel
+***
+:metal: Remove LXDE
+
+
