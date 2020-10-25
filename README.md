@@ -16,23 +16,18 @@ I'm not a native speeker
 Tested it.... You will not break the system ;-)
 
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-***
-cd PiGro-Aid-
-***
-sudo chmod +x install.sh
-***
-sudo ./install.sh
+    • cd PiGro-Aid-
+    • sudo chmod +x install.sh
+    • sudo ./install.sh
 
-#New Additions
 
-:metal: sources.list
-***
-:metal: install compiz
-***
-:metal: config.txt
-***
-:metal: tasksel
-***
-:metal: Remove LXDE
+
+# New Additions
+
+    • :metal: sources.list
+    • :metal: install compiz
+    • :metal: config.txt
+    • :metal: tasksel
+    • :metal: Remove LXDE
 
 
