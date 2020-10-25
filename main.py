@@ -33,14 +33,21 @@ def button_action6():
     
 def button_action7():   
     os.system ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
+    
 def button_action8():   
-    os.system ("lxterminal -e 'bash -c \"display /home/pi/PiGro-Aid-/icons/funkyfresh.jpg; exec bash\"'")
+    os.system ("lxterminal -e 'bash -c \" ~/PiGro-Aid-/scripts/terminal.sh; exec bash\"'")
+    
+def button_action9():   
+    os.system ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
+
+def button_action10():   
+    os.system ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/rmlxde.sh; exec bash\"'")
 #############################################################################
 #MAIN
     
 main = Tk()
 main.title("PiGro+Aid+")
-main.geometry("455x300")
+main.geometry("455x500")
 main['background']='grey10'
 
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/emblem-debian.png") 
@@ -65,6 +72,12 @@ l.image = p
 l.place(x = 200, y = 0,width=250, height=250)
 l['background']='grey10'
 
+w = Label(main, text="No Raspberry Cry")
+w.place(x = 260, y = 250)
+w['background']='grey10'
+w['foreground']='white'
+
+
 
 button0 = Button(main,compound = LEFT, image = photoimage, text="Update your OS           ",foreground="white", command=button_action)
 button0['background']='grey10'
@@ -84,6 +97,10 @@ button7 = Button(main,text="Nano Config.txt           ",foreground="white", comm
 button7['background']='grey10'
 button8 = Button(main,text="$sudo rm -rf/(Don't klick)    ",foreground="white", command=button_action8, image = photoimage5 ,compound = LEFT)
 button8['background']='grey10'
+button9 = Button(main,text="Tasksel                       ",foreground="white", command=button_action9, image = photoimage ,compound = LEFT)
+button9['background']='grey10'
+button10 = Button(main,text="RM/ Standart Desktop",foreground="white", command=button_action10, image = photoimage ,compound = LEFT)
+button10['background']='grey10'
 #####
 #newwin
 
@@ -100,6 +117,9 @@ button5.place(x = 0, y = 150, width=200, height=30)
 button6.place(x = 0, y = 180, width=200, height=30)
 button7.place(x = 0, y = 210, width=200, height=30)
 button8.place(x = 0, y = 240, width=200, height=30)
+button9.place(x = 0, y = 290, width=200, height=30)
+button10.place(x = 0, y = 320, width=200, height=30)
+
 ###################################################################################################
 main.mainloop()
 
