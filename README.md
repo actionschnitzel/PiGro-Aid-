@@ -28,6 +28,6 @@ git clone https://github.com/actionschnitzel/PiGro-Aid-.git
     :metal: install compiz
     :metal: config.txt
     :metal: tasksel
-    :metal: Remove LXDE
+    :metal: Neofetch
 
 
