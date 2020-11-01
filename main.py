@@ -35,7 +35,7 @@ def button_action7():
     os.system ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
     
 def button_action8():   
-    os.system ("lxterminal -e 'bash -c \" ~/PiGro-Aid-/scripts/terminal.sh; exec bash\"'")
+    os.system ("lxterminal -e 'bash -c \"sudo neofetch; exec bash\"'")
     
 def button_action9():   
     os.system ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
@@ -72,7 +72,7 @@ l.image = p
 l.place(x = 200, y = 0,width=250, height=250)
 l['background']='grey10'
 
-w = Label(main, text="No Raspberry Cry")
+w = Label(main, text="Don't Cry Little Pi")
 w.place(x = 260, y = 250)
 w['background']='grey10'
 w['foreground']='white'
