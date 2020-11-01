@@ -41,7 +41,7 @@ def button_action9():
     os.system ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
 
 def button_action10():   
-    os.system ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/rmlxde.sh; exec bash\"'")
+    os.system ("lxterminal -e 'bash -c \"sudo neofetch; exec bash\"'")
 #############################################################################
 #MAIN
     
@@ -99,7 +99,7 @@ button8 = Button(main,text="$sudo rm -rf/(Don't klick)    ",foreground="white", 
 button8['background']='grey10'
 button9 = Button(main,text="Tasksel                       ",foreground="white", command=button_action9, image = photoimage ,compound = LEFT)
 button9['background']='grey10'
-button10 = Button(main,text="RM/ Standart Desktop",foreground="white", command=button_action10, image = photoimage ,compound = LEFT)
+button10 = Button(main,text="NeoFetch               ",foreground="white", command=button_action10, image = photoimage ,compound = LEFT)
 button10['background']='grey10'
 #####
 #newwin
