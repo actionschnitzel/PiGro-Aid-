@@ -24,9 +24,13 @@ git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 
 # New Additions
 :metal: sources.list
+***
 :metal: install compiz
+***
 :metal: config.txt
+***
 :metal: tasksel
+***
 :metal: Neofetch
 
 
