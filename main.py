@@ -46,7 +46,7 @@ def button_action10():
     
 main = Tk()
 main.title("PiGro+Aid+")
-main.geometry("455x550")
+main.geometry("397x510")
 main['background']='grey10'
 
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/emblem-debian.png") 
@@ -68,13 +68,8 @@ i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
 p=ImageTk.PhotoImage(i)
 l=Label(main,image = p)
 l.image = p
-l.place(x = 200, y = 0,width=250, height=250)
+l.place(x=0, y=250)
 l['background']='grey10'
-
-w = Label(main, text="Don't Cry Little Pi")
-w.place(x = 260, y = 250)
-w['background']='grey10'
-w['foreground']='white'
 
 
 
@@ -107,17 +102,17 @@ button10['background']='grey10'
 
 
 ####mainwin
-button0.pack(anchor="w")
-button2.pack(anchor="w")
-button1.pack(anchor="w")
-button3.pack(anchor="w")
-button4.pack(anchor="w")
-button5.pack(anchor="w")
-button6.pack(anchor="w")
-button7.pack(anchor="w")
-button8.pack(anchor="w")
-button9.pack(anchor="w")
-button10.pack(anchor="w")
+button0.grid(row=0, column=1)
+button2.grid(row=0, column=2)
+button1.grid(row=1, column=1)
+button3.grid(row=1, column=2)
+button4.grid(row=2, column=1)
+button5.grid(row=2, column=2)
+button6.grid(row=3, column=1)
+button7.grid(row=3, column=2)
+button8.grid(row=4, column=1)
+button9.grid(row=4, column=2)
+#button10.grid(row=5, column=1)
 
 ###################################################################################################
 main.mainloop()
