@@ -7,7 +7,7 @@ I'm not a native speeker
 
 
 
-![GUI](https://github.com/actionschnitzel/PiGro-Aid-/blob/main/GUI.png?raw=true)
+![GUI](https://github.com/actionschnitzel/PiGro-Aid-/blob/dev/GUI.png)
 
 
 
