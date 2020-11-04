@@ -65,7 +65,7 @@ photoimage4 = photo.subsample(13,13)
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/tux.png") 
 photoimage5 = photo.subsample(15,15) 
 
-i=Image.open('/home/pi/DEV/PiGro-Aid-/raspi-aid.png')
+i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
 p=ImageTk.PhotoImage(i)
 l=Label(main,image = p)
 l.image = p
