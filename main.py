@@ -40,15 +40,16 @@ def button_action9():
     os.system ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
 
 def button_action10():   
-    os.system ("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
+    os.system ("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
+    
 #############################################################################
 #MAIN
     
 main = Tk()
 main.title("PiGro+Aid+")
-main.geometry("397x510")
+main.geometry("597x510")
 main['background']='grey10'
-
+##############################################################################
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/emblem-debian.png") 
 photoimage = photo.subsample(2,2) 
 
@@ -64,15 +65,28 @@ photoimage4 = photo.subsample(13,13)
 photo = PhotoImage(file = r"/home/pi/PiGro-Aid-/icons/tux.png") 
 photoimage5 = photo.subsample(15,15) 
 
-i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
+i=Image.open('/home/pi/DEV/PiGro-Aid-/raspi-aid.png')
 p=ImageTk.PhotoImage(i)
 l=Label(main,image = p)
 l.image = p
-l.place(x=0, y=250)
+l.place(x=100, y=260)
 l['background']='grey10'
+#########################################################################
+sys_label = Label(main, text="System", fg="white")
+sys_label.configure(font=("Impact", 16,"italic"))
+sys_label['background']='grey10'
+
+#######
+look_label = Label(main, text="Appearance", fg="white")
+look_label.configure(font=("Impact", 16,"italic"))
+look_label['background']='grey10'
+#######
+tool_label = Label(main, text="Tools", fg="white")
+tool_label.configure(font=("Impact", 16,"italic"))
+tool_label['background']='grey10'
 
 
-
+########################################################################
 button0 = Button(main, anchor="w", image = photoimage, text="Update",foreground="white", command=button_action, compound = LEFT,width=170)
 button0['background']='grey10'
 button1 = Button(main, anchor="w",compound = LEFT, image = photoimage, text="Raspi-Config",foreground="white", command=button_action1,width=170)
@@ -93,7 +107,7 @@ button8 = Button(main, anchor="w",compound = LEFT,text="Neofetch",foreground="wh
 button8['background']='grey10'
 button9 = Button(main, anchor="w",compound = LEFT,text="Tasksel",foreground="white", command=button_action9, image = photoimage,width=170)
 button9['background']='grey10'
-button10 = Button(main, anchor="w",compound = LEFT,text="Nothing Jet",foreground="white", command=button_action10, image = photoimage,width=170)
+button10 = Button(main, anchor="w",compound = LEFT,text="Change Desktop \nEnvironment",foreground="white", command=button_action10, image = photoimage,width=170)
 button10['background']='grey10'
 #####
 #newwin
@@ -102,17 +116,20 @@ button10['background']='grey10'
 
 
 ####mainwin
-button0.grid(row=0, column=1)
-button2.grid(row=0, column=2)
-button1.grid(row=1, column=1)
+sys_label.grid(row=0, column=1)
+look_label.grid(row=0, column=2)
+tool_label.grid(row=0, column=3)
+button0.grid(row=1, column=1)
+button2.grid(row=2, column=1)
+button1.grid(row=3, column=1)
 button3.grid(row=1, column=2)
-button4.grid(row=2, column=1)
-button5.grid(row=2, column=2)
-button6.grid(row=3, column=1)
-button7.grid(row=3, column=2)
-button8.grid(row=4, column=1)
-button9.grid(row=4, column=2)
-#button10.grid(row=5, column=1)
+button4.grid(row=5, column=1)
+button5.grid(row=1, column=3)
+button6.grid(row=2, column=2)
+button7.grid(row=8, column=1)
+button8.grid(row=2, column=3)
+button9.grid(row=3, column=2)
+button10.grid(row=3, column=2)
 
 ###################################################################################################
 main.mainloop()
