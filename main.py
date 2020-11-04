@@ -112,7 +112,7 @@ button9 = Button(main, anchor="w",compound = LEFT,text="Tasksel",foreground="whi
 button9['background']='grey10'
 button10 = Button(main, anchor="w",compound = LEFT,text="Change Desktop \nEnvironment",foreground="white", command=button_action10, image = photoimage,width=170)
 button10['background']='grey10'
-button11 = Button(main, anchor="w",compound = LEFT,text="Take A Photo",foreground="white", command=button_action10, image = photoimage2,width=170)
+button11 = Button(main, anchor="w",compound = LEFT,text="Take A Photo",foreground="white", command=button_action11, image = photoimage2,width=170)
 button11['background']='grey10'
 #####
 #newwin
