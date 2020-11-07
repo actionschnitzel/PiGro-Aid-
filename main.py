@@ -9,41 +9,41 @@ from tkinter import messagebox
 #DEFINITIONS
 
 def button_action():
-    os.system("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
+    popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
    
     
 def button_action1():
-    os.system("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
+    popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
     
 def button_action2():
-   os.system ("lxterminal -e 'bash -c \"sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove -y && sudo apt autoclean; exec bash\"'")
+   popen ("lxterminal -e 'bash -c \"sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove -y && sudo apt autoclean; exec bash\"'")
     
 def button_action3():
-    os.system ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/lxappearance.sh; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/lxappearance.sh; exec bash\"'")
     
 def button_action4():
-    os.system ("lxterminal -e 'bash -c \"sudo nano /etc/apt/sources.list; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"sudo nano /etc/apt/sources.list; exec bash\"'")
     
 def button_action5():   
-    os.system ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
 
 def button_action6():   
-    os.system ("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
     
 def button_action7():   
-    os.system ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
     
 def button_action8():   
-    os.system ("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
     
 def button_action9():   
-    os.system ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
 
 def button_action10():   
-    os.system ("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
     
 def button_action11():   
-    os.system ("lxterminal -e 'bash -c \"raspistill -o image.jpg; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"raspistill -o image.jpg; exec bash\"'")
     
 #############################################################################
 #MAIN
@@ -139,5 +139,6 @@ button11.grid(row=3, column=3)
 
 ###################################################################################################
 main.mainloop()
+
 
 
