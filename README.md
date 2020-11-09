@@ -1,9 +1,8 @@
 # PiGro+Aid+
 
-I love making cool things out of the pi. I mainly use Raspbian / RaspberryOS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. Because I was bored, I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
+I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
 
-Excuse my English
-I'm not a native speeker
+
 
 
 
@@ -13,7 +12,7 @@ I'm not a native speeker
 
 
 
-Tested it.... You will not break the system ;-)
+
 
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
     • cd PiGro-Aid-
