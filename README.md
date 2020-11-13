@@ -18,7 +18,7 @@ sudo ./install.sh
 
 
 # New Additions
-:metal: install by just type the App-Name(It's very BETA, sometimes you have the click "INSTALL" 2 or 3 times        
+:metal: install by just type the App-Name(It's very BETA, sometimes you have to click "INSTALL" 2 or 3 times        
 :metal: xfce4-wifi-fix(after install)    
 :metal: Breeze&Arc Theme    
 :metal: sources.list    
