@@ -27,10 +27,22 @@ def button_action20():
     if (entry_text == ""):
         welcome_label.config(text="Name of the App?")
     else:
-        entry_text = "Install " + entry_text 
-        welcome_label.config(text=entry_text)
-        popen("lxterminal -e 'bash -c \"sudo apt-get install; exec bash\"'")+ (entry_text)
-my_label = Label(fenster, text="sudo apt-get install:", fg="white")
+        entry_text = "sudo apt-get install " + entry_text 
+        #welcome_label.config(text=entry_text)
+        #welcome_label.config(command=callback2)
+        
+        #print(entry_text)
+        #entry_text = popen("lxterminal") + entry_text
+        #button_action20(command=callback2)
+        f=open("buttoninst.sh","a+")
+        for i in range(1):
+             f.write(entry_text)
+        popen("lxterminal -e 'bash -c \"chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+        popen("lxterminal -e 'bash -c \"rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
+        
+        
+        
+my_label = Label(fenster, text="sudo apt-get install(>NAME<)", fg="white")
 my_label['background']='grey10'
 
 welcome_label = Label(fenster)
@@ -44,7 +56,9 @@ exit_button = Button(fenster, text="Beenden", command=fenster.quit)
 ################################################
 def callback(event):
        webbrowser.open_new(event.widget.cget("text"))
-
+       
+def callback2(event):
+       lxterminal.open_new(event.widget.cget("entry_text"))
 
 def button_action():
     popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
