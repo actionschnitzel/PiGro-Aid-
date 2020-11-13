@@ -26,8 +26,8 @@ sudo ./install.sh
 
 # New Additions
 :metal: install by just type the App-Name    
-:metal: xfce4-wifi-fix(after install)
-:metal: Breeze&Arc Theme
+:metal: xfce4-wifi-fix(after install)    
+:metal: Breeze&Arc Theme    
 :metal: sources.list    
 :metal: install compiz    
 :metal: config.txt    
