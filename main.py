@@ -234,8 +234,7 @@ l.grid(row=4, column=0)
 my_label.grid(row = 0, column = 0)
 eingabefeld.grid(row = 1, column = 0)
 welcom_button.grid(row = 2, column = 0)
-#exit_button.grid(row = 1, column = 1)
-#welcome_label.grid(row = 3, column = 0, columnspan = 2)
+
 
 # 
 fenster.config(menu=menuleiste)          
