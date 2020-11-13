@@ -17,22 +17,6 @@ sudo ./install.sh
 
 
 
-![GUI](https://www.actionschnitzel.de/.cm4all/uproc.php/0/Pi/.done.png/picture-2600?_=175c2179da8)
-
-
-
-
-
-
-
-git clone https://github.com/actionschnitzel/PiGro-Aid-.git    
-cd PiGro-Aid-    
-sudo chmod +x install.sh    
-sudo ./install.sh    
-
-
-
-
 # New Additions
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
