@@ -25,14 +25,11 @@ sudo ./install.sh
 
 
 # New Additions
-:metal: sources.list
-***
-:metal: install compiz
-***
-:metal: config.txt
-***
-:metal: tasksel
-***
-:metal: Neofetch
+:metal: install by just type the App-Name    
+:metal: sources.list    
+:metal: install compiz    
+:metal: config.txt    
+:metal: tasksel    
+:metal: Neofetch    
 
 
