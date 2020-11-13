@@ -21,9 +21,27 @@ icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
 #fenster.geometry("400x250")
 fenster['background']='grey10'
+################################################
+def button_action20():
+    entry_text = eingabefeld.get()
+    if (entry_text == ""):
+        welcome_label.config(text="Name of the App?")
+    else:
+        entry_text = "Install " + entry_text 
+        welcome_label.config(text=entry_text)
+        popen("lxterminal -e 'bash -c \"sudo apt-get install; exec bash\"'")+ (entry_text)
+my_label = Label(fenster, text="sudo apt-get install:", fg="white")
+my_label['background']='grey10'
 
+welcome_label = Label(fenster)
 
+eingabefeld = Entry(fenster, bd=5, width=40)
 
+welcom_button = Button(fenster, text="Install", command=button_action20)
+
+exit_button = Button(fenster, text="Beenden", command=fenster.quit)
+
+################################################
 def callback(event):
        webbrowser.open_new(event.widget.cget("text"))
 
@@ -197,9 +215,16 @@ p=ImageTk.PhotoImage(i)
 l=Label(fenster,image = p)
 l.image = p
 l['background']='grey10'
-l.grid(row=0, column=1)
+l.grid(row=4, column=0)
+
+my_label.grid(row = 0, column = 0)
+eingabefeld.grid(row = 1, column = 0)
+welcom_button.grid(row = 2, column = 0)
+#exit_button.grid(row = 1, column = 1)
+#welcome_label.grid(row = 3, column = 0, columnspan = 2)
 
 # 
 fenster.config(menu=menuleiste)          
 
 fenster.mainloop()
+
