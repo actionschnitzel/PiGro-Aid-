@@ -17,10 +17,10 @@ I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS
 
 
 
-git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-cd PiGro-Aid-
-sudo chmod +x install.sh
-sudo ./install.sh
+git clone https://github.com/actionschnitzel/PiGro-Aid-.git    
+cd PiGro-Aid-    
+sudo chmod +x install.sh    
+sudo ./install.sh    
 
 
 
