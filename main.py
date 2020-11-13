@@ -34,11 +34,11 @@ def button_action20():
         #print(entry_text)
         #entry_text = popen("lxterminal") + entry_text
         #button_action20(command=callback2)
-        f=open("buttoninst.sh","a+")
+        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","a+")
         for i in range(1):
              f.write(entry_text)
-        popen("lxterminal -e 'bash -c \"chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
-        popen("lxterminal -e 'bash -c \"rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+        popen("lxterminal -e 'bash -c \"sudo rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
         
         
         
@@ -234,11 +234,11 @@ l.grid(row=4, column=0)
 my_label.grid(row = 0, column = 0)
 eingabefeld.grid(row = 1, column = 0)
 welcom_button.grid(row = 2, column = 0)
-#exit_button.grid(row = 1, column = 1)
-#welcome_label.grid(row = 3, column = 0, columnspan = 2)
+
 
 # 
 fenster.config(menu=menuleiste)          
 
 fenster.mainloop()
+
 
