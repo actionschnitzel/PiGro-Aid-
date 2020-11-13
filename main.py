@@ -77,10 +77,10 @@ def button_action15():
     popen ("sudo gparted")
 
 def button_action16():   
-    popen ("lxterminal -e 'bash -c \"sudo apt-get autoclean; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/autoremove.sh; exec bash\"'")
     
 def button_action17():   
-    popen ("lxterminal -e 'bash -c \"sudo apt-get --allow-unauthenticated update; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/addunsignedrepo.sh; exec bash\"'")
     
 def button_action18():   
     popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/xfce4fix.sh ; exec bash\"'")    
@@ -142,11 +142,11 @@ help_menu = Menu(menuleiste, tearoff=0)
 system_menu.add_command(label="Update", command=button_action)
 system_menu.add_command(label="Upgrade", command=button_action2)
 system_menu.add_separator()
-system_menu.add_command(label="Autoclean(apt-get)", command=button_action16)
+system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
 system_menu.add_separator()
 system_menu.add_command(label="Raspi-Config", command=button_action1)
 system_menu.add_command(label="Edit Source List", command=button_action4)
-system_menu.add_command(label="Allow Unauthed Source", command=button_action17)
+system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
 system_menu.add_command(label="Nano Config.txt", command=button_action7)
 system_menu.add_separator()
 system_menu.add_command(label="Gparted", command=button_action15)
