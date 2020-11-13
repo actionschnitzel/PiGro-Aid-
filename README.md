@@ -9,7 +9,7 @@ I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS
 
 
 
-![GUI](https://www.actionschnitzel.de/.cm4all/uproc.php/0/Pi/.Bildschirmfoto_2020-11-12_23-57-34.png/picture-2600?_=175beb37b78)
+![GUI](https://www.actionschnitzel.de/.cm4all/uproc.php/0/Pi/.done.png/picture-2600?_=175c2179da8)
 
 
 
