@@ -21,12 +21,44 @@ icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
 #fenster.geometry("400x250")
 fenster['background']='grey10'
+################################################
+def button_action20():
+    entry_text = eingabefeld.get()
+    if (entry_text == ""):
+        welcome_label.config(text="Name of the App?")
+    else:
+        entry_text = "sudo apt-get install " + entry_text 
+        #welcome_label.config(text=entry_text)
+        #welcome_label.config(command=callback2)
+        
+        #print(entry_text)
+        #entry_text = popen("lxterminal") + entry_text
+        #button_action20(command=callback2)
+        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","a+")
+        for i in range(1):
+             f.write(entry_text)
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+        popen("lxterminal -e 'bash -c \"sudo rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
+        
+        
+        
+my_label = Label(fenster, text="sudo apt-get install(>NAME<)", fg="white")
+my_label['background']='grey10'
 
+welcome_label = Label(fenster)
 
+eingabefeld = Entry(fenster, bd=5, width=40)
 
+welcom_button = Button(fenster, text="Install", command=button_action20)
+
+exit_button = Button(fenster, text="Beenden", command=fenster.quit)
+
+################################################
 def callback(event):
        webbrowser.open_new(event.widget.cget("text"))
-
+       
+def callback2(event):
+       lxterminal.open_new(event.widget.cget("entry_text"))
 
 def button_action():
     popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
@@ -77,10 +109,10 @@ def button_action15():
     popen ("sudo gparted")
 
 def button_action16():   
-    popen ("lxterminal -e 'bash -c \"sudo apt-get autoclean; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/autoremove.sh; exec bash\"'")
     
 def button_action17():   
-    popen ("lxterminal -e 'bash -c \"sudo apt-get --allow-unauthenticated update; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/addunsignedrepo.sh; exec bash\"'")
     
 def button_action18():   
     popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/xfce4fix.sh ; exec bash\"'")    
@@ -142,11 +174,11 @@ help_menu = Menu(menuleiste, tearoff=0)
 system_menu.add_command(label="Update", command=button_action)
 system_menu.add_command(label="Upgrade", command=button_action2)
 system_menu.add_separator()
-system_menu.add_command(label="Autoclean(apt-get)", command=button_action16)
+system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
 system_menu.add_separator()
 system_menu.add_command(label="Raspi-Config", command=button_action1)
 system_menu.add_command(label="Edit Source List", command=button_action4)
-system_menu.add_command(label="Allow Unauthed Source", command=button_action17)
+system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
 system_menu.add_command(label="Nano Config.txt", command=button_action7)
 system_menu.add_separator()
 system_menu.add_command(label="Gparted", command=button_action15)
@@ -197,9 +229,16 @@ p=ImageTk.PhotoImage(i)
 l=Label(fenster,image = p)
 l.image = p
 l['background']='grey10'
-l.grid(row=0, column=1)
+l.grid(row=4, column=0)
+
+my_label.grid(row = 0, column = 0)
+eingabefeld.grid(row = 1, column = 0)
+welcom_button.grid(row = 2, column = 0)
+
 
 # 
 fenster.config(menu=menuleiste)          
 
 fenster.mainloop()
+
+
