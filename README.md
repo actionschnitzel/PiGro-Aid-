@@ -18,7 +18,8 @@ sudo ./install.sh
 
 
 # New Additions
-:metal: install by just type the App-Name(It's very BETA, sometimes you have to click "INSTALL" 2 or 3 times        
+:metal: install by just type the App-Name(It's very BETA, sometimes you have to click "INSTALL" 2 or 3 times    
+:metal: Cheat Sheet Buddy*Alpha Version* (Yeah, finally there is a text editior attached to a terminal ....life never'll be the same xD)    
 :metal: xfce4-wifi-fix(after install)    
 :metal: Breeze&Arc Theme    
 :metal: sources.list    
