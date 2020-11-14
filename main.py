@@ -19,8 +19,13 @@ fenster = Tk()
 fenster.title("PiGro - Just Click It")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
-#fenster.geometry("400x250")
+fenster.geometry("440x350")
 fenster['background']='grey10'
+
+
+
+
+
 ################################################
 def button_action20():
     entry_text = eingabefeld.get()
@@ -34,11 +39,11 @@ def button_action20():
         #print(entry_text)
         #entry_text = popen("lxterminal") + entry_text
         #button_action20(command=callback2)
-        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","a+")
+        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","w+")
         for i in range(1):
              f.write(entry_text)
         popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
-        popen("lxterminal -e 'bash -c \"sudo rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
+        #popen("lxterminal -e 'bash -c \"sudo rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
         
         
         
@@ -119,18 +124,40 @@ def button_action18():
 
 def button_action19():   
     popen ("chromium-browser https://www.actionschnitzel.de/PiGro/PiGro-HowTo-s/")    
+#CSB#
 
-def open_txt():
-    text_file = open('~/PiGro-Aid-/scripts/bla.txt','r')
-    text_file.read()
+ 
+def create_window1():
+    infofenster1 = tk.Toplevel(fenster)
+    infofenster1.title("CSB Freakin' Alpha")    
+    icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
+    infofenster1.tk.call('wm', 'iconphoto', infofenster1._w, icon)
+    infofenster1.geometry("600x500")
+    my_text = Text(infofenster1, width=390, heigh=20)
+    my_text.pack()
+    text_file = open('/home/pi/PiGro-Aid-/scripts/ssb.txt','r+')
+    stuff = text_file.read()
+    my_text.insert(END, stuff)
+    text_file.close()
+    infofenster1['background']='grey10'
+    termf = Frame(infofenster1)
+    termf.pack(fill=BOTH, expand=YES)
+    wid = termf.winfo_id()
+    os.system('xterm -into %d -geometry 390x20  &' % wid)
+    
 
+    
 def create_window():
     infofenster = tk.Toplevel(fenster)
     infofenster.title("Good Pi-Websites")    
     icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
     infofenster.tk.call('wm', 'iconphoto', infofenster._w, icon)
     infofenster.geometry("400x250")
-    ####################################################################
+    
+##############################################
+
+    
+####################################################################
     lbl = tk.Label(infofenster, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
     lbl.pack()
     lbl.bind("<Button-1>", callback)
@@ -142,7 +169,7 @@ def create_window():
     lbl1 = tk.Label(infofenster, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
     lbl1.pack()
     lbl1.bind("<Button-1>", callback)
-    
+
 
 def action_get_info_dialog():
     m_text = "\
@@ -167,6 +194,7 @@ menuleiste['background']='snow'
 system_menu = Menu(menuleiste, tearoff=0)
 appearance_menu = Menu(menuleiste, tearoff=0)
 tools_menu = Menu(menuleiste, tearoff=0)
+cheat_menu = Menu(menuleiste, tearoff=0)
 help_menu = Menu(menuleiste, tearoff=0)
 
 # System
@@ -207,7 +235,7 @@ tools_menu.add_command(label="Take A Photo", command=button_action11)
 tools_menu['background']='snow'
 #
 #
-#
+cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
 #
 #
 
@@ -221,7 +249,7 @@ help_menu['background']='snow'
 menuleiste.add_cascade(label="System", menu=system_menu)
 menuleiste.add_cascade(label="Appearance", menu=appearance_menu)
 menuleiste.add_cascade(label="Tools", menu=tools_menu)
-
+menuleiste.add_cascade(label="CheatSheetBuddy(ALPHA)",foreground="red", menu=cheat_menu)
 menuleiste.add_cascade(label="Help", menu=help_menu)
 
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
@@ -235,7 +263,7 @@ my_label.grid(row = 0, column = 0)
 eingabefeld.grid(row = 1, column = 0)
 welcom_button.grid(row = 2, column = 0)
 
-
+  
 # 
 fenster.config(menu=menuleiste)          
 
