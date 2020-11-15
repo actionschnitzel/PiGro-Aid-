@@ -16,7 +16,7 @@ sudo chmod +x install.sh
 sudo ./install.sh
 ```
 
-
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
 
 
 
