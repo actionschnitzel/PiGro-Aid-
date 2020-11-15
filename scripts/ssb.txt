@@ -1,12 +1,15 @@
 Cheat Sheet Buddy - Say it ten times in a row
 
+test
 
 
 Uhm .... you are here?! But why? It clearly says "Freakin' ALPHA"
 Maybe your Pi will die .... now 
 Wooohhh that rhymes
 
+update 
 
+sudo apt-get update
 
 Copy
 cp /home/pi/Desktop/win10.png /usr/share/lxpanel/images/
@@ -131,3 +134,4 @@ Access dropdown: alt + [letter-with-underline] e.g. alt + f
 Close window: ctrl + q
 
 Back to CLI: ctrl + alt + backspace
+
