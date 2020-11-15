@@ -5,7 +5,10 @@
 I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
 
 
-![GUI](https://www.actionschnitzel.de/.cm4all/uproc.php/0/Pi/.Bildschirmfoto_2020-11-12_23-57-34.png/picture-2600?_=175beb37b78)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-27.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-19-25.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-54.png)
+
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
