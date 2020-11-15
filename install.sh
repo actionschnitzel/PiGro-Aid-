@@ -20,6 +20,7 @@ sudo chmod +x scripts/raspiconfiginstall.sh
 sudo chmod +x scripts/autoremove.sh
 sudo chmod +x scripts/addunsignedrepo.sh
 sudo chmod +x scripts/update.sh
+sudo chmod +x scripts/upgrade.sh
 sudo chmod +x scripts/lxappearance.sh
 sudo chmod +x scripts/rmlxde.sh
 sudo chmod +x scripts/terminal.sh
