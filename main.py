@@ -187,6 +187,10 @@ def create_window():
     lbl1 = tk.Label(infofenster, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
     lbl1.pack()
     lbl1.bind("<Button-1>", callback)
+    
+    lbl2 = tk.Label(infofenster, text=r"https://http://www.lcdwiki.com/Main_Page", fg="blue", cursor="hand2")
+    lbl2.pack()
+    lbl2.bind("<Button-1>", callback)
 
 
 def action_get_info_dialog():
