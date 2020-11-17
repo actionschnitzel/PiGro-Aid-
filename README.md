@@ -1,6 +1,6 @@
 
-# PiGro - Just Click It (v2.1)
-![GUI](https://www.actionschnitzel.de/.cm4all/uproc.php/0/Pi/.raspi-aid.png/picture-2600?_=175beb21be8)
+# PiGro - Just Click It (v3.?)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_header.png)
 
 I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
 
@@ -21,10 +21,10 @@ sudo ./install.sh
 
 
 # New Additions
-:metal: install by just type the App-Name(It's very BETA, sometimes you have to click "INSTALL" 2 or 3 times        
+:metal: PiGro Updater(WORKS NOW)      
+:metal: install by just type the App-Name(WORKS NOW)  
 :metal: xfce4-wifi-fix(after install)    
-:metal: Breeze&Arc Theme    
-:metal: sources.list    
+:metal: Breeze&Arc Theme      
 :metal: install compiz    
 :metal: config.txt    
 :metal: tasksel    
