@@ -1,12 +1,12 @@
 [Desktop Entry]
-Version=1.0
+Version=2.1
 Exec=/home/pi/PiGro-Aid-/start.sh
-Name=PiGro+Aid+
-GenericName=PiGro+Aid+
-Comment=Things And Stuff
+Name=PiGro
+GenericName=PiGro
+Comment=The Lord Of System Config
 Encoding=UTF-8
 Terminal=false
 Type=Application
 Categories=System
 Icon=/home/pi/PiGro-Aid-/PiGroLogoslim.png
-Name[de_DE]=PiGro+Aid+
+Name[de_DE]=PiGro - Just Click It

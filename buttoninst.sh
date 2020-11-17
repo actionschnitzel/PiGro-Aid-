@@ -1,1 +1,1 @@
-sudo apt-get install thunderbird
+sudo apt-get install compiz
