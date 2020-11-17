@@ -66,7 +66,7 @@ def callback2(event):
 
 def button_action():
     #popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
-    os.system("python3 /home/pi/PiGro-Aid-/updater.py")
+    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/update.sh &' % wid)
     
     
 def button_action1():
@@ -216,19 +216,19 @@ menuleiste['background']='snow'
 system_menu = Menu(menuleiste, tearoff=0)
 appearance_menu = Menu(menuleiste, tearoff=0)
 tools_menu = Menu(menuleiste, tearoff=0)
-#cheat_menu = Menu(menuleiste, tearoff=0)
+cheat_menu = Menu(menuleiste, tearoff=0)
 help_menu = Menu(menuleiste, tearoff=0)
 
 # System
 # 
-system_menu.add_command(label="Update & Settings", command=button_action)
-#system_menu.add_command(label="Upgrade", command=button_action2)
-#system_menu.add_separator()
-#system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
+system_menu.add_command(label="Update", command=button_action)
+system_menu.add_command(label="Upgrade", command=button_action2)
+system_menu.add_separator()
+system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
 system_menu.add_separator()
 system_menu.add_command(label="Raspi-Config", command=button_action1)
-#system_menu.add_command(label="Edit Source List", command=button_action4)
-#system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
+system_menu.add_command(label="Edit Source List", command=button_action4)
+system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
 system_menu.add_command(label="Nano Config.txt", command=button_action7)
 system_menu.add_separator()
 system_menu.add_command(label="Gparted", command=button_action15)
@@ -257,7 +257,7 @@ tools_menu.add_command(label="Take A Photo", command=button_action11)
 tools_menu['background']='snow'
 #
 #
-#cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
+cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
 #
 #
 
@@ -271,7 +271,7 @@ help_menu['background']='snow'
 menuleiste.add_cascade(label="System", menu=system_menu)
 menuleiste.add_cascade(label="Appearance", menu=appearance_menu)
 menuleiste.add_cascade(label="Tools", menu=tools_menu)
-#menuleiste.add_cascade(label="CSB(ALPHA)",foreground="red", menu=cheat_menu)
+menuleiste.add_cascade(label="CSB(ALPHA)",foreground="red", menu=cheat_menu)
 menuleiste.add_cascade(label="Help", menu=help_menu)
 
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
@@ -308,3 +308,5 @@ os.system('xterm -into %d -geometry 100x20  &' % wid)
 fenster.config(menu=menuleiste)
 
 fenster.mainloop()
+
+
