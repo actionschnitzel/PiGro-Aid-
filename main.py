@@ -23,7 +23,7 @@ fenster = Tk()
 fenster.title("PiGro - Just Click It")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
-fenster.geometry("385x450")
+fenster.geometry("385x430")
 fenster['background']='grey10'
 ##################################################
 
@@ -66,7 +66,7 @@ def callback2(event):
 
 def button_action():
     #popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/update.sh &' % wid)
+    os.system("python3 /home/pi/PiGro-Aid-/updater.py")
     
     
 def button_action1():
@@ -134,7 +134,7 @@ def create_window1():
     infofenster1.title("Cheat Sheet Buddy Freakin' Alpha")    
     icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
     infofenster1.tk.call('wm', 'iconphoto', infofenster1._w, icon)
-    infofenster1.geometry("600x500")
+    infofenster1.geometry("500x500")
     
     def open_txt():
         text_file = filedialog.askopenfilename()
@@ -216,19 +216,19 @@ menuleiste['background']='snow'
 system_menu = Menu(menuleiste, tearoff=0)
 appearance_menu = Menu(menuleiste, tearoff=0)
 tools_menu = Menu(menuleiste, tearoff=0)
-cheat_menu = Menu(menuleiste, tearoff=0)
+#cheat_menu = Menu(menuleiste, tearoff=0)
 help_menu = Menu(menuleiste, tearoff=0)
 
 # System
 # 
-system_menu.add_command(label="Update", command=button_action)
-system_menu.add_command(label="Upgrade", command=button_action2)
-system_menu.add_separator()
-system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
+system_menu.add_command(label="Update & Settings", command=button_action)
+#system_menu.add_command(label="Upgrade", command=button_action2)
+#system_menu.add_separator()
+#system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
 system_menu.add_separator()
 system_menu.add_command(label="Raspi-Config", command=button_action1)
-system_menu.add_command(label="Edit Source List", command=button_action4)
-system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
+#system_menu.add_command(label="Edit Source List", command=button_action4)
+#system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
 system_menu.add_command(label="Nano Config.txt", command=button_action7)
 system_menu.add_separator()
 system_menu.add_command(label="Gparted", command=button_action15)
@@ -257,7 +257,7 @@ tools_menu.add_command(label="Take A Photo", command=button_action11)
 tools_menu['background']='snow'
 #
 #
-cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
+#cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
 #
 #
 
@@ -271,7 +271,7 @@ help_menu['background']='snow'
 menuleiste.add_cascade(label="System", menu=system_menu)
 menuleiste.add_cascade(label="Appearance", menu=appearance_menu)
 menuleiste.add_cascade(label="Tools", menu=tools_menu)
-menuleiste.add_cascade(label="CSB(ALPHA)",foreground="red", menu=cheat_menu)
+#menuleiste.add_cascade(label="CSB(ALPHA)",foreground="red", menu=cheat_menu)
 menuleiste.add_cascade(label="Help", menu=help_menu)
 
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
@@ -285,7 +285,7 @@ l['background']='grey10'
 my_label.place(x=50, y=0)
 eingabefeld.place(x=5, y=20)
 welcom_button.place(x=310, y=20)
-l.pack(pady=55)  
+l.pack(anchor='w',pady=55)  
 #
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
@@ -295,12 +295,12 @@ def send_entry_to_terminal(*args):
 
 
 termf = Frame(fenster, height=20, width=440)
-termf.pack(fill=BOTH, expand=YES)
+termf.pack(fill=BOTH, expand=NO)
 wid = termf.winfo_id()
 #termf2=Frame(fenster)
-#termf2.pack(fill=BOTH, expand=YES) 
+#termf2.pack(fill=BOTH, expand=NO) 
 #wid=termf2.winfo_id()
-os.system('xterm -into %d -geometry 100x20  &' % wid)
+os.system('xterm -into %d -geometry 100x100  &' % wid)
 
 
 
@@ -308,5 +308,3 @@ os.system('xterm -into %d -geometry 100x20  &' % wid)
 fenster.config(menu=menuleiste)
 
 fenster.mainloop()
-
-
