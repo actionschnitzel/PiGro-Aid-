@@ -198,7 +198,7 @@ def action_get_info_dialog():
 ************************\n\
 Author: Timo Westphal\n\
 Date: Nov. 2020\n\
-Version: 2.1\n\
+Version: 2.5\n\
 ************************"
     messagebox.showinfo(message=m_text, title = "Infos")
         
