@@ -12,11 +12,11 @@ from tkinter import messagebox
 import webbrowser
 
 updater = Tk()
-updater.title("PiGro Updater")
+updater.title("PiGro UpDater")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 updater.tk.call('wm', 'iconphoto', updater._w, icon)
 updater.geometry("900x310")
-
+updater['background']='grey39'
 
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
@@ -54,22 +54,27 @@ Sources List has been saved\n\
 "
     messagebox.showinfo(message=m_text, title = "Infos")
         
+#Notebook Style
+noteStyler = ttk.Style()
+noteStyler.configure("TNotebook", background="grey39", borderwidth=0)
+noteStyler.configure("TNotebook.Tab", background="grey39")
+noteStyler.configure("TFrame", background="grey39")
 
 
 
 
-
-tab_control = ttk.Notebook(updater)
-
-tab1 = ttk.Frame(tab_control)
-
-tab2 = ttk.Frame(tab_control)
-lbl2 = Label(tab2, text= "This updater is inspired by the Ub**tu software updater. No ads here. xDDD")
-lbl2.grid(column=0, row=0)
-tab_control.add(tab1, text='Update & Settings')
+#Notebook
+tab_control = ttk.Notebook(updater,style='TNotebook')
 
 
-tab_control.add(tab2, text='Info')
+tab1 = ttk.Frame(tab_control, style='TFrame')
+#tab2 = ttk.Frame(tab_control, style='TFrame')
+#lbl2 = Label(tab2, text= "This updater is inspired by the Ub**tu software updater. No ads here. xDDD")
+#lbl2.grid(column=0, row=0)
+tab_control.add(tab1, text='Update & Settings',)
+
+
+#tab_control.add(tab2, text='Info')
 
 
 
@@ -80,10 +85,13 @@ tab_control.pack(expand=1, fill='both')
 termf = Frame(tab1, height=20, width=20)
 wid = termf.winfo_id()
 os.system('xterm -into %d -geometry 120x20  &' % wid)
+termf['background']='grey39'
+
 
 i=Image.open('/home/pi/PiGro-Aid-/pigropi.png')
 p=ImageTk.PhotoImage(i)
 l=Label(tab1,image = p)
+l['background']='grey39'
 l.image = p
 
 
@@ -96,21 +104,21 @@ text_file.close()
 
 s_list.pack(anchor='w')
 
-update_button=Button(tab1,text="Update",width=15,anchor='w', command=button_action)
-update_button.place(x=725, y=0,)
+update_button=Button(tab1,text="Update",width=15,anchor='w', command=button_action,background="grey39",foreground="white")
+update_button.place(x=730, y=0,)
 
-upgrade_button=Button(tab1,text="Upgrade",width=15,anchor='w', command=button_action2)
-upgrade_button.place(x=725, y=30)
+upgrade_button=Button(tab1,text="Upgrade",width=15,anchor='w', command=button_action2,background="grey39",foreground="white")
+upgrade_button.place(x=730, y=30)
 
-auth_button=Button(tab1,text="Allow Sources",width=15,anchor='w', command=button_action17)
-auth_button.place(x=725, y=60)
+auth_button=Button(tab1,text="Allow Sources",width=15,anchor='w', command=button_action17,background="grey39",foreground="white")
+auth_button.place(x=730, y=60)
 
-rm_button=Button(tab1,text="Remove Config Files",width=15,anchor='w', command=button_action16)
-rm_button.place(x=725, y=90)
+rm_button=Button(tab1,text="Remove Config Files",width=15,anchor='w', command=button_action16,background="grey39",foreground="white")
+rm_button.place(x=730, y=90)
 
 
-sv_button=Button(tab1,text="Save Source List",width=15,anchor='w', command=save_list)
-sv_button.place(x=725, y=145)
+sv_button=Button(tab1,text="Save Source List",width=15,anchor='w', command=save_list,background="grey39",foreground="white")
+sv_button.place(x=730, y=145)
 
 termf.pack(fill=BOTH, expand=NO)
 l.pack()
