@@ -16,11 +16,12 @@ sudo chmod +x install.sh
 sudo ./install.sh
 ```
 
-
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
 
 
 
 # New Additions
+
 :metal: PiGro Updater(WORKS NOW)      
 :metal: install by just type the App-Name(WORKS NOW)  
 :metal: xfce4-wifi-fix(after install)    

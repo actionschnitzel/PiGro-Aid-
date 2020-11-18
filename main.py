@@ -307,4 +307,6 @@ os.system('xterm -into %d -geometry 100x100  &' % wid)
 
 fenster.config(menu=menuleiste)
 
+
 fenster.mainloop()
+
