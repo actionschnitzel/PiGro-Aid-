@@ -1,9 +1,12 @@
 
 # PiGro - Just Click It (v2.5)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_header.png)
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
+
 I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
 
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
+
+OR:
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
