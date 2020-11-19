@@ -1,1 +1,1 @@
-sudo apt-get install compiz
+sudo apt-get install breeze-dark

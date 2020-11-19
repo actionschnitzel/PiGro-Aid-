@@ -1,6 +1,7 @@
-#Author: Timo Westphal#######################################################
-#Date: 11.11.2020###########################################################
-#Version: 2.0###############################################################
+#PiGro ####################################################################
+#Author: Timo Westphal ####################################################
+#Date: NOV.2020 ###########################################################
+#Version: 2.5 #############################################################
 ###########################################################################
 ##### Y U LOOK MY CODE? xD ################################################
 ###########################################################################
@@ -15,7 +16,7 @@ import subprocess
 from PIL import ImageTk, Image
 from tkinter import messagebox
 import webbrowser
-#######################
+##########################################################################
 
 ###########################################################################
 #DEFINITIONS
@@ -25,7 +26,60 @@ icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
 fenster.geometry("385x430")
 fenster['background']='grey10'
-##################################################
+fenster.resizable(0, 0)
+################################################
+class CreateToolTip(object):
+    """
+    create a tooltip for a given widget
+    """
+    def __init__(self, widget, text='widget info'):
+        self.waittime = 500     #miliseconds
+        self.wraplength = 180   #pixels
+        self.widget = widget
+        self.text = text
+        self.widget.bind("<Enter>", self.enter)
+        self.widget.bind("<Leave>", self.leave)
+        self.widget.bind("<ButtonPress>", self.leave)
+        self.id = None
+        self.tw = None
+
+    def enter(self, event=None):
+        self.schedule()
+
+    def leave(self, event=None):
+        self.unschedule()
+        self.hidetip()
+
+    def schedule(self):
+        self.unschedule()
+        self.id = self.widget.after(self.waittime, self.showtip)
+
+    def unschedule(self):
+        id = self.id
+        self.id = None
+        if id:
+            self.widget.after_cancel(id)
+
+    def showtip(self, event=None):
+        x = y = 0
+        x, y, cx, cy = self.widget.bbox("insert")
+        x += self.widget.winfo_rootx() + 25
+        y += self.widget.winfo_rooty() + 20
+        # creates a toplevel window
+        self.tw = tk.Toplevel(self.widget)
+        # Leaves only the label and removes the app window
+        self.tw.wm_overrideredirect(True)
+        self.tw.wm_geometry("+%d+%d" % (x, y))
+        label = tk.Label(self.tw, text=self.text, justify='left',
+                       background="#ffffff", relief='solid', borderwidth=1,
+                       wraplength = self.wraplength)
+        label.pack(ipadx=1)
+
+    def hidetip(self):
+        tw = self.tw
+        self.tw= None
+        if tw:
+            tw.destroy()
 
 
 
@@ -41,21 +95,17 @@ def button_action20():
         f=open("/home/pi/PiGro-Aid-/buttoninst.sh","w+")
         for i in range(1):
              f.write(entry_text)
-        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
-        #popen("lxterminal -e 'bash -c \"sudo rm /home/pi/PiGro-Aid-/buttoninst.sh && exit ; exec bash\"'")
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")       
         
-        
-        
-my_label = Label(fenster, text="sudo apt-get install(>NAME<)", fg="white")
+my_label = Label(fenster, text="sudo apt-get install:", fg="white")
 my_label['background']='grey10'
 
 welcome_label = Label(fenster)
-
 eingabefeld = Entry(fenster, bd=5, width=31)
-
 welcom_button = Button(fenster, text="Install", command=button_action20)
+welcom_button_ttp = CreateToolTip(welcom_button, \
+   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
-exit_button = Button(fenster, text="Beenden", command=fenster.quit)
 
 ################################################
 def callback(event):
@@ -65,16 +115,11 @@ def callback2(event):
        lxterminal.open_new(event.widget.cget("entry_text"))
 
 def button_action():
-    #popen("lxterminal -e 'bash -c \"sudo apt-get update; exec bash\"'")
-    os.system("python3 /home/pi/PiGro-Aid-/updater.py")
+    popen("python3 /home/pi/PiGro-Aid-/updater.py")
     
     
 def button_action1():
     popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
-    
-def button_action2():
-    #popen ("lxterminal -e 'bash -c \"sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove -y && sudo apt autoclean; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/upgrade.sh &' % wid)
     
 def button_action3():
     popen ("sudo lxappearance")
@@ -86,8 +131,8 @@ def button_action5():
     popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'") 
 
 def button_action6():   
-    #popen ("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e sudo apt-get install compiz &' % wid)
+    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install compiz &' % wid)
+    
 def button_action7():   
     popen ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
     
@@ -104,66 +149,24 @@ def button_action11():
     popen ("lxterminal -e 'bash -c \"raspistill -o image.jpg; exec bash\"'")
 
 def button_action12():   
-    #popen ("lxterminal -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e sudo apt-get install arc-theme &' % wid)
+    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install arc-theme &' % wid)
+    
 def button_action13():   
-    #popen ("lxterminal -e 'bash -c \"sudo apt-get install breeze; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e sudo apt-get install breeze &' % wid)
+    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install breeze &' % wid)
+    
 def button_action14():   
-    #popen ("lxterminal -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e sudo apt-get install gparted &' % wid)
+    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install gparted &' % wid)
+    
 def button_action15():   
     popen ("sudo gparted")
 
-def button_action16():   
-    #popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/autoremove.sh; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/autoremove.sh &' % wid)
-def button_action17():   
-    #popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/addunsignedrepo.sh; exec bash\"'")
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/addunsignedrepo.sh &' % wid)
 def button_action18():   
-    #popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/xfce4fix.sh ; exec bash\"'")    
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/xfce4fix.sh &' % wid)
+    popen ('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/xfce4fix.sh &' % wid)
+    
 def button_action19():   
-    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/PiGro-HowTo-s/")    
-#CSB#
-
- 
-def create_window1():
-    infofenster1 = tk.Toplevel(fenster)
-    infofenster1.title("Cheat Sheet Buddy Freakin' Alpha")    
-    icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
-    infofenster1.tk.call('wm', 'iconphoto', infofenster1._w, icon)
-    infofenster1.geometry("500x500")
-    
-    def open_txt():
-        text_file = filedialog.askopenfilename()
-        text_file = open(text_file,'r')
-        stuff = text_file.read()
-        my_text.insert(END, stuff)
-        text_file.close()
-        
-    def save_txt():
-        text_file = filedialog.askopenfilename()
-        text_file = open(text_file,'w')
-        text_file.write(my_text.get(1.0, END))
-        
-    my_text = Text(infofenster1, width=390, heigh=20)
-    my_text.pack()
-    
-    open_button = Button(infofenster1, text="Open File", command=open_txt)
-    open_button.pack(padx=5, pady=0, side=LEFT)
-    
-    save_button = Button(infofenster1, text="Save File", command=save_txt) 
-    save_button.pack(padx=5, pady=0, side=LEFT)
+    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/PiGro-HowTo-s/")
     
     
-    termf = Frame(infofenster1)
-    termf.pack(fill=BOTH, expand=YES) 
-    wid = termf.winfo_id()
-    os.system('xterm -into %d -geometry 390x80  &' % wid)
-    infofenster1['background']='grey10'
-
     
 def create_window():
     infofenster = tk.Toplevel(fenster)
@@ -172,7 +175,7 @@ def create_window():
     infofenster.tk.call('wm', 'iconphoto', infofenster._w, icon)
     infofenster.geometry("400x250")
     
-##############################################
+
 
     
 ####################################################################
@@ -192,22 +195,16 @@ def create_window():
     lbl2.pack()
     lbl2.bind("<Button-1>", callback)
 
-
+####################################################
 def action_get_info_dialog():
     m_text = "\
 ************************\n\
 Author: Timo Westphal\n\
 Date: Nov. 2020\n\
-Version: 2.1\n\
+Version: 2.5\n\
 ************************"
     messagebox.showinfo(message=m_text, title = "Infos")
         
-
-        
-        
-
-
-
 
 # Menüleiste 
 menuleiste = Menu(fenster)
@@ -216,25 +213,21 @@ menuleiste['background']='snow'
 system_menu = Menu(menuleiste, tearoff=0)
 appearance_menu = Menu(menuleiste, tearoff=0)
 tools_menu = Menu(menuleiste, tearoff=0)
-#cheat_menu = Menu(menuleiste, tearoff=0)
 help_menu = Menu(menuleiste, tearoff=0)
 
 # System
 # 
 system_menu.add_command(label="Update & Settings", command=button_action)
-#system_menu.add_command(label="Upgrade", command=button_action2)
-#system_menu.add_separator()
-#system_menu.add_command(label="Remove Residual Configuration Files", command=button_action16)
 system_menu.add_separator()
 system_menu.add_command(label="Raspi-Config", command=button_action1)
-#system_menu.add_command(label="Edit Source List", command=button_action4)
-#system_menu.add_command(label="Allow All Unauthed Source", command=button_action17)
 system_menu.add_command(label="Nano Config.txt", command=button_action7)
 system_menu.add_separator()
 system_menu.add_command(label="Gparted", command=button_action15)
 system_menu.add_command(label="NeoFetch", command=button_action8)
 system_menu['background']='snow'
-#system_menu.add_command(label="Exit", command=fenster.quit)
+#
+#
+#
 #
 #Appear
 appearance_menu.add_command(label="LXAppearance", command=button_action3)
@@ -257,13 +250,13 @@ tools_menu.add_command(label="Take A Photo", command=button_action11)
 tools_menu['background']='snow'
 #
 #
-#cheat_menu.add_command(label="Let's be super lazy ", command=create_window1)
+
 #
 #
 
 #Help ....I need somebody... HELP!
 help_menu.add_command(label="Good Pi-Websites", command=create_window)
-help_menu.add_command(label="HowTo's", command=button_action19)
+help_menu.add_command(label="Support / Me, tryna figure out wtf is wrong ;-)", command=button_action19)
 help_menu.add_command(label="Info", command=action_get_info_dialog)
 help_menu['background']='snow'
 # 
@@ -271,7 +264,6 @@ help_menu['background']='snow'
 menuleiste.add_cascade(label="System", menu=system_menu)
 menuleiste.add_cascade(label="Appearance", menu=appearance_menu)
 menuleiste.add_cascade(label="Tools", menu=tools_menu)
-#menuleiste.add_cascade(label="CSB(ALPHA)",foreground="red", menu=cheat_menu)
 menuleiste.add_cascade(label="Help", menu=help_menu)
 
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
@@ -279,14 +271,16 @@ p=ImageTk.PhotoImage(i)
 l=Label(fenster,image = p)
 l.image = p
 l['background']='grey10'
+l_ttp = CreateToolTip(l, \
+   "Don't forget to git pull PiGro from time to time to be up to date")
 
-
-
-my_label.place(x=50, y=0)
+my_label.place(x=5, y=0)
 eingabefeld.place(x=5, y=20)
 welcom_button.place(x=310, y=20)
-l.pack(anchor='w',pady=55)  
-#
+l.pack(anchor='w',pady=55)
+
+
+###################################################################
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
    or one arg (entry)
@@ -297,14 +291,12 @@ def send_entry_to_terminal(*args):
 termf = Frame(fenster, height=20, width=440)
 termf.pack(fill=BOTH, expand=NO)
 wid = termf.winfo_id()
-#termf2=Frame(fenster)
-#termf2.pack(fill=BOTH, expand=NO) 
-#wid=termf2.winfo_id()
 os.system('xterm -into %d -geometry 100x100  &' % wid)
 
 
 
-
 fenster.config(menu=menuleiste)
+
+
 
 fenster.mainloop()
