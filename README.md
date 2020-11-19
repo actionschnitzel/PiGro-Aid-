@@ -14,7 +14,7 @@ sudo chmod +x install.sh
 sudo ./install.sh
 ```
 # New Additions
-:metal: PiGro UpDater
+:metal: PiGro UpDater    
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
 :metal: Breeze&Arc Theme    
