@@ -13,6 +13,10 @@ cd PiGro-Aid-
 sudo chmod +x install.sh
 sudo ./install.sh
 ```
+
+Runs best on:    
+https://twisteros.com/
+
 # New Additions
 :metal: PiGro UpDater    
 :metal: install by just type the App-Name    
