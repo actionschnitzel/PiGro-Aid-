@@ -26,6 +26,7 @@ sudo ./install.sh
 
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-27.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/updater.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-19-25.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-54.png)
 
