@@ -164,7 +164,7 @@ def button_action18():
     popen ('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/xfce4fix.sh &' % wid)
     
 def button_action19():   
-    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/PiGro-HowTo-s/")
+    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/")
     
     
     
