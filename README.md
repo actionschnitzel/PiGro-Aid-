@@ -20,9 +20,9 @@ https://twisteros.com/
 
 # New Additions
 :metal: NEW GUI     
+:metal: PiGro UpDater is now an own app(for faster update&upgrade)    
 :metal: Snap support (NOT Pre-Installed)    
 :metal: WhatsApp Installer(Snap)    
-:metal: PiGro UpDater    
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
 :metal: Breeze&Arc Theme    
