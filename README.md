@@ -18,6 +18,8 @@ Runs best on:
 https://twisteros.com/
 
 # New Additions
+:metal: NEW GUI     
+:metal: Snap support (NOT Pre-Installed)    
 :metal: PiGro UpDater    
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
@@ -29,11 +31,11 @@ https://twisteros.com/
 :metal: Neofetch    
 
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-27.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/updater.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-19-25.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-54.png)
-
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/1.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/2.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/3.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/4.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/5.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
 
 
