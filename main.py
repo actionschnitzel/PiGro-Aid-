@@ -16,7 +16,7 @@ import webbrowser
 ##################################################MAIN
 main = Tk()
 
-main.title("PiGro Xtremo - TESTING v3.0")
+main.title("PiGro Xtrmo - TESTING v3.0")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 
@@ -50,8 +50,7 @@ tab_control.add(tab4, text='Appearance')
 #tab_control.add(tab5, text='Tools')
 tab_control.add(tab6, text='Help')
 
-lbl1 = Label(tab3, text= '*to use snap install, you must\napt-get install snapd xD lol')
-lbl1.grid(column=1, row=3)
+
 
 lbl2 = Label(tab3, text= 'Suggestions', font=16, pady=20)
 lbl2.grid(column=0, row=5)
@@ -174,15 +173,20 @@ def inst_btn1():
         f=open("/home/pi/PiGro-Aid-/buttoninst.sh","w+")
         for i in range(1):
              f.write(entry_text)
-        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")       
-                
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
         
-my_label1 = Label(tab3, text="Apt-Get install", fg="white")
+i4=Image.open('/home/pi/PiGro-Aid-/Apt-get_logo.png')
+p4=ImageTk.PhotoImage(i4)
+l4=Label(image = p4)                
+        
+my_label1 = Label(tab3,image = p4, text="install", fg="white")
 #my_label1['background']='grey20'
 
 welcome_label1 = Label(tab3)
 eingabefeld1 = Entry(tab3, bd=5, width=31, borderwidth=1 )
 welcom_button1 = Button(tab3, text="install", command=inst_btn1)
+welcom_button1_ttp = CreateToolTip(welcom_button1, \
+   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
 
 ######DEFZ####inst2##############################################################
@@ -197,13 +201,21 @@ def inst_btn2():
         for i in range(1):
              f.write(entry_text)
         popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")       
-        
-my_label2 = Label(tab3, text="Snap install", fg="white")
+
+
+
+i6=Image.open('/home/pi/PiGro-Aid-/62161316-cb674400-b30d-11e9-8477-11b16c921ef7.png')
+p6=ImageTk.PhotoImage(i6)
+l6=Label(image = p6) 
+
+my_label2 = Label(tab3,image = p6, text="Snap install", fg="white")
 #my_label2['background']='grey20'
 
 welcome_label2 = Label(tab3)
 eingabefeld2 = Entry(tab3, bd=5, width=31, borderwidth=1)
 welcom_button2 = Button(tab3, text="Install", command=inst_btn2,)
+welcom_button2_ttp = CreateToolTip(welcom_button2, \
+   '*to use snap install, you must\napt-get install snapd xD lol')
 
 
 #################LOGO
@@ -214,22 +226,25 @@ l.image = p
 #l['background']='grey20'
 l.place(x=0, y=0)
 ###################################################Placement#inst1
-my_label1.grid(column=0, row=0)
-eingabefeld1.grid(column=1, row=0)
-welcom_button1.grid(column=2, row=0)
+my_label1.grid(column=0, row=0, pady=5)
+eingabefeld1.grid(column=2, row=0)
+welcom_button1.grid(column=1, row=0)
 ###################################################Placement#inst2
 my_label2.grid(column=0, row=1)
-eingabefeld2.grid(column=1, row=1)
-welcom_button2.grid(column=2, row=1)
+eingabefeld2.grid(column=2, row=1)
+welcom_button2.grid(column=1, row=1)
 ########################################inst#btn#
-in_btn0 = Button(tab3, text="Whatsapp",command=w_app)
+in_btn0 = Button(tab3, text="Whatsapp",command=w_app,width=10)
 in_btn0.grid(column=0, row=6)
+in_btn0_ttp = CreateToolTip(in_btn0, \
+   '*U need Snap')
 
-in_btn1 = Button(tab3, text="Compiz", command=compiz_button)
-in_btn1.grid(column=1, row=6)
 
-in_btn2 = Button(tab3, text="PiKiss",command=kiss_button)
-in_btn2.grid(column=2, row=6)
+in_btn1 = Button(tab3, text="Compiz", command=compiz_button,width=10)
+in_btn1.grid(column=0, row=7)
+
+in_btn2 = Button(tab3, text="PiKiss",command=kiss_button,width=10)
+in_btn2.grid(column=0, row=8)
 ######DEFZ####tab1
 def button_action20():
     entry_text = eingabefeld.get()
@@ -245,6 +260,12 @@ def button_action20():
         
 my_label = Label(tab1, text="sudo apt-get install", fg="white")
 my_label['background']='grey20'
+
+
+i7=Image.open('/home/pi/PiGro-Aid-/5a364bf9376f80.9760899415135078332271.png')
+p7=ImageTk.PhotoImage(i7)
+l7=Label(tab3, image = p7)
+l7.place(x=200, y=100)
 
 #################LOGO
 i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
@@ -297,7 +318,12 @@ in_btn2.grid(column=0, row=2)
 in_btn2 = Button(tab4, text="Install Breeze Theme", width=15,command=breeze_inst)
 in_btn2.grid(column=1, row=2)
 
-
+i3=Image.open('/home/pi/PiGro-Aid-/brushpi.png')
+p3=ImageTk.PhotoImage(i3)
+l3=Label(tab4,image = p3)
+l3.image = p3
+#l['background']='grey20'
+l3.place(x=330, y=90)
 
 ######################################HELP
 def callback(event):
@@ -306,7 +332,7 @@ def callback(event):
 def callback2(event):
        lxterminal.open_new(event.widget.cget("entry_text"))
 
-author = tk.Label(tab6,text="Author: Timo Westphal\nDate: Nov. 2020\nVersion: 3.X")
+author = tk.Label(tab6,text="Author: Timo Westphal\nDate: Nov. 2020\nVersion: 3")
 author.pack(pady=10)
 al = tk.Label(tab6, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.pack()
