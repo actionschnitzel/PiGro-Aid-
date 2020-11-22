@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Exec=/home/pi/PiGro-Aid-/start1.sh
+Name=PiGro UpDater
+GenericName=PiGro UpDater
+Comment=The Lord Of System Config
+Encoding=UTF-8
+Terminal=false
+Type=Application
+Categories=System
+Icon=/home/pi/PiGro-Aid-/PiGroLogoslim.png
+Name[de_DE]=PiGro UpDater

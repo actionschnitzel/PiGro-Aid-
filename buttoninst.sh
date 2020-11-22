@@ -1,1 +1,1 @@
-sudo apt-get install breeze-dark
+sudo apt-get install snapd
