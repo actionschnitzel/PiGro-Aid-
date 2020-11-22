@@ -12,7 +12,8 @@ git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 sudo chmod +x install.sh
 sudo ./install.sh
-```
+```    
+after "git pull" you shoud do "./install.sh"    
 
 Runs best on:    
 https://twisteros.com/
@@ -20,6 +21,7 @@ https://twisteros.com/
 # New Additions
 :metal: NEW GUI     
 :metal: Snap support (NOT Pre-Installed)    
+:metal: WhatsApp Installer(Snap)    
 :metal: PiGro UpDater    
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
