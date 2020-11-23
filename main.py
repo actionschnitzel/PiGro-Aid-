@@ -16,7 +16,7 @@ import webbrowser
 ##################################################MAIN
 main = Tk()
 
-main.title("PiGro Xtrmo - TESTING v3.0")
+main.title("PiGro Xtrmo - Just Click It")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 
