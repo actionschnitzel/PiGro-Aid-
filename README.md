@@ -1,6 +1,6 @@
 
-# PiGro Xtrmo - Just Click It (Testing v3)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_header.png)
+# PiGro Xtrmo - Just Click It
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
 I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
 
