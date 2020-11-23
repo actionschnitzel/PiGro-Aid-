@@ -334,7 +334,7 @@ p3=ImageTk.PhotoImage(i3)
 l3=Label(tab4,image = p3)
 l3.image = p3
 #l['background']='grey20'
-l3.place(x=360, y=120)
+l3.place(x=310, y=75)
 
 
 ######################################HELP
