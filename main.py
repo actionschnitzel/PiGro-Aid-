@@ -1,33 +1,113 @@
-#PiGro ####################################################################
-#Author: Timo Westphal ####################################################
-#Date: NOV.2020 ###########################################################
-#Version: 2.5 #############################################################
-###########################################################################
-##### Y U LOOK MY CODE? xD ################################################
-###########################################################################
 from tkinter import *
+from tkinter import ttk
 from tkinter import filedialog
 import tkinter as tk
 import os
 import sys
+from tkinter import ttk
 from os import popen
 from os import system as cmd
 import subprocess
 from PIL import ImageTk, Image
 from tkinter import messagebox
 import webbrowser
-##########################################################################
 
-###########################################################################
-#DEFINITIONS
-fenster = Tk()
-fenster.title("PiGro - Just Click It")
+
+##################################################MAIN
+main = Tk()
+
+main.title("PiGro Xtrmo - Just Click It")
 icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
-fenster.tk.call('wm', 'iconphoto', fenster._w, icon)
-fenster.geometry("385x430")
-fenster['background']='grey10'
-fenster.resizable(0, 0)
-################################################
+main.tk.call('wm', 'iconphoto', main._w, icon)
+
+#main['background']='grey20'
+main.resizable(0, 0)
+
+main.geometry("500x315")
+
+###########################################TABCONT
+tab_control = ttk.Notebook(main)
+
+
+
+tab1 = ttk.Frame(tab_control)
+tab2 = ttk.Frame(tab_control)
+tab3 = ttk.Frame(tab_control)
+tab4 = ttk.Frame(tab_control)
+tab5 = ttk.Frame(tab_control)
+tab6 = ttk.Frame(tab_control)
+
+#Notebook Style
+noteStyler = ttk.Style()
+noteStyler.configure("TNotebook", borderwidth=0)
+#noteStyler.configure("TNotebook.Tab", background="grey20")
+#noteStyler.configure("TFrame", background="grey20")
+
+tab_control.add(tab1, text='Start')
+tab_control.add(tab2, text='System')
+tab_control.add(tab3, text='Installer')
+tab_control.add(tab4, text='Appearance')
+#tab_control.add(tab5, text='Tools')
+tab_control.add(tab6, text='Help')
+
+
+
+lbl2 = Label(tab3, text= 'Suggestions', font=16, pady=20)
+lbl2.grid(column=0, row=5)
+
+################################################DEF/BUTTONZ
+
+
+def upDater_button():
+    popen("python3 /home/pi/PiGro-Aid-/updater.py")  
+    
+def pi_configbutton():
+    popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
+    
+def lxap_button():
+    popen ("sudo lxappearance")
+    
+def kiss_button():   
+    popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'") 
+
+def compiz_button():   
+    popen ("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
+    
+def contxt_button():   
+    popen ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
+    
+def neofetch_button():   
+    popen ("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
+    
+def tasksel_button():   
+    popen ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
+
+def arc_inst():   
+    #popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install arc-theme &' % wid)
+    popen ("lxterminal -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
+def breeze_inst():   
+    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install breeze &' % wid)
+    
+def gparted_inst():   
+    #popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install gparted &' % wid)
+    popen ("lxterminal -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
+def gparted_exec():   
+    popen ("sudo gparted")
+
+def xfcefix():   
+    #popen ('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/xfce4fix.sh &' % wid)
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
+
+def actionhome():   
+    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/")
+
+def ch_desk():   
+    popen ("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
+    
+def w_app():
+    popen ("lxterminal -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
+
+#####################################TOOLTIPZ
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
@@ -82,9 +162,90 @@ class CreateToolTip(object):
             tw.destroy()
 
 
+######DEFZ####inst1###############################################################
+def inst_btn1():
+    entry_text = eingabefeld1.get()
+    if (entry_text == ""):
+        welcome_label.config(text="Name of the App?")
+    else:
+        entry_text = "sudo apt-get install " + entry_text 
+        
+        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","w+")
+        for i in range(1):
+             f.write(entry_text)
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+        
+i4=Image.open('/home/pi/PiGro-Aid-/Apt-get_logo.png')
+p4=ImageTk.PhotoImage(i4)
+l4=Label(image = p4)                
+        
+my_label1 = Label(tab3,image = p4, text="install", fg="white")
+#my_label1['background']='grey20'
+
+welcome_label1 = Label(tab3)
+eingabefeld1 = Entry(tab3, bd=5, width=31, borderwidth=1 )
+welcom_button1 = Button(tab3, text="install", command=inst_btn1)
+welcom_button1_ttp = CreateToolTip(welcom_button1, \
+   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
 
-################################################
+######DEFZ####inst2##############################################################
+def inst_btn2():
+    entry_text = eingabefeld2.get()
+    if (entry_text == ""):
+        welcome_label2.config(text="Name of the App?")
+    else:
+        entry_text = "sudo snap install " + entry_text 
+        
+        f=open("/home/pi/PiGro-Aid-/buttoninst.sh","w+")
+        for i in range(1):
+             f.write(entry_text)
+        popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")       
+
+
+
+i6=Image.open('/home/pi/PiGro-Aid-/62161316-cb674400-b30d-11e9-8477-11b16c921ef7.png')
+p6=ImageTk.PhotoImage(i6)
+l6=Label(image = p6) 
+
+my_label2 = Label(tab3,image = p6, text="Snap install", fg="white")
+#my_label2['background']='grey20'
+
+welcome_label2 = Label(tab3)
+eingabefeld2 = Entry(tab3, bd=5, width=31, borderwidth=1)
+welcom_button2 = Button(tab3, text="Install", command=inst_btn2,)
+welcom_button2_ttp = CreateToolTip(welcom_button2, \
+   '*to use snap install, you must\napt-get install snapd xD lol')
+
+
+#################LOGO
+i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
+p=ImageTk.PhotoImage(i)
+l=Label(tab1,image = p)
+l.image = p
+#l['background']='grey20'
+l.place(x=0, y=0)
+###################################################Placement#inst1
+my_label1.grid(column=0, row=0, pady=5)
+eingabefeld1.grid(column=2, row=0)
+welcom_button1.grid(column=1, row=0)
+###################################################Placement#inst2
+my_label2.grid(column=0, row=1)
+eingabefeld2.grid(column=2, row=1)
+welcom_button2.grid(column=1, row=1)
+########################################inst#btn#
+in_btn0 = Button(tab3, text="Whatsapp",command=w_app,width=10)
+in_btn0.grid(column=0, row=6,padx=10)
+in_btn0_ttp = CreateToolTip(in_btn0, \
+   '*U need Snap')
+
+
+in_btn1 = Button(tab3, text="Compiz", command=compiz_button,width=10)
+in_btn1.grid(column=0, row=7)
+
+in_btn2 = Button(tab3, text="PiKiss",command=kiss_button,width=10)
+in_btn2.grid(column=0, row=8)
+######DEFZ####tab1
 def button_action20():
     entry_text = eingabefeld.get()
     if (entry_text == ""):
@@ -97,206 +258,128 @@ def button_action20():
              f.write(entry_text)
         popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")       
         
-my_label = Label(fenster, text="sudo apt-get install:", fg="white")
-my_label['background']='grey10'
-
-welcome_label = Label(fenster)
-eingabefeld = Entry(fenster, bd=5, width=31)
-welcom_button = Button(fenster, text="Install", command=button_action20)
-welcom_button_ttp = CreateToolTip(welcom_button, \
-   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
+my_label = Label(tab1, text="sudo apt-get install", fg="white")
+my_label['background']='grey20'
 
 
-################################################
+i7=Image.open('/home/pi/PiGro-Aid-/5a364bf9376f80.9760899415135078332271.png')
+p7=ImageTk.PhotoImage(i7)
+l7=Label(tab3, image = p7)
+l7.place(x=200, y=100)
+
+#################LOGO
+i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
+p=ImageTk.PhotoImage(i)
+l=Label(tab1,image = p)
+l.image = p
+
+###########################################System
+
+i1=Image.open('/home/pi/PiGro-Aid-/pigropi.png')
+p1=ImageTk.PhotoImage(i1)
+l1=Label(image = p1)
+
+i2=Image.open('/home/pi/PiGro-Aid-/spacepi.png')
+p2=ImageTk.PhotoImage(i2)
+l2=Label(tab2, image = p2)
+l2.place(x=200, y=100)
+
+sys_btn0 = Button(tab2,image = p1,command=upDater_button)
+sys_btn0.grid(column=1, row=0, pady= 20)
+
+sys_btn1 = Button(tab2, text="Raspi-Config", width=10,command=pi_configbutton)
+sys_btn1.grid(column=0, row=1,padx= 10)
+
+sys_btn2 = Button(tab2, text="Nano Config.txt", width=10,command=contxt_button)
+sys_btn2.grid(column=0, row=2,padx= 10,)
+
+sys_btn3 = Button(tab2, text="Gparted", width=10,command=gparted_exec)
+sys_btn3.grid(column=0, row=3,padx= 10)
+
+sys_btn4 = Button(tab2, text="NeoFetch", width=10,command=neofetch_button)
+sys_btn4.grid(column=0, row=4,padx= 10)
+
+##########################################LOOK
+in_btn0 = Button(tab4, text="LXAppearace",font=120,command=lxap_button)
+in_btn0.place(x=25, y=15)
+
+in_btn1 = Button(tab4, text="Tasksel",command=tasksel_button,font=120)
+in_btn1.place(x=185, y=15)
+
+in_btn2 = Button(tab4, text="Change Desktop",command=ch_desk,font=120)
+in_btn2.place(x=295, y=15)
+
+loklik = Label(tab4, text="More:")
+loklik.place(x=10, y=220)
+
+separator = Frame(tab4,height=2, bd=1, relief=SUNKEN)
+separator.pack(fill=X, pady=60)
+
+
+
+in_btn2 = Button(tab4, text="Install Arc Theme", width=15,command=arc_inst)
+in_btn2.place(x=10, y=75)
+
+in_btn2 = Button(tab4, text="Install Breeze Theme", width=15,command=breeze_inst)
+in_btn2.place(x=10, y=110)
+
+in_btn2 = Button(tab4, text="Xfce WiFi Fix", width=15,command=xfcefix)
+in_btn2.place(x=10, y=145)
+
+
+
+
+i3=Image.open('/home/pi/PiGro-Aid-/brushpi.png')
+p3=ImageTk.PhotoImage(i3)
+l3=Label(tab4,image = p3)
+l3.image = p3
+#l['background']='grey20'
+l3.place(x=360, y=120)
+
+
+######################################HELP
 def callback(event):
        webbrowser.open_new(event.widget.cget("text"))
        
 def callback2(event):
        lxterminal.open_new(event.widget.cget("entry_text"))
 
-def button_action():
-    popen("python3 /home/pi/PiGro-Aid-/updater.py")
+author = tk.Label(tab6,text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: December Push")
+author.pack(pady=10)
+al = tk.Label(tab6, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
+al.pack()
+al.bind("<Button-1>", callback)
+
+
+separator = Frame(tab6,height=2, bd=1, relief=SUNKEN)
+separator.pack(fill=X, padx=5, pady=5)
+
+gws = Label(tab6, text="Good Websites")
+gws.pack(pady=10)
+
+######ALL LINKS###########
+lbl = tk.Label(tab6, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
+lbl.pack()
+lbl.bind("<Button-1>", callback)
     
+lbl0 = tk.Label(tab6, text=r"https://twisteros.com", fg="blue", cursor="hand2")
+lbl0.pack()
+lbl0.bind("<Button-1>", callback)
     
-def button_action1():
-    popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
+lbl1 = tk.Label(tab6, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
+lbl1.pack()
+lbl1.bind("<Button-1>", callback)
     
-def button_action3():
-    popen ("sudo lxappearance")
-    
-def button_action4():
-    popen ("lxterminal -e 'bash -c \"sudo nano /etc/apt/sources.list; exec bash\"'")
-    
-def button_action5():   
-    popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'") 
-
-def button_action6():   
-    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install compiz &' % wid)
-    
-def button_action7():   
-    popen ("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
-    
-def button_action8():   
-    popen ("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
-    
-def button_action9():   
-    popen ("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
-
-def button_action10():   
-    popen ("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
-    
-def button_action11():   
-    popen ("lxterminal -e 'bash -c \"raspistill -o image.jpg; exec bash\"'")
-
-def button_action12():   
-    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install arc-theme &' % wid)
-    
-def button_action13():   
-    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install breeze &' % wid)
-    
-def button_action14():   
-    popen ('xterm -into %d -geometry 100x20 -e sudo apt-get install gparted &' % wid)
-    
-def button_action15():   
-    popen ("sudo gparted")
-
-def button_action18():   
-    popen ('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/xfce4fix.sh &' % wid)
-    
-def button_action19():   
-    popen ("chromium-browser https://www.actionschnitzel.de/PiGro/")
-    
-    
-    
-def create_window():
-    infofenster = tk.Toplevel(fenster)
-    infofenster.title("Good Pi-Websites")    
-    icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
-    infofenster.tk.call('wm', 'iconphoto', infofenster._w, icon)
-    infofenster.geometry("400x250")
-    
+lbl2 = tk.Label(tab6, text=r"https://www.lcdwiki.com/Main_Page", fg="blue", cursor="hand2")
+lbl2.pack()
+lbl2.bind("<Button-1>", callback)
 
 
-    
-####################################################################
-    lbl = tk.Label(infofenster, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
-    lbl.pack()
-    lbl.bind("<Button-1>", callback)
-    
-    lbl0 = tk.Label(infofenster, text=r"https://twisteros.com", fg="blue", cursor="hand2")
-    lbl0.pack()
-    lbl0.bind("<Button-1>", callback)
-    
-    lbl1 = tk.Label(infofenster, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
-    lbl1.pack()
-    lbl1.bind("<Button-1>", callback)
-    
-    lbl2 = tk.Label(infofenster, text=r"https://www.lcdwiki.com/Main_Page", fg="blue", cursor="hand2")
-    lbl2.pack()
-    lbl2.bind("<Button-1>", callback)
-
-####################################################
-def action_get_info_dialog():
-    m_text = "\
-************************\n\
-Author: Timo Westphal\n\
-Date: Nov. 2020\n\
-Version: 2.5\n\
-************************"
-    messagebox.showinfo(message=m_text, title = "Infos")
-        
-
-# Menüleiste 
-menuleiste = Menu(fenster)
-menuleiste['background']='snow'
-# Menüeinträge
-system_menu = Menu(menuleiste, tearoff=0)
-appearance_menu = Menu(menuleiste, tearoff=0)
-tools_menu = Menu(menuleiste, tearoff=0)
-help_menu = Menu(menuleiste, tearoff=0)
-
-# System
-# 
-system_menu.add_command(label="Update & Settings", command=button_action)
-system_menu.add_separator()
-system_menu.add_command(label="Raspi-Config", command=button_action1)
-system_menu.add_command(label="Nano Config.txt", command=button_action7)
-system_menu.add_separator()
-system_menu.add_command(label="Gparted", command=button_action15)
-system_menu.add_command(label="NeoFetch", command=button_action8)
-system_menu['background']='snow'
-#
-#
-#
-#
-#Appear
-appearance_menu.add_command(label="LXAppearance", command=button_action3)
-appearance_menu.add_command(label="Compiz", command=button_action6)
-appearance_menu.add_separator() 
-appearance_menu.add_command(label="Tasksel", command=button_action9)
-appearance_menu.add_command(label="Change Desktop Env.", command=button_action10)
-appearance_menu.add_command(label="Xfce-Wifi-Fix(rpiOS)", command=button_action18)
-appearance_menu.add_separator() 
-appearance_menu.add_command(label="Arc-Theme", command=button_action12)
-appearance_menu.add_command(label="Breeze-Theme", command=button_action13)
-appearance_menu['background']='snow'
-#
-#
-#Tools
-tools_menu.add_command(label="Install PiKiss", command=button_action5)
-tools_menu.add_command(label="Install Gparted", command=button_action14)
-tools_menu.add_separator() 
-tools_menu.add_command(label="Take A Photo", command=button_action11)
-tools_menu['background']='snow'
-#
-#
-
-#
-#
-
-#Help ....I need somebody... HELP!
-help_menu.add_command(label="Good Pi-Websites", command=create_window)
-help_menu.add_command(label="Support / Me, tryna figure out wtf is wrong ;-)", command=button_action19)
-help_menu.add_command(label="Info", command=action_get_info_dialog)
-help_menu['background']='snow'
-# 
-# "Drop-Down-Menü"
-menuleiste.add_cascade(label="System", menu=system_menu)
-menuleiste.add_cascade(label="Appearance", menu=appearance_menu)
-menuleiste.add_cascade(label="Tools", menu=tools_menu)
-menuleiste.add_cascade(label="Help", menu=help_menu)
-
-i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
-p=ImageTk.PhotoImage(i)
-l=Label(fenster,image = p)
-l.image = p
-l['background']='grey10'
-l_ttp = CreateToolTip(l, \
-   "Don't forget to git pull PiGro from time to time to be up to date")
-
-my_label.place(x=5, y=0)
-eingabefeld.place(x=5, y=20)
-welcom_button.place(x=310, y=20)
-l.pack(anchor='w',pady=55)
+ll = tk.Label(tab4, text=r"https://www.pling.com/s/XFCE/browse", fg="blue", cursor="hand2")
+ll.place(x=10, y=250)
+ll.bind("<Button-1>", callback)
 
 
-###################################################################
-def send_entry_to_terminal(*args):
-    """*args needed since callback may be called from no arg (button)
-   or one arg (entry)
-   """
-    cmd("%s" % (BasicCovTests))
+tab_control.pack(expand=1, fill='both')
 
-
-termf = Frame(fenster, height=20, width=440)
-termf.pack(fill=BOTH, expand=NO)
-wid = termf.winfo_id()
-os.system('xterm -into %d -geometry 100x100  &' % wid)
-
-
-
-fenster.config(menu=menuleiste)
-
-
-
-fenster.mainloop()
+main.mainloop()

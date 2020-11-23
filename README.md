@@ -1,24 +1,32 @@
 
-# PiGro - Just Click It (v2.5)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_header.png)
+# PiGro Xtrmo - Just Click It
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
-I love making cool things out of the pi. I mainly use Raspbian / Raspberry Pi OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.
+I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
 
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
+Originally I wanted to bring out an update every few months. But since I have many ideas and also take maintenance very seriously, you should do a "git pull" regularly. The next project will be an "Auto-Update"
 
-OR:
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 sudo chmod +x install.sh
 sudo ./install.sh
-```
+```    
+after "git pull" you shoud do "./install.sh"    
+    
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
+
+OR:
+
 
 Runs best on:    
 https://twisteros.com/
 
 # New Additions
-:metal: PiGro UpDater    
+:metal: NEW GUI     
+:metal: PiGro UpDater is now an own app(for faster update&upgrade)    
+:metal: Snap support (NOT Pre-Installed)    
+:metal: WhatsApp Installer(Snap)    
 :metal: install by just type the App-Name    
 :metal: xfce4-wifi-fix(after install)    
 :metal: Breeze&Arc Theme    
@@ -29,11 +37,11 @@ https://twisteros.com/
 :metal: Neofetch    
 
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-27.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/updater.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-19-25.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Bildschirmfoto_2020-11-15_03-20-54.png)
-
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/1.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/2.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/3.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/4.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/5.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
 
 
