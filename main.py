@@ -309,7 +309,8 @@ in_btn1.place(x=185, y=15)
 in_btn2 = Button(tab4, text="Change Desktop",command=ch_desk,font=120)
 in_btn2.place(x=295, y=15)
 
-
+loklik = Label(tab4, text="More:")
+loklik.place(x=10, y=220)
 
 separator = Frame(tab4,height=2, bd=1, relief=SUNKEN)
 separator.pack(fill=X, pady=60)
@@ -325,12 +326,16 @@ in_btn2.place(x=10, y=110)
 in_btn2 = Button(tab4, text="Xfce WiFi Fix", width=15,command=xfcefix)
 in_btn2.place(x=10, y=145)
 
+
+
+
 i3=Image.open('/home/pi/PiGro-Aid-/brushpi.png')
 p3=ImageTk.PhotoImage(i3)
 l3=Label(tab4,image = p3)
 l3.image = p3
 #l['background']='grey20'
 l3.place(x=360, y=120)
+
 
 ######################################HELP
 def callback(event):
@@ -352,7 +357,7 @@ separator.pack(fill=X, padx=5, pady=5)
 gws = Label(tab6, text="Good Websites")
 gws.pack(pady=10)
 
-
+######ALL LINKS###########
 lbl = tk.Label(tab6, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
 lbl.pack()
 lbl.bind("<Button-1>", callback)
@@ -370,6 +375,9 @@ lbl2.pack()
 lbl2.bind("<Button-1>", callback)
 
 
+ll = tk.Label(tab4, text=r"https://www.pling.com/s/XFCE/browse", fg="blue", cursor="hand2")
+ll.place(x=10, y=250)
+ll.bind("<Button-1>", callback)
 
 
 tab_control.pack(expand=1, fill='both')
