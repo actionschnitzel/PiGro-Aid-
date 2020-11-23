@@ -15,6 +15,7 @@ case "$option" in
 	y*) sudo apt-get install gparted ;;
 esac
 
+sudo chmod +x start1.sh
 sudo chmod +x start.sh
 sudo chmod +x scripts/raspiconfiginstall.sh
 sudo chmod +x scripts/autoremove.sh
