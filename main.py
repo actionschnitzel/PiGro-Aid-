@@ -235,7 +235,7 @@ eingabefeld2.grid(column=2, row=1)
 welcom_button2.grid(column=1, row=1)
 ########################################inst#btn#
 in_btn0 = Button(tab3, text="Whatsapp",command=w_app,width=10)
-in_btn0.grid(column=0, row=6)
+in_btn0.grid(column=0, row=6,padx=10)
 in_btn0_ttp = CreateToolTip(in_btn0, \
    '*U need Snap')
 
@@ -301,29 +301,36 @@ sys_btn4.grid(column=0, row=4,padx= 10)
 
 ##########################################LOOK
 in_btn0 = Button(tab4, text="LXAppearace",font=120,command=lxap_button)
-in_btn0.grid(column=1, row=0, pady=10)
+in_btn0.place(x=25, y=15)
 
-in_btn1 = Button(tab4, text="Tasksel", width=15,command=tasksel_button)
-in_btn1.grid(column=0, row=1)
+in_btn1 = Button(tab4, text="Tasksel",command=tasksel_button,font=120)
+in_btn1.place(x=185, y=15)
 
-in_btn2 = Button(tab4, text="Change Desktop", width=15,command=ch_desk)
-in_btn2.grid(column=1, row=1)
+in_btn2 = Button(tab4, text="Change Desktop",command=ch_desk,font=120)
+in_btn2.place(x=295, y=15)
 
-in_btn2 = Button(tab4, text="Xfce WiFi Fix", width=15,command=xfcefix)
-in_btn2.grid(column=2, row=1)
+
+
+separator = Frame(tab4,height=2, bd=1, relief=SUNKEN)
+separator.pack(fill=X, pady=60)
+
+
 
 in_btn2 = Button(tab4, text="Install Arc Theme", width=15,command=arc_inst)
-in_btn2.grid(column=0, row=2)
+in_btn2.place(x=10, y=75)
 
 in_btn2 = Button(tab4, text="Install Breeze Theme", width=15,command=breeze_inst)
-in_btn2.grid(column=1, row=2)
+in_btn2.place(x=10, y=110)
+
+in_btn2 = Button(tab4, text="Xfce WiFi Fix", width=15,command=xfcefix)
+in_btn2.place(x=10, y=145)
 
 i3=Image.open('/home/pi/PiGro-Aid-/brushpi.png')
 p3=ImageTk.PhotoImage(i3)
 l3=Label(tab4,image = p3)
 l3.image = p3
 #l['background']='grey20'
-l3.place(x=330, y=90)
+l3.place(x=360, y=120)
 
 ######################################HELP
 def callback(event):
@@ -332,7 +339,7 @@ def callback(event):
 def callback2(event):
        lxterminal.open_new(event.widget.cget("entry_text"))
 
-author = tk.Label(tab6,text="Author: Timo Westphal\nDate: Nov. 2020\nVersion: 3")
+author = tk.Label(tab6,text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: December Push")
 author.pack(pady=10)
 al = tk.Label(tab6, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.pack()
