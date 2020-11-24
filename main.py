@@ -17,7 +17,7 @@ import webbrowser
 main = Tk()
 
 main.title("PiGro Xtrmo - Just Click It")
-icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
+icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 
 #main['background']='grey20'
@@ -35,7 +35,7 @@ tab2 = ttk.Frame(tab_control)
 tab3 = ttk.Frame(tab_control)
 tab4 = ttk.Frame(tab_control)
 tab5 = ttk.Frame(tab_control)
-tab6 = ttk.Frame(tab_control)
+tab7 = ttk.Frame(tab_control)
 
 #Notebook Style
 noteStyler = ttk.Style()
@@ -47,8 +47,9 @@ tab_control.add(tab1, text='Start')
 tab_control.add(tab2, text='System')
 tab_control.add(tab3, text='Installer')
 tab_control.add(tab4, text='Appearance')
-#tab_control.add(tab5, text='Tools')
-tab_control.add(tab6, text='Help')
+#tab_control.add(tab5, text='Touch')
+#tab_control.add(tab6, text='Tuning')
+tab_control.add(tab7, text='Help')
 
 
 
@@ -175,7 +176,7 @@ def inst_btn1():
              f.write(entry_text)
         popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/buttoninst.sh && /home/pi/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
         
-i4=Image.open('/home/pi/PiGro-Aid-/Apt-get_logo.png')
+i4=Image.open('/home/pi/PiGro-Aid-/icons/apt-get.png')
 p4=ImageTk.PhotoImage(i4)
 l4=Label(image = p4)                
         
@@ -204,7 +205,7 @@ def inst_btn2():
 
 
 
-i6=Image.open('/home/pi/PiGro-Aid-/62161316-cb674400-b30d-11e9-8477-11b16c921ef7.png')
+i6=Image.open('/home/pi/PiGro-Aid-/icons/snap.png')
 p6=ImageTk.PhotoImage(i6)
 l6=Label(image = p6) 
 
@@ -219,14 +220,24 @@ welcom_button2_ttp = CreateToolTip(welcom_button2, \
 
 
 #################LOGO
-i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
+i=Image.open('/home/pi/PiGro-Aid-/icons/pigrox.png')
 p=ImageTk.PhotoImage(i)
 l=Label(tab1,image = p)
 l.image = p
 #l['background']='grey20'
 l.place(x=0, y=0)
+
+
+
+i8=Image.open('/home/pi/PiGro-Aid-/icons/click.png')
+p8=ImageTk.PhotoImage(i8)
+l8=Label(image = p8)
+
+clc_btn0 = Button(tab1,image = p8,  borderwidth=0)
+clc_btn0.place(x=183, y=132)
+
 ###################################################Placement#inst1
-my_label1.grid(column=0, row=0, pady=5)
+my_label1.grid(column=0, row=0, pady=10)
 eingabefeld1.grid(column=2, row=0)
 welcom_button1.grid(column=1, row=0)
 ###################################################Placement#inst2
@@ -262,24 +273,24 @@ my_label = Label(tab1, text="sudo apt-get install", fg="white")
 my_label['background']='grey20'
 
 
-i7=Image.open('/home/pi/PiGro-Aid-/5a364bf9376f80.9760899415135078332271.png')
+i7=Image.open('/home/pi/PiGro-Aid-/icons/shop.png')
 p7=ImageTk.PhotoImage(i7)
 l7=Label(tab3, image = p7)
 l7.place(x=200, y=100)
 
 #################LOGO
-i=Image.open('/home/pi/PiGro-Aid-/raspi-aid.png')
+i=Image.open('/home/pi/PiGro-Aid-/icons/pigrox.png')
 p=ImageTk.PhotoImage(i)
 l=Label(tab1,image = p)
 l.image = p
 
 ###########################################System
 
-i1=Image.open('/home/pi/PiGro-Aid-/pigropi.png')
+i1=Image.open('/home/pi/PiGro-Aid-/icons/pigropiup.png')
 p1=ImageTk.PhotoImage(i1)
 l1=Label(image = p1)
 
-i2=Image.open('/home/pi/PiGro-Aid-/spacepi.png')
+i2=Image.open('/home/pi/PiGro-Aid-/icons/spacepi.png')
 p2=ImageTk.PhotoImage(i2)
 l2=Label(tab2, image = p2)
 l2.place(x=200, y=100)
@@ -309,6 +320,10 @@ in_btn1.place(x=185, y=15)
 in_btn2 = Button(tab4, text="Change Desktop",command=ch_desk,font=120)
 in_btn2.place(x=295, y=15)
 
+tip1 = Label(tab4, text="*I recommend Xfce. Gnome & KDE\nrun terribly as a desktop\n even with Overclock")
+tip1.config(font=('Arial',7))
+tip1.place(x=20, y=175)
+
 loklik = Label(tab4, text="More:")
 loklik.place(x=10, y=220)
 
@@ -323,18 +338,23 @@ in_btn2.place(x=10, y=75)
 in_btn2 = Button(tab4, text="Install Breeze Theme", width=15,command=breeze_inst)
 in_btn2.place(x=10, y=110)
 
-in_btn2 = Button(tab4, text="Xfce WiFi Fix", width=15,command=xfcefix)
+in_btn2 = Button(tab4, text="Post-Install WiFi Fix", width=15,command=xfcefix)
 in_btn2.place(x=10, y=145)
 
 
 
-
-i3=Image.open('/home/pi/PiGro-Aid-/brushpi.png')
+i3=Image.open('/home/pi/PiGro-Aid-/icons/brushpi.png')
 p3=ImageTk.PhotoImage(i3)
 l3=Label(tab4,image = p3)
 l3.image = p3
 #l['background']='grey20'
-l3.place(x=310, y=75)
+l3.place(x=300, y=70)
+######################################TOUCH
+Touchl = Label(tab5, text="")
+
+
+
+
 
 
 ######################################HELP
@@ -344,33 +364,33 @@ def callback(event):
 def callback2(event):
        lxterminal.open_new(event.widget.cget("entry_text"))
 
-author = tk.Label(tab6,text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: December Push")
+author = tk.Label(tab7,text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: December Push")
 author.pack(pady=10)
-al = tk.Label(tab6, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
+al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.pack()
 al.bind("<Button-1>", callback)
 
 
-separator = Frame(tab6,height=2, bd=1, relief=SUNKEN)
+separator = Frame(tab7,height=2, bd=1, relief=SUNKEN)
 separator.pack(fill=X, padx=5, pady=5)
 
-gws = Label(tab6, text="Good Websites")
+gws = Label(tab7, text="Good Websites")
 gws.pack(pady=10)
 
 ######ALL LINKS###########
-lbl = tk.Label(tab6, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
+lbl = tk.Label(tab7, text=r"https://www.raspberrypi.org", fg="blue", cursor="hand2")
 lbl.pack()
 lbl.bind("<Button-1>", callback)
     
-lbl0 = tk.Label(tab6, text=r"https://twisteros.com", fg="blue", cursor="hand2")
+lbl0 = tk.Label(tab7, text=r"https://twisteros.com", fg="blue", cursor="hand2")
 lbl0.pack()
 lbl0.bind("<Button-1>", callback)
     
-lbl1 = tk.Label(tab6, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
+lbl1 = tk.Label(tab7, text=r"https://berryboot.alexgoldcheidt.com/images", fg="blue", cursor="hand2")
 lbl1.pack()
 lbl1.bind("<Button-1>", callback)
     
-lbl2 = tk.Label(tab6, text=r"https://www.lcdwiki.com/Main_Page", fg="blue", cursor="hand2")
+lbl2 = tk.Label(tab7, text=r"https://www.lcdwiki.com/Main_Page", fg="blue", cursor="hand2")
 lbl2.pack()
 lbl2.bind("<Button-1>", callback)
 

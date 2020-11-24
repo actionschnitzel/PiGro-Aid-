@@ -1,1 +1,1 @@
-sudo apt-get install snapd
+sudo apt-get install compiz
