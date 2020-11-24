@@ -21,10 +21,10 @@ import webbrowser
 
 updater = Tk()
 updater.title("PiGro UpDater")
-icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/PiGroLogoslim.png")
+icon = tk.PhotoImage(file="/home/pi/PiGro-Aid-/icons/PiGroLogoslimup.png")
 updater.tk.call('wm', 'iconphoto', updater._w, icon)
 updater.geometry("900x310")
-updater['background']='grey39'
+#updater['background']='grey39'
 updater.resizable(0, 0)
 #############################################
 class CreateToolTip(object):
@@ -118,9 +118,9 @@ Sources List has been saved\n\
         
 #Notebook Style
 noteStyler = ttk.Style()
-noteStyler.configure("TNotebook", background="grey39", borderwidth=0)
-noteStyler.configure("TNotebook.Tab", background="grey39")
-noteStyler.configure("TFrame", background="grey39")
+noteStyler.configure("TNotebook", borderwidth=0)
+noteStyler.configure("TNotebook.Tab")
+noteStyler.configure("TFrame")
 
 
 
@@ -136,13 +136,13 @@ tab_control.pack(expand=1, fill='both')
 termf = Frame(tab1, height=20, width=20)
 wid = termf.winfo_id()
 os.system('xterm -into %d -geometry 120x20  &' % wid)
-termf['background']='grey39'
+#termf['background']='grey39'
 
 
-i=Image.open('/home/pi/PiGro-Aid-/pigropi.png')
+i=Image.open('/home/pi/PiGro-Aid-/icons/pigropiup.png')
 p=ImageTk.PhotoImage(i)
 l=Label(tab1,image = p)
-l['background']='grey39'
+#l['background']='grey39'
 l.image = p
 
 
@@ -154,23 +154,23 @@ s_list.insert(END,stuff)
 text_file.close()
 s_list.pack(anchor='w')
 
-update_button=Button(tab1,text="Update",width=15,anchor='w', command=button_action,background="grey39",foreground="white")
+update_button=Button(tab1,text="Update",width=15,anchor='w', command=button_action)
 update_button.place(x=730, y=0,)
 
-upgrade_button=Button(tab1,text="Upgrade",width=15,anchor='w', command=button_action2,background="grey39",foreground="white")
+upgrade_button=Button(tab1,text="Upgrade",width=15,anchor='w', command=button_action2)
 upgrade_button.place(x=730, y=30)
 
-auth_button=Button(tab1,text="Allow Sources",width=15,anchor='w', command=button_action17,background="grey39",foreground="white")
+auth_button=Button(tab1,text="Allow Sources",width=15,anchor='w', command=button_action17)
 auth_button.place(x=730, y=60)
 
-rm_button=Button(tab1,text="Remove Config Files",width=15,anchor='w', command=button_action16,background="grey39",foreground="white")
+rm_button=Button(tab1,text="Remove Config Files",width=15,anchor='w', command=button_action16)
 rm_button.place(x=730, y=90)
 
 
-sv_button=Button(tab1,text="Save Source List",width=15,anchor='w', command=save_list,background="grey39",foreground="white")
+sv_button=Button(tab1,text="Save Source List",width=15,anchor='w', command=save_list)
 sv_button.place(x=730, y=145)
 
-hiddn_button=Button(tab1,width=15,anchor='w',background="grey39",foreground="grey39", borderwidth=0, highlightbackground="grey39" )
+hiddn_button=Button(tab1,width=15,anchor='w', borderwidth=0)
 hiddn_button.place(x=730, y=280)
 hiddn_button_ttp = CreateToolTip(hiddn_button, \
    "oh my fucking god, you found the hidden button !!!! I don't give a fuck about spelling, okay? This tool was created in 6 weeks of corona quarantine and quite honestly I think it's really cool. if it wasn't open source, I'd be a fucking millionaire now .... fuuuuuuuuuuuuuuuuuuuu. love you for using my tool: - * C YA")

@@ -16,8 +16,10 @@ case "$option" in
 esac
 
 sudo apt-get install xterm -y
-sudo chmod +x start1.sh
+
+
 sudo chmod +x start.sh
+sudo chmod +x start1.sh
 sudo chmod +x scripts/raspiconfiginstall.sh
 sudo chmod +x scripts/autoremove.sh
 sudo chmod +x scripts/addunsignedrepo.sh
