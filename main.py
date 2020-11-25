@@ -66,7 +66,7 @@ def pi_configbutton():
     popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
     
 def lxap_button():
-    popen ("sudo lxappearance")
+    popen ("lxappearance")
     
 def kiss_button():   
     popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'") 
