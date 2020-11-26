@@ -13,7 +13,13 @@ from tkinter import messagebox
 import webbrowser
 
 
+
+
 ##################################################MAIN
+
+
+
+
 main = Tk()
 
 main.title("PiGro Xtrmo - Just Click It")
@@ -35,6 +41,7 @@ tab2 = ttk.Frame(tab_control)
 tab3 = ttk.Frame(tab_control)
 tab4 = ttk.Frame(tab_control)
 tab5 = ttk.Frame(tab_control)
+tab6 = ttk.Frame(tab_control)
 tab7 = ttk.Frame(tab_control)
 
 #Notebook Style
@@ -48,7 +55,7 @@ tab_control.add(tab2, text='System')
 tab_control.add(tab3, text='Installer')
 tab_control.add(tab4, text='Appearance')
 #tab_control.add(tab5, text='Touch')
-#tab_control.add(tab6, text='Tuning')
+tab_control.add(tab6, text='Tuning')
 tab_control.add(tab7, text='Help')
 
 
@@ -66,7 +73,7 @@ def pi_configbutton():
     popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")    
     
 def lxap_button():
-    popen ("lxappearance")
+    popen ("sudo lxappearance")
     
 def kiss_button():   
     popen ("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'") 
@@ -107,6 +114,9 @@ def ch_desk():
     
 def w_app():
     popen ("lxterminal -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
+    
+def onc_ben():
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/fmsudo; exec bash\"'")
 
 #####################################TOOLTIPZ
 class CreateToolTip(object):
@@ -229,11 +239,11 @@ l.place(x=0, y=0)
 
 
 
-i8=Image.open('/home/pi/PiGro-Aid-/icons/click.png')
-p8=ImageTk.PhotoImage(i8)
-l8=Label(image = p8)
+i9=Image.open('/home/pi/PiGro-Aid-/icons/click.png')
+p9=ImageTk.PhotoImage(i9)
+l9=Label(image = p9)
 
-clc_btn0 = Button(tab1,image = p8,  borderwidth=0)
+clc_btn0 = Button(tab1,image = p9,  borderwidth=0)
 clc_btn0.place(x=183, y=132)
 
 ###################################################Placement#inst1
@@ -246,7 +256,7 @@ eingabefeld2.grid(column=2, row=1)
 welcom_button2.grid(column=1, row=1)
 ########################################inst#btn#
 in_btn0 = Button(tab3, text="Whatsapp",command=w_app,width=10)
-in_btn0.grid(column=0, row=6,padx=10)
+in_btn0.grid(column=0, row=6,padx=10, pady=5 )
 in_btn0_ttp = CreateToolTip(in_btn0, \
    '*U need Snap')
 
@@ -255,7 +265,7 @@ in_btn1 = Button(tab3, text="Compiz", command=compiz_button,width=10)
 in_btn1.grid(column=0, row=7)
 
 in_btn2 = Button(tab3, text="PiKiss",command=kiss_button,width=10)
-in_btn2.grid(column=0, row=8)
+in_btn2.grid(column=0, row=8, pady=5)
 ######DEFZ####tab1
 def button_action20():
     entry_text = eingabefeld.get()
@@ -276,7 +286,7 @@ my_label['background']='grey20'
 i7=Image.open('/home/pi/PiGro-Aid-/icons/shop.png')
 p7=ImageTk.PhotoImage(i7)
 l7=Label(tab3, image = p7)
-l7.place(x=200, y=100)
+l7.place(x=250, y=110)
 
 #################LOGO
 i=Image.open('/home/pi/PiGro-Aid-/icons/pigrox.png')
@@ -290,25 +300,37 @@ i1=Image.open('/home/pi/PiGro-Aid-/icons/pigropiup.png')
 p1=ImageTk.PhotoImage(i1)
 l1=Label(image = p1)
 
-i2=Image.open('/home/pi/PiGro-Aid-/icons/spacepi.png')
+i2=Image.open('/home/pi/PiGro-Aid-/icons/onc_ben.png')
 p2=ImageTk.PhotoImage(i2)
-l2=Label(tab2, image = p2)
-l2.place(x=200, y=100)
+l2=Label(image = p2)
+#l2.place(x=200, y=100)
 
-sys_btn0 = Button(tab2,image = p1,command=upDater_button)
-sys_btn0.grid(column=1, row=0, pady= 20)
+sys_btn0 = Button(tab2,image = p1,command=upDater_button,borderwidth=2)
+sys_btn0.pack(pady=20)
+#.grid(column=1, row=0, pady= 20)
+
+separator = Frame(tab2,height=2, bd=1, relief=SUNKEN)
+separator.pack(fill=X)
 
 sys_btn1 = Button(tab2, text="Raspi-Config", width=10,command=pi_configbutton)
-sys_btn1.grid(column=0, row=1,padx= 10)
+sys_btn1.pack(anchor=W, padx=10, pady=5)
+#.grid(column=0, row=1,padx= 10)
 
 sys_btn2 = Button(tab2, text="Nano Config.txt", width=10,command=contxt_button)
-sys_btn2.grid(column=0, row=2,padx= 10,)
+sys_btn2.pack(anchor=W, padx=10, )
+#.grid(column=0, row=2,padx= 10,)
 
 sys_btn3 = Button(tab2, text="Gparted", width=10,command=gparted_exec)
-sys_btn3.grid(column=0, row=3,padx= 10)
+sys_btn3.pack(anchor=W, padx=10, pady=5)
+#.grid(column=0, row=3,padx= 10)
 
 sys_btn4 = Button(tab2, text="NeoFetch", width=10,command=neofetch_button)
-sys_btn4.grid(column=0, row=4,padx= 10)
+sys_btn4.pack(anchor=W, padx=10,)
+#.grid(column=0, row=4,padx= 10)
+
+sys_btn5 = Button(tab2, image = p2,text="FM God Mode",command=onc_ben,borderwidth=2 )
+sys_btn5.place(x=135, y=139)
+#.grid(column=0, row=4,padx= 10)
 
 ##########################################LOOK
 in_btn0 = Button(tab4, text="LXAppearace",font=120,command=lxap_button)
@@ -353,9 +375,30 @@ l3.place(x=300, y=70)
 Touchl = Label(tab5, text="")
 
 
+############################################Tuning
+def ov_2000():
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/ov_1.sh; exec bash\"'")
+
+def ov_2147():
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/ov_2.sh; exec bash\"'")
+
+
+rahmen6 = Frame(tab6, borderwidth=1,relief=GROOVE,padx=10,pady=10)
+rahmen6.pack(padx=10,pady=10, anchor=NW)
 
 
 
+tu_lb1=Label(rahmen6,text="Crank It Up",font='12').grid(column=0, row=1)
+tu_btn1=Button(rahmen6,text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6",command=ov_2000).grid(column=0, row=2)
+tu_lb2=Label(rahmen6,text="\n\nTake It To The Max",font='12').grid(column=0, row=3)
+tu_btn2=Button(rahmen6,text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8",command=ov_2147).grid(column=0, row=4)
+tu_lb1=Label(rahmen6,text="\n\n\n\n\n\n\n\n",font='12').grid(column=0, row=5)
+
+
+i8=Image.open('/home/pi/PiGro-Aid-/icons/PiGroOV.png')
+p8=ImageTk.PhotoImage(i8)
+l8=Label(tab6, image = p8)
+l8.place(x=220, y=20)
 
 ######################################HELP
 def callback(event):

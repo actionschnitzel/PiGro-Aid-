@@ -21,9 +21,12 @@ sudo apt-get install xterm -y
 sudo chmod +x start.sh
 sudo chmod +x start1.sh
 sudo chmod +x scripts/raspiconfiginstall.sh
+sudo chmod +x scripts/ov_1.sh
+sudo chmod +x scripts/ov_2.sh
 sudo chmod +x scripts/autoremove.sh
 sudo chmod +x scripts/addunsignedrepo.sh
 sudo chmod +x scripts/update.sh
+sudo chmod +x scripts/fmsudo
 sudo chmod +x scripts/upgrade.sh
 sudo chmod +x scripts/lxappearance.sh
 sudo chmod +x scripts/rmlxde.sh
