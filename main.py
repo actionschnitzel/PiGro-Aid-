@@ -236,14 +236,23 @@ l=Label(tab1,image = p)
 l.image = p
 #l['background']='grey20'
 l.place(x=0, y=0)
+######################################################
+#variable is stored in the tab1 object
+tab1.counter = 0
 
+def clicked():
+    tab1.counter += 1
+    L['text'] = str(tab1.counter)
+        
 
-
+L = Label(tab1, text="")
+L.place(y=284, anchor=W)
+#######################################################
 i9=Image.open('/home/pi/PiGro-Aid-/icons/click.png')
 p9=ImageTk.PhotoImage(i9)
 l9=Label(image = p9)
 
-clc_btn0 = Button(tab1,image = p9,  borderwidth=0)
+clc_btn0 = Button(tab1,image = p9,  borderwidth=0 , command=clicked)
 clc_btn0.place(x=183, y=132)
 
 ###################################################Placement#inst1
@@ -331,6 +340,11 @@ sys_btn4.pack(anchor=W, padx=10,)
 sys_btn5 = Button(tab2, image = p2,text="FM God Mode",command=onc_ben,borderwidth=2 )
 sys_btn5.place(x=135, y=139)
 #.grid(column=0, row=4,padx= 10)
+onc_bl = Label(tab2,text="*   'With great power comes \ngreat responsibility'\n\n                                     - Oncle Ben")
+onc_bl.place(x=300, y=145)
+onc_bl.config(font=('Arial',7))
+
+
 
 ##########################################LOOK
 in_btn0 = Button(tab4, text="LXAppearace",font=120,command=lxap_button)
