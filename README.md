@@ -23,6 +23,8 @@ Runs best on:
 https://twisteros.com/
 
 # New Additions
+:metal: FM GOD MODE    
+:metal: Tuning Tab    
 :metal: NEW GUI     
 :metal: PiGro UpDater is now an own app(for faster update&upgrade)    
 :metal: Snap support (NOT Pre-Installed)    
