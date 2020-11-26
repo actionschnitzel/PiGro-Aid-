@@ -27,6 +27,7 @@ updater.geometry("900x310")
 #updater['background']='grey39'
 updater.resizable(0, 0)
 #############################################
+
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
@@ -92,7 +93,7 @@ def send_entry_to_terminal(*args):
     cmd("%s" % (BasicCovTests))
 
 def button_action():
-    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/update.sh &' % wid)
+    os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/update.sh &' % wid);   
     
 def button_action2():
     os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/upgrade.sh &' % wid)

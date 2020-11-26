@@ -6,8 +6,6 @@ I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twiste
 
 Originally I wanted to bring out an update every few months. But since I have many ideas and also take maintenance very seriously, you should do a "git pull" regularly. The next project will be an "Auto-Update"
 
-
-****On https://www.actionschnitzel.de/PiGro/ you will find votes on how Pigro should continue, help me make PiGro better :-)****
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
