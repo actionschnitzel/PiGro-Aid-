@@ -9,11 +9,11 @@ Originally I wanted to bring out an update every few months. But since I have ma
 go full lazy with PiGro OS:    
 
 (in work)
-https://github.com/actionschnitzel/PiGro-OS/blob/main/README.md
+https://github.com/actionschnitzel/PiGro-OS
 
 
 
-###Install
+# Install
 
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
