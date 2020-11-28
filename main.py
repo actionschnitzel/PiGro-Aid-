@@ -116,7 +116,7 @@ def w_app():
     popen ("lxterminal -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
     
 def onc_ben():
-    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/fmsudo; exec bash\"'")
+    popen ("lxterminal -e 'bash -c \"~/PiGro-Aid-/scripts/fmsudo.sh; exec bash\"'")
 
 #####################################TOOLTIPZ
 class CreateToolTip(object):
