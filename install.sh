@@ -5,18 +5,25 @@ case "$option" in
 	n*) exit ;;
 esac
 
+clear
+
 read -p "There are some really cool "Tool-Must-Haves" like: NeoFetch ...... install (y/n)? " option
 case "$option" in
 	y*) sudo apt-get install neofetch ;;
 esac
+
+clear
 
 read -p "Gparted ...... install (y/n)? " option
 case "$option" in
 	y*) sudo apt-get install gparted ;;
 esac
 
-sudo apt-get install xterm -y
+clear
 
+
+sudo apt-get install xterm -y
+sudo apt-get install python3-pil python3-pil.imagetk -y
 
 sudo chmod +x start.sh
 sudo chmod +x start1.sh
@@ -40,4 +47,4 @@ sudo cp UpDater.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
 sudo chmod +x /home/pi/Desktop/UpDater.desktop
 
-
+echo  "\e[32mDone!.\e[39m"
