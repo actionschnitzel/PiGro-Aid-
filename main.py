@@ -423,7 +423,7 @@ def callback2(event):
 
 author = tk.Label(tab7,text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: December Push")
 author.pack(pady=10)
-al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
+al = tk.Label(tab7, text=r"https://www.actionschnitzel.de", fg="blue", cursor="hand2")
 al.pack()
 al.bind("<Button-1>", callback)
 
