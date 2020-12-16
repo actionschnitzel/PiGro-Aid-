@@ -1,5 +1,5 @@
 
-# PiGro Xtrmo - Just Click It
+# :tada: PiGro Xtrmo - Just Click It
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
 I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
@@ -27,9 +27,14 @@ OR:
 
 
 Runs best on:    
-https://twisteros.com/
-
+https://twisteros.com/    
+    
 # New Additions
+:hamburger: (GUI)Arc Dark Theme    
+:hamburger: More System Tab Funktions    
+:hamburger: System Info Frame    
+:hamburger: PiGro UpDater is now also in the main app    
+# Features
 :metal: FM GOD MODE    
 :metal: Tuning Tab    
 :metal: NEW GUI     

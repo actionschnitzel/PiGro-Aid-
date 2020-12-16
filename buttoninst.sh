@@ -1,1 +1,1 @@
-sudo apt-get install snapd
+sudo apt-get install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware
