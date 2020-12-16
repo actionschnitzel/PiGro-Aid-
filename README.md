@@ -33,22 +33,27 @@ https://twisteros.com/
 :hamburger: (GUI)Arc Dark Theme    
 :hamburger: More System Tab Funktions    
 :hamburger: System Info Frame    
-:hamburger: PiGro UpDater is now also in the main app    
+:hamburger: PiGro UpDater is now also in the main app  
+
 # Features
-:metal: FM GOD MODE    
-:metal: Tuning Tab    
+:metal: FileManager GOD MODE (Sudo pcmanfm/thunar)   
+:metal: EZ Overclocking    
 :metal: NEW GUI     
-:metal: PiGro UpDater is now an own app(for faster update&upgrade)    
+:metal: PiGro UpDater (for faster update&upgrade)    
 :metal: Snap support (NOT Pre-Installed)    
-:metal: WhatsApp Installer(Snap)    
-:metal: install by just type the App-Name    
-:metal: xfce4-wifi-fix(after install)    
+:metal: System Info Frame    
+:metal: Install by just type the App-Name    
+:metal: Xfce4-wifi/bluetooth-fix(post install)    
 :metal: Breeze&Arc Theme    
-:metal: sources.list    
-:metal: install compiz    
-:metal: config.txt    
-:metal: tasksel    
+:metal: Sources.list    
+:metal: Change Desktop Env.
+:metal: Customize your Desktop    
+:metal: Config.txt    
+:metal: Tasksel    
 :metal: Neofetch    
+:metal: Bootlog    
+:metal: Upgrade Linux Kernel    
+:metal: Deskpi Pro Fan Controle    
 
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/1.png)
