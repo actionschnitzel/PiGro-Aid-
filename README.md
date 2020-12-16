@@ -38,15 +38,14 @@ https://twisteros.com/
 # Features
 :metal: FileManager GOD MODE (Sudo pcmanfm/thunar)   
 :metal: EZ Overclocking    
-:metal: NEW GUI     
 :metal: PiGro UpDater (for faster update&upgrade)    
 :metal: Snap support (NOT Pre-Installed)    
 :metal: System Info Frame    
 :metal: Install by just type the App-Name    
 :metal: Xfce4-wifi/bluetooth-fix(post install)    
-:metal: Breeze&Arc Theme    
+:metal: Breeze Theme, Arc Theme, Papirus Theme    
 :metal: Sources.list    
-:metal: Change Desktop Env.
+:metal: Change Desktop Env.    
 :metal: Customize your Desktop    
 :metal: Config.txt    
 :metal: Tasksel    
