@@ -55,12 +55,12 @@ https://twisteros.com/
 :metal: Deskpi Pro Fan Controle    
 
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/1.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/2.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/3.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/4.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/5.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro1.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro2.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro3.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro4.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro5.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro6.png)
 
 
 
