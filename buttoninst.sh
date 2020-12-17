@@ -1,1 +1,1 @@
-sudo apt-get install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware
+sudo snap install whatsapp
