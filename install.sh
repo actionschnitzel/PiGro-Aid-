@@ -23,9 +23,6 @@ printf '\e[48;5;15m \e[48;5;15m \e[48;5;15m \e[48;5;15m \e[48;5;15m \e[48;5;15m 
 ';
 
 echo -e '\e[92mI recently switched from Mint to MX and was blown away by the "MX Tools GUI". In the spirit of this, PiGro4 has now become an all-in-one control center.Hope you like it.\e[39m'
-
-
-
 read -p "You are about to install PiGro - Just Click It! ...... Agree (y/n)? " option
 case "$option" in
 	y*) sudo apt-get update ;;
@@ -73,7 +70,6 @@ sudo cp UpDater.desktop  /home/pi/Desktop
 sudo cp UpDater.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
 sudo chmod +x /home/pi/Desktop/UpDater.desktop
-
 
 echo -e '\e[92mDone! You can close this window now.\e[39m'
 
