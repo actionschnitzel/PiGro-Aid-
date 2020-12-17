@@ -155,7 +155,7 @@ def xfcefix():
 
 
 def xfcefix2():
-    popen("lxterminal -e 'bash -c \"/scripts/xfce4fix.sh; exec bash\"'")
+    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
 
 
 def actionhome():
@@ -171,7 +171,7 @@ def w_app():
 
 
 def onc_ben():
-    popen("lxterminal -e 'bash -c \"/scripts/fmsudo.sh; exec bash\"'")
+    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/fmsudo.sh; exec bash\"'")
 
 
 def inst_bleach():
@@ -898,11 +898,11 @@ tul02 = Label(image=tu02)
 
 
 def ov_2000():
-    popen("lxterminal -e 'bash -c \"/scripts/ov_1.sh; exec bash\"'")
+    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_1.sh; exec bash\"'")
 
 
 def ov_2147():
-    popen("lxterminal -e 'bash -c \"/scripts/ov_2.sh; exec bash\"'")
+    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh; exec bash\"'")
 
 
 rahmen6 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=50, pady=20)
