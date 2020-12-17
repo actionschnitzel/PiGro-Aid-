@@ -1,13 +1,10 @@
-#!/usr/bin/python3
 #PiGro UpDater ############################################################
 #Author: Timo Westphal ####################################################
-#Date: DEC.2020 ###########################################################
+#Date: NOV.2020 ###########################################################
 #Version: 1.0 #############################################################
 ###########################################################################
 ##### Y U LOOK MY CODE? xD ################################################
 ###########################################################################
-
-
 
 from tkinter import *
 from tkinter import filedialog
@@ -106,11 +103,6 @@ def button_action16():
 
 def button_action17():   
     os.system('xterm -into %d -geometry 100x20 -e ~/PiGro-Aid-/scripts/addunsignedrepo.sh &' % wid)
-
-def button_twist():   
-    #popen ("python3 ")
-    popen('sudo pi-gpk-update-viewer')
-    
     
 def save_list():
     os.system('sudo chmod 777 -R /etc/apt/sources.list')
@@ -175,15 +167,12 @@ auth_button.place(x=730, y=60)
 rm_button=Button(tab1,text="Remove Config Files",width=15,anchor='w', command=button_action16)
 rm_button.place(x=730, y=90)
 
-twist_button=Button(tab1,text="GPK UpdateViewer",width=15,anchor='w', command=button_twist)
-twist_button.place(x=730, y=120)
-
 
 sv_button=Button(tab1,text="Save Source List",width=15,anchor='w', command=save_list)
-sv_button.place(x=730, y=165)
+sv_button.place(x=730, y=145)
 
 hiddn_button=Button(tab1,width=15,anchor='w', borderwidth=0)
-#hiddn_button.place(x=730, y=280)
+hiddn_button.place(x=730, y=280)
 hiddn_button_ttp = CreateToolTip(hiddn_button, \
    "oh my fucking god, you found the hidden button !!!! I don't give a fuck about spelling, okay? This tool was created in 6 weeks of corona quarantine and quite honestly I think it's really cool. if it wasn't open source, I'd be a fucking millionaire now .... fuuuuuuuuuuuuuuuuuuuu. love you for using my tool: - * C YA")
 

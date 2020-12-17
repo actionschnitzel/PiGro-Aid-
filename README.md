@@ -1,5 +1,5 @@
 
-# PiGro Xtrmo - Just Click It
+# :tada: PiGro Xtrmo - Just Click It
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
 I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
@@ -27,31 +27,40 @@ OR:
 
 
 Runs best on:    
-https://twisteros.com/
-
+https://twisteros.com/    
+    
 # New Additions
-:metal: FM GOD MODE    
-:metal: Tuning Tab    
-:metal: NEW GUI     
-:metal: PiGro UpDater is now an own app(for faster update&upgrade)    
+:hamburger: (GUI)Arc Dark Theme    
+:hamburger: More System Tab Funktions    
+:hamburger: System Info Frame    
+:hamburger: PiGro UpDater is now also in the main app  
+
+# Features
+:metal: FileManager GOD MODE (Sudo pcmanfm/thunar)   
+:metal: EZ Overclocking    
+:metal: PiGro UpDater (for faster update&upgrade)    
 :metal: Snap support (NOT Pre-Installed)    
-:metal: WhatsApp Installer(Snap)    
-:metal: install by just type the App-Name    
-:metal: xfce4-wifi-fix(after install)    
-:metal: Breeze&Arc Theme    
-:metal: sources.list    
-:metal: install compiz    
-:metal: config.txt    
-:metal: tasksel    
+:metal: System Info Frame    
+:metal: Install by just type the App-Name    
+:metal: Xfce4-wifi/bluetooth-fix(post install)    
+:metal: Breeze Theme, Arc Theme, Papirus Theme    
+:metal: Sources.list    
+:metal: Change Desktop Env.    
+:metal: Customize your Desktop    
+:metal: Config.txt    
+:metal: Tasksel    
 :metal: Neofetch    
+:metal: Bootlog    
+:metal: Upgrade Linux Kernel    
+:metal: Deskpi Pro Fan Controle    
 
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/1.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/2.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/3.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/4.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/5.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigromeme.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro1.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro2.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro3.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro4.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro5.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro6.png)
 
 
 
