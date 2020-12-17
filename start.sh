@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-python3 main.py
+python3 /home/pi/PiGro-Aid-/main.py
