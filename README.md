@@ -4,11 +4,11 @@
 
 I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
 
-Originally I wanted to bring out an update every few months. But since I have many ideas and also take maintenance very seriously, you should do a "git pull" regularly. The next project will be an "Auto-Update"
+Originally I wanted to bring out an update every few months. But since I have many ideas and also take maintenance very seriously, you should do a "git pull" regularly.
     
 
-
-
+## To do
+- [ ] [add "RPiOS 64 Bit Switch" to install the good stuff]
 
 
 # Install
