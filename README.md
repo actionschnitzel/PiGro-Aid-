@@ -8,7 +8,9 @@ Originally I wanted to bring out an update every few months. But since I have ma
     
 
 ## To do
-- [ ] [add "RPiOS 64 Bit Switch" to install the good stuff]
+- [ ] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
+
+
 
 
 # Install
