@@ -35,7 +35,7 @@ https://twisteros.com/
     
 # New Additions
 :hamburger: ZRAM    
-:hamburger: 64 Bit Mode
+:hamburger: 64 Bit Mode    
 :hamburger: (GUI)Arc Dark Theme    
 :hamburger: More System Tab Funktions    
 :hamburger: System Info Frame    
