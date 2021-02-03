@@ -908,6 +908,14 @@ rahmen6 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=50, pady=20)
 rahmen6.pack(padx=10, pady=20, anchor=N)
 rahmen6['background'] = '#404552'
 
+rahmen61 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=10, pady=10)#
+rahmen61.pack(padx=50,side=LEFT)
+rahmen61['background'] = '#404552'
+
+rahmen62 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=10, pady=10)#
+rahmen62.pack(padx=10, side=LEFT)
+rahmen62['background'] = '#404552'
+
 tu_lb1 = Label(rahmen6, text="Crank It Up", font='20', highlightthickness=0, borderwidth=2, background='#404552',
                foreground="white").grid(column=0, row=0)
 
@@ -925,6 +933,20 @@ tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOve
 
 
 
+
+tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#404552',
+               foreground="white").grid(column=0, row=0)
+
+tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
+################
+
+
+tu_bb1 = Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#404552',
+               foreground="white").grid(column=0, row=0)
+
+tu_bbtn = Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
 
 #####################################INFO
 
