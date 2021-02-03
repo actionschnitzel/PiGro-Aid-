@@ -213,6 +213,11 @@ def button_xfwm():
 def button_boot():
     popen("lxterminal -e 'bash -c \"dmesg; exec bash\"'")
 
+def btswitch_64():
+    popen("lxterminal -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
+    
+def z_ram():
+    popen("lxterminal -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
 
 #####################################TOOLTIPZ
 class CreateToolTip(object):
@@ -934,19 +939,15 @@ tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOve
 
 
 
-tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#404552',
-               foreground="white").grid(column=0, row=0)
+tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#404552',foreground="white").grid(column=0, row=0)
 
-tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,
-                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
+tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
 ################
 
 
-tu_bb1 = Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#404552',
-               foreground="white").grid(column=0, row=0)
+tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#404552',foreground="white").grid(column=0, row=0)
 
-tu_bbtn = Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,
-                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
+tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
 
 #####################################INFO
 
@@ -1004,3 +1005,4 @@ lbl2['background'] = '#383c4a'
 tab_control.pack(expand=1, fill='both')
 
 main.mainloop()
+
