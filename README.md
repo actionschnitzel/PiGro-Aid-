@@ -3,8 +3,12 @@
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
 I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
+    
+If you want to support my project:
 
-Originally I wanted to bring out an update every few months. But since I have many ideas and also take maintenance very seriously, you should do a "git pull" regularly.
+XMR/Monero: 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f
+BTC/Bitcoin: 1HTzo4dBMQRbwrxuM5T2stJ5XLNTnCRFhC    
+    
     
 
 ## To do
