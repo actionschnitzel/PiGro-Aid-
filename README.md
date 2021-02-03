@@ -8,8 +8,8 @@ Originally I wanted to bring out an update every few months. But since I have ma
     
 
 ## To do
-- [ ] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
-- [ ] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
+- [x] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
+- [x] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
  | https://blog.gc2.at/post/zram/)
 
 
@@ -34,6 +34,8 @@ Runs best on:
 https://twisteros.com/    
     
 # New Additions
+:hamburger: ZRAM    
+:hamburger: 64 Bit Mode
 :hamburger: (GUI)Arc Dark Theme    
 :hamburger: More System Tab Funktions    
 :hamburger: System Info Frame    
