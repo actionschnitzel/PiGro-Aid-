@@ -6,8 +6,7 @@ I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twiste
     
 If you want to support my project:
 
-XMR/Monero: 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f    
-BTC/Bitcoin: 1HTzo4dBMQRbwrxuM5T2stJ5XLNTnCRFhC    
+XMR/Monero: 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f       
     
     
 
@@ -38,6 +37,7 @@ Runs best on:
 https://twisteros.com/    
     
 # New Additions
+:hamburger: rm vscode.list    
 :hamburger: ZRAM    
 :hamburger: 64 Bit Mode    
 :hamburger: (GUI)Arc Dark Theme    

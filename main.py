@@ -218,6 +218,9 @@ def btswitch_64():
     
 def z_ram():
     popen("lxterminal -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
+    
+def rm_vsc():
+    popen("lxterminal -e 'bash -c \"sudo rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'")
 
 #####################################TOOLTIPZ
 class CreateToolTip(object):
@@ -662,6 +665,10 @@ sys_btn2 = Button(rahmen2, width=150, image=bp03, text="Nano Config.txt", anchor
                   highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 sys_btn2.grid(column=0, row=2)
 
+sys_btnvs = Button(rahmen2, width=150, image=bp03, text="rm vscode.list ", anchor="w", command=rm_vsc,
+                  highlightthickness=0, borderwidth=0, background='#404552', foreground="red", compound=LEFT)
+sys_btnvs.grid(column=0, row=3)
+
 sys_btn3 = Button(rahmen2, width=150, image=bp04, text="Gparted", anchor="w", command=gparted_exec,
                   highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 sys_btn3.grid(column=1, row=0)
@@ -960,7 +967,7 @@ def callback2(event):
     lxterminal.open_new(event.widget.cget("entry_text"))
 
 
-author = tk.Label(tab7, text="Author: Timo Westphal\nDate: DEC. 2020\nVersion: 4.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab7, text="Author: Timo Westphal\nDate: MARCH. 2021\nVersion: 4.2.1", foreground="white",font=20,compound=LEFT)
 author.pack(pady=10)
 al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="red", cursor="hand2")
 al.pack()
@@ -968,16 +975,28 @@ al.bind("<Button-1>", callback)
 author['background'] = '#383c4a'
 al['background'] = '#383c4a'
 
+don_txt1= StringVar()
+don_txt1.set("XMR/Monero: 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f")
+
+don_txt2= StringVar()
+don_txt2.set("BTC/Bitcoin: 1HTzo4dBMQRbwrxuM5T2stJ5XLNTnCRFhC")
+
+supp=Label(tab7,text="If you want to support my project:", foreground="white", background='#383c4a')
+supp.pack(pady=20)
+
+donate_ent1= Entry(tab7,font=("Helvetica",7), borderwidth=0, state="readonly", textvariable = don_txt1,width=120 )
+donate_ent1.pack()
+
+#donate_ent2= Entry(tab7,font=("Helvetica",7), borderwidth=0, state="readonly", textvariable = don_txt2,width=120 )
+#donate_ent2.pack()
+
+
 
 gws = Label(tab7, text="Good Websites", foreground="white", font=20)
-gws.pack(pady=10)
+gws.pack(pady=20)
 gws['background'] = '#383c4a'
 
-i8 = Image.open('icons/spacepi.png')
-p8 = ImageTk.PhotoImage(i8)
-l8 = Label(tab7, image=p8)
-l8.place(x=200, y=210)
-l8['background'] = '#383c4a'
+
 
 ######ALL LINKS###########
 
