@@ -5,9 +5,10 @@
 I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
     
 If you want to support my project:
-
-XMR/Monero: 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f       
-    
+```
+XMR/Monero:    
+45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f       
+```    
     
 
 ## To do
