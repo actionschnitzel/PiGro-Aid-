@@ -14,8 +14,8 @@ XMR/Monero:
 ## To do
 - [x] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
 - [x] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
- | https://blog.gc2.at/post/zram/)
-
+ | https://blog.gc2.at/post/zram/)    
+- [ ] ["How To" Tab]  (Collection of Pi configs that work)
 
 
 
