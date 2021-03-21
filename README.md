@@ -8,6 +8,8 @@ If you want to support my project:
 ```
 XMR/Monero:    
 45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f       
+BTC/Bitcoin:    
+132YdLFkMZrrGoiCYuNg8BoHTTVgiw5UKB
 ```    
     
 
