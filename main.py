@@ -23,7 +23,7 @@ icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 main['background'] = '#404552'
 main.resizable(0, 0)
-main.geometry("710x550")
+main.geometry("750x550")
 main.wait_visibility(main)
 main.wm_attributes('-alpha', 0.9)
 
@@ -40,6 +40,8 @@ tab4 = ttk.Frame(tab_control)
 tab5 = ttk.Frame(tab_control)
 tab6 = ttk.Frame(tab_control)
 tab7 = ttk.Frame(tab_control)
+tab8 = ttk.Frame(tab_control)
+
 
 # Notebook Style
 noteStyler = ttk.Style()
@@ -77,14 +79,24 @@ tab_tp7 = Image.open('icons/org.gnome.OfficeRunner.png')
 tp07 = ImageTk.PhotoImage(tab_tp7)
 tl07 = Label(image=tp07)
 
+tab_tp8 = Image.open('icons/org.gnome.OfficeRunner.png')
+tp08 = ImageTk.PhotoImage(tab_tp8)
+tl08 = Label(image=tp07)
+
+sys_bp9 = Image.open('icons/iconfinder_linux_tux_337128.png')
+bp09 = ImageTk.PhotoImage(sys_bp9)
+bl09 = Label(image=bp09)
+
 ########################################
 tab_control.add(tab1, compound=LEFT, text='Start', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
 tab_control.add(tab2, compound=LEFT, text='System', image=tp02)
 tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
-tab_control.add(tab4, compound=LEFT, text='Appearance', image=tp04)
+tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
 tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
+tab_control.add(tab8, compound=LEFT, text='Distros', image=bp09)
 tab_control.add(tab7, compound=LEFT, text='Info', image=tp07)
+
 
 
 ################################################DEF/BUTTONZ
@@ -465,7 +477,7 @@ gpk_button = Button(rahmen112, text="GPK UpdateViewer", width=15, anchor='w', co
 gpk_button.grid(column=0, row=2)
 
 sv_button = Button(rahmen112, text="Save Source List", width=15, anchor='w', command=save_list, highlightthickness=0,
-                   borderwidth=0, background='#404552', foreground="white")
+                   borderwidth=0, background='#404552', foreground="red")
 sv_button.grid(column=1, row=2)
 
 hiddn_button = Button(tab11, width=15, anchor='w', borderwidth=0)
@@ -507,7 +519,13 @@ def inst_btn1():
         popen(
             "lxterminal -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
 
+def uninst_btn1():
+        popen("sudo synaptic")
+        
+def inst_syn():
+        popen("lxterminal -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
 
+    
 i4 = Image.open('icons/apt-get.png')
 p4 = ImageTk.PhotoImage(i4)
 l4 = Label(image=p4)
@@ -519,11 +537,15 @@ welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthi
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
                                    'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
+uninst_button = Button(rahmen3, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=0, borderwidth=1,background='#404552', foreground="white")
+
+
 my_label = Label(rahmen3, image=p4, fg="white")
 my_label['background'] = '#404552'
 my_label.grid(column=0, row=0, pady=10)
 eingabefeld1.grid(column=2, row=0)
 welcom_button1.grid(column=1, row=0)
+uninst_button.grid(column=2, row=2)
 
 
 ######DEFZ####inst2###
@@ -600,6 +622,10 @@ sys_btn5 = Button(rahmen31, width=110, image=ip03, text="Pi Imager", anchor="w",
                   borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 sys_btn5.grid(column=3, row=0)
 
+sys_btn6 = Button(rahmen31, width=110, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
+                  borderwidth=0, background='#404552', foreground="white", compound=LEFT)
+sys_btn6.grid(column=3, row=1)
+
 
 
 ix2 = Image.open('icons/shop.png')
@@ -607,7 +633,7 @@ px2 = ImageTk.PhotoImage(ix2)
 lx2 = Label(tab3, image=px2)
 lx2.image = px2
 lx2['background'] = '#383c4a'
-lx2.place(x=270, y=320)
+lx2.place(x=270, y=330)
 
 ###########################################System####################tab2#######################################
 
@@ -921,7 +947,7 @@ rahmen6.pack(padx=10, pady=20, anchor=N)
 rahmen6['background'] = '#404552'
 
 rahmen61 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=10, pady=10)#
-rahmen61.pack(padx=50,side=LEFT)
+rahmen61.pack(padx=70,side=LEFT)
 rahmen61['background'] = '#404552'
 
 rahmen62 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=10, pady=10)#
@@ -956,6 +982,104 @@ tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, bord
 
 tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
 
+
+#####################################Distros
+def down_twist():
+    popen("chromium-browser https://twisteros.com/")
+    
+def down_puppy():
+    popen("chromium-browser https://puppylinux.com/")
+    
+def down_diet():
+    popen("chromium-browser https://dietpi.com/")
+    
+def down_mx():
+    popen("chromium-browser https://mxlinux.org/blog/fluxbox-raspberrypi-respin-ragout-beta/")
+
+def down_fy():
+    popen("chromium-browser https://releases.fydeos.io/11.4/rpi4-fydeos")
+
+def down_kk():
+    popen("chromium-browser https://konstakang.com/devices/rpi4/")
+    
+def down_bb():
+    popen("chromium-browser https://berryboot.alexgoldcheidt.com/images")
+
+#def webvew():
+    #popen("chromium-browser https://pypi.org/project/pywebview/")
+
+
+
+
+rahmen81 = Frame(tab8, borderwidth=2, relief=GROOVE)
+rahmen81.pack(padx=60, pady=100, anchor=NW)
+rahmen81['background'] = '#404552'
+
+rahmen82 = Frame(tab8, borderwidth=2, relief=GROOVE)
+rahmen82.pack(padx=70, pady=20, anchor=NW)
+rahmen82['background'] = '#404552'
+
+tab8_dist1 = Image.open('icons/TwisterOSLogo-Large-New3.png')
+di01 = ImageTk.PhotoImage(tab8_dist1)
+dl01 = Label(image=di01)
+
+tab8_dist2 = Image.open('icons/Puppy_Linux_Logo.png')
+di02 = ImageTk.PhotoImage(tab8_dist2)
+dl02 = Label(image=di02)
+
+tab8_dist3 = Image.open('icons/dietpi.png')
+di03 = ImageTk.PhotoImage(tab8_dist3)
+dl03 = Label(image=di03)
+
+tab8_dist4 = Image.open('icons/MX-icon.png')
+di04 = ImageTk.PhotoImage(tab8_dist4)
+dl04 = Label(image=di04)
+
+tab8_dist5 = Image.open('icons/fydeos.png')
+di05 = ImageTk.PhotoImage(tab8_dist5)
+dl05 = Label(image=di05)
+
+tab8_dist6 = Image.open('icons/android.png')
+di06 = ImageTk.PhotoImage(tab8_dist6)
+dl06 = Label(image=di06)
+
+tab8_dist7 = Image.open('icons/logo_berryserver_website_2020_125x125_opt.png')
+di07 = ImageTk.PhotoImage(tab8_dist7)
+dl07 = Label(image=di07)
+
+
+
+dist_btn1 = Button(rahmen81, compound=LEFT, image=di01, text="Get: Twister OS", anchor="w", command=down_twist,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white",width=180).grid(column=0, row=0)
+
+dist_btn2 = Button(rahmen81,compound=LEFT, image=di02, text="Get: Puppy Linux", anchor="w", command=down_puppy,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white",width=180).grid(column=1, row=0)
+
+dist_btn3 = Button(rahmen81, image=di03, text="Get: DietPi", anchor="w", command=down_diet,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,width=180).grid(column=3, row=0)
+
+dist_btn4 = Button(rahmen81, image=di04, text="Get: MX Linux", anchor="w", command=down_mx,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,width=180).grid(column=0, row=1)
+
+dist_btn5 = Button(rahmen81, image=di05, text="Get: FydeOS", anchor="w", command=down_fy,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,width=180).grid(column=1, row=1)
+
+dist_btn6 = Button(rahmen81, image=di06, text="Get: Android", anchor="w", command=down_kk,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,width=180).grid(column=3, row=1)
+
+dist_btn7 = Button(rahmen81, image=di07, text="Berryserver", anchor="w", command=down_bb,
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,width=180).grid(column=1, row=2)
+##################
+
+#other_btn1 = Button(rahmen82, text="Program start on boot", anchor="w", command=ov_2147,
+                 #highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=0)
+
+#other_btn2 = Button(rahmen82, text="Make a Webapp with Python", anchor="w", command=webvew,
+                 #highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
+
+#other_btn2 = Button(rahmen82, text="Get: Twister OS", anchor="w", command=ov_2147,
+                 #highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
+
 #####################################INFO
 
 
@@ -967,7 +1091,7 @@ def callback2(event):
     lxterminal.open_new(event.widget.cget("entry_text"))
 
 
-author = tk.Label(tab7, text="Author: Timo Westphal\nDate: MARCH. 2021\nVersion: 4.2.1", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab7, text="Author: Timo Westphal\nDate: MARCH. 2021\nVersion: 4.3.0", foreground="white",font=20,compound=LEFT)
 author.pack(pady=10)
 al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="red", cursor="hand2")
 al.pack()
