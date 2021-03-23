@@ -40,6 +40,8 @@ Runs best on:
 https://twisteros.com/    
     
 # New Additions
+:hamburger: Uninstaller 4 Programms      
+:hamburger: Distro Tab      
 :hamburger: rm vscode.list    
 :hamburger: ZRAM    
 :hamburger: 64 Bit Mode    
