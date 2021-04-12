@@ -1119,7 +1119,7 @@ def callback2(event):
     lxterminal.open_new(event.widget.cget("entry_text"))
 
 
-author = tk.Label(tab7, text="Author: Timo Westphal\nDate: MARCH. 2021\nVersion: 4.3.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab7, text="Author: Timo Westphal\nDate: April 12. 2021\nVersion: 4.3.1", foreground="white",font=20,compound=LEFT)
 author.pack(pady=10)
 al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="red", cursor="hand2")
 al.pack()
