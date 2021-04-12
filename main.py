@@ -411,7 +411,7 @@ class CreateToolTip(object):
 
 
 lac_ttp = CreateToolTip(lac, \
-                                   "Ok, Ok ... I'll admit that the updates always come after I've seen the latest leepsp video. I have no own ideas xD. And yes ... I'm just too lazy to port PiGro to Ubuntu, because it's an ass full of work. And BTW the Click! button is a real button. R U brave enough?")
+                                   "Ok, Ok ... I admit that the updates always come after I've seen the latest leepsp video. I have no own ideas xD. And yes ... I'm just too lazy to port PiGro to Ubuntu, because it's an ass full of work. And BTW the Click! button is a real button. R U brave enough?")
 
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
