@@ -306,7 +306,19 @@ p = ImageTk.PhotoImage(i)
 l = Label(tab1, image=p)
 l.image = p
 l['background'] = '#383c4a'
-l.place(x=25, y=10)
+l.place(x=-40, y=10)
+
+iac = Image.open('icons/Schwarzenschnitzel.png')
+pac = ImageTk.PhotoImage(iac)
+lac = Label(tab1, image=pac)
+lac.image = p
+lac['background'] = '#383c4a'
+lac.place(x=520, y=230)
+
+
+
+aclabel=Label(tab1,text="Hey man, I'm Actionschnitzel!\nI'll be your guide.\nSo what's new?!\n1. ToolTips\n2. Nothin'",font=("Arial", 8), bg="white",).place(x=540, y=240)
+
 
 tab1.counter = 0
 
@@ -324,11 +336,16 @@ i9 = Image.open('icons/click.png')
 p9 = ImageTk.PhotoImage(i9)
 l9 = Label(image=p9)
 
+
+
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, command=clicked)
-clc_btn0.place(x=220, y=220)
+clc_btn0.place(x=155, y=220)
+
+
 
 Chl = Button(tab1, text="Change Log", width=10, highlightthickness=0, borderwidth=0, background='#404552',
              foreground="white", command=changelog).place(x=50, y=480)
+
 
 ############################################################################################################tab11######updater
 
@@ -392,6 +409,9 @@ class CreateToolTip(object):
         if tw:
             tw.destroy()
 
+
+lac_ttp = CreateToolTip(lac, \
+                                   "Ok, Ok ... I'll admit that the updates always come after I've seen the latest leepsp video. I have no own ideas xD. And yes ... I'm just too lazy to port PiGro to Ubuntu, because it's an ass full of work. And BTW the Click! button is a real button. R U brave enough?")
 
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
@@ -538,7 +558,8 @@ welcom_button1_ttp = CreateToolTip(welcom_button1, \
                                    'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
 uninst_button = Button(rahmen3, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=0, borderwidth=1,background='#404552', foreground="white")
-
+uninst_button_ttp = CreateToolTip(uninst_button, \
+                                  'If nothing happens you must install Synaptic')
 
 my_label = Label(rahmen3, image=p4, fg="white")
 my_label['background'] = '#404552'
@@ -597,6 +618,9 @@ il03 = Label(image=ip03)
 sys_btn6 = Button(rahmen31, width=110, image=ip03, text="Whatsapp", anchor="w", command=w_app, highlightthickness=0,
                   borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 sys_btn6.grid(column=0, row=0)
+sys_btn6_ttp = CreateToolTip(sys_btn6, \
+                                  'This is a SNAP')
+
 
 sys_btn2 = Button(rahmen31, width=110, image=ip03, text="Compiz", anchor="w", command=compiz_button,
                   highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT)
@@ -706,6 +730,10 @@ sys_btn4.grid(column=1, row=1)
 sys_btn5 = Button(rahmen2, width=150, image=bp06, text="FM God Mode", anchor="w", command=onc_ben, highlightthickness=0,
                   borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 sys_btn5.grid(column=1, row=2)
+
+sys_btn5_ttp = CreateToolTip(sys_btn5, \
+                                   "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)")
+
 
 sys_btn6 = Button(rahmen2, width=180, image=bp07, text="Update Linux Kernel", anchor="w", command=button_lk,
                   highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT)
