@@ -306,18 +306,18 @@ p = ImageTk.PhotoImage(i)
 l = Label(tab1, image=p)
 l.image = p
 l['background'] = '#383c4a'
-l.place(x=-40, y=10)
+l.place(x=30, y=10)
 
 iac = Image.open('icons/Schwarzenschnitzel.png')
 pac = ImageTk.PhotoImage(iac)
 lac = Label(tab1, image=pac)
 lac.image = p
 lac['background'] = '#383c4a'
-lac.place(x=520, y=230)
+lac.place(x=575, y=280)
 
 
 
-aclabel=Label(tab1,text="Hey man, I'm Actionschnitzel!\nI'll be your guide.\nSo what's new?!\n1. ToolTips\n2. Nothin'",font=("Arial", 8), bg="white",).place(x=540, y=240)
+aclabel=Label(tab1,text="Hey man, I'm Actionschnitzel!\nI'll be your guide.\nSo what's new?!\n1. ToolTips\n2. Nothin'",font=("Arial", 8), bg="white",).place(x=590, y=300)
 
 
 tab1.counter = 0
@@ -339,7 +339,7 @@ l9 = Label(image=p9)
 
 
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, command=clicked)
-clc_btn0.place(x=155, y=220)
+clc_btn0.place(x=225, y=220)
 
 
 
@@ -411,7 +411,7 @@ class CreateToolTip(object):
 
 
 lac_ttp = CreateToolTip(lac, \
-                                   "Ok, Ok ... I admit that the updates always come after I've seen the latest leepsp video. I have no own ideas xD. And yes ... I'm just too lazy to port PiGro to Ubuntu, because it's an ass full of work. And BTW the Click! button is a real button. R U brave enough?")
+                                   "Ok, Ok ... I'll admit that the updates always come after I've seen the latest leepsp video. I have no own ideas xD. And yes ... I'm just too lazy to port PiGro to Ubuntu, because it's an ass full of work. And BTW the Click! button is a real button. R U brave enough?")
 
 def send_entry_to_terminal(*args):
     """*args needed since callback may be called from no arg (button)
@@ -1119,7 +1119,7 @@ def callback2(event):
     lxterminal.open_new(event.widget.cget("entry_text"))
 
 
-author = tk.Label(tab7, text="Author: Timo Westphal\nDate: April 12. 2021\nVersion: 4.3.1", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab7, text="Author: Timo Westphal\nDate: MARCH. 2021\nVersion: 4.3.0", foreground="white",font=20,compound=LEFT)
 author.pack(pady=10)
 al = tk.Label(tab7, text=r"https://www.actionschnitzel.de/PiGro/", fg="red", cursor="hand2")
 al.pack()
