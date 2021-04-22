@@ -317,7 +317,7 @@ lac.place(x=575, y=280)
 
 
 
-aclabel=Label(tab1,text="Hey man, I'm Actionschnitzel!\nI'll be your guide.\nSo what's new?!\n1. ToolTips\n2. Nothin'",font=("Arial", 8), bg="white",).place(x=590, y=300)
+aclabel=Label(tab1,text="ApriFIX#2\nSo what's new?!\n1. ToolTips\n2. Restore Overclocking",font=("Arial", 10), bg="white",).place(x=590, y=300)
 
 
 tab1.counter = 0
