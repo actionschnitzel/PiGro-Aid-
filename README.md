@@ -40,6 +40,8 @@ Runs best on:
 https://twisteros.com/    
     
 # New Additions
+:hamburger: More Tool Tips    
+:hamburger: Restore Overclocking    
 :hamburger: Uninstaller 4 Programms      
 :hamburger: Distro Tab      
 :hamburger: rm vscode.list    
