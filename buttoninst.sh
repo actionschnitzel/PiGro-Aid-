@@ -1,1 +1,1 @@
-sudo snap install whatsapp
+sudo apt-get install neofetch

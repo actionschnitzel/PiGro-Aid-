@@ -961,16 +961,26 @@ tu_tp2 = Image.open('icons/PiGroOV.png')
 tu02 = ImageTk.PhotoImage(tu_tp2)
 tul02 = Label(image=tu02)
 
+tu_tp3 = Image.open('icons/PiGroOV3.png')
+tu03 = ImageTk.PhotoImage(tu_tp3)
+tul03 = Label(image=tu03)
+
+
 
 def ov_2000():
     popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_1.sh; exec bash\"'")
 
-
 def ov_2147():
     popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh; exec bash\"'")
+    
+#def ov_2200():
+#    popen("lxterminal -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/ov_3.sh; exec bash\"'")
+
+def set_default():
+    popen("lxterminal -e 'bash -c \"sudo chmod +x /scripts/rm_ov.sh & /home/pi/PiGro-Aid-/scripts/rm_ov.sh; exec bash\"'")
 
 
-rahmen6 = Frame(tab6, borderwidth=2, relief=GROOVE, padx=50, pady=20)
+rahmen6 = Frame(tab6, borderwidth=2, relief=GROOVE, pady=20)
 rahmen6.pack(padx=10, pady=20, anchor=N)
 rahmen6['background'] = '#404552'
 
@@ -983,32 +993,37 @@ rahmen62.pack(padx=10, side=LEFT)
 rahmen62['background'] = '#404552'
 
 tu_lb1 = Label(rahmen6, text="Crank It Up", font='20', highlightthickness=0, borderwidth=2, background='#404552',
-               foreground="white").grid(column=0, row=0)
+               foreground="white").grid(column=1, row=0)
 
 tu_btn1 = Button(rahmen6, image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
-                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=2)
-
-
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=1, row=1)
 
 tu_lb2 = Label(rahmen6, text="Take It To The Max", font='20', highlightthickness=0, borderwidth=2,
-               background='#404552', foreground="white").grid(column=1, row=0)
-
+               background='#404552', foreground="white").grid(column=2, row=0)
 
 tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
-                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=1, row=2)
+                 highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=2, row=1)
+
+tu_lb3 = Label(rahmen6, text="Reset Overclocking", font='20', highlightthickness=0, borderwidth=2,
+               background='#404552', foreground="white").grid(column=0, row=0)
+
+tu_btn3 = Button(rahmen6, image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
+                highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
 
 
 
+tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.\nReset the settings with config.txt", font=("Arial", 8), highlightthickness=0, borderwidth=2,
+               background='#404552', foreground="yellow").grid(column=1, row=4)
 
 tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#404552',foreground="white").grid(column=0, row=0)
 
-tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
+tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
 ################
 
 
 tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#404552',foreground="white").grid(column=0, row=0)
 
-tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=0, row=1)
+tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
 
 
 #####################################Distros
