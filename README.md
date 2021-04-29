@@ -2,17 +2,19 @@
 # :tada: PiGro Xtrmo - Just Click It
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
-I love making cool things out of the pi. I mainly use Raspberry Pi OS and Twister OS. But if you set up new systems as often as I do or try them out a lot, you have to make the same configurations over and over again. I programmed a GUI that executes everyday terminal commands at the push of a button. Nothing big.    
+All settings in one place!    
     
-If you want to support my project:
-```
-XMR/Monero:    
-45rGHE93ExgQwiAEvujSTMW4WvFn8RNRPE8ugEV898JMgx7Ti72KUDGbZbCHf9rD29TVzJMYPnq2f1D3ccSqE3KN2mnv91f       
-BTC/Bitcoin:    
-132YdLFkMZrrGoiCYuNg8BoHTTVgiw5UKB
-```    
+Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. PiGro is inspired by the control interface of Linux Mint and MX Linux.    
     
-
+The most important settings that are used again and again must be entered on the Pi using a terminal. Pigro is a graphically appealing GUI that does these settings with the click of a button.     
+    
+Sudo apt-get update/upgrade? .... No, just click it!     
+Sudo apt-get install ...? No, just click it!     
+Sudo nano boot / config.txt? No, just click it!     
+    
+And there is a lot more!    
+    
+    
 ## To do
 - [x] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
 - [x] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
