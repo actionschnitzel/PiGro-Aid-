@@ -33,26 +33,21 @@ sudo ./install.sh
 ```    
 after "git pull" you shoud do "./install.sh"    
     
+OR:    
+    
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
 
-OR:
+
 
 
 Runs best on:    
 https://twisteros.com/    
     
-# New Additions
+	
+	
+# 21.05. FIX:    
 :hamburger: More Tool Tips    
-:hamburger: Restore Overclocking    
-:hamburger: Uninstaller 4 Programms      
-:hamburger: Distro Tab      
-:hamburger: rm vscode.list    
-:hamburger: ZRAM    
-:hamburger: 64 Bit Mode    
-:hamburger: (GUI)Arc Dark Theme    
-:hamburger: More System Tab Funktions    
-:hamburger: System Info Frame    
-:hamburger: PiGro UpDater is now also in the main app  
+:hamburger: HOLY GRAIL      
 
 # Features
 :metal: FileManager GOD MODE (Sudo pcmanfm/thunar)   
@@ -72,6 +67,10 @@ https://twisteros.com/
 :metal: Bootlog    
 :metal: Upgrade Linux Kernel    
 :metal: Deskpi Pro Fan Controle    
+:metal: Uninstaller 4 Programms    
+:metal: rm vscode.list    
+:metal: ZRAM    
+:metal: 64 Bit Mode    
 
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro1.png)
@@ -80,7 +79,6 @@ https://twisteros.com/
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro4.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro5.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro6.png)
-
 
 
 

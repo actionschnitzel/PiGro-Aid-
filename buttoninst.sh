@@ -1,1 +1,1 @@
-sudo apt-get install neofetch
+~/pi-apps/manage install Zoom
