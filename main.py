@@ -17,7 +17,7 @@ from datetime import datetime
 
 ##################################################MAIN
 
-popen("lxterminal -e 'bash -c \"chmod +x /home/pi/PiGro-Aid-/scripts/* & exit; exec bash\"'")
+popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh & exit; exec bash\"'")
 
 main = Tk()
 main.title("PiGro Xtrmo - Just Click It!")
@@ -1089,6 +1089,7 @@ def ov_2147():
     tl0m = Label(frame_pop_2147,image=tp0m, background='#404552').grid(column=0, row=1)
 ##########################pop_default
 def set_default():
+    popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
     popen("lxterminal -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
     global pop_default
     pop_default=Toplevel(main)
