@@ -15,4 +15,5 @@ sudo sed -i '/force_turbo=1/d' config.txt
 
 clear
 
-read -p "Done! You should reboot, C YA!......Press Enter"
+#read -p "Done! You should reboot, C YA!......Press Enter"
+
