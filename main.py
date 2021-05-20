@@ -17,7 +17,7 @@ from datetime import datetime
 
 ##################################################MAIN
 
-popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh & exit; exec bash\"'")
+popen("xterm -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh & exit; exec bash\"'")
 
 main = Tk()
 main.title("PiGro Xtrmo - Just Click It!")
@@ -112,7 +112,7 @@ def upDater_button():
     popen("python3 updater.py")
 
 def pi_configbutton():
-    popen("lxterminal -e 'bash -c \"sudo raspi-config; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo raspi-config; exec bash\"'")
 
 def pi_configbutton2():
     popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
@@ -121,89 +121,89 @@ def lxap_button():
     popen("sudo lxappearance")
 
 def kiss_button():
-    popen("lxterminal -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
+    popen("xterm -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
 
 def compiz_button():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
 
 def contxt_button():
-    popen("lxterminal -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo nano /boot/config.txt; exec bash\"'")
 
 def neofetch_button():
-    popen("lxterminal -e 'bash -c \"neofetch; exec bash\"'")
+    popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
 
 def tasksel_button():
-    popen("lxterminal -e 'bash -c \"sudo tasksel; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo tasksel; exec bash\"'")
 
 def arc_inst():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
 
 def breeze_inst():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install breeze-cursor-theme; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install breeze-cursor-theme; exec bash\"'")
 
 def papi_inst():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'")
 
 def gparted_inst():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
 
 def gparted_exec():
     popen("sudo gparted")
 
 def xfcefix():
     popen(
-        "lxterminal -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
+        "xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
 
 def xfcefix2():
-    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
 
 def actionhome():
     popen("chromium-browser https://www.actionschnitzel.de/PiGro/")
 
 def ch_desk():
-    popen("lxterminal -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
 
 def w_app():
-    popen("lxterminal -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
 
 def onc_ben():
-    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/fmsudo.sh; exec bash\"'")
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/fmsudo.sh; exec bash\"'")
 
 def inst_bleach():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
 
 def m_alien():
     popen("chromium-browser https://github.com/actionschnitzel/Matemorph")
 
 def button_lk():
-    popen("lxterminal -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
 
 def inst_ima():
-    popen("lxterminal -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
 
 def inst_neo():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
 
 def button_dpfc():
-    popen("lxterminal -e 'bash -c \"deskpi-config; exec bash\"'")
+    popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
 
 def button_xf4s():
     popen("xfwm4-settings")
 
 def button_xfwm():
-    popen("lxterminal -e 'bash -c \"sudo update-alternatives --config x-window-manager; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo update-alternatives --config x-window-manager; exec bash\"'")
 
 def button_boot():
-    popen("lxterminal -e 'bash -c \"dmesg; exec bash\"'")
+    popen("xterm -e 'bash -c \"dmesg; exec bash\"'")
 
 def btswitch_64():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
     
 def z_ram():
-    popen("lxterminal -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
     
 def rm_vsc():
-    popen("lxterminal -e 'bash -c \"sudo rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'")
 
 def reboot_n():
     popen("sudo reboot")
@@ -575,13 +575,13 @@ def inst_btn1():
         for i in range(1):
             f.write(entry_text)
         popen(
-            "lxterminal -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+            "xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
 
 def uninst_btn1():
         popen("sudo synaptic")
         
 def inst_syn():
-        popen("lxterminal -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
+        popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
 
     
 i4 = Image.open('icons/apt-get.png')
@@ -621,7 +621,7 @@ def inst_pi_apps():
         for i in range(1):
             f.write(entry_text)
         popen(
-            "lxterminal -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+            "xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
 
 def uninst_pi_apps():
     entry_text = eingabefeld3.get()
@@ -634,7 +634,7 @@ def uninst_pi_apps():
         for i in range(1):
             f.write(entry_text)
         popen(
-            "lxterminal -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+            "xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
 
 
 ia6 = Image.open('icons/pi-app.png')
@@ -670,7 +670,7 @@ def inst_btn2():
         for i in range(1):
             f.write(entry_text)
         popen(
-            "lxterminal -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
+            "xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/buttoninst.sh && ~/PiGro-Aid-/buttoninst.sh ; exec bash\"'")
 
 
 i6 = Image.open('icons/snap.png')
@@ -1035,7 +1035,7 @@ def reboot_n():
     popen("sudo reboot")
 ######################################pop_2000
 def ov_2000():
-    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'")
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'")
     global pop_2000
     pop_2000=Toplevel(main)
     pop_2000.config(bg='#404552')
@@ -1063,7 +1063,7 @@ def ov_2000():
     
 ######################################pop_2147        
 def ov_2147():
-    popen("lxterminal -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'")
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'")
     global pop_2147
     pop_2147=Toplevel(main)
     pop_2147.config(bg='#404552')
@@ -1089,8 +1089,8 @@ def ov_2147():
     tl0m = Label(frame_pop_2147,image=tp0m, background='#404552').grid(column=0, row=1)
 ##########################pop_default
 def set_default():
-    popen("lxterminal -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
-    popen("lxterminal -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
     global pop_default
     pop_default=Toplevel(main)
     pop_default.config(bg='#404552')
@@ -1274,7 +1274,7 @@ def callback(event):
 
 
 def callback2(event):
-    lxterminal.open_new(event.widget.cget("entry_text"))
+    xterm.open_new(event.widget.cget("entry_text"))
 
 
 
@@ -1284,13 +1284,13 @@ def callback2(event):
 
 ###########################
 def holy_backup():
-    popen("lxterminal -e 'bash -c \"dpkg --get-selections > /home/pi/packages.list & echo Done!; exec bash\"'")
+    popen("xterm -e 'bash -c \"dpkg --get-selections > /home/pi/packages.list & echo Done!; exec bash\"'")
     
 def holy_dselect():
-    popen("lxterminal -e 'bash -c \"sudo apt update & sudo apt install dselect; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt update & sudo apt install dselect; exec bash\"'")
     
 def holy_recovery():
-    popen("lxterminal -e 'bash -c \"sudo dselect update & dpkg --get-selections < /home/pi/packages.list & sudo apt-get dselect-upgrade; exec bash\"'")    
+    popen("xterm -e 'bash -c \"sudo dselect update & dpkg --get-selections < /home/pi/packages.list & sudo apt-get dselect-upgrade; exec bash\"'")    
 #############################
 
 
