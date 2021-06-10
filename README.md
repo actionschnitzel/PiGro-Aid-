@@ -13,8 +13,11 @@ Sudo apt-get install ...? No, just click it!
 Sudo nano boot / config.txt? No, just click it!     
     
 And there is a lot more!    
-    
-    
+   
+You want support me?    
+https://paypal.me/actionschnitzel?locale.x=de_DE
+
+
 ## To do
 - [x] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
 - [x] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
