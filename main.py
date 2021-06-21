@@ -114,7 +114,7 @@ def changelog():
     pop_changelog.geometry("650x600")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####JunFix#1##################################################################
+####JunFix###################################################################
 ##############################################################################
 Pigro was created 'cause I needed somthing that wasn't available.
 When it comes to GUI I decited to change the Style so is looks more modern and
@@ -126,7 +126,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 5.5
+Version 5.5.1
 -----------
 -It's PIIIIIIIINK xD
 - Pigro is now centered in the middle of the screen
@@ -148,6 +148,9 @@ Version 5.5
 -Removes useless code % files 
 -Transperecy to 0.95
 -HOLY GRAIL
+-Own webapp
+-Xfce-Look.org > Looks
+-Overwatch cursor
     - .deb Package Recovery""")
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 
@@ -206,6 +209,12 @@ def xfcefix2():
 
 def actionhome():
     popen("chromium-browser https://www.actionschnitzel.de/PiGro/")
+    
+def xfcelook_f():
+    popen("chromium-browser https://www.xfce-look.org/browse/cat/")
+
+def web_OVC():
+    popen("chromium-browser https://www.gnome-look.org/p/1158321/")
 
 def ch_desk():
     popen("xterm -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
@@ -414,7 +423,7 @@ ltab9.place(x=-50, y=0)
 
 
 #############################################TAB1
-aclabel=Label(tab1,text="JUN FIX#1:",font=("Arial", 12), bg="#c3c3c3",fg="#d4244d").place(x=280, y=333)
+aclabel=Label(tab1,text="JUN FIX#:",font=("Arial", 12), bg="#c3c3c3",fg="#d4244d").place(x=280, y=333)
 
 
 tab1.counter = 0
@@ -440,7 +449,7 @@ clc_btn0.place(x=151, y=100)
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#c3c3c3',
              foreground="black", command=changelog).place(x=380, y=330)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nDate: Jun. 2021\nVersion: 5.5.0", foreground="black",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nDate: Jun. 2021\nVersion: 5.5.1", foreground="black",font=20,compound=LEFT)
 author.place(x=220, y=230)
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.place(x=190, y=300)
@@ -741,9 +750,8 @@ def shop():
 
 
 
-
     shop_btn01 = Button(pop_shop, width=110, image=ip03, text="Whatsapp", anchor="w", command=w_app, highlightthickness=0,
-                  borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=1)
+                  borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
 
     shop_btn1_ttp = CreateToolTip(sys_btn6, \
                                       'This is a SNAP')
@@ -842,7 +850,7 @@ rahmen_shop.pack(padx=40, pady=20)
 rahmen_shop['background'] = '#404552'
 
 
-shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=0,
+shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
                   borderwidth=0, background='#404552', foreground="white", compound=LEFT)
 shop_click.grid(column=2, row=2)
 
@@ -1035,11 +1043,15 @@ in_btn3.grid(column=2, row=0, padx=5)
 
 in_btn7 = Button(rahmen4, text="Theme Folder", compound=LEFT, anchor="w", width=10,
                  command=theme_f, highlightthickness=1, borderwidth=0, background='#404552', foreground="white")
-in_btn7.grid(column=3, row=0)
-
-in_btn7 = Button(rahmen4, text="Icon Folder", compound=LEFT, anchor="e", width=10,
-                 command=icon_f, highlightthickness=1, borderwidth=0, background='#404552', foreground="white")
 in_btn7.grid(column=3, row=1)
+
+in_btn7 = Button(rahmen4, text="Icon Folder", compound=LEFT, anchor="w", width=10,
+                 command=icon_f, highlightthickness=1, borderwidth=0, background='#404552', foreground="white")
+in_btn7.grid(column=3, row=2)
+
+in_btn7 = Button(rahmen4, text="Xfce_look", compound=LEFT, anchor="w", width=10,
+                 command=xfcelook_f, highlightthickness=1, borderwidth=0, background='#404552', foreground="white")
+in_btn7.grid(column=3, row=0)
 
 ###########################################
 
@@ -1112,6 +1124,10 @@ in_btn5.grid(column=1, row=1)
 in_btn6 = Button(rahmen43, text="ACTNShnzl Wallpapers(Web)", image=ip01, compound=LEFT, anchor="w", width=220,
                  command=web_wall, highlightthickness=0, borderwidth=0, background='#404552', foreground="white")
 in_btn6.grid(column=2, row=1)
+
+in_btn7 = Button(rahmen43, text="Overwatch Cursor", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=web_OVC, highlightthickness=0, borderwidth=0, background='#404552', foreground="white")
+in_btn7.grid(column=1, row=3)
 
 
 
