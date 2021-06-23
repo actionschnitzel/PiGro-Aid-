@@ -126,7 +126,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 5.5.1
+Version 5.5.2
 -----------
 -It's PIIIIIIIINK xD
 - Pigro is now centered in the middle of the screen
@@ -150,8 +150,11 @@ Version 5.5.1
 -HOLY GRAIL
 -Own webapp
 -Xfce-Look.org > Looks
+-lutis.h fixxxed
+-added pi-apps list 
 -Overwatch cursor
-    - .deb Package Recovery""")
+    - .deb Package Recovery
+fixed typos""")
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 
 
@@ -280,8 +283,8 @@ def pi_apps():
     popen("xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'")
     
 def inst_lutis():
-    popen("xterm -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/lutris.sh & exit; exec bash\"'")
-    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/lutris.sh; exec bash\"'")
+    popen("sudo chmod +x /home/pi/PiGro-Aid-/scripts/lutris.sh")
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/lutris.sh; exec bash\"'")
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -423,7 +426,7 @@ ltab9.place(x=-50, y=0)
 
 
 #############################################TAB1
-aclabel=Label(tab1,text="JUN FIX#:",font=("Arial", 12), bg="#c3c3c3",fg="#d4244d").place(x=280, y=333)
+aclabel=Label(tab1,text="JUN FIX of the Fix:",font=("Arial", 12), bg="#c3c3c3",fg="#d4244d").place(x=200, y=333)
 
 
 tab1.counter = 0
@@ -449,7 +452,7 @@ clc_btn0.place(x=151, y=100)
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#c3c3c3',
              foreground="black", command=changelog).place(x=380, y=330)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nDate: Jun. 2021\nVersion: 5.5.1", foreground="black",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nDate: Jun. 2021\nVersion: 5.5.2", foreground="black",font=20,compound=LEFT)
 author.place(x=220, y=230)
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.place(x=190, y=300)
@@ -687,6 +690,8 @@ def uninst_pi_apps():
     entry_text = eingabefeld3.get()
     popen(uninst3_p1 + entry_text + uninst3_p2)
 
+def pi_apps_list():
+    popen("xterm -e 'bash -c \"ls /home/pi/pi-apps/apps/ ; exec bash\"'")
 
 ia6 = Image.open('icons/pi-app.png')
 pa6 = ImageTk.PhotoImage(ia6)
@@ -700,13 +705,17 @@ eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
                         background='#404552', foreground="white")
 
+welcom_button33 = Button(rahmen3, text="list all pi-apps", command=pi_apps_list, highlightthickness=0, borderwidth=0,
+                        background='#404552', foreground="white")
+
 welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
                         background='#404552', foreground="white")
 
 apps_inst_btn.grid(column=0, row=3)
 eingabefeld3.grid(column=2, row=3)
 welcom_button3.grid(column=1, row=3)
-welcom_button4.grid(column=1, row=4)
+welcom_button33.grid(column=1, row=4)
+welcom_button4.grid(column=1, row=5)
 
 ######DEFZ####inst2###
 
@@ -818,7 +827,7 @@ def shop():
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=9)
 
 
-    shop_btn91 = Label(pop_shop, text="When you tell peolpe i3 is god\nbut you need a hidden menu", anchor="w",
+    shop_btn91 = Label(pop_shop, text="When you tell peolpe i3 is god\nbut you need a hidden menu cuz you dont cope with it", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#404552', foreground="white", compound=LEFT).grid(column=1, row=9)
 
 
