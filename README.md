@@ -1,5 +1,5 @@
 # :tada: PiGro Xtrmo - Just Click It
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Untitled%2Bberry%2B1000.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Untitled%2Bberry.png)
 
 
 All settings in one place!    
