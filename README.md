@@ -1,6 +1,6 @@
-# :tada: PiGro Xtrmo - Just Click It
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Untitled%2Bberry.png)
 
+# :tada: PiGro Xtrmo - Just Click It
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 
 All settings in one place!    
     
@@ -14,22 +14,15 @@ Sudo nano boot / config.txt? No, just click it!
     
 And there is a lot more!    
    
-You want support me?     
-[![badge](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://paypal.me/actionschnitzel?locale.x=de_DE)     
-
-
+You want support me?    
+https://paypal.me/actionschnitzel?locale.x=de_DE
 
 
 ## To do
 - [x] [add "RPiOS 64 Bit Switch" to install the good stuff]  (MEMO 2 MYSELF xD : sudo apt-get install -y raspbian-nspawn-64 | ds64-shell)
 - [x] [add ZRAM Installer]  (MEMO 2 MYSELF xD : apt-get install zram-tools
  | https://blog.gc2.at/post/zram/)    
-- [ ] [Add all settings options]    
-- [ ] [Getting more YaST like]
-- [ ] [Final GUI Look](getting close xDDDD)    
-- [ ] [Own Logo] (Move away for the Original Raspberry)    
-- [ ] [Port Pigro To Ubunu] (feels like I porting a Linux app to Windows -.-)     
-- [x] [Order a Pizza] Pizza Steak, Cheese & Bacon, Tomato, Bacon, Jalapenos, Sauce Hollandaise,Pepper                
+- [ ] ["How To" Tab]  (Collection of Pi configs that work)
 
 
 
