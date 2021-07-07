@@ -15,7 +15,8 @@ Sudo nano boot / config.txt? No, just click it!
 And there is a lot more!    
    
 You want support me?    
-https://paypal.me/actionschnitzel?locale.x=de_DE
+
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/kisspng-donation-computer-icons-portable-network-graphics-5b972c7ded3449.9709889315366339819716.png)](https://paypal.me/actionschnitzel?locale.x=de_DE)  
 
 
 ## To do
@@ -48,7 +49,7 @@ https://twisteros.com/
     
 	
 	
-# 21.05. FIX:    
+# 21.06. FIX:    
 :hamburger: More Tool Tips    
 :hamburger: HOLY GRAIL      
 
@@ -73,8 +74,8 @@ https://twisteros.com/
 :metal: Uninstaller 4 Programms    
 :metal: rm vscode.list    
 :metal: ZRAM    
-:metal: 64 Bit Mode    
-
+:metal: 64 Bit Mode        
+:metal: dSelect    
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro1.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro2.png)
