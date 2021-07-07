@@ -15,7 +15,7 @@ Sudo nano boot / config.txt? No, just click it!
 #### And there is a lot more! 
 
 
-#### Prigro includes options for both the Pixel Desktop and XFCE4. I am a big fan of XFCE and TwisterOS which is why the focus is often on these two. But everything works just as well under RaspiOS. ... Except for the transparency :-(. I always try to stay up to date and add the latest features or cool things from youtube.
+#### Pigro includes options for both the Pixel Desktop and XFCE4. I am a big fan of XFCE and TwisterOS which is why the focus is often on these two. But everything works just as well under RaspiOS. ... Except for the transparency :-(. I always try to stay up to date and add the latest features or cool things from youtube.
 
 #### Can you trust me?
 #### Yup! It's open source, after all.
