@@ -13,6 +13,7 @@ from collections import namedtuple
 import resource
 import threading
 from datetime import datetime
+from playsound import playsound
 
 
 ##################################################MAIN
@@ -131,7 +132,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 5.6.0
+Version 5.6.1
 -----------
 - Xfce4 wifi-fix worx now in RaspiOS(at least for me)
 - New Theme/Logo/Icons
@@ -140,7 +141,7 @@ Version 5.6.0
 - Xfce install How-To > LOOK
 - Added more options to > SYSTEM
 - Added more Links
-
+- Code fixes
  """)
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 
@@ -328,6 +329,16 @@ class CreateToolTip(object):
                          wraplength=self.wraplength)
         label.pack(ipadx=1)
 
+    def hidetip(self):
+        tw = self.tw
+        self.tw = None
+        if tw:
+            tw.destroy()
+
+
+
+
+####################################
 def get_size(bytes, suffix="B"):
     """
     Scale bytes to its proper format
@@ -420,12 +431,14 @@ ltab9.place(x=-1, y=-1)
 
 
 #############################################TAB1
-
-
+def paypal():
+    popen("chromium-browser https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
 tab1.counter = 0
 
 
 def clicked():
+    playsound('scripts/kuba-yo.mp3')
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/kuba-yo!.sh && exit; exec bash\"'")
     tab1.counter += 1
     L['text'] = str(tab1.counter)
 
@@ -438,19 +451,25 @@ i9 = Image.open('icons/click.png')
 p9 = ImageTk.PhotoImage(i9)
 l9 = Label(image=p9)
 
+ip9 = Image.open('icons/pay.png')
+pp9 = ImageTk.PhotoImage(ip9)
+lp9 = Label(image=pp9)
 
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, background='white',highlightthickness=0, command=clicked)
 clc_btn0.place(x=470, y=156)
+clc_btn0tt= CreateToolTip(clc_btn0, \
+                                 "You found the hidden button ! Release hell/Kill cute puppies")
 
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#333333',
              foreground="white", command=changelog).place(x=550, y=445)
 
 aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Arial", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nDate: Jul. 2021\nVersion: 5.6.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 5.6.1", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
+paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
-al.place(x=410, y=420)
+al.place(x=410, y=425)
 al.bind("<Button-1>", callback)
 author['background'] = '#333333'
 al['background'] = '#333333'
@@ -1143,6 +1162,9 @@ in_btn7.grid(column=1, row=3)
 
 
 
+
+
+
 ############################################Tuning
 
 
@@ -1311,7 +1333,7 @@ tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, bord
 tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
 
 
-#####################################Others
+#####################################Links
 def down_twist():
     popen("chromium-browser https://twisteros.com/")
     
@@ -1410,19 +1432,37 @@ dist_btn7 = Button(rahmen81, image=di07, text="Berryserver", anchor="w", command
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=1, row=2)
 ##################
 choice_link1=Button(rahmen82,text="Mankiere.com (Online Commandline Database)", anchor="w", command=link_mankier,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=40).grid(column=0, row=0)
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=0)
 
 choice_link2=Button(rahmen82,text="Guake (Drop Down Terminal)", anchor="w", command=link_guake,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=40).grid(column=0, row=1)
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
 
 choice_link2=Button(rahmen82,text="OnBoard (Onscreen Keyboard)", anchor="w", command=link_onBoard,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=40).grid(column=0, row=2)
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=2)
 
 choice_link2=Button(rahmen82,text="Draculatheme.com", anchor="w", command=link_drac,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=40).grid(column=0, row=3)
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=3)
 
 choice_link2=Button(rahmen82,text="Starship (Cross-Shell-Promt)", anchor="w", command=link_star,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=40).grid(column=0, row=4)
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=4)
+######column1
+#####################################
+##############################################
+#choice_link1=Button(rahmen82,text="LernLinux (Youtube)", anchor="w", command=link_mankier,
+#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=0)
+#
+#choice_link2=Button(rahmen82,text="Rocket Beans(ger.) (Youtube)", anchor="w", command=link_guake,
+#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
+#
+#choice_link2=Button(rahmen82,text="Raspberry Pi News (Youtube)", anchor="w", command=link_onBoard,
+#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
+#
+#choice_link2=Button(rahmen82,text="leepsp(Youtube)", anchor="w", command=link_drac,
+#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
+#
+#choice_link2=Button(rahmen82,text="Linux for Everyone (Youtube)", anchor="w", command=link_star,
+#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
+#
 #####################################INFO
 
 
