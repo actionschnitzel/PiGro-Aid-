@@ -40,7 +40,7 @@ echo 'Now I install dependencies'
 
 sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
-pip install playsound
+pip3 install playsound
 
 sudo chmod +x start.sh
 sudo chmod +x start1.sh
