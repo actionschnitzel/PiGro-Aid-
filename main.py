@@ -144,7 +144,52 @@ Version 5.6.1
 - Code fixes
  """)
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
+################################
+def readf():
+    global pop_readf
+    pop_readf=Toplevel()
+    pop_readf.geometry("650x600")
+    text = Text(pop_readf)
+    text.insert(INSERT, """
+##############################################################################
+##############################################################################
+PiGro is getting more and more complex. In general,
+PiGro should work with all Debian derivatives.
+Nevertheless, despite Debian as the basis, there are many differences.
 
+For Raspberry Pi OS users this means:
+
+- Only nano config.txt instead of mousepad config.txt
+
+- Notification Sounds are not working
+
+If you installed PiGro via pi-apps (On RaspiOS) please run:
+
+sudo apt-get install xterm -y
+sudo apt-get install python3-pil python3-pil.imagetk -y
+sudo apt install python3-pip -y
+pip3 install playsound
+
+that should fix most of the bugs ;-)
+
+If you use Twister you shouldn't have any problem :-P
+
+
+Should there be any other questions: I'm on the PiLabs Discord.
+DM to Actionschnitzel
+#####################
+Since it's vacation time now, I won't be able to compensate the differences for another three weeks.
+
+Cheers
+
+Timo
+##############################################################################
+##############################################################################
+""")
+    text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
+
+
+#################################
 
 def upDater_button():
     popen("python3 updater.py")
@@ -454,6 +499,8 @@ l9 = Label(image=p9)
 ip9 = Image.open('icons/pay.png')
 pp9 = ImageTk.PhotoImage(ip9)
 lp9 = Label(image=pp9)
+
+readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=1, command=readf,font=(("Arial,bold"),"16")).place(x=80,y=400)
 
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, background='white',highlightthickness=0, command=clicked)
 clc_btn0.place(x=470, y=156)
@@ -1229,6 +1276,7 @@ def ov_2000():
 ######################################pop_2147        
 def ov_2147():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'")
+    playsound('scripts/HOLYPiT.mp3')
     global pop_2147
     pop_2147=Toplevel(main)
     pop_2147.config(bg='#333333')
