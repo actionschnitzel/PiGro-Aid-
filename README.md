@@ -45,18 +45,20 @@ Sudo nano boot / config.txt? No, just click it!
 | :metal: ZRAM| install with a click    
 | :metal: 64 Bit Mode| installer with a click         
 | :metal: dSelect| backup your installed DEBs
+| :metal: Notification Sounds| Added support/ coming more soon :alarm_clock:|
 
 
-
-
-
-
+```diff
+- 	Dear curious users, xDDDDD nerver ever ever ever use a script from the    
+-	"SCRIPTS-FOLDER" that is not in the GUI! These scripts are Alpha-State.    
+```
+    
+    
+    
 
 ## To do
-- [x] [add RPiOS 64 Bit Switch] 
-- [x] [add ZRAM Installer]
- | https://blog.gc2.at/post/zram/)    
-- [ ] ["How To" Tab]
+- [ ] [add Theme Shop] 
+- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 
 
