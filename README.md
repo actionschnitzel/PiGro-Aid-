@@ -61,8 +61,14 @@ Sudo nano boot / config.txt? No, just click it!
 - [ ] [add Theme Shop] 
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
-
-
+# Dependencies    
+    
+```    
+sudo apt-get install xterm -y
+sudo apt-get install python3-pil python3-pil.imagetk -y
+sudo apt install python3-pip -y
+pip3 install playsound
+```
 # Install
 
 ```
