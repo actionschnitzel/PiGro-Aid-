@@ -23,10 +23,11 @@ Sudo nano boot / config.txt? No, just click it!
 
 | # Features | # Description |
 | --------- | --- |
-| :metal: FileManager GOD MODE| Opens You FM in with Sudo     
-| :metal: EZ Overclocking|Click on the Berry to sett clockspeed     
+| :metal: FileManager GOD MODE| Opens your FM in with Sudo     
+| :metal: Easy Overclocking|Click on the Berry to set clock speed     
 | :metal: PiGro UpDater| Various options that are standard in other distros    
 | :metal: Snap support| Snap store can be installed     
+| :metal: Pi-Apps support| pi-apps store can be installed     
 | :metal: System Info Frame | Shows you current settings   
 | :metal: Install by just type the App-Name| <----     
 | :metal: Xfce4-wifi/bluetooth-fix| Fixes Wifi after Xfce installation     
