@@ -81,9 +81,7 @@ sudo ./install.sh
 OR:    
     
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)  
-#### You want support me?    
 
-[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/kisspng-donation-computer-icons-portable-network-graphics-5b972c7ded3449.9709889315366339819716.png)](https://paypal.me/actionschnitzel?locale.x=de_DE)  
 
 
 
@@ -91,3 +89,7 @@ OR:
 https://twisteros.com/    
     
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
+
+#### You want support me?    
+
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/kisspng-donation-computer-icons-portable-network-graphics-5b972c7ded3449.9709889315366339819716.png)](https://paypal.me/actionschnitzel?locale.x=de_DE)  
