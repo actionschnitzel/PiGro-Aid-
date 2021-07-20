@@ -62,17 +62,18 @@ Sudo nano boot / config.txt? No, just click it!
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 # Dependencies/ Y it's not working    
-  ensure the are installed:  
+  Ensure these are installed:  
 ```    
 sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
 pip3 install playsound
 ```
-```diff
-- 	Debian based means "DEBIAN" not UBUNTU nor MANJARO ;-)    
--	Do you use another USER than "Pi"?    
-```
+
+ Debian based means "DEBIAN" not UBUNTU nor MANJARO  :shit:   
+ Do you use another USER than "Pi"?    
+
+
 
 # Install
 
