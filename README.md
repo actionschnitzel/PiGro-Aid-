@@ -90,13 +90,4 @@ OR:
 #### Runs best on:    
 https://twisteros.com/    
     
-	   
-
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro1.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro2.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro3.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro4.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro5.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Pigro6.png)
-
-
+[![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
