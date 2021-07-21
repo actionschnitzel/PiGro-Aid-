@@ -1,8 +1,8 @@
 
 # :tada: PiGro Xtrmo - Just Click It
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
-
-#### All settings in one place!    
+****
+#### All settings in one place! :key: :mag: :hammer: :toilet:   
     
 #### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. PiGro is inspired by the control interface of Linux Mint and MX Linux.    
     
@@ -20,48 +20,22 @@ Sudo nano boot / config.txt? No, just click it!
 #### Can you trust me?
 #### Yup! It's open source, after all.
 #### Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
-
-| # Features | # Description |
-| --------- | --- |
-| :metal: FileManager GOD MODE| Opens your FM in with Sudo     
-| :metal: Easy Overclocking|Click on the Berry to set clock speed     
-| :metal: PiGro UpDater| Various options that are standard in other distros    
-| :metal: Snap support| Snap store can be installed     
-| :metal: Pi-Apps support| pi-apps store can be installed     
-| :metal: System Info Frame | Shows you current settings   
-| :metal: Install by just type the App-Name| <----     
-| :metal: Xfce4-wifi/bluetooth-fix| Fixes Wifi after Xfce installation     
-| :metal: Breeze Theme, Arc Theme, Papirus Theme| <----      
-| :metal: Sources.list| manage sources without terminal     
-| :metal: Change Desktop Env.| makes it as simple as in other distros     
-| :metal: Customize your Desktop| ;-)     
-| :metal: Mousepad Config.txt| manage config.txt without terminal      
-| :metal: Tasksel| installer for desktop environment     
-| :metal: Neofetch support| open Neofetch with a click  
-| :metal: Bootlog|     
-| :metal: Upgrade Linux Kernel|     
-| :metal: Deskpi Pro Fan Controle|     
-| :metal: Uninstaller|     
-| :metal: rm vscode.list| :-)    
-| :metal: ZRAM| install with a click    
-| :metal: 64 Bit Mode| installer with a click         
-| :metal: dSelect| backup your installed DEBs
-| :metal: Notification Sounds| Added support/ coming more soon :alarm_clock:|
+****
 
 
 ```diff
 - 	Dear curious users, xDDDDD nerver ever ever ever use a script from the    
 -	"SCRIPTS-FOLDER" that is not in the GUI! These scripts are Alpha-State.    
 ```
-    
-    
-    
-
-## To do
+ ****   
+#  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
+Documentation + Manual   /// Still in work 
+****
+#  :rocket: To do
 - [ ] [add Theme Shop] 
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
-
-# Dependencies/ Y it's not working    
+****
+# :warning: Dependencies/ Y it's not working    
   Ensure these are installed:  
 ```    
 sudo apt-get install xterm -y
@@ -73,9 +47,9 @@ pip3 install playsound
  Debian based means "DEBIAN" not UBUNTU nor MANJARO  :shit:   
  Do you use another USER than "Pi"?    
 
+****
 
-
-# Install
+# :floppy_disk: Install
 
 ```
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
@@ -93,7 +67,7 @@ OR:
 
 #### Runs best on:    
 https://twisteros.com/    
-    
+****    
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
 #### You want support me?    
