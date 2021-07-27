@@ -33,6 +33,9 @@ Documentation + Manual   /// Still in work
 ****
 #  :rocket: To do
 - [ ] [add Theme Shop] 
+- [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
+- [ ] Add Wiki to to PiGro GUI
+- [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
 # :warning: Dependencies/ Y it's not working    
