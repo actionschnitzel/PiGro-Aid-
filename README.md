@@ -33,8 +33,16 @@ Documentation + Manual   /// Still in work
 ****
 #  :rocket: To do
 - [ ] [add Theme Shop] 
+- [ ] [add more apt-get installs] 
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [ ] Add Wiki to to PiGro GUI
+- [ ] Delete old scripts
+- [ ] Add User Manuel.pdf
+- [ ] Add a Testing branch/it's about time!!!!!1111
+- [ ] Fix playsound not play mp3 bug(RaspiOS)
+- [ ] Make-Me-Nextclod-script
+- [ ] Quake III one click installer vulkan :rage3:
+- [ ] Integrate Vulkan32/64 installer to GUI
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
