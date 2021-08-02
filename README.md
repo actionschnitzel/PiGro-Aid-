@@ -26,6 +26,8 @@ Sudo nano boot / config.txt? No, just click it!
 ```diff
 - 	Dear curious users, xDDDDD nerver ever ever ever use a script from the    
 -	"SCRIPTS-FOLDER" that is not in the GUI! These scripts are Alpha-State.    
+-	By the next Update those scripts will be removed/moved to the unstable BRANCH    
+
 ```
  ****   
 #  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
