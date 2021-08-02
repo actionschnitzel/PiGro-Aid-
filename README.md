@@ -40,6 +40,7 @@ Documentation + Manual   /// Still in work
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [ ] Add Wiki to to PiGro GUI
 - [ ] Delete old scripts
+- [ ] Remove alpha scrips
 - [ ] Add User Manuel.pdf
 - [ ] Add a Testing branch/it's about time!!!!!1111
 - [ ] Fix playsound not play mp3 bug(RaspiOS)
