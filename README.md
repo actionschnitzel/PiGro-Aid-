@@ -4,7 +4,7 @@
 ****
 #### All settings in one place! :key: :mag: :hammer: :toilet:   
     
-#### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. PiGro is inspired by the control interface of Linux Mint and MX Linux.    
+#### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.     
     
 #### The most important settings that are used again and again must be entered on the Pi using a terminal. Pigro is a graphically appealing GUI that does these settings with the click of a button.     
     
