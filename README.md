@@ -45,6 +45,8 @@ Documentation + Manual   /// Still in work
 - [ ] Add a Testing branch/it's about time!!!!!1111
 - [ ] Fix playsound not play mp3 bug(RaspiOS)
 - [ ] Make-Me-Nextclod-script
+- [x] Fix old icons
+- [x] adjust code
 - [ ] Quake III one click installer vulkan :rage3:
 - [ ] Integrate Vulkan32/64 installer to GUI
 - [ ] Add to Links [No payed promo/Just stuff I like]
