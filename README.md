@@ -38,7 +38,7 @@ Documentation + Manual   /// Still in work
 - [ ] [add more apt-get installs] 
 - [ ] Add planke to Apt-Shop
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
-- [x] Add Wiki to to PiGro GUI
+- [x] Add Wiki to PiGro GUI
 - [x] Delete old scripts
 - [ ] Remove alpha scrips
 - [ ] Add User Manuel.pdf
