@@ -48,7 +48,7 @@ Documentation + Manual   /// Still in work
 - [ ] Quake III one click installer vulkan :rage3:
 - [ ] Integrate Vulkan32/64 installer to GUI
 - [ ] Add to Links [No payed promo/Just stuff I like]
-- [ ] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
+- [x] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
 - [ ] Add https://www.52pi.com/
 - [ ] Add https://www.amazon.de/stores/GeeekPi/page/1ACB4789-76E0-4E1A-817B-E1F403EDF01B?ref_=ast_bln
 - [ ] Next vication put a Pi in the luggage
