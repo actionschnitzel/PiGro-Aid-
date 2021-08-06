@@ -1554,20 +1554,32 @@ choice_link2=Button(rahmen82, anchor="w",width=20,text="Starship (Cross-Shell-Pr
 ######column1
 #####################################
 ##############################################
-choice_link1=Button(rahmen82,width=20,text="LernLinux (Youtube)", anchor="w", command=link_mankier,
+
+def lern_l():
+    popen("xdg-open https://www.learnlinux.tv/")
+    
+def rb_tv():
+    popen("xdg-open https://rocketbeans.tv/")
+    
+def l4_e():
+    popen("xdg-open https://www.linux4everyone.com/")
+    
+def fitwo_p():
+    popen("xdg-open https://www.52pi.com/")    
+    
+
+
+choice_link1=Button(rahmen82,width=20,text="LernLinux.tv", anchor="w", command=lern_l,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=1)
 
-choice_link2=Button(rahmen82,width=20,text="Rocket Beans(ger.) (Youtube)", anchor="w", command=link_guake,
+choice_link2=Button(rahmen82,width=20,text="Rocket Beans(ger.)", anchor="w", command=rb_tv,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=2)
 
-choice_link2=Button(rahmen82,width=20,text="Raspberry Pi News (Youtube)", anchor="w", command=link_onBoard,
+choice_link2=Button(rahmen82,width=20,text="52Pi", anchor="w", command=fitwo_p,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=3)
 
-choice_link2=Button(rahmen82,width=20,text="leepsp (Youtube)", anchor="w", command=link_drac,
+choice_link2=Button(rahmen82,width=20,text="Linux for Everyone", anchor="w", command=l4_e,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=4)
-
-choice_link2=Button(rahmen82,width=20,text="Linux for Everyone (Youtube)", anchor="w", command=link_star,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=5)
 
 #####################################INFO
 
