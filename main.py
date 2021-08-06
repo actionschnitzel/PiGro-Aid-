@@ -1276,6 +1276,9 @@ tu_tp3 = Image.open('icons/PiGroOV3.png')
 tu03 = ImageTk.PhotoImage(tu_tp3)
 tul03 = Label(image=tu03)
 
+tu_tp4 = Image.open('icons/PiGroOV4.png')
+tu04 = ImageTk.PhotoImage(tu_tp4)
+tul04 = Label(image=tu04)
 
 
 #########################################tuning_def
@@ -1287,6 +1290,9 @@ def pop_dest1():
 
 def pop_dest2():
     pop_2000.destroy()
+    
+def pop_dest3():
+    pop_2200.destroy()
     
 def reboot_n():
     popen("sudo reboot")
@@ -1372,7 +1378,37 @@ def set_default():
     pop_btn_shut.grid(column=2, row=2)
     
     tl0m = Label(frame_pop_de,image=tp0m, background='#333333').grid(column=0, row=1)
+
+
+######################################pop_2147        
+def ov_2200():
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
+    playsound('scripts/HOLYPiT.mp3')
+    global pop_2200
+    pop_2200=Toplevel(main)
+    pop_2200.config(bg='#333333')
     
+    frame_pop_2200 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
+    frame_pop_2200.pack()
+    frame_pop_2200['background'] = '#333333'
+
+    frame_pop_2200_1 = Frame(pop_22007, borderwidth=0, relief=GROOVE)
+    frame_pop_2200_1.pack(pady=10)
+    frame_pop_2200_1['background'] = '#333333'
+
+    
+    pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2200.grid(column=1, row=1)
+    pop_btn_2200=Button(frame_pop_2200_1,text="Continue", anchor="w", command=pop_dest3,
+                           highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
+    pop_btn_2200.grid(column=1, row=2)
+    pop_btn_shut=Button(frame_pop_2200_1,text="Reboot", anchor="w", command=reboot_n,
+                           highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
+    pop_btn_shut.grid(column=2, row=2)
+    
+    tl0m = Label(frame_pop_2200,image=tp0m, background='#333333').grid(column=0, row=1)
+##########################pop_default
+
  ##########################################   
 rahmen6 = Frame(tab6,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=20)
 rahmen6.pack(padx=10, pady=20, anchor=N)
@@ -1396,7 +1432,7 @@ tu_lb1 = Label(rahmen6, text="Crank It Up", font='20', highlightthickness=0, bor
 tu_btn1 = Button(rahmen6, image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
 
-tu_lb2 = Label(rahmen6, text="Take It To The Max", font='20', highlightthickness=0, borderwidth=2,
+tu_lb2 = Label(rahmen6, text="You Sir... Need A Fan! ", font='20', highlightthickness=0, borderwidth=2,
                background='#333333', foreground="#d4244d").grid(column=2, row=0)
 
 tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
@@ -1408,7 +1444,11 @@ tu_lb3 = Label(rahmen6, text="Reset Overclocking", font='20', highlightthickness
 tu_btn3 = Button(rahmen6, image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
 
+tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", font='20', highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d").grid(column=1, row=2)
 
+tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=set_default,
+                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
 tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Arial", 8), highlightthickness=0, borderwidth=2,
                background='#333333', foreground="yellow").grid(column=1, row=4)
