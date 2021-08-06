@@ -14,13 +14,14 @@ import resource
 import threading
 from datetime import datetime
 from playsound import playsound
+import distro
 
 
 ##################################################MAIN
 
 popen('find /home/pi/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
 
-
+###################################Main_Settings
 
 main = Tk()
 main.title("PiGro Xtrmo - Just Click It!")
@@ -28,9 +29,22 @@ icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 main['background'] = '#333333'
 main.resizable(0, 0)
-main.geometry("880x545+600+300")
+
+
+app_width = 850
+app_height = 545
+
+screen_width = main.winfo_screenwidth()
+screen_height = main.winfo_screenheight()
+
+x = (screen_width / 2) - (app_width / 2)
+y = (screen_height / 2) - (app_height / 2)
+
+main.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
 main.wait_visibility(main)
-main.wm_attributes('-alpha', 0.95)
+main.wm_attributes('-alpha', 0.95, )
+
 
 ###########################################TABCONT
 
@@ -59,6 +73,8 @@ tab6 = ttk.Frame(tab_control)
 tab7 = ttk.Frame(tab_control)
 tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
+tab10 = ttk.Frame(tab_control)
+
 ########################
 tab_tp1 = Image.open('icons/Logotab.png')
 tp01 = ImageTk.PhotoImage(tab_tp1)
@@ -98,6 +114,10 @@ tab_tp9 = Image.open('icons/holy_grail_ico.png')
 tp09 = ImageTk.PhotoImage(tab_tp9)
 tl09 = Label(image=tp09)
 
+tab_tp10 = Image.open('icons/pigpi.png')
+tp10 = ImageTk.PhotoImage(tab_tp10)
+tl10 = Label(image=tp10)
+
 ########################################
 tab_control.add(tab1, compound=LEFT, text='Start     ', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
@@ -107,6 +127,7 @@ tab_control.add(tab4, compound=LEFT, text='Look     ', image=tp04)
 tab_control.add(tab6, compound=LEFT, text='Tuning  ', image=tp06)
 tab_control.add(tab8, compound=LEFT, text='Links  ', image=bp0111)
 tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
+tab_control.add(tab10, compound=LEFT, text='Pig-Grow', image=tp10)
 
 
 
@@ -132,7 +153,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 5.6.1
+Version 6.0
 -----------
 - Xfce4 wifi-fix worx now in RaspiOS(at least for me)
 - New Theme/Logo/Icons
@@ -174,11 +195,7 @@ that should fix most of the bugs ;-)
 
 If you use Twister you shouldn't have any problem :-P
 
-
-Should there be any other questions: I'm on the PiLabs Discord.
-DM to Actionschnitzel
-#####################
-Since it's vacation time now, I won't be able to compensate the differences for another three weeks.
+I'll do a pull request to pi-apps soon to fix all.
 
 Cheers
 
@@ -251,13 +268,13 @@ def xfcefix2():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
 
 def actionhome():
-    popen("chromium-browser https://www.actionschnitzel.de/PiGro/")
+    popen("xdg-open https://www.actionschnitzel.de/PiGro/")
     
 def xfcelook_f():
-    popen("chromium-browser https://www.xfce-look.org/browse/cat/")
+    popen("xdg-open https://www.xfce-look.org/browse/cat/")
 
 def web_OVC():
-    popen("chromium-browser https://www.gnome-look.org/p/1158321/")
+    popen("xdg-open https://www.gnome-look.org/p/1158321/")
 
 def ch_desk():
     popen("xterm -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
@@ -271,8 +288,7 @@ def onc_ben():
 def inst_bleach():
     popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
 
-def web_wall():
-    popen("chromium-browser https://actionschnitzel.de/Wallpapers/")
+
 
 def button_lk():
     popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
@@ -472,12 +488,17 @@ ltab9.image = ptab9
 ltab9['background'] = '#383c4a'
 ltab9.place(x=-1, y=-1)
 
-
+itab10 = Image.open('icons/pigro_bg.png')
+ptab10 = ImageTk.PhotoImage(itab10)
+ltab10 = Label(tab10, image=ptab10)
+ltab10.image = ptab10
+ltab10['background'] = '#383c4a'
+ltab10.place(x=-1, y=-1)
 
 
 #############################################TAB1
 def paypal():
-    popen("chromium-browser https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
+    popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
 tab1.counter = 0
 
 
@@ -512,7 +533,7 @@ Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0,
 
 aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Arial", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 5.6.1", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
@@ -818,7 +839,7 @@ def shop():
 
 
 
-    shop_btn01 = Button(pop_shop, width=110, image=ip03, text="Whatsapp", anchor="w", command=w_app, highlightthickness=0,
+    shop_btn01 = Button(pop_shop, width=110, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
                   borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
 
     shop_btn1_ttp = CreateToolTip(sys_btn6, \
@@ -904,7 +925,14 @@ def shop():
     
     shop_btn111 = Label(pop_shop, text="Game installer", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)
+    
+    shop_btn12 = Button(pop_shop, width=120, image=ip03, text="NextcloudPi\nHow To", anchor="w", command=inst_lutis, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=1)
 
+    shop_btn112 = Label(pop_shop, text="How to set up you own cloud service", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)
+    
+       
     
     
 
@@ -1003,7 +1031,7 @@ sys_btn5_ttp = CreateToolTip(sys_btn5, \
                                    "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)")
 
 
-sys_btn6 = Button(rahmen2, image=bp07, text="Update Linux Kernel", command=button_lk,
+sys_btn6 = Button(rahmen2, image=bp07, text="Upgrade Linux Kernel", command=button_lk,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn6.grid(row=1,column=3)
 
@@ -1023,11 +1051,17 @@ sys_btn9 = Button(rahmen2, image=bp03, text="Xfce Settings", command=button_xset
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=3)
 
-rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=62,pady=10)
+
+####################################################
+
+
+rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=20)
 rahmen21.pack()
 rahmen21['background'] = '#333333'
 
-
+deblogo = Image.open('icons/deb_logo.png')
+dl = ImageTk.PhotoImage(deblogo)
+dl01 = Label(image=dl)
 
         
 pid = os.getpid()
@@ -1036,45 +1070,57 @@ my_system = platform.uname()
 cpufreq = psutil.cpu_freq()
 svmem = psutil.virtual_memory()
 swap = psutil.swap_memory()
+distro = distro.id()
 
 
-sysinf0 = Label(rahmen21, text="System Info", compound=LEFT, anchor='n', font="25", highlightthickness=0, borderwidth=0,
-                background='#333333', foreground="#d4244d")
-sysinf0.grid(column=0, row=0)
-sysinf0 = Label(rahmen21, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white")
-sysinf0.grid(column=0, row=1)
+
+
+#xxx
+
+sysinf0 = Label(rahmen21, text="System Info", compound=LEFT, anchor='n',font=("Helvetica",16), highlightthickness=0, borderwidth=0,
+                background='#333333', foreground="#d4244d",pady=20)
+sysinf0.grid(column=1, row=0)
+
+sysinf0 = Label(rahmen21,image=dl, highlightthickness=0, borderwidth=0,
+                background='#333333', foreground="#d4244d",pady=20,padx=20)
+sysinf0.grid(column=0, row=0,rowspan=6)
+
 sysinf0 = Label(rahmen21, text=f"System: {my_system.system}", compound=LEFT, anchor=W, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white", width=25)
-sysinf0.grid(column=0, row=2)
+                borderwidth=0, background='#333333', foreground="white", width=20,padx=10)
+sysinf0.grid(column=1, row=1)
+
+sysinfd = Label(rahmen21, text=f"Distro: {distro}", compound=LEFT, anchor=W, highlightthickness=0,
+                borderwidth=0, background='#333333', foreground="white", width=20)
+sysinfd.grid(column=1, row=2)
+
 sysinf1 = Label(rahmen21, text=f"Node Name: {my_system.node}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf1.grid(column=0, row=3)
+                foreground="white", width=20)
+sysinf1.grid(column=1, row=3)
 sysinf2 = Label(rahmen21, text=f"Kernel: {my_system.release}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf2.grid(column=0, row=4)
+                foreground="white", width=20)
+sysinf2.grid(column=1, row=4)
 sysinf3 = Label(rahmen21, text=f"Machine: {my_system.machine}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf3.grid(column=0, row=5)
+                foreground="white", width=20)
+sysinf3.grid(column=1, row=5)
 sysinf3 = Label(rahmen21, text="", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf3.grid(column=1, row=0)
+                foreground="white", width=20)
+sysinf3.grid(column=2, row=0)
 sysinf3 = Label(rahmen21, text=f"RAM Total: {get_size(svmem.total)}", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf3.grid(column=1, row=1)
+sysinf3.grid(column=2, row=1)
 sysinf3 = Label(rahmen21, text=f"SWAP Total: {get_size(swap.total)}", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf3.grid(column=1, row=2)
+sysinf3.grid(column=2, row=2)
 
 sysinf6 = Label(rahmen21, text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf6.grid(column=1, row=3)
+sysinf6.grid(column=2, row=3)
 sysinf7 = Label(rahmen21, text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf7.grid(column=1, row=4)
+sysinf7.grid(column=2, row=4)
 sysinf8 = Label(rahmen21, text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf8.grid(column=1, row=5)
+sysinf8.grid(column=2, row=5)
 
 
 ##########################################LOOK
@@ -1084,7 +1130,7 @@ def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
 
 def xfce_make():
-    popen("chromium-browser https://github.com/actionschnitzel/Make-Me-Xfce")
+    popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
 
 tab_ip1 = Image.open('icons/download_ico.png')
 ip01 = ImageTk.PhotoImage(tab_ip1)
@@ -1199,9 +1245,9 @@ in_btn5 = Button(rahmen43, text="Install Papirus Icon Theme", image=ip01, compou
                  command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
 in_btn5.grid(column=1, row=1)
 
-in_btn6 = Button(rahmen43, text="ACTNShnzl Wallpapers(Web)", image=ip01, compound=LEFT, anchor="w", width=220,
-                 command=web_wall, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
-in_btn6.grid(column=2, row=1)
+#in_btn6 = Button(rahmen43, text="PiGro Wallpapers(Web)", image=ip01, compound=LEFT, anchor="w", width=220,
+#                 command=web_wall, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+#in_btn6.grid(column=2, row=1)
 
 in_btn7 = Button(rahmen43, text="Overwatch Cursor", image=ip01, compound=LEFT, anchor="w", width=220,
                  command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
@@ -1383,40 +1429,43 @@ tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu
 
 #####################################Links
 def down_twist():
-    popen("chromium-browser https://twisteros.com/")
+    popen("xdg-open https://twisteros.com/")
     
+def down_NCP():
+    popen("xdg-open https://ownyourbits.com/nextcloudpi/")
+
 def down_puppy():
-    popen("chromium-browser https://puppylinux.com/")
+    popen("xdg-open https://puppylinux.com/")
     
 def down_diet():
-    popen("chromium-browser https://dietpi.com/")
+    popen("xdg-open https://dietpi.com/")
     
 def down_mx():
-    popen("chromium-browser https://mxlinux.org/blog/fluxbox-raspberrypi-respin-ragout-beta/")
+    popen("xdg-open https://mxlinux.org/blog/fluxbox-raspberrypi-respin-ragout-beta/")
 
 def down_fy():
-    popen("chromium-browser https://releases.fydeos.io/11.4/rpi4-fydeos")
+    popen("xdg-open https://releases.fydeos.io/11.4/rpi4-fydeos")
 
 def down_kk():
-    popen("chromium-browser https://konstakang.com/devices/rpi4/")
+    popen("xdg-open https://konstakang.com/devices/rpi4/")
     
 def down_bb():
-    popen("chromium-browser https://berryboot.alexgoldcheidt.com/images")
+    popen("xdg-open https://berryboot.alexgoldcheidt.com/images")
 
 def link_mankier():
-    popen("chromium-browser https://mankier.com")
+    popen("xdg-open https://mankier.com")
     
 def link_guake():
-    popen("chromium-browser https://github.com/Guake/guake")
+    popen("xdg-open https://github.com/Guake/guake")
     
 def link_onBoard():
-    popen("chromium-browser https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
+    popen("xdg-open https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
     
 def link_drac():
-    popen("chromium-browser https://draculatheme.com/")    
+    popen("xdg-open https://draculatheme.com/")    
 
 def link_star():
-    popen("chromium-browser https://starship.rs/")    
+    popen("xdg-open https://starship.rs/")    
 
 
 
@@ -1424,7 +1473,7 @@ rahmen81 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE)
 rahmen81.pack(padx=20, pady=20)
 rahmen81['background'] = '#333333'
 
-rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE)
+rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=20, pady=20)
 rahmen82.pack(padx=20, pady=20)
 rahmen82['background'] = '#333333'
 
@@ -1456,7 +1505,9 @@ tab8_dist7 = Image.open('icons/logo_berryserver.png')
 di07 = ImageTk.PhotoImage(tab8_dist7)
 dl07 = Label(image=di07)
 
-
+tab8_dist8 = Image.open('icons/NCP.png')
+di08 = ImageTk.PhotoImage(tab8_dist8)
+dl08 = Label(image=di08)
 
 dist_btn1 = Button(rahmen81, compound=LEFT, image=di01, text="Get: Twister OS", anchor="w", command=down_twist,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).grid(column=0, row=0)
@@ -1476,41 +1527,48 @@ dist_btn5 = Button(rahmen81, image=di05, text="Get: FydeOS", anchor="w", command
 dist_btn6 = Button(rahmen81, image=di06, text="Get: Android", anchor="w", command=down_kk,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=3, row=1)
 
-dist_btn7 = Button(rahmen81, image=di07, text="Berryserver", anchor="w", command=down_bb,
+dist_btn7 = Button(rahmen81, image=di07, text="Get: Berryserver", anchor="w", command=down_bb,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=0, row=2)
+
+dist_btn8 = Button(rahmen81,image=di08, text="Get: NextCloudPi", anchor="w", command=down_NCP,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=1, row=2)
 ##################
-choice_link1=Button(rahmen82,text="Mankiere.com (Online Commandline Database)", anchor="w", command=link_mankier,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=0)
 
-choice_link2=Button(rahmen82,text="Guake (Drop Down Terminal)", anchor="w", command=link_guake,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
+hedd = Label (rahmen82, text="Good Sites [No payed promo/Just stuff I like]",
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=0, row=0,columnspan=3,pady=10)
 
-choice_link2=Button(rahmen82,text="OnBoard (Onscreen Keyboard)", anchor="w", command=link_onBoard,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=2)
+choice_link1=Button(rahmen82, anchor="w", width=20,text="Mankiere.com (Commandline Database)", command=link_mankier,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=1)
 
-choice_link2=Button(rahmen82,text="Draculatheme.com", anchor="w", command=link_drac,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=3)
+choice_link2=Button(rahmen82,anchor="w",width=20,text="Guake (Drop Down Terminal)",  command=link_guake,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=2)
 
-choice_link2=Button(rahmen82,text="Starship (Cross-Shell-Promt)", anchor="w", command=link_star,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=4)
+choice_link2=Button(rahmen82,anchor="w",width=20,text="OnBoard (Onscreen Keyboard)",  command=link_onBoard,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=3)
+
+choice_link2=Button(rahmen82, anchor="w",width=20,text="Draculatheme.com", command=link_drac,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=4)
+
+choice_link2=Button(rahmen82, anchor="w",width=20,text="Starship (Cross-Shell-Promt)", command=link_star,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=5)
 ######column1
 #####################################
 ##############################################
-#choice_link1=Button(rahmen82,text="LernLinux (Youtube)", anchor="w", command=link_mankier,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=0)
-#
-#choice_link2=Button(rahmen82,text="Rocket Beans(ger.) (Youtube)", anchor="w", command=link_guake,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
-#
-#choice_link2=Button(rahmen82,text="Raspberry Pi News (Youtube)", anchor="w", command=link_onBoard,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
-#
-#choice_link2=Button(rahmen82,text="leepsp(Youtube)", anchor="w", command=link_drac,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
-#
-#choice_link2=Button(rahmen82,text="Linux for Everyone (Youtube)", anchor="w", command=link_star,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
-#
+choice_link1=Button(rahmen82,width=20,text="LernLinux (Youtube)", anchor="w", command=link_mankier,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=1)
+
+choice_link2=Button(rahmen82,width=20,text="Rocket Beans(ger.) (Youtube)", anchor="w", command=link_guake,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=2)
+
+choice_link2=Button(rahmen82,width=20,text="Raspberry Pi News (Youtube)", anchor="w", command=link_onBoard,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=3)
+
+choice_link2=Button(rahmen82,width=20,text="leepsp (Youtube)", anchor="w", command=link_drac,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=4)
+
+choice_link2=Button(rahmen82,width=20,text="Linux for Everyone (Youtube)", anchor="w", command=link_star,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=5)
+
 #####################################INFO
 
 
@@ -1580,6 +1638,66 @@ grail_botn3.grid(column=2, row=0)
 grail_text3=Label(rahmen92,text="Or: sudo apt install dselect\nsudo dselect updat\nsudo dpkg --set-selections < packages.listn\nsudo apt-get dselect-upgrade",
                  background='#333333',font=("Helvetica",8), foreground="white")
 grail_text3.pack(pady=10)
+
+
+##########################################pig-grow
+pig_x = Image.open('icons/poke_pig.jpg')
+pg0x = ImageTk.PhotoImage(pig_x)
+pl0x = Label(image=pg0x)
+
+
+def pick_at_you():
+    global pop_pig
+    pop_pig=Toplevel()
+    pop_pig['background'] = 'white'
+    
+    poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
+
+    playsound('scripts/poke_pig.mp3')
+
+    poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()
+
+
+################################
+def poll():
+    popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
+    
+def wpaps():
+    popen("xdg-open http://www.actionschnitzel.de/Wallpapers/")
+    
+def wiki():
+    popen("xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki")    
+    
+pig_1 = Image.open('icons/pigpi_btn.png')
+pg01 = ImageTk.PhotoImage(pig_1)
+pl01 = Label(image=pg01)
+
+pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pack(pady=20)
+
+
+rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen102.pack(padx=45,pady=20)
+rahmen102['background'] = '#333333'
+
+poke_pig_21 = Label(rahmen102,text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD",font=("Helvetica",14),background='#333333', fg="white",pady=20, padx=20).pack()
+
+
+
+
+rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen101.pack(padx=45,pady=20)
+rahmen101['background'] = '#333333'
+
+
+
+pig_btn_1 = Button(rahmen101,text="User Poll", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white", command=poll).grid(column=0,row=0,pady=20, padx=20)
+
+pig_btn_2 = Button(rahmen101,text="Wallpapers", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white", command=wpaps).grid(column=1,row=0,pady=20)
+
+pig_btn_3 = Button(rahmen101,text="PiGro Manuel", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white",command=wiki).grid(column=2,row=0,pady=20, padx=20)
 ###########################################################
 tab_control.pack(expand=1, fill='both')
 
