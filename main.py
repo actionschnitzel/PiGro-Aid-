@@ -118,6 +118,8 @@ tab_tp10 = Image.open('icons/pigpi.png')
 tp10 = ImageTk.PhotoImage(tab_tp10)
 tl10 = Label(image=tp10)
 
+
+
 ########################################
 tab_control.add(tab1, compound=LEFT, text='Start     ', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
@@ -655,7 +657,7 @@ Sources List has been saved\n\
 
 #ft
 
-termf = Frame(tab11, height=270, width=630, padx=10, highlightthickness=1)
+termf = Frame(tab11, height=270, width=600, padx=10, highlightthickness=1)
 wid = termf.winfo_id()
 # os.system('xterm -into %d -bg SteelBlue4 -geometry 120x100  &' % wid)
 termf['background'] = '#383c4a'
@@ -1339,8 +1341,8 @@ def ov_2000():
     frame_pop_2000_1['background'] = '#333333'
 
     
-    pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_2000.grid(column=1, row=1)
+    pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2000.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2000=Button(frame_pop_2000_1,text="Continue", anchor="w", command=pop_dest2,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_2000.grid(column=1, row=2)
@@ -1348,7 +1350,7 @@ def ov_2000():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_2000,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_2000,image=tp0m, background='#333333').grid(column=0, row=1)
     
     
 ######################################pop_2147        
@@ -1368,8 +1370,8 @@ def ov_2147():
     frame_pop_2147_1['background'] = '#333333'
 
     
-    pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_2147.grid(column=1, row=1)
+    pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2147.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2147=Button(frame_pop_2147_1,text="Continue", anchor="w", command=pop_dest1,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_2147.grid(column=1, row=2)
@@ -1377,7 +1379,7 @@ def ov_2147():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_2147,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_2147,image=tp0m, background='#333333').grid(column=0, row=1)
 ##########################pop_default
 def set_default():
     popen("xterm -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
@@ -1394,8 +1396,8 @@ def set_default():
     frame_pop_de1.pack(pady=10)
     frame_pop_de1['background'] = '#333333'
 
-    pop_lbl_default=Label(frame_pop_de,anchor="w", text="Settings Restored", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_default.grid(column=1, row=1)
+    pop_lbl_default=Label(frame_pop_de,anchor="w", text="Settings Restored",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_default.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_default=Button(frame_pop_de1,text="Continue", anchor="w", command=pop_dest,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_default.grid(column=1, row=2)
@@ -1403,7 +1405,7 @@ def set_default():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_de,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_de,image=tp0m, background='#333333').grid(column=0, row=1)
 
 
 ######################################pop_2147        
@@ -1418,13 +1420,13 @@ def ov_2200():
     frame_pop_2200.pack()
     frame_pop_2200['background'] = '#333333'
 
-    frame_pop_2200_1 = Frame(pop_22007, borderwidth=0, relief=GROOVE)
+    frame_pop_2200_1 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
     frame_pop_2200_1.pack(pady=10)
     frame_pop_2200_1['background'] = '#333333'
 
     
-    pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_2200.grid(column=1, row=1)
+    pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2200.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2200=Button(frame_pop_2200_1,text="Continue", anchor="w", command=pop_dest3,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_2200.grid(column=1, row=2)
@@ -1432,7 +1434,7 @@ def ov_2200():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_2200,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_2200,image=tp0m, background='#333333').grid(column=0, row=1)
 ##########################pop_default
 
  ##########################################   
@@ -1473,7 +1475,7 @@ tu_btn3 = Button(rahmen6, image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anc
 tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", font='20', highlightthickness=0, borderwidth=2,
                background='#333333', foreground="#d4244d").grid(column=1, row=2)
 
-tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=set_default,
+tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
 tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Arial", 8), highlightthickness=0, borderwidth=2,
@@ -1776,7 +1778,12 @@ pig_btn_2 = Button(rahmen101,text="Wallpapers", highlightthickness=0,
 
 pig_btn_3 = Button(rahmen101,text="PiGro Manuel", highlightthickness=0,
                        borderwidth=0, background='#333333', foreground="white",command=wiki).grid(column=2,row=0,pady=20, padx=20)
-###########################################################
+
+
+
+###########################################################Games
+
+################################################################
 tab_control.pack(expand=1, fill='both')
 
 main.mainloop()
