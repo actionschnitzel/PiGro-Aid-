@@ -341,6 +341,12 @@ def pi_apps():
 def inst_lutis():
     popen("sudo chmod +x /home/pi/PiGro-Aid-/scripts/lutris.sh")
     popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/lutris.sh; exec bash\"'")
+    
+def vulk_32():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/vulkan_32.sh; exec bash\"'")
+    
+def vulk_64():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/vulkan_64.sh; exec bash\"'")
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -839,110 +845,105 @@ def shop():
 
 
 
-    shop_btn01 = Button(pop_shop, width=110, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
+    shop_btn01 = Button(pop_shop, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
                   borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
 
     shop_btn1_ttp = CreateToolTip(sys_btn6, \
                                       'This is a SNAP')
 
-    shop_lbl011 = Label(pop_shop, text="... is... you know Whatsapp", anchor="w",
+    shop_lbl011 = Label(pop_shop,width=50, text="... is... you know Whatsapp", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
 
-    shop_btn2 = Button(pop_shop, width=110, image=ip03, text="Compiz", anchor="w", command=compiz_button,
+    shop_btn2 = Button(pop_shop, width=120, image=ip03, text="Compiz", anchor="w", command=compiz_button,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=2)
 
-    shop_lbl21 = Label(pop_shop, text="When I was young it was cool\nYou know it as wobbly windows", anchor="w",
+    shop_lbl21 = Label(pop_shop,width=50, text="When I was young it was cool You know it as wobbly windows", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
 
     
-    shop_btn3 = Button(pop_shop, width=110, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
+    shop_btn3 = Button(pop_shop, width=120, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=3)
 
 
-    shop_btn31 = Label(pop_shop, text="A Partition Manager", anchor="w",
+    shop_btn31 = Label(pop_shop,width=50, text="A Partition Manager", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
 
-    shop_btn4 = Button(pop_shop, width=110, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
+    shop_btn4 = Button(pop_shop, width=120, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=4)
 
 
-    shop_btn41 = Label(pop_shop, text="Shows system specs you already know \nbut ... uhhm...", anchor="w",
+    shop_btn41 = Label(pop_shop,width=50, text="Shows system specs you already know but ... uhhm...", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
 
 
-    shop_btn5 = Button(pop_shop, width=110, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
+    shop_btn5 = Button(pop_shop, width=120, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=5)
 
 
-    shop_btn51 = Label(pop_shop, text="Bow down!", anchor="w",
+    shop_btn51 = Label(pop_shop,width=50, text="Bow down!", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=5)
 
 
-    shop_btn6 = Button(pop_shop, width=110, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
+    shop_btn6 = Button(pop_shop, width=120, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=6)
 
     
-    shop_btn61 = Label(pop_shop, text="Cleans the System", anchor="w",
+    shop_btn61 = Label(pop_shop,width=50, text="Cleans the System", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=6)
 
 
-    shop_btn7 = Button(pop_shop, width=110, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
+    shop_btn7 = Button(pop_shop, width=120, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=7)
 
     
-    shop_btn71 = Label(pop_shop, text="Pi-Imager on RaspiOS is like \nthe Replicants from Stargate... o,o", anchor="w",
+    shop_btn71 = Label(pop_shop,width=50, text="Pi-Imager on RaspiOS is like the Replicants from Stargate... o,o", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=7)
 
     
-    shop_btn8 = Button(pop_shop, width=110, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
+    shop_btn8 = Button(pop_shop, width=120, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=8)
 
     
-    shop_btn81 = Label(pop_shop, text="THE Pakegemanager", anchor="w",
+    shop_btn81 = Label(pop_shop,width=50, text="THE Pakegemanager", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=8)
 
 
-    shop_btn9 = Button(pop_shop, width=110, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
+    shop_btn9 = Button(pop_shop, width=120, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=9)
 
 
-    shop_btn91 = Label(pop_shop, text="When you tell peolpe i3 is god\nbut you need a hidden menu cuz you dont cope with it", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=9)
+    shop_btn91 = Label(pop_shop,width=50, compound=LEFT, text="When you tell peolpe i3 is god but you need a hidden menu cuz\nyou dont cope with it", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=1, row=9)
 
 
-    shop_btn10 = Button(pop_shop, width=110, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
+    shop_btn10 = Button(pop_shop, width=120, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=10)
 
     
-    shop_btn101 = Label(pop_shop, text="DOWNLOAD IT!!!!!11", anchor="w",
+    shop_btn101 = Label(pop_shop,width=50, text="DOWNLOAD IT!!!!!11", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=10)
 
     
-    shop_btn11 = Button(pop_shop, width=110, image=ip03, text="Lutris", anchor="w", command=inst_lutis, highlightthickness=0,
+    shop_btn11 = Button(pop_shop, width=120, image=ip03, text="Lutris", anchor="w", command=inst_lutis, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=11)
 
     
-    shop_btn111 = Label(pop_shop, text="Game installer", anchor="w",
+    shop_btn111 = Label(pop_shop,width=50, text="Game installer", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)
     
-    shop_btn12 = Button(pop_shop, width=120, image=ip03, text="NextcloudPi\nHow To", anchor="w", command=inst_lutis, highlightthickness=0,
+    
+    shop_btn13 = Button(pop_shop, width=120, image=ip03, text="Vulkan 32 bit\n ", anchor="w", command=vulk_32, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=1)
 
-    shop_btn112 = Label(pop_shop, text="How to set up you own cloud service", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)
+    shop_btn113 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)   
     
-    shop_btn13 = Button(pop_shop, width=120, image=ip03, text="Vulkan 32 bit", anchor="w", command=inst_lutis, highlightthickness=0,
+    shop_btn14 = Button(pop_shop, width=120, image=ip03, text="Vulkan 64 bit", anchor="w", command=vulk_64, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=2)
 
-    shop_btn113 = Label(pop_shop, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)   
-    
-    shop_btn14 = Button(pop_shop, width=120, image=ip03, text="Vulkan 64 bit", anchor="w", command=inst_lutis, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
-
-    shop_btn114 = Label(pop_shop, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
+    shop_btn114 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)     
 
 #####################
 tab_shop = Image.open('icons/shop.png')
@@ -980,6 +981,10 @@ bl02 = Label(image=bp02)
 sys_bp3 = Image.open('icons/terminal.png')
 bp03 = ImageTk.PhotoImage(sys_bp3)
 bl03 = Label(image=bp03)
+
+sys_bp33 = Image.open('icons/terminal3.png')
+bp033 = ImageTk.PhotoImage(sys_bp33)
+bl033 = Label(image=bp033)
 
 sys_bp4 = Image.open('icons/gparted.png')
 bp04 = ImageTk.PhotoImage(sys_bp4)
@@ -1051,11 +1056,11 @@ sys_btn8 = Button(rahmen2, image=bp03, text="Boot Log", command=button_boot,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn8.grid(row=2,column=1)
 
-sys_btn9 = Button(rahmen2, image=bp03, text="Xfce Autostarts", command=button_auto,
+sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Autostarts", command=button_auto,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=2)
 
-sys_btn9 = Button(rahmen2, image=bp03, text="Xfce Settings", command=button_xsett,
+sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Settings", command=button_xsett,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=3)
 
