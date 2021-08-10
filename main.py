@@ -932,9 +932,17 @@ def shop():
     shop_btn112 = Label(pop_shop, text="How to set up you own cloud service", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)
     
-       
+    shop_btn13 = Button(pop_shop, width=120, image=ip03, text="Vulkan 32 bit", anchor="w", command=inst_lutis, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=2)
+
+    shop_btn113 = Label(pop_shop, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)   
     
-    
+    shop_btn14 = Button(pop_shop, width=120, image=ip03, text="Vulkan 64 bit", anchor="w", command=inst_lutis, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
+
+    shop_btn114 = Label(pop_shop, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
 
 #####################
 tab_shop = Image.open('icons/shop.png')
@@ -948,7 +956,7 @@ rahmen_shop['background'] = '#333333'
 
 shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
                   borderwidth=0, background='#333333', foreground="white", compound=LEFT)
-shop_click.grid(column=2, row=2)
+shop_click.pack()
 
 
 
@@ -1059,9 +1067,22 @@ rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10
 rahmen21.pack()
 rahmen21['background'] = '#333333'
 
+
+
+
+
+
+
 deblogo = Image.open('icons/deb_logo.png')
 dl = ImageTk.PhotoImage(deblogo)
 dl01 = Label(image=dl)
+
+deblogo2 = Image.open('icons/lmint.png')
+dl2 = ImageTk.PhotoImage(deblogo2)
+dl012 = Label(image=dl2)
+
+
+
 
         
 pid = os.getpid()
@@ -1602,7 +1623,7 @@ def rb_tv():
     popen("xdg-open https://rocketbeans.tv/")
     
 def l4_e():
-    popen("xdg-open https://www.linux4everyone.com/")
+    popen("xdg-open http://www.lcdwiki.com/Main_Page")
     
 def fitwo_p():
     popen("xdg-open https://www.52pi.com/")    
@@ -1618,7 +1639,7 @@ choice_link2=Button(rahmen82,width=20,text="Rocket Beans(ger.)", anchor="w", com
 choice_link2=Button(rahmen82,width=20,text="52Pi", anchor="w", command=fitwo_p,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=3)
 
-choice_link2=Button(rahmen82,width=20,text="Linux for Everyone", anchor="w", command=l4_e,
+choice_link2=Button(rahmen82,width=20,text="LCD Wiki", anchor="w", command=l4_e,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=4)
 
 #####################################INFO
