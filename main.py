@@ -51,10 +51,10 @@ main.wm_attributes('-alpha', 0.95, )
 
 
 
-# Notebook Style
+#Notebook Style
 noteStyler = ttk.Style()
 noteStyler.configure("TNotebook", borderwidth=0, background="#333333", tabposition='wn',highlightthickness=0)
-noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white", font="bold",width=10,highlightthickness=0)
+noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=10,highlightthickness=0)
 noteStyler.configure("TFrame", background="#333333")
 
 
@@ -101,7 +101,6 @@ tp06 = ImageTk.PhotoImage(tab_tp6)
 tl06 = Label(image=tp06)
 
 
-
 sys_bp9 = Image.open('icons/links.png')
 bp09 = ImageTk.PhotoImage(sys_bp9)
 bl09 = Label(image=bp09)
@@ -121,13 +120,13 @@ tl10 = Label(image=tp10)
 
 
 ########################################
-tab_control.add(tab1, compound=LEFT, text='Start     ', image=tp01)
+tab_control.add(tab1, compound=LEFT, text='Start', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
-tab_control.add(tab2, compound=LEFT, text='System ', image=tp02)
+tab_control.add(tab2, compound=LEFT, text='System', image=tp02)
 tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
-tab_control.add(tab4, compound=LEFT, text='Look     ', image=tp04)
-tab_control.add(tab6, compound=LEFT, text='Tuning  ', image=tp06)
-tab_control.add(tab8, compound=LEFT, text='Links  ', image=bp0111)
+tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
+tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
+tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
 tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
 tab_control.add(tab10, compound=LEFT, text='Pig-Grow', image=tp10)
 
@@ -225,7 +224,6 @@ def pi_appear():
 def opbox_button():
     popen("sudo obconf")    
 
-
 def lxap_button():
     popen("sudo lxappearance")
 
@@ -263,8 +261,7 @@ def gparted_exec():
     popen("sudo gparted")
 
 def xfcefix():
-    popen(
-        "xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
 
 def xfcefix2():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
@@ -289,8 +286,6 @@ def onc_ben():
 
 def inst_bleach():
     popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
-
-
 
 def button_lk():
     popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
@@ -349,6 +344,9 @@ def vulk_32():
     
 def vulk_64():
     popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/vulkan_64.sh; exec bash\"'")
+    
+def tetris_cli():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/tetris_cli.sh; exec bash\"'")
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -507,6 +505,8 @@ ltab10.place(x=-1, y=-1)
 #############################################TAB1
 def paypal():
     popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
+    
+    
 tab1.counter = 0
 
 
@@ -517,7 +517,7 @@ def clicked():
     L['text'] = str(tab1.counter)
 
 
-L = Label(tab1, text="", font=("Arial", 20), background='#333333', fg="white")
+L = Label(tab1, text="", font=("Helvetica", 20), background='#333333', fg="white")
 L.place(y=447, x=315)
 
 ###############StartClick
@@ -529,7 +529,7 @@ ip9 = Image.open('icons/pay.png')
 pp9 = ImageTk.PhotoImage(ip9)
 lp9 = Label(image=pp9)
 
-readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=1, command=readf,font=(("Arial,bold"),"16")).place(x=80,y=400)
+readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=1, command=readf,font=(("Helvetica,bold"),"11")).place(x=80,y=400)
 
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, background='white',highlightthickness=0, command=clicked)
 clc_btn0.place(x=470, y=156)
@@ -539,16 +539,21 @@ clc_btn0tt= CreateToolTip(clc_btn0, \
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#333333',
              foreground="white", command=changelog).place(x=550, y=445)
 
-aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Arial", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
+aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
 author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
+
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
+
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.place(x=410, y=425)
 al.bind("<Button-1>", callback)
+
 author['background'] = '#333333'
 al['background'] = '#333333'
+
+
 ############################################################################################################tab11######updater
 
 rahmen11 = Frame(tab11, relief=GROOVE, borderwidth=0)
@@ -746,7 +751,7 @@ l4 = Label(image=p4)
 welcome_label1 = Label(rahmen3)
 eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
                                    'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
@@ -791,10 +796,10 @@ apps_inst_btn ['background'] = '#333333'
 welcome_label2 = Label(rahmen3)
 eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button33 = Button(rahmen3, text="list all pi-apps", command=pi_apps_list, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
                         background='#333333', foreground="white")
@@ -825,7 +830,7 @@ my_label2['background'] = '#333333'
 welcome_label2 = Label(rahmen3)
 eingabefeld2 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button2 = Button(rahmen3, text="install", command=inst_btn2, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button2_ttp = CreateToolTip(welcom_button2, \
                                    '*to use snap install, you must\napt-get install snapd xD lol')
 
@@ -947,18 +952,25 @@ def shop():
     shop_btn114 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)     
 
+    shop_btn15 = Button(pop_shop, width=120, image=ip03, text="Tetris-CLI", anchor="w", command=tetris_cli, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
+
+    shop_btn115 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/tetris", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
+
+
 #####################
 tab_shop = Image.open('icons/shop.png')
 ipshop = ImageTk.PhotoImage(tab_shop)
 ilshop = Label(image=ipshop)
 
-rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1, relief=GROOVE)
+rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1)
 rahmen_shop.pack(padx=40, pady=20)
 rahmen_shop['background'] = '#333333'
 
 
 shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
-                  borderwidth=0, background='#333333', foreground="white", compound=LEFT)
+                  borderwidth=0, background='#7f1b57', foreground="white", compound=LEFT)
 shop_click.pack()
 
 
@@ -1211,7 +1223,7 @@ rahmen41.pack()
 rahmen41['background'] = '#333333'
 
 
-xfce = Label(rahmen41, text="Xfce Tweaks", font=20, background='#333333', foreground="#d4244d", anchor="w")
+xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 xfce.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen41, text="Xfwm4 Settings", image=ip02, compound=LEFT, anchor="w",
@@ -1236,7 +1248,7 @@ rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10
 rahmen42.pack(padx=10, pady=20)
 rahmen42['background'] = '#333333'
 
-lxde = Label(rahmen42, text="Pixel Tweaks", font=20, background='#333333', foreground="#d4244d", anchor="w")
+lxde = Label(rahmen42, text="Pixel Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 lxde.grid(column=0, row=0)
 
 lx_btn0 = Button(rahmen42, text="LXAppearace", image=ip02, compound=LEFT, anchor="w",
@@ -1258,7 +1270,7 @@ rahmen43.pack(padx=8)
 rahmen43['background'] = '#333333'
 
 
-lxde = Label(rahmen43, text="Suggestions ", font=20, background='#333333', foreground="#d4244d", anchor="w")
+lxde = Label(rahmen43, text="Suggestions ",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 lxde.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen43, text="Install Arc Theme", image=ip01, compound=LEFT, anchor="w", width=220, command=arc_inst,
@@ -1478,7 +1490,7 @@ tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", font='20', highlightthickn
 tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
-tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Arial", 8), highlightthickness=0, borderwidth=2,
+tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
                background='#333333', foreground="yellow").grid(column=1, row=4)
 
 
@@ -1486,13 +1498,13 @@ tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and 
 tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
 
-tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
+tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 ################
 
 
 tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
-tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
+tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 
 
 #####################################Links
@@ -1756,10 +1768,10 @@ pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pa
 
 
 rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
-rahmen102.pack(padx=45,pady=20)
+rahmen102.pack()
 rahmen102['background'] = '#333333'
 
-poke_pig_21 = Label(rahmen102,text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD",font=("Helvetica",14),background='#333333', fg="white",pady=20, padx=20).pack()
+poke_pig_21 = Label(rahmen102,text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD",font=("Helvetica",14),background='#333333', fg="white",padx=5,pady=20).pack()
 
 
 
