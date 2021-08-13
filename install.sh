@@ -44,25 +44,19 @@ sudo apt install python3-pip -y
 pip3 install playsound
 
 sudo chmod +x start.sh
-sudo chmod +x start1.sh
-sudo chmod +x scripts/raspiconfiginstall.sh
-sudo chmod +x scripts/ov_1.sh
-sudo chmod +x scripts/ov_2.sh
-sudo chmod +x scripts/autoremove.sh
-sudo chmod +x scripts/addunsignedrepo.sh
-sudo chmod +x scripts/update.sh
-sudo chmod +x scripts/fmsudo.sh
-sudo chmod +x scripts/upgrade.sh
-sudo chmod +x scripts/lxappearance.sh
-sudo chmod +x scripts/rmlxde.sh
-sudo chmod +x scripts/terminal.sh
-sudo chmod +x scripts/xfce4fix.sh
-sudo chmod +x scripts/uninstall.sh
-sudo chmod +x scripts/rm_ov.sh
-sudo chmod +x scripts/lutris.sh
 sudo cp pigro.desktop  /home/pi/Desktop
 sudo cp pigro.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
+
+clear
+
+echo '                                                                     
+    ____  _ ______              ____           __        ____         
+   / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
+  / /_/ / / / __/ ___/ __ \    / // __ \/ ___/ __/ __ `/ / / _ \/ ___/
+ / ____/ / /_/ / /  / /_/ /  _/ // / / (__  ) /_/ /_/ / / /  __/ /    
+/_/   /_/\____/_/   \____/  /___/_/ /_/____/\__/\__,_/_/_/\___/_/     
+                                                                      '
 
 echo  '
  ____ ____ ____ ____ _________ ____ 

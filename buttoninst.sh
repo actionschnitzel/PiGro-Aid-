@@ -1,1 +1,0 @@
-~/pi-apps/manage install Zoom

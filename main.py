@@ -14,13 +14,14 @@ import resource
 import threading
 from datetime import datetime
 from playsound import playsound
+import distro
 
 
 ##################################################MAIN
 
 popen('find /home/pi/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
 
-
+###################################Main_Settings
 
 main = Tk()
 main.title("PiGro Xtrmo - Just Click It!")
@@ -28,19 +29,32 @@ icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 main['background'] = '#333333'
 main.resizable(0, 0)
-main.geometry("880x545+600+300")
+
+
+app_width = 850
+app_height = 545
+
+screen_width = main.winfo_screenwidth()
+screen_height = main.winfo_screenheight()
+
+x = (screen_width / 2) - (app_width / 2)
+y = (screen_height / 2) - (app_height / 2)
+
+main.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
 main.wait_visibility(main)
-main.wm_attributes('-alpha', 0.95)
+main.wm_attributes('-alpha', 0.95, )
+
 
 ###########################################TABCONT
 
 
 
 
-# Notebook Style
+#Notebook Style
 noteStyler = ttk.Style()
 noteStyler.configure("TNotebook", borderwidth=0, background="#333333", tabposition='wn',highlightthickness=0)
-noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white", font="bold",width=10,highlightthickness=0)
+noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=10,highlightthickness=0)
 noteStyler.configure("TFrame", background="#333333")
 
 
@@ -59,6 +73,8 @@ tab6 = ttk.Frame(tab_control)
 tab7 = ttk.Frame(tab_control)
 tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
+tab10 = ttk.Frame(tab_control)
+
 ########################
 tab_tp1 = Image.open('icons/Logotab.png')
 tp01 = ImageTk.PhotoImage(tab_tp1)
@@ -85,7 +101,6 @@ tp06 = ImageTk.PhotoImage(tab_tp6)
 tl06 = Label(image=tp06)
 
 
-
 sys_bp9 = Image.open('icons/links.png')
 bp09 = ImageTk.PhotoImage(sys_bp9)
 bl09 = Label(image=bp09)
@@ -98,15 +113,22 @@ tab_tp9 = Image.open('icons/holy_grail_ico.png')
 tp09 = ImageTk.PhotoImage(tab_tp9)
 tl09 = Label(image=tp09)
 
+tab_tp10 = Image.open('icons/pigpi.png')
+tp10 = ImageTk.PhotoImage(tab_tp10)
+tl10 = Label(image=tp10)
+
+
+
 ########################################
-tab_control.add(tab1, compound=LEFT, text='Start     ', image=tp01)
+tab_control.add(tab1, compound=LEFT, text='Start', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
-tab_control.add(tab2, compound=LEFT, text='System ', image=tp02)
+tab_control.add(tab2, compound=LEFT, text='System', image=tp02)
 tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
-tab_control.add(tab4, compound=LEFT, text='Look     ', image=tp04)
-tab_control.add(tab6, compound=LEFT, text='Tuning  ', image=tp06)
-tab_control.add(tab8, compound=LEFT, text='Links  ', image=bp0111)
+tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
+tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
+tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
 tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
+tab_control.add(tab10, compound=LEFT, text='Pig-Grow', image=tp10)
 
 
 
@@ -118,13 +140,25 @@ def changelog():
     pop_changelog.geometry("650x600")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####JulFix###################################################################
+####AugustFix#################################################################
 ##############################################################################
-Sorry for another theme change... no not really xD
-But this one 'll be the last last for a long time
-I just wanted a mondern look. Hope I nailed it.
-Also is decided to use an own Logo
-instead of just paint the raspberry gold :-P .
+
+The vacation is over and I finally have my Pi in front of me again.
+Programming on a laptop while sunbathing is something nice xD
+
+Changes:
+
+- Splaaaash Screeeen :-)
+- new unique icons (I am now a GIMP PRO xD)
+- Uniform fonts (Helvetica)
+- XFCE settings are marked with a symbol
+- "Distro display" at System Info
+- New Stuff in the Shop (Icon is ugly .. I'll patch it soon ;-)
+    - Vulkan 32/64 installer
+    - Tetris CLI
+- Overlocking to 2200 Ghz
+- More usefull links
+- * NEW * Pig-Grow Tab
 
 
 Cheers
@@ -132,17 +166,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 5.6.1
------------
-- Xfce4 wifi-fix worx now in RaspiOS(at least for me)
-- New Theme/Logo/Icons
-- xdp instead of script
-- Minor code changes
-- Xfce install How-To > LOOK
-- Added more options to > SYSTEM
-- Added more Links
-- Code fixes
- """)
+""")
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 ################################
 def readf():
@@ -174,11 +198,7 @@ that should fix most of the bugs ;-)
 
 If you use Twister you shouldn't have any problem :-P
 
-
-Should there be any other questions: I'm on the PiLabs Discord.
-DM to Actionschnitzel
-#####################
-Since it's vacation time now, I won't be able to compensate the differences for another three weeks.
+I'll do a pull request to pi-apps soon to fix all.
 
 Cheers
 
@@ -205,7 +225,6 @@ def pi_appear():
     
 def opbox_button():
     popen("sudo obconf")    
-
 
 def lxap_button():
     popen("sudo lxappearance")
@@ -244,20 +263,19 @@ def gparted_exec():
     popen("sudo gparted")
 
 def xfcefix():
-    popen(
-        "xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
+    popen("xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
 
 def xfcefix2():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
 
 def actionhome():
-    popen("chromium-browser https://www.actionschnitzel.de/PiGro/")
+    popen("xdg-open https://www.actionschnitzel.de/PiGro/")
     
 def xfcelook_f():
-    popen("chromium-browser https://www.xfce-look.org/browse/cat/")
+    popen("xdg-open https://www.xfce-look.org/browse/cat/")
 
 def web_OVC():
-    popen("chromium-browser https://www.gnome-look.org/p/1158321/")
+    popen("xdg-open https://www.gnome-look.org/p/1158321/")
 
 def ch_desk():
     popen("xterm -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'")
@@ -270,9 +288,6 @@ def onc_ben():
 
 def inst_bleach():
     popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
-
-def web_wall():
-    popen("chromium-browser https://actionschnitzel.de/Wallpapers/")
 
 def button_lk():
     popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
@@ -325,6 +340,15 @@ def pi_apps():
 def inst_lutis():
     popen("sudo chmod +x /home/pi/PiGro-Aid-/scripts/lutris.sh")
     popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/lutris.sh; exec bash\"'")
+    
+def vulk_32():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/vulkan_32.sh; exec bash\"'")
+    
+def vulk_64():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/vulkan_64.sh; exec bash\"'")
+    
+def tetris_cli():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/tetris_cli.sh; exec bash\"'")
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -472,12 +496,19 @@ ltab9.image = ptab9
 ltab9['background'] = '#383c4a'
 ltab9.place(x=-1, y=-1)
 
-
+itab10 = Image.open('icons/pigro_bg.png')
+ptab10 = ImageTk.PhotoImage(itab10)
+ltab10 = Label(tab10, image=ptab10)
+ltab10.image = ptab10
+ltab10['background'] = '#383c4a'
+ltab10.place(x=-1, y=-1)
 
 
 #############################################TAB1
 def paypal():
-    popen("chromium-browser https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
+    popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
+    
+    
 tab1.counter = 0
 
 
@@ -488,7 +519,7 @@ def clicked():
     L['text'] = str(tab1.counter)
 
 
-L = Label(tab1, text="", font=("Arial", 20), background='#333333', fg="white")
+L = Label(tab1, text="", font=("Helvetica", 20), background='#333333', fg="white")
 L.place(y=447, x=315)
 
 ###############StartClick
@@ -500,7 +531,7 @@ ip9 = Image.open('icons/pay.png')
 pp9 = ImageTk.PhotoImage(ip9)
 lp9 = Label(image=pp9)
 
-readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=1, command=readf,font=(("Arial,bold"),"16")).place(x=80,y=400)
+readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=1, command=readf,font=(("Helvetica,bold"),"11")).place(x=80,y=400)
 
 clc_btn0 = Button(tab1, image=p9, borderwidth=0, background='white',highlightthickness=0, command=clicked)
 clc_btn0.place(x=470, y=156)
@@ -510,16 +541,21 @@ clc_btn0tt= CreateToolTip(clc_btn0, \
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#333333',
              foreground="white", command=changelog).place(x=550, y=445)
 
-aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Arial", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
+aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 5.6.1", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
+
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
+
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
 al.place(x=410, y=425)
 al.bind("<Button-1>", callback)
+
 author['background'] = '#333333'
 al['background'] = '#333333'
+
+
 ############################################################################################################tab11######updater
 
 rahmen11 = Frame(tab11, relief=GROOVE, borderwidth=0)
@@ -628,7 +664,7 @@ Sources List has been saved\n\
 
 #ft
 
-termf = Frame(tab11, height=270, width=630, padx=10, highlightthickness=1)
+termf = Frame(tab11, height=270, width=600, padx=10, highlightthickness=1)
 wid = termf.winfo_id()
 # os.system('xterm -into %d -bg SteelBlue4 -geometry 120x100  &' % wid)
 termf['background'] = '#383c4a'
@@ -717,7 +753,7 @@ l4 = Label(image=p4)
 welcome_label1 = Label(rahmen3)
 eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
                                    'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
@@ -762,10 +798,10 @@ apps_inst_btn ['background'] = '#333333'
 welcome_label2 = Label(rahmen3)
 eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button33 = Button(rahmen3, text="list all pi-apps", command=pi_apps_list, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,
                         background='#333333', foreground="white")
@@ -796,7 +832,7 @@ my_label2['background'] = '#333333'
 welcome_label2 = Label(rahmen3)
 eingabefeld2 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button2 = Button(rahmen3, text="install", command=inst_btn2, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white")
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button2_ttp = CreateToolTip(welcom_button2, \
                                    '*to use snap install, you must\napt-get install snapd xD lol')
 
@@ -818,109 +854,126 @@ def shop():
 
 
 
-    shop_btn01 = Button(pop_shop, width=110, image=ip03, text="Whatsapp", anchor="w", command=w_app, highlightthickness=0,
+    shop_btn01 = Button(pop_shop, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
                   borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
 
     shop_btn1_ttp = CreateToolTip(sys_btn6, \
                                       'This is a SNAP')
 
-    shop_lbl011 = Label(pop_shop, text="... is... you know Whatsapp", anchor="w",
+    shop_lbl011 = Label(pop_shop,width=50, text="... is... you know Whatsapp", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
 
-    shop_btn2 = Button(pop_shop, width=110, image=ip03, text="Compiz", anchor="w", command=compiz_button,
+    shop_btn2 = Button(pop_shop, width=120, image=ip03, text="Compiz", anchor="w", command=compiz_button,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=2)
 
-    shop_lbl21 = Label(pop_shop, text="When I was young it was cool\nYou know it as wobbly windows", anchor="w",
+    shop_lbl21 = Label(pop_shop,width=50, text="When I was young it was cool You know it as wobbly windows", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
 
     
-    shop_btn3 = Button(pop_shop, width=110, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
+    shop_btn3 = Button(pop_shop, width=120, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=3)
 
 
-    shop_btn31 = Label(pop_shop, text="A Partition Manager", anchor="w",
+    shop_btn31 = Label(pop_shop,width=50, text="A Partition Manager", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
 
-    shop_btn4 = Button(pop_shop, width=110, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
+    shop_btn4 = Button(pop_shop, width=120, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=4)
 
 
-    shop_btn41 = Label(pop_shop, text="Shows system specs you already know \nbut ... uhhm...", anchor="w",
+    shop_btn41 = Label(pop_shop,width=50, text="Shows system specs you already know but ... uhhm...", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
 
 
-    shop_btn5 = Button(pop_shop, width=110, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
+    shop_btn5 = Button(pop_shop, width=120, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=5)
 
 
-    shop_btn51 = Label(pop_shop, text="Bow down!", anchor="w",
+    shop_btn51 = Label(pop_shop,width=50, text="Bow down!", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=5)
 
 
-    shop_btn6 = Button(pop_shop, width=110, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
+    shop_btn6 = Button(pop_shop, width=120, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
                       highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=6)
 
     
-    shop_btn61 = Label(pop_shop, text="Cleans the System", anchor="w",
+    shop_btn61 = Label(pop_shop,width=50, text="Cleans the System", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=6)
 
 
-    shop_btn7 = Button(pop_shop, width=110, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
+    shop_btn7 = Button(pop_shop, width=120, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=7)
 
     
-    shop_btn71 = Label(pop_shop, text="Pi-Imager on RaspiOS is like \nthe Replicants from Stargate... o,o", anchor="w",
+    shop_btn71 = Label(pop_shop,width=50, text="Pi-Imager on RaspiOS is like the Replicants from Stargate... o,o", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=7)
 
     
-    shop_btn8 = Button(pop_shop, width=110, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
+    shop_btn8 = Button(pop_shop, width=120, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=8)
 
     
-    shop_btn81 = Label(pop_shop, text="THE Pakegemanager", anchor="w",
+    shop_btn81 = Label(pop_shop,width=50, text="THE Pakegemanager", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=8)
 
 
-    shop_btn9 = Button(pop_shop, width=110, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
+    shop_btn9 = Button(pop_shop, width=120, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=9)
 
 
-    shop_btn91 = Label(pop_shop, text="When you tell peolpe i3 is god\nbut you need a hidden menu cuz you dont cope with it", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=9)
+    shop_btn91 = Label(pop_shop,width=50, compound=LEFT, text="When you tell peolpe i3 is god but you need a hidden menu cuz\nyou dont cope with it", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=1, row=9)
 
 
-    shop_btn10 = Button(pop_shop, width=110, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
+    shop_btn10 = Button(pop_shop, width=120, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=10)
 
     
-    shop_btn101 = Label(pop_shop, text="DOWNLOAD IT!!!!!11", anchor="w",
+    shop_btn101 = Label(pop_shop,width=50, text="DOWNLOAD IT!!!!!11", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=10)
 
     
-    shop_btn11 = Button(pop_shop, width=110, image=ip03, text="Lutris", anchor="w", command=inst_lutis, highlightthickness=0,
+    shop_btn11 = Button(pop_shop, width=120, image=ip03, text="Lutris", anchor="w", command=inst_lutis, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=11)
 
     
-    shop_btn111 = Label(pop_shop, text="Game installer", anchor="w",
+    shop_btn111 = Label(pop_shop,width=50, text="Game installer", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)
+    
+    
+    shop_btn13 = Button(pop_shop, width=120, image=ip03, text="Vulkan 32 bit\n ", anchor="w", command=vulk_32, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=1)
 
+    shop_btn113 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)   
     
-    
+    shop_btn14 = Button(pop_shop, width=120, image=ip03, text="Vulkan 64 bit", anchor="w", command=vulk_64, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=2)
+
+    shop_btn114 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)     
+
+    shop_btn15 = Button(pop_shop, width=120, image=ip03, text="Tetris-CLI", anchor="w", command=tetris_cli, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
+
+    shop_btn115 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/tetris", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
+
 
 #####################
 tab_shop = Image.open('icons/shop.png')
 ipshop = ImageTk.PhotoImage(tab_shop)
 ilshop = Label(image=ipshop)
 
-rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1, relief=GROOVE)
+rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1)
 rahmen_shop.pack(padx=40, pady=20)
 rahmen_shop['background'] = '#333333'
 
 
 shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
-                  borderwidth=0, background='#333333', foreground="white", compound=LEFT)
-shop_click.grid(column=2, row=2)
+                  borderwidth=0, background='#7f1b57', foreground="white", compound=LEFT)
+shop_click.pack()
 
 
 
@@ -944,6 +997,10 @@ bl02 = Label(image=bp02)
 sys_bp3 = Image.open('icons/terminal.png')
 bp03 = ImageTk.PhotoImage(sys_bp3)
 bl03 = Label(image=bp03)
+
+sys_bp33 = Image.open('icons/terminal3.png')
+bp033 = ImageTk.PhotoImage(sys_bp33)
+bl033 = Label(image=bp033)
 
 sys_bp4 = Image.open('icons/gparted.png')
 bp04 = ImageTk.PhotoImage(sys_bp4)
@@ -1003,7 +1060,7 @@ sys_btn5_ttp = CreateToolTip(sys_btn5, \
                                    "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)")
 
 
-sys_btn6 = Button(rahmen2, image=bp07, text="Update Linux Kernel", command=button_lk,
+sys_btn6 = Button(rahmen2, image=bp07, text="Upgrade Linux Kernel", command=button_lk,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn6.grid(row=1,column=3)
 
@@ -1015,17 +1072,36 @@ sys_btn8 = Button(rahmen2, image=bp03, text="Boot Log", command=button_boot,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn8.grid(row=2,column=1)
 
-sys_btn9 = Button(rahmen2, image=bp03, text="Xfce Autostarts", command=button_auto,
+sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Autostarts", command=button_auto,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=2)
 
-sys_btn9 = Button(rahmen2, image=bp03, text="Xfce Settings", command=button_xsett,
+sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Settings", command=button_xsett,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=3)
 
-rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=62,pady=10)
+
+####################################################
+
+
+rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=20)
 rahmen21.pack()
 rahmen21['background'] = '#333333'
+
+
+
+
+
+
+
+deblogo = Image.open('icons/deb_logo.png')
+dl = ImageTk.PhotoImage(deblogo)
+dl01 = Label(image=dl)
+
+deblogo2 = Image.open('icons/lmint.png')
+dl2 = ImageTk.PhotoImage(deblogo2)
+dl012 = Label(image=dl2)
+
 
 
 
@@ -1036,45 +1112,57 @@ my_system = platform.uname()
 cpufreq = psutil.cpu_freq()
 svmem = psutil.virtual_memory()
 swap = psutil.swap_memory()
+distro = distro.id()
 
 
-sysinf0 = Label(rahmen21, text="System Info", compound=LEFT, anchor='n', font="25", highlightthickness=0, borderwidth=0,
-                background='#333333', foreground="#d4244d")
-sysinf0.grid(column=0, row=0)
-sysinf0 = Label(rahmen21, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white")
-sysinf0.grid(column=0, row=1)
+
+
+#xxx
+
+sysinf0 = Label(rahmen21, text="System Info", compound=LEFT, anchor='n',font=("Helvetica",16), highlightthickness=0, borderwidth=0,
+                background='#333333', foreground="#d4244d",pady=20)
+sysinf0.grid(column=1, row=0)
+
+sysinf0 = Label(rahmen21,image=dl, highlightthickness=0, borderwidth=0,
+                background='#333333', foreground="#d4244d",pady=20,padx=20)
+sysinf0.grid(column=0, row=0,rowspan=6)
+
 sysinf0 = Label(rahmen21, text=f"System: {my_system.system}", compound=LEFT, anchor=W, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white", width=25)
-sysinf0.grid(column=0, row=2)
+                borderwidth=0, background='#333333', foreground="white", width=20,padx=10)
+sysinf0.grid(column=1, row=1)
+
+sysinfd = Label(rahmen21, text=f"Distro: {distro}", compound=LEFT, anchor=W, highlightthickness=0,
+                borderwidth=0, background='#333333', foreground="white", width=20)
+sysinfd.grid(column=1, row=2)
+
 sysinf1 = Label(rahmen21, text=f"Node Name: {my_system.node}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf1.grid(column=0, row=3)
+                foreground="white", width=20)
+sysinf1.grid(column=1, row=3)
 sysinf2 = Label(rahmen21, text=f"Kernel: {my_system.release}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf2.grid(column=0, row=4)
+                foreground="white", width=20)
+sysinf2.grid(column=1, row=4)
 sysinf3 = Label(rahmen21, text=f"Machine: {my_system.machine}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf3.grid(column=0, row=5)
+                foreground="white", width=20)
+sysinf3.grid(column=1, row=5)
 sysinf3 = Label(rahmen21, text="", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
-sysinf3.grid(column=1, row=0)
+                foreground="white", width=20)
+sysinf3.grid(column=2, row=0)
 sysinf3 = Label(rahmen21, text=f"RAM Total: {get_size(svmem.total)}", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf3.grid(column=1, row=1)
+sysinf3.grid(column=2, row=1)
 sysinf3 = Label(rahmen21, text=f"SWAP Total: {get_size(swap.total)}", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf3.grid(column=1, row=2)
+sysinf3.grid(column=2, row=2)
 
 sysinf6 = Label(rahmen21, text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf6.grid(column=1, row=3)
+sysinf6.grid(column=2, row=3)
 sysinf7 = Label(rahmen21, text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf7.grid(column=1, row=4)
+sysinf7.grid(column=2, row=4)
 sysinf8 = Label(rahmen21, text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
                 foreground="white", width=25)
-sysinf8.grid(column=1, row=5)
+sysinf8.grid(column=2, row=5)
 
 
 ##########################################LOOK
@@ -1084,7 +1172,7 @@ def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
 
 def xfce_make():
-    popen("chromium-browser https://github.com/actionschnitzel/Make-Me-Xfce")
+    popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
 
 tab_ip1 = Image.open('icons/download_ico.png')
 ip01 = ImageTk.PhotoImage(tab_ip1)
@@ -1137,7 +1225,7 @@ rahmen41.pack()
 rahmen41['background'] = '#333333'
 
 
-xfce = Label(rahmen41, text="Xfce Tweaks", font=20, background='#333333', foreground="#d4244d", anchor="w")
+xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 xfce.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen41, text="Xfwm4 Settings", image=ip02, compound=LEFT, anchor="w",
@@ -1162,7 +1250,7 @@ rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10
 rahmen42.pack(padx=10, pady=20)
 rahmen42['background'] = '#333333'
 
-lxde = Label(rahmen42, text="Pixel Tweaks", font=20, background='#333333', foreground="#d4244d", anchor="w")
+lxde = Label(rahmen42, text="Pixel Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 lxde.grid(column=0, row=0)
 
 lx_btn0 = Button(rahmen42, text="LXAppearace", image=ip02, compound=LEFT, anchor="w",
@@ -1184,7 +1272,7 @@ rahmen43.pack(padx=8)
 rahmen43['background'] = '#333333'
 
 
-lxde = Label(rahmen43, text="Suggestions ", font=20, background='#333333', foreground="#d4244d", anchor="w")
+lxde = Label(rahmen43, text="Suggestions ",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
 lxde.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen43, text="Install Arc Theme", image=ip01, compound=LEFT, anchor="w", width=220, command=arc_inst,
@@ -1199,9 +1287,9 @@ in_btn5 = Button(rahmen43, text="Install Papirus Icon Theme", image=ip01, compou
                  command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
 in_btn5.grid(column=1, row=1)
 
-in_btn6 = Button(rahmen43, text="ACTNShnzl Wallpapers(Web)", image=ip01, compound=LEFT, anchor="w", width=220,
-                 command=web_wall, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
-in_btn6.grid(column=2, row=1)
+#in_btn6 = Button(rahmen43, text="PiGro Wallpapers(Web)", image=ip01, compound=LEFT, anchor="w", width=220,
+#                 command=web_wall, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+#in_btn6.grid(column=2, row=1)
 
 in_btn7 = Button(rahmen43, text="Overwatch Cursor", image=ip01, compound=LEFT, anchor="w", width=220,
                  command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
@@ -1230,6 +1318,9 @@ tu_tp3 = Image.open('icons/PiGroOV3.png')
 tu03 = ImageTk.PhotoImage(tu_tp3)
 tul03 = Label(image=tu03)
 
+tu_tp4 = Image.open('icons/PiGroOV4.png')
+tu04 = ImageTk.PhotoImage(tu_tp4)
+tul04 = Label(image=tu04)
 
 
 #########################################tuning_def
@@ -1241,6 +1332,9 @@ def pop_dest1():
 
 def pop_dest2():
     pop_2000.destroy()
+    
+def pop_dest3():
+    pop_2200.destroy()
     
 def reboot_n():
     popen("sudo reboot")
@@ -1261,8 +1355,8 @@ def ov_2000():
     frame_pop_2000_1['background'] = '#333333'
 
     
-    pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_2000.grid(column=1, row=1)
+    pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2000.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2000=Button(frame_pop_2000_1,text="Continue", anchor="w", command=pop_dest2,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_2000.grid(column=1, row=2)
@@ -1270,7 +1364,7 @@ def ov_2000():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_2000,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_2000,image=tp0m, background='#333333').grid(column=0, row=1)
     
     
 ######################################pop_2147        
@@ -1290,8 +1384,8 @@ def ov_2147():
     frame_pop_2147_1['background'] = '#333333'
 
     
-    pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done !", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_2147.grid(column=1, row=1)
+    pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2147.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2147=Button(frame_pop_2147_1,text="Continue", anchor="w", command=pop_dest1,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_2147.grid(column=1, row=2)
@@ -1299,7 +1393,7 @@ def ov_2147():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_2147,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_2147,image=tp0m, background='#333333').grid(column=0, row=1)
 ##########################pop_default
 def set_default():
     popen("xterm -e 'bash -c \"sudo chmod +x /home/pi/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
@@ -1316,8 +1410,8 @@ def set_default():
     frame_pop_de1.pack(pady=10)
     frame_pop_de1['background'] = '#333333'
 
-    pop_lbl_default=Label(frame_pop_de,anchor="w", text="Settings Restored", font='50', highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-    pop_lbl_default.grid(column=1, row=1)
+    pop_lbl_default=Label(frame_pop_de,anchor="w", text="Settings Restored",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_default.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_default=Button(frame_pop_de1,text="Continue", anchor="w", command=pop_dest,
                            highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
     pop_btn_default.grid(column=1, row=2)
@@ -1325,8 +1419,38 @@ def set_default():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
-    tl0m = Label(frame_pop_de,image=tp0m, background='#333333').grid(column=0, row=1)
+    #tl0m = Label(frame_pop_de,image=tp0m, background='#333333').grid(column=0, row=1)
+
+
+######################################pop_2147        
+def ov_2200():
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
+    playsound('scripts/HOLYPiT.mp3')
+    global pop_2200
+    pop_2200=Toplevel(main)
+    pop_2200.config(bg='#333333')
     
+    frame_pop_2200 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
+    frame_pop_2200.pack()
+    frame_pop_2200['background'] = '#333333'
+
+    frame_pop_2200_1 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
+    frame_pop_2200_1.pack(pady=10)
+    frame_pop_2200_1['background'] = '#333333'
+
+    
+    pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+    pop_lbl_2200.grid(column=1, row=1,pady=10,padx=10)
+    pop_btn_2200=Button(frame_pop_2200_1,text="Continue", anchor="w", command=pop_dest3,
+                           highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
+    pop_btn_2200.grid(column=1, row=2)
+    pop_btn_shut=Button(frame_pop_2200_1,text="Reboot", anchor="w", command=reboot_n,
+                           highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
+    pop_btn_shut.grid(column=2, row=2)
+    
+    #tl0m = Label(frame_pop_2200,image=tp0m, background='#333333').grid(column=0, row=1)
+##########################pop_default
+
  ##########################################   
 rahmen6 = Frame(tab6,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=20)
 rahmen6.pack(padx=10, pady=20, anchor=N)
@@ -1350,7 +1474,7 @@ tu_lb1 = Label(rahmen6, text="Crank It Up", font='20', highlightthickness=0, bor
 tu_btn1 = Button(rahmen6, image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
 
-tu_lb2 = Label(rahmen6, text="Take It To The Max", font='20', highlightthickness=0, borderwidth=2,
+tu_lb2 = Label(rahmen6, text="You Sir... Need A Fan! ", font='20', highlightthickness=0, borderwidth=2,
                background='#333333', foreground="#d4244d").grid(column=2, row=0)
 
 tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
@@ -1362,9 +1486,13 @@ tu_lb3 = Label(rahmen6, text="Reset Overclocking", font='20', highlightthickness
 tu_btn3 = Button(rahmen6, image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
 
+tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", font='20', highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d").grid(column=1, row=2)
 
+tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
+                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
 
-tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Arial", 8), highlightthickness=0, borderwidth=2,
+tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
                background='#333333', foreground="yellow").grid(column=1, row=4)
 
 
@@ -1372,51 +1500,54 @@ tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and 
 tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
 
-tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
+tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 ################
 
 
 tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
-tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Arial", 8)).grid(column=0, row=1)
+tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 
 
 #####################################Links
 def down_twist():
-    popen("chromium-browser https://twisteros.com/")
+    popen("xdg-open https://twisteros.com/")
     
+def down_NCP():
+    popen("xdg-open https://ownyourbits.com/nextcloudpi/")
+
 def down_puppy():
-    popen("chromium-browser https://puppylinux.com/")
+    popen("xdg-open https://puppylinux.com/")
     
 def down_diet():
-    popen("chromium-browser https://dietpi.com/")
+    popen("xdg-open https://dietpi.com/")
     
 def down_mx():
-    popen("chromium-browser https://mxlinux.org/blog/fluxbox-raspberrypi-respin-ragout-beta/")
+    popen("xdg-open https://mxlinux.org/blog/fluxbox-raspberrypi-respin-ragout-beta/")
 
 def down_fy():
-    popen("chromium-browser https://releases.fydeos.io/11.4/rpi4-fydeos")
+    popen("xdg-open https://releases.fydeos.io/11.4/rpi4-fydeos")
 
 def down_kk():
-    popen("chromium-browser https://konstakang.com/devices/rpi4/")
+    popen("xdg-open https://konstakang.com/devices/rpi4/")
     
 def down_bb():
-    popen("chromium-browser https://berryboot.alexgoldcheidt.com/images")
+    popen("xdg-open https://berryboot.alexgoldcheidt.com/images")
 
 def link_mankier():
-    popen("chromium-browser https://mankier.com")
+    popen("xdg-open https://mankier.com")
     
 def link_guake():
-    popen("chromium-browser https://github.com/Guake/guake")
+    popen("xdg-open https://github.com/Guake/guake")
     
 def link_onBoard():
-    popen("chromium-browser https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
+    popen("xdg-open https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
     
 def link_drac():
-    popen("chromium-browser https://draculatheme.com/")    
+    popen("xdg-open https://draculatheme.com/")    
 
 def link_star():
-    popen("chromium-browser https://starship.rs/")    
+    popen("xdg-open https://starship.rs/")    
 
 
 
@@ -1424,7 +1555,7 @@ rahmen81 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE)
 rahmen81.pack(padx=20, pady=20)
 rahmen81['background'] = '#333333'
 
-rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE)
+rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=20, pady=20)
 rahmen82.pack(padx=20, pady=20)
 rahmen82['background'] = '#333333'
 
@@ -1456,7 +1587,9 @@ tab8_dist7 = Image.open('icons/logo_berryserver.png')
 di07 = ImageTk.PhotoImage(tab8_dist7)
 dl07 = Label(image=di07)
 
-
+tab8_dist8 = Image.open('icons/NCP.png')
+di08 = ImageTk.PhotoImage(tab8_dist8)
+dl08 = Label(image=di08)
 
 dist_btn1 = Button(rahmen81, compound=LEFT, image=di01, text="Get: Twister OS", anchor="w", command=down_twist,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).grid(column=0, row=0)
@@ -1476,41 +1609,60 @@ dist_btn5 = Button(rahmen81, image=di05, text="Get: FydeOS", anchor="w", command
 dist_btn6 = Button(rahmen81, image=di06, text="Get: Android", anchor="w", command=down_kk,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=3, row=1)
 
-dist_btn7 = Button(rahmen81, image=di07, text="Berryserver", anchor="w", command=down_bb,
+dist_btn7 = Button(rahmen81, image=di07, text="Get: Berryserver", anchor="w", command=down_bb,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=0, row=2)
+
+dist_btn8 = Button(rahmen81,image=di08, text="Get: NextCloudPi", anchor="w", command=down_NCP,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=1, row=2)
 ##################
-choice_link1=Button(rahmen82,text="Mankiere.com (Online Commandline Database)", anchor="w", command=link_mankier,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=0)
 
-choice_link2=Button(rahmen82,text="Guake (Drop Down Terminal)", anchor="w", command=link_guake,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
+hedd = Label (rahmen82, text="Good Sites [No payed promo/Just stuff I like]",
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=0, row=0,columnspan=3,pady=10)
 
-choice_link2=Button(rahmen82,text="OnBoard (Onscreen Keyboard)", anchor="w", command=link_onBoard,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=2)
+choice_link1=Button(rahmen82, anchor="w", width=20,text="Mankiere.com (Commandline Database)", command=link_mankier,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=1)
 
-choice_link2=Button(rahmen82,text="Draculatheme.com", anchor="w", command=link_drac,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=3)
+choice_link2=Button(rahmen82,anchor="w",width=20,text="Guake (Drop Down Terminal)",  command=link_guake,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=2)
 
-choice_link2=Button(rahmen82,text="Starship (Cross-Shell-Promt)", anchor="w", command=link_star,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=4)
+choice_link2=Button(rahmen82,anchor="w",width=20,text="OnBoard (Onscreen Keyboard)",  command=link_onBoard,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=3)
+
+choice_link2=Button(rahmen82, anchor="w",width=20,text="Draculatheme.com", command=link_drac,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=4)
+
+choice_link2=Button(rahmen82, anchor="w",width=20,text="Starship (Cross-Shell-Promt)", command=link_star,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=5)
 ######column1
 #####################################
 ##############################################
-#choice_link1=Button(rahmen82,text="LernLinux (Youtube)", anchor="w", command=link_mankier,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=0)
-#
-#choice_link2=Button(rahmen82,text="Rocket Beans(ger.) (Youtube)", anchor="w", command=link_guake,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
-#
-#choice_link2=Button(rahmen82,text="Raspberry Pi News (Youtube)", anchor="w", command=link_onBoard,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
-#
-#choice_link2=Button(rahmen82,text="leepsp(Youtube)", anchor="w", command=link_drac,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
-#
-#choice_link2=Button(rahmen82,text="Linux for Everyone (Youtube)", anchor="w", command=link_star,
-#                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
-#
+
+def lern_l():
+    popen("xdg-open https://www.learnlinux.tv/")
+    
+def rb_tv():
+    popen("xdg-open https://rocketbeans.tv/")
+    
+def l4_e():
+    popen("xdg-open http://www.lcdwiki.com/Main_Page")
+    
+def fitwo_p():
+    popen("xdg-open https://www.52pi.com/")    
+    
+
+
+choice_link1=Button(rahmen82,width=20,text="LernLinux.tv", anchor="w", command=lern_l,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=1)
+
+choice_link2=Button(rahmen82,width=20,text="Rocket Beans(ger.)", anchor="w", command=rb_tv,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=2)
+
+choice_link2=Button(rahmen82,width=20,text="52Pi", anchor="w", command=fitwo_p,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=3)
+
+choice_link2=Button(rahmen82,width=20,text="LCD Wiki", anchor="w", command=l4_e,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=2, row=4)
+
 #####################################INFO
 
 
@@ -1580,7 +1732,72 @@ grail_botn3.grid(column=2, row=0)
 grail_text3=Label(rahmen92,text="Or: sudo apt install dselect\nsudo dselect updat\nsudo dpkg --set-selections < packages.listn\nsudo apt-get dselect-upgrade",
                  background='#333333',font=("Helvetica",8), foreground="white")
 grail_text3.pack(pady=10)
-###########################################################
+
+
+##########################################pig-grow
+pig_x = Image.open('icons/poke_pig.jpg')
+pg0x = ImageTk.PhotoImage(pig_x)
+pl0x = Label(image=pg0x)
+
+
+def pick_at_you():
+    global pop_pig
+    pop_pig=Toplevel()
+    pop_pig['background'] = 'white'
+    
+    poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
+
+    playsound('scripts/poke_pig.mp3')
+
+    poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()
+
+
+################################
+def poll():
+    popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
+    
+def wpaps():
+    popen("xdg-open http://www.actionschnitzel.de/Wallpapers/")
+    
+def wiki():
+    popen("xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki")    
+    
+pig_1 = Image.open('icons/pigpi_btn.png')
+pg01 = ImageTk.PhotoImage(pig_1)
+pl01 = Label(image=pg01)
+
+pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pack(pady=20)
+
+
+rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen102.pack()
+rahmen102['background'] = '#333333'
+
+poke_pig_21 = Label(rahmen102,text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD",font=("Helvetica",14),background='#333333', fg="white",padx=5,pady=20).pack()
+
+
+
+
+rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen101.pack(padx=45,pady=20)
+rahmen101['background'] = '#333333'
+
+
+
+pig_btn_1 = Button(rahmen101,text="User Poll", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white", command=poll).grid(column=0,row=0,pady=20, padx=20)
+
+pig_btn_2 = Button(rahmen101,text="Wallpapers", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white", command=wpaps).grid(column=1,row=0,pady=20)
+
+pig_btn_3 = Button(rahmen101,text="PiGro Manuel", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white",command=wiki).grid(column=2,row=0,pady=20, padx=20)
+
+
+
+###########################################################Games
+
+################################################################
 tab_control.pack(expand=1, fill='both')
 
 main.mainloop()

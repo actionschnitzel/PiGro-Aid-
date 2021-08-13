@@ -36,23 +36,23 @@ Documentation + Manual   /// Still in work
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
-- [ ] Add planke to Apt-Shop
+- [x] Add planke to Apt-Shop
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [x] Add Wiki to PiGro GUI
 - [x] Delete old scripts
-- [ ] Remove alpha scrips
-- [ ] Add User Manuel.pdf
-- [ ] Add a Testing branch/it's about time!!!!!1111
+- [x] Remove alpha scrips
+- [x] Add User Manuel.pdf
+- [x] Add a Testing branch/it's about time!!!!!1111
 - [ ] Fix playsound not play mp3 bug(RaspiOS)
 - [ ] Make-Me-Nextclod-script
 - [x] Fix old icons
 - [x] adjust code
 - [ ] Quake III one click installer vulkan :rage3:
-- [ ] Integrate Vulkan32/64 installer to GUI
-- [ ] Add to Links [No payed promo/Just stuff I like]
+- [x] Integrate Vulkan32/64 installer to GUI
+- [x] Add to Links [No payed promo/Just stuff I like]
 - [x] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
-- [ ] Add https://www.52pi.com/
-- [ ] Add https://www.amazon.de/stores/GeeekPi/page/1ACB4789-76E0-4E1A-817B-E1F403EDF01B?ref_=ast_bln
+- [x] Add https://www.52pi.com/
+- [x] Add https://www.amazon.de/stores/GeeekPi/page/1ACB4789-76E0-4E1A-817B-E1F403EDF01B?ref_=ast_bln
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
