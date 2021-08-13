@@ -4,7 +4,7 @@
 ****
 #### All settings in one place! :key: :mag: :hammer: :toilet:   
     
-#### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. PiGro is inspired by the control interface of Linux Mint and MX Linux.    
+#### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.     
     
 #### The most important settings that are used again and again must be entered on the Pi using a terminal. Pigro is a graphically appealing GUI that does these settings with the click of a button.     
     
@@ -26,23 +26,33 @@ Sudo nano boot / config.txt? No, just click it!
 ```diff
 - 	Dear curious users, xDDDDD nerver ever ever ever use a script from the    
 -	"SCRIPTS-FOLDER" that is not in the GUI! These scripts are Alpha-State.    
+-	By the next Update those scripts will be removed/moved to the unstable BRANCH    
+
 ```
  ****   
 #  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
 Documentation + Manual   /// Still in work 
 ****
-#  :rocket: To do
+#  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
+- [x] Add planke to Apt-Shop
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
-- [ ] Add Wiki to to PiGro GUI
-- [ ] Delete old scripts
-- [ ] Add User Manuel.pdf
-- [ ] Add a Testing branch/it's about time!!!!!1111
+- [x] Add Wiki to PiGro GUI
+- [x] Delete old scripts
+- [x] Remove alpha scrips
+- [x] Add User Manuel.pdf
+- [x] Add a Testing branch/it's about time!!!!!1111
 - [ ] Fix playsound not play mp3 bug(RaspiOS)
 - [ ] Make-Me-Nextclod-script
+- [x] Fix old icons
+- [x] adjust code
 - [ ] Quake III one click installer vulkan :rage3:
-- [ ] Integrate Vulkan32/64 installer to GUI
+- [x] Integrate Vulkan32/64 installer to GUI
+- [x] Add to Links [No payed promo/Just stuff I like]
+- [x] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
+- [x] Add https://www.52pi.com/
+- [x] Add https://www.amazon.de/stores/GeeekPi/page/1ACB4789-76E0-4E1A-817B-E1F403EDF01B?ref_=ast_bln
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****

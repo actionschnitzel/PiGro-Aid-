@@ -140,13 +140,23 @@ def changelog():
     pop_changelog.geometry("650x600")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####JulFix###################################################################
+####AugustFix#################################################################
 ##############################################################################
-Sorry for another theme change... no not really xD
-But this one 'll be the last last for a long time
-I just wanted a mondern look. Hope I nailed it.
-Also is decided to use an own Logo
-instead of just paint the raspberry gold :-P .
+
+The vacation is over and I finally have my Pi in front of me again.
+
+Programming on a laptop while sunbathing is something nice xD
+- Splaaaash Screeeen :-)
+- new unique icons (I am now a GIMP PRO xD)
+- Uniform fonts (Helvetica)
+- XFCE settings are marked with a symbol
+- "Distro display" at System Info
+- New Stuff in the Shop (Icon is ugly .. I'll patch it soon ;-)
+    - Vulkan 32/64 installer
+    - Tetris CLI
+- Overlocking to 2200 Ghz
+- More usefull links
+- * NEW * Pig-Grow Tab
 
 
 Cheers
@@ -154,17 +164,7 @@ Cheers
 Timo
 ##############################################################################
 ##############################################################################
-Version 6.0
------------
-- Xfce4 wifi-fix worx now in RaspiOS(at least for me)
-- New Theme/Logo/Icons
-- xdp instead of script
-- Minor code changes
-- Xfce install How-To > LOOK
-- Added more options to > SYSTEM
-- Added more Links
-- Code fixes
- """)
+""")
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 ################################
 def readf():
