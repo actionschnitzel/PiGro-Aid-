@@ -144,8 +144,10 @@ def changelog():
 ##############################################################################
 
 The vacation is over and I finally have my Pi in front of me again.
-
 Programming on a laptop while sunbathing is something nice xD
+
+Changes:
+
 - Splaaaash Screeeen :-)
 - new unique icons (I am now a GIMP PRO xD)
 - Uniform fonts (Helvetica)
