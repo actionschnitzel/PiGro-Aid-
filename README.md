@@ -36,6 +36,7 @@ Documentation + Manual   /// Still in work
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
+- [ ] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
 - [x] Add planke to Apt-Shop
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [x] Add Wiki to PiGro GUI
