@@ -43,6 +43,7 @@ Documentation + Manual   /// Still in work
 - [ ] ADD Papirus Folder Colors https://github.com/PapirusDevelopmentTeam/papirus-icon-theme#folders-color
 - [ ] ADD Timeshift https://github.com/teejee2008/timeshift
 - [ ] ADD AssistentPi https://github.com/xtools-at/AssistantPi
+- [ ] ADD Planner https://flatpak.org/setup/Raspberry%20Pi%20OS/
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [x] Add Wiki to PiGro GUI
 - [x] Delete old scripts
