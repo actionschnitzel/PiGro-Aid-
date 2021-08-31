@@ -13,7 +13,7 @@ from collections import namedtuple
 import resource
 import threading
 from datetime import datetime
-from playsound import playsound
+#from playsound import playsound 
 import distro
 
 
@@ -138,28 +138,23 @@ def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
     pop_changelog.geometry("650x600")
+    pop_changelog.title("Changelog")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####AugustFix#################################################################
+####SeptemberFix#################################################################
 ##############################################################################
-
-The vacation is over and I finally have my Pi in front of me again.
-Programming on a laptop while sunbathing is something nice xD
 
 Changes:
 
-- Splaaaash Screeeen :-)
-- new unique icons (I am now a GIMP PRO xD)
-- Uniform fonts (Helvetica)
-- XFCE settings are marked with a symbol
-- "Distro display" at System Info
-- New Stuff in the Shop (Icon is ugly .. I'll patch it soon ;-)
-    - Vulkan 32/64 installer
-    - Tetris CLI
-- Overlocking to 2200 Ghz
-- More usefull links
-- * NEW * Pig-Grow Tab
+sound playback replacement: py.playsound -> mpg123
 
+The splash screen shouldn't just look cool! ... ;-)
+It also checks whether all dependencies are met. As a result,
+PiGro doesn't start as fast as it used to. The advantage is:
+I don't have to write with Botspot every time to adapt the pi-apps installer :-)
+
+
+oohhhh and PiGro will now open exactly in the middle of the screen
 
 Cheers
 
@@ -173,36 +168,25 @@ def readf():
     global pop_readf
     pop_readf=Toplevel()
     pop_readf.geometry("650x600")
+    pop_readf.title("Mutcho Importanto")
+
     text = Text(pop_readf)
     text.insert(INSERT, """
+########################Mutcho Importanto#####################################
 ##############################################################################
-##############################################################################
-PiGro is getting more and more complex. In general,
-PiGro should work with all Debian derivatives.
-Nevertheless, despite Debian as the basis, there are many differences.
+For once there are no important comments ...
 
-For Raspberry Pi OS users this means:
+But I could tell you a story.
 
-- Only nano config.txt instead of mousepad config.txt
-
-- Notification Sounds are not working
-
-If you installed PiGro via pi-apps (On RaspiOS) please run:
-
-sudo apt-get install xterm -y
-sudo apt-get install python3-pil python3-pil.imagetk -y
-sudo apt install python3-pip -y
-pip3 install playsound
-
-that should fix most of the bugs ;-)
-
-If you use Twister you shouldn't have any problem :-P
-
-I'll do a pull request to pi-apps soon to fix all.
-
-Cheers
-
-Timo
+It is a period of civil war.
+Rebel spaceships, striking from a hidden base,
+have won their first victory against the evil Galactic Empire.
+During the battle, Rebel spies managed to steal secret plans
+to the Empire’s ultimate weapon, the DEATH STAR, an armored space station
+with enough power to destroy an entire planet. Pursued by the Empire’s
+sinister agents, Princess Leia races home aboard her starship,
+custodian of the stolen plans that can save her people
+and restore freedom to the galaxy….
 ##############################################################################
 ##############################################################################
 """)
@@ -513,7 +497,7 @@ tab1.counter = 0
 
 
 def clicked():
-    playsound('scripts/kuba-yo.mp3')
+    popen('mpg321 /home/pi/PiGro-Aid-/scripts/kuba-yo.mp3 &')
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/kuba-yo!.sh && exit; exec bash\"'")
     tab1.counter += 1
     L['text'] = str(tab1.counter)
@@ -541,9 +525,9 @@ clc_btn0tt= CreateToolTip(clc_btn0, \
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#333333',
              foreground="white", command=changelog).place(x=550, y=445)
 
-aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
+aclabel=Label(tab1,text="September FIX :",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0.1", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
 
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
@@ -1370,7 +1354,8 @@ def ov_2000():
 ######################################pop_2147        
 def ov_2147():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'")
-    playsound('scripts/HOLYPiT.mp3')
+    popen("mpg123 /home/pi/PiGro-Aid-/scripts/HOLYPiT.mp3")
+    #playsound('scripts/HOLYPiT.mp3')
     global pop_2147
     pop_2147=Toplevel(main)
     pop_2147.config(bg='#333333')
@@ -1425,7 +1410,7 @@ def set_default():
 ######################################pop_2147        
 def ov_2200():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
-    playsound('scripts/HOLYPiT.mp3')
+    #playsound('scripts/HOLYPiT.mp3')
     global pop_2200
     pop_2200=Toplevel(main)
     pop_2200.config(bg='#333333')
@@ -1747,7 +1732,8 @@ def pick_at_you():
     
     poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
 
-    playsound('scripts/poke_pig.mp3')
+    #playsound('scripts/poke_pig.mp3')
+    popen("mpg123  /home/pi/PiGro-Aid-/scripts/poke_pig.mp3")
 
     poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()
 

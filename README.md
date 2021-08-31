@@ -36,7 +36,14 @@ Documentation + Manual   /// Still in work
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
+- [ ] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
 - [x] Add planke to Apt-Shop
+- [ ] ADD Pi-Safe https://github.com/RichardMidnight/pi-safe
+- [ ] ADD DeskPi Pro driver https://github.com/DeskPi-Team/deskpi
+- [ ] ADD Papirus Folder Colors https://github.com/PapirusDevelopmentTeam/papirus-icon-theme#folders-color
+- [ ] ADD Timeshift https://github.com/teejee2008/timeshift
+- [ ] ADD AssistentPi https://github.com/xtools-at/AssistantPi
+- [ ] ADD Planner https://flatpak.org/setup/Raspberry%20Pi%20OS/
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
 - [x] Add Wiki to PiGro GUI
 - [x] Delete old scripts
@@ -47,7 +54,7 @@ Documentation + Manual   /// Still in work
 - [ ] Make-Me-Nextclod-script
 - [x] Fix old icons
 - [x] adjust code
-- [ ] Quake III one click installer vulkan :rage3:
+- [ ] Quake III one click installer vulkan :rage3: https://github.com/cdev-tux/q3lite
 - [x] Integrate Vulkan32/64 installer to GUI
 - [x] Add to Links [No payed promo/Just stuff I like]
 - [x] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
