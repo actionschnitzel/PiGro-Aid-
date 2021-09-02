@@ -22,7 +22,7 @@ y = (screen_height / 2) - (app_height / 2)
 splash.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
 splash.overrideredirect(True)
 
-popen("pip3 install distro && exit"
+popen("pip3 install distro && exit")
 
 tab_tp1 = Image.open('icons/splash.png')
 tp01 = ImageTk.PhotoImage(tab_tp1)
