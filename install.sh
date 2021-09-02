@@ -41,7 +41,7 @@ echo 'Now I install dependencies'
 sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
-pip3 install playsound
+sudo apt install mpg123
 
 sudo chmod +x start.sh
 sudo cp pigro.desktop  /home/pi/Desktop

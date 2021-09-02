@@ -13,7 +13,7 @@ from collections import namedtuple
 import resource
 import threading
 from datetime import datetime
-from playsound import playsound
+#from playsound import playsound 
 import distro
 
 
@@ -138,28 +138,26 @@ def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
     pop_changelog.geometry("650x600")
+    pop_changelog.title("Changelog")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####AugustFix#################################################################
+####SeptemberFix#################################################################
 ##############################################################################
-
-The vacation is over and I finally have my Pi in front of me again.
-Programming on a laptop while sunbathing is something nice xD
 
 Changes:
 
-- Splaaaash Screeeen :-)
-- new unique icons (I am now a GIMP PRO xD)
-- Uniform fonts (Helvetica)
-- XFCE settings are marked with a symbol
-- "Distro display" at System Info
-- New Stuff in the Shop (Icon is ugly .. I'll patch it soon ;-)
-    - Vulkan 32/64 installer
-    - Tetris CLI
-- Overlocking to 2200 Ghz
-- More usefull links
-- * NEW * Pig-Grow Tab
+- sound playback replacement: py.playsound -> mpg123
 
+- The splash screen shouldn't just look cool! ... ;-)
+  It also checks whether all dependencies are met. As a result,
+  PiGro doesn't start as fast as it used to. The advantage is:
+  I don't have to write with Botspot every time to adapt the pi-apps installer :-)
+
+- Argon One & Deskpi Pi Pro driver installer in Shop
+
+- Plank installer & Albert installer
+
+- oohhhh and PiGro will now open exactly in the middle of the screen
 
 Cheers
 
@@ -173,36 +171,17 @@ def readf():
     global pop_readf
     pop_readf=Toplevel()
     pop_readf.geometry("650x600")
+    pop_readf.title("Mutcho Importanto")
+
     text = Text(pop_readf)
     text.insert(INSERT, """
+########################Mutcho Importanto#####################################
 ##############################################################################
-##############################################################################
-PiGro is getting more and more complex. In general,
-PiGro should work with all Debian derivatives.
-Nevertheless, despite Debian as the basis, there are many differences.
+For once there are no important comments ...
 
-For Raspberry Pi OS users this means:
+But I could tell you a story.
 
-- Only nano config.txt instead of mousepad config.txt
-
-- Notification Sounds are not working
-
-If you installed PiGro via pi-apps (On RaspiOS) please run:
-
-sudo apt-get install xterm -y
-sudo apt-get install python3-pil python3-pil.imagetk -y
-sudo apt install python3-pip -y
-pip3 install playsound
-
-that should fix most of the bugs ;-)
-
-If you use Twister you shouldn't have any problem :-P
-
-I'll do a pull request to pi-apps soon to fix all.
-
-Cheers
-
-Timo
+...No I don't....
 ##############################################################################
 ##############################################################################
 """)
@@ -349,6 +328,18 @@ def vulk_64():
     
 def tetris_cli():
     popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/tetris_cli.sh; exec bash\"'")
+    
+def ar_1():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/argon.sh; exec bash\"'")
+
+def dp_p():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/dp_pro.sh; exec bash\"'")
+    
+def p_lank():
+    popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")  
+    
+def al_bert():
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/albert.sh; exec bash\"'")    
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -513,7 +504,7 @@ tab1.counter = 0
 
 
 def clicked():
-    playsound('scripts/kuba-yo.mp3')
+    popen('mpg123 /home/pi/PiGro-Aid-/scripts/kuba-yo.mp3')
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/kuba-yo!.sh && exit; exec bash\"'")
     tab1.counter += 1
     L['text'] = str(tab1.counter)
@@ -541,9 +532,9 @@ clc_btn0tt= CreateToolTip(clc_btn0, \
 Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0, borderwidth=0, background='#333333',
              foreground="white", command=changelog).place(x=550, y=445)
 
-aclabel=Label(tab1,text="JULY FIX of the Fix:",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
+aclabel=Label(tab1,text="September FIX :",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0.2", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
 
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
@@ -942,23 +933,47 @@ def shop():
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)
     
     
-    shop_btn13 = Button(pop_shop, width=120, image=ip03, text="Vulkan 32 bit\n ", anchor="w", command=vulk_32, highlightthickness=0,
+    shop_btn13 = Button(pop_shop, width=150, image=ip03, text="Vulkan 32 bit\n ", anchor="w", command=vulk_32, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=1)
 
     shop_btn113 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)   
     
-    shop_btn14 = Button(pop_shop, width=120, image=ip03, text="Vulkan 64 bit", anchor="w", command=vulk_64, highlightthickness=0,
+    shop_btn14 = Button(pop_shop, width=150, image=ip03, text="Vulkan 64 bit", anchor="w", command=vulk_64, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=2)
 
     shop_btn114 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)     
 
-    shop_btn15 = Button(pop_shop, width=120, image=ip03, text="Tetris-CLI", anchor="w", command=tetris_cli, highlightthickness=0,
+    shop_btn15 = Button(pop_shop, width=150, image=ip03, text="Tetris-CLI", anchor="w", command=tetris_cli, highlightthickness=0,
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
 
     shop_btn115 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/tetris", anchor="w",
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
+
+    shop_btn16 = Button(pop_shop, width=150, image=ip03, text="Argon One Driver", anchor="w", command=ar_1, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=4)
+
+    shop_btn116 = Label(pop_shop,width=50, text="https://www.argon40.com/", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=4)     
+
+    shop_btn17 = Button(pop_shop, width=150, image=ip03, text="DeskPi Pro Driver", anchor="w", command=dp_p, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=5)
+
+    shop_btn117 = Label(pop_shop,width=50, text="https://wiki.deskpi.com/deskpi/", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=5)     
+
+    shop_btn18 = Button(pop_shop, width=150, image=ip03, text="Plank", anchor="w", command=p_lank, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=6)
+
+    shop_btn118 = Label(pop_shop,width=50, text="It's a Dock!", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=6)     
+
+    shop_btn19 = Button(pop_shop, width=150, image=ip03, text="Albert", anchor="w", command=al_bert, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=7)
+
+    shop_btn119 = Label(pop_shop,width=50, text="THE Search Bar!!!!", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=7)     
 
 
 #####################
@@ -1370,7 +1385,8 @@ def ov_2000():
 ######################################pop_2147        
 def ov_2147():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'")
-    playsound('scripts/HOLYPiT.mp3')
+    popen("mpg123 /home/pi/PiGro-Aid-/scripts/HOLYPiT.mp3")
+    #playsound('scripts/HOLYPiT.mp3')
     global pop_2147
     pop_2147=Toplevel(main)
     pop_2147.config(bg='#333333')
@@ -1425,7 +1441,7 @@ def set_default():
 ######################################pop_2147        
 def ov_2200():
     popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
-    playsound('scripts/HOLYPiT.mp3')
+    #playsound('scripts/HOLYPiT.mp3')
     global pop_2200
     pop_2200=Toplevel(main)
     pop_2200.config(bg='#333333')
@@ -1747,7 +1763,8 @@ def pick_at_you():
     
     poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
 
-    playsound('scripts/poke_pig.mp3')
+    #playsound('scripts/poke_pig.mp3')
+    popen("mpg123  /home/pi/PiGro-Aid-/scripts/poke_pig.mp3")
 
     poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()
 

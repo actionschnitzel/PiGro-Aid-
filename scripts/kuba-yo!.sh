@@ -142,5 +142,5 @@ echo "Thank YOU for 14.000 git clons!!!!!!!!"
 sleep 6
 clear
 echo "Now go away!"
-
+sleep 6
 exit
