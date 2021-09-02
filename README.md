@@ -36,10 +36,10 @@ Documentation + Manual   /// Still in work
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
-- [ ] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
+- [x] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
 - [x] Add planke to Apt-Shop
 - [ ] ADD Pi-Safe https://github.com/RichardMidnight/pi-safe
-- [ ] ADD DeskPi Pro driver https://github.com/DeskPi-Team/deskpi
+- [x] ADD DeskPi Pro driver https://github.com/DeskPi-Team/deskpi
 - [ ] ADD Papirus Folder Colors https://github.com/PapirusDevelopmentTeam/papirus-icon-theme#folders-color
 - [ ] ADD Timeshift https://github.com/teejee2008/timeshift
 - [ ] ADD AssistentPi https://github.com/xtools-at/AssistantPi
@@ -50,7 +50,7 @@ Documentation + Manual   /// Still in work
 - [x] Remove alpha scrips
 - [x] Add User Manuel.pdf
 - [x] Add a Testing branch/it's about time!!!!!1111
-- [ ] Fix playsound not play mp3 bug(RaspiOS)
+- [x] Fix playsound not play mp3 bug(RaspiOS)
 - [ ] Make-Me-Nextclod-script
 - [x] Fix old icons
 - [x] adjust code
