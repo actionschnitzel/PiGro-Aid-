@@ -36,6 +36,7 @@ Documentation + Manual   /// Still in work
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
+
 - [x] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
 - [x] Add planke to Apt-Shop
 - [ ] ADD Pi-Safe https://github.com/RichardMidnight/pi-safe
@@ -70,6 +71,7 @@ sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
 pip3 install playsound
+pip3 install distro
 ```
 
  Debian based means "DEBIAN" not UBUNTU nor MANJARO  :shit:   
