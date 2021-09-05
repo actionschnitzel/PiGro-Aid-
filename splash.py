@@ -45,7 +45,7 @@ dump_splash_txt = Label(text=item,font=("Arial", 16), bg="#333333",fg="white").p
 #popen("sudo apt-get install xterm -y")
 #popen("sudo apt-get install python3-pil python3-pil.imagetk -y")
 #popen("sudo apt install python3-pip -y")
-#popen("pip3 install playsound")
+popen("pip3 install distro")
 
 
 cache = apt.Cache()
