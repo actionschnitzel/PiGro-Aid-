@@ -21,46 +21,20 @@ Sudo nano boot / config.txt? No, just click it!
 #### Yup! It's open source, after all.
 #### Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
 ****
-
-
-```diff
-- 	Dear curious users, xDDDDD nerver ever ever ever use a script from the    
--	"SCRIPTS-FOLDER" that is not in the GUI! These scripts are Alpha-State.    
--	By the next Update those scripts will be removed/moved to the unstable BRANCH    
-
-```
- ****   
+ 
 #  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
 Documentation + Manual   /// Still in work 
 ****
 #  :rocket: To do [NEXT UPDATE]
 - [ ] [add Theme Shop] 
 - [ ] [add more apt-get installs] 
-
-- [x] Add Albert https://download.opensuse.org/repositories/home:/manuelschneid3r/Raspbian_10/armhf/albert_0.17.2-0_armhf.deb
-- [x] Add planke to Apt-Shop
 - [ ] ADD Pi-Safe https://github.com/RichardMidnight/pi-safe
-- [x] ADD DeskPi Pro driver https://github.com/DeskPi-Team/deskpi
 - [ ] ADD Papirus Folder Colors https://github.com/PapirusDevelopmentTeam/papirus-icon-theme#folders-color
 - [ ] ADD Timeshift https://github.com/teejee2008/timeshift
 - [ ] ADD AssistentPi https://github.com/xtools-at/AssistantPi
 - [ ] ADD Planner https://flatpak.org/setup/Raspberry%20Pi%20OS/
 - [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
-- [x] Add Wiki to PiGro GUI
-- [x] Delete old scripts
-- [x] Remove alpha scrips
-- [x] Add User Manuel.pdf
-- [x] Add a Testing branch/it's about time!!!!!1111
-- [x] Fix playsound not play mp3 bug(RaspiOS)
-- [ ] Make-Me-Nextclod-script
-- [x] Fix old icons
-- [x] adjust code
 - [ ] Quake III one click installer vulkan :rage3: https://github.com/cdev-tux/q3lite
-- [x] Integrate Vulkan32/64 installer to GUI
-- [x] Add to Links [No payed promo/Just stuff I like]
-- [x] Add https://docs.nextcloudpi.com/en/how-to-install-nextcloudpi/
-- [x] Add https://www.52pi.com/
-- [x] Add https://www.amazon.de/stores/GeeekPi/page/1ACB4789-76E0-4E1A-817B-E1F403EDF01B?ref_=ast_bln
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
@@ -70,7 +44,7 @@ Documentation + Manual   /// Still in work
 sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
-pip3 install playsound
+sudo apt install mpg123 -y
 pip3 install distro
 ```
 
