@@ -10,6 +10,7 @@ from os import popen
 from os import system as cmd
 import apt
 import threading
+import requests
 
 class aptFind(apt.Cache):
     def __init__(self):
@@ -44,6 +45,12 @@ def install_depends():
     c.installIfNotInstalled('mpg123')
     pip_install('distro')
     isInstalling=False
+def isConnected(url, timeout):
+    try:
+        requests.get(url, timeout=timeout)
+        return True
+    except (requests.ConnectionError, requests.Timeout):
+        return False
 
 splash = Tk()
 splash['background'] = '#333333'
@@ -88,8 +95,13 @@ def loop():
     while isInstalling == True:
         pass
     splash.destroy()
-t=threading.Thread(target=install_depends)
-splash.after(3000, loop)
-t.start()
+
+if isConnected('https://github.com', 5):
+    t = threading.Thread(target=install_depends)
+    splash.after(3000, loop)
+    t.start()
+else:
+    print("\033[1;33mWARNING: not connected to the internet!\033[0m") #print in bold yellow
+    splash.after(3000, splash.destroy)
 
 mainloop()
