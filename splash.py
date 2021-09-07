@@ -10,6 +10,25 @@ from os import popen
 from os import system as cmd
 import apt
 
+class aptFind(apt.Cache):
+    def __init__(self):
+        super().__init__()
+    def find(self, pkg):
+        try:
+            if self[pkg].is_installed:
+                print(pkg+" is installed")
+                return True
+            else:
+                print(pkg+" is NOT installed")
+                return False
+        except KeyError:
+            print("ERROR: there is no package called '"+pkg+"'!")
+    def install(self, pkg):
+        cmd='sudo apt install -y '+pkg
+        popen(cmd)
+    def installIfNotInstalled(self, pkg):
+        if not self.find(pkg):
+            self.install(pkg)
 
 splash = Tk()
 splash['background'] = '#333333'
@@ -48,36 +67,12 @@ dump_splash_txt = Label(text=item,font=("Arial", 16), bg="#333333",fg="white").p
 popen("pip3 install distro")
 
 
-cache = apt.Cache()
-if cache['xterm'].is_installed:
-    print ("xterm it installed")
-else :
-    print ("xterm it NOT installed")
-    popen("sudo apt-get install xterm -y")
-    
-cache = apt.Cache()
-if cache['python3-pil'].is_installed:
-    print ("python3-pil is installed")
-else :
-    print ("python3-pil is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'python3-pil.imagetk'].is_installed:
-    print ("python3-pil.imagetk is installed")
-else :
-    print ("python3-pil.imagetk is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'python3-pip' ].is_installed:
-    print ("python3-pip is installed")
-else :
-    print ("python3-pip is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'mpg123' ].is_installed:
-    print ("mpg123 is installed")
-else :
-    print ("mpg123 is NOT installed")
+cache = aptFind()
+cache.installIfNotInstalled('xterm')
+cache.installIfNotInstalled('python3-pil')
+cache.installIfNotInstalled('python3-pil.imagetk')
+cache.installIfNotInstalled('python3-pip')
+cache.installIfNotInstalled('mpg123')
     
 required = {'distro','playsound'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
