@@ -89,7 +89,7 @@ def loop():
         pass
     splash.destroy()
 t=threading.Thread(target=install_depends)
-splash.after(3000, splash.destroy)
+splash.after(3000, loop)
 t.start()
 
 mainloop()
