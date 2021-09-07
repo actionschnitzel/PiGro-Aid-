@@ -24,8 +24,8 @@ class aptFind(apt.Cache):
         except KeyError:
             print("ERROR: there is no package called '"+pkg+"'!")
     def install(self, pkg):
-        cmd='sudo apt install -y '+pkg
-        popen(cmd)
+        command='sudo apt install -y '+pkg
+        cmd(command)
     def installIfNotInstalled(self, pkg):
         if not self.find(pkg):
             self.install(pkg)
