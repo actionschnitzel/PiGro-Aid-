@@ -9,7 +9,41 @@ import os
 from os import popen
 from os import system as cmd
 import apt
+import threading
 
+class aptFind(apt.Cache):
+    def __init__(self):
+        super().__init__()
+    def find(self, pkg):
+        try:
+            if self[pkg].is_installed:
+                print(pkg+" is installed")
+                return True
+            else:
+                print(pkg+" is NOT installed")
+                return False
+        except KeyError:
+            print("ERROR: there is no package called '"+pkg+"'!")
+    def install(self, pkg):
+        command='sudo apt install -y '+pkg
+        cmd(command)
+    def installIfNotInstalled(self, pkg):
+        if not self.find(pkg):
+            self.install(pkg)
+def pip_install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+def install_depends():
+    global isInstalling
+    isInstalling=True
+    c = aptFind()
+    c.installIfNotInstalled('xterm')
+    c.installIfNotInstalled('python3-pil')
+    c.installIfNotInstalled('python3-pil.imagetk')
+    c.installIfNotInstalled('python3-pip')
+    c.installIfNotInstalled('mpg123')
+    pip_install('distro')
+    isInstalling=False
 
 splash = Tk()
 splash['background'] = '#333333'
@@ -45,45 +79,17 @@ dump_splash_txt = Label(text=item,font=("Arial", 16), bg="#333333",fg="white").p
 #popen("sudo apt-get install xterm -y")
 #popen("sudo apt-get install python3-pil python3-pil.imagetk -y")
 #popen("sudo apt install python3-pip -y")
-popen("pip3 install distro")
+#popen("pip3 install distro")   
+#required = {'distro','playsound'}
+#installed = {pkg.key for pkg in pkg_resources.working_set}
+#missing = required - installed
 
-
-cache = apt.Cache()
-if cache['xterm'].is_installed:
-    print ("xterm it installed")
-else :
-    print ("xterm it NOT installed")
-    popen("sudo apt-get install xterm -y")
-    
-cache = apt.Cache()
-if cache['python3-pil'].is_installed:
-    print ("python3-pil is installed")
-else :
-    print ("python3-pil is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'python3-pil.imagetk'].is_installed:
-    print ("python3-pil.imagetk is installed")
-else :
-    print ("python3-pil.imagetk is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'python3-pip' ].is_installed:
-    print ("python3-pip is installed")
-else :
-    print ("python3-pip is NOT installed")
-    
-cache = apt.Cache()
-if cache[ 'mpg123' ].is_installed:
-    print ("mpg123 is installed")
-else :
-    print ("mpg123 is NOT installed")
-    
-required = {'distro','playsound'}
-installed = {pkg.key for pkg in pkg_resources.working_set}
-missing = required - installed
-
-
-splash.after(3000, splash.destroy)
+def loop():
+    while isInstalling == True:
+        pass
+    splash.destroy()
+t=threading.Thread(target=install_depends)
+splash.after(3000, loop)
+t.start()
 
 mainloop()
