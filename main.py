@@ -141,9 +141,15 @@ def changelog():
     pop_changelog.title("Changelog")
     text = Text(pop_changelog)
     text.insert(INSERT, """
-####SeptemberFix#################################################################
-##############################################################################
+####SeptemberFix################################################################
+################################################################################
 
+    ____  _ ______            
+   / __ \(_) ____/________  
+  / /_/ / / / __/ ___/ __ \ 
+ / ____/ / /_/ / /  / /_/ / 
+/_/   /_/\____/_/   \____/ 
+                                                               
 Changes:
 
 - sound playback replacement: py.playsound -> mpg123
@@ -162,8 +168,8 @@ Changes:
 Cheers
 
 Timo
-##############################################################################
-##############################################################################
+################################################################################
+################################################################################
 """)
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 ################################
@@ -175,15 +181,23 @@ def readf():
 
     text = Text(pop_readf)
     text.insert(INSERT, """
-########################Mutcho Importanto#####################################
-##############################################################################
-For once there are no important comments ...
+########################Mutcho Importanto#######################################
+################################################################################
 
-But I could tell you a story.
+    ____  _ ______              ____           __        ____         
+   / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
+  / /_/ / / / __/ ___/ __ \    / // __ \/ ___/ __/ __ `/ / / _ \/ ___/
+ / ____/ / /_/ / /  / /_/ /  _/ // / / (__  ) /_/ /_/ / / /  __/ /    
+/_/   /_/\____/_/   \____/  /___/_/ /_/____/\__/\__,_/_/_/\___/_/     
+                                                                      
 
-...No I don't....
-##############################################################################
-##############################################################################
+You have voted and there will soon be a lot more programs in the shop.
+Since there is Pi-Apps and I assume that you know how to use APT, 
+I will integrate unique tools that are only available from github. 
+'Cause Sometimes the handling here is not so well documented here ;-)
+
+################################################################################
+################################################################################
 """)
     text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 
@@ -339,7 +353,13 @@ def p_lank():
     popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")  
     
 def al_bert():
-    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/albert.sh; exec bash\"'")    
+    popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/albert.sh; exec bash\"'")
+    
+def button_auto():
+    popen('xfce4-session-settings')
+    
+def button_xsett():
+    popen('xfce4-settings-manager')
 #####################################TOOLTIPZ
 class CreateToolTip(object):
     """
@@ -618,23 +638,20 @@ def send_entry_to_terminal(*args):
     cmd("%s" % (BasicCovTests))
 
 
-def button_action():
-    os.popen('xterm -into %d -bg Grey37 -geometry 120x25 -e \"sudo apt update && read -p PRESS_ENTER && exit; exec bash\"' % wid);
+def update_btn():
+    os.popen('xterm -into %d -bg Grey1 -geometry 120x25 -e \"~/PiGro-Aid-/scripts/update.sh && read -p PRESS_ENTER && exit; exec bash\"' % wid);
 
-def button_action2():
-    os.popen('xterm -into %d -bg Grey37 -geometry 120x25 -e \"sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove -y && sudo apt autoclean && read -p PRESS_ENTER && exit ; exec bash\"' % wid);
+def upgrade_btn():
+    os.popen('xterm -into %d -bg Grey1 -geometry 120x25 -e \"~/PiGro-Aid-/scripts/upgrade.sh && read -p PRESS_ENTER && exit; exec bash\"' % wid);
+
+def full_upgrade_btn():
+    os.popen('xterm -into %d -bg Grey1 -geometry 120x25 -e \"~/PiGro-Aid-/scripts/full_upgrade.sh && read -p PRESS_ENTER && exit; exec bash\"' % wid);
     
-def button_action16():
-    os.popen('xterm -into %d -bg Grey37 -geometry 120x25 -e \"sudo apt autoremove -y && sudo apt clean && sudo apt-get purge -y && read -p PRESS_ENTER && exit ; exec bash\"' % wid)
+def autoremove_btn():
+    os.popen('xterm -into %d -bg Grey1 -geometry 120x25 -e \"sudo apt autoremove -y && sudo apt clean && sudo apt-get purge -y && read -p PRESS_ENTER && exit ; exec bash\"' % wid)
 
-def button_action17():
-    os.popen("xterm -into %d -bg Grey37 -geometry 120x25 -e ~/PiGro-Aid-/scripts/addunsignedrepo.sh &" % wid)
-
-def button_auto():
-    popen('xfce4-session-settings')
-    
-def button_xsett():
-    popen('xfce4-settings-manager')
+def add_unsi_btn():
+    os.popen("xterm -into %d -bg Grey1 -geometry 120x25 -e ~/PiGro-Aid-/scripts/addunsignedrepo.sh &" % wid)
     
 def button_gpk():
     popen('sudo pi-gpk-update-viewer')
@@ -658,7 +675,7 @@ Sources List has been saved\n\
 termf = Frame(tab11, height=270, width=600, padx=10, highlightthickness=1)
 wid = termf.winfo_id()
 # os.system('xterm -into %d -bg SteelBlue4 -geometry 120x100  &' % wid)
-termf['background'] = '#383c4a'
+termf['background'] = '#333333'
 
 s_list = Text(rahmen11, width=100, height=5, highlightthickness=1, borderwidth=0)
 text_file = open("/etc/apt/sources.list", 'r')
@@ -675,35 +692,33 @@ rahmen112 = Frame(tab11, borderwidth=0, relief=GROOVE, highlightthickness=1)
 rahmen112.pack(padx=45, anchor='w')
 rahmen112['background'] = '#333333'
 
-update_button = Button(rahmen112, text="Update", width=15, anchor='w', command=button_action, highlightthickness=0,
+update_button = Button(rahmen112, text="Update", width=15, anchor='w', command=update_btn, highlightthickness=0,
                        borderwidth=0, background='#333333', foreground="white")
 update_button.grid(column=0, row=0)
 
-upgrade_button = Button(rahmen112, text="Upgrade", width=15, anchor='w', command=button_action2, highlightthickness=0,
+update_button = Button(rahmen112, text="Upgrade", width=15, anchor='w', command=upgrade_btn, highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="white")
+update_button.grid(column=0, row=1)
+
+fupgrade_button = Button(rahmen112, text="Full Upgrade", width=15, anchor='w', command=full_upgrade_btn, highlightthickness=0,
                         borderwidth=0, background='#333333', foreground="white")
-upgrade_button.grid(column=0, row=1)
-
-auth_button = Button(rahmen112, text="Allow Sources", width=15, anchor='w', command=button_action17,
-                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
-auth_button.grid(column=1, row=0)
-
-rm_button = Button(rahmen112, text="Remove Config Files", width=15, anchor='w', command=button_action16,
-                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
-rm_button.grid(column=1, row=1)
+fupgrade_button.grid(column=0, row=2)
 
 gpk_button = Button(rahmen112, text="GPK UpdateViewer", width=15, anchor='w', command=button_gpk,
                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
-gpk_button.grid(column=0, row=2)
+gpk_button.grid(column=0, row=3)
+
+auth_button = Button(rahmen112, text="Allow Sources", width=15, anchor='w', command=add_unsi_btn,
+                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+auth_button.grid(column=1, row=0)
+
+rm_button = Button(rahmen112, text="Remove Config Files", width=15, anchor='w', command=autoremove_btn,
+                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+rm_button.grid(column=1, row=1)
 
 sv_button = Button(rahmen112, text="Save Source List", width=15, anchor='w', command=save_list, highlightthickness=0,
                    borderwidth=1, background='#333333', foreground="#d4244d")
 sv_button.grid(column=1, row=2)
-
-hiddn_button = Button(tab11, width=15, anchor='w', borderwidth=0)
-# hiddn_button.place(x=730, y=280)
-hiddn_button_ttp = CreateToolTip(hiddn_button, \
-                                 "oh my fucking god, you found the hidden button !!!! I don't give a fuck about spelling, okay? This tool was created in 6 weeks of corona quarantine and quite honestly I think it's really cool. if it wasn't open source, I'd be a fucking millionaire now .... fuuuuuuuuuuuuuuuuuuuu. love you for using my tool: - * C YA")
-
 
 
 termf.pack(padx=10,pady=20)
@@ -1052,7 +1067,7 @@ sys_btn1 = Button(rahmen2, image=bp01, text="Raspi-Config GUI", command=pi_confi
 sys_btn1.grid(row=0,column=1)
 
 
-sys_btn2 = Button(rahmen2, image=bp03, text="Nano Config.txt", command=contxt_button,
+sys_btn2 = Button(rahmen2, image=bp03, text="Config.txt", command=contxt_button,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn2.grid(row=0,column=2)
 
@@ -1226,6 +1241,9 @@ in_btn7.grid(column=3, row=2)
 in_btn7 = Button(rahmen4, text="Xfce_look", compound=LEFT, anchor="w", width=10,
                  command=xfcelook_f, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")
 in_btn7.grid(column=3, row=0)
+
+xfcelook_ttp = CreateToolTip(in_btn7, \
+                                   '*download the themes extract em and throw it into Theme/Icon Folder')
 
 in_btn8 = Button(rahmen4, text="Make-Me-Xfce (Tutorial)", compound=LEFT, anchor="w",
                  command=xfce_make, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")

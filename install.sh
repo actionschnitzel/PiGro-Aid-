@@ -64,6 +64,5 @@ echo  '
 ||__|||__|||__|||__|||_______|||__||
 |/__\|/__\|/__\|/__\|/_______\|/__\|'
 
-
-echo  'You can close this window now'
+printf '\e[38;5;46m You can close this window now\n'
 

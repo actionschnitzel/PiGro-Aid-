@@ -42,6 +42,7 @@ def install_depends():
     c.installIfNotInstalled('python3-pil.imagetk')
     c.installIfNotInstalled('python3-pip')
     c.installIfNotInstalled('mpg123')
+    c.installIfNotInstalled('lolcat')
     pip_install('distro')
     isInstalling=False
 
