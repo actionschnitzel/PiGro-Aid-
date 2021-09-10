@@ -198,6 +198,19 @@ Since there is Pi-Apps and I assume that you know how to use APT,
 I will integrate unique tools that are only available from github. 
 'Cause Sometimes the handling here is not so well documented here ;-)
 
+Announcement time!
+
+Version 6.1.0 will be the last update in the 6 series ... 
+Except Raspberry Pi OS is upgrading to Bulls Eye and I have to fix something.
+
+Why?
+
+I will rebuild the code so that everything is based on classes
+so that I can use some features that are not currently working.
+This will take some time.
+
+C U in v7
+
 ################################################################################
 ################################################################################
 """)
