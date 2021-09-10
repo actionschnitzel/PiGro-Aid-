@@ -153,17 +153,18 @@ def changelog():
 Changes:
 
 - sound playback replacement: py.playsound -> mpg123
-
 - The splash screen shouldn't just look cool! ... ;-)
   It also checks whether all dependencies are met. As a result,
   PiGro doesn't start as fast as it used to. The advantage is:
-  I don't have to write with Botspot every time to adapt the pi-apps installer :-)
-
+  I don't have to write with Botspot every time to adapt the pi-apps installer 
 - Argon One & Deskpi Pi Pro driver installer in Shop
-
 - Plank installer & Albert installer
-
+- Added Samba to Shop
+- Added Tilix to Shop
+- Added Network Settings to System
 - oohhhh and PiGro will now open exactly in the middle of the screen
+
+!!!Special THX to Itai Nelken for fixing the splash screen!!!
 
 Cheers
 
@@ -203,6 +204,8 @@ I will integrate unique tools that are only available from github.
 
 
 #################################
+def net_set():
+    popen("nm-connection-editor")
 
 def upDater_button():
     popen("python3 updater.py")
@@ -351,7 +354,13 @@ def dp_p():
     
 def p_lank():
     popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")  
-    
+
+def inst_tilix():
+    popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")
+
+def inst_samba():
+    popen("xterm -e 'bash -c \"sudo apt-get install -y samba; exec bash\"'")
+
 def al_bert():
     popen("xterm -e 'bash -c \"sudo /home/pi/PiGro-Aid-/scripts/albert.sh; exec bash\"'")
     
@@ -554,7 +563,7 @@ Chl = Button(tab1, text="Change Log", font="50", width=10, highlightthickness=0,
 
 aclabel=Label(tab1,text="September FIX :",font=("Helvetica", 12), bg="#333333",fg="#d4244d").place(x=410, y=447)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.0.2", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.1.0", foreground="white",font=20,compound=LEFT)
 author.place(x=450, y=360)
 
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=505, y=400)
@@ -988,7 +997,19 @@ def shop():
                       borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=7)
 
     shop_btn119 = Label(pop_shop,width=50, text="THE Search Bar!!!!", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=7)     
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=7)
+
+    shop_btn20 = Button(pop_shop, width=150, image=ip03, text="Tilix", anchor="w", command=inst_tilix, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=8)
+
+    shop_btn120 = Label(pop_shop,width=50, text="Multi-Tiling-Super-Terminal-Emulator", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=8)
+
+    shop_btn21 = Button(pop_shop, width=150, image=ip03, text="Samba", anchor="w", command=inst_samba, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=9)
+
+    shop_btn121 = Label(pop_shop,width=50, text="Standard Windows interoperability suite", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=9)
 
 
 #####################
@@ -1109,6 +1130,10 @@ sys_btn9.grid(row=2,column=2)
 sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Settings", command=button_xsett,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
 sys_btn9.grid(row=2,column=3)
+
+sys_btn10 = Button(rahmen2, image=bp05, text="Network Settings", command=net_set,
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP, anchor="w")
+sys_btn10.grid(row=3,column=0)
 
 
 ####################################################
