@@ -162,6 +162,7 @@ Changes:
 - Added Samba to Shop
 - Added Tilix to Shop
 - Added Network Settings to System
+- Added Full-Upgrade butten to Updater
 - oohhhh and PiGro will now open exactly in the middle of the screen
 
 !!!Special THX to Itai Nelken for fixing the splash screen!!!
