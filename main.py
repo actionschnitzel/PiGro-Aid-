@@ -201,13 +201,15 @@ I will integrate unique tools that are only available from github.
 Announcement time!
 
 Version 6.1.0 will be the last update in the 6 series ... 
-Except Raspberry Pi OS is upgrading to Bulls Eye and I have to fix something.
 
 Why?
 
 I will rebuild the code so that everything is based on classes
 so that I can use some features that are not currently working.
 This will take some time.
+
+It also makes more sense to wait for bullseye 
+because then I have more options for Xfce
 
 C U in v7
 
