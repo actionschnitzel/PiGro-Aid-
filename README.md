@@ -1,2 +1,2 @@
-# This is just for testing! do nix check out.
+# This is just for testing! Do not check out.
 
