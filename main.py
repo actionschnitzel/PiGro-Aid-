@@ -1041,7 +1041,7 @@ rahmen_shop['background'] = '#333333'
 
 
 shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
-                  borderwidth=0, background='#7f1b57', foreground="white", compound=LEFT)
+                  borderwidth=0, background='green', foreground="white", compound=LEFT)
 shop_click.pack()
 
 
@@ -1089,7 +1089,7 @@ bl07 = Label(image=bp07)
 
 #########################################FRAMETAB2
 #########################################
-rahmen2 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=10)
+rahmen2 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=10,pady=10)
 rahmen2.pack(padx=40,pady=40)
 rahmen2['background'] = '#333333'
 
@@ -1251,42 +1251,43 @@ tab_ip2 = Image.open('icons/fix1i.png')
 ip02 = ImageTk.PhotoImage(tab_ip2)
 il02 = Label(image=ip02)
 
-rahmen4 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=35, padx=10)
+rahmen4 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=10, padx=10,width=300)
 rahmen4.pack(pady=40,padx=40)
 rahmen4['background'] = '#333333'
 
+tab_loktt = Image.open('icons/tuxterm.png')
+ttp01 = ImageTk.PhotoImage(tab_loktt)
+ttl01 = Label(image=ttp01)
+
+guitweaks = Label(rahmen4, text="GUI Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
+guitweaks.grid(column=0, row=0)
+
+in_btn1 = Button(rahmen4,image=ttp01, text="Tasksel",font=("Helvetica",12), command=tasksel_button, highlightthickness=0, borderwidth=0,
+                 background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
+in_btn1.grid(column=1, row=0, padx=5)
+
+in_btn2 = Button(rahmen4,image=ttp01, text="Change Desktop", command=ch_desk,font=("Helvetica",12), highlightthickness=0, borderwidth=0,
+                 background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
+in_btn2.grid(column=1, row=1, padx=5)
+
+in_btn3 = Button(rahmen4,image=ttp01, text="Change Win-Manager", command=button_xfwm,font=("Helvetica",12), highlightthickness=0, borderwidth=0,
+                 background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
+in_btn3.grid(column=1, row=2, padx=5)
+
+in_btn7 = Button(rahmen4,image=bp06, text="Theme Folder",font=("Helvetica",12),
+                 command=theme_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=200)
+in_btn7.grid(column=2, row=0, padx=5,pady=5)
+
+in_btn7 = Button(rahmen4,image=bp06, text="Icon Folder",font=("Helvetica",12),
+                 command=icon_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=200)
+in_btn7.grid(column=2, row=1, padx=5)
 
 
-in_btn1 = Button(rahmen4, text="Tasksel", command=tasksel_button, font=120, highlightthickness=0, borderwidth=0,
-                 background='#333333', foreground="white")
-in_btn1.grid(column=0, row=0, padx=5)
-
-in_btn2 = Button(rahmen4, text="Change Desktop", command=ch_desk, font=120, highlightthickness=0, borderwidth=0,
-                 background='#333333', foreground="white")
-in_btn2.grid(column=1, row=0, padx=5)
-
-in_btn3 = Button(rahmen4, text="Change Win-Manager", command=button_xfwm, font=120, highlightthickness=0, borderwidth=0,
-                 background='#333333', foreground="white")
-in_btn3.grid(column=2, row=0, padx=5)
-
-in_btn7 = Button(rahmen4, text="Theme Folder", compound=LEFT, anchor="w", width=10,
-                 command=theme_f, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")
-in_btn7.grid(column=3, row=1)
-
-in_btn7 = Button(rahmen4, text="Icon Folder", compound=LEFT, anchor="w", width=10,
-                 command=icon_f, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")
-in_btn7.grid(column=3, row=2)
-
-in_btn7 = Button(rahmen4, text="Xfce_look", compound=LEFT, anchor="w", width=10,
-                 command=xfcelook_f, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")
-in_btn7.grid(column=3, row=0)
 
 xfcelook_ttp = CreateToolTip(in_btn7, \
                                    '*download the themes extract em and throw it into Theme/Icon Folder')
 
-in_btn8 = Button(rahmen4, text="Make-Me-Xfce (Tutorial)", compound=LEFT, anchor="w",
-                 command=xfce_make, highlightthickness=2, borderwidth=0, background='#333333', foreground="white")
-in_btn8.grid(column=1, row=2)
+
 
 
 ###########################################
@@ -1316,6 +1317,13 @@ in_btn5 = Button(rahmen41, text="Xfce4 Appearance", image=ip02, compound=LEFT, a
                  command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
 in_btn5.grid(column=1, row=1)
 
+in_btn7 = Button(rahmen41, text="Xfce_look", compound=LEFT, anchor="w", width=10,
+                 command=xfcelook_f, highlightthickness=2, borderwidth=0, background='green', foreground="white")
+in_btn7.grid(column=2, row=1, columnspan=1)
+
+in_btn8 = Button(rahmen41, text="Make-Me-Xfce", compound=LEFT, anchor="w",
+                 command=xfce_make, highlightthickness=2, borderwidth=0, background='green', foreground="white")
+in_btn8.grid(column=3, row=1)
 ##################################################
 
 rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=16)
