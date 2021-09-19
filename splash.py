@@ -98,4 +98,7 @@ else:
     print("\033[1;33mWARNING: not connected to the internet!\033[0m") #print in bold yellow
     splash.after(3000, splash.destroy)
 
+popen('find /home/pi/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+
+
 mainloop()

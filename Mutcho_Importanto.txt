@@ -1,0 +1,32 @@
+########################Mutcho Importanto#######################################
+################################################################################
+
+    ____  _ ______              ____           __        ____         
+   / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
+  / /_/ / / / __/ ___/ __ \    / // __ \/ ___/ __/ __ `/ / / _ \/ ___/
+ / ____/ / /_/ / /  / /_/ /  _/ // / / (__  ) /_/ /_/ / / /  __/ /    
+/_/   /_/\____/_/   \____/  /___/_/ /_/____/\__/\__,_/_/_/\___/_/     
+                                                                      
+
+You have voted and there will soon be a lot more programs in the shop.
+Since there is Pi-Apps and I assume that you know how to use APT, 
+I will integrate unique tools that are only available from github. 
+'Cause Sometimes the handling here is not so well documented here ;-)
+
+Announcement time!
+
+Version 6.1.0 will be the last update in the 6 series ... 
+
+Why?
+
+I will rebuild the code so that everything is based on classes
+so that I can use some features that are not currently working.
+This will take some time.
+
+It also makes more sense to wait for bullseye 
+because then I have more options for Xfce
+
+C U in v7
+
+################################################################################
+################################################################################

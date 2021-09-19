@@ -18,7 +18,6 @@ import distro
 
 ##################################################MAIN
 
-popen('find /home/pi/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
 
 ###################################Main_Settings
 
@@ -137,41 +136,19 @@ def changelog():
     pop_changelog=Toplevel()
     pop_changelog.geometry("650x600")
     pop_changelog.title("Changelog")
-    text = Text(pop_changelog)
-    text.insert(INSERT, """
-####SeptemberFix################################################################
-################################################################################
-
-    ____  _ ______            
-   / __ \(_) ____/________  
-  / /_/ / / / __/ ___/ __ \ 
- / ____/ / /_/ / /  / /_/ / 
-/_/   /_/\____/_/   \____/ 
-                                                               
-Changes:
-
-- sound playback replacement: py.playsound -> mpg123
-- The splash screen shouldn't just look cool! ... ;-)
-  It also checks whether all dependencies are met. As a result,
-  PiGro doesn't start as fast as it used to. The advantage is:
-  I don't have to write with Botspot every time to adapt the pi-apps installer 
-- Argon One & Deskpi Pi Pro driver installer in Shop
-- Plank installer & Albert installer
-- Added Samba to Shop
-- Added Tilix to Shop
-- Added Network Settings to System
-- Added Full-Upgrade butten to Updater
-- oohhhh and PiGro will now open exactly in the middle of the screen
-
-!!!Special THX to Itai Nelken for fixing the splash screen!!!
-
-Cheers
-
-Timo
-################################################################################
-################################################################################
-""")
-    text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
+    s_list = Text(pop_changelog)
+    text_file = open("changelog.txt")
+    stuff = text_file.read()
+    s_list.insert(END, stuff)
+    text_file.close()
+    s_list.pack(anchor='w', fill=BOTH, expand=True)
+    
+    
+    
+    
+#    text = Text(pop_changelog)
+#    open(file=changelog.txt)
+#    text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 ################################
 def readf():
     global pop_readf
@@ -179,42 +156,13 @@ def readf():
     pop_readf.geometry("650x600")
     pop_readf.title("Mutcho Importanto")
 
-    text = Text(pop_readf)
-    text.insert(INSERT, """
-########################Mutcho Importanto#######################################
-################################################################################
+    s_list = Text(pop_readf)
+    text_file = open("Mutcho_Importanto.txt")
+    stuff = text_file.read()
+    s_list.insert(END, stuff)
+    text_file.close()
+    s_list.pack(anchor='w', fill=BOTH, expand=True)
 
-    ____  _ ______              ____           __        ____         
-   / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
-  / /_/ / / / __/ ___/ __ \    / // __ \/ ___/ __/ __ `/ / / _ \/ ___/
- / ____/ / /_/ / /  / /_/ /  _/ // / / (__  ) /_/ /_/ / / /  __/ /    
-/_/   /_/\____/_/   \____/  /___/_/ /_/____/\__/\__,_/_/_/\___/_/     
-                                                                      
-
-You have voted and there will soon be a lot more programs in the shop.
-Since there is Pi-Apps and I assume that you know how to use APT, 
-I will integrate unique tools that are only available from github. 
-'Cause Sometimes the handling here is not so well documented here ;-)
-
-Announcement time!
-
-Version 6.1.0 will be the last update in the 6 series ... 
-
-Why?
-
-I will rebuild the code so that everything is based on classes
-so that I can use some features that are not currently working.
-This will take some time.
-
-It also makes more sense to wait for bullseye 
-because then I have more options for Xfce
-
-C U in v7
-
-################################################################################
-################################################################################
-""")
-    text.pack(anchor=N, fill=BOTH, expand=True, side=LEFT )
 
 
 #################################
