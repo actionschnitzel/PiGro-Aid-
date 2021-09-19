@@ -43,6 +43,7 @@ def install_depends():
     c.installIfNotInstalled('python3-pil.imagetk')
     c.installIfNotInstalled('python3-pip')
     c.installIfNotInstalled('mpg123')
+    c.installIfNotInstalled('lolcat')
     pip_install('distro')
     isInstalling=False
 def isConnected(url, timeout):
@@ -83,13 +84,6 @@ info_splash_txt = Label(text="Checked Dependencies - Lets GO!!!", bg="#333333",f
 
 dump_splash_txt = Label(text=item,font=("Arial", 16), bg="#333333",fg="white").pack(pady=20,side=BOTTOM)
 
-#popen("sudo apt-get install xterm -y")
-#popen("sudo apt-get install python3-pil python3-pil.imagetk -y")
-#popen("sudo apt install python3-pip -y")
-#popen("pip3 install distro")   
-#required = {'distro','playsound'}
-#installed = {pkg.key for pkg in pkg_resources.working_set}
-#missing = required - installed
 
 def loop():
     while isInstalling == True:
@@ -103,5 +97,9 @@ if isConnected('https://github.com', 5):
 else:
     print("\033[1;33mWARNING: not connected to the internet!\033[0m") #print in bold yellow
     splash.after(3000, splash.destroy)
+
+    
+popen('find /home/pi/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+
 
 mainloop()
