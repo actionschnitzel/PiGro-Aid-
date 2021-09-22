@@ -1,6 +1,6 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-# :tada: PiGro Xtrmo - Just Click It
+PiGro Xtrmo - Just Click It
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 ****
 #### All settings in one place! :key: :mag: :hammer: :toilet:   
