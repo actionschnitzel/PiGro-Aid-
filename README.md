@@ -1,6 +1,7 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+![forthebadge made-with-coffee](https://github.com/actionschnitzel/PiGro-Aid-/blob/gh-pages/powered-by-coffee.svg)
 
-PiGro Xtrmo - Just Click It
+
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 ****
 #### All settings in one place! :key: :mag: :hammer: :toilet:   
