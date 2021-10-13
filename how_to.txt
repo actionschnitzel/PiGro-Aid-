@@ -1,0 +1,13 @@
+#####################################################
+#####################################################
+Add your own apps:									
+1.create a folder with "APP_NAME" in:				
+													
+~/PDL/essentials/									
+The folder must conain:								
+													
+install.sh [with the whole install parameters]		
+uninstall.sh [with the whole uninstall parameters]	
+Done												
+#####################################################
+#####################################################

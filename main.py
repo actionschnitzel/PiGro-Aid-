@@ -22,7 +22,7 @@ import distro
 ###################################Main_Settings
 
 main = Tk()
-main.title("PiGro Xtrmo - Just Click It!")
+main.title("PiGro - Colpo Diretto")
 icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 main['background'] = '#333333'
@@ -71,6 +71,7 @@ tab7 = ttk.Frame(tab_control)
 tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
+tabx = ttk.Frame(tab_control)
 
 ########################
 tab_tp1 = Image.open('icons/Logotab.png')
@@ -114,6 +115,13 @@ tab_tp10 = Image.open('icons/pigpi.png')
 tp10 = ImageTk.PhotoImage(tab_tp10)
 tl10 = Label(image=tp10)
 
+tab_tpX = Image.open('icons/xfce.png')
+tpX = ImageTk.PhotoImage(tab_tpX)
+tlX = Label(image=tpX)
+
+tab_tpinf = Image.open('icons/info_button.png')
+tpinf = ImageTk.PhotoImage(tab_tpinf)
+tlinf = Label(image=tpinf)
 
 
 ########################################
@@ -122,6 +130,7 @@ tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
 tab_control.add(tab2, compound=LEFT, text='System', image=tp02)
 tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
 tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
+tab_control.add(tabx, compound=LEFT, text='Xfce', image=tpX)
 tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
 tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
 tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
@@ -220,11 +229,6 @@ def gparted_inst():
 def gparted_exec():
     popen("sudo gparted")
 
-def xfcefix():
-    popen("xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
-
-def xfcefix2():
-    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
 
 def actionhome():
     popen("xdg-open https://www.actionschnitzel.de/PiGro/")
@@ -485,8 +489,20 @@ ltab10.image = ptab10
 ltab10['background'] = '#383c4a'
 ltab10.place(x=-1, y=-1)
 
+itabX = Image.open('icons/pigro_X-bg .png')
+ptabX = ImageTk.PhotoImage(itabX)
+ltabX = Label(tabx, image=ptabX)
+ltabX.image = ptabX
+ltabX['background'] = '#383c4a'
+ltabX.place(x=-1, y=-1)
+
 
 #############################################TAB1
+
+def exit666():
+    main.destroy()
+    os.system("python3 ~/PiGro-Aid-/main_altanate_touch.py")
+
 def paypal():
     popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel?locale.x=de_DE")
     
@@ -513,17 +529,17 @@ ip9 = Image.open('icons/pay.png')
 pp9 = ImageTk.PhotoImage(ip9)
 lp9 = Label(image=pp9)
 
-readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=2, command=readf,font=(("Helvetica,bold"),"11")).place(x=140,y=390)
+#readfbutton = Button(tab1, text="Read First", borderwidth=0, background='green',highlightthickness=2, command=readf,font=(("Helvetica,bold"),"11")).place(x=140,y=390)
 
 # clc_btn0 = Button(tab1, image=p9, borderwidth=0, background='white',highlightthickness=0, command=clicked)
 # clc_btn0.place(x=496, y=156)
 # clc_btn0tt= CreateToolTip(clc_btn0, \
 #                                  "You found the hidden button ! Release hell/Kill cute puppies")
 
-Chl = Button(tab1, text="Change Log",font=(("Helvetica,bold"),"11"), width=10, highlightthickness=2, borderwidth=0, background='blue',
-             foreground="white", command=changelog).place(x=95, y=430)
+Chl = Button(tab1, image=tpinf,font=(("Helvetica,bold"),"11"), highlightthickness=0, borderwidth=0, background='#d0b16b',
+             foreground="white", command=changelog).place(x=140, y=400)
 
-author = tk.Label(tab1, text="Author: Timo Westphal\nVersion: 6.1.0", foreground="white",font=20,compound=LEFT)
+author = tk.Label(tab1, text="Author: Timo Westphal\n\nVersion: Colpo Diretto", foreground="white",font=20,compound=LEFT)
 author.place(x=520, y=530)
 
 paypal = Button(tab1, image=pp9, borderwidth=0, background='#333333',highlightthickness=0, command=paypal).place(x=575, y=600)
@@ -535,7 +551,8 @@ al.bind("<Button-1>", callback)
 author['background'] = '#333333'
 al['background'] = '#333333'
 
-
+tcui = tk.Button(tab1, text="\nTouchscreen\nUI\n", fg="white",bg="blue", borderwidth=3,font=20,command=exit666)
+tcui.place(x=60, y=200)
 ############################################################################################################tab11######updater
 
 rahmen11 = Frame(tab11, relief=GROOVE, borderwidth=0)
@@ -696,7 +713,22 @@ termf.pack(padx=45,pady=20, anchor=W)
 
 
 #####################################################INSTALLER Tab3###############################
+def shop():
+    os.system("python3 ~/PiGro-Aid-/PDL.py")
 
+
+tab_shop = Image.open('icons/shop.png')
+ipshop = ImageTk.PhotoImage(tab_shop)
+ilshop = Label(image=ipshop)
+
+rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1)
+rahmen_shop.pack(padx=40, pady=40)
+rahmen_shop['background'] = '#333333'
+
+
+shop_click = Button(rahmen_shop,image=ipshop, command=shop, highlightthickness=1,
+                  borderwidth=0, background='green', foreground="white", compound=LEFT,width=500)
+shop_click.pack()
 
 rahmen3 = Frame(tab3, relief=GROOVE, padx=42, pady=20,borderwidth=0, highlightthickness=1)
 rahmen3.pack(pady=40,padx=50)
@@ -706,48 +738,6 @@ termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, border
 wid1 = termf1.winfo_id()
 termf1['background'] = '#333333'
 #########inst tab2
-#########inst tab2
-
-inst1_p1=""" xterm -e 'bash -c \"sudo apt-get install """
-inst1_p2="""; exec bash\"' """
-
-
-def inst_btn1():
-    entry_text = eingabefeld1.get()
-    popen(inst1_p1 + entry_text + inst1_p2)
-
-def uninst_btn1():
-        popen("sudo synaptic")
-        
-def inst_syn():
-        popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
-
-
-
-
-i4 = Image.open('icons/apt-get.png')
-p4 = ImageTk.PhotoImage(i4)
-l4 = Label(image=p4)
-
-welcome_label1 = Label(rahmen3)
-eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
-welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
-welcom_button1_ttp = CreateToolTip(welcom_button1, \
-                                   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
-
-uninst_button = Button(rahmen3, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white")
-uninst_button_ttp = CreateToolTip(uninst_button, \
-                                  'If nothing happens you must install Synaptic')
-
-my_label = Label(rahmen3, image=p4, fg="white")
-my_label['background'] = '#333333'
-my_label.grid(column=0, row=0, pady=10)
-eingabefeld1.grid(column=2, row=0)
-welcom_button1.grid(column=1, row=0)
-uninst_button.grid(column=2, row=6)
-
-
 ######DEFZ####inst3###pi-apps
 
 
@@ -824,175 +814,6 @@ welcom_button2.grid(column=1, row=1)
 tab_ip3 = Image.open('icons/download_ico.png')
 ip03 = ImageTk.PhotoImage(tab_ip3)
 il03 = Label(image=ip03)
-
-
-
-###################shop Tab3
-def shop():
-    global pop_shop
-    pop_shop=Toplevel()
-    pop_shop['background'] = '#333333'
-
-
-
-    shop_btn01 = Button(pop_shop, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
-                  borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
-
-    shop_btn1_ttp = CreateToolTip(sys_btn6, \
-                                      'This is a SNAP')
-
-    shop_lbl011 = Label(pop_shop,width=50, text="... is... you know Whatsapp", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
-
-    shop_btn2 = Button(pop_shop, width=120, image=ip03, text="Compiz", anchor="w", command=compiz_button,
-                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=2)
-
-    shop_lbl21 = Label(pop_shop,width=50, text="When I was young it was cool You know it as wobbly windows", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
-
-    
-    shop_btn3 = Button(pop_shop, width=120, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
-                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=3)
-
-
-    shop_btn31 = Label(pop_shop,width=50, text="A Partition Manager", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
-
-
-    shop_btn4 = Button(pop_shop, width=120, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=4)
-
-
-    shop_btn41 = Label(pop_shop,width=50, text="Shows system specs you already know but ... uhhm...", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
-
-
-    shop_btn5 = Button(pop_shop, width=120, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=5)
-
-
-    shop_btn51 = Label(pop_shop,width=50, text="Bow down!", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=5)
-
-
-    shop_btn6 = Button(pop_shop, width=120, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
-                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=6)
-
-    
-    shop_btn61 = Label(pop_shop,width=50, text="Cleans the System", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=6)
-
-
-    shop_btn7 = Button(pop_shop, width=120, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=7)
-
-    
-    shop_btn71 = Label(pop_shop,width=50, text="Pi-Imager on RaspiOS is like the Replicants from Stargate... o,o", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=7)
-
-    
-    shop_btn8 = Button(pop_shop, width=120, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=8)
-
-    
-    shop_btn81 = Label(pop_shop,width=50, text="THE Pakegemanager", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=8)
-
-
-    shop_btn9 = Button(pop_shop, width=120, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=9)
-
-
-    shop_btn91 = Label(pop_shop,width=50, compound=LEFT, text="When you tell peolpe i3 is god but you need a hidden menu cuz\nyou dont cope with it", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=1, row=9)
-
-
-    shop_btn10 = Button(pop_shop, width=120, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=10)
-
-    
-    shop_btn101 = Label(pop_shop,width=50, text="DOWNLOAD IT!!!!!11", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=10)
-
-    
-    shop_btn11 = Button(pop_shop, width=120, image=ip03, text="Lutris", anchor="w", command=inst_lutis, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=11)
-
-    
-    shop_btn111 = Label(pop_shop,width=50, text="Game installer", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)
-    
-    
-    shop_btn13 = Button(pop_shop, width=150, image=ip03, text="Vulkan 32 bit\n ", anchor="w", command=vulk_32, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=1)
-
-    shop_btn113 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=1)   
-    
-    shop_btn14 = Button(pop_shop, width=150, image=ip03, text="Vulkan 64 bit", anchor="w", command=vulk_64, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=2)
-
-    shop_btn114 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/mesa_vulkan", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=2)     
-
-    shop_btn15 = Button(pop_shop, width=150, image=ip03, text="Tetris-CLI", anchor="w", command=tetris_cli, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=3)
-
-    shop_btn115 = Label(pop_shop,width=50, text="Uninstall: sudo rm -r /home/pi/tetris", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=3)     
-
-    shop_btn16 = Button(pop_shop, width=150, image=ip03, text="Argon One Driver", anchor="w", command=ar_1, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=4)
-
-    shop_btn116 = Label(pop_shop,width=50, text="https://www.argon40.com/", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=4)     
-
-    shop_btn17 = Button(pop_shop, width=150, image=ip03, text="DeskPi Pro Driver", anchor="w", command=dp_p, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=5)
-
-    shop_btn117 = Label(pop_shop,width=50, text="https://wiki.deskpi.com/deskpi/", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=5)     
-
-    shop_btn18 = Button(pop_shop, width=150, image=ip03, text="Plank", anchor="w", command=p_lank, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=6)
-
-    shop_btn118 = Label(pop_shop,width=50, text="It's a Dock!", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=6)     
-
-    shop_btn19 = Button(pop_shop, width=150, image=ip03, text="Albert", anchor="w", command=al_bert, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=7)
-
-    shop_btn119 = Label(pop_shop,width=50, text="THE Search Bar!!!!", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=7)
-
-    shop_btn20 = Button(pop_shop, width=150, image=ip03, text="Tilix", anchor="w", command=inst_tilix, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=8)
-
-    shop_btn120 = Label(pop_shop,width=50, text="Multi-Tiling-Super-Terminal-Emulator", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=8)
-
-    shop_btn21 = Button(pop_shop, width=150, image=ip03, text="Samba", anchor="w", command=inst_samba, highlightthickness=0,
-                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=2, row=9)
-
-    shop_btn121 = Label(pop_shop,width=50, text="Standard Windows interoperability suite", anchor="w",
-                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=3, row=9)
-
-
-#####################
-tab_shop = Image.open('icons/shop.png')
-ipshop = ImageTk.PhotoImage(tab_shop)
-ilshop = Label(image=ipshop)
-
-rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1)
-rahmen_shop.pack(padx=40, pady=20)
-rahmen_shop['background'] = '#333333'
-
-
-shop_click = Button(rahmen_shop,image=ipshop, anchor="w", command=shop, highlightthickness=1,
-                  borderwidth=0, background='green', foreground="white", compound=LEFT)
-shop_click.pack()
-
-
 
 
 
@@ -1188,8 +1009,7 @@ sysinf8.grid(column=2, row=5)
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
 
-def xfce_make():
-    popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
+
 
 tab_ip1 = Image.open('icons/download_ico.png')
 ip01 = ImageTk.PhotoImage(tab_ip1)
@@ -1241,37 +1061,7 @@ xfcelook_ttp = CreateToolTip(in_btn7, \
 ###########################################
 
 
-rahmen41 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=15)
-rahmen41.pack()
-rahmen41['background'] = '#333333'
 
-
-xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
-xfce.grid(column=0, row=0)
-
-in_btn3 = Button(rahmen41, text="Xfwm4 Settings", image=ip02, compound=LEFT, anchor="w",
-                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
-in_btn3.grid(column=1, row=0, padx=5)
-
-in_btn5 = Button(rahmen41, text="WiFi Fix", image=ip02, compound=LEFT, anchor="w",
-                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=100)
-in_btn5.grid(column=3, row=0)
-
-in_btn5 = Button(rahmen41, text="Bluetooth Fix", image=ip02, compound=LEFT, anchor="w",
-                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
-in_btn5.grid(column=2, row=0)
-
-in_btn5 = Button(rahmen41, text="Xfce4 Appearance", image=ip02, compound=LEFT, anchor="w",
-                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
-in_btn5.grid(column=1, row=1)
-
-in_btn7 = Button(rahmen41, text="Xfce_look", compound=LEFT, anchor="w", width=10,
-                 command=xfcelook_f, highlightthickness=2, borderwidth=0, background='green', foreground="white")
-in_btn7.grid(column=2, row=1, columnspan=1)
-
-in_btn8 = Button(rahmen41, text="Make-Me-Xfce", compound=LEFT, anchor="w",
-                 command=xfce_make, highlightthickness=2, borderwidth=0, background='green', foreground="white")
-in_btn8.grid(column=3, row=1)
 ##################################################
 
 rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=16)
@@ -1814,8 +1604,55 @@ pig_btn_3 = Button(rahmen101,text="PiGro Manuel", highlightthickness=0,
 
 
 
-###########################################################Games
+###########################################################XFCE
+def xfcefix():
+    popen("xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'")
 
+def xfcefix2():
+    popen("xterm -e 'bash -c \"/home/pi/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
+
+def xfce_make():
+    popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
+
+fxinst_1 = Image.open('icons/xfce_inst_button.png')
+xg01 = ImageTk.PhotoImage(fxinst_1)
+xl01 = Label(image=xg01)
+
+
+in_btn3 = Button(tabx, image=xg01, compound=LEFT, anchor="w", highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn3.place(x=120, y=40)
+
+rahmen41 = Frame(tabx,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=15)
+rahmen41.place(x=90, y=550)
+rahmen41['background'] = '#333333'
+
+
+xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
+xfce.grid(column=0, row=0)
+
+in_btn3 = Button(rahmen41, text="Xfwm4 Settings", image=ip02, compound=LEFT, anchor="w",
+                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
+in_btn3.grid(column=1, row=0, padx=5)
+
+in_btn5 = Button(rahmen41, text="WiFi Fix", image=ip02, compound=LEFT, anchor="w",
+                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=100)
+in_btn5.grid(column=3, row=0)
+
+in_btn5 = Button(rahmen41, text="Bluetooth Fix", image=ip02, compound=LEFT, anchor="w",
+                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
+in_btn5.grid(column=2, row=0)
+
+in_btn5 = Button(rahmen41, text="Xfce4 Appearance", image=ip02, compound=LEFT, anchor="w",
+                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", width=150)
+in_btn5.grid(column=1, row=1)
+
+in_btn7 = Button(rahmen41, text="Xfce_look", compound=LEFT, anchor="w", width=10,
+                 command=xfcelook_f, highlightthickness=2, borderwidth=0, background='green', foreground="white")
+in_btn7.grid(column=2, row=1, columnspan=1)
+
+in_btn8 = Button(rahmen41, text="Make-Me-Xfce", compound=LEFT, anchor="w",
+                 command=xfce_make, highlightthickness=2, borderwidth=0, background='green', foreground="white")
+in_btn8.grid(column=3, row=1)
 ################################################################
 tab_control.pack(expand=1, fill='both')
 

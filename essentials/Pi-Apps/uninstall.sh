@@ -1,0 +1,2 @@
+
+~/pi-apps/uninstall
