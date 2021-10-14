@@ -1,4 +1,4 @@
-####SeptemberFix################################################################
+################################################################################
 ################################################################################
 
     ____  _ ______            
@@ -6,23 +6,17 @@
   / /_/ / / / __/ ___/ __ \ 
  / ____/ / /_/ / /  / /_/ / 
 /_/   /_/\____/_/   \____/ 
-                                                               
+
+
+Guess who's back
+Back again
+PiGro's back
+Tell a friend
+
 Changes:
 
 - sound playback replacement: py.playsound -> mpg123
-- The splash screen shouldn't just look cool! ... ;-)
-  It also checks whether all dependencies are met. As a result,
-  PiGro doesn't start as fast as it used to. The advantage is:
-  I don't have to write with Botspot every time to adapt the pi-apps installer 
-- Argon One & Deskpi Pi Pro driver installer in Shop
-- Plank installer & Albert installer
-- Added Samba to Shop
-- Added Tilix to Shop
-- Added Network Settings to System
-- Added Full-Upgrade butten to Updater
-- oohhhh and PiGro will now open exactly in the middle of the screen
 
-!!!Special THX to Itai Nelken for fixing the splash screen!!!
 
 Cheers
 

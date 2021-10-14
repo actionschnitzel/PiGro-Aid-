@@ -29,7 +29,7 @@ main['background'] = '#333333'
 main.resizable(0, 0)
 
 
-app_width = 959
+app_width = 1000
 app_height = 700
 
 screen_width = main.winfo_screenwidth()
@@ -52,7 +52,7 @@ main.wm_attributes('-alpha', 0.95, )
 #Notebook Style
 noteStyler = ttk.Style()
 noteStyler.configure("TNotebook", borderwidth=0, background="#333333", tabposition='wn',highlightthickness=0)
-noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=10,highlightthickness=0)
+noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=13,highlightthickness=0)
 noteStyler.configure("TFrame", background="#333333")
 
 
@@ -72,6 +72,7 @@ tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
 tabx = ttk.Frame(tab_control)
+tabu = ttk.Frame(tab_control)
 
 ########################
 tab_tp1 = Image.open('icons/Logotab.png')
@@ -119,6 +120,10 @@ tab_tpX = Image.open('icons/xfce.png')
 tpX = ImageTk.PhotoImage(tab_tpX)
 tlX = Label(image=tpX)
 
+tab_tpu = Image.open('icons/ubuntu_logo.png')
+tpU = ImageTk.PhotoImage(tab_tpu)
+tlU = Label(image=tpU)
+
 tab_tpinf = Image.open('icons/info_button.png')
 tpinf = ImageTk.PhotoImage(tab_tpinf)
 tlinf = Label(image=tpinf)
@@ -130,7 +135,8 @@ tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
 tab_control.add(tab2, compound=LEFT, text='System', image=tp02)
 tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
 tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
-tab_control.add(tabx, compound=LEFT, text='Xfce', image=tpX)
+tab_control.add(tabx, compound=LEFT, text='Xfce Tweaks', image=tpX)
+tab_control.add(tabu, compound=LEFT, text='Ubuntu Tweaks', image=tpU)
 tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
 tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
 tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
@@ -205,8 +211,10 @@ def kiss_button():
 def compiz_button():
     popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
 
+
 def contxt_button():
-    popen("sudo xdg-open /boot/config.txt")
+    popen("xterm -e ~/PiGro-Aid-/scripts/config.sh")
+
 
 def neofetch_button():
     popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
@@ -489,14 +497,19 @@ ltab10.image = ptab10
 ltab10['background'] = '#383c4a'
 ltab10.place(x=-1, y=-1)
 
-itabX = Image.open('icons/pigro_X-bg .png')
+itabX = Image.open('icons/pigro_bg.png')
 ptabX = ImageTk.PhotoImage(itabX)
 ltabX = Label(tabx, image=ptabX)
 ltabX.image = ptabX
 ltabX['background'] = '#383c4a'
 ltabX.place(x=-1, y=-1)
 
-
+itabU = Image.open('icons/pigro_bg.png')
+ptabU = ImageTk.PhotoImage(itabU)
+ltabU = Label(tabu, image=ptabU)
+ltabU.image = ptabU
+ltabU['background'] = '#383c4a'
+ltabU.place(x=-1, y=-1)
 #############################################TAB1
 
 def exit666():
@@ -552,7 +565,7 @@ author['background'] = '#333333'
 al['background'] = '#333333'
 
 tcui = tk.Button(tab1, text="\nTouchscreen\nUI\n", fg="white",bg="blue", borderwidth=3,font=20,command=exit666)
-tcui.place(x=60, y=200)
+tcui.place(x=20, y=20)
 ############################################################################################################tab11######updater
 
 rahmen11 = Frame(tab11, relief=GROOVE, borderwidth=0)
@@ -721,6 +734,10 @@ tab_shop = Image.open('icons/shop.png')
 ipshop = ImageTk.PhotoImage(tab_shop)
 ilshop = Label(image=ipshop)
 
+tab_finst = Image.open('icons/fast_install.png')
+ipfinst = ImageTk.PhotoImage(tab_finst)
+ilfinst = Label(image=ipfinst)
+
 rahmen_shop = Frame(tab3,borderwidth=0, highlightthickness=1)
 rahmen_shop.pack(padx=40, pady=40)
 rahmen_shop['background'] = '#333333'
@@ -730,14 +747,67 @@ shop_click = Button(rahmen_shop,image=ipshop, command=shop, highlightthickness=1
                   borderwidth=0, background='green', foreground="white", compound=LEFT,width=500)
 shop_click.pack()
 
-rahmen3 = Frame(tab3, relief=GROOVE, padx=42, pady=20,borderwidth=0, highlightthickness=1)
-rahmen3.pack(pady=40,padx=50)
+rahmen3x = Frame(tab3, relief=GROOVE,borderwidth=1, highlightthickness=1,pady=10,padx=10)
+rahmen3x['background'] = 'green'
+rahmen3x.pack()
+
+sysinf0 = Label(rahmen3x,image=ipfinst, compound=LEFT, anchor='n',font=("Helvetica",16), highlightthickness=0, borderwidth=0,
+                background='green', foreground="white",pady=20)
+sysinf0.pack()
+
+
+rahmen3 = Frame(rahmen3x, relief=GROOVE,borderwidth=0, highlightthickness=1, padx=42, pady=20)
+rahmen3.pack()
 rahmen3['background'] = '#333333'
 
 termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, borderwidth=0)
 wid1 = termf1.winfo_id()
 termf1['background'] = '#333333'
 #########inst tab2
+
+######DEFZ####inst1###apt-get
+
+
+inst1_p1=""" xterm -e 'bash -c \"sudo apt-get install """
+inst1_p2="""; exec bash\"' """
+
+
+def inst_btn1():
+    entry_text = eingabefeld1.get()
+    popen(inst1_p1 + entry_text + inst1_p2)
+
+def uninst_btn1():
+        popen("sudo synaptic")
+        
+def inst_syn():
+        popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
+
+
+
+
+i4 = Image.open('icons/apt-get.png')
+p4 = ImageTk.PhotoImage(i4)
+l4 = Label(image=p4)
+
+welcome_label1 = Label(rahmen3)
+eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
+welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+welcom_button1_ttp = CreateToolTip(welcom_button1, \
+                                   'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
+
+uninst_button = Button(rahmen3, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white")
+uninst_button_ttp = CreateToolTip(uninst_button, \
+                                  'If nothing happens you must install Synaptic')
+
+my_label = Label(rahmen3, image=p4, fg="white")
+my_label['background'] = '#333333'
+my_label.grid(column=0, row=0, pady=10)
+eingabefeld1.grid(column=2, row=0)
+welcom_button1.grid(column=1, row=0)
+uninst_button.grid(column=2, row=6)
+
+
 ######DEFZ####inst3###pi-apps
 
 
@@ -1653,6 +1723,141 @@ in_btn7.grid(column=2, row=1, columnspan=1)
 in_btn8 = Button(rahmen41, text="Make-Me-Xfce", compound=LEFT, anchor="w",
                  command=xfce_make, highlightthickness=2, borderwidth=0, background='green', foreground="white")
 in_btn8.grid(column=3, row=1)
+
+
+###########################################################UBUNTU
+
+# xx
+def callback(event):
+    webbrowser.open_new(event.widget.cget("text"))
+
+def blury():
+    popen("xdg-open https://extensions.gnome.org/extension/3193/blur-my-shell/")
+
+def dash():
+    popen("xdg-open https://extensions.gnome.org/extension/1160/dash-to-panel/")
+
+def uth():
+    popen("xdg-open https://extensions.gnome.org/extension/19/user-themes/")
+
+def cpufreq():
+    popen("xdg-open https://extensions.gnome.org/extension/1082/cpufreq/")
+
+
+def wobwin():
+    popen("xdg-open https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/")
+
+
+def tico():
+    popen("xdg-open https://extensions.gnome.org/extension/1503/tray-icons/")
+
+
+def gex():
+    popen("xdg-open https://extensions.gnome.org/")
+
+
+def arc_m():
+    popen("xdg-open https://extensions.gnome.org/extension/3628/arcmenu/")
+
+def gtweaks():
+    popen("xterm -e 'bash -c \"sudo apt-get install gnome-tweaks ; exec bash\"'")
+
+
+def cshell():
+    popen("xterm -e 'bash -c \"sudo apt install chrome-gnome-shell; exec bash\"'")
+
+def r_conf():
+    popen("xterm -e 'bash -c \"~/PiGro_UE/scripts/raspiconfiginstall.sh && exit; exec bash\"'")
+
+def g_men():
+    popen("xterm -e 'bash -c \"sudo apt-get install alacarte ; exec bash\"'")
+
+
+
+
+tab_ip1 = Image.open('icons/download_ico.png')
+ip01 = ImageTk.PhotoImage(tab_ip1)
+il01 = Label(image=ip01)
+
+tab_ip2 = Image.open('icons/fix1i.png')
+ip02 = ImageTk.PhotoImage(tab_ip2)
+il02 = Label(image=ip02)
+
+frame_ub = Frame(tabu, borderwidth=2, relief=GROOVE,pady=20,padx=10)
+frame_ub.pack(padx=10,pady=20)
+frame_ub['background'] = '#333333'
+
+
+
+Sugg2 = Label(frame_ub, text="", font=20, background='#333333', foreground="white")
+Sugg2.grid(column=0, row=1)
+
+
+in_btn1 = Button(frame_ub, text="blur my shell", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=blury, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn1.grid(column=0, row=1)
+
+in_btn2 = Button(frame_ub, text="dash to panel", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=dash, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn2.grid(column=0, row=2)
+
+in_btn3 = Button(frame_ub, text="user themes", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=uth, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn3.grid(column=0, row=3)
+
+in_btn4 = Button(frame_ub, text="window wobbly", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=wobwin, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn4.grid(column=0, row=4)
+
+in_btn5 = Button(frame_ub, text="cpufreq(konkor)", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=tico, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn5.grid(column=0, row=5)
+
+in_btn6 = Button(frame_ub, text="Tray Icons", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=tico, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn6.grid(column=0, row=6)
+
+in_btn7 = Button(frame_ub, text="Chrome Shell", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=cshell, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn7.grid(column=1, row=1)
+
+in_btn8 = Button(frame_ub, text="Gnome Tweaks", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=gtweaks, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn8.grid(column=1, row=2)
+
+in_btn9 = Button(frame_ub, text="Install rpi-config", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn9.grid(column=1, row=3)
+
+in_btn10 = Button(frame_ub, text="Arc Menu", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=arc_m, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn10.grid(column=1, row=3)
+
+in_btn11 = Button(frame_ub, text="Install raspi-config", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=r_conf, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn11.grid(column=1, row=3)
+
+in_btn11 = Button(frame_ub, text="Install Gnome-Menu-Editor", image=ip01, compound=LEFT, anchor="w", width=220,
+                 command=g_men, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn11.grid(column=1, row=4)
+
+###############################################################################
+#########################################################################################
+
+
+gx_btn = Button(frame_ub, text="Gnome Extentios (Web)", compound=LEFT, anchor="w",
+                 command=gex, highlightthickness=1, borderwidth=0, background='#333333', foreground="white")
+gx_btn.grid(column=1, row=9)
+
+#fo_btn = Button(frame_ub, text="Theme Folder", compound=LEFT, anchor="w",
+#                 command=theme_f, highlightthickness=1, borderwidth=0, background='#333333', foreground="white")
+#fo_btn.grid(column=1, row=8)
+
+mtb = Label(frame_ub, compound=LEFT, text="\nMore Themes:", background='#333333', foreground="white")
+mtb.grid(column=1, row=6)
+
+
+
 ################################################################
 tab_control.pack(expand=1, fill='both')
 
