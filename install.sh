@@ -43,11 +43,14 @@ sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
 sudo apt install mpg123
 
+git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+cd PiGro-Aid-
+
 sudo chmod +x start.sh
 sudo cp pigro.desktop  /home/pi/Desktop
 sudo cp pigro.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
-
+cd
 clear
 
 echo '                                                                     
