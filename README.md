@@ -12,3 +12,5 @@ Absolut TESTING!!!!!
 - Touchscreen UI total Testing!!!!!!    
 - Packagemanager integration 
 - First scratch of PiGro - Colpo Diretto (Pigro v7)    
+    
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/bullseye_testing_/install.sh |bash
