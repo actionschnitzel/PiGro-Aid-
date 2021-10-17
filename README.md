@@ -13,4 +13,8 @@ Absolut TESTING!!!!!
 - Packagemanager integration 
 - First scratch of PiGro - Colpo Diretto (Pigro v7)    
     
+<<<<<<< HEAD
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/bullseye_testing_/install.sh |bash
+=======
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/bullseye_testing_/install.sh |bash
+>>>>>>> bullseye_testing_
