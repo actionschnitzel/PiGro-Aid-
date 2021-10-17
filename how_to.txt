@@ -3,7 +3,7 @@
 Add your own apps:									
 1.create a folder with "APP_NAME" in:				
 													
-~/PDL/essentials/									
+~PiGro-Aid-/PDL/essentials/									
 The folder must conain:								
 													
 install.sh [with the whole install parameters]		

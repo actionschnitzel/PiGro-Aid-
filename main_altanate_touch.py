@@ -49,25 +49,26 @@ def exit666():
 
 main = Tk()
 main.title("PiGro - Colpo Diretto")
-icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
-main.tk.call('wm', 'iconphoto', main._w, icon)
-main['background'] = '#333333'
-main.resizable(0, 0)
+#icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
+#main.tk.call('wm', 'iconphoto', main._w, icon)
+main['background'] = '#5E2750'
+#main.resizable(0, 0)
+main.attributes('-fullscreen',True)
 
 
-app_width = 959
-app_height = 700
+#app_width = 959
+#app_height = 700
 
-screen_width = main.winfo_screenwidth()
-screen_height = main.winfo_screenheight()
+#screen_width = main.winfo_screenwidth()
+#screen_height = main.winfo_screenheight()
 
-x = (screen_width / 2) - (app_width / 2)
-y = (screen_height / 2) - (app_height / 2)
+#x = (screen_width / 2) - (app_width / 2)
+#y = (screen_height / 2) - (app_height / 2)
 
-main.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+#main.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
 
-main.wait_visibility(main)
-main.wm_attributes('-alpha', 0.95, )
+#main.wait_visibility(main)
+#main.wm_attributes('-alpha', 0.95, )
 #####################################
 
 #####################################
@@ -136,11 +137,11 @@ def toggle_win():
      
         def on_entera(e):
             myButton1['background'] = bcolor #ffcc66
-            myButton1['foreground']= '#262626'  #000d33
+            myButton1['foreground']= '#E95420'  #000d33
 
         def on_leavea(e):
             myButton1['background'] = fcolor
-            myButton1['foreground']= '#262626'
+            myButton1['foreground']= '#E954206'
 
         myButton1 = Button(f1,text=text,
                        width=42,
@@ -179,17 +180,17 @@ def toggle_win():
            image=img2,
            border=0,
            command=dele,
-           bg='#FFFFFF',
-           activebackground='#FFFFFF').place(x=5,y=10)
+           bg='#E95420',
+           activebackground='#5E2750').place(x=5,y=10)
  
  
 
-i = Image.open('icons/pigro_bull.png')
-p = ImageTk.PhotoImage(i)
-l = Label(main, image=p)
-l.image = p
-l['background'] = '#383c4a'
-l.place(x=-1, y=-1)
+#i = Image.open('icons/pigro_bull.png')
+#p = ImageTk.PhotoImage(i)
+#l = Label(main, image=p)
+#l.image = p
+#l['background'] = '#383c4a'
+#l.place(x=-1, y=-1)
 
 
 
@@ -203,7 +204,7 @@ Button(main,image=img1,
        command=toggle_win,
        border=0,
        highlightthickness=0,
-       bg='#333333',
+       bg='#5E2750',
        activebackground='#262626').place(x=5,y=10)
 
 

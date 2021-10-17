@@ -13,27 +13,6 @@ I recently switched from Mint to MX and was blown away by the "MX Tools GUI".
 In the spirit of this, PiGro has now become an all-in-one control center.
 Hope you like it.
 '
-read -p "You are about to install PiGro - Just Click It! ...... Agree (y/n)? " option
-case "$option" in
-	y*) sudo apt-get update ;;
-	n*) exit ;;
-esac
-
-clear
-echo 'You can now install tool that can be usesd in Pigro'
-
-read -p "Install NeoFetch (y/n)? " option
-case "$option" in
-	y*) sudo apt-get install neofetch ;;
-esac
-
-clear
-
-read -p "Install Gparted (y/n)? " option
-case "$option" in
-	y*) sudo apt-get install gparted ;;
-esac
-
 clear
 
 echo 'Now I install dependencies'
@@ -43,11 +22,14 @@ sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
 sudo apt install mpg123
 
+git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+cd PiGro-Aid-
+
 sudo chmod +x start.sh
 sudo cp pigro.desktop  /home/pi/Desktop
 sudo cp pigro.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
-
+cd
 clear
 
 echo '                                                                     
@@ -65,4 +47,3 @@ echo  '
 |/__\|/__\|/__\|/__\|/_______\|/__\|'
 
 printf '\e[38;5;46m You can close this window now\n'
-
