@@ -209,7 +209,7 @@ def compiz_button():
     popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
 
 def contxt_button():
-    popen("xterm -e ~/PiGro-Aid-/scripts/config.sh")
+    popen("sudo xdg-open /boot/config.txt")
 
 def neofetch_button():
     popen("xterm -e 'bash -c \"neofetch; exec bash\"'")

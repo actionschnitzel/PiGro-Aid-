@@ -9,9 +9,7 @@ echo '
 
 
 echo '
-I recently switched from Mint to MX and was blown away by the "MX Tools GUI". 
-In the spirit of this, PiGro has now become an all-in-one control center.
-Hope you like it.
+The Raspberry Pi Control Room
 '
 clear
 
@@ -20,7 +18,8 @@ echo 'Now I install dependencies'
 sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
-sudo apt install mpg123
+sudo apt install mpg123 -y
+pip3 install psutil
 
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-

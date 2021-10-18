@@ -45,6 +45,7 @@ def install_depends():
     c.installIfNotInstalled('mpg123')
     c.installIfNotInstalled('lolcat')
     pip_install('distro')
+    pip_install('psutil')
     isInstalling=False
 def isConnected(url, timeout):
     try:
