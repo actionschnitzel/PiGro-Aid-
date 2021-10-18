@@ -21,7 +21,7 @@ sudo apt install python3-pip -y
 sudo apt install mpg123 -y
 pip3 install psutil
 
-git clone  --branch bullseye_testing_ https://github.com/actionschnitzel/PiGro-Aid-.git
+git clone -b bullseye_testing_ https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 
 sudo chmod +x start.sh
