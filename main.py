@@ -46,11 +46,11 @@ main.wm_attributes('-alpha', 0.95, )
 
 
 #Notebook Style
-noteStyler = ttk.Style()
-noteStyler.configure("TNotebook", borderwidth=0, background="#333333", tabposition='wn',highlightthickness=0)
-noteStyler.configure("TNotebook.Tab", borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=13,highlightthickness=0)
-noteStyler.configure("TFrame", background="#333333")
 
+noteStyler = ttk.Style()
+noteStyler.configure("TNotebook",borderwidth=0, background="#333333", tabposition='w',highlightthickness=0)
+noteStyler.configure("TNotebook.Tab",borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=13,highlightthickness=0)
+noteStyler.configure("TFrame", background="#333333")
 
 noteStyler.map("TNotebook.Tab", background=[("selected", "#333333")], foreground=[("selected", "#d4244d")]);
 
@@ -67,6 +67,8 @@ tab7 = ttk.Frame(tab_control)
 tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
+
+
 
 #Tab_Icons
 tab_tp1 = Image.open('icons/Logotab.png')
@@ -258,6 +260,9 @@ def gparted_exec():
 def actionhome():
     popen("xdg-open https://www.actionschnitzel.de/PiGro/")
     
+def snapcraft():
+    popen("xdg-open https://snapcraft.io/store")
+
 def xfcelook_f():
     popen("xdg-open https://www.xfce-look.org/browse/cat/")
 
@@ -435,12 +440,16 @@ Chl = Button(tab1, image=tpinfp,font=(("Helvetica,bold"),"11"), highlightthickne
 
 
 al = tk.Label(tab1, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
-al.place(x=500, y=670)
+al.place(x=480, y=645)
 al.bind("<Button-1>", callback)
 
 al['background'] = '#333333'
 
+al2 = tk.Label(tab1, text=r"https://github.com/actionschnitzel/PiGro-Aid-", fg="blue", cursor="hand2")
+al2.place(x=480, y=670)
+al2.bind("<Button-1>", callback)
 
+al2['background'] = '#333333'
 
 
 #Updater_Tab
@@ -488,7 +497,7 @@ Sources List has been saved\n\
 
 
 
-termf = Frame(tab11, height=270, width=700, padx=10, highlightthickness=1, borderwidth=0)
+termf = Frame(tab11, height=270, width=700, padx=10, highlightthickness=2, borderwidth=0)
 wid = termf.winfo_id()
 termf['background'] = '#333333'
 
@@ -502,7 +511,7 @@ s_list.pack(anchor='w')
 shadowcolor = "yellow"
 
 
-rahmen112 = Frame(tab11, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen112 = Frame(tab11, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen112.pack(padx=45, anchor='w')
 rahmen112['background'] = '#333333'
 
@@ -573,9 +582,12 @@ rahmen3 = Frame(rahmen3x, relief=GROOVE,borderwidth=0, highlightthickness=1, pad
 rahmen3.pack()
 rahmen3['background'] = '#333333'
 
-termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, borderwidth=0)
-wid1 = termf1.winfo_id()
-termf1['background'] = '#333333'
+
+
+
+# termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, borderwidth=0)
+# wid1 = termf1.winfo_id()
+# termf1['background'] = '#333333'
 
 
 #apt-get_entry
@@ -607,16 +619,14 @@ welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthi
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
                                    'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.')
 
-uninst_button = Button(rahmen3, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white")
-uninst_button_ttp = CreateToolTip(uninst_button, \
-                                  'If nothing happens you must install Synaptic')
+
 
 my_label = Label(rahmen3, image=p4, fg="white")
 my_label['background'] = '#333333'
 my_label.grid(column=0, row=0, pady=10)
 eingabefeld1.grid(column=2, row=0)
 welcom_button1.grid(column=1, row=0)
-uninst_button.grid(column=2, row=6)
+
 
 
 #pi-apps_entry
@@ -649,15 +659,13 @@ welcome_label2 = Label(rahmen3)
 eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
-welcom_button33 = Button(rahmen3, text="list all pi-apps", command=pi_apps_list, highlightthickness=0, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white")
 
 apps_inst_btn.grid(column=0, row=3)
+welcom_button4.grid(column=1, row=5)
 eingabefeld3.grid(column=2, row=3)
 welcom_button3.grid(column=1, row=3)
-welcom_button33.grid(column=1, row=4)
-welcom_button4.grid(column=1, row=5)
 
 
 #snap_entry
@@ -687,11 +695,25 @@ my_label2.grid(column=0, row=1)
 eingabefeld2.grid(column=2, row=1)
 welcom_button2.grid(column=1, row=1)
 
+
 tab_ip3 = Image.open('icons/download_ico.png')
 ip03 = ImageTk.PhotoImage(tab_ip3)
 il03 = Label(image=ip03)
 
+frame311 = Frame(tab3, relief=GROOVE,borderwidth=0, highlightthickness=1,pady=5,padx=46,bg="green")
+frame311.pack(pady=10)
 
+snapstore_btn = Button(frame311, text="snapcraft.io", command=snapcraft, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+
+welcom_button33 = Button(frame311, text="list all pi-apps", command=pi_apps_list, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+
+uninst_button = Button(frame311, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+uninst_button_ttp = CreateToolTip(uninst_button, \
+                                  'If nothing happens you must install Synaptic')
+
+snapstore_btn.grid(column=0, row=6)
+welcom_button33.grid(column=1, row=6)
+uninst_button.grid(column=2, row=6)
 
 #System_Tab
 
@@ -730,7 +752,7 @@ bp07 = ImageTk.PhotoImage(sys_bp7)
 bl07 = Label(image=bp07)
 
 
-rahmen2 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=60,pady=10)
+rahmen2 = Frame(tab2,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=60,pady=10)
 rahmen2.pack(padx=40, pady=20, fill='both')
 rahmen2['background'] = '#333333'
 
@@ -789,7 +811,7 @@ sys_btn10 = Button(rahmen2, image=bp05, text="Network Settings", command=net_set
 sys_btn10.grid(row=3,column=0)
 
 
-rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=20)
+rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=20)
 rahmen21.pack(padx=40, pady=20, fill='both')
 rahmen21['background'] = '#333333'
 
@@ -866,7 +888,7 @@ tab_ip1 = Image.open('icons/download_ico.png')
 ip01 = ImageTk.PhotoImage(tab_ip1)
 il01 = Label(image=ip01)
 
-rahmen4 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=10, padx=10,width=300)
+rahmen4 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=10,width=300)
 rahmen4.pack(pady=40,padx=40 , fill='both' )#
 rahmen4['background'] = '#333333'
 
@@ -905,7 +927,7 @@ tab_ip2 = Image.open('icons/fix1i.png')
 ip02 = ImageTk.PhotoImage(tab_ip2)
 il02 = Label(image=ip02)
 
-rahmen41 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=15)
+rahmen41 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen41.pack(padx=40, pady=20, fill='both')
 rahmen41['background'] = '#333333'
 
@@ -937,7 +959,7 @@ in_btn8 = Button(rahmen41,justify="left", text="Make-Me-Xfce", compound=LEFT,
 in_btn8.grid(column=3, row=1)
 
 
-rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=15)
+rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen42.pack(padx=40, pady=20, fill='both')
 rahmen42['background'] = '#333333'
 
@@ -958,7 +980,7 @@ lxde.grid(column=3, row=0)
 
 
 
-rahmen43 = Frame(tab4,borderwidth=0, highlightthickness=1, relief=GROOVE,pady=10,padx=15)
+rahmen43 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen43.pack(padx=40, pady=20, fill='both')
 rahmen43['background'] = '#333333'
 
@@ -1127,11 +1149,11 @@ def ov_2200():
     pop_btn_shut.grid(column=2, row=2)
     
 
-rahmen6 = Frame(tab6,borderwidth=0, highlightthickness=1, relief=GROOVE, pady=20,padx=50)
+rahmen6 = Frame(tab6,borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20,padx=50)
 rahmen6.pack(padx=40, pady=20, fill='both')
 rahmen6['background'] = '#333333'
 
-rahmen622 = Frame(tab6,borderwidth=0, highlightthickness=1, relief=GROOVE, padx=100, pady=10)#
+rahmen622 = Frame(tab6,borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10)#
 rahmen622.pack(padx=40, pady=20, fill='both')
 rahmen622['background'] = '#333333'
 
@@ -1233,7 +1255,7 @@ def fitwo_p():
 
 
 
-rahmen81 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=90,pady=10)
+rahmen81 = Frame(tab8,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=90,pady=10)
 rahmen81.pack(padx=40, pady=20, fill='both')
 rahmen81['background'] = '#333333'
 
@@ -1294,7 +1316,7 @@ dist_btn8 = Button(rahmen81,image=di08, text="Get: NextCloudPi", anchor="w", com
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,width=150).grid(column=1, row=2)
 
 
-rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=1, relief=GROOVE,padx=50, pady=20,width=800)
+rahmen82 = Frame(tab8,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=50, pady=20,width=800)
 rahmen82.pack(padx=40, pady=20, fill='both')
 rahmen82['background'] = '#333333'
 
@@ -1347,7 +1369,7 @@ def holy_recovery():
     
 
     
-rahmen92 = Frame(tab9,borderwidth=0, highlightthickness=1, relief=GROOVE,background='#383c4a',padx=80,pady=10)
+rahmen92 = Frame(tab9,borderwidth=0, highlightthickness=2, relief=GROOVE,background='#383c4a',padx=80,pady=10)
 rahmen92.pack(padx=20,pady=40)
 rahmen92['background'] = '#333333'
 
@@ -1424,13 +1446,13 @@ pl01 = Label(image=pg01)
 
 pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pack(pady=40)
 
-rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen102.pack(padx=40, pady=20, fill='both')
 rahmen102['background'] = '#333333'
 
 poke_pig_21 = Label(rahmen102,justify="left",text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\n\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo",font=("Helvetica",14),background='#333333', fg="white",padx=5,pady=20).pack()
 
-rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=1)
+rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen101.pack(padx=40, pady=20, fill='both')
 rahmen101['background'] = '#333333'
 
