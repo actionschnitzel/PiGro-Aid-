@@ -23,19 +23,13 @@ icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 main['background'] = '#333333'
 main.resizable(0, 0)
-
-
 app_width = 1000
 app_height = 700
-
 screen_width = main.winfo_screenwidth()
 screen_height = main.winfo_screenheight()
-
 x = (screen_width / 2) - (app_width / 2)
 y = (screen_height / 2) - (app_height / 2)
-
 main.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
-
 main.wait_visibility(main)
 main.wm_attributes('-alpha', 0.95, )
 
@@ -43,16 +37,14 @@ main.wm_attributes('-alpha', 0.95, )
 
 
 
-
-
 #Notebook Style
 
-noteStyler = ttk.Style()
+noteStyler = ttk.Style(main)
 noteStyler.configure("TNotebook",borderwidth=0, background="#333333", tabposition='w',highlightthickness=0)
 noteStyler.configure("TNotebook.Tab",borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=13,highlightthickness=0)
 noteStyler.configure("TFrame", background="#333333")
-
 noteStyler.map("TNotebook.Tab", background=[("selected", "#333333")], foreground=[("selected", "#d4244d")]);
+
 
 tab_control = ttk.Notebook(main)
 
@@ -67,6 +59,20 @@ tab7 = ttk.Frame(tab_control)
 tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
+
+tabi = Image.open('icons/side_bar.png')
+tabp = ImageTk.PhotoImage(tabi)
+tabl = Label(tab_control,image=tabp)
+tabl.image = tabp
+tabl['background'] = '#333333'
+tabl.place(x=-2, y=-1) 
+
+tab2i = Image.open('icons/side_bar2.png')
+tab2p = ImageTk.PhotoImage(tab2i)
+tab2l = Label(tab_control,image=tab2p)
+tab2l.image = tab2p
+tab2l['background'] = '#333333'
+tab2l.place(x=-2, y=630) 
 
 
 
@@ -357,6 +363,8 @@ def get_size(bytes, suffix="B"):
 
 
 #TAB_BG
+
+        
 i = Image.open('icons/pigronew.png')
 p = ImageTk.PhotoImage(i)
 l = Label(tab1, image=p)
@@ -550,6 +558,112 @@ termf.pack(padx=45,pady=20, anchor=W)
 
 
 #INSTALLER_Tab
+def w_app():
+    popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
+
+def compiz_button():
+    popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
+
+def kiss_button():
+    popen("xterm -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'")
+    
+def gnome_pie():
+    popen("xterm -e 'bash -c \"sudo apt-get install gnome-pie; exec bash\"'")    
+    
+def pi_apps():
+    popen("xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'")
+        
+def p_lank():
+    popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")     
+    
+def inst_tilix():
+    popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")    
+    
+    
+
+def goodstuff():
+    global pop_goodstuff
+    pop_goodstuff=Toplevel()
+    pop_goodstuff['background'] = '#333333'
+    
+    shop_btn01 = Button(pop_goodstuff, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
+
+borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
+    shop_btn1_ttp = CreateToolTip(sys_btn6, \
+                                      'This is a SNAP')
+    shop_lbl011 = Label(pop_goodstuff,width=60, text="... is... you know Whatsapp", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
+
+    shop_btn2 = Button(pop_goodstuff, width=120, image=ip03, text="Compiz", anchor="w", command=compiz_button,
+                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=2)
+
+    shop_lbl21 = Label(pop_goodstuff,width=60, text="When I was young it was cool You know it as wobbly windows", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=2)
+    
+    shop_btn3 = Button(pop_goodstuff, width=120, image=ip03, text="Gparted", anchor="w", command=gparted_inst,
+                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=3)
+
+    shop_btn31 = Label(pop_goodstuff,width=60, text="A Partition Manager", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
+
+    shop_btn4 = Button(pop_goodstuff, width=120, image=ip03, text="NeoFetch", anchor="w", command=inst_neo, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=4)
+
+    shop_btn41 = Label(pop_goodstuff,width=60, text="Shows system specs you already know but ... uhhm...", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=4)
+
+    shop_btn5 = Button(pop_goodstuff, width=120, image=ip03, text="PiKiss", anchor="w", command=kiss_button, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=5)
+
+    shop_btn51 = Label(pop_goodstuff,width=60, text="Bow down!", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=5)
+
+    shop_btn6 = Button(pop_goodstuff, width=120, image=ip03, text="Bleach Bit", anchor="w", command=inst_bleach,
+                      highlightthickness=0, borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=6)
+    
+    shop_btn61 = Label(pop_goodstuff,width=60, text="Cleans the System", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=6)
+
+    shop_btn7 = Button(pop_goodstuff, width=120, image=ip03, text="Pi Imager", anchor="w", command=inst_ima, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=7)
+    
+    shop_btn71 = Label(pop_goodstuff,width=60, text="Pi-Imager on RaspiOS is like the Replicants from Stargate... o,o", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=7)
+    
+    shop_btn8 = Button(pop_goodstuff, width=120, image=ip03, text="Synaptic", anchor="w", command=inst_syn, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=8)
+    
+    shop_btn81 = Label(pop_goodstuff,width=60, text="THE Pakegemanager", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=8)
+
+    shop_btn9 = Button(pop_goodstuff, width=120, image=ip03, text="Gnome-Pie", anchor="w", command=gnome_pie, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=9)
+
+    shop_btn91 = Label(pop_goodstuff,width=60, compound=LEFT, text="When you tell peolpe i3 is god but you need a hidden menu cuz\nyou dont cope with it", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=1, row=9)
+
+    shop_btn10 = Button(pop_goodstuff, width=120, image=ip03, text="Pi-Apps", anchor="w", command=pi_apps, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=10)
+    
+    shop_btn101 = Label(pop_goodstuff,width=60, text="DOWNLOAD IT!!!!!11", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=10)
+
+    shop_btn18 = Button(pop_goodstuff, width=120, image=ip03, text="Plank", anchor="w", command=p_lank, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=11)
+
+    shop_btn118 = Label(pop_goodstuff,width=60, text="It's a Dock!", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=11)     
+
+    shop_btn20 = Button(pop_goodstuff, width=120, image=ip03, text="Tilix", anchor="w", command=inst_tilix, highlightthickness=0,
+                      borderwidth=0, background='#d4244d', foreground="white", compound=LEFT).grid(column=0, row=12)
+
+    shop_btn120 = Label(pop_goodstuff,width=60, text="Multi-Tiling-Super-Terminal-Emulator", anchor="w",
+                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=12)
+
+
+
+
+
 def shop():
     os.system("python3 ~/PiGro-Aid-/PDL.py")
 
@@ -700,20 +814,24 @@ tab_ip3 = Image.open('icons/download_ico.png')
 ip03 = ImageTk.PhotoImage(tab_ip3)
 il03 = Label(image=ip03)
 
-frame311 = Frame(tab3, relief=GROOVE,borderwidth=0, highlightthickness=1,pady=5,padx=46,bg="green")
+frame311 = Frame(tab3, relief=GROOVE,borderwidth=0, highlightthickness=1,pady=5,padx=36,bg="green")
 frame311.pack(pady=10)
 
 snapstore_btn = Button(frame311, text="snapcraft.io", command=snapcraft, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 welcom_button33 = Button(frame311, text="list all pi-apps", command=pi_apps_list, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
-uninst_button = Button(frame311, text="Synaptic/Uninstaller", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+uninst_button = Button(frame311, text="Synaptic", command=uninst_btn1, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 uninst_button_ttp = CreateToolTip(uninst_button, \
                                   'If nothing happens you must install Synaptic')
+
+goodstuff_btn = Button(frame311, text="Good Stuff", command=goodstuff, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+
 
 snapstore_btn.grid(column=0, row=6)
 welcom_button33.grid(column=1, row=6)
 uninst_button.grid(column=2, row=6)
+goodstuff_btn.grid(column=3, row=6)
 
 #System_Tab
 
@@ -1047,6 +1165,13 @@ def ov_2000():
     global pop_2000
     pop_2000=Toplevel(main)
     pop_2000.config(bg='#333333')
+    app_width = 300
+    app_height = 100
+    screen_width = pop_2000.winfo_screenwidth()
+    screen_height = pop_2000.winfo_screenheight()
+    x = (screen_width / 2) - (app_width / 2)
+    y = (screen_height / 2) - (app_height / 2)
+    pop_2000.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
     
     frame_pop_2000 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
     frame_pop_2000.pack()
@@ -1076,7 +1201,17 @@ def ov_2147():
     global pop_2147
     pop_2147=Toplevel(main)
     pop_2147.config(bg='#333333')
-    
+    app_width = 300
+    app_height = 100
+    screen_width = pop_2147.winfo_screenwidth()
+    screen_height = pop_2147.winfo_screenheight()
+    x = (screen_width / 2) - (app_width / 2)
+    y = (screen_height / 2) - (app_height / 2)
+    pop_2147.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
+
+
+
     frame_pop_2147 = Frame(pop_2147, borderwidth=0, relief=GROOVE)
     frame_pop_2147.pack()
     frame_pop_2147['background'] = '#333333'
@@ -1102,7 +1237,16 @@ def set_default():
     global pop_default
     pop_default=Toplevel(main)
     pop_default.config(bg='#333333')
-    
+    app_width = 300
+    app_height = 100
+    screen_width = pop_default.winfo_screenwidth()
+    screen_height = pop_default.winfo_screenheight()
+    x = (screen_width / 2) - (app_width / 2)
+    y = (screen_height / 2) - (app_height / 2)
+    pop_default.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
+
+
     frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
     frame_pop_de.pack()
     frame_pop_de['background'] = '#333333'
@@ -1471,6 +1615,7 @@ pig_btn_4 = Button(rahmen101,text="redbubble.com", highlightthickness=0,
 
 tab_control.pack(expand=1, fill='both')
 
-
+       
+        
 
 main.mainloop()
