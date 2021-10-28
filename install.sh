@@ -9,17 +9,26 @@ echo '
 
 
 echo '
-The Raspberry Pi Control Room
+Thanks for installing Pigro!
+Pigro is a system tool and is inspired by YaST (OpenSuse). Let's go!!!
 '
+read -p "Install PiGro - Just Click It! ...... Agree (y/n)? " option
+case "$option" in
+    y*) sudo apt-get update ;;
+    n*) exit ;;
+esac
 clear
 
 echo 'Now I install dependencies'
 
 sudo apt-get install xterm -y
-sudo apt-get install python3-pil python3-pil.imagetk -y
+sudo apt-get install python3-pil -y 
+sudo apt-get install python3-pil.imagetk -y
 sudo apt install python3-pip -y
 sudo apt install mpg123 -y
+sudo apt install lolcat -y
 pip3 install psutil
+pip3 install distro
 
 git clone -b bullseye_testing_ https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
