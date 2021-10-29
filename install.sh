@@ -8,14 +8,15 @@ echo '
                                                                       '
 
 
-echo "Thanks for installing Pigro!
-Pigro is a system tool and is inspired by YaST (OpenSuse). Let's go!!!"
-read -p "Install PiGro - Just Click It! ...... Agree (y/n)? " option
-case "$option" in
-    y*) sudo apt-get update ;;
-    n*) exit ;;
-esac
-clear
+#echo "Thanks for installing Pigro!
+#Pigro is a system tool and is inspired by YaST (OpenSuse). Let's go!!!"
+#read -p "Install PiGro - Just Click It! ...... Agree (y/n)? " option
+#case "$option" in
+#    y*) sudo apt-get update ;;
+ #   n*) exit ;;
+#esac
+
+#clear
 
 echo 'Now I install dependencies'
 
