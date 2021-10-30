@@ -825,13 +825,41 @@ uninst_button = Button(frame311, text="Synaptic", command=uninst_btn1, highlight
 uninst_button_ttp = CreateToolTip(uninst_button, \
                                   'If nothing happens you must install Synaptic')
 
-goodstuff_btn = Button(frame311, text="Good Stuff", command=goodstuff, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+goodstuff_btn = Button(frame311, text="Must Haves", command=goodstuff, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 
 snapstore_btn.grid(column=0, row=6)
 welcom_button33.grid(column=1, row=6)
 uninst_button.grid(column=2, row=6)
 goodstuff_btn.grid(column=3, row=6)
+
+#flat_entry
+inst4_p1=""" xterm -e 'bash -c \"sudo flatpak install flathub """
+inst4_p2="""; exec bash\"' """
+
+def inst_btn4():
+    entry_text = eingabefeld4.get()
+    popen(inst4_p1 + entry_text + inst4_p2)
+
+
+i66 = Image.open('icons/snap.png')
+p66 = ImageTk.PhotoImage(i66)
+l66 = Label(image=p66)
+
+my_label4 = Label(rahmen3, image=p66, text="Snap install", fg="white")
+my_label4['background'] = '#333333'
+
+welcome_label4 = Label(rahmen3)
+eingabefeld4 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
+welcom_button44 = Button(rahmen3, text="install", command=inst_btn4, highlightthickness=0, borderwidth=0,
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+welcom_button44_ttp = CreateToolTip(welcom_button44, \
+                                   '*to use snap install, you must\napt-get install flatpak xD lol')
+
+my_label4.grid(column=0, row=7)
+eingabefeld4.grid(column=2, row=7)
+welcom_button44.grid(column=1, row=7)
+
 
 #System_Tab
 
