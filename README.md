@@ -2,7 +2,7 @@
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/PiGro-Aid-/blob/gh-pages/powered-by-coffee.svg)
 
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20Xy.png)
 
 
 ### Nothin' 2 C here!
