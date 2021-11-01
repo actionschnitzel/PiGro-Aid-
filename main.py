@@ -134,6 +134,10 @@ tab_tpinfp = Image.open('icons/info_button_p.png')
 tpinfp = ImageTk.PhotoImage(tab_tpinfp)
 tlinfp = Label(image=tpinfp)
 
+tab_tpinfm = Image.open('icons/info_m.png')
+tpinfm = ImageTk.PhotoImage(tab_tpinfm)
+tlinfm = Label(image=tpinfm)
+
 #Tab_contal_look
 tab_control.add(tab1, compound=LEFT, text='Start', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
@@ -269,6 +273,9 @@ def actionhome():
 def snapcraft():
     popen("xdg-open https://snapcraft.io/store")
 
+def flatflat():
+    popen("xdg-open https://flathub.org/")
+
 def xfcelook_f():
     popen("xdg-open https://www.xfce-look.org/browse/cat/")
 
@@ -357,7 +364,205 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
+def info_update_tab():
+    global pop_info_update
+    pop_info_update=Toplevel()
+    up_box = Text(
+    pop_info_update)
+    message ='''
+    the first frame contains the source list. This can be edited immediately. 
+    Do not worry! 
+    the changes are only adopted if you press the "SAVE SOURCE LIST" button. 
+    I installed this emergency brake on purpose so that 
+    I don't mess around and accidentally break everything.
+    Linux users should know the other buttons. They do exactly what it says.
+    The GPK button is super cool, it opens the GPK update viewer, 
+    which is AMAZINGLY preinstalled but is not displayed in the menu. 
+    Question is .. Why ??? !!!!!
+    The big gray box is xterm. it shows you what's going on right now.
+    Xterm is ancient but great for embedding in programs. 
+    You will come across it more often. 
+    My guiding principle is "less terminal more click!" but 
+    I think it's good and important to see what happens.'''
 
+
+    up_box.pack(expand=True)
+    up_box.insert('end', message)
+    up_box.config(fill=BOTH, expand=True)
+
+
+def info_installer_tab():
+    global pop_info_installer
+    pop_info_installer=Toplevel()
+    inst_box = Text(
+    pop_info_installer)
+    message ='''
+    Do you know RAMBO III?
+
+    What's that? ... It's blue light. ..... What does it do? 
+    ..... It turns blue.
+    So, here you can install programs .....
+    The special thing here is that you only have to enter the program name
+    without SUDO APT-GET INSTALL BLA BAL BLA ...
+    You can do this with apt / apt-get, pi-apps and snaps.
+    The "UNINSTALL" button belongs to pi-apps.
+    You can uninstall programs that were installed via APT with synaptic.
+    In general, the installer is designed like this:
+    Without having to do a lot of tinkering and digging,
+    you can quickly install a program. no extras.
+    Set up quickly!
+    Oh ... Snaps .... yes ... that works too ... but who needs ..... neverminde
+    The shop is not really a SHOP. 
+    It's more of a collection of programs that I personally find useful.'''
+
+    inst_box.pack(expand=True)
+    inst_box.insert('end', message)
+    inst_box.config(fill=BOTH, expand=True)
+
+def info_system_tab():
+    global pop_info_system
+    pop_info_system=Toplevel()
+    sys_box = Text(
+    pop_info_system)
+    message ='''
+    I think the buttons here are also self-explanatory. 
+    There are a few things to watch out for.
+    If you delete vcode.list, 
+    you can no longer install vscode. which is a really cool tool. 
+    Microsoft, Amazon and Google already know everything about you ;-)
+    Gparted, Neofetch, Deskpi and the Xfce tools only 
+    work if you have installed it. I
+    'm not installing anything behind your back here.
+    FM God Mode opens your file browser with sudo so be careful.
+    Update Kernel makes an upgrade to the latest. 
+    It can be that everything doesn't run so smoothly anymore (can be)
+    System info is unfortunately not yet in real time, 
+    but I'm working on it.'''
+
+    sys_box.pack(expand=True)
+    sys_box.insert('end', message)
+    sys_box.config(fill=BOTH, expand=True)
+
+
+def info_look_tab():
+    global pop_info_look
+    pop_info_look=Toplevel()
+    luk_box = Text(
+    pop_info_look)
+    message ='''
+    I love this TAB!
+    Why? Because I've read thousands of articles on how to 
+    change the desktop under RaspiOS. 
+    The articles and forum posts were like kilometers long.
+    And I compressed the whole thing into a tab. .... 
+    A man's praise in his own mouth stinks. :-P
+    I think everything is well structured and in an understandable way.
+    I have added a guideline especially for XFCE. (Make-Me-XFCE)
+    Tasksel basically does most of the work.
+    The suggestions are again stuff that I use. 
+    I think Twister OS does a good job when it comes to desktop themes. 
+    So I don't have to try to reinvent the wheel.
+    If you want to make an iOS out of vanilla raspi OS 
+    you have to handle so many dependencies ... 
+    that it is faster to install Twister.
+    With the Look tab, I just want to fully expand your options.
+    Tasksel:
+    Install the desktop environment of your choice with all dependencies.
+
+    Change Desktop:
+    Switch to a specific desktop after the reboot.
+
+    Change win manager:
+    Change the window manager
+
+    e.g gdm (Gnome), xfwm4 (XFCE)
+
+    Xfce_look:
+    Opens your webbrowser to xfce-looks.org
+
+    Theme folder:
+    Opens the theme folder as SUDO so that the new themes can be thrown in.
+
+    Icon folder:
+    Same same here
+
+    Xfwm4 Settings:
+    Quick access to the Xfce settings
+
+    Bluetooth fix:
+    If you have no bluetooth connectivity after installing Xfce
+
+    WiFi Fix:
+    If you have no Wifi connectivity after installing Xfce
+
+    Xfce4 Appearance:
+    Change the color scheme, icons etc.'''
+
+    luk_box.pack(expand=True)
+    luk_box.insert('end', message)
+    luk_box.config(fill=BOTH, expand=True)
+
+def info_tuning_tab():
+    global pop_info_tuning
+    pop_info_tuning=Toplevel()
+    tun_box = Text(
+    pop_info_tuning)
+    message ='''
+    I have to admit, I was lazy programming. 
+    If you are using the Tuning Berrys, 
+    you should check beforehand whether there is a space between 
+    the equals of your previous tuning settings.
+
+    example:
+    Valid: (arm_freq = over9000)
+    No Valid: (arm_freq=over9000)
+
+    Note that over9000 is a DBZ reference ;-) Never overclock to 9000 
+    ... NEVER
+
+    Zram: This creates a compressing block device right in the computer's memory. 
+    However, zRam is only used when the main memory is full: 
+    the kernel first uses the entire available RAM, 
+    then it tries to compress parts of it into zRam. 
+    In this way, more data can be kept in memory. 
+    In practice, this means that the system does not have to move to a slower 
+    hard drive so quickly, 
+    but the price is a slightly higher processor load.
+
+    64 bit mode adds the 64 bit kernel to your system. 
+    You can see how it works on the button ;-) 
+    Important !!!!! Kernel means KERNEL not distro. 
+    You will need to run a separate apt update / upgrade. 
+    64 bit apps can only be installed in the 64 bit container. 
+    You will also have to install a few things, 
+    e.g. you have to install cmake additionally, 
+    even if it is already installed under 32 bit. 
+    And ..... yeeeees Box64 you have to install over the 64 container.'''
+
+    tun_box.pack(expand=True)
+    tun_box.insert('end', message)
+    tun_box.config(fill=BOTH, expand=True)
+
+def info_holy_tab():
+    global pop_info_holy
+    pop_info_holy=Toplevel()
+    hol_box = Text(
+    pop_info_holy)
+    message ='''
+    I bought the book from the guy here -> LernLinux.tv 
+    and was so excited about it. 
+    Saw dselcet there. 
+    I've been using Linux since I was 15 years old, 
+    but "dselect" completely passed me by. 
+    The thing is: when I use timeshift, 
+    I still have all the trash on the HDD. 
+    Dselect only downloads all saved .DEBs. 
+    You get a fresh system with all the programs you love.
+    '''
+
+    hol_box.pack(expand=True)
+    hol_box.insert('end', message)
+    hol_box.config(fill=BOTH, expand=True)
 
 
 
@@ -554,7 +759,9 @@ sv_button.grid(column=1, row=2)
 
 termf.pack(padx=45,pady=20, anchor=W)
 
-
+info_up_btn = Button(tab11, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_update_tab)
+info_up_btn.place(x=650,y=320)
 
 
 #INSTALLER_Tab
@@ -737,7 +944,7 @@ welcom_button1_ttp = CreateToolTip(welcom_button1, \
 
 my_label = Label(rahmen3, image=p4, fg="white")
 my_label['background'] = '#333333'
-my_label.grid(column=0, row=0, pady=10)
+my_label.grid(column=0, row=0, )
 eingabefeld1.grid(column=2, row=0)
 welcom_button1.grid(column=1, row=0)
 
@@ -774,10 +981,10 @@ eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 
-welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white")
+#welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white")
 
 apps_inst_btn.grid(column=0, row=3)
-welcom_button4.grid(column=1, row=5)
+#welcom_button4.grid(column=1, row=5)
 eingabefeld3.grid(column=2, row=3)
 welcom_button3.grid(column=1, row=3)
 
@@ -814,6 +1021,36 @@ tab_ip3 = Image.open('icons/download_ico.png')
 ip03 = ImageTk.PhotoImage(tab_ip3)
 il03 = Label(image=ip03)
 
+
+
+
+#flat_entry
+inst4_p1=""" xterm -e 'bash -c \"sudo flatpak install flathub """
+inst4_p2="""; exec bash\"' """
+
+def inst_btn4():
+    entry_text = eingabefeld4.get()
+    popen(inst4_p1 + entry_text + inst4_p2)
+
+
+i66 = Image.open('icons/flathub.png')
+p66 = ImageTk.PhotoImage(i66)
+l66 = Label(image=p66)
+
+my_label4 = Label(rahmen3, image=p66, text="Snap install", fg="white")
+my_label4['background'] = '#333333'
+
+welcome_label4 = Label(rahmen3)
+eingabefeld4 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
+welcom_button44 = Button(rahmen3, text="install", command=inst_btn4, highlightthickness=0, borderwidth=0,
+                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+welcom_button44_ttp = CreateToolTip(welcom_button44, \
+                                   '*past without--->>>flatpak install flathub<<< org.mozilla.firefox')
+
+my_label4.grid(column=0, row=7)
+eingabefeld4.grid(column=2, row=7)
+welcom_button44.grid(column=1, row=7)
+
 frame311 = Frame(tab3, relief=GROOVE,borderwidth=0, highlightthickness=1,pady=5,padx=36,bg="green")
 frame311.pack(pady=10)
 
@@ -827,39 +1064,19 @@ uninst_button_ttp = CreateToolTip(uninst_button, \
 
 goodstuff_btn = Button(frame311, text="Must Haves", command=goodstuff, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
+flat_btn = Button(frame311, text="Flathub", command=flatflat, highlightthickness=1, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
+
 
 snapstore_btn.grid(column=0, row=6)
 welcom_button33.grid(column=1, row=6)
 uninst_button.grid(column=2, row=6)
-goodstuff_btn.grid(column=3, row=6)
-
-#flat_entry
-inst4_p1=""" xterm -e 'bash -c \"sudo flatpak install flathub """
-inst4_p2="""; exec bash\"' """
-
-def inst_btn4():
-    entry_text = eingabefeld4.get()
-    popen(inst4_p1 + entry_text + inst4_p2)
+goodstuff_btn.grid(column=4, row=6)
+flat_btn.grid(column=3, row=6)
 
 
-i66 = Image.open('icons/snap.png')
-p66 = ImageTk.PhotoImage(i66)
-l66 = Label(image=p66)
-
-my_label4 = Label(rahmen3, image=p66, text="Snap install", fg="white")
-my_label4['background'] = '#333333'
-
-welcome_label4 = Label(rahmen3)
-eingabefeld4 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
-welcom_button44 = Button(rahmen3, text="install", command=inst_btn4, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
-welcom_button44_ttp = CreateToolTip(welcom_button44, \
-                                   '*to use snap install, you must\napt-get install flatpak xD lol')
-
-my_label4.grid(column=0, row=7)
-eingabefeld4.grid(column=2, row=7)
-welcom_button44.grid(column=1, row=7)
-
+info_inst_btn = Button(tab3, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_installer_tab)
+info_inst_btn.place(x=700,y=620)
 
 #System_Tab
 
@@ -1021,6 +1238,11 @@ sysinf8 = Label(rahmen21, text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz", co
 sysinf8.grid(column=2, row=5)
 
 
+info_sys_btn = Button(tab2, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_system_tab)
+info_sys_btn.place(x=700,y=620)
+
+
 
 #LOOK_Tab
 
@@ -1148,7 +1370,9 @@ in_btn7 = Button(rahmen43, text="Overwatch Cursor", compound=LEFT,
                  command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
 in_btn7.grid(column=1, row=3)
 
-
+info_look_btn = Button(tab4, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_look_tab)
+info_look_btn.place(x=700,y=620)
 
 #Tuning_Tab
 tu_tp1 = Image.open('icons/PiGroOV2.png')
@@ -1372,6 +1596,9 @@ tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, bord
 
 tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 
+info_tuning_btn = Button(tab6, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_tuning_tab)
+info_tuning_btn.place(x=700,y=620)
 
 #Links_Tab
 def down_twist():
@@ -1580,6 +1807,11 @@ grail_botn3.grid(column=2, row=0)
 grail_text3=Label(rahmen92,text="Or: sudo apt install dselect\nsudo dselect updat\nsudo dpkg --set-selections < packages.listn\nsudo apt-get dselect-upgrade",
                  background='#333333',font=("Helvetica",8), foreground="white")
 grail_text3.pack(pady=10)
+
+
+info_holy_btn = Button(tab9, image=tpinfm,highlightthickness=0,
+                   borderwidth=0,command=info_holy_tab)
+info_holy_btn.place(x=700,y=620)
 
 
 #Pig-Grow_Tab
