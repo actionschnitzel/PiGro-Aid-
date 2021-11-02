@@ -238,10 +238,13 @@ def opbox_button():
     popen("sudo obconf")    
 
 def lxap_button():
-    popen("sudo lxappearance")
+    popen("lxappearance")
 
 def xfceappear_button():
     popen("xfce4-appearance-settings")
+
+def lx_task():
+    popen("lxtask")
 
 def contxt_button():
     popen("sudo xdg-open /boot/config.txt")
@@ -370,9 +373,9 @@ def info_update_tab():
     up_box = Text(
     pop_info_update)
     message ='''
-    the first frame contains the source list. This can be edited immediately. 
+    The first frame contains the source list. This can be edited immediately. 
     Do not worry! 
-    the changes are only adopted if you press the "SAVE SOURCE LIST" button. 
+    The changes are only adopted if you press the "SAVE SOURCE LIST" button. 
     I installed this emergency brake on purpose so that 
     I don't mess around and accidentally break everything.
     Linux users should know the other buttons. They do exactly what it says.
@@ -908,6 +911,7 @@ rahmen3['background'] = '#333333'
 
 # termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, borderwidth=0)
 # wid1 = termf1.winfo_id()
+#Dragon Quest (origin) D7TT-SK65-AMD8-KXK9-3FDJ
 # termf1['background'] = '#333333'
 
 
@@ -1172,6 +1176,10 @@ sys_btn9.grid(row=2,column=3)
 sys_btn10 = Button(rahmen2, image=bp05, text="Network Settings", command=net_set,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn10.grid(row=3,column=0)
+
+sys_btn11 = Button(rahmen2, image=bp05, text="Taskmanager", command=lx_task,
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+sys_btn11.grid(row=3,column=1)
 
 
 rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=20)
