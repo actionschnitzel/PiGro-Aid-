@@ -138,6 +138,14 @@ tab_tpinfm = Image.open('icons/info_m.png')
 tpinfm = ImageTk.PhotoImage(tab_tpinfm)
 tlinfm = Label(image=tpinfm)
 
+ico_1 = Image.open('icons/gui_icon.png')
+ico_m = ImageTk.PhotoImage(ico_1)
+ico_win = Label(image=ico_m)
+
+ico_2 = Image.open('icons/weblink_icon.png')
+ico_m2 = ImageTk.PhotoImage(ico_2)
+ico_win2 = Label(image=ico_m2)
+
 #Tab_contal_look
 tab_control.add(tab1, compound=LEFT, text='Start', image=tp01)
 tab_control.add(tab11, compound=LEFT, text='Updater', image=tp012)
@@ -1131,7 +1139,7 @@ sys_btn1 = Button(rahmen2, image=bp01, text="Raspi-Config GUI", command=pi_confi
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn1.grid(row=0,column=1)
 
-sys_btn2 = Button(rahmen2, image=bp03, text="Config.txt", command=contxt_button,
+sys_btn2 = Button(rahmen2, image=ico_m, text="Config.txt", command=contxt_button,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn2.grid(row=0,column=2)
 
@@ -1173,11 +1181,11 @@ sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Settings", command=button_xse
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn9.grid(row=2,column=3)
 
-sys_btn10 = Button(rahmen2, image=bp05, text="Network Settings", command=net_set,
+sys_btn10 = Button(rahmen2, image=ico_m, text="Network Settings", command=net_set,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn10.grid(row=3,column=0)
 
-sys_btn11 = Button(rahmen2, image=bp05, text="Taskmanager", command=lx_task,
+sys_btn11 = Button(rahmen2, image=ico_m, text="Taskmanager", command=lx_task,
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
 sys_btn11.grid(row=3,column=1)
 
@@ -1310,28 +1318,28 @@ rahmen41['background'] = '#333333'
 xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d",width=10)
 xfce.grid(column=0, row=0)
 
-in_btn3 = Button(rahmen41,justify="left", text="Xfwm4 Settings",
-                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn3 = Button(rahmen41,image=ico_m,justify="left", text="Xfwm4 Settings",
+                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=160)
 in_btn3.grid(column=1, row=0, padx=5)
 
-in_btn5 = Button(rahmen41,justify="left", text="WiFi Fix", compound=LEFT,
-                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+in_btn5 = Button(rahmen41,image=bp03,justify="left", text="WiFi Fix", compound=LEFT,
+                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
 in_btn5.grid(column=3, row=0)
 
-in_btn5 = Button(rahmen41,justify="left", text="Bluetooth Fix", compound=LEFT,
-                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+in_btn5 = Button(rahmen41,image=bp03,justify="left", text="Bluetooth Fix", compound=LEFT,
+                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160)
 in_btn5.grid(column=2, row=0)
 
-in_btn5 = Button(rahmen41,justify="left", text="Xfce4 Appearance", compound=LEFT,
-                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+in_btn5 = Button(rahmen41,image=ico_m,justify="left", text="Xfce4 Appearance", compound=LEFT,
+                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160)
 in_btn5.grid(column=1, row=1)
+#üüü
+in_btn7 = Button(rahmen41,image=ico_m2,justify="left", text="Xfce_look", compound=LEFT,
+                 command=xfcelook_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+in_btn7.grid(column=2, row=1)
 
-in_btn7 = Button(rahmen41, text="Xfce_look", compound=LEFT,
-                 command=xfcelook_f, highlightthickness=2, borderwidth=0, background='green', foreground="white",width=15)
-in_btn7.grid(column=2, row=1, columnspan=1)
-
-in_btn8 = Button(rahmen41,justify="left", text="Make-Me-Xfce", compound=LEFT,
-                 command=xfce_make, highlightthickness=2, borderwidth=0, background='green', foreground="white",width=15)
+in_btn8 = Button(rahmen41,image=ico_m2,justify="left", text="Make-Me-Xfce", compound=LEFT,
+                 command=xfce_make, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
 in_btn8.grid(column=3, row=1)
 
 
@@ -1342,16 +1350,16 @@ rahmen42['background'] = '#333333'
 lxde = Label(rahmen42, text="Pixel Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d")
 lxde.grid(column=0, row=0)
 
-lx_btn0 = Button(rahmen42, text="LXAppearace", compound=LEFT,
-                 command=lxap_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+lx_btn0 = Button(rahmen42,image=ico_m,justify="left", text="LXAppearace", compound=LEFT,
+                 command=lxap_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
 lx_btn0.grid(column=1, row=0)
 
-lxde = Button(rahmen42, text="OpenBox Conf", compound=LEFT,
-                 command=opbox_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+lxde = Button(rahmen42,image=ico_m,justify="left", text="OpenBox Conf", compound=LEFT,
+                 command=opbox_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
 lxde.grid(column=2, row=0)
 
-lxde = Button(rahmen42, text="Pi Appeariance", compound=LEFT,
-                 command=pi_appear, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=15)
+lxde = Button(rahmen42,image=ico_m,justify="left", text="Pi Appeariance", compound=LEFT,
+                 command=pi_appear, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
 lxde.grid(column=3, row=0)
 
 
