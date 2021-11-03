@@ -46,6 +46,7 @@ def install_depends():
     c.installIfNotInstalled('lolcat')
     pip_install('distro')
     pip_install('psutil')
+    #pip_install('pywebview')
     isInstalling=False
 def isConnected(url, timeout):
     try:

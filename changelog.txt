@@ -15,8 +15,35 @@ Tell a friend
 
 Changes:
 
-- sound playback replacement: py.playsound -> mpg123
+-PDL integration
 
+     PDL is a package manager that I developed. It shows you
+     which APT packages are installed. You can search for packages and
+     install / uninstall. You can find it when you click on SHOP.
+     The old SHOP can be reached under MUST HAVES.
+
+-Must Haves
+
+    I removed all installers that no longer work.
+
+-Design
+
+    PiGro has always been about a cool look. I have continued tinkering and 
+    will continue to work on getting the best out of tkinter. 
+    It is important to me to write every line of code myself 
+    and not to use any GUI generators :-)
+
+    The font has changed to Helvetica
+
+-Installer
+
+    I have bound flatpaks in the FAST INSTALLER. 
+    Don't forget that Flatpak and SNAP are not preinstalled.
+
+-Poll
+
+    Thanks for using the poll! You help me to improve PiGro. 
+    I leave the votes open until January and then evaluate them.
 
 Cheers
 

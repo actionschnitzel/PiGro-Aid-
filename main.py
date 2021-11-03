@@ -221,7 +221,7 @@ class CreateToolTip(object):
 def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
-    pop_changelog.geometry("650x600")
+    pop_changelog.geometry("650x900")
     pop_changelog.title("Changelog")
     s_list = Text(pop_changelog)
     text_file = open("changelog.txt")
@@ -415,16 +415,22 @@ def info_installer_tab():
     So, here you can install programs .....
     The special thing here is that you only have to enter the program name
     without SUDO APT-GET INSTALL BLA BAL BLA ...
-    You can do this with apt / apt-get, pi-apps and snaps.
-    The "UNINSTALL" button belongs to pi-apps.
-    You can uninstall programs that were installed via APT with synaptic.
     In general, the installer is designed like this:
     Without having to do a lot of tinkering and digging,
     you can quickly install a program. no extras.
     Set up quickly!
-    Oh ... Snaps .... yes ... that works too ... but who needs ..... neverminde
-    The shop is not really a SHOP. 
-    It's more of a collection of programs that I personally find useful.'''
+    
+    To use snap and flatpaks you have to install them beforehand ;-)
+    command:
+    - sudo apt install snapd
+    - sudo apt install flatpak
+
+    If you want to know which programs are available click on: 
+    / snapcraft.io / list of all pi-apps / Flathub / 
+    
+    
+    
+    '''
 
     inst_box.pack(expand=True)
     inst_box.insert('end', message)
@@ -1577,38 +1583,38 @@ rahmen62 = Frame(rahmen622,borderwidth=0, highlightthickness=0, relief=GROOVE, p
 rahmen62.pack(padx=10, side=LEFT)
 rahmen62['background'] = '#333333'
 
-tu_lb1 = Label(rahmen6, text="Crank It Up", font='20', highlightthickness=0, borderwidth=2, background='#333333',
-               foreground="#d4244d").grid(column=1, row=0)
+tu_lb1 = Label(rahmen6, text="Crank It Up", highlightthickness=0, borderwidth=2, background='#333333',
+               foreground="#d4244d",font=("Helvetica",16)).grid(column=1, row=0)
 
-tu_btn1 = Button(rahmen6, image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=1)
+tu_btn1 = Button(rahmen6,justify="left", image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=1)
 
-tu_lb2 = Label(rahmen6, text="You Sir... Need A Fan! ", font='20', highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d").grid(column=2, row=0)
+tu_lb2 = Label(rahmen6, text="You Sir... Need A Fan! ", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=2, row=0)
 
-tu_btn2 = Button(rahmen6, image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=2, row=1)
+tu_btn2 = Button(rahmen6,justify="left", image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=2, row=1)
 
-tu_lb3 = Label(rahmen6, text="Reset Overclocking", font='20', highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d").grid(column=0, row=0)
+tu_lb3 = Label(rahmen6, text="Reset Overclocking", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=0, row=0)
 
-tu_btn3 = Button(rahmen6, image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
-                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=0, row=1)
+tu_btn3 = Button(rahmen6,justify="left", image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
+                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=1)
 
-tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", font='20', highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d").grid(column=1, row=2)
+tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=1, row=2)
 
-tu_btn4 = Button(rahmen6, image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
-                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=3)
+tu_btn4 = Button(rahmen6,justify="left", image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
+                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=3)
 
 tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
                background='#333333', foreground="yellow").grid(column=1, row=4)
 
-tu_zb1 = Label(rahmen61, text="ZRAM", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
+tu_zb1 = Label(rahmen61, text="ZRAM",font=("Helvetica",16), highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
 tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 
-tu_bb1=Label(rahmen62, text="64 Bit Mode", font='20', highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
+tu_bb1=Label(rahmen62, text="64 Bit Mode",font=("Helvetica",16), highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
 
 tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
 
