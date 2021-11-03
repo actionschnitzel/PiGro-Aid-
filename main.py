@@ -735,36 +735,36 @@ s_list.pack(anchor='w')
 shadowcolor = "yellow"
 
 
-rahmen112 = Frame(tab11, borderwidth=0, relief=GROOVE, highlightthickness=2)
+rahmen112 = Frame(tab11, borderwidth=0, relief=GROOVE, highlightthickness=2,padx=5,pady=5)
 rahmen112.pack(padx=45, anchor='w')
 rahmen112['background'] = '#333333'
 
 update_button = Button(rahmen112, text="Update", width=15, anchor='w', command=update_btn, highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white")
+                       borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 update_button.grid(column=0, row=0)
 
 update_button = Button(rahmen112, text="Upgrade", width=15, anchor='w', command=upgrade_btn, highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white")
+                       borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 update_button.grid(column=0, row=1)
 
 fupgrade_button = Button(rahmen112, text="Full Upgrade", width=15, anchor='w', command=full_upgrade_btn, highlightthickness=0,
-                        borderwidth=0, background='#333333', foreground="white")
+                        borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 fupgrade_button.grid(column=0, row=2)
 
 gpk_button = Button(rahmen112, text="GPK UpdateViewer", width=15, anchor='w', command=button_gpk,
-                    highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+                    highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 gpk_button.grid(column=0, row=3)
 
-auth_button = Button(rahmen112, text="Allow Sources", width=15, anchor='w', command=add_unsi_btn,
-                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+auth_button = Button(rahmen112, text="Allow Sources", width=20, anchor='w', command=add_unsi_btn,
+                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 auth_button.grid(column=1, row=0)
 
-rm_button = Button(rahmen112, text="Remove Config Files", width=15, anchor='w', command=autoremove_btn,
-                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+rm_button = Button(rahmen112, text="Remove Config Files", width=20, anchor='w', command=autoremove_btn,
+                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",12,"bold"))
 rm_button.grid(column=1, row=1)
 
-sv_button = Button(rahmen112, text="Save Source List", width=15, anchor='w', command=save_list, highlightthickness=0,
-                   borderwidth=1, background='#333333', foreground="#d4244d")
+sv_button = Button(rahmen112, text="Save Source List", width=20, anchor='w', command=save_list, highlightthickness=0,
+                   borderwidth=0, background='#333333', foreground="#d4244d",font=("Helvetica",12,"bold"))
 sv_button.grid(column=1, row=2)
 
 
@@ -1132,61 +1132,61 @@ rahmen2.pack(padx=40, pady=20, fill='both')
 rahmen2['background'] = '#333333'
 
 sys_btn6 = Button(rahmen2, image=bp01, text="Raspi-Config CLI", command=pi_configbutton,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn6.grid(row=0,column=0)
 
 sys_btn1 = Button(rahmen2, image=bp01, text="Raspi-Config GUI", command=pi_configbutton2,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn1.grid(row=0,column=1)
 
 sys_btn2 = Button(rahmen2, image=ico_m, text="Config.txt", command=contxt_button,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn2.grid(row=0,column=2)
 
 sys_btnvs = Button(rahmen2, image=bp03, text="rm vscode.list ", command=rm_vsc,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btnvs.grid(row=0,column=3)
 
 sys_btn3 = Button(rahmen2, image=bp04, text="Gparted", command=gparted_exec,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn3.grid(row=1,column=0)
 
 sys_btn4 = Button(rahmen2, image=bp05, text="NeoFetch", command=neofetch_button,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn4.grid(row=1,column=1)
 
 sys_btn5 = Button(rahmen2, image=bp06, text="FM God Mode", command=onc_ben, highlightthickness=0,
-                  borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn5.grid(row=1,column=2)
 sys_btn5_ttp = CreateToolTip(sys_btn5, \
                                    "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)")
 
 sys_btn6 = Button(rahmen2, image=bp07, text="Upgrade Linux Kernel", command=button_lk,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn6.grid(row=1,column=3)
 
 sys_btn7 = Button(rahmen2, image=bp03, text="DeskpiPro Control", command=button_dpfc,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn7.grid(row=2,column=0)
 
 sys_btn8 = Button(rahmen2, image=bp03, text="Boot Log", command=button_boot,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn8.grid(row=2,column=1)
 
 sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Autostarts", command=button_auto,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn9.grid(row=2,column=2)
 
 sys_btn9 = Button(rahmen2, image=bp033, text="Xfce Settings", command=button_xsett,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn9.grid(row=2,column=3)
 
 sys_btn10 = Button(rahmen2, image=ico_m, text="Network Settings", command=net_set,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn10.grid(row=3,column=0)
 
 sys_btn11 = Button(rahmen2, image=ico_m, text="Taskmanager", command=lx_task,
-                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP)
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",10,"bold"))
 sys_btn11.grid(row=3,column=1)
 
 
@@ -1219,38 +1219,38 @@ sysinf0 = Label(rahmen21,image=dl, highlightthickness=0, borderwidth=0,
                 background='#333333', foreground="#d4244d",pady=20,padx=20)
 sysinf0.grid(column=0, row=0,rowspan=6)
 sysinf0 = Label(rahmen21, text=f"System: {my_system.system}", compound=LEFT, anchor=W, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white", width=20,padx=10)
+                borderwidth=0, background='#333333', foreground="white", width=20,padx=10,font=("Helvetica",10,"bold"))
 sysinf0.grid(column=1, row=1)
 sysinfd = Label(rahmen21, text=f"Distro: {distro}", compound=LEFT, anchor=W, highlightthickness=0,
-                borderwidth=0, background='#333333', foreground="white", width=20)
+                borderwidth=0, background='#333333', foreground="white", width=20,font=("Helvetica",10,"bold"))
 sysinfd.grid(column=1, row=2)
 sysinf1 = Label(rahmen21, text=f"Node Name: {my_system.node}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=20)
+                foreground="white", width=20,font=("Helvetica",10,"bold"))
 sysinf1.grid(column=1, row=3)
 sysinf2 = Label(rahmen21, text=f"Kernel: {my_system.release}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=20)
+                foreground="white", width=20,font=("Helvetica",10,"bold"))
 sysinf2.grid(column=1, row=4)
 sysinf3 = Label(rahmen21, text=f"Machine: {my_system.machine}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=20)
+                foreground="white", width=20,font=("Helvetica",10,"bold"))
 sysinf3.grid(column=1, row=5)
 sysinf3 = Label(rahmen21, text="", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=20)
+                foreground="white", width=20,font=("Helvetica",10,"bold"))
 sysinf3.grid(column=2, row=0)
 sysinf3 = Label(rahmen21, text=f"RAM Total: {get_size(svmem.total)}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
+                foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf3.grid(column=2, row=1)
 sysinf3 = Label(rahmen21, text=f"SWAP Total: {get_size(swap.total)}", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
+                foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf3.grid(column=2, row=2)
 sysinf6 = Label(rahmen21, text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
+                foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf6.grid(column=2, row=3)
 sysinf7 = Label(rahmen21, text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
-                foreground="white", width=25)
+                foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf7.grid(column=2, row=4)
 
 sysinf8 = Label(rahmen21, text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
-            foreground="white", width=25)
+            foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf8.grid(column=2, row=5)
 
 
@@ -1280,26 +1280,26 @@ tab_loktt = Image.open('icons/tuxterm.png')
 ttp01 = ImageTk.PhotoImage(tab_loktt)
 ttl01 = Label(image=ttp01)
 
-guitweaks = Label(rahmen4, text="GUI Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
+guitweaks = Label(rahmen4, text="GUI Tweaks",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d", anchor="w")
 guitweaks.grid(column=0, row=0)
 
-in_btn1 = Button(rahmen4,image=ttp01, text="Tasksel",font=("Helvetica",12), command=tasksel_button, highlightthickness=0, borderwidth=0,
+in_btn1 = Button(rahmen4,image=ttp01, text="Tasksel",font=("Helvetica",10,"bold"), command=tasksel_button, highlightthickness=0, borderwidth=0,
                  background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
 in_btn1.grid(column=1, row=0, padx=5)
 
-in_btn2 = Button(rahmen4,image=ttp01, text="Change Desktop", command=ch_desk,font=("Helvetica",12), highlightthickness=0, borderwidth=0,
+in_btn2 = Button(rahmen4,image=ttp01, text="Change Desktop", command=ch_desk,font=("Helvetica",10,"bold"), highlightthickness=0, borderwidth=0,
                  background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
 in_btn2.grid(column=1, row=1, padx=5)
 
-in_btn3 = Button(rahmen4,image=ttp01, text="Change Win-Manager", command=button_xfwm,font=("Helvetica",12), highlightthickness=0, borderwidth=0,
+in_btn3 = Button(rahmen4,image=ttp01, text="Change Win-Manager", command=button_xfwm,font=("Helvetica",10,"bold"), highlightthickness=0, borderwidth=0,
                  background='#333333', foreground="white", compound=LEFT, anchor='w',width=220)
 in_btn3.grid(column=1, row=2, padx=5)
 
-in_btn7 = Button(rahmen4,image=bp06, text="Theme Folder",font=("Helvetica",12),
+in_btn7 = Button(rahmen4,image=bp06, text="Theme Folder",font=("Helvetica",10,"bold"),
                  command=theme_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=200)
 in_btn7.grid(column=2, row=0, padx=5,pady=5)
 
-in_btn7 = Button(rahmen4,image=bp06, text="Icon Folder",font=("Helvetica",12),
+in_btn7 = Button(rahmen4,image=bp06, text="Icon Folder",font=("Helvetica",10,"bold"),
                  command=icon_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=200)
 in_btn7.grid(column=2, row=1, padx=5)
 
@@ -1315,31 +1315,31 @@ rahmen41 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10
 rahmen41.pack(padx=40, pady=20, fill='both')
 rahmen41['background'] = '#333333'
 
-xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d",width=10)
+xfce = Label(rahmen41, text="Xfce Tweaks",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d",width=10)
 xfce.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen41,image=ico_m,justify="left", text="Xfwm4 Settings",
-                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=160)
+                 command=button_xf4s, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=160,font=("Helvetica",10,"bold"))
 in_btn3.grid(column=1, row=0, padx=5)
 
 in_btn5 = Button(rahmen41,image=bp03,justify="left", text="WiFi Fix", compound=LEFT,
-                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=xfcefix2, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 in_btn5.grid(column=3, row=0)
 
 in_btn5 = Button(rahmen41,image=bp03,justify="left", text="Bluetooth Fix", compound=LEFT,
-                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160)
+                 command=xfcefix, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160,font=("Helvetica",10,"bold"))
 in_btn5.grid(column=2, row=0)
 
 in_btn5 = Button(rahmen41,image=ico_m,justify="left", text="Xfce4 Appearance", compound=LEFT,
-                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160)
+                 command=xfceappear_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", anchor='w',width=160,font=("Helvetica",10,"bold"))
 in_btn5.grid(column=1, row=1)
-#üüü
+
 in_btn7 = Button(rahmen41,image=ico_m2,justify="left", text="Xfce_look", compound=LEFT,
-                 command=xfcelook_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=xfcelook_f, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 in_btn7.grid(column=2, row=1)
 
 in_btn8 = Button(rahmen41,image=ico_m2,justify="left", text="Make-Me-Xfce", compound=LEFT,
-                 command=xfce_make, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=xfce_make, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 in_btn8.grid(column=3, row=1)
 
 
@@ -1347,19 +1347,19 @@ rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10
 rahmen42.pack(padx=40, pady=20, fill='both')
 rahmen42['background'] = '#333333'
 
-lxde = Label(rahmen42, text="Pixel Tweaks",font=("Helvetica",14), background='#333333', foreground="#d4244d")
+lxde = Label(rahmen42, text="Pixel Tweaks",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d")
 lxde.grid(column=0, row=0)
 
 lx_btn0 = Button(rahmen42,image=ico_m,justify="left", text="LXAppearace", compound=LEFT,
-                 command=lxap_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=lxap_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 lx_btn0.grid(column=1, row=0)
 
 lxde = Button(rahmen42,image=ico_m,justify="left", text="OpenBox Conf", compound=LEFT,
-                 command=opbox_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=opbox_button, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 lxde.grid(column=2, row=0)
 
 lxde = Button(rahmen42,image=ico_m,justify="left", text="Pi Appeariance", compound=LEFT,
-                 command=pi_appear, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w')
+                 command=pi_appear, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
 lxde.grid(column=3, row=0)
 
 
@@ -1368,22 +1368,22 @@ rahmen43 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10
 rahmen43.pack(padx=40, pady=20, fill='both')
 rahmen43['background'] = '#333333'
 
-lxde = Label(rahmen43, text="Suggestions ",font=("Helvetica",14), background='#333333', foreground="#d4244d", anchor="w")
+lxde = Label(rahmen43, text="Suggestions ",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d", anchor="w")
 lxde.grid(column=0, row=0)
 
 in_btn3 = Button(rahmen43, text="Install Arc Theme", compound=LEFT, command=arc_inst,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
 in_btn3.grid(column=1, row=0)
 
-in_btn4 = Button(rahmen43, text="Install Breeze Cursor Theme", compound=LEFT,command=breeze_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+in_btn4 = Button(rahmen43, text="Install Breeze Cursor Theme", compound=LEFT,command=breeze_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
 in_btn4.grid(column=2, row=0)
 
 in_btn5 = Button(rahmen43, text="Install Papirus Icon Theme", compound=LEFT,
-                 command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+                 command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
 in_btn5.grid(column=1, row=1)
 
 in_btn7 = Button(rahmen43, text="Overwatch Cursor", compound=LEFT,
-                 command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white")
+                 command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
 in_btn7.grid(column=1, row=3)
 
 info_look_btn = Button(tab4, image=tpinfm,highlightthickness=0,
