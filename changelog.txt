@@ -1,4 +1,4 @@
-####SeptemberFix################################################################
+################################################################################
 ################################################################################
 
     ____  _ ______            
@@ -6,23 +6,51 @@
   / /_/ / / / __/ ___/ __ \ 
  / ____/ / /_/ / /  / /_/ / 
 /_/   /_/\____/_/   \____/ 
-                                                               
+
+
+Guess who's back
+Back again
+PiGro's back
+Tell a friend
+
+Actually I wanted to wait until Bullseye came out but the update is ready. 
+Why wait :-)
+
+
 Changes:
 
-- sound playback replacement: py.playsound -> mpg123
-- The splash screen shouldn't just look cool! ... ;-)
-  It also checks whether all dependencies are met. As a result,
-  PiGro doesn't start as fast as it used to. The advantage is:
-  I don't have to write with Botspot every time to adapt the pi-apps installer 
-- Argon One & Deskpi Pi Pro driver installer in Shop
-- Plank installer & Albert installer
-- Added Samba to Shop
-- Added Tilix to Shop
-- Added Network Settings to System
-- Added Full-Upgrade butten to Updater
-- oohhhh and PiGro will now open exactly in the middle of the screen
+-PDL integration
 
-!!!Special THX to Itai Nelken for fixing the splash screen!!!
+     PDL is a package manager that I developed. It shows you
+     which APT packages are installed. You can search for packages and
+     install / uninstall. You can find it when you click on SHOP.
+     The old SHOP can be reached under MUST HAVES.
+
+     PDL is super new and may still have a few teething problems. 
+     Be a little indulgent ;-)
+
+-Must Haves
+
+    I removed all installers that no longer work.
+
+-Design
+
+    PiGro has always been about a cool look. I have continued tinkering and 
+    will continue to work on getting the best out of tkinter. 
+    It is important to me to write every line of code myself 
+    and not to use any GUI generators :-)
+
+    The font has changed to Helvetica
+
+-Installer
+
+    I have bound flatpaks in the FAST INSTALLER. 
+    Don't forget that Flatpak and SNAP are not preinstalled.
+
+-Poll
+
+    Thanks for using the poll! You help me to improve PiGro. 
+    I leave the votes open until January and then evaluate them.
 
 Cheers
 

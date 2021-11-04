@@ -1,4 +1,3 @@
-
 echo '                                                                     
     ____  _ ______              ____           __        ____         
    / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
@@ -15,8 +14,8 @@ Hope you like it.
 '
 read -p "You are about to install PiGro - Just Click It! ...... Agree (y/n)? " option
 case "$option" in
-	y*) sudo apt-get update ;;
-	n*) exit ;;
+    y*) sudo apt-get update ;;
+    n*) exit ;;
 esac
 
 clear
@@ -24,14 +23,14 @@ echo 'You can now install tool that can be usesd in Pigro'
 
 read -p "Install NeoFetch (y/n)? " option
 case "$option" in
-	y*) sudo apt-get install neofetch ;;
+    y*) sudo apt-get install neofetch ;;
 esac
 
 clear
 
 read -p "Install Gparted (y/n)? " option
 case "$option" in
-	y*) sudo apt-get install gparted ;;
+    y*) sudo apt-get install gparted ;;
 esac
 
 clear
@@ -65,4 +64,3 @@ echo  '
 |/__\|/__\|/__\|/__\|/_______\|/__\|'
 
 printf '\e[38;5;46m You can close this window now\n'
-
