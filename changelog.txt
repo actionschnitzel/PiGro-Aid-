@@ -13,6 +13,10 @@ Back again
 PiGro's back
 Tell a friend
 
+Actually I wanted to wait until Bullseye came out but the update is ready. 
+Why wait :-)
+
+
 Changes:
 
 -PDL integration
@@ -21,6 +25,9 @@ Changes:
      which APT packages are installed. You can search for packages and
      install / uninstall. You can find it when you click on SHOP.
      The old SHOP can be reached under MUST HAVES.
+
+     PDL is super new and may still have a few teething problems. 
+     Be a little indulgent ;-)
 
 -Must Haves
 

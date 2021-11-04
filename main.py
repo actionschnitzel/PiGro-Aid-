@@ -221,7 +221,7 @@ class CreateToolTip(object):
 def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
-    pop_changelog.geometry("650x900")
+    pop_changelog.geometry("650x1000")
     pop_changelog.title("Changelog")
     s_list = Text(pop_changelog)
     text_file = open("changelog.txt")
@@ -423,7 +423,8 @@ def info_installer_tab():
     To use snap and flatpaks you have to install them beforehand ;-)
     command:
     - sudo apt install snapd
-    - sudo apt install flatpak
+    - sudo apt install flatpak 
+        + flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
     If you want to know which programs are available click on: 
     / snapcraft.io / list of all pi-apps / Flathub / 
@@ -1883,16 +1884,16 @@ rahmen101.pack(padx=40, pady=20, fill='both')
 rahmen101['background'] = '#333333'
 
 pig_btn_1 = Button(rahmen101,text="User Poll", highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white", command=poll).grid(column=0,row=0,pady=20, padx=20)
+                       borderwidth=0, background='#333333', foreground="#2FFC05", command=poll,font=(("Helvetica,bold"),"12","bold")).grid(column=0,row=0,pady=20, padx=20)
 
 pig_btn_2 = Button(rahmen101,text="Wallpapers", highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white", command=wpaps).grid(column=1,row=0,pady=20)
+                       borderwidth=0, background='#333333', foreground="#EBFC05", command=wpaps,font=(("Helvetica,bold"),"12","bold")).grid(column=1,row=0,pady=20)
 
 pig_btn_3 = Button(rahmen101,text="PiGro Manuel", highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white",command=wiki).grid(column=2,row=0,pady=20, padx=20)
+                       borderwidth=0, background='#333333', foreground="#053AFC",command=wiki,font=(("Helvetica,bold"),"12","bold")).grid(column=2,row=0,pady=20, padx=20)
 
-pig_btn_4 = Button(rahmen101,text="redbubble.com", highlightthickness=0,
-                       borderwidth=0, background='#333333', foreground="white",command=red_bub).grid(column=3,row=0,pady=20, padx=20)
+pig_btn_4 = Button(rahmen101,text="Redbubble.com", highlightthickness=0,
+                       borderwidth=0, background='#333333', foreground="#FC05A0",command=red_bub,font=(("Helvetica,bold"),"12","bold")).grid(column=3,row=0,pady=20, padx=20)
 
 
 tab_control.pack(expand=1, fill='both')

@@ -1,4 +1,3 @@
-
 echo '                                                                     
     ____  _ ______              ____           __        ____         
    / __ \(_) ____/________     /  _/___  _____/ /_____ _/ / /__  _____
@@ -8,35 +7,46 @@ echo '
                                                                       '
 
 
-#echo "Thanks for installing Pigro!
-#Pigro is a system tool and is inspired by YaST (OpenSuse). Let's go!!!"
-#read -p "Install PiGro - Just Click It! ...... Agree (y/n)? " option
-#case "$option" in
-#    y*) sudo apt-get update ;;
- #   n*) exit ;;
-#esac
+echo '
+I recently switched from Mint to MX and was blown away by the "MX Tools GUI". 
+In the spirit of this, PiGro has now become an all-in-one control center.
+Hope you like it.
+'
+read -p "You are about to install PiGro - Just Click It! ...... Agree (y/n)? " option
+case "$option" in
+    y*) sudo apt-get update ;;
+    n*) exit ;;
+esac
 
-#clear
+clear
+echo 'You can now install tool that can be usesd in Pigro'
+
+read -p "Install NeoFetch (y/n)? " option
+case "$option" in
+    y*) sudo apt-get install neofetch ;;
+esac
+
+clear
+
+read -p "Install Gparted (y/n)? " option
+case "$option" in
+    y*) sudo apt-get install gparted ;;
+esac
+
+clear
 
 echo 'Now I install dependencies'
 
 sudo apt-get install xterm -y
-sudo apt-get install python3-pil -y 
-sudo apt-get install python3-pil.imagetk -y
+sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
-sudo apt install mpg123 -y
-sudo apt install lolcat -y
-pip3 install psutil
-pip3 install distro
-
-git clone -b bullseye_testing_ https://github.com/actionschnitzel/PiGro-Aid-.git
-cd PiGro-Aid-
+sudo apt install mpg123
 
 sudo chmod +x start.sh
 sudo cp pigro.desktop  /home/pi/Desktop
 sudo cp pigro.desktop /usr/share/applications/
 sudo chmod +x /home/pi/Desktop/pigro.desktop
-cd
+
 clear
 
 echo '                                                                     
