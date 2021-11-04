@@ -120,7 +120,7 @@ def btop_plusplus():
     def top_uninst():
         os.system("xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'")
 
-    logo = Label(bt_pp, image=ip03, text="btop++",font=("Helvetica",16), anchor="w",
+    logo = Label(bt_pp, image=ip03, text="bpytop",font=("Helvetica",16), anchor="w",
                   highlightthickness=0, borderwidth=0, background='#191925', foreground="white", compound=TOP).grid(column=0, row=0)
     
     bt_inst = Button(bt_pp, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
@@ -129,7 +129,7 @@ def btop_plusplus():
     bt_uninst = Button(bt_pp, text="Uninstall",font=("Helvetica",11,"bold"), anchor="w",
                   highlightthickness=0, borderwidth=0, background='#191925', foreground="white", compound=LEFT,justify="left",command=top_uninst).grid(column=0, row=2)
     
-    bt_info = Label(bt_pp, text="Resource monitor that shows usage and stats for\nprocessor,memory, disks, network and processes.",justify="left", anchor="w",
+    bt_info = Label(bt_pp, text="Resource monitor that shows usage and stats for\nprocessor,memory, disks, network and processes.\n\ncommand: bpytop",justify="left", anchor="w",
                   highlightthickness=0, borderwidth=0, background='#191925', foreground="white", compound=TOP).grid(column=1, row=0)
     
     #bt_pic = Label(bt_pp,image=ip24, anchor="w",
@@ -399,7 +399,7 @@ tab_ip1 = Image.open('essentials/Albert/albert-icon.png')
 ip01 = ImageTk.PhotoImage(tab_ip1)
 il01 = Label(image=ip01)
 
-tab_ip3 = Image.open('essentials/btop++/logo.png')
+tab_ip3 = Image.open('essentials/bpytop/logo.png')
 ip03 = ImageTk.PhotoImage(tab_ip3)
 il03 = Label(image=ip03)
 
@@ -439,9 +439,9 @@ tab_ip23 = Image.open('essentials/Sublime_Merge/sublime_merge.png')
 ip23 = ImageTk.PhotoImage(tab_ip23)
 il23 = Label(image=ip23)
 
-tab_ip24 = Image.open('essentials/btop++/btop.png')
-ip24 = ImageTk.PhotoImage(tab_ip24)
-il24 = Label(image=ip24)
+#tab_ip24 = Image.open('essentials/btop++/btop.png')
+#ip24 = ImageTk.PhotoImage(tab_ip24)
+#il24 = Label(image=ip24)
 
 
 #####################################################################TAB1
@@ -457,7 +457,7 @@ ess_frame = Frame(tab1, borderwidth=0, background='#191925',highlightthickness=0
 ess_frame.pack(pady=20)
 
 
-shop_btn01 = Button(ess_frame, width=105, image=ip03, text="btop++", anchor="n", highlightthickness=0,
+shop_btn01 = Button(ess_frame, width=105, image=ip03, text="bpytop", anchor="n", highlightthickness=0,
                   borderwidth=0, foreground="white", compound=TOP,font=("Helvetica",11,"bold"),command=btop_plusplus, background='#191925').grid(column=0, row=0,pady=5, padx=5)
 
 shop_btn01 = Button(ess_frame, width=105, image=ip20, text="Argon One Driver", anchor="n", highlightthickness=0,
