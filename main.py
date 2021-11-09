@@ -221,14 +221,17 @@ class CreateToolTip(object):
 def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
-    pop_changelog.geometry("650x1000")
+    pop_changelog.geometry("1000x1000")
     pop_changelog.title("Changelog")
-    s_list = Text(pop_changelog)
+    scrollbar = Scrollbar(pop_changelog)
+    scrollbar.pack( side = RIGHT, fill = Y )
+    s_list = Text(pop_changelog, yscrollcommand = scrollbar.set )
     text_file = open("changelog.txt")
     stuff = text_file.read()
     s_list.insert(END, stuff)
     text_file.close()
     s_list.pack(anchor='w', fill=BOTH, expand=True)
+    scrollbar.config( command = mylist.yview )
     
 def net_set():
     popen("nm-connection-editor")
@@ -1599,7 +1602,7 @@ tu_btn2 = Button(rahmen6,justify="left", image=tu02, text="Arm_Freq = 2147\nGpu_
 tu_lb3 = Label(rahmen6, text="Reset Overclocking", highlightthickness=0, borderwidth=2,
                background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=0, row=0)
 
-tu_btn3 = Button(rahmen6,justify="left", image=tu03,text="Arm_Freq = 1500\nGpu_Freq = 500", anchor="w", command=set_default,
+tu_btn3 = Button(rahmen6,justify="left", image=tu03,text="Base Clock\n1.5 / 1.8 Ghz", anchor="w", command=set_default,
                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=1)
 
 tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,

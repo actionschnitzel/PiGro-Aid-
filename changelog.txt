@@ -17,6 +17,11 @@ Actually I wanted to wait until Bullseye came out but the update is ready.
 Why wait :-)
 
 
+Friendly reminder:
+
+The Raspberry Pi Foundation recommends flashing a new image instead of manually upgrading to BULLSEYE. Me too xD ERROR ERROR ERROR
+
+
 Changes:
 
 -PDL integration

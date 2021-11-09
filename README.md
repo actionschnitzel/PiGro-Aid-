@@ -58,10 +58,7 @@ pip3 install distro
 # :floppy_disk: Install
 
 ```
-git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-cd PiGro-Aid-
-sudo chmod +x install.sh
-sudo ./install.sh
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
 ```       
     
 OR:    
