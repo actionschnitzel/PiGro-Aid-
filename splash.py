@@ -81,9 +81,9 @@ spl_png = Label(splash,image=tp01).place(x=-1,y=-1)
 list = ["Whoaa...\nSplash Screen....\nSoooo professionel","Sono pigro","Wer\nanderen eine Bratwurst brät,\n hat ein Bratwurstbratgerät.","I love Ubuntu... Server...","I hate the Great Saiyaman!","Don't Ctrl+C Ctrl+V!\nRead a Book!","I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!","GO GO Power Rangers!","1 + 1 = 3", "It’s time to kick ass\nand chew bubble gum", "It’s a-me, Mario!", "Do a barrel roll!", "I need TP for my ...", "Splash screens suck!", "Snake? Snake? SNAKE!", "I like shorts! They’re comfy and easy to wear!", "Frostmourne hungers", "It's alive! It's alive!", "Hello, gorgeous", "I feel the need - the need for speed!", "They call it a Royale with cheese.", "Yo, Adrian!", "My precious.", "Go ahead, make my day.","My Little Pony is not for Children", "Mama says, 'Stupid is as stupid does."]
 item = random.choice(list)
 #print(item)
-info_splash_txt = Label(splash,text="Checked Dependencies - Lets GO!!!", bg="grey",fg="white").pack(side=TOP)
+info_splash_txt = Label(splash,text="Checked Dependencies - Lets GO!!!", bg="#333333",fg="white").pack(side="top")
 
-dump_splash_txt = Label(splash,text=item,font=("Arial", 16), bg="grey",fg="white").pack(pady=20,side=BOTTOM)
+dump_splash_txt = Label(splash,text=item,font=("Arial", 16), bg="#333333",fg="white").pack(pady=20,side=BOTTOM)
 
 
 def loop():
