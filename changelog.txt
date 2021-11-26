@@ -13,9 +13,6 @@ Back again
 PiGro's back
 Tell a friend
 
-Actually I wanted to wait until Bullseye came out but the update is ready. 
-Why wait :-)
-
 
 Friendly reminder:
 
@@ -23,6 +20,10 @@ The Raspberry Pi Foundation recommends flashing a new image instead of manually 
 
 
 Changes:
+
+
+- Nov. 26th : Smaller fixes 
+
 
 -PDL integration
 

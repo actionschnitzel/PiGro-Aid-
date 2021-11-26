@@ -957,6 +957,7 @@ l4 = Label(image=p4)
 
 welcome_label1 = Label(rahmen3)
 eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
+eingabefeld1.insert(0,"Enter Package Name")
 welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
                         background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
@@ -1003,10 +1004,8 @@ eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 
-#welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white")
 
 apps_inst_btn.grid(column=0, row=3)
-#welcom_button4.grid(column=1, row=5)
 eingabefeld3.grid(column=2, row=3)
 welcom_button3.grid(column=1, row=3)
 
@@ -1853,7 +1852,6 @@ def pick_at_you():
     
     poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
 
-    #playsound('scripts/poke_pig.mp3')
     popen("mpg123  ~/PiGro-Aid-/scripts/poke_pig.mp3")
 
     poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()
