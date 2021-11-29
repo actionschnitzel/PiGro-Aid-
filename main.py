@@ -1511,6 +1511,8 @@ def ov_2147():
 def set_default():
     popen("xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
     popen("xterm -e 'bash -c \"sudo ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
+    
+
     global pop_default
     pop_default=Toplevel(main)
     pop_default.config(bg='#333333')
@@ -1546,6 +1548,7 @@ def set_default():
 #overclocking_2200    
 def ov_2200():
     popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
+    popen("mpg123 ~/PiGro-Aid-/scripts/over9000.mp3")
     #playsound('scripts/HOLYPiT.mp3')
     global pop_2200
     pop_2200=Toplevel(main)
