@@ -957,6 +957,7 @@ l4 = Label(image=p4)
 
 welcome_label1 = Label(rahmen3)
 eingabefeld1 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
+eingabefeld1.insert(0,"Enter Package Name")
 welcom_button1 = Button(rahmen3, text="install", command=inst_btn1, highlightthickness=0, borderwidth=0,
                         background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 welcom_button1_ttp = CreateToolTip(welcom_button1, \
@@ -1003,10 +1004,8 @@ eingabefeld3 = Entry(rahmen3, bd=5, width=31, borderwidth=1)
 welcom_button3 = Button(rahmen3, text="install", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white",font=(("Helvetica,bold"),"12"))
 
 
-#welcom_button4 = Button(rahmen3, text="uninstall", command=inst_pi_apps, highlightthickness=0, borderwidth=0,background='#333333', foreground="white")
 
 apps_inst_btn.grid(column=0, row=3)
-#welcom_button4.grid(column=1, row=5)
 eingabefeld3.grid(column=2, row=3)
 welcom_button3.grid(column=1, row=3)
 
@@ -1512,6 +1511,8 @@ def ov_2147():
 def set_default():
     popen("xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
     popen("xterm -e 'bash -c \"sudo ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'")
+    
+
     global pop_default
     pop_default=Toplevel(main)
     pop_default.config(bg='#333333')
@@ -1547,6 +1548,7 @@ def set_default():
 #overclocking_2200    
 def ov_2200():
     popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
+    popen("mpg123 ~/PiGro-Aid-/scripts/over9000.mp3")
     #playsound('scripts/HOLYPiT.mp3')
     global pop_2200
     pop_2200=Toplevel(main)
@@ -1853,7 +1855,6 @@ def pick_at_you():
     
     poke_pig = Label(pop_pig,image=pg0x,background='#333333').pack()
 
-    #playsound('scripts/poke_pig.mp3')
     popen("mpg123  ~/PiGro-Aid-/scripts/poke_pig.mp3")
 
     poke_pig1 = Label(pop_pig,text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",background='white', fg="red").pack()

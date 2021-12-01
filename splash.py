@@ -104,3 +104,5 @@ popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
 popen('~/PiGro-Aid-/scripts/check_bin.sh')
 
 mainloop()
+
+
