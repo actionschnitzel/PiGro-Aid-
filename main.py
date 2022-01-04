@@ -38,7 +38,6 @@ main.wm_attributes('-alpha', 0.95, )
 
 
 #Notebook Style
-
 noteStyler = ttk.Style(main)
 noteStyler.configure("TNotebook",borderwidth=0, background="#333333", tabposition='w',highlightthickness=0)
 noteStyler.configure("TNotebook.Tab",borderwidth=0, background="#333333", foreground="white",font=("Helvetica",16),width=13,highlightthickness=0)
@@ -60,6 +59,7 @@ tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
 
+#sidebar theme
 tabi = Image.open('icons/side_bar.png')
 tabp = ImageTk.PhotoImage(tabi)
 tabl = Label(tab_control,image=tabp)
@@ -100,7 +100,6 @@ tl04 = Label(image=tp04)
 tab_tp6 = Image.open('icons/tuning.png')
 tp06 = ImageTk.PhotoImage(tab_tp6)
 tl06 = Label(image=tp06)
-
 
 sys_bp9 = Image.open('icons/links.png')
 bp09 = ImageTk.PhotoImage(sys_bp9)
@@ -154,7 +153,7 @@ tab_control.add(tab3, compound=LEFT, text='Installer', image=tp03)
 tab_control.add(tab4, compound=LEFT, text='Look', image=tp04)
 tab_control.add(tab6, compound=LEFT, text='Tuning', image=tp06)
 tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
-tab_control.add(tab9, compound=LEFT, text='Holy Grail', image=tp09)
+#tab_control.add(tab9, compound=LEFT, text='Xfce', image=tp09)
 tab_control.add(tab10, compound=LEFT, text='Pig-Grow', image=tp10)
 
 #####################################TOOLTIPZ
@@ -212,12 +211,7 @@ class CreateToolTip(object):
         if tw:
             tw.destroy()
 
-
-
-
-
-
-
+#changelog popup
 def changelog():
     global pop_changelog
     pop_changelog=Toplevel()
@@ -326,10 +320,7 @@ def button_xfwm():
 def button_boot():
     popen("xterm -e 'bash -c \"dmesg; exec bash\"'")
 
-def btswitch_64():
-    popen("xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
-    
-def z_ram():
+def z_inst():
     popen("xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
     
 def rm_vsc():
@@ -378,6 +369,7 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
+#help button popups
 def info_update_tab():
     global pop_info_update
     pop_info_update=Toplevel()
@@ -588,9 +580,7 @@ def info_holy_tab():
 
 
 
-#TAB_BG
-
-        
+#TAB_BG       
 i = Image.open('icons/pigronew.png')
 p = ImageTk.PhotoImage(i)
 l = Label(tab1, image=p)
@@ -923,14 +913,6 @@ sysinf0.pack()
 rahmen3 = Frame(rahmen3x, relief=GROOVE,borderwidth=0, highlightthickness=1, padx=42, pady=20)
 rahmen3.pack()
 rahmen3['background'] = '#333333'
-
-
-
-
-# termf1 = Frame(tab3, height=50, width=565, padx=10, highlightthickness=1, borderwidth=0)
-# wid1 = termf1.winfo_id()
-#Dragon Quest (origin) D7TT-SK65-AMD8-KXK9-3FDJ
-# termf1['background'] = '#333333'
 
 
 #apt-get_entry
@@ -1270,7 +1252,6 @@ info_sys_btn.place(x=700,y=620)
 
 
 #LOOK_Tab
-
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
 
@@ -1549,7 +1530,6 @@ def set_default():
 def ov_2200():
     popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
     popen("mpg123 ~/PiGro-Aid-/scripts/over9000.mp3")
-    #playsound('scripts/HOLYPiT.mp3')
     global pop_2200
     pop_2200=Toplevel(main)
     pop_2200.config(bg='#333333')
@@ -1589,44 +1569,80 @@ rahmen62 = Frame(rahmen622,borderwidth=0, highlightthickness=0, relief=GROOVE, p
 rahmen62.pack(padx=10, side=LEFT)
 rahmen62['background'] = '#333333'
 
-tu_lb1 = Label(rahmen6, text="Crank It Up", highlightthickness=0, borderwidth=2, background='#333333',
-               foreground="#d4244d",font=("Helvetica",16)).grid(column=1, row=0)
+tu_lb0 = Label(rahmen6,justify="left", text="Pi4 Overclocking", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="white",font=("Helvetica",18),pady=5).grid(column=0, row=0)
+
+tu_lb3 = Label(rahmen6, text="\nReset Overclocking", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",14),justify="left").grid(column=0, row=1)
+
+tu_btn3 = Button(rahmen6,justify="left", image=tu03,text="Base Clock       \n1.5 / 1.8 Ghz       ", anchor="w", command=set_default,
+                highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=2)
+
+tu_lb1 = Label(rahmen6,justify="left", text="\nCrank It Up", highlightthickness=0, borderwidth=2, background='#333333',
+               foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=3)
 
 tu_btn1 = Button(rahmen6,justify="left", image=tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=1)
+                 highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=4)
 
-tu_lb2 = Label(rahmen6, text="You Sir... Need A Fan! ", highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=2, row=0)
+tu_lb2 = Label(rahmen6,justify="left", text="\nYou Sir... Need A Fan! ", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=5)
 
 tu_btn2 = Button(rahmen6,justify="left", image=tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
-                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=2, row=1)
+                 highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=6)
 
-tu_lb3 = Label(rahmen6, text="Reset Overclocking", highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=0, row=0)
-
-tu_btn3 = Button(rahmen6,justify="left", image=tu03,text="Base Clock\n1.5 / 1.8 Ghz", anchor="w", command=set_default,
-                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=1)
-
-tu_lb4 = Label(rahmen6, text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="#d4244d",font=("Helvetica",16)).grid(column=1, row=2)
+tu_lb4 = Label(rahmen6,justify="left", text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,
+               background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=7)
 
 tu_btn4 = Button(rahmen6,justify="left", image=tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
-                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=3)
+                highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=8)
 
 tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
-               background='#333333', foreground="yellow").grid(column=1, row=4)
+              background='#333333', foreground="yellow").grid(column=1, row=8)
 
-tu_zb1 = Label(rahmen61, text="ZRAM",font=("Helvetica",16), highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
+#sd
+def z_ram():
+    global z_ram_pop
+    z_ram_pop=Toplevel()
+    z_ram_pop['background'] = '#333333'
+    
+    def top_inst():
+        os.system("xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/install.sh; exec bash\"'")
+    def top_uninst():
+        os.system("xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'")
 
-tu_zbtn = Button(rahmen61, text="Install Zram\n\nCommands:\nswapon -s\nservice zramswap stop\nservice zramswap start\n ", anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
+    logo = Label(z_ram_pop, image=ip03, text="ZRAM",font=("Helvetica",16), anchor="w",
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=0, row=0)
+    
+    bt_inst = Button(z_ram_pop, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
+                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,command=z_inst).grid(column=0, row=1)
+    
+    bt_info = Label(z_ram_pop, text="\nResource monitor that shows usage and stats for\nprocessor,memory, disks, network and processes.\n\ncommand: bpytop",justify="left", anchor="w",
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=1, row=0)
 
-tu_bb1=Label(rahmen62, text="64 Bit Mode",font=("Helvetica",16), highlightthickness=0, borderwidth=2, background='#333333',foreground="#d4244d").grid(column=0, row=0)
+def btswitch_64():
+    global six4_mode_pop
+    six4_mode_pop=Toplevel()
+    six4_mode_pop['background'] = '#333333'
+    
+    def top_inst():
+        os.system("xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
+    logo = Label(six4_mode_pop, image=ip03, text="64-Bit\nMode",font=("Helvetica",16), anchor="w",
+                    highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=0, row=0)
+    
+    bt_inst = Button(six4_mode_pop, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
+                     highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,command=z_inst).grid(column=0, row=1)
+    
+    bt_info = Label(six4_mode_pop, text="\nAdds 64 bit support.\nRun >ds64-shell< in terminal.\nBut I recommend using the RPi OS 64 bit.\nYou can find the link under LINK TAB",justify="left", anchor="w",
+                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=1, row=0)
 
-tu_bbtn=Button(rahmen62, text="Install 64 Bit Mode\n\nHow To:\nActivate via Menu\nor\n Type:ds64-shell\nThen install what ever you want", anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica", 8)).grid(column=0, row=1)
+
+tu_zbtn = Button(rahmen61, text="ZRAM",font=("Helvetica",16), anchor="w", command=z_ram,highlightthickness=0, borderwidth=0, background='#333333', compound=LEFT,foreground="#d4244d").grid(column=0, row=1)
+
+tu_bbtn=Button(rahmen62, text="64 Bit Mode",font=("Helvetica",16), anchor="w", command=btswitch_64,highlightthickness=0, borderwidth=0, background='#333333', foreground="#d4244d", compound=LEFT).grid(column=0, row=1)
 
 info_tuning_btn = Button(tab6, image=tpinfm,highlightthickness=0,
                    borderwidth=0,command=info_tuning_tab)
-info_tuning_btn.place(x=700,y=620)
+info_tuning_btn.place(x=665,y=40)
 
 #Links_Tab
 def down_twist():
@@ -1679,6 +1695,9 @@ def l4_e():
     
 def fitwo_p():
     popen("xdg-open https://www.52pi.com/") 
+
+def pi64_ld():
+    popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
 
 
 
@@ -1777,6 +1796,9 @@ choice_link2=Button(rahmen82,width=50,text="52Pi", anchor="w", command=fitwo_p,
 choice_link2=Button(rahmen82,width=50,text="LCD Wiki", anchor="w", command=l4_e,
                  highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=9)
 
+choice_link3=Button(rahmen82,width=50,text="RasPi OS 64 bit", anchor="w", command=pi64_ld,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").grid(column=0, row=10)
+
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
 
@@ -1785,14 +1807,14 @@ def callback2(event):
 
 
 #HOLY_GRAIL_Tab
-def holy_backup():
-    popen("xterm -e 'bash -c \"dpkg --get-selections > ~/packages.list & echo Done!; exec bash\"'")
+#def holy_backup():
+    #popen("xterm -e 'bash -c \"dpkg --get-selections > ~/packages.list & echo Done!; exec bash\"'")
     
-def holy_dselect():
-    popen("xterm -e 'bash -c \"sudo apt update & sudo apt install dselect; exec bash\"'")
+#def holy_dselect():
+    #popen("xterm -e 'bash -c \"sudo apt update & sudo apt install dselect; exec bash\"'")
     
-def holy_recovery():
-    popen("xterm -e 'bash -c \"sudo dselect update & dpkg --get-selections < ~/packages.list & sudo apt-get dselect-upgrade; exec bash\"'")
+#def holy_recovery():
+    #popen("xterm -e 'bash -c \"sudo dselect update & dpkg --get-selections < ~/packages.list & sudo apt-get dselect-upgrade; exec bash\"'")
     
 
     
@@ -1800,46 +1822,46 @@ rahmen92 = Frame(tab9,borderwidth=0, highlightthickness=2, relief=GROOVE,backgro
 rahmen92.pack(padx=20,pady=40)
 rahmen92['background'] = '#333333'
 
-grail_text=Label(rahmen92,text="Creates a packages.list (in: ~/) of all .deb files\non your system.\nCopy it to a fresh system to auto install your packages.\nDo sudo apt-get/apt at first!",
-                 background='#333333',font=("Helvetica",12), foreground="white")
-grail_text.pack(pady=10)
+#grail_text=Label(rahmen92,text="Creates a packages.list (in: ~/) of all .deb files\non your system.\nCopy it to a fresh system to auto install your packages.\nDo sudo apt-get/apt at first!",
+                 #background='#333333',font=("Helvetica",12), foreground="white")
+#grail_text.pack(pady=10)
 
-grail_botn=Button(rahmen92,text="Backup", highlightthickness=1,background='#333333',
-                       borderwidth=0, foreground="white",command=holy_backup)
-grail_botn.pack(pady=10)
-grail_botn_ttp = CreateToolTip(grail_botn, \
-                                 "This also kills kitten remotely...\nRight now...\nAs you clicked...\nMuhahahaha!!!")
+#grail_botn=Button(rahmen92,text="Backup", highlightthickness=1,background='#333333',
+                       #borderwidth=0, foreground="white",command=holy_backup)
+#grail_botn.pack(pady=10)
+#grail_botn_ttp = CreateToolTip(grail_botn, \
+                                # "This also kills kitten remotely...\nRight now...\nAs you clicked...\nMuhahahaha!!!")
 
-grail_text2=Label(rahmen92,text="On the  fresh system install dselect and press RECOVER.",
-                 background='#333333',font=("Helvetica",12), foreground="white")
-grail_text2.pack(pady=10)
+#grail_text2=Label(rahmen92,text="On the  fresh system install dselect and press RECOVER.",
+                 #background='#333333',font=("Helvetica",12), foreground="white")
+#grail_text2.pack(pady=10)
 
 
 rahmen93 = Frame(rahmen92,borderwidth=0, highlightthickness=0, relief=GROOVE)
 rahmen93.pack(padx=20)
 rahmen93['background'] = '#333333'
 
-grail_botn2=Button(rahmen93,text="dselect", highlightthickness=1,background='#333333',
-                       borderwidth=0, foreground="white",command=holy_dselect)
-grail_botn2.grid(column=0, row=0)
+#grail_botn2=Button(rahmen93,text="dselect", highlightthickness=1,background='#333333',
+                       #borderwidth=0, foreground="white",command=holy_dselect)
+#grail_botn2.grid(column=0, row=0)
 
-grail_botn2=Label(rahmen93,text="              ",
-                 background='#333333', highlightthickness=0,
-                       borderwidth=0, foreground="white")
-grail_botn2.grid(column=1, row=0)
+#grail_botn2=Label(rahmen93,text="              ",
+                # background='#333333', highlightthickness=0,
+                      # borderwidth=0, foreground="white")
+#grail_botn2.grid(column=1, row=0)
 
-grail_botn3=Button(rahmen93,text="Recover", highlightthickness=1,
-                       borderwidth=0, background='#333333', foreground="white",command=holy_recovery)
-grail_botn3.grid(column=2, row=0)
+#grail_botn3=Button(rahmen93,text="Recover", highlightthickness=1,
+                       #borderwidth=0, background='#333333', foreground="white",command=holy_recovery)
+#grail_botn3.grid(column=2, row=0)
 
-grail_text3=Label(rahmen92,text="Or: sudo apt install dselect\nsudo dselect updat\nsudo dpkg --set-selections < packages.listn\nsudo apt-get dselect-upgrade",
-                 background='#333333',font=("Helvetica",8), foreground="white")
-grail_text3.pack(pady=10)
+#grail_text3=Label(rahmen92,text="Or: sudo apt install dselect\nsudo dselect updat\nsudo dpkg --set-selections < packages.listn\nsudo apt-get dselect-upgrade",
+                 #background='#333333',font=("Helvetica",8), foreground="white")
+#grail_text3.pack(pady=10)
 
 
-info_holy_btn = Button(tab9, image=tpinfm,highlightthickness=0,
-                   borderwidth=0,command=info_holy_tab)
-info_holy_btn.place(x=700,y=620)
+#info_holy_btn = Button(tab9, image=tpinfm,highlightthickness=0,
+                   #borderwidth=0,command=info_holy_tab)
+#info_holy_btn.place(x=700,y=620)
 
 
 #Pig-Grow_Tab
@@ -1880,8 +1902,14 @@ pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pa
 rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen102.pack(padx=40, pady=20, fill='both')
 rahmen102['background'] = '#333333'
+#gg
+poke_pig_21 = Label(rahmen102,justify="left",text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo\n\nQuestions or suggestions?:",font=("Helvetica",12),background='#333333', fg="white",padx=5,pady=3).pack()
 
-poke_pig_21 = Label(rahmen102,justify="left",text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\n\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo",font=("Helvetica",14),background='#333333', fg="white",padx=5,pady=20).pack()
+
+mail = Entry(rahmen102, bd=5, width=31, borderwidth=1)
+mail.insert(END,"pigroxtrmo@gmail.com")
+mail.pack(pady=5)
+
 
 rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen101.pack(padx=40, pady=20, fill='both')
