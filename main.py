@@ -16,6 +16,7 @@ from datetime import datetime
 import distro
 
 
+
 #MAIN
 main = Tk()
 main.title("PiGro - Colpo Diretto")
@@ -35,8 +36,6 @@ main.wm_attributes('-alpha', 0.95, )
 
 
 
-
-
 #Notebook Style
 noteStyler = ttk.Style(main)
 noteStyler.configure("TNotebook",borderwidth=0, background="#333333", tabposition='w',highlightthickness=0)
@@ -46,7 +45,6 @@ noteStyler.map("TNotebook.Tab", background=[("selected", "#333333")], foreground
 
 
 tab_control = ttk.Notebook(main)
-
 tab1 = ttk.Frame(tab_control)
 tab11 = ttk.Frame(tab_control)
 tab2 = ttk.Frame(tab_control)
@@ -59,7 +57,7 @@ tab8 = ttk.Frame(tab_control)
 tab9 = ttk.Frame(tab_control)
 tab10 = ttk.Frame(tab_control)
 
-#sidebar theme
+#Sidebar theme
 tabi = Image.open('icons/side_bar.png')
 tabp = ImageTk.PhotoImage(tabi)
 tabl = Label(tab_control,image=tabp)
@@ -156,7 +154,7 @@ tab_control.add(tab8, compound=LEFT, text='Links', image=bp0111)
 #tab_control.add(tab9, compound=LEFT, text='Xfce', image=tp09)
 tab_control.add(tab10, compound=LEFT, text='Pig-Grow', image=tp10)
 
-#####################################TOOLTIPZ
+#####################################TOOLTIPZs
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
@@ -210,6 +208,7 @@ class CreateToolTip(object):
         self.tw = None
         if tw:
             tw.destroy()
+
 
 #changelog popup
 def changelog():
@@ -556,26 +555,26 @@ def info_tuning_tab():
     tun_box.insert('end', message)
     tun_box.config(fill=BOTH, expand=True)
 
-def info_holy_tab():
-    global pop_info_holy
-    pop_info_holy=Toplevel()
-    hol_box = Text(
-    pop_info_holy)
-    message ='''
-    I bought the book from the guy here -> LernLinux.tv 
-    and was so excited about it. 
-    Saw dselcet there. 
-    I've been using Linux since I was 15 years old, 
-    but "dselect" completely passed me by. 
-    The thing is: when I use timeshift, 
-    I still have all the trash on the HDD. 
-    Dselect only downloads all saved .DEBs. 
-    You get a fresh system with all the programs you love.
-    '''
-
-    hol_box.pack(expand=True)
-    hol_box.insert('end', message)
-    hol_box.config(fill=BOTH, expand=True)
+#def info_holy_tab():
+#    global pop_info_holy
+#    pop_info_holy=Toplevel()
+#    hol_box = Text(
+#    pop_info_holy)
+#    message ='''
+#    I bought the book from the guy here -> LernLinux.tv 
+#    and was so excited about it. 
+#    Saw dselcet there. 
+#    I've been using Linux since I was 15 years old, 
+#    but "dselect" completely passed me by. 
+#    The thing is: when I use timeshift, 
+#    I still have all the trash on the HDD. 
+#    Dselect only downloads all saved .DEBs. 
+#    You get a fresh system with all the programs you love.
+#    '''
+#
+#    hol_box.pack(expand=True)
+#    hol_box.insert('end', message)
+#    hol_box.config(fill=BOTH, expand=True)
 
 
 
@@ -797,16 +796,12 @@ def p_lank():
 def inst_tilix():
     popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")    
     
-    
-
 def goodstuff():
     global pop_goodstuff
     pop_goodstuff=Toplevel()
     pop_goodstuff['background'] = '#333333'
     
-    shop_btn01 = Button(pop_goodstuff, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,
-
-borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
+    shop_btn01 = Button(pop_goodstuff, width=120, image=ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
     shop_btn1_ttp = CreateToolTip(sys_btn6, \
                                       'This is a SNAP')
     shop_lbl011 = Label(pop_goodstuff,width=60, text="... is... you know Whatsapp", anchor="w",
@@ -879,9 +874,6 @@ borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(colu
                       highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).grid(column=1, row=12)
 
 
-
-
-
 def shop():
     os.system("python3 ~/PiGro-Aid-/PDL.py")
 
@@ -929,9 +921,6 @@ def uninst_btn1():
         
 def inst_syn():
         popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
-
-
-
 
 i4 = Image.open('icons/apt-get.png')
 p4 = ImageTk.PhotoImage(i4)
@@ -1082,8 +1071,6 @@ info_inst_btn = Button(tab3, image=tpinfm,highlightthickness=0,
 info_inst_btn.place(x=700,y=620)
 
 #System_Tab
-
-
 # icons
 sys_bp1 = Image.open('icons/raspberry-pi-logo.png')
 bp01 = ImageTk.PhotoImage(sys_bp1)
@@ -1181,6 +1168,21 @@ sys_btn11 = Button(rahmen2, image=ico_m, text="Taskmanager", command=lx_task,
 sys_btn11.grid(row=3,column=1)
 
 
+
+
+
+#Parameters for System
+pid = os.getpid()
+ps = psutil.Process(pid)
+my_system = platform.uname()
+cpufreq = psutil.cpu_freq()
+svmem = psutil.virtual_memory()
+swap = psutil.swap_memory()
+distro = distro.id()
+
+
+
+#status_frame
 rahmen21 = Frame(tab2,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=20)
 rahmen21.pack(padx=40, pady=20, fill='both')
 rahmen21['background'] = '#333333'
@@ -1192,16 +1194,6 @@ dl01 = Label(image=dl)
 deblogo2 = Image.open('icons/lmint.png')
 dl2 = ImageTk.PhotoImage(deblogo2)
 dl012 = Label(image=dl2)
-
-
-#Parameters for System
-pid = os.getpid()
-ps = psutil.Process(pid)
-my_system = platform.uname()
-cpufreq = psutil.cpu_freq()
-svmem = psutil.virtual_memory()
-swap = psutil.swap_memory()
-distro = distro.id()
 
 sysinf0 = Label(rahmen21, text="System Info", compound=LEFT, anchor='n',font=("Helvetica",16), highlightthickness=0, borderwidth=0,
                 background='#333333', foreground="#d4244d",pady=20)
@@ -1244,12 +1236,11 @@ sysinf8 = Label(rahmen21, text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz", co
             foreground="white", width=25,font=("Helvetica",10,"bold"))
 sysinf8.grid(column=2, row=5)
 
-
 info_sys_btn = Button(tab2, image=tpinfm,highlightthickness=0,
                    borderwidth=0,command=info_system_tab)
 info_sys_btn.place(x=700,y=620)
 
-
+    
 
 #LOOK_Tab
 def callback(event):
@@ -1301,6 +1292,8 @@ tab_ip2 = Image.open('icons/fix1i.png')
 ip02 = ImageTk.PhotoImage(tab_ip2)
 il02 = Label(image=ip02)
 
+
+#xfce_tweaks
 rahmen41 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen41.pack(padx=40, pady=20, fill='both')
 rahmen41['background'] = '#333333'
@@ -1333,6 +1326,8 @@ in_btn8 = Button(rahmen41,image=ico_m2,justify="left", text="Make-Me-Xfce", comp
 in_btn8.grid(column=3, row=1)
 
 
+
+#gui_tweaks
 rahmen42 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen42.pack(padx=40, pady=20, fill='both')
 rahmen42['background'] = '#333333'
@@ -1353,7 +1348,7 @@ lxde = Button(rahmen42,image=ico_m,justify="left", text="Pi Appeariance", compou
 lxde.grid(column=3, row=0)
 
 
-
+#Suggestions
 rahmen43 = Frame(tab4,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
 rahmen43.pack(padx=40, pady=20, fill='both')
 rahmen43['background'] = '#333333'
@@ -1380,6 +1375,10 @@ info_look_btn = Button(tab4, image=tpinfm,highlightthickness=0,
                    borderwidth=0,command=info_look_tab)
 info_look_btn.place(x=700,y=620)
 
+
+
+
+
 #Tuning_Tab
 tu_tp1 = Image.open('icons/PiGroOV2.png')
 tu01 = ImageTk.PhotoImage(tu_tp1)
@@ -1398,8 +1397,10 @@ tu04 = ImageTk.PhotoImage(tu_tp4)
 tul04 = Label(image=tu04)
 
 
-#overclocking
 
+
+
+#overclocking
 def pop_dest():
     pop_default.destroy()
 
@@ -1416,6 +1417,7 @@ def reboot_n():
     popen("sudo reboot")
     
     
+
 #overclocking_2000    
 def ov_2000():
     popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'")
@@ -1438,7 +1440,6 @@ def ov_2000():
     frame_pop_2000_1 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
     frame_pop_2000_1.pack(pady=10)
     frame_pop_2000_1['background'] = '#333333'
-
     
     pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
     pop_lbl_2000.grid(column=1, row=1,pady=10,padx=10)
@@ -1466,9 +1467,6 @@ def ov_2147():
     x = (screen_width / 2) - (app_width / 2)
     y = (screen_height / 2) - (app_height / 2)
     pop_2147.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
-
-
-
 
     frame_pop_2147 = Frame(pop_2147, borderwidth=0, relief=GROOVE)
     frame_pop_2147.pack()
@@ -1505,8 +1503,6 @@ def set_default():
     y = (screen_height / 2) - (app_height / 2)
     pop_default.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
 
-
-
     frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
     frame_pop_de.pack()
     frame_pop_de['background'] = '#333333'
@@ -1541,8 +1537,7 @@ def ov_2200():
     frame_pop_2200_1 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
     frame_pop_2200_1.pack(pady=10)
     frame_pop_2200_1['background'] = '#333333'
-
-    
+ 
     pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
     pop_lbl_2200.grid(column=1, row=1,pady=10,padx=10)
     pop_btn_2200=Button(frame_pop_2200_1,text="Continue", anchor="w", command=pop_dest3,
@@ -1552,6 +1547,7 @@ def ov_2200():
                            highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
     pop_btn_shut.grid(column=2, row=2)
     
+
 
 rahmen6 = Frame(tab6,borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20,padx=50)
 rahmen6.pack(padx=40, pady=20, fill='both')
@@ -1568,6 +1564,8 @@ rahmen61['background'] = '#333333'
 rahmen62 = Frame(rahmen622,borderwidth=0, highlightthickness=0, relief=GROOVE, padx=10, pady=10)#
 rahmen62.pack(padx=10, side=LEFT)
 rahmen62['background'] = '#333333'
+
+
 
 tu_lb0 = Label(rahmen6,justify="left", text="Pi4 Overclocking", highlightthickness=0, borderwidth=2,
                background='#333333', foreground="white",font=("Helvetica",18),pady=5).grid(column=0, row=0)
@@ -1599,7 +1597,9 @@ tu_btn4 = Button(rahmen6,justify="left", image=tu04,text="Arm_Freq = 2200\nGpu_F
 tu_info = Label(rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
               background='#333333', foreground="yellow").grid(column=1, row=8)
 
-#sd
+
+
+
 def z_ram():
     global z_ram_pop
     z_ram_pop=Toplevel()
@@ -1616,8 +1616,11 @@ def z_ram():
     bt_inst = Button(z_ram_pop, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
                      highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT,command=z_inst).grid(column=0, row=1)
     
-    bt_info = Label(z_ram_pop, text="\nResource monitor that shows usage and stats for\nprocessor,memory, disks, network and processes.\n\ncommand: bpytop",justify="left", anchor="w",
+    bt_info = Label(z_ram_pop, text="\nzram is a Linux kernel feature and userspace tools for creating compressible RAM-based block devices.\nIt has been included as a module of the mainline Linux since kernel version 3.14. \nStarting with kernel version 3.15, zram supports multiple compression streams and the ability to change \nthe compression algorithms without a system restart.",justify="left", anchor="w",
                   highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=1, row=0)
+
+
+
 
 def btswitch_64():
     global six4_mode_pop
@@ -1698,6 +1701,7 @@ def fitwo_p():
 
 def pi64_ld():
     popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
+
 
 
 
@@ -1818,9 +1822,9 @@ def callback2(event):
     
 
     
-rahmen92 = Frame(tab9,borderwidth=0, highlightthickness=2, relief=GROOVE,background='#383c4a',padx=80,pady=10)
-rahmen92.pack(padx=20,pady=40)
-rahmen92['background'] = '#333333'
+#rahmen92 = Frame(tab9,borderwidth=0, highlightthickness=2, relief=GROOVE,background='#383c4a',padx=80,pady=10)
+#rahmen92.pack(padx=20,pady=40)
+#rahmen92['background'] = '#333333'
 
 #grail_text=Label(rahmen92,text="Creates a packages.list (in: ~/) of all .deb files\non your system.\nCopy it to a fresh system to auto install your packages.\nDo sudo apt-get/apt at first!",
                  #background='#333333',font=("Helvetica",12), foreground="white")
@@ -1837,9 +1841,9 @@ rahmen92['background'] = '#333333'
 #grail_text2.pack(pady=10)
 
 
-rahmen93 = Frame(rahmen92,borderwidth=0, highlightthickness=0, relief=GROOVE)
-rahmen93.pack(padx=20)
-rahmen93['background'] = '#333333'
+#rahmen93 = Frame(rahmen92,borderwidth=0, highlightthickness=0, relief=GROOVE)
+#rahmen93.pack(padx=20)
+#rahmen93['background'] = '#333333'
 
 #grail_botn2=Button(rahmen93,text="dselect", highlightthickness=1,background='#333333',
                        #borderwidth=0, foreground="white",command=holy_dselect)
@@ -1892,7 +1896,11 @@ def wiki():
     
 def red_bub():
     popen("xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u") 
-    
+
+
+
+
+
 pig_1 = Image.open('icons/pigpi_btn.png')
 pg01 = ImageTk.PhotoImage(pig_1)
 pl01 = Label(image=pg01)
@@ -1902,7 +1910,8 @@ pig_logo = Button(tab10,image=pg01,background='#333333', command=pick_at_you).pa
 rahmen102 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen102.pack(padx=40, pady=20, fill='both')
 rahmen102['background'] = '#333333'
-#gg
+
+
 poke_pig_21 = Label(rahmen102,justify="left",text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo\n\nQuestions or suggestions?:",font=("Helvetica",12),background='#333333', fg="white",padx=5,pady=3).pack()
 
 
@@ -1914,6 +1923,10 @@ mail.pack(pady=5)
 rahmen101 = Frame(tab10, borderwidth=0, relief=GROOVE, highlightthickness=2)
 rahmen101.pack(padx=40, pady=20, fill='both')
 rahmen101['background'] = '#333333'
+
+
+
+
 
 pig_btn_1 = Button(rahmen101,text="User Poll", highlightthickness=0,
                        borderwidth=0, background='#333333', foreground="#2FFC05", command=poll,font=(("Helvetica,bold"),"12","bold")).grid(column=0,row=0,pady=20, padx=20)
@@ -1928,9 +1941,13 @@ pig_btn_4 = Button(rahmen101,text="Redbubble.com", highlightthickness=0,
                        borderwidth=0, background='#333333', foreground="#FC05A0",command=red_bub,font=(("Helvetica,bold"),"12","bold")).grid(column=3,row=0,pady=20, padx=20)
 
 
+
+
+
+
+
+
+
+#########################################END
 tab_control.pack(expand=1, fill='both')
-
-       
-        
-
 main.mainloop()
