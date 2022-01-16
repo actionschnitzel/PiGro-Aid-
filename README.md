@@ -12,6 +12,10 @@ For more professionalism I use classes because it brings many advantages.
 
 System stats are now real time
 
+```
+python3 main_classes.py #temporary exe
+```
+
 #  :rocket: To do [NEXT UPDATE]
 - [x] [realtime system stats] 
 - [x] port Linux mint version to PiOS
