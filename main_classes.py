@@ -16,6 +16,10 @@ from datetime import datetime
 import distro
 import time
 import socket
+from gpiozero import CPUTemperature #rpitemp
+
+
+
 
 
 def actionhome():
@@ -28,16 +32,14 @@ def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
         
 
-
-
 #Main Winddow / Notebook Config
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title("PiGro - Colpo Diretto")
-        icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
-        self.tk.call('wm', 'iconphoto', self._w, icon)
+        self.title("PiGro - Vincitore_Fedele")
+        self.icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
+        self.tk.call('wm', 'iconphoto', self._w, self.icon)
         self['background'] = '#333333'
         self.resizable(0, 0)
         app_width = 1000
@@ -108,9 +110,9 @@ class MainApplication(tk.Tk):
         self.tp10 = ImageTk.PhotoImage(self.tab_tp10)
         self.tl10 = Label(image=self.tp10)
         
-        self.notebook.add(self.Frame1, compound=LEFT, text='Start', image=self.tp01)
-        self.notebook.add(self.Frame2, compound=LEFT, text='Update', image=self.tp012)
+        self.notebook.add(self.Frame1, compound=LEFT, text='Welcome', image=self.tp01)
         self.notebook.add(self.Frame3, compound=LEFT, text='System', image=self.tp02)
+        self.notebook.add(self.Frame2, compound=LEFT, text='Update', image=self.tp012)
         self.notebook.add(self.Frame4, compound=LEFT, text='Installer', image=self.tp03)
         self.notebook.add(self.Frame5, compound=LEFT, text='Look', image=self.tp04)
         self.notebook.add(self.Frame6, compound=LEFT, text='Tuning', image=self.tp06)
@@ -130,11 +132,46 @@ class MainApplication(tk.Tk):
 class Frame1(ttk.Frame):
     def __init__(self, container):
         super().__init__()
+        
+        def changelog():
+            global pop_changelog
+            pop_changelog=Toplevel()
+            pop_changelog.geometry("1000x1000")
+            pop_changelog.title("Changelog")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack( side = RIGHT, fill = Y )
+            s_list = Text(pop_changelog, yscrollcommand = scrollbar.set )
+            text_file = open("changelog.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.pack(anchor='w', fill=BOTH, expand=True)
+            scrollbar.config( command = mylist.yview )
+        
+        self.tab_tpinfp = Image.open('icons/info_button_p.png')
+        self.tpinfp = ImageTk.PhotoImage(self.tab_tpinfp)
+        self.tlinfp = Label(image=self.tpinfp)
 
-        self.bg = PhotoImage(file="icons/pigronew.png")
+
+        self.bg = PhotoImage(file="~/PiGro-Aid-/icons/pigronew.png")
         self.my_canvas = Canvas(self,width=900, height=700,highlightthickness=0)
         self.my_canvas.pack(fill="both", expand=True)
         self.my_canvas.create_image(0,0, image=self.bg, anchor="nw")
+        
+        self.al = tk.Label(self, text=r"https://www.actionschnitzel.de/PiGro/", fg="blue", cursor="hand2")
+        self.al.place(x=480, y=645)
+        self.al.bind("<Button-1>", callback)
+
+        self.al['background'] = '#333333'
+
+        self.al2 = tk.Label(self, text=r"https://github.com/actionschnitzel/PiGro-Aid-", fg="blue", cursor="hand2")
+        self.al2.place(x=480, y=670)
+        self.al2.bind("<Button-1>", callback)
+
+        self.al2['background'] = '#333333'
+
+        self.Chl = Button(self, image=self.tpinfp,font=(("Helvetica,bold"),"11"), highlightthickness=0, borderwidth=0, background='#d0a966',
+                     foreground="white", command=changelog).place(x=110, y=400)
 
 
 #Update Tab
@@ -264,7 +301,6 @@ class Frame2(ttk.Frame):
                         borderwidth=0, background='#333333', foreground="#d4244d",font=("Helvetica",12,"bold"))
         self.sv_button.grid(column=1, row=2)
 
-
         self.termf.pack(padx=45,pady=20, anchor=W)
 
         self.info_up_btn = Button(self, image=self.tpinfm,highlightthickness=0,
@@ -297,7 +333,7 @@ class Frame3(ttk.Frame):
             popen("lxtask")
 
         def contxt_button():
-            popen("sudo xdg-open /boot/config.txt")
+            popen("sudo mousepad /boot/config.txt")
 
         def neofetch_button():
             popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
@@ -356,6 +392,18 @@ class Frame3(ttk.Frame):
                 if bytes < factor:
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
+
+        def extract_ip():
+            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:       
+                st.connect(('10.255.255.255', 1))
+                IP = st.getsockname()[0]
+            except Exception:
+                IP = '127.0.0.1'
+            finally:
+                st.close()
+            return IP
+        #print(extract_ip())
 
         #Icon Set
         self.sys_bp1 = Image.open('icons/raspberry-pi-logo.png')
@@ -514,72 +562,86 @@ class Frame3(ttk.Frame):
         svmem = psutil.virtual_memory()
         swap = psutil.swap_memory()
         hostname = socket.gethostname()   
-        IPAddr = socket.gethostbyname(hostname)  
-
+        IPAddr = extract_ip() 
+        cpu = CPUTemperature()
+        Pi_Model = open("/proc/device-tree/model", "r")
+        
        
         self.rahmen21 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=20)
         self.rahmen21.pack(padx=40, pady=20, fill='both')
         self.rahmen21['background'] = '#333333'
 
+        self.rahmen22 = Frame(self.rahmen21,borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=20)
+        self.rahmen22.grid(row=1,column=2)
+        self.rahmen22['background'] = '#333333'
 
         self.my_img = ImageTk.PhotoImage(Image.open("icons/deb_logo.png"))
         self.my_label = Label(image=self.my_img)
 
-        self.sysinf0 = Label(self.rahmen21, text="System Info", compound=LEFT, anchor='n',font=("Helvetica",16), highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="#d4244d",pady=20)
-        self.sysinf0.grid(column=1, row=0)
+        self.sysinf0 = Label(self.rahmen22,justify="left",image=self.my_img, highlightthickness=0, borderwidth=0,
+                        background='#333333', foreground="#d4244d",pady=20,padx=20,anchor=W)
+        self.sysinf0.pack()
 
-        self.sysinf0 = Label(self.rahmen21,image=self.my_img, highlightthickness=0, borderwidth=0,
-                        background='#333333', foreground="#d4244d",pady=20,padx=20)
-        self.sysinf0.grid(column=0, row=0,rowspan=6)
-
-        self.sysinf0 = Label(self.rahmen21, text=f"System: {my_system.system}", compound=LEFT, anchor=W, highlightthickness=0,
-                        borderwidth=0, background='#333333', foreground="white", width=20,padx=10,font=("Helvetica",10,"bold"))
-        self.sysinf0.grid(column=1, row=1)
-
-        self.sysinfd = Label(self.rahmen21, text=f"Distro: {distro}", compound=LEFT, anchor=W, highlightthickness=0,
-                        borderwidth=0, background='#333333', foreground="white", width=20,font=("Helvetica",10,"bold"))
-        self.sysinfd.grid(column=1, row=2)
-
-        self.sysinf1 = Label(self.rahmen21, text=f"Node Name: {my_system.node}", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=20,font=("Helvetica",10,"bold"))
-        self.sysinf1.grid(column=1, row=3)
-
-        self.sysinf2 = Label(self.rahmen21, text=f"Kernel: {my_system.release}", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=20,font=("Helvetica",10,"bold"))
-        self.sysinf2.grid(column=1, row=4)
-
-        self.sysinf3 = Label(self.rahmen21, text=f"Machine: {my_system.machine}", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=20,font=("Helvetica",10,"bold"))
-        self.sysinf3.grid(column=1, row=5)
-
-        self.sysinf3 = Label(self.rahmen21, text="", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=20,font=("Helvetica",10,"bold"))
-        self.sysinf3.grid(column=2, row=0)
-
-        self.sysinf3 = Label(self.rahmen21, text=f"RAM Total: {get_size(svmem.total)}", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf3.grid(column=2, row=1)
-
-        self.sysinf3 = Label(self.rahmen21, text=f"SWAP Total: {get_size(swap.total)}", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf3.grid(column=2, row=2)
-
-        self.sysinf6 = Label(self.rahmen21, text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf6.grid(column=2, row=3)
-
-        self.sysinf7 = Label(self.rahmen21, text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz", compound=LEFT, anchor=W, background='#333333',
-                        foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf7.grid(column=2, row=4)
-
-        self.sysinf8 = Label(self.rahmen21, text="", compound=LEFT, anchor=W, background='#333333',
-                    foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf8.grid(column=2, row=5)
+        self.rahmen23 = Frame(self.rahmen21,borderwidth=0, highlightthickness=0, relief=GROOVE)
+        self.rahmen23.grid(row=1,column=0)
+        self.rahmen23['background'] = '#333333'
         
-        self.sysinf9 = Label(self.rahmen21, text=f"IP Address: {IPAddr}", compound=LEFT, anchor=W, background='#333333',
-                    foreground="white", width=25,font=("Helvetica",10,"bold"))
-        self.sysinf9.grid(column=2, row=6)
+        self.rahmen24 = Frame(self.rahmen21,borderwidth=0, highlightthickness=0, relief=GROOVE)
+        self.rahmen24.grid(row=0,column=2)
+        self.rahmen24['background'] = '#333333'
+
+
+
+
+
+
+        self.sysinf0 = Label(self.rahmen24, text="System Info",font=("Helvetica",16,"bold"),justify="center", highlightthickness=0, borderwidth=0,
+                        background='#333333', foreground="#d4244d", width=30,anchor=W).pack()
+
+        self.sysinf0 = Label(self.rahmen23, text=f"System: {my_system.system}",font=("Helvetica",10,"bold"),justify="left", highlightthickness=0,
+                        borderwidth=0, background='#333333', foreground="white", width=30,anchor=W).pack()
+ 
+        self.sysinfd = Label(self.rahmen23, text=f"Distro: {distro}",justify="left", highlightthickness=0,
+                        borderwidth=0, background='#333333', foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf1 = Label(self.rahmen23, text=f"Node Name: {my_system.node}",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+       
+        self.sysinf9 = Label(self.rahmen23, text=Pi_Model.read(),justify="left", background='#333333',
+                    foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+
+        self.sysinf2 = Label(self.rahmen23, text=f"Kernel: {my_system.release}",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf3 = Label(self.rahmen23, text=f"Machine: {my_system.machine}",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf8 = Label(self.rahmen23, text="", background='#333333',
+                    foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W)
+        self.sysinf8.pack()
+
+        self.sysinf6 = Label(self.rahmen23, text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf7 = Label(self.rahmen23, text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf10 = Label(self.rahmen23, text="",justify="left", background='#333333',
+                    foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W)
+        self.sysinf10.pack()
+        
+        self.sysinf3 = Label(self.rahmen23, text=f"RAM Total: {get_size(svmem.total)}",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+        self.sysinf3 = Label(self.rahmen23, text=f"SWAP Total: {get_size(swap.total)}",justify="left", background='#333333',
+                        foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+     
+        self.sysinf9 = Label(self.rahmen23, text=f"IP Address: {IPAddr}",justify="left", background='#333333',
+                    foreground="white", width=30,font=("Helvetica",10,"bold"),anchor=W).pack()
+
+
+
 
         self.info_sys_btn = Button(self, image=self.tpinfm,highlightthickness=0,
                         borderwidth=0,command=info_system_tab)
@@ -593,8 +655,10 @@ class Frame3(ttk.Frame):
             cpufreq = psutil.cpu_freq()
             svmem = psutil.virtual_memory()
             swap = psutil.swap_memory()
-            
+            cpu = CPUTemperature()
+
             self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature} °C")
             self.after(1000, refresh)
             
         refresh()
@@ -697,7 +761,7 @@ class Frame4(ttk.Frame):
             
         def goodstuff():
             global pop_goodstuff
-            pop_goodstuff=Toplevel()
+            pop_goodstuff=Toplevel(self)
             pop_goodstuff['background'] = '#333333'
             
             shop_btn01 = Button(pop_goodstuff, width=120, image=self.ip03, text="Whatsapp\n(Snap)", anchor="w", command=w_app, highlightthickness=0,borderwidth=0, background='#d4244d',foreground="white", compound=LEFT).grid(column=0, row=1)
@@ -1097,7 +1161,7 @@ class Frame5(ttk.Frame):
             popen("xterm -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'")
 
         def web_OVC():
-            popen("xdg-open https://www.gnome-look.org/p/1158321/")
+            popen("xdg-open https://www.xfce-look.org/browse/")
 
         #Images/Icons
         self.bg = PhotoImage(file="icons/pigro_bg.png")
@@ -1167,6 +1231,12 @@ class Frame5(ttk.Frame):
 
         self.xfcelook_ttp = CreateToolTip(self.in_btn7, \
                                         '*download the themes extract em and throw it into Theme/Icon Folder')
+        
+        self.in_btn7 = Button(self.rahmen4,image=self.ico_m2, text="Get Themes",font=("Helvetica",10,"bold"),
+                        command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT, anchor='w',width=200)
+        self.in_btn7.grid(column=2, row=2, padx=5)
+        
+        
 
 
 
@@ -1227,28 +1297,29 @@ class Frame5(ttk.Frame):
 
 
         #Suggestions
-        self.rahmen43 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
-        self.rahmen43.pack(padx=40, pady=20, fill='both')
-        self.rahmen43['background'] = '#333333'
-
-        self.lxde = Label(self.rahmen43, text="Suggestions ",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d", anchor="w")
-        self.lxde.grid(column=0, row=0)
-
-        self.in_btn3 = Button(self.rahmen43, text="Install Arc Theme", compound=LEFT, command=arc_inst,
-                        highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
-        self.in_btn3.grid(column=1, row=0)
-
-        self.in_btn4 = Button(self.rahmen43, text="Install Breeze Cursor Theme", compound=LEFT,command=breeze_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
-        self.in_btn4.grid(column=2, row=0)
-
-        self.in_btn5 = Button(self.rahmen43, text="Install Papirus Icon Theme", compound=LEFT,
-                        command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
-        self.in_btn5.grid(column=1, row=1)
-
-        self.in_btn7 = Button(self.rahmen43, text="Overwatch Cursor", compound=LEFT,
-                        command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"))
-        self.in_btn7.grid(column=1, row=3)
-
+#         self.rahmen43 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
+#         self.rahmen43.pack(padx=40, pady=20, fill='both')
+#         self.rahmen43['background'] = '#333333'
+# 
+#         self.lxde = Label(self.rahmen43, text="Suggestions ",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d", anchor="w")
+#         self.lxde.grid(column=0, row=0)
+# 
+#         self.in_btn3 = Button(self.rahmen43, text="Install Arc Theme",justify="left", command=arc_inst,
+#                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
+#         self.in_btn3.grid(column=1, row=0)
+# 
+#         self.in_btn4 = Button(self.rahmen43,justify="left", text="Install Breeze Cursor Theme",command=breeze_inst, highlightthickness=0,
+#                               borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
+#         self.in_btn4.grid(column=2, row=0)
+# 
+#         self.in_btn5 = Button(self.rahmen43,justify="left", text="Install Papirus Icon Theme",
+#                         command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
+#         self.in_btn5.grid(column=1, row=1)
+# 
+#         self.in_btn7 = Button(self.rahmen43,justify="left", text="Overwatch Cursor",
+#                         command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
+#         self.in_btn7.grid(column=1, row=3)
+# 
         self.info_look_btn = Button(self, image=self.tpinfm,highlightthickness=0,
                         borderwidth=0,command=info_look_tab)
         self.info_look_btn.place(x=700,y=620)
@@ -1352,7 +1423,7 @@ class Frame6(ttk.Frame):
             popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'")
             
             global pop_2000
-            pop_2000=Toplevel(main)
+            pop_2000=Toplevel(self)
             pop_2000.config(bg='#333333')
             app_width = 300
             app_height = 100
@@ -1386,7 +1457,7 @@ class Frame6(ttk.Frame):
             popen("mpg123 ~/PiGro-Aid-/scripts/HOLYPiT.mp3")
             
             global pop_2147
-            pop_2147=Toplevel(main)
+            pop_2147=Toplevel(self)
             pop_2147.config(bg='#333333')
             app_width = 300
             app_height = 100
@@ -1421,7 +1492,7 @@ class Frame6(ttk.Frame):
             
 
             global pop_default
-            pop_default=Toplevel(main)
+            pop_default=Toplevel(self)
             pop_default.config(bg='#333333')
             app_width = 300
             app_height = 100
@@ -1454,7 +1525,7 @@ class Frame6(ttk.Frame):
             popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'")
             popen("mpg123 ~/PiGro-Aid-/scripts/over9000.mp3")
             global pop_2200
-            pop_2200=Toplevel(main)
+            pop_2200=Toplevel(self)
             pop_2200.config(bg='#333333')
             
             frame_pop_2200 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
@@ -1528,7 +1599,7 @@ class Frame6(ttk.Frame):
 
         def z_ram():
             global z_ram_pop
-            z_ram_pop=Toplevel()
+            z_ram_pop=Toplevel(self)
             z_ram_pop['background'] = '#333333'
             
             def top_inst():
@@ -1550,7 +1621,7 @@ class Frame6(ttk.Frame):
 
         def btswitch_64():
             global six4_mode_pop
-            six4_mode_pop=Toplevel()
+            six4_mode_pop=Toplevel(self)
             six4_mode_pop['background'] = '#333333'
             
             def top_inst():
@@ -1632,6 +1703,17 @@ class Frame7(ttk.Frame):
 
         def pi64_ld():
             popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
+            
+        def ubi_bubi():
+            popen("xdg-open https://ubuntu.com/download/raspberry-pi")
+            
+        def popo_bubi():
+            popen("xdg-open https://pop.system76.com/")
+            
+        def six4_berry():
+            popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
+            
+           
 
         self.bg = PhotoImage(file="icons/pigro_bg.png")
         self.bg_label = Label(self,image=self.bg)
@@ -1669,12 +1751,21 @@ class Frame7(ttk.Frame):
         self.di08 = ImageTk.PhotoImage(self.tab8_dist8)
         self.dl08 = Label(image=self.di08)
 
+        self.pop_os_ico = ImageTk.PhotoImage(Image.open("icons/popo_os_icon.png"))
+        self.pop_os_icol = Label(image=self.pop_os_ico)
+
+        self.ubu_os_ico = ImageTk.PhotoImage(Image.open("icons/Logo-ubuntu_.png"))
+        self.ubu_os_icol = Label(image=self.ubu_os_ico)
+
+        self.pi64_os_ico = ImageTk.PhotoImage(Image.open("icons/Raspberry_Pi_Logo.png"))
+        self.pi64_os_icol = Label(image=self.pi64_os_ico)
+
         self.rahmen = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=10,pady=20)
-        self.rahmen.grid(row=0, column=0,pady=20,padx=40)
+        self.rahmen.grid(row=0,rowspan=11, column=0,pady=20,padx=40)
         self.rahmen['background'] = '#333333'
 
         sys_btn2 = Label(self.rahmen,text="Distros",
-                          highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",14,"bold"))
+                          highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",16,"bold"))
         sys_btn2.pack()
 
         self.dist_btn1 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di01,anchor="w", text="Twister OS ", command=down_twist,
@@ -1688,35 +1779,69 @@ class Frame7(ttk.Frame):
 
         self.dist_btn4 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di04,anchor="w", text="MX Linux   ", command=down_mx,
                         highlightthickness=0, borderwidth=0, background='#333333',   foreground="white",width=150).pack()
+
         self.dist_btn5 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di05,anchor="w", text="FydeOS     ", command=down_fy,
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
+
         self.dist_btn6 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di06,anchor="w", text="Android    ", command=down_kk,
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
+
         self.dist_btn7 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di07,anchor="w", text="Berryserver", command=down_bb,
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
+
         self.dist_btn8 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di08,anchor="w", text="NextCloudPi", command=down_NCP,
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
-        #dist_btn7 = Button(self.rahmen, image=di07, text="Get: Berryserver", command=down_bb,
-        #                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).pack()
 
-        #dist_btn8 = Button(self.rahmen,image=di08, text="Get: NextCloudPi", command=down_NCP,
-        #                highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=LEFT).pack()
+        self.dist_btn9 = Button(self.rahmen,compound=LEFT,justify="left", image=self.ubu_os_ico,anchor="w", text="Ubuntu", command=ubi_bubi,
+                        highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
 
-        self.rahmen2 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=60,pady=10)
-        self.rahmen2.grid(row=0, column=1)
-        self.rahmen2['background'] = '#333333'
+        self.dist_btn10 = Button(self.rahmen,compound=LEFT,justify="left", image=self.pop_os_ico,anchor="w", text="Pop_OS", command=popo_bubi,
+                        highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
 
-        sys_btn2 = Label(self.rahmen2,  text=" Tools ",
-                          highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",14,"bold"))
-        sys_btn2.grid(row=0,column=2)
+        self.dist_btn11 = Button(self.rahmen,compound=LEFT,justify="left", image=self.pi64_os_ico,anchor="w", text="RPi OS 64 Bit", command=six4_berry,
+                        highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
 
-        self.rahmen3 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,padx=60,pady=10)
-        self.rahmen3.grid(row=0, column=2,padx=40)
+        #self.dist_btn12 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di08,anchor="w", text="NextCloudPi", command=down_NCP,
+        #                highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
+
+
+
+        self.rahmen3 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10)
+        self.rahmen3.grid(row=0, column=1,pady=20)
         self.rahmen3['background'] = '#333333'
 
         sys_btn2 = Label(self.rahmen3,  text=" Other ",
                           highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP,font=("Helvetica",14,"bold"))
-        sys_btn2.grid(row=0,column=2)
+        sys_btn2.pack()
+        
+        choice_link1=Button(sys_btn2, anchor="w", width=50,text="Mankiere.com (Commandline Database)", command=link_mankier,
+                 highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+        
+        choice_link2=Button(sys_btn2,anchor="w", width=50,text="Guake (Drop Down Terminal)",  command=link_guake,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2,anchor="w", width=50,text="OnBoard (Onscreen Keyboard)",  command=link_onBoard,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2, anchor="w",width=50,text="Draculatheme.com", command=link_drac,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2, anchor="w",width=50,text="Starship (Cross-Shell-Promt)", command=link_star,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link1=Button(sys_btn2,width=50,text="LernLinux.tv", anchor="w", command=lern_l,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2,width=50,text="Rocket Beans(ger.)", anchor="w", command=rb_tv,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2,width=50,text="52Pi", anchor="w", command=fitwo_p,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+        choice_link2=Button(sys_btn2,width=50,text="LCD Wiki", anchor="w", command=l4_e,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+
+
 
 #Poll
 class Frame8(ttk.Frame):
@@ -1734,7 +1859,7 @@ class Frame8(ttk.Frame):
 
         def pick_at_you():
             global pop_pig
-            pop_pig=Toplevel()
+            pop_pig=Toplevel(self)
             pop_pig['background'] = 'white'
             
             poke_pig = Label(pop_pig,image=self.pg0x,background='#333333').pack()
@@ -1794,6 +1919,7 @@ class Frame8(ttk.Frame):
 
         self.pig_btn_4 = Button(self.rahmen101,text="Redbubble.com", highlightthickness=0,
                             borderwidth=0, background='#333333', foreground="#FC05A0",command=red_bub,font=(("Helvetica,bold"),"12","bold")).grid(column=3,row=0,pady=20, padx=20)
+
 #TOOLTIPZ
 class CreateToolTip(object):
     """
