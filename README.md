@@ -20,10 +20,13 @@ python3 main_classes.py #temporary exe
 - [x] [realtime system stats] 
 - [x] port Linux mint version to PiOS
 - [x] [first test run in DEV Pi]
+- [x] [Finish LINKS Tab]
+- [ ] [Rewrite aaaaall theeee Info Frames :-(]
 - [ ] [test run on vanilla RaspiOS]
+- [ ] [Merge with MAIN]
+
+---------------------------------------------
 - [ ] [Code PiKiss Game GUI 4 FUN]
 - [ ] [ADD Guinea Pig tab (Testing Area)]
-- [ ] [Finish LINKS Tab]
-
 
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
