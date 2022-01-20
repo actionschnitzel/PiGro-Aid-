@@ -24,6 +24,7 @@ python3 main_classes.py #temporary exe
 - [ ] [Rewrite aaaaall theeee Info Frames :-(]
 - [ ] [test run on vanilla RaspiOS]
 - [ ] [Merge with MAIN]
+- [ ] [ADD Boring Theme(Style that matches with OS base theme)]
 
 ---------------------------------------------
 - [ ] [Code PiKiss Game GUI 4 FUN]
