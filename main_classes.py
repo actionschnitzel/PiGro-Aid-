@@ -30,7 +30,8 @@ def reboot_n():
         
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
-        
+
+
 
 #Main Winddow / Notebook Config
 class MainApplication(tk.Tk):
@@ -1332,6 +1333,16 @@ class Frame6(ttk.Frame):
 
         def z_inst():
             popen("xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
+            
+        #Current OV settings   
+        def lines_that_contain(string, fp):
+            return [line for line in fp if string in line]
+
+        def generate_lines_that_equal(string, fp):
+            for line in fp:
+                if line == string:
+                    yield line
+                    
 
         def info_tuning_tab():
             global pop_info_tuning
@@ -1425,30 +1436,32 @@ class Frame6(ttk.Frame):
             global pop_2000
             pop_2000=Toplevel(self)
             pop_2000.config(bg='#333333')
-            app_width = 300
-            app_height = 100
+            app_width = 500
+            app_height = 150
             screen_width = pop_2000.winfo_screenwidth()
             screen_height = pop_2000.winfo_screenheight()
             x = (screen_width / 2) - (app_width / 2)
             y = (screen_height / 2) - (app_height / 2)
             pop_2000.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+            pop_2000.resizable(0, 0)
             
             frame_pop_2000 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
             frame_pop_2000.pack()
             frame_pop_2000['background'] = '#333333'
 
             frame_pop_2000_1 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
-            frame_pop_2000_1.pack(pady=10)
+            frame_pop_2000_1.pack()
             frame_pop_2000_1['background'] = '#333333'
             
-            pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-            pop_lbl_2000.grid(column=1, row=1,pady=10,padx=10)
+            pop_lbl_2000=Label(frame_pop_2000,anchor="w", text="Done! The new settings take effect after a reboot",font=("Helvetica",12), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+            pop_lbl_2000.pack(pady=20)
+            
             pop_btn_2000=Button(frame_pop_2000_1,text="Continue", anchor="w", command=pop_dest2,
                                 highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
-            pop_btn_2000.grid(column=1, row=2)
+            pop_btn_2000.pack(padx=5,pady=20,side=LEFT)
             pop_btn_shut=Button(frame_pop_2000_1,text="Reboot", anchor="w", command=reboot_n,
                                 highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
-            pop_btn_shut.grid(column=2, row=2)
+            pop_btn_shut.pack(padx=5,pady=20)
 
 
         #overclocking_2147    
@@ -1459,13 +1472,14 @@ class Frame6(ttk.Frame):
             global pop_2147
             pop_2147=Toplevel(self)
             pop_2147.config(bg='#333333')
-            app_width = 300
-            app_height = 100
+            app_width = 500
+            app_height = 150
             screen_width = pop_2147.winfo_screenwidth()
             screen_height = pop_2147.winfo_screenheight()
             x = (screen_width / 2) - (app_width / 2)
             y = (screen_height / 2) - (app_height / 2)
             pop_2147.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+            pop_2147.resizable(0, 0)
 
             frame_pop_2147 = Frame(pop_2147, borderwidth=0, relief=GROOVE)
             frame_pop_2147.pack()
@@ -1475,14 +1489,14 @@ class Frame6(ttk.Frame):
             frame_pop_2147_1.pack(pady=10)
             frame_pop_2147_1['background'] = '#333333'
         
-            pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-            pop_lbl_2147.grid(column=1, row=1,pady=10,padx=10)
+            pop_lbl_2147=Label(frame_pop_2147,anchor="w", text="Done! The new settings take effect after a reboot",font=("Helvetica",12), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+            pop_lbl_2147.pack(pady=20)
             pop_btn_2147=Button(frame_pop_2147_1,text="Continue", anchor="w", command=pop_dest1,
                                 highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
-            pop_btn_2147.grid(column=1, row=2)
+            pop_btn_2147.pack(padx=5,pady=20,side=LEFT)
             pop_btn_shut=Button(frame_pop_2147_1,text="Reboot", anchor="w", command=reboot_n,
                                 highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
-            pop_btn_shut.grid(column=2, row=2)
+            pop_btn_shut.pack(padx=5,pady=20)
             
 
         #overclocking_default/reset      
@@ -1494,13 +1508,14 @@ class Frame6(ttk.Frame):
             global pop_default
             pop_default=Toplevel(self)
             pop_default.config(bg='#333333')
-            app_width = 300
-            app_height = 100
+            app_width = 500
+            app_height = 150
             screen_width = pop_default.winfo_screenwidth()
             screen_height = pop_default.winfo_screenheight()
             x = (screen_width / 2) - (app_width / 2)
             y = (screen_height / 2) - (app_height / 2)
             pop_default.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+            pop_default.resizable(0, 0)
 
             frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
             frame_pop_de.pack()
@@ -1511,13 +1526,13 @@ class Frame6(ttk.Frame):
             frame_pop_de1['background'] = '#333333'
 
             pop_lbl_default=Label(frame_pop_de,anchor="w", text="Settings Restored",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-            pop_lbl_default.grid(column=1, row=1,pady=10,padx=10)
+            pop_lbl_default.pack(pady=20)
             pop_btn_default=Button(frame_pop_de1,text="Continue", anchor="w", command=pop_dest,
                                 highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
-            pop_btn_default.grid(column=1, row=2)
+            pop_btn_default.pack(padx=5,pady=20,side=LEFT)
             pop_btn_shut=Button(frame_pop_de1,text="Reboot", anchor="w", command=reboot_n,
                                 highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
-            pop_btn_shut.grid(column=2, row=2)
+            pop_btn_shut.pack(padx=5,pady=20)
             
 
         #overclocking_2200    
@@ -1527,6 +1542,14 @@ class Frame6(ttk.Frame):
             global pop_2200
             pop_2200=Toplevel(self)
             pop_2200.config(bg='#333333')
+            app_width = 500
+            app_height = 150
+            screen_width = pop_2200.winfo_screenwidth()
+            screen_height = pop_2200.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_2200.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+            pop_2200.resizable(0, 0)
             
             frame_pop_2200 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
             frame_pop_2200.pack()
@@ -1536,24 +1559,75 @@ class Frame6(ttk.Frame):
             frame_pop_2200_1.pack(pady=10)
             frame_pop_2200_1['background'] = '#333333'
         
-            pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done !",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
-            pop_lbl_2200.grid(column=1, row=1,pady=10,padx=10)
+            pop_lbl_2200=Label(frame_pop_2200,anchor="w", text="Done! The new settings take effect after a reboot",font=("Helvetica",16), highlightthickness=0, borderwidth=2,background='#333333', foreground="white",compound=LEFT)
+            pop_lbl_2200.pack(pady=20)
             pop_btn_2200=Button(frame_pop_2200_1,text="Continue", anchor="w", command=pop_dest3,
                                 highlightthickness=0, borderwidth=0, background='#2246c4', foreground="white", compound=LEFT)
-            pop_btn_2200.grid(column=1, row=2)
+            pop_btn_2200.pack(padx=5,pady=20,side=LEFT)
             pop_btn_shut=Button(frame_pop_2200_1,text="Reboot", anchor="w", command=reboot_n,
                                 highlightthickness=0, borderwidth=0, background='#f03838', foreground="white", compound=LEFT)
-            pop_btn_shut.grid(column=2, row=2)
+            pop_btn_shut.pack(padx=5,pady=20)
             
 
-        self.rahmen6 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20,padx=50)
-        self.rahmen6.pack(padx=40, pady=20, fill='both')
-        self.rahmen6['background'] = '#333333'
 
+        self.rahmen6 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20,padx=50)
+        self.rahmen6.pack(padx=20, pady=20, fill='both')
+        self.rahmen6['background'] = '#333333'
+        
+        #Header_Frame
+        self.ov_header = Frame(self.rahmen6,borderwidth=0, highlightthickness=0, relief=GROOVE, pady=20,padx=50)
+        self.ov_header.pack()
+        self.ov_header['background'] = '#333333'
+        
+        self.tu_lb0 = Label(self.ov_header,justify="left", text="Pi4 Overclocking", highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="white",font=("Helvetica",18),pady=5).grid(column=0, row=0)
+        
+        global tu_current
+        tu_current = Label(self.ov_header, text="Current Settings: Base Clock", highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="green",font=("Helvetica",12,"bold"),padx=10)
+        tu_current.grid(column=1, row=0,columnspan=2)
+
+        #Butten_Frame
+        self.ov_buttons = Frame(self.rahmen6,borderwidth=0, highlightthickness=0, relief=GROOVE, pady=20)
+        self.ov_buttons.pack()
+        self.ov_buttons['background'] = '#333333'
+        
+        self.tu_lb3 = Label(self.ov_buttons, text="\nReset Overclocking", highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="#d4244d",font=("Helvetica",14),justify="left").grid(column=1, row=1)        
+
+        self.tu_btn3 = Button(self.ov_buttons,justify="left", image=self.tu03,text="Base Clock       \n1.5 / 1.8 Ghz       ", anchor="w", command=set_default,
+                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=2)
+
+        self.tu_lb1 = Label(self.ov_buttons,justify="left", text="\nCrank It Up", highlightthickness=0, borderwidth=2, background='#333333',
+                    foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=3)
+
+        self.tu_btn1 = Button(self.ov_buttons,justify="left", image=self.tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
+                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold"))
+        self.tu_btn1.grid(column=0, row=4)
+
+        self.tu_lb2 = Label(self.ov_buttons,justify="left", text="\nYou Sir... Need A Fan! ", highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=1, row=3,padx=10)
+
+        self.tu_btn2 = Button(self.ov_buttons,justify="left", image=self.tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
+                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=1, row=4)
+
+        self.tu_lb4 = Label(self.ov_buttons,justify="left", text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=2, row=3)
+
+        self.tu_btn4 = Button(self.ov_buttons,justify="left", image=self.tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
+                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=2, row=4)
+
+        self.tu_info = Label(self.ov_buttons, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
+                    background='#333333', foreground="yellow").grid(column=1, row=8,pady=20)
+        
+
+
+
+        #Misc_Frame
         self.rahmen622 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10)#
         self.rahmen622.pack(padx=40, pady=20, fill='both')
         self.rahmen622['background'] = '#333333'
-
+        
         self.rahmen61 = Frame(self.rahmen622,borderwidth=0, highlightthickness=0, relief=GROOVE, padx=30, pady=10)#
         self.rahmen61.pack(side=LEFT)
         self.rahmen61['background'] = '#333333'
@@ -1563,39 +1637,38 @@ class Frame6(ttk.Frame):
         self.rahmen62['background'] = '#333333'
 
 
+        def OV1_label():
+            tu_current.config(text="Current Settings: Crank It Up",fg="yellow")
 
-        self.tu_lb0 = Label(self.rahmen6,justify="left", text="Pi4 Overclocking", highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="white",font=("Helvetica",18),pady=5).grid(column=0, row=0)
+        def OV2_label():
+            tu_current.config(text="Current Settings: You Sir... Need A Fan!",fg="red")
+            
+        def OV3_label():
+            tu_current.config(text="Current Settings: Take It To The Max!",fg="pink")
 
-        self.tu_lb3 = Label(self.rahmen6, text="\nReset Overclocking", highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="#d4244d",font=("Helvetica",14),justify="left").grid(column=0, row=1)
+            
 
-        self.tu_btn3 = Button(self.rahmen6,justify="left", image=self.tu03,text="Base Clock       \n1.5 / 1.8 Ghz       ", anchor="w", command=set_default,
-                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=2)
-
-        self.tu_lb1 = Label(self.rahmen6,justify="left", text="\nCrank It Up", highlightthickness=0, borderwidth=2, background='#333333',
-                    foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=3)
-
-        self.tu_btn1 = Button(self.rahmen6,justify="left", image=self.tu01, text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6", anchor="w", command=ov_2000,
-                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=4)
-
-        self.tu_lb2 = Label(self.rahmen6,justify="left", text="\nYou Sir... Need A Fan! ", highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=5)
-
-        self.tu_btn2 = Button(self.rahmen6,justify="left", image=self.tu02, text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2147,
-                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=6)
-
-        self.tu_lb4 = Label(self.rahmen6,justify="left", text="\nTake It To The Max!", highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="#d4244d",font=("Helvetica",14)).grid(column=0, row=7)
-
-        self.tu_btn4 = Button(self.rahmen6,justify="left", image=self.tu04,text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8", anchor="w", command=ov_2200,
-                        highlightthickness=2, borderwidth=0, background='#333333', foreground="white", compound=LEFT,font=("Helvetica",10,"bold")).grid(column=0, row=8)
-
-        self.tu_info = Label(self.rahmen6, text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.", font=("Helvetica", 8), highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="yellow").grid(column=1, row=8)
+        with open("/boot/config.txt", "r") as fp:
+            for line in lines_that_contain("#Pigro_Overclocking1", fp):
+                print (line)
+                if line :
+                    OV1_label()
+                    
+                    
+                    
+        with open("/boot/config.txt", "r") as fp:
+            for line in lines_that_contain("#Pigro_Overclocking2", fp):
+                print (line)
+                if line :
+                    OV2_label()
 
 
-
+                    
+        with open("/boot/config.txt", "r") as fp:
+            for line in lines_that_contain("#Pigro_Overclocking3", fp):
+                print (line)
+                if line :
+                    OV3_label()
 
         def z_ram():
             global z_ram_pop

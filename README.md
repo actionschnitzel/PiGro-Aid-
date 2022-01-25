@@ -11,19 +11,3 @@ I'm currently rewriting the entire program from scratch.
 For more professionalism I use classes because it brings many advantages.
 
 System stats are now real time
-
-```
-python3 main_classes.py #temporary exe
-```
-
-#  :rocket: To do [NEXT UPDATE]
-- [x] [realtime system stats] 
-- [x] port Linux mint version to PiOS
-- [x] [first test run in DEV Pi]
-- [ ] [test run on vanilla RaspiOS]
-- [ ] [Code PiKiss Game GUI 4 FUN]
-- [ ] [ADD Guinea Pig tab (Testing Area)]
-- [ ] [Finish LINKS Tab]
-
-
-- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
