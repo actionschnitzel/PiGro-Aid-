@@ -17,17 +17,29 @@ python3 main_classes.py #temporary exe
 ```
 
 #  :rocket: To do [NEXT UPDATE]
-- [x] [realtime system stats] 
-- [x] port Linux mint version to PiOS
+
 - [x] [first test run in DEV Pi]
 - [x] [Finish LINKS Tab]
 - [ ] [Rewrite aaaaall theeee Info Frames :-(]
 - [ ] [test run on vanilla RaspiOS]
 - [ ] [Merge with MAIN]
-- [ ] [ADD Boring Theme(Style that matches with OS base theme)]
+- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
+
+  #:rocket: Changes
+
+- Changed code Structure to Classes
+- Live Stats in System Tab
+  - Added IP-Address
+  - Added PI Model
+- Tuning Tab shows now current OverClocking
+- Links:
+  - Added Ubuntu
+  - Added Pop_OS
+  - Added RPI OS 64 Bit
+- System Tab icon changed
+
+
 
 ---------------------------------------------
-- [ ] [Code PiKiss Game GUI 4 FUN]
-- [ ] [ADD Guinea Pig tab (Testing Area)]
 
-- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
+
