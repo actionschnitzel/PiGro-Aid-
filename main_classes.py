@@ -1637,6 +1637,7 @@ class Frame6(ttk.Frame):
         self.rahmen62['background'] = '#333333'
 
 
+        #Overclocking in config.txt
         def OV1_label():
             tu_current.config(text="Current Settings: Crank It Up",fg="yellow")
 
