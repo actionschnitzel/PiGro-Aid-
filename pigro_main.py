@@ -137,7 +137,7 @@ class Frame1(ttk.Frame):
         def changelog():
             global pop_changelog
             pop_changelog=Toplevel()
-            pop_changelog.geometry("1000x1000")
+            pop_changelog.geometry("700x800")
             pop_changelog.title("Changelog")
             scrollbar = Scrollbar(pop_changelog)
             scrollbar.pack( side = RIGHT, fill = Y )
@@ -1295,32 +1295,6 @@ class Frame5(ttk.Frame):
                         command=pi_appear, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=160, anchor='w',font=("Helvetica",10,"bold"))
         self.lxde.grid(column=3, row=0)
 
-
-
-        #Suggestions
-#         self.rahmen43 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10,padx=15)
-#         self.rahmen43.pack(padx=40, pady=20, fill='both')
-#         self.rahmen43['background'] = '#333333'
-# 
-#         self.lxde = Label(self.rahmen43, text="Suggestions ",font=("Helvetica",14,"bold"), background='#333333', foreground="#d4244d", anchor="w")
-#         self.lxde.grid(column=0, row=0)
-# 
-#         self.in_btn3 = Button(self.rahmen43, text="Install Arc Theme",justify="left", command=arc_inst,
-#                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
-#         self.in_btn3.grid(column=1, row=0)
-# 
-#         self.in_btn4 = Button(self.rahmen43,justify="left", text="Install Breeze Cursor Theme",command=breeze_inst, highlightthickness=0,
-#                               borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
-#         self.in_btn4.grid(column=2, row=0)
-# 
-#         self.in_btn5 = Button(self.rahmen43,justify="left", text="Install Papirus Icon Theme",
-#                         command=papi_inst, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
-#         self.in_btn5.grid(column=1, row=1)
-# 
-#         self.in_btn7 = Button(self.rahmen43,justify="left", text="Overwatch Cursor",
-#                         command=web_OVC, highlightthickness=0, borderwidth=0, background='#333333', foreground="white",font=("Helvetica",10,"bold"),width=20)
-#         self.in_btn7.grid(column=1, row=3)
-# 
         self.info_look_btn = Button(self, image=self.tpinfm,highlightthickness=0,
                         borderwidth=0,command=info_look_tab)
         self.info_look_btn.place(x=700,y=620)
@@ -1409,6 +1383,10 @@ class Frame6(ttk.Frame):
         self.tab_tpinfm = Image.open('icons/info_m.png')
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
+        
+        self.tab_ip3 = Image.open('icons/download_ico.png')
+        self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
+        self.il03 = Label(image=self.ip03)
 
 
         #overclocking
@@ -1584,7 +1562,7 @@ class Frame6(ttk.Frame):
         
         global tu_current
         tu_current = Label(self.ov_header, text="Current Settings: Base Clock", highlightthickness=0, borderwidth=2,
-                    background='#333333', foreground="green",font=("Helvetica",12,"bold"),padx=10)
+                    background='#333333', foreground="green",bg="black",font=("Helvetica",12,"bold"),padx=10)
         tu_current.grid(column=1, row=0,columnspan=2)
 
         #Butten_Frame
@@ -1637,15 +1615,14 @@ class Frame6(ttk.Frame):
         self.rahmen62['background'] = '#333333'
 
 
-        #Overclocking in config.txt
         def OV1_label():
-            tu_current.config(text="Current Settings: Crank It Up",fg="yellow")
+            tu_current.config(text="Current Settings: Crank It Up",fg="yellow",bg="black")
 
         def OV2_label():
-            tu_current.config(text="Current Settings: You Sir... Need A Fan!",fg="red")
+            tu_current.config(text="Current Settings: You Sir... Need A Fan!",fg="red",bg="black")
             
         def OV3_label():
-            tu_current.config(text="Current Settings: Take It To The Max!",fg="pink")
+            tu_current.config(text="Current Settings: Take It To The Max!",fg="pink",bg="black")
 
             
 
@@ -1681,7 +1658,7 @@ class Frame6(ttk.Frame):
             def top_uninst():
                 os.system("xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'")
 
-            logo = Label(z_ram_pop, image=ip03, text="ZRAM",font=("Helvetica",16), anchor="w",
+            logo = Label(z_ram_pop, image=self.ip03, text="ZRAM",font=("Helvetica",16), anchor="w",
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=0, row=0)
             
             bt_inst = Button(z_ram_pop, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
@@ -1698,9 +1675,11 @@ class Frame6(ttk.Frame):
             six4_mode_pop=Toplevel(self)
             six4_mode_pop['background'] = '#333333'
             
+
+            
             def top_inst():
                 os.system("xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'")
-            logo = Label(six4_mode_pop, image=ip03, text="64-Bit\nMode",font=("Helvetica",16), anchor="w",
+            logo = Label(six4_mode_pop, image=self.ip03, text="64-Bit\nMode",font=("Helvetica",16), anchor="w",
                             highlightthickness=0, borderwidth=0, background='#333333', foreground="white", compound=TOP).grid(column=0, row=0)
             
             bt_inst = Button(six4_mode_pop, text="Install",font=("Helvetica",11,"bold"),justify="left", anchor="w",
@@ -1786,6 +1765,10 @@ class Frame7(ttk.Frame):
             
         def six4_berry():
             popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
+
+        def pi_doc():
+            popen("xdg-open https://www.raspberrypi.com/documentation/")
+            
             
            
 
@@ -1874,10 +1857,7 @@ class Frame7(ttk.Frame):
 
         self.dist_btn11 = Button(self.rahmen,compound=LEFT,justify="left", image=self.pi64_os_ico,anchor="w", text="RPi OS 64 Bit", command=six4_berry,
                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
-
-        #self.dist_btn12 = Button(self.rahmen,compound=LEFT,justify="left", image=self.di08,anchor="w", text="NextCloudPi", command=down_NCP,
-        #                highlightthickness=0, borderwidth=0, background='#333333', foreground="white",width=150).pack()
-
+        
 
 
         self.rahmen3 = Frame(self,borderwidth=0, highlightthickness=2, relief=GROOVE,pady=10)
@@ -1913,6 +1893,9 @@ class Frame7(ttk.Frame):
                          highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
 
         choice_link2=Button(sys_btn2,width=50,text="LCD Wiki", anchor="w", command=l4_e,
+                         highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
+        
+        choice_link2=Button(sys_btn2,width=50,text="Offical Raspberry Pi Documentation", anchor="w", command=pi_doc,
                          highlightthickness=0, borderwidth=0, background='#333333', foreground="white").pack()
 
 

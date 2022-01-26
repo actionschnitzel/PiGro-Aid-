@@ -7,29 +7,37 @@
  / ____/ / /_/ / /  / /_/ / 
 /_/   /_/\____/_/   \____/ 
 
+BUT NOTHING HAS CHANGED!!!
+WRONG EVERYTHING HAS CHANGED!
 
-Happy New Year everyone!
+Roadmap 2022:
+[X] Port to Classes
+[ ] Add easy understandeble manuel for kids
+[ ] Make all Config.txt settings avaleble in a GUI
 
-After a break in programming, I can finally say: 
-It only took me 24 years to finish Crash Bandicoot 3
+Changelog Jan/22 Codname: Vincitore_Fedele
 
-I have set up an e-mail address with which you can write me your ideas directly. 
-No spam please!  >pigroxtrmo@gmail.com<
+-Changed code Structure to Classes
 
-And remember Pigro is a system config tool and should not be an all-rounder ;-)
+-Live Stats in System Tab
+    Added IP-Address
+    Added PI Model
 
-The 2021 poll is over and I am currently evaluating the results.
-First consequence: I took Holy Grail out because nobody is using it.
+-Tuning Tab shows now current OverClocking
 
-I will also publish python code examples on the homepage from time to time.
+-Links:
+        Added Ubuntu
+        Added Pop_OS
+        Added RPI OS 64 Bit
+        
+-System Tab icon changed
 
 
-And last but not least, Pigro is becoming more child-friendly.
 
 Best regards
 
 Timo
-Cheers
+
 
 ################################################################################
 ################################################################################
