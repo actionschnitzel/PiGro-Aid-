@@ -23,6 +23,8 @@ Sudo nano boot / config.txt? No, just click it!
 #### Yup! It's open source, after all.
 #### Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
 ****
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20_showcase.png)
+
  
 #  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
 Documentation + Manual   /// Still in work 
