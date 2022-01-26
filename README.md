@@ -28,15 +28,7 @@ Sudo nano boot / config.txt? No, just click it!
 Documentation + Manual   /// Still in work 
 ****
 #  :rocket: To do [NEXT UPDATE]
-- [ ] [add Theme Shop] 
-- [ ] [add more apt-get installs] 
-- [ ] ADD Pi-Safe https://github.com/RichardMidnight/pi-safe
-- [ ] ADD Papirus Folder Colors https://github.com/PapirusDevelopmentTeam/papirus-icon-theme#folders-color
-- [ ] ADD Timeshift https://github.com/teejee2008/timeshift
-- [ ] ADD AssistentPi https://github.com/xtools-at/AssistantPi
-- [ ] ADD Planner https://flatpak.org/setup/Raspberry%20Pi%20OS/
-- [ ] [Memo to myself] Twister Xfce is on 4.16 ---> Rounded Panel to LOOK in next update
-- [ ] Quake III one click installer vulkan :rage3: https://github.com/cdev-tux/q3lite
+
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****

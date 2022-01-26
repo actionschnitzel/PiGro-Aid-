@@ -3,7 +3,7 @@
 python3 ~/PiGro-Aid-/splash.py
 
 
-python3 ~/PiGro-Aid-/main.py
+python3 ~/PiGro-Aid-/pigro_main.py
 
 
 

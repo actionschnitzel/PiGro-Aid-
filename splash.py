@@ -70,20 +70,23 @@ y = (screen_height / 2) - (app_height / 2)
 splash.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
 splash.overrideredirect(True)
 
+bg = PhotoImage(file="icons/splash.png")
 
-tab_tp1 = Image.open('icons/splash.png')
-tp01 = ImageTk.PhotoImage(tab_tp1)
-tl01 = Label(image=tp01)
+splash_canvas = Canvas(splash,width=499, height=299,highlightthickness=0)
+splash_canvas.pack(fill="both", expand=True)
 
-spl_png = Label(splash,image=tp01).place(x=-1,y=-1)
+splash_canvas.create_image(0,0, image=bg, anchor="nw")
 
 
-list = ["Whoaa...\nSplash Screen....\nSoooo professionel","Sono pigro","Wer\nanderen eine Bratwurst brät,\n hat ein Bratwurstbratgerät.","I love Ubuntu... Server...","I hate the Great Saiyaman!","Don't Ctrl+C Ctrl+V!\nRead a Book!","I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!","GO GO Power Rangers!","1 + 1 = 3", "It’s time to kick ass\nand chew bubble gum", "It’s a-me, Mario!", "Do a barrel roll!", "I need TP for my ...", "Splash screens suck!", "Snake? Snake? SNAKE!", "I like shorts! They’re comfy and easy to wear!", "Frostmourne hungers", "It's alive! It's alive!", "Hello, gorgeous", "I feel the need - the need for speed!", "They call it a Royale with cheese.", "Yo, Adrian!", "My precious.", "Go ahead, make my day.","My Little Pony is not for Children", "Mama says, 'Stupid is as stupid does."]
+
+list = ["Kamehameha\nwas the first king of Hawaii","Whoaa...\nSplash Screen....\nSoooo professionel","Sono pigro","Wer\nanderen eine Bratwurst brät,\n hat ein Bratwurstbratgerät.","I love Ubuntu... Server...","I hate the Great Saiyaman!","Don't Ctrl+C Ctrl+V!\nRead a Book!","I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!","GO GO Power Rangers!","1 + 1 = 3", "It’s time to kick ass\nand chew bubble gum", "It’s a-me, Mario!", "Do a barrel roll!", "I need TP for my ...", "Splash screens suck!", "Snake? Snake? SNAKE!", "I like shorts! They’re comfy and easy to wear!", "Frostmourne hungers", "It's alive! It's alive!", "Hello, gorgeous", "I feel the need - the need for speed!", "They call it a Royale with cheese.", "Yo, Adrian!", "My precious.", "Go ahead, make my day.","My Little Pony is not for Children", "Mama says, 'Stupid is as stupid does."]
 item = random.choice(list)
 #print(item)
-info_splash_txt = Label(splash,text="Checked Dependencies - Lets GO!!!", bg="#333333",fg="white").pack(side="top")
+splash_canvas.create_text(130,20,text="Checked Dependencies - Lets GO!!!",font=("Helvetica",11,"bold"),fill="white")
 
-dump_splash_txt = Label(splash,text=item,font=("Arial", 16), bg="#333333",fg="white").pack(pady=20,side=BOTTOM)
+splash_canvas.create_text(250,250,text=item,font=("Helvetica",18,"bold"),fill="white")
+
+
 
 
 def loop():
