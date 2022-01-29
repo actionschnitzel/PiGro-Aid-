@@ -53,7 +53,8 @@ pip3 install distro
 
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
-```       
+```
+(Extra easy for LTT employees)
     
 OR:    
     
