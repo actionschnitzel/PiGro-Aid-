@@ -4,24 +4,28 @@
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
 ****
-#### All settings in one place! :key: :mag: :hammer: :toilet:   
+## All settings in one place! :key: :mag: :hammer: :toilet:   
     
-#### Raspberry Pi OS based distros awesome. What I missed from the start is a central control panel. Many settings are hidden or have to be made manually using the terminal. My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.     
+#### PiGro - Just Click It! is a control panel that bundles the most important options.
+The most important settings that are used again and again must be entered on the Pi using a terminal.
+Pigro is a graphically appealing GUI that does these settings with the click of a button.
+My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.
     
-#### The most important settings that are used again and again must be entered on the Pi using a terminal. Pigro is a graphically appealing GUI that does these settings with the click of a button.     
+     
     
-Sudo apt-get update/upgrade? .... No, just click it!     
-Sudo apt-get install ...? No, just click it!     
-Sudo nano boot / config.txt? No, just click it!     
-    
-#### And there is a lot more! 
+##### :wrench: Sudo apt-get update/upgrade    
+##### :wrench: Sudo apt-get install ...
+##### :wrench: Sudo nano boot / config.txt
+##### :wrench: Overclocking
+##### :wrench: Install and change the DE
+        
+### And there is a lot more! 
 
-
-#### Pigro includes options for both the Pixel Desktop and XFCE4. I am a big fan of XFCE and TwisterOS which is why the focus is often on these two. But everything works just as well under RaspiOS. ... Except for the transparency :-(. I always try to stay up to date and add the latest features or cool things from youtube.
-
+    
+        
 #### Can you trust me?
-#### Yup! It's open source, after all.
-#### Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
+Yup! It's open source, after all.
+Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
 ****
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20_showcase.png)
 
