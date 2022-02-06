@@ -35,6 +35,8 @@ Documentation + Manual   /// Still in work
 ****
 #  :rocket: To do [NEXT UPDATE]
 
+- [ ] Review Code In Terms Of PEP
+    - rename if needed
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
@@ -67,9 +69,18 @@ OR:
 
 
 
+
+
 #### Runs best on:    
 https://twisteros.com/    
-****    
+   
+
+#### :exclamation: Installation Process & Updates
+
+If you install PiGro via Pi-Apps, you will automatically receive an update notification.    
+If you install PiGro using the script, you can simply use "git pull".    
+    
+****     
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
 #### You want support me?    
