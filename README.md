@@ -1,3 +1,7 @@
+
+
+
+
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/PiGro-Aid-/blob/gh-pages/powered-by-coffee.svg)
 
@@ -27,8 +31,16 @@ My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding princi
 Yup! It's open source, after all.
 Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
 ****
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20_showcase.png)
-
+# :doughnut: Showcase (Click 2 Enlage)    
+    
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="300"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="300"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="300">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="300">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="300">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="300">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="300">
+    
+****
+    
  
 #  :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)   
 Documentation + Manual   /// Still in work 
