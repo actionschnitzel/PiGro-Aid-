@@ -19,14 +19,12 @@ import socket
 from gpiozero import CPUTemperature  # rpitemp
 import splash
 
-
+# 
 def actionhome():
     popen("xdg-open https://www.actionschnitzel.de/PiGro/")
 
-
 def reboot_n():
     popen("sudo reboot")
-
 
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
@@ -63,6 +61,7 @@ class MainApplication(tk.Tk):
         self.Frame7 = Frame7(self.notebook)
         self.Frame8 = Frame8(self.notebook)
 
+        #Notebook Decoration TOP_BOTTOM
         tabi = Image.open("icons/side_bar.png")
         tabp = ImageTk.PhotoImage(tabi)
         tabl = Label(self.notebook, image=tabp)
@@ -77,6 +76,7 @@ class MainApplication(tk.Tk):
         tab2l["background"] = "#333333"
         tab2l.place(x=-2, y=630)
 
+        #Tab_Icons
         self.tab_tp1 = Image.open("icons/Logotab.png")
         self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
         self.tl01 = Label(image=self.tp01)
@@ -109,6 +109,7 @@ class MainApplication(tk.Tk):
         self.tp10 = ImageTk.PhotoImage(self.tab_tp10)
         self.tl10 = Label(image=self.tp10)
 
+        #Tabs
         self.notebook.add(self.Frame1, compound=LEFT, text="Welcome", image=self.tp01)
         self.notebook.add(self.Frame3, compound=LEFT, text="System", image=self.tp02)
         self.notebook.add(self.Frame2, compound=LEFT, text="Update", image=self.tp012)
@@ -119,7 +120,8 @@ class MainApplication(tk.Tk):
         self.notebook.add(self.Frame8, compound=LEFT, text="PiG-Grow", image=self.tp10)
 
         self.notebook.pack()
-
+        
+        #Notebook Themeing
         self.noteStyler = ttk.Style(self)
         self.noteStyler.configure(
             "TNotebook",
@@ -143,7 +145,6 @@ class MainApplication(tk.Tk):
             background=[("selected", "#333333")],
             foreground=[("selected", "#d4244d")],
         )
-
 
 
 # Start Tab
@@ -549,9 +550,9 @@ class Frame3(ttk.Frame):
         self.bp033 = ImageTk.PhotoImage(self.sys_bp33)
         self.bl033 = Label(image=self.bp033)
 
-        sys_bp4 = Image.open("icons/gparted.png")
-        bp04 = ImageTk.PhotoImage(sys_bp4)
-        bl04 = Label(image=bp04)
+        self.sys_bp4 = Image.open("icons/gparted.png")
+        self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
+        self.bl04 = Label(image=self.bp04)
 
         self.sys_bp5 = Image.open("icons/indicator-cpufreq.png")
         self.bp05 = ImageTk.PhotoImage(self.sys_bp5)
@@ -582,7 +583,7 @@ class Frame3(ttk.Frame):
         self.bl033 = Label(image=self.bp033)
 
         self.sys_bp4 = Image.open("icons/gparted.png")
-        self.bp04 = ImageTk.PhotoImage(sys_bp4)
+        self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
         self.bl04 = Label(image=self.bp04)
 
         self.sys_bp5 = Image.open("icons/indicator-cpufreq.png")
@@ -1490,7 +1491,8 @@ class Frame4(ttk.Frame):
         # PDL
         def shop():
             os.system("python3 ~/PiGro-Aid-/PDL.py")
-
+        
+        #Icons/BG
         self.bg = PhotoImage(file="icons/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
@@ -1573,10 +1575,9 @@ class Frame4(ttk.Frame):
         self.p4 = ImageTk.PhotoImage(self.i4)
         self.l4 = Label(image=self.p4)
 
-        self.welcome_label1 = Label(self.rahmen3)
         self.eingabefeld1 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
         self.eingabefeld1.insert(0, "Enter Package Name")
-        self.welcom_button1 = Button(
+        self.apt_inst_btn = Button(
             self.rahmen3,
             text="install",
             command=inst_btn1,
@@ -1586,19 +1587,19 @@ class Frame4(ttk.Frame):
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
-        self.welcom_button1_ttp = CreateToolTip(
-            self.welcom_button1,
+        self.apt_inst_btn_ttp = CreateToolTip(
+            self.apt_inst_btn,
             'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.',
         )
 
-        self.my_label = Label(self.rahmen3, image=self.p4, fg="white")
-        self.my_label["background"] = "#333333"
-        self.my_label.grid(
+        self.apt_ico = Label(self.rahmen3, image=self.p4, fg="white")
+        self.apt_ico["background"] = "#333333"
+        self.apt_ico.grid(
             column=0,
             row=0,
         )
         self.eingabefeld1.grid(column=2, row=0)
-        self.welcom_button1.grid(column=1, row=0)
+        self.apt_inst_btn.grid(column=1, row=0)
 
         # pi-apps_entry
         inst3_p1 = """ xterm -e 'bash -c \"~/pi-apps/manage install """
@@ -1622,14 +1623,13 @@ class Frame4(ttk.Frame):
         self.pa6 = ImageTk.PhotoImage(self.ia6)
         self.la6 = Label(image=self.pa6)
 
-        self.apps_inst_btn = Label(
+        self.pi_apps_ico = Label(
             self.rahmen3, image=self.pa6, text="piapps install", fg="white"
         )
-        self.apps_inst_btn["background"] = "#333333"
+        self.pi_apps_ico["background"] = "#333333"
 
-        self.welcome_label2 = Label(self.rahmen3)
         self.eingabefeld3 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
-        self.welcom_button3 = Button(
+        self.pi_apps_inst_btn = Button(
             self.rahmen3,
             text="install",
             command=inst_pi_apps,
@@ -1640,9 +1640,9 @@ class Frame4(ttk.Frame):
             font=(("Helvetica,bold"), "12"),
         )
 
-        self.apps_inst_btn.grid(column=0, row=3)
+        self.pi_apps_ico.grid(column=0, row=3)
         self.eingabefeld3.grid(column=2, row=3)
-        self.welcom_button3.grid(column=1, row=3)
+        self.pi_apps_inst_btn.grid(column=1, row=3)
 
         # snap_entry
         inst2_p1 = """ xterm -e 'bash -c \"sudo snap install """
@@ -1656,14 +1656,13 @@ class Frame4(ttk.Frame):
         self.p6 = ImageTk.PhotoImage(self.i6)
         self.l6 = Label(image=self.p6)
 
-        self.my_label2 = Label(
+        self.snap_ico = Label(
             self.rahmen3, image=self.p6, text="Snap install", fg="white"
         )
-        self.my_label2["background"] = "#333333"
+        self.snap_ico["background"] = "#333333"
 
-        self.welcome_label2 = Label(self.rahmen3)
         self.eingabefeld2 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
-        self.welcom_button2 = Button(
+        self.snap_inst_btn = Button(
             self.rahmen3,
             text="install",
             command=inst_btn2,
@@ -1673,14 +1672,14 @@ class Frame4(ttk.Frame):
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
-        self.welcom_button2_ttp = CreateToolTip(
-            self.welcom_button2,
+        self.snap_inst_btn_ttp = CreateToolTip(
+            self.snap_inst_btn,
             "*to use snap install, you must\napt-get install snapd xD lol",
         )
 
-        self.my_label2.grid(column=0, row=1)
+        self.snap_ico.grid(column=0, row=1)
         self.eingabefeld2.grid(column=2, row=1)
-        self.welcom_button2.grid(column=1, row=1)
+        self.snap_inst_btn.grid(column=1, row=1)
 
         self.tab_ip3 = Image.open("icons/download_ico.png")
         self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
@@ -1698,14 +1697,13 @@ class Frame4(ttk.Frame):
         self.p66 = ImageTk.PhotoImage(self.i66)
         self.l66 = Label(image=self.p66)
 
-        self.my_label4 = Label(
-            self.rahmen3, image=self.p66, text="Snap install", fg="white"
+        self.flatp_ico = Label(
+            self.rahmen3, image=self.p66, text="Flat install", fg="white"
         )
-        self.my_label4["background"] = "#333333"
+        self.flatp_ico["background"] = "#333333"
 
-        self.welcome_label4 = Label(self.rahmen3)
         self.eingabefeld4 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
-        self.welcom_button44 = Button(
+        self.flatp_inst_btn = Button(
             self.rahmen3,
             text="install",
             command=inst_btn4,
@@ -1715,14 +1713,14 @@ class Frame4(ttk.Frame):
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
-        self.welcom_button44_ttp = CreateToolTip(
-            self.welcom_button44,
+        self.flatp_inst_btn_ttp = CreateToolTip(
+            self.flatp_inst_btn,
             "*past without--->>>flatpak install flathub<<< org.mozilla.firefox",
         )
 
-        self.my_label4.grid(column=0, row=7)
+        self.flatp_ico.grid(column=0, row=7)
         self.eingabefeld4.grid(column=2, row=7)
-        self.welcom_button44.grid(column=1, row=7)
+        self.flatp_inst_btn.grid(column=1, row=7)
 
         self.frame311 = Frame(
             self,
@@ -1734,7 +1732,7 @@ class Frame4(ttk.Frame):
             bg="green",
         )
         self.frame311.pack(pady=10)
-#xd
+
         self.snapstore_btn = Button(
             self.frame311,
             text="snapcraft.io",
@@ -1746,7 +1744,7 @@ class Frame4(ttk.Frame):
             font=(("Helvetica,bold"), "9"),
         )
 
-        self.welcom_button33 = Button(
+        self.pi_apps_inst_btn3 = Button(
             self.frame311,
             text="list all pi-apps",
             command=pi_apps_list,
@@ -1794,7 +1792,7 @@ class Frame4(ttk.Frame):
         )
 
         self.snapstore_btn.grid(column=0, row=6)
-        self.welcom_button33.grid(column=1, row=6)
+        self.pi_apps_inst_btn3.grid(column=1, row=6)
         self.uninst_button.grid(column=2, row=6)
         self.goodstuff_btn.grid(column=4, row=6)
         self.flat_btn.grid(column=3, row=6)
