@@ -17,6 +17,7 @@ import distro
 import time
 import socket
 from gpiozero import CPUTemperature  # rpitemp
+import splash
 
 
 def actionhome():
@@ -142,6 +143,7 @@ class MainApplication(tk.Tk):
             background=[("selected", "#333333")],
             foreground=[("selected", "#d4244d")],
         )
+
 
 
 # Start Tab
@@ -433,8 +435,6 @@ class Frame2(ttk.Frame):
 
 # System Tab
 distro = distro.id()
-
-
 class Frame3(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -1730,11 +1730,11 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             highlightthickness=1,
             pady=5,
-            padx=36,
+            padx=50,
             bg="green",
         )
         self.frame311.pack(pady=10)
-
+#xd
         self.snapstore_btn = Button(
             self.frame311,
             text="snapcraft.io",
@@ -1743,7 +1743,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            font=(("Helvetica,bold"), "12"),
+            font=(("Helvetica,bold"), "9"),
         )
 
         self.welcom_button33 = Button(
@@ -1754,7 +1754,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            font=(("Helvetica,bold"), "12"),
+            font=(("Helvetica,bold"), "9"),
         )
 
         self.uninst_button = Button(
@@ -1765,7 +1765,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            font=(("Helvetica,bold"), "12"),
+            font=(("Helvetica,bold"), "9"),
         )
         self.uninst_button_ttp = CreateToolTip(
             self.uninst_button, "If nothing happens you must install Synaptic"
@@ -1779,7 +1779,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            font=(("Helvetica,bold"), "12"),
+            font=(("Helvetica,bold"), "9"),
         )
 
         self.flat_btn = Button(
@@ -1790,7 +1790,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            font=(("Helvetica,bold"), "12"),
+            font=(("Helvetica,bold"), "9"),
         )
 
         self.snapstore_btn.grid(column=0, row=6)
