@@ -70,7 +70,7 @@ y = (screen_height / 2) - (app_height / 2)
 splash.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
 splash.overrideredirect(True)
 
-bg = PhotoImage(file="icons/splash.png")
+bg = PhotoImage(file="images/backgrounds/splash.png")
 
 splash_canvas = Canvas(splash,width=499, height=299,highlightthickness=0)
 splash_canvas.pack(fill="both", expand=True)

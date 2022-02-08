@@ -1,0 +1,47 @@
+Tasksel:
+Install the desktop environment of your choice with all dependencies.
+This package provides a simple interface for users who want to configure their 
+system to perform a specific task. This program is used during the installation 
+process, but users can also use tasksel at any time.
+
+Change Desktop environment:
+Switch to a specific desktop after the reboot.
+A desktop environment bundles together a variety of components to provide common 
+graphical user interface elements such as icons, toolbars, wallpapers, and desktop 
+widgets. Additionally, most desktop environments include a set of integrated 
+applications and utilities. Most importantly, desktop environments provide their 
+own window manager, which can however usually be replaced with another compatible one.
+
+Change WM:
+Executes "sudo update-alternatives --config x-window-manager"
+This uses Debian's built-in mechanisms to choose "alternatives" for default commands.
+
+A window manager (WM) is system software that controls the placement and appearance 
+of windows within a windowing system in a graphical user interface (GUI). 
+It can be part of a desktop environment (DE) or be used standalone.
+
+Window managers are unique to Xorg. The equivalent of window managers on Wayland 
+are called compositors because they also act as compositing window managers.
+
+e.g gdm (Gnome), xfwm4 (XFCE)
+
+Xfce_look:
+Opens your webbrowser to xfce-looks.org
+
+Theme folder:
+Opens the theme folder as SUDO so that the new themes can be thrown in.
+
+Icon folder:
+Same same here
+
+Xfwm4 Settings:
+Quick access to the Xfce settings
+
+Bluetooth fix:
+If you have no bluetooth connectivity after installing Xfce
+
+WiFi Fix:
+If you have no Wifi connectivity after installing Xfce
+
+Xfce4 Appearance:
+Change the color scheme, icons etc.

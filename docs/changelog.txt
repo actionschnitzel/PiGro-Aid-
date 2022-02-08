@@ -15,7 +15,7 @@ Roadmap 2022:
 [ ] Add easy understandeble manuel for kids
 [ ] Make all Config.txt settings avaleble in a GUI
 
-Changelog Jan/22 Codname: Vincitore_Fedele
+Changelog Feb/22 Codename: Vincitore_Fedele
 
 -Changed code Structure to Classes
 

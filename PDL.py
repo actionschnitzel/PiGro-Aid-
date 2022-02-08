@@ -36,7 +36,7 @@ os.system("find ~/PiGro-Aid-/essentials -type f -exec chmod +x {} \;")
 
 main = Tk()
 main.title("PDL (Pacchetti di Lamponi) --PiGroEmbedded-Version--")
-icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
+icon = tk.PhotoImage(file="images/icons/PiGroLogoslim.png")
 main.tk.call('wm', 'iconphoto', main._w, icon)
 #main['background'] = '#191925'
 main.resizable(0, 0)
@@ -73,31 +73,31 @@ tab1 = ttk.Frame(tab_control)
 tab2 = ttk.Frame(tab_control)
 tab3 = ttk.Frame(tab_control)
 
-tab_ip25 = Image.open('icons/pdl_system.png')
+tab_ip25 = Image.open('images/icons/pdl_system.png')
 ip25 = ImageTk.PhotoImage(tab_ip25)
 il25 = Label(image=ip25)
 
-tab_ip26 = Image.open('icons/github.png')
+tab_ip26 = Image.open('images/icons/github.png')
 ip26 = ImageTk.PhotoImage(tab_ip26)
 il26 = Label(image=ip26)
 
-tab_ip27 = Image.open('icons/apt.png')
+tab_ip27 = Image.open('images/icons/apt.png')
 ip27 = ImageTk.PhotoImage(tab_ip27)
 il27 = Label(image=ip27)
 
-tab_ip28 = Image.open('icons/pdl_install_btn.png')
+tab_ip28 = Image.open('images/icons/pdl_install_btn.png')
 ip28 = ImageTk.PhotoImage(tab_ip28)
 il28 = Label(image=ip28)
 
-tab_ip29 = Image.open('icons/uninstall_btn.png')
+tab_ip29 = Image.open('images/icons/uninstall_btn.png')
 ip29 = ImageTk.PhotoImage(tab_ip29)
 il29 = Label(image=ip29)
 
-tab_ip30 = Image.open('icons/gpk.png')
+tab_ip30 = Image.open('images/icons/gpk.png')
 ip30 = ImageTk.PhotoImage(tab_ip30)
 il30 = Label(image=ip30)
 
-tab_ip31 = Image.open('icons/howto_btn.png')
+tab_ip31 = Image.open('images/icons/howto_btn.png')
 ip31 = ImageTk.PhotoImage(tab_ip31)
 il31 = Label(image=ip31)
 ########################
@@ -388,7 +388,7 @@ def button_gpk():
     popen('sudo pi-gpk-update-viewer')
 #######
 ##############################################################################################
-tab_tp1 = Image.open('icons/Essentials.png')
+tab_tp1 = Image.open('images/icons/Essentials.png')
 tp01 = ImageTk.PhotoImage(tab_tp1)
 tl01 = Label(image=tp01)
 
@@ -427,7 +427,7 @@ tab_ip20 = Image.open('essentials/Driver---Argon_One/argon_icon.png')
 ip20 = ImageTk.PhotoImage(tab_ip20)
 il20 = Label(image=ip20)
 
-tab_ip21 = Image.open('icons/info_button.png')
+tab_ip21 = Image.open('images/icons/info_button.png')
 ip21 = ImageTk.PhotoImage(tab_ip21)
 il21 = Label(image=ip21)
 
@@ -488,7 +488,7 @@ shop_btn10 = Button(ess_frame, width=105, image=ip22, text="Sublime Text 64 Bit"
                   borderwidth=0, foreground="white", compound=TOP,font=("Helvetica",9,"bold"), background='#191925',command=pop_text).grid(column=4, row=1,pady=2, padx=5)
 
 #####################################################################################################TAB2
-# i = Image.open('icons/pigro_bg.png')
+# i = Image.open('images/icons/pigro_bg.png')
 # p = ImageTk.PhotoImage(i)
 # l = Label(tab2, image=p)
 # l.image = p

@@ -36,7 +36,7 @@ class MainApplication(tk.Tk):
         super().__init__()
 
         self.title("PiGro - Vincitore_Fedele")
-        self.icon = tk.PhotoImage(file="icons/PiGroLogoslim.png")
+        self.icon = tk.PhotoImage(file="images/icons/PiGroLogoslim.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = "#333333"
         self.resizable(0, 0)
@@ -62,14 +62,14 @@ class MainApplication(tk.Tk):
         self.Frame8 = Frame8(self.notebook)
 
         #Notebook Decoration TOP_BOTTOM
-        tabi = Image.open("icons/side_bar.png")
+        tabi = Image.open("images/backgrounds/side_bar.png")
         tabp = ImageTk.PhotoImage(tabi)
         tabl = Label(self.notebook, image=tabp)
         tabl.image = tabp
         tabl["background"] = "#333333"
         tabl.place(x=-2, y=0)
 
-        tab2i = Image.open("icons/side_bar2.png")
+        tab2i = Image.open("images/backgrounds/side_bar2.png")
         tab2p = ImageTk.PhotoImage(tab2i)
         tab2l = Label(self.notebook, image=tab2p)
         tab2l.image = tab2p
@@ -77,35 +77,35 @@ class MainApplication(tk.Tk):
         tab2l.place(x=-2, y=630)
 
         #Tab_Icons
-        self.tab_tp1 = Image.open("icons/Logotab.png")
+        self.tab_tp1 = Image.open("images/icons/Logotab.png")
         self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
         self.tl01 = Label(image=self.tp01)
 
-        self.tab_tp12 = Image.open("icons/updatetab.png")
+        self.tab_tp12 = Image.open("images/icons/updatetab.png")
         self.tp012 = ImageTk.PhotoImage(self.tab_tp12)
         self.tl012 = Label(image=self.tp012)
 
-        self.tab_tp2 = Image.open("icons/system.png")
+        self.tab_tp2 = Image.open("images/icons/system.png")
         self.tp02 = ImageTk.PhotoImage(self.tab_tp2)
         self.tl02 = Label(image=self.tp02)
 
-        self.tab_tp3 = Image.open("icons/installer_ico.png")
+        self.tab_tp3 = Image.open("images/icons/installer_ico.png")
         self.tp03 = ImageTk.PhotoImage(self.tab_tp3)
         self.tl03 = Label(image=self.tp03)
 
-        self.tab_tp4 = Image.open("icons/look.png")
+        self.tab_tp4 = Image.open("images/icons/look.png")
         self.tp04 = ImageTk.PhotoImage(self.tab_tp4)
         self.tl04 = Label(image=self.tp04)
 
-        self.tab_tp6 = Image.open("icons/tuning.png")
+        self.tab_tp6 = Image.open("images/icons/tuning.png")
         self.tp06 = ImageTk.PhotoImage(self.tab_tp6)
         self.tl06 = Label(image=self.tp06)
 
-        self.sys_bp111 = Image.open("icons/dm.png")
+        self.sys_bp111 = Image.open("images/icons/dm.png")
         self.bp0111 = ImageTk.PhotoImage(self.sys_bp111)
         self.bl0111 = Label(image=self.bp0111)
 
-        self.tab_tp10 = Image.open("icons/pigpi.png")
+        self.tab_tp10 = Image.open("images/icons/pigpi.png")
         self.tp10 = ImageTk.PhotoImage(self.tab_tp10)
         self.tl10 = Label(image=self.tp10)
 
@@ -147,7 +147,7 @@ class MainApplication(tk.Tk):
         )
 
 
-# Start Tab
+# Welcome Tab
 class Frame1(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -160,18 +160,19 @@ class Frame1(ttk.Frame):
             scrollbar = Scrollbar(pop_changelog)
             scrollbar.pack(side=RIGHT, fill=Y)
             s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
-            text_file = open("changelog.txt")
+            text_file = open("docs/changelog.txt")
             stuff = text_file.read()
             s_list.insert(END, stuff)
             text_file.close()
+            s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            scrollbar.config(command=mylist.yview)
+            #scrollbar.config(command=mylist.yview)
 
-        self.tab_tpinfp = Image.open("icons/info_button_p.png")
+        self.tab_tpinfp = Image.open("images/icons/info_button_p.png")
         self.tpinfp = ImageTk.PhotoImage(self.tab_tpinfp)
         self.tlinfp = Label(image=self.tpinfp)
 
-        self.bg = PhotoImage(file="~/PiGro-Aid-/icons/pigronew.png")
+        self.bg = PhotoImage(file="~/PiGro-Aid-/images/backgrounds/pigronew.png")
         self.my_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
         self.my_canvas.pack(fill="both", expand=True)
         self.my_canvas.create_image(0, 0, image=self.bg, anchor="nw")
@@ -222,28 +223,21 @@ class Frame2(ttk.Frame):
             cmd("%s" % (BasicCovTests))
 
         def info_update_tab():
-            global pop_info_update
-            pop_info_update = Toplevel()
-            up_box = Text(pop_info_update)
-            message = """
-            The first frame contains the source list. This can be edited immediately. 
-            Do not worry! 
-            The changes are only adopted if you press the "SAVE SOURCE LIST" button. 
-            I installed this emergency brake on purpose so that 
-            I don't mess around and accidentally break everything.
-            Linux users should know the other buttons. They do exactly what it says.
-            The GPK button is super cool, it opens the GPK update viewer, 
-            which is AMAZINGLY preinstalled but is not displayed in the menu. 
-            Question is .. Why ??? !!!!!
-            The big gray box is xterm. it shows you what's going on right now.
-            Xterm is ancient but great for embedding in programs. 
-            You will come across it more often. 
-            My guiding principle is "less terminal more click!" but 
-            I think it's good and important to see what happens."""
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("Update Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/update_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            #scrollbar.config(command=mylist.yview)
 
-            up_box.pack(expand=True)
-            up_box.insert("end", message)
-            up_box.config(fill=BOTH, expand=True)
 
         def update_btn():
             os.popen(
@@ -291,11 +285,11 @@ class Frame2(ttk.Frame):
         "
             messagebox.showinfo(message=m_text, title="Infos")
 
-        self.tab_tpinfm = Image.open("icons/info_m.png")
+        self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
 
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
@@ -485,27 +479,20 @@ class Frame3(ttk.Frame):
             popen("xfce4-settings-manager")
 
         def info_system_tab():
-            global pop_info_system
-            pop_info_system = Toplevel()
-            sys_box = Text(pop_info_system)
-            message = """
-            I think the buttons here are also self-explanatory. 
-            There are a few things to watch out for.
-            If you delete vcode.list, 
-            you can no longer install vscode. which is a really cool tool. 
-            Microsoft, Amazon and Google already know everything about you ;-)
-            Gparted, Neofetch, Deskpi and the Xfce tools only 
-            work if you have installed it. I
-            'm not installing anything behind your back here.
-            FM God Mode opens your file browser with sudo so be careful.
-            Update Kernel makes an upgrade to the latest. 
-            It can be that everything doesn't run so smoothly anymore (can be)
-            System info is unfortunately not yet in real time, 
-            but I'm working on it."""
-
-            sys_box.pack(expand=True)
-            sys_box.insert("end", message)
-            sys_box.config(fill=BOTH, expand=True)
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("System Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/system_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            #scrollbar.config(command=mylist.yview)
 
         def get_size(bytes, suffix="B"):
             """
@@ -534,83 +521,83 @@ class Frame3(ttk.Frame):
         # print(extract_ip())
 
         # Icon Set
-        self.sys_bp1 = Image.open("icons/raspberry-pi-logo.png")
+        self.sys_bp1 = Image.open("images/icons/raspberry-pi-logo.png")
         self.bp01 = ImageTk.PhotoImage(self.sys_bp1)
         self.bl01 = Label(image=self.bp01)
 
-        self.sys_bp2 = Image.open("icons/raspberry-pi-logo.png")
+        self.sys_bp2 = Image.open("images/icons/raspberry-pi-logo.png")
         self.bp02 = ImageTk.PhotoImage(self.sys_bp2)
         self.bl02 = Label(image=self.bp02)
 
-        self.sys_bp3 = Image.open("icons/terminal.png")
+        self.sys_bp3 = Image.open("images/icons/terminal.png")
         self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
         self.bl03 = Label(image=self.bp03)
 
-        self.sys_bp33 = Image.open("icons/terminal3.png")
+        self.sys_bp33 = Image.open("images/icons/terminal3.png")
         self.bp033 = ImageTk.PhotoImage(self.sys_bp33)
         self.bl033 = Label(image=self.bp033)
 
-        self.sys_bp4 = Image.open("icons/gparted.png")
+        self.sys_bp4 = Image.open("images/icons/gparted.png")
         self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
         self.bl04 = Label(image=self.bp04)
 
-        self.sys_bp5 = Image.open("icons/indicator-cpufreq.png")
+        self.sys_bp5 = Image.open("images/icons/indicator-cpufreq.png")
         self.bp05 = ImageTk.PhotoImage(self.sys_bp5)
         self.bl05 = Label(image=self.bp05)
 
-        self.sys_bp6 = Image.open("icons/folder.png")
+        self.sys_bp6 = Image.open("images/icons/folder.png")
         self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
         self.bl06 = Label(image=self.bp06)
 
-        self.sys_bp7 = Image.open("icons/links.png")
+        self.sys_bp7 = Image.open("images/icons/links.png")
         self.bp07 = ImageTk.PhotoImage(self.sys_bp7)
         self.bl07 = Label(image=self.bp07)
 
-        self.sys_bp1 = Image.open("icons/raspberry-pi-logo.png")
+        self.sys_bp1 = Image.open("images/icons/raspberry-pi-logo.png")
         self.bp01 = ImageTk.PhotoImage(self.sys_bp1)
         self.bl01 = Label(image=self.bp01)
 
-        self.sys_bp2 = Image.open("icons/raspberry-pi-logo.png")
+        self.sys_bp2 = Image.open("images/icons/raspberry-pi-logo.png")
         self.bp02 = ImageTk.PhotoImage(self.sys_bp2)
         self.bl02 = Label(image=self.bp02)
 
-        self.sys_bp3 = Image.open("icons/terminal.png")
+        self.sys_bp3 = Image.open("images/icons/terminal.png")
         self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
         self.bl03 = Label(image=self.bp03)
 
-        self.sys_bp33 = Image.open("icons/terminal3.png")
+        self.sys_bp33 = Image.open("images/icons/terminal3.png")
         self.bp033 = ImageTk.PhotoImage(self.sys_bp33)
         self.bl033 = Label(image=self.bp033)
 
-        self.sys_bp4 = Image.open("icons/gparted.png")
+        self.sys_bp4 = Image.open("images/icons/gparted.png")
         self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
         self.bl04 = Label(image=self.bp04)
 
-        self.sys_bp5 = Image.open("icons/indicator-cpufreq.png")
+        self.sys_bp5 = Image.open("images/icons/indicator-cpufreq.png")
         self.bp05 = ImageTk.PhotoImage(self.sys_bp5)
         self.bl05 = Label(image=self.bp05)
 
-        self.sys_bp6 = Image.open("icons/folder.png")
+        self.sys_bp6 = Image.open("images/icons/folder.png")
         self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
         self.bl06 = Label(image=self.bp06)
 
-        self.sys_bp7 = Image.open("icons/links.png")
+        self.sys_bp7 = Image.open("images/icons/links.png")
         self.bp07 = ImageTk.PhotoImage(self.sys_bp7)
         self.bl07 = Label(image=self.bp07)
 
-        self.ico_1 = Image.open("icons/gui_icon.png")
+        self.ico_1 = Image.open("images/icons/gui_icon.png")
         self.ico_m = ImageTk.PhotoImage(self.ico_1)
         self.ico_win = Label(image=self.ico_m)
 
-        self.ico_2 = Image.open("icons/weblink_icon.png")
+        self.ico_2 = Image.open("images/icons/weblink_icon.png")
         self.ico_m2 = ImageTk.PhotoImage(self.ico_2)
         self.ico_win2 = Label(image=self.ico_m2)
 
-        self.tab_tpinfm = Image.open("icons/info_m.png")
+        self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
 
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
@@ -852,7 +839,7 @@ class Frame3(ttk.Frame):
         self.rahmen22.grid(row=1, column=2)
         self.rahmen22["background"] = "#333333"
 
-        self.my_img = ImageTk.PhotoImage(Image.open("icons/deb_logo.png"))
+        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
         self.my_label = Label(image=self.my_img)
 
         self.sysinf0 = Label(
@@ -1074,38 +1061,22 @@ class Frame4(ttk.Frame):
         super().__init__()
 
         def info_installer_tab():
-            global pop_info_installer
-            pop_info_installer = Toplevel()
-            inst_box = Text(pop_info_installer)
-            message = """
-            Do you know RAMBO III?
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("Installer Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/installer_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            #scrollbar.config(command=mylist.yview)
 
-            What's that? ... It's blue light. ..... What does it do? 
-            ..... It turns blue.
-            So, here you can install programs .....
-            The special thing here is that you only have to enter the program name
-            without SUDO APT-GET INSTALL BLA BAL BLA ...
-            In general, the installer is designed like this:
-            Without having to do a lot of tinkering and digging,
-            you can quickly install a program. no extras.
-            Set up quickly!
-            
-            To use snap and flatpaks you have to install them beforehand ;-)
-            command:
-            - sudo apt install snapd
-            - sudo apt install flatpak 
-                + flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-            If you want to know which programs are available click on: 
-            / snapcraft.io / list of all pi-apps / Flathub / 
-            
-            
-            
-            """
-
-            inst_box.pack(expand=True)
-            inst_box.insert("end", message)
-            inst_box.config(fill=BOTH, expand=True)
 
         def web_OVC():
             popen("xdg-open https://www.gnome-look.org/p/1158321/")
@@ -1492,20 +1463,20 @@ class Frame4(ttk.Frame):
         def shop():
             os.system("python3 ~/PiGro-Aid-/PDL.py")
         
-        #Icons/BG
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        #images/icons/BG
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab_shop = Image.open("icons/shop.png")
+        self.tab_shop = Image.open("images/icons/shop.png")
         self.ipshop = ImageTk.PhotoImage(self.tab_shop)
         self.ilshop = Label(image=self.ipshop)
 
-        self.tab_finst = Image.open("icons/fast_install.png")
+        self.tab_finst = Image.open("images/icons/fast_install.png")
         self.ipfinst = ImageTk.PhotoImage(self.tab_finst)
         self.ilfinst = Label(image=self.ipfinst)
 
-        self.tab_tpinfm = Image.open("icons/info_m.png")
+        self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
 
@@ -1571,7 +1542,7 @@ class Frame4(ttk.Frame):
         def inst_syn():
             popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
 
-        self.i4 = Image.open("icons/apt-get.png")
+        self.i4 = Image.open("images/icons/apt-get.png")
         self.p4 = ImageTk.PhotoImage(self.i4)
         self.l4 = Label(image=self.p4)
 
@@ -1619,7 +1590,7 @@ class Frame4(ttk.Frame):
         def pi_apps_list():
             popen("xterm -e 'bash -c \"ls ~/pi-apps/apps/ ; exec bash\"'")
 
-        self.ia6 = Image.open("icons/pi-app.png")
+        self.ia6 = Image.open("images/icons/pi-app.png")
         self.pa6 = ImageTk.PhotoImage(self.ia6)
         self.la6 = Label(image=self.pa6)
 
@@ -1652,7 +1623,7 @@ class Frame4(ttk.Frame):
             entry_text = self.eingabefeld2.get()
             popen(inst2_p1 + entry_text + inst2_p2)
 
-        self.i6 = Image.open("icons/snap.png")
+        self.i6 = Image.open("images/icons/snap.png")
         self.p6 = ImageTk.PhotoImage(self.i6)
         self.l6 = Label(image=self.p6)
 
@@ -1681,7 +1652,7 @@ class Frame4(ttk.Frame):
         self.eingabefeld2.grid(column=2, row=1)
         self.snap_inst_btn.grid(column=1, row=1)
 
-        self.tab_ip3 = Image.open("icons/download_ico.png")
+        self.tab_ip3 = Image.open("images/icons/download_ico.png")
         self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
         self.il03 = Label(image=self.ip03)
 
@@ -1693,7 +1664,7 @@ class Frame4(ttk.Frame):
             entry_text = self.eingabefeld4.get()
             popen(inst4_p1 + entry_text + inst4_p2)
 
-        self.i66 = Image.open("icons/flathub.png")
+        self.i66 = Image.open("images/icons/flathub.png")
         self.p66 = ImageTk.PhotoImage(self.i66)
         self.l66 = Label(image=self.p66)
 
@@ -1822,61 +1793,21 @@ class Frame5(ttk.Frame):
             popen("xfwm4-settings")
 
         def info_look_tab():
-            global pop_info_look
-            pop_info_look = Toplevel()
-            luk_box = Text(pop_info_look)
-            message = """
-            I love this TAB!
-            Why? Because I've read thousands of articles on how to 
-            change the desktop under RaspiOS. 
-            The articles and forum posts were like kilometers long.
-            And I compressed the whole thing into a tab. .... 
-            A man's praise in his own mouth stinks. :-P
-            I think everything is well structured and in an understandable way.
-            I have added a guideline especially for XFCE. (Make-Me-XFCE)
-            Tasksel basically does most of the work.
-            The suggestions are again stuff that I use. 
-            I think Twister OS does a good job when it comes to desktop themes. 
-            So I don't have to try to reinvent the wheel.
-            If you want to make an iOS out of vanilla raspi OS 
-            you have to handle so many dependencies ... 
-            that it is faster to install Twister.
-            With the Look tab, I just want to fully expand your options.
-            Tasksel:
-            Install the desktop environment of your choice with all dependencies.
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("Looks Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/looks_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            #scrollbar.config(command=mylist.yview)
 
-            Change Desktop:
-            Switch to a specific desktop after the reboot.
-
-            Change win manager:
-            Change the window manager
-
-            e.g gdm (Gnome), xfwm4 (XFCE)
-
-            Xfce_look:
-            Opens your webbrowser to xfce-looks.org
-
-            Theme folder:
-            Opens the theme folder as SUDO so that the new themes can be thrown in.
-
-            Icon folder:
-            Same same here
-
-            Xfwm4 Settings:
-            Quick access to the Xfce settings
-
-            Bluetooth fix:
-            If you have no bluetooth connectivity after installing Xfce
-
-            WiFi Fix:
-            If you have no Wifi connectivity after installing Xfce
-
-            Xfce4 Appearance:
-            Change the color scheme, icons etc."""
-
-            luk_box.pack(expand=True)
-            luk_box.insert("end", message)
-            luk_box.config(fill=BOTH, expand=True)
 
         def pi_appear():
             popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
@@ -1910,7 +1841,7 @@ class Frame5(ttk.Frame):
             popen("sudo xdg-open /usr/share/themes/")
 
         def icon_f():
-            popen("sudo xdg-open /usr/share/icons/")
+            popen("sudo xdg-open /usr/share/images/icons/")
 
         def xfcefix():
             popen(
@@ -1940,39 +1871,39 @@ class Frame5(ttk.Frame):
             popen("xdg-open https://www.xfce-look.org/browse/")
 
         # Images/Icons
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab_tpinfm = Image.open("icons/info_m.png")
+        self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
 
-        self.sys_bp6 = Image.open("icons/folder.png")
+        self.sys_bp6 = Image.open("images/icons/folder.png")
         self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
         self.bl06 = Label(image=self.bp06)
 
-        self.ico_1 = Image.open("icons/gui_icon.png")
+        self.ico_1 = Image.open("images/icons/gui_icon.png")
         self.ico_m = ImageTk.PhotoImage(self.ico_1)
         self.ico_win = Label(image=self.ico_m)
 
-        self.sys_bp3 = Image.open("icons/terminal.png")
+        self.sys_bp3 = Image.open("images/icons/terminal.png")
         self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
         self.bl03 = Label(image=self.bp03)
 
-        self.ico_2 = Image.open("icons/weblink_icon.png")
+        self.ico_2 = Image.open("images/icons/weblink_icon.png")
         self.ico_m2 = ImageTk.PhotoImage(self.ico_2)
         self.ico_win2 = Label(image=self.ico_m2)
 
-        self.tab_ip1 = Image.open("icons/download_ico.png")
+        self.tab_ip1 = Image.open("images/icons/download_ico.png")
         self.ip01 = ImageTk.PhotoImage(self.tab_ip1)
         self.il01 = Label(image=self.ip01)
 
-        self.tab_loktt = Image.open("icons/tuxterm.png")
+        self.tab_loktt = Image.open("images/icons/tuxterm.png")
         self.ttp01 = ImageTk.PhotoImage(self.tab_loktt)
         self.ttl01 = Label(image=self.ttp01)
 
-        self.tab_ip2 = Image.open("icons/fix1i.png")
+        self.tab_ip2 = Image.open("images/icons/fix1i.png")
         self.ip02 = ImageTk.PhotoImage(self.tab_ip2)
         self.il02 = Label(image=self.ip02)
 
@@ -2314,71 +2245,48 @@ class Frame6(ttk.Frame):
                     yield line
 
         def info_tuning_tab():
-            global pop_info_tuning
-            pop_info_tuning = Toplevel()
-            tun_box = Text(pop_info_tuning)
-            message = """
-            I have to admit, I was lazy programming. 
-            If you are using the Tuning Berrys, 
-            you should check beforehand whether there is a space between 
-            the equals of your previous tuning settings.
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("Tuning Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/tuning_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            #scrollbar.config(command=mylist.yview)
 
-            example:
-            Valid: (arm_freq = over9000)
-            No Valid: (arm_freq=over9000)
-
-            Note that over9000 is a DBZ reference ;-) Never overclock to 9000 
-            ... NEVER
-
-            Zram: This creates a compressing block device right in the computer's memory. 
-            However, zRam is only used when the main memory is full: 
-            the kernel first uses the entire available RAM, 
-            then it tries to compress parts of it into zRam. 
-            In this way, more data can be kept in memory. 
-            In practice, this means that the system does not have to move to a slower 
-            hard drive so quickly, 
-            but the price is a slightly higher processor load.
-
-            64 bit mode adds the 64 bit kernel to your system. 
-            You can see how it works on the button ;-) 
-            Important !!!!! Kernel means KERNEL not distro. 
-            You will need to run a separate apt update / upgrade. 
-            64 bit apps can only be installed in the 64 bit container. 
-            You will also have to install a few things, 
-            e.g. you have to install cmake additionally, 
-            even if it is already installed under 32 bit. 
-            And ..... yeeeees Box64 you have to install over the 64 container."""
-
-            tun_box.pack(expand=True)
-            tun_box.insert("end", message)
-            tun_box.config(fill=BOTH, expand=True)
 
         # BG + Icons
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tu_tp1 = Image.open("icons/PiGroOV2.png")
+        self.tu_tp1 = Image.open("images/icons/PiGroOV2.png")
         self.tu01 = ImageTk.PhotoImage(self.tu_tp1)
         self.tul01 = Label(image=self.tu01)
 
-        self.tu_tp2 = Image.open("icons/PiGroOV.png")
+        self.tu_tp2 = Image.open("images/icons/PiGroOV.png")
         self.tu02 = ImageTk.PhotoImage(self.tu_tp2)
         self.tul02 = Label(image=self.tu02)
 
-        self.tu_tp3 = Image.open("icons/PiGroOV3.png")
+        self.tu_tp3 = Image.open("images/icons/PiGroOV3.png")
         self.tu03 = ImageTk.PhotoImage(self.tu_tp3)
         self.tul03 = Label(image=self.tu03)
 
-        self.tu_tp4 = Image.open("icons/PiGroOV4.png")
+        self.tu_tp4 = Image.open("images/icons/PiGroOV4.png")
         self.tu04 = ImageTk.PhotoImage(self.tu_tp4)
         self.tul04 = Label(image=self.tu04)
 
-        self.tab_tpinfm = Image.open("icons/info_m.png")
+        self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
 
-        self.tab_ip3 = Image.open("icons/download_ico.png")
+        self.tab_ip3 = Image.open("images/icons/download_ico.png")
         self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
         self.il03 = Label(image=self.ip03)
 
@@ -3095,49 +3003,49 @@ class Frame7(ttk.Frame):
         def pi_doc():
             popen("xdg-open https://www.raspberrypi.com/documentation/")
 
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab8_dist1 = Image.open("icons/TwisterOSLogo-Large-New3.png")
+        self.tab8_dist1 = Image.open("images/icons/TwisterOSLogo-Large-New3.png")
         self.di01 = ImageTk.PhotoImage(self.tab8_dist1)
         self.dl01 = Label(image=self.di01)
 
-        self.tab8_dist2 = Image.open("icons/Puppy_Linux_Logo.png")
+        self.tab8_dist2 = Image.open("images/icons/Puppy_Linux_Logo.png")
         self.di02 = ImageTk.PhotoImage(self.tab8_dist2)
         self.dl02 = Label(image=self.di02)
 
-        self.tab8_dist3 = Image.open("icons/dietpi.png")
+        self.tab8_dist3 = Image.open("images/icons/dietpi.png")
         self.di03 = ImageTk.PhotoImage(self.tab8_dist3)
         self.dl03 = Label(image=self.di03)
 
-        self.tab8_dist4 = Image.open("icons/MX-icon.png")
+        self.tab8_dist4 = Image.open("images/icons/MX-icon.png")
         self.di04 = ImageTk.PhotoImage(self.tab8_dist4)
         self.dl04 = Label(image=self.di04)
 
-        self.tab8_dist5 = Image.open("icons/fydeos.png")
+        self.tab8_dist5 = Image.open("images/icons/fydeos.png")
         self.di05 = ImageTk.PhotoImage(self.tab8_dist5)
         self.dl05 = Label(image=self.di05)
 
-        self.tab8_dist6 = Image.open("icons/android.png")
+        self.tab8_dist6 = Image.open("images/icons/android.png")
         self.di06 = ImageTk.PhotoImage(self.tab8_dist6)
         self.dl06 = Label(image=self.di06)
 
-        self.tab8_dist7 = Image.open("icons/logo_berryserver.png")
+        self.tab8_dist7 = Image.open("images/icons/logo_berryserver.png")
         self.di07 = ImageTk.PhotoImage(self.tab8_dist7)
         self.dl07 = Label(image=self.di07)
 
-        self.tab8_dist8 = Image.open("icons/NCP.png")
+        self.tab8_dist8 = Image.open("images/icons/NCP.png")
         self.di08 = ImageTk.PhotoImage(self.tab8_dist8)
         self.dl08 = Label(image=self.di08)
 
-        self.pop_os_ico = ImageTk.PhotoImage(Image.open("icons/popo_os_icon.png"))
+        self.pop_os_ico = ImageTk.PhotoImage(Image.open("images/icons/popo_os_icon.png"))
         self.pop_os_icol = Label(image=self.pop_os_ico)
 
-        self.ubu_os_ico = ImageTk.PhotoImage(Image.open("icons/Logo-ubuntu_.png"))
+        self.ubu_os_ico = ImageTk.PhotoImage(Image.open("images/icons/Logo-ubuntu_.png"))
         self.ubu_os_icol = Label(image=self.ubu_os_ico)
 
-        self.pi64_os_ico = ImageTk.PhotoImage(Image.open("icons/Raspberry_Pi_Logo.png"))
+        self.pi64_os_ico = ImageTk.PhotoImage(Image.open("images/icons/Raspberry_Pi_Logo.png"))
         self.pi64_os_icol = Label(image=self.pi64_os_ico)
 
         self.rahmen = Frame(
@@ -3466,11 +3374,11 @@ class Frame8(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.bg = PhotoImage(file="icons/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.pig_x = Image.open("icons/poke_pig.jpg")
+        self.pig_x = Image.open("images/icons/poke_pig.jpg")
         self.pg0x = ImageTk.PhotoImage(self.pig_x)
         self.pl0x = Label(image=self.pg0x)
 
@@ -3504,7 +3412,7 @@ class Frame8(ttk.Frame):
                 "xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u"
             )
 
-        self.pig_1 = Image.open("icons/pigpi_btn.png")
+        self.pig_1 = Image.open("images/icons/pigpi_btn.png")
         self.pg01 = ImageTk.PhotoImage(self.pig_1)
         self.pl01 = Label(image=self.pg01)
 
@@ -3512,7 +3420,7 @@ class Frame8(ttk.Frame):
             self, image=self.pg01, background="#333333", command=pick_at_you
         ).pack(pady=40)
 
-        self.rahmen102 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
+        self.rahmen102 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2,pady=10)
         self.rahmen102.pack(padx=40, pady=20, fill="both")
         self.rahmen102["background"] = "#333333"
 
