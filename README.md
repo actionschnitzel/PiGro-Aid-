@@ -55,7 +55,14 @@ sudo apt-get install xterm -y
 sudo apt-get install python3-pil python3-pil.imagetk -y
 sudo apt install python3-pip -y
 sudo apt install mpg123 -y
+sudo apt install lolcat -y
 pip3 install distro
+
+(recommended)
+sudo apt install gparted -y
+sudo apt install neofetch -y
+
+
 ```
 #### :exclamation: PiGro only works with Raspberry Pi OS and systems based on it(e.g. Twister OS), as it works with APT and .deb integrations.   
 
