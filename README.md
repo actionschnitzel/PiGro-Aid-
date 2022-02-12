@@ -57,9 +57,7 @@ sudo apt install python3-pip -y
 sudo apt install mpg123 -y
 pip3 install distro
 ```
-
- Debian based means "DEBIAN" not UBUNTU nor MANJARO  :shit:   
- Do you use another USER than "Pi"?    
+#### :exclamation: PiGro only works with Raspberry Pi OS and systems based on it(e.g. Twister OS), as it works with APT and .deb integrations.   
 
 ****
 
