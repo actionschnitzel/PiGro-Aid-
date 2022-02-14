@@ -8,6 +8,6 @@ Encoding=UTF-8
 Terminal=false
 Type=Application
 Categories=System
-Icon=/home/pi/PiGro-Aid-/icons/pigro_spalsh.png
+Icon=/home/pi/PiGro-Aid-/images/icons/pigro_spalsh.png
 Name[de_DE]=PiGro - Just Click It
 Path=/home/pi/PiGro-Aid-/

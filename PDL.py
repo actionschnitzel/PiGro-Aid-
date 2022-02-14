@@ -378,7 +378,7 @@ def howto():
     #pop_changelog.geometry("650x600")
     pop_changelog.title("How To Add Your Own Scripts")
     s_list = Text(pop_changelog)
-    text_file = open("how_to.txt")
+    text_file = open("docs/how_to.txt")
     stuff = text_file.read()
     s_list.insert(END, stuff)
     text_file.close()

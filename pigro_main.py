@@ -2727,13 +2727,23 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background="#333333",
             foreground="yellow",
-        ).grid(column=1, row=8, pady=20)
+        ).grid(column=1, row=9, pady=20)
+
+        self.tu_info1 = Label(
+            self.ov_buttons,
+            text="By clicking on one of the Tuning Berries PiGro creates a backup file of config.txt ;-)",
+            font=("Helvetica", 10,"bold"),
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="white",
+        ).grid(column=0, row=8,columnspan=3,pady=15 )
 
         # Misc_Frame
         self.rahmen622 = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
         )  #
-        self.rahmen622.pack(padx=40, pady=20, fill="both")
+        self.rahmen622.pack(padx=40, pady=15, fill="both")
         self.rahmen622["background"] = "#333333"
 
         self.rahmen61 = Frame(
