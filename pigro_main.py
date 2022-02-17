@@ -19,12 +19,14 @@ import socket
 from gpiozero import CPUTemperature  # rpitemp
 import splash
 
-# 
+#
 def actionhome():
     popen("xdg-open https://www.actionschnitzel.de/PiGro/")
 
+
 def reboot_n():
     popen("sudo reboot")
+
 
 def callback(event):
     webbrowser.open_new(event.widget.cget("text"))
@@ -61,7 +63,7 @@ class MainApplication(tk.Tk):
         self.Frame7 = Frame7(self.notebook)
         self.Frame8 = Frame8(self.notebook)
 
-        #Notebook Decoration TOP_BOTTOM
+        # Notebook Decoration TOP_BOTTOM
         tabi = Image.open("images/backgrounds/side_bar.png")
         tabp = ImageTk.PhotoImage(tabi)
         tabl = Label(self.notebook, image=tabp)
@@ -76,7 +78,7 @@ class MainApplication(tk.Tk):
         tab2l["background"] = "#333333"
         tab2l.place(x=-2, y=630)
 
-        #Tab_Icons
+        # Tab_Icons
         self.tab_tp1 = Image.open("images/icons/Logotab.png")
         self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
         self.tl01 = Label(image=self.tp01)
@@ -109,7 +111,7 @@ class MainApplication(tk.Tk):
         self.tp10 = ImageTk.PhotoImage(self.tab_tp10)
         self.tl10 = Label(image=self.tp10)
 
-        #Tabs
+        # Tabs
         self.notebook.add(self.Frame1, compound=LEFT, text="Welcome", image=self.tp01)
         self.notebook.add(self.Frame3, compound=LEFT, text="System", image=self.tp02)
         self.notebook.add(self.Frame2, compound=LEFT, text="Update", image=self.tp012)
@@ -120,8 +122,8 @@ class MainApplication(tk.Tk):
         self.notebook.add(self.Frame8, compound=LEFT, text="PiG-Grow", image=self.tp10)
 
         self.notebook.pack()
-        
-        #Notebook Themeing
+
+        # Notebook Themeing
         self.noteStyler = ttk.Style(self)
         self.noteStyler.configure(
             "TNotebook",
@@ -166,7 +168,7 @@ class Frame1(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
+            # scrollbar.config(command=mylist.yview)
 
         self.tab_tpinfp = Image.open("images/icons/info_button_p.png")
         self.tpinfp = ImageTk.PhotoImage(self.tab_tpinfp)
@@ -236,8 +238,7 @@ class Frame2(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
-
+            # scrollbar.config(command=mylist.yview)
 
         def update_btn():
             os.popen(
@@ -447,6 +448,8 @@ class Frame2(ttk.Frame):
 
 # System Tab
 distro = distro.id()
+
+
 class Frame3(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -509,7 +512,7 @@ class Frame3(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
+            # scrollbar.config(command=mylist.yview)
 
         def get_size(bytes, suffix="B"):
             """
@@ -1071,24 +1074,25 @@ class Frame3(ttk.Frame):
 
         refresh()
 
+
 # Sec Window [Must HAVES]
 class Must_Haves(tk.Toplevel):
-    def __init__(self,parent):
-        super() .__init__(parent)
+    def __init__(self, parent):
+        super().__init__(parent)
         self["background"] = "#333333"
 
         self.tab_ip3 = Image.open("images/icons/download_ico.png")
         self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
         self.il03 = Label(image=self.ip03)
 
-
-            
         # Whatsapp
         def w_app():
             popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
 
         def un_w_app():
-            popen("xterm -e 'bash -c \"sudo snap uninstall kesty-whatsapp; exec bash\"'")
+            popen(
+                "xterm -e 'bash -c \"sudo snap uninstall kesty-whatsapp; exec bash\"'"
+            )
 
         self.what_frame = Frame(
             self, relief=GROOVE, borderwidth=0, highlightthickness=0
@@ -1097,18 +1101,18 @@ class Must_Haves(tk.Toplevel):
         self.what_frame.pack()
 
         self.shop_whatsapp_inst = Button(
-                self.what_frame,
-                width=120,
-                image=self.ip03,
-                text="Whatsapp\n(Snap)",
-                anchor="w",
-                command=w_app,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=1)
+            self.what_frame,
+            width=120,
+            image=self.ip03,
+            text="Whatsapp\n(Snap)",
+            anchor="w",
+            command=w_app,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=1)
 
         self.shop_whatsapp_uninst = Button(
             self.what_frame,
@@ -1172,7 +1176,6 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=3)
 
-
         self.shop_compiz_uninst = Button(
             self.comp_frame,
             text="Uninstall",
@@ -1208,16 +1211,14 @@ class Must_Haves(tk.Toplevel):
 
         self.shop_compiz_link["background"] = "grey"
 
-        #Gparted
+        # Gparted
         def gparted_inst():
             popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
 
         def un_gparted_inst():
             popen("xterm -e 'bash -c \"sudo apt-get remove gparted; exec bash\"'")
 
-        self.gpa_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.gpa_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.gpa_frame["background"] = "#333333"
         self.gpa_frame.pack()
 
@@ -1270,7 +1271,6 @@ class Must_Haves(tk.Toplevel):
 
         self.shop_gparted_link["background"] = "#333333"
 
-
         # Neofetch
         def inst_neo():
             popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
@@ -1278,9 +1278,7 @@ class Must_Haves(tk.Toplevel):
         def un_inst_neo():
             popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
 
-        self.neo_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.neo_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.neo_frame["background"] = "grey"
         self.neo_frame.pack()
 
@@ -1333,7 +1331,6 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=8)
 
-
         # piKiss
         def kiss_button():
             popen(
@@ -1372,7 +1369,6 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=1, row=9)
 
-
         self.shop_pikiss_link = tk.Label(
             self.kiss_frame,
             text=r"https://github.com/jmcerrejon/PiKISS",
@@ -1383,16 +1379,14 @@ class Must_Haves(tk.Toplevel):
         self.shop_pikiss_link.grid(column=1, row=10)
         self.shop_pikiss_link["background"] = "#333333"
 
-        #bleechbit
+        # bleechbit
         def inst_bleach():
             popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
 
         def un_inst_bleach():
             popen("xterm -e 'bash -c \"sudo apt-get remove bleachbit ; exec bash\"'")
 
-        self.bit_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.bit_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.bit_frame["background"] = "grey"
         self.bit_frame.pack()
 
@@ -1432,7 +1426,6 @@ class Must_Haves(tk.Toplevel):
         self.shop_bleech_link.grid(column=1, row=12)
         self.shop_bleech_link["background"] = "grey"
 
-
         self.shop_bleech_uninst = Button(
             self.bit_frame,
             text="Uninstall",
@@ -1445,19 +1438,16 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=12)
 
-        #Pi Imager
+        # Pi Imager
         def inst_ima():
             popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
 
         def un_inst_ima():
             popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
 
-        self.ima_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.ima_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.ima_frame["background"] = "#333333"
         self.ima_frame.pack()
-
 
         self.shop_imager_inst = Button(
             self.ima_frame,
@@ -1507,17 +1497,14 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=14)
 
-
-        #gnome-pie
+        # gnome-pie
         def gnome_pie():
             popen("xterm -e 'bash -c \"sudo apt-get install gnome-pie; exec bash\"'")
 
         def un_gnome_pie():
             popen("xterm -e 'bash -c \"sudo apt-get remove gnome-pie; exec bash\"'")
 
-        self.gpi_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.gpi_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.gpi_frame["background"] = "grey"
         self.gpi_frame.pack()
 
@@ -1557,7 +1544,6 @@ class Must_Haves(tk.Toplevel):
         self.shop_gpi_link.grid(column=1, row=18)
         self.shop_gpi_link["background"] = "grey"
 
-
         self.shop_gpi_uninst = Button(
             self.gpi_frame,
             text="Uninstall",
@@ -1565,13 +1551,12 @@ class Must_Haves(tk.Toplevel):
             command=un_gnome_pie,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="grey",
             foreground="white",
             compound=LEFT,
         ).grid(column=0, row=18)
 
-
-        #Pi-Apps
+        # Pi-Apps
         def pi_apps():
             popen(
                 "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
@@ -1619,18 +1604,14 @@ class Must_Haves(tk.Toplevel):
         self.shop_papps_link.grid(column=1, row=20)
         self.shop_papps_link["background"] = "#333333"
 
-
-
-        #Plank
+        # Plank
         def p_lank():
             popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")
 
         def un_p_lank():
             popen("xterm -e 'bash -c \"sudo apt-get remove -y plank; exec bash\"'")
 
-        self.pla_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.pla_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.pla_frame["background"] = "grey"
         self.pla_frame.pack()
 
@@ -1670,7 +1651,6 @@ class Must_Haves(tk.Toplevel):
         self.shop_plank_link.grid(column=1, row=22)
         self.shop_plank_link["background"] = "grey"
 
-
         self.shop_plank_uninst = Button(
             self.pla_frame,
             text="Uninstall",
@@ -1683,17 +1663,14 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=22)
 
-
-        #tilix
+        # tilix
         def inst_tilix():
             popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")
 
         def un_inst_tilix():
             popen("xterm -e 'bash -c \"sudo apt-get remove -y tilix; exec bash\"'")
 
-        self.til_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
+        self.til_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
         self.til_frame["background"] = "#333333"
         self.til_frame.pack()
 
@@ -1733,7 +1710,6 @@ class Must_Haves(tk.Toplevel):
         self.shop_tilix_link.grid(column=1, row=24)
         self.shop_tilix_link["background"] = "#333333"
 
-
         self.shop_tilix_uninst = Button(
             self.til_frame,
             text="Uninstall",
@@ -1745,7 +1721,6 @@ class Must_Haves(tk.Toplevel):
             foreground="white",
             compound=LEFT,
         ).grid(column=0, row=24)
-
 
 
 # Installer Tab
@@ -1767,10 +1742,10 @@ class Frame4(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
+            # scrollbar.config(command=mylist.yview)
 
         def open_must_haves():
-            must_haves =Must_Haves(self)
+            must_haves = Must_Haves(self)
             must_haves.grab_set()
 
         def callback(url):
@@ -1798,12 +1773,11 @@ class Frame4(ttk.Frame):
         def flatflat():
             popen("xdg-open https://flathub.org/")
 
-
         # PDL
         def shop():
             os.system("python3 ~/PiGro-Aid-/PDL.py")
-        
-        #images/icons/BG
+
+        # images/icons/BG
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
@@ -2146,8 +2120,7 @@ class Frame5(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
-
+            # scrollbar.config(command=mylist.yview)
 
         def pi_appear():
             popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
@@ -2598,8 +2571,7 @@ class Frame6(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            #scrollbar.config(command=mylist.yview)
-
+            # scrollbar.config(command=mylist.yview)
 
         # BG + Icons
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
@@ -3072,12 +3044,12 @@ class Frame6(ttk.Frame):
         self.tu_info1 = Label(
             self.ov_buttons,
             text="*By clicking on one of the Tuning Berries PiGro also creates a backup file of config.txt ;-)",
-            font=("Helvetica", 8,"bold"),
+            font=("Helvetica", 8, "bold"),
             highlightthickness=0,
             borderwidth=2,
             background="#333333",
             foreground="white",
-        ).grid(column=0, row=8,columnspan=3,pady=15 )
+        ).grid(column=0, row=8, columnspan=3, pady=15)
 
         # Misc_Frame
         self.rahmen622 = Frame(
@@ -3389,13 +3361,19 @@ class Frame7(ttk.Frame):
         self.di08 = ImageTk.PhotoImage(self.tab8_dist8)
         self.dl08 = Label(image=self.di08)
 
-        self.pop_os_ico = ImageTk.PhotoImage(Image.open("images/icons/popo_os_icon.png"))
+        self.pop_os_ico = ImageTk.PhotoImage(
+            Image.open("images/icons/popo_os_icon.png")
+        )
         self.pop_os_icol = Label(image=self.pop_os_ico)
 
-        self.ubu_os_ico = ImageTk.PhotoImage(Image.open("images/icons/Logo-ubuntu_.png"))
+        self.ubu_os_ico = ImageTk.PhotoImage(
+            Image.open("images/icons/Logo-ubuntu_.png")
+        )
         self.ubu_os_icol = Label(image=self.ubu_os_ico)
 
-        self.pi64_os_ico = ImageTk.PhotoImage(Image.open("images/icons/Raspberry_Pi_Logo.png"))
+        self.pi64_os_ico = ImageTk.PhotoImage(
+            Image.open("images/icons/Raspberry_Pi_Logo.png")
+        )
         self.pi64_os_icol = Label(image=self.pi64_os_ico)
 
         self.rahmen = Frame(
@@ -3770,7 +3748,9 @@ class Frame8(ttk.Frame):
             self, image=self.pg01, background="#333333", command=pick_at_you
         ).pack(pady=40)
 
-        self.rahmen102 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2,pady=10)
+        self.rahmen102 = Frame(
+            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10
+        )
         self.rahmen102.pack(padx=40, pady=20, fill="both")
         self.rahmen102["background"] = "#333333"
 
