@@ -285,6 +285,9 @@ class Frame2(ttk.Frame):
         "
             messagebox.showinfo(message=m_text, title="Infos")
 
+        def reboot_n():
+            popen("sudo reboot")
+
         self.tab_tpinfm = Image.open("images/icons/info_m.png")
         self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
         self.tlinfm = Label(image=self.tpinfm)
@@ -415,6 +418,20 @@ class Frame2(ttk.Frame):
             font=("Helvetica", 12, "bold"),
         )
         self.sv_button.grid(column=1, row=2)
+
+        self.reboot_button = Button(
+            self.rahmen112,
+            text="Reboot",
+            width=20,
+            anchor="w",
+            command=reboot_n,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#d4244d",
+            font=("Helvetica", 12, "bold"),
+        )
+        self.reboot_button.grid(column=1, row=3)
 
         self.termf.pack(padx=45, pady=20, anchor=W)
 
@@ -1054,6 +1071,682 @@ class Frame3(ttk.Frame):
 
         refresh()
 
+# Sec Window [Must HAVES]
+class Must_Haves(tk.Toplevel):
+    def __init__(self,parent):
+        super() .__init__(parent)
+        self["background"] = "#333333"
+
+        self.tab_ip3 = Image.open("images/icons/download_ico.png")
+        self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
+        self.il03 = Label(image=self.ip03)
+
+
+            
+        # Whatsapp
+        def w_app():
+            popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
+
+        def un_w_app():
+            popen("xterm -e 'bash -c \"sudo snap uninstall kesty-whatsapp; exec bash\"'")
+
+        self.what_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.what_frame["background"] = "#333333"
+        self.what_frame.pack()
+
+        self.shop_whatsapp_inst = Button(
+                self.what_frame,
+                width=120,
+                image=self.ip03,
+                text="Whatsapp\n(Snap)",
+                anchor="w",
+                command=w_app,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#d4244d",
+                foreground="white",
+                compound=LEFT,
+            ).grid(column=0, row=1)
+
+        self.shop_whatsapp_uninst = Button(
+            self.what_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_w_app,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=2)
+
+        self.shop_whatsapp_info = Label(
+            self.what_frame,
+            width=60,
+            text="The desktop version of the popular messenger(unofficial)",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=1)
+
+        self.shop_whatsapp_link = tk.Label(
+            self.what_frame,
+            text=r"https://snapcraft.io/kesty-whatsapp",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_whatsapp_link.grid(column=1, row=2)
+        self.shop_whatsapp_link.bind("<Button-1>", callback)
+
+        self.shop_whatsapp_link["background"] = "#333333"
+
+        # Compiz
+        def compiz_button():
+            popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
+
+        def un_compiz_button():
+            popen("xterm -e 'bash -c \"sudo apt-get remove compiz; exec bash\"'")
+
+        self.comp_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.comp_frame["background"] = "grey"
+        self.comp_frame.pack()
+
+        self.shop_compiz_inst = Button(
+            self.comp_frame,
+            width=120,
+            image=self.ip03,
+            text="Compiz",
+            anchor="w",
+            command=compiz_button,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=3)
+
+
+        self.shop_compiz_uninst = Button(
+            self.comp_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_compiz_button,
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=4)
+
+        self.shop_compiz_info = Label(
+            self.comp_frame,
+            width=60,
+            text="Compiz is a compositing window manager",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=3)
+
+        self.shop_compiz_link = tk.Label(
+            self.comp_frame,
+            text=r"http://wiki.compiz.org/",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_compiz_link.grid(column=1, row=4)
+        self.shop_compiz_link.bind("<Button-1>", callback)
+
+        self.shop_compiz_link["background"] = "grey"
+
+        #Gparted
+        def gparted_inst():
+            popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
+
+        def un_gparted_inst():
+            popen("xterm -e 'bash -c \"sudo apt-get remove gparted; exec bash\"'")
+
+        self.gpa_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.gpa_frame["background"] = "#333333"
+        self.gpa_frame.pack()
+
+        self.shop_gparted_inst = Button(
+            self.gpa_frame,
+            width=120,
+            image=self.ip03,
+            text="Gparted",
+            anchor="w",
+            command=gparted_inst,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=5)
+
+        self.shop_gparted_info = Label(
+            self.gpa_frame,
+            width=60,
+            text="A Partition Manager",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=5)
+
+        self.shop_gparted_uninst = Button(
+            self.gpa_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_gparted_inst,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=6)
+
+        self.shop_gparted_link = tk.Label(
+            self.gpa_frame,
+            text=r"https://gparted.org/",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_gparted_link.grid(column=1, row=6)
+        self.shop_gparted_link.bind("<Button-1>", callback)
+
+        self.shop_gparted_link["background"] = "#333333"
+
+
+        # Neofetch
+        def inst_neo():
+            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
+
+        def un_inst_neo():
+            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
+
+        self.neo_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.neo_frame["background"] = "grey"
+        self.neo_frame.pack()
+
+        self.shop_neofetch_inst = Button(
+            self.neo_frame,
+            width=120,
+            image=self.ip03,
+            text="NeoFetch",
+            anchor="w",
+            command=inst_neo,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=7)
+
+        self.shop_neofetch_info = Label(
+            self.neo_frame,
+            width=60,
+            text="Shows system specs",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=7)
+
+        self.shop_neofetch_link = tk.Label(
+            self.neo_frame,
+            text=r"https://github.com/dylanaraps/neofetch",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_neofetch_link.grid(column=1, row=8)
+        self.shop_neofetch_link.bind("<Button-1>", callback)
+
+        self.shop_neofetch_link["background"] = "grey"
+
+        self.shop_neofetch_uninst = Button(
+            self.neo_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_inst_neo,
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=8)
+
+
+        # piKiss
+        def kiss_button():
+            popen(
+                "xterm -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'"
+            )
+
+        self.kiss_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.kiss_frame["background"] = "#333333"
+        self.kiss_frame.pack()
+
+        self.shop_pikiss_inst = Button(
+            self.kiss_frame,
+            width=120,
+            image=self.ip03,
+            text="PiKiss",
+            anchor="w",
+            command=kiss_button,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=9)
+
+        self.shop_pikiss_info = Label(
+            self.kiss_frame,
+            width=60,
+            text="Pi Config Tool/Game-Installer",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=9)
+
+
+        self.shop_pikiss_link = tk.Label(
+            self.kiss_frame,
+            text=r"https://github.com/jmcerrejon/PiKISS",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_pikiss_link.bind("<Button-1>", callback)
+        self.shop_pikiss_link.grid(column=1, row=10)
+        self.shop_pikiss_link["background"] = "#333333"
+
+        #bleechbit
+        def inst_bleach():
+            popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
+
+        def un_inst_bleach():
+            popen("xterm -e 'bash -c \"sudo apt-get remove bleachbit ; exec bash\"'")
+
+        self.bit_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.bit_frame["background"] = "grey"
+        self.bit_frame.pack()
+
+        self.shop_bleech_inst = Button(
+            self.bit_frame,
+            width=120,
+            image=self.ip03,
+            text="Bleach Bit",
+            anchor="w",
+            command=inst_bleach,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=11)
+
+        self.shop_bleech_info = Label(
+            self.bit_frame,
+            width=60,
+            text="Cleans the System",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=11)
+
+        self.shop_bleech_link = tk.Label(
+            self.bit_frame,
+            text=r"https://www.bleachbit.org/",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_bleech_link.bind("<Button-1>", callback)
+        self.shop_bleech_link.grid(column=1, row=12)
+        self.shop_bleech_link["background"] = "grey"
+
+
+        self.shop_bleech_uninst = Button(
+            self.bit_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_inst_bleach,
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=12)
+
+        #Pi Imager
+        def inst_ima():
+            popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
+
+        def un_inst_ima():
+            popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
+
+        self.ima_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.ima_frame["background"] = "#333333"
+        self.ima_frame.pack()
+
+
+        self.shop_imager_inst = Button(
+            self.ima_frame,
+            width=120,
+            image=self.ip03,
+            text="Pi Imager",
+            anchor="w",
+            command=inst_ima,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=13)
+
+        self.shop_imager_info = Label(
+            self.ima_frame,
+            width=60,
+            text="Flash RPiOS to SD/USB Drive",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=13)
+
+        self.shop_imager_link = tk.Label(
+            self.ima_frame,
+            text=r"https://www.raspberrypi.com/software/",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_imager_link.bind("<Button-1>", callback)
+        self.shop_imager_link.grid(column=1, row=14)
+        self.shop_imager_link["background"] = "#333333"
+
+        self.shop_imager_uninst = Button(
+            self.ima_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_inst_ima,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=14)
+
+
+        #gnome-pie
+        def gnome_pie():
+            popen("xterm -e 'bash -c \"sudo apt-get install gnome-pie; exec bash\"'")
+
+        def un_gnome_pie():
+            popen("xterm -e 'bash -c \"sudo apt-get remove gnome-pie; exec bash\"'")
+
+        self.gpi_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.gpi_frame["background"] = "grey"
+        self.gpi_frame.pack()
+
+        self.shop_gpi_inst = Button(
+            self.gpi_frame,
+            width=120,
+            image=self.ip03,
+            text="Gnome-Pie",
+            anchor="w",
+            command=gnome_pie,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=17)
+
+        self.shop_gpi_info = Label(
+            self.gpi_frame,
+            width=60,
+            compound=LEFT,
+            text="Gnome-Pie is a circular application launcher (pie menu) for Linux",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+        ).grid(column=1, row=17)
+
+        self.shop_gpi_link = tk.Label(
+            self.gpi_frame,
+            text=r"http://schneegans.github.io/gnome-pie",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_gpi_link.bind("<Button-1>", callback)
+        self.shop_gpi_link.grid(column=1, row=18)
+        self.shop_gpi_link["background"] = "grey"
+
+
+        self.shop_gpi_uninst = Button(
+            self.gpi_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_gnome_pie,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=18)
+
+
+        #Pi-Apps
+        def pi_apps():
+            popen(
+                "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
+            )
+
+        self.papps_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.papps_frame["background"] = "#333333"
+        self.papps_frame.pack()
+
+        self.shop_papps_inst = Button(
+            self.papps_frame,
+            width=120,
+            image=self.ip03,
+            text="Pi-Apps",
+            anchor="w",
+            command=pi_apps,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=19)
+
+        self.shop_papps_info = Label(
+            self.papps_frame,
+            width=60,
+            text="THE APP-Store",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=19)
+
+        self.shop_papps_link = tk.Label(
+            self.papps_frame,
+            text=r"https://github.com/Botspot/pi-apps",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_papps_link.bind("<Button-1>", callback)
+        self.shop_papps_link.grid(column=1, row=20)
+        self.shop_papps_link["background"] = "#333333"
+
+
+
+        #Plank
+        def p_lank():
+            popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")
+
+        def un_p_lank():
+            popen("xterm -e 'bash -c \"sudo apt-get remove -y plank; exec bash\"'")
+
+        self.pla_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.pla_frame["background"] = "grey"
+        self.pla_frame.pack()
+
+        self.shop_plank_inst = Button(
+            self.pla_frame,
+            width=120,
+            image=self.ip03,
+            text="Plank",
+            anchor="w",
+            command=p_lank,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=21)
+
+        self.shop_plank_info = Label(
+            self.pla_frame,
+            width=60,
+            text="It's a Dock!",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=21)
+
+        self.shop_plank_link = tk.Label(
+            self.pla_frame,
+            text=r"https://launchpad.net/plank",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_plank_link.bind("<Button-1>", callback)
+        self.shop_plank_link.grid(column=1, row=22)
+        self.shop_plank_link["background"] = "grey"
+
+
+        self.shop_plank_uninst = Button(
+            self.pla_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_p_lank,
+            highlightthickness=0,
+            borderwidth=0,
+            background="grey",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=22)
+
+
+        #tilix
+        def inst_tilix():
+            popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")
+
+        def un_inst_tilix():
+            popen("xterm -e 'bash -c \"sudo apt-get remove -y tilix; exec bash\"'")
+
+        self.til_frame = Frame(
+            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        )
+        self.til_frame["background"] = "#333333"
+        self.til_frame.pack()
+
+        self.shop_tilix_inst = Button(
+            self.til_frame,
+            width=120,
+            image=self.ip03,
+            text="Tilix",
+            anchor="w",
+            command=inst_tilix,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#d4244d",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=23)
+
+        self.shop_tilix_info = Label(
+            self.til_frame,
+            width=60,
+            text="Multi-Tiling-Terminal-Emulator",
+            anchor="w",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=1, row=23)
+
+        self.shop_tilix_link = tk.Label(
+            self.til_frame,
+            text=r"https://gnunn1.github.io/tilix-web/",
+            fg="blue",
+            cursor="hand2",
+        )
+        self.shop_tilix_link.bind("<Button-1>", callback)
+        self.shop_tilix_link.grid(column=1, row=24)
+        self.shop_tilix_link["background"] = "#333333"
+
+
+        self.shop_tilix_uninst = Button(
+            self.til_frame,
+            text="Uninstall",
+            anchor="w",
+            command=un_inst_tilix,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+        ).grid(column=0, row=24)
+
+
 
 # Installer Tab
 class Frame4(ttk.Frame):
@@ -1076,7 +1769,12 @@ class Frame4(ttk.Frame):
             s_list.pack(anchor="w", fill=BOTH, expand=True)
             #scrollbar.config(command=mylist.yview)
 
+        def open_must_haves():
+            must_haves =Must_Haves(self)
+            must_haves.grab_set()
 
+        def callback(url):
+            webbrowser.open_new(url)
 
         def web_OVC():
             popen("xdg-open https://www.gnome-look.org/p/1158321/")
@@ -1094,370 +1792,12 @@ class Frame4(ttk.Frame):
                 "xterm -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'"
             )
 
-        def gparted_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
-
         def snapcraft():
             popen("xdg-open https://snapcraft.io/store")
 
         def flatflat():
             popen("xdg-open https://flathub.org/")
 
-        def inst_bleach():
-            popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
-
-        def inst_ima():
-            popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
-
-        def inst_neo():
-            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
-
-        def pi_apps():
-            popen(
-                "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
-            )
-
-        def w_app():
-            popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
-
-        def compiz_button():
-            popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
-
-        def kiss_button():
-            popen(
-                "xterm -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'"
-            )
-
-        def gnome_pie():
-            popen("xterm -e 'bash -c \"sudo apt-get install gnome-pie; exec bash\"'")
-
-        def pi_apps():
-            popen(
-                "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
-            )
-
-        def p_lank():
-            popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")
-
-        def inst_tilix():
-            popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")
-
-        def goodstuff():
-            global pop_goodstuff
-            pop_goodstuff = Toplevel(self)
-            pop_goodstuff["background"] = "#333333"
-
-            shop_btn01 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Whatsapp\n(Snap)",
-                anchor="w",
-                command=w_app,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=1)
-
-            shop_lbl011 = Label(
-                pop_goodstuff,
-                width=60,
-                text="... is... you know Whatsapp",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=1)
-
-            shop_btn2 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Compiz",
-                anchor="w",
-                command=compiz_button,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=2)
-
-            shop_lbl21 = Label(
-                pop_goodstuff,
-                width=60,
-                text="When I was young it was cool You know it as wobbly windows",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=2)
-
-            shop_btn3 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Gparted",
-                anchor="w",
-                command=gparted_inst,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=3)
-
-            shop_btn31 = Label(
-                pop_goodstuff,
-                width=60,
-                text="A Partition Manager",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=3)
-
-            shop_btn4 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="NeoFetch",
-                anchor="w",
-                command=inst_neo,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=4)
-
-            shop_btn41 = Label(
-                pop_goodstuff,
-                width=60,
-                text="Shows system specs you already know but ... uhhm...",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=4)
-
-            shop_btn5 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="PiKiss",
-                anchor="w",
-                command=kiss_button,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=5)
-
-            shop_btn51 = Label(
-                pop_goodstuff,
-                width=60,
-                text="Bow down!",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=5)
-
-            shop_btn6 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Bleach Bit",
-                anchor="w",
-                command=inst_bleach,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=6)
-
-            shop_btn61 = Label(
-                pop_goodstuff,
-                width=60,
-                text="Cleans the System",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=6)
-
-            shop_btn7 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Pi Imager",
-                anchor="w",
-                command=inst_ima,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=7)
-
-            shop_btn71 = Label(
-                pop_goodstuff,
-                width=60,
-                text="Pi-Imager on RaspiOS is like the Replicants from Stargate... o,o",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=7)
-
-            shop_btn8 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Synaptic",
-                anchor="w",
-                command=inst_syn,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=8)
-
-            shop_btn81 = Label(
-                pop_goodstuff,
-                width=60,
-                text="THE Pakegemanager",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=8)
-
-            shop_btn9 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Gnome-Pie",
-                anchor="w",
-                command=gnome_pie,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=9)
-
-            shop_btn91 = Label(
-                pop_goodstuff,
-                width=60,
-                compound=LEFT,
-                text="When you tell peolpe i3 is god but you need a hidden menu cuz\nyou dont cope with it",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-            ).grid(column=1, row=9)
-
-            shop_btn10 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Pi-Apps",
-                anchor="w",
-                command=pi_apps,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=10)
-
-            shop_btn101 = Label(
-                pop_goodstuff,
-                width=60,
-                text="DOWNLOAD IT!!!!!11",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=10)
-
-            shop_btn18 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Plank",
-                anchor="w",
-                command=p_lank,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=11)
-
-            shop_btn118 = Label(
-                pop_goodstuff,
-                width=60,
-                text="It's a Dock!",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=11)
-
-            shop_btn20 = Button(
-                pop_goodstuff,
-                width=120,
-                image=self.ip03,
-                text="Tilix",
-                anchor="w",
-                command=inst_tilix,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#d4244d",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=0, row=12)
-
-            shop_btn120 = Label(
-                pop_goodstuff,
-                width=60,
-                text="Multi-Tiling-Super-Terminal-Emulator",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            ).grid(column=1, row=12)
 
         # PDL
         def shop():
@@ -1743,7 +2083,7 @@ class Frame4(ttk.Frame):
         self.goodstuff_btn = Button(
             self.frame311,
             text="Must Haves",
-            command=goodstuff,
+            command=open_must_haves,
             highlightthickness=1,
             borderwidth=0,
             background="#333333",
@@ -2731,8 +3071,8 @@ class Frame6(ttk.Frame):
 
         self.tu_info1 = Label(
             self.ov_buttons,
-            text="By clicking on one of the Tuning Berries PiGro creates a backup file of config.txt ;-)",
-            font=("Helvetica", 10,"bold"),
+            text="*By clicking on one of the Tuning Berries PiGro also creates a backup file of config.txt ;-)",
+            font=("Helvetica", 8,"bold"),
             highlightthickness=0,
             borderwidth=2,
             background="#333333",
