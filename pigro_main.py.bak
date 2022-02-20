@@ -1846,27 +1846,8 @@ class Frame4(ttk.Frame):
         inst1_p1 = """ xterm -e 'bash -c \"sudo apt-get install """
         inst1_p2 = """; exec bash\"' """
 
-        fo = open("scripts/apt_cache.list", "r")
-        content = fo.readlines()
-        for i, s in enumerate(content):
-            content[i] = s.strip()
-        # print(content)
-
-        def check_input(event):
-            value = event.widget.get()
-
-            if value == "":
-                self.combo_box["values"] = content
-            else:
-                data = []
-                for item in content:
-                    if value.lower() in item.lower():
-                        data.append(item)
-
-                self.combo_box["values"] = data
-
         def inst_btn1():
-            entry_text = self.combo_box.get()
+            entry_text = self.eingabefeld1.get()
             popen(inst1_p1 + entry_text + inst1_p2)
 
         def uninst_btn1():
@@ -1880,14 +1861,7 @@ class Frame4(ttk.Frame):
         self.l4 = Label(image=self.p4)
 
         self.eingabefeld1 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
-
-        self.combo_box = ttk.Combobox(self.rahmen3)
-        self.combo_box["values"] = content
-        self.combo_box.bind("<KeyRelease>", check_input)
-        self.combo_box.config(width=30)
-
-        # self.eingabefeld1.insert(0, "Enter Package Name")
-
+        self.eingabefeld1.insert(0, "Enter Package Name")
         self.apt_inst_btn = Button(
             self.rahmen3,
             text="install",
@@ -1909,8 +1883,7 @@ class Frame4(ttk.Frame):
             column=0,
             row=0,
         )
-        self.combo_box.grid(column=2, row=0)
-        # self.eingabefeld1.grid(column=2, row=0)
+        self.eingabefeld1.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
 
         # pi-apps_entry
