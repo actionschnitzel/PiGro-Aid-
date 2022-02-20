@@ -42,9 +42,20 @@ Nevertheless you should know what you are doing because most of it works with "S
 Documentation + Manual   /// Still in work 
 ****
 #  :rocket: To do [NEXT UPDATE]
+The Vincitore_Fedele update is by far the biggest I've ever done.    
+It is divided into two phases:    
 
-- [ ] Review Code In Terms Of PEP
+1. Porting code to classes
+2. Make PiGro perfect
+
+Phase 1 has no meaning for the user. Phase 2 means that the UI stays the way it is.     
+This means that after the end of phase 2 there will only be updates if, for example,    
+a new Pi is released and adjustments to the program have to be made.    
+    
+    
+- [x] Phase 1
     - rename if needed
+- [ ] Phase 2
 - [ ] Next vication put a Pi in the luggage
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 ****
