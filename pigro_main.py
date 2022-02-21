@@ -17,6 +17,8 @@ import distro
 import time
 import socket
 from gpiozero import CPUTemperature  # rpitemp
+
+
 import splash
 
 #
@@ -1808,8 +1810,13 @@ class Frame4(ttk.Frame):
             foreground="white",
             compound=LEFT,
             width=500,
+            state=DISABLED,
         )
         self.shop_click.pack()
+        self.shop_click_ttp = CreateToolTip(
+            self.shop_click,
+            "The shop is currently deactivated due to renovations. All installers can be found under Must Haves",
+        )
 
         self.rahmen3x = Frame(
             self, relief=GROOVE, borderwidth=1, highlightthickness=1, pady=10, padx=10
@@ -3729,29 +3736,29 @@ class Frame8(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg2.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.pig_x = Image.open("images/icons/poke_pig.jpg")
-        self.pg0x = ImageTk.PhotoImage(self.pig_x)
-        self.pl0x = Label(image=self.pg0x)
+        # self.pig_x = Image.open("images/icons/poke_pig.jpg")
+        # self.pg0x = ImageTk.PhotoImage(self.pig_x)
+        # self.pl0x = Label(image=self.pg0x)
 
-        def pick_at_you():
-            global pop_pig
-            pop_pig = Toplevel(self)
-            pop_pig["background"] = "white"
+        # def pick_at_you():
+        #    global pop_pig
+        #    pop_pig = Toplevel(self)
+        #    pop_pig["background"] = "white"
 
-            poke_pig = Label(pop_pig, image=self.pg0x, background="#333333").pack()
+        #    poke_pig = Label(pop_pig, image=self.pg0x, background="#333333").pack()
 
-            popen("mpg123  ~/PiGro-Aid-/scripts/poke_pig.mp3")
+        #    popen("mpg123  ~/PiGro-Aid-/scripts/poke_pig.mp3")
 
-            poke_pig1 = Label(
-                pop_pig,
-                text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",
-                background="white",
-                fg="red",
-            ).pack()
+        #    poke_pig1 = Label(
+        #        pop_pig,
+        #        text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",
+        #        background="white",
+        #        fg="red",
+        #    ).pack()
 
         def poll():
             popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
@@ -3767,18 +3774,18 @@ class Frame8(ttk.Frame):
                 "xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u"
             )
 
-        self.pig_1 = Image.open("images/icons/pigpi_btn.png")
-        self.pg01 = ImageTk.PhotoImage(self.pig_1)
-        self.pl01 = Label(image=self.pg01)
+        # self.pig_1 = Image.open("images/icons/pigpi_btn.png")
+        # self.pg01 = ImageTk.PhotoImage(self.pig_1)
+        # self.pl01 = Label(image=self.pg01)
 
-        self.pig_logo = Button(
-            self, image=self.pg01, background="#333333", command=pick_at_you
-        ).pack(pady=40)
+        # self.pig_logo = Button(
+        #    self, image=self.pg01, background="#333333", command=pick_at_you
+        # ).pack(pady=40)
 
         self.rahmen102 = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10
+            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10
         )
-        self.rahmen102.pack(padx=40, pady=20, fill="both")
+        self.rahmen102.place(x=60, y=300)
         self.rahmen102["background"] = "#333333"
 
         self.poke_pig_21 = Label(
@@ -3797,7 +3804,7 @@ class Frame8(ttk.Frame):
         self.mail.pack(pady=5)
 
         self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
-        self.rahmen101.pack(padx=40, pady=20, fill="both")
+        self.rahmen101.place(x=60, y=600)
         self.rahmen101["background"] = "#333333"
 
         self.pig_btn_1 = Button(

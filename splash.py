@@ -94,7 +94,7 @@ list = [
     "I love Ubuntu... Server...",
     "I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!",
     "GO GO Power Rangers!",
-    "It’s time to kick ass\nand chew bubble gum",
+    "It is time to kick ass\nand chew bubble gum",
     "Splash screens suck!",
     "Snake? Snake? SNAKE!",
     "Frostmourne hungers",
