@@ -10,29 +10,11 @@
 BUT NOTHING HAS CHANGED!!!
 WRONG EVERYTHING HAS CHANGED!
 
-Roadmap 2022:
-[X] Port to Classes
-[ ] Add easy understandeble manuel for kids
-[ ] Make all Config.txt settings avaleble in a GUI
-
-Changelog Feb/22 Codename: Vincitore_Fedele
-
--Changed code Structure to Classes
-
--Live Stats in System Tab
-    Added IP-Address
-    Added PI Model
-
--Tuning Tab shows now current OverClocking
-
--Links:
-        Added Ubuntu
-        Added Pop_OS
-        Added RPI OS 64 Bit
-        
--System Tab icon changed
-
-
+- Folder structure improved
+- APT Fast Install has now a search funktion + combobox
+- Lot of code fixes
+- Icon & PNG improvements
+- Shop currently disabled due to makeover
 
 Best regards
 

@@ -1058,7 +1058,7 @@ class Frame3(ttk.Frame):
             borderwidth=0,
             command=info_system_tab,
         )
-        self.info_sys_btn.place(x=700, y=620)
+        self.info_sys_btn.place(x=650, y=550)
 
         def refresh():
 
@@ -3359,6 +3359,9 @@ class Frame7(ttk.Frame):
         def pi_doc():
             popen("xdg-open https://www.raspberrypi.com/documentation/")
 
+        def pi_tuto():
+            popen("xdg-open https://tutorials-raspberrypi.com/")
+
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
@@ -3646,7 +3649,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             anchor="w",
             width=50,
@@ -3670,7 +3673,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link1 = Button(
+        self.choice_link1 = Button(
             sys_btn2,
             width=50,
             text="LernLinux.tv",
@@ -3694,7 +3697,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             width=50,
             text="52Pi",
@@ -3724,6 +3727,18 @@ class Frame7(ttk.Frame):
             text="Offical Raspberry Pi Documentation",
             anchor="w",
             command=pi_doc,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+        ).pack()
+
+        choice_link2 = Button(
+            sys_btn2,
+            width=50,
+            text="Raspberry Pi Tutorials",
+            anchor="w",
+            command=pi_tuto,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
