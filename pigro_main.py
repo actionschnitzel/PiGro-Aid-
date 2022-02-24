@@ -40,7 +40,7 @@ class MainApplication(tk.Tk):
         super().__init__()
 
         self.title("PiGro - Vincitore_Fedele")
-        self.icon = tk.PhotoImage(file="images/icons/PiGroLogoslim.png")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = "#333333"
         self.resizable(0, 0)

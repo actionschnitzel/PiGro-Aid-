@@ -15,6 +15,7 @@ WRONG EVERYTHING HAS CHANGED!
 - Lot of code fixes
 - Icon & PNG improvements
 - Shop currently disabled due to makeover
+- More infos on the help button
 
 Best regards
 
