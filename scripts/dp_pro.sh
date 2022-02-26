@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 cd ~
 git clone https://github.com/DeskPi-Team/deskpi.git
 cd ~/deskpi/

@@ -263,7 +263,7 @@ class Frame2(ttk.Frame):
         def autoremove_btn():
             os.popen(
                 'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt autoremove -y && sudo apt clean && sudo apt-get purge -y && read -p PRESS_ENTER && exit ; exec bash"'
-                % wid
+                % self.wid
             )
 
         def add_unsi_btn():
@@ -1058,7 +1058,7 @@ class Frame3(ttk.Frame):
             borderwidth=0,
             command=info_system_tab,
         )
-        self.info_sys_btn.place(x=650, y=550)
+        self.info_sys_btn.place(x=700, y=620)
 
         def refresh():
 
@@ -1850,8 +1850,6 @@ class Frame4(ttk.Frame):
         self.rahmen3["background"] = "#333333"
 
         # apt-get_entry
-        inst1_p1 = """ xterm -e 'bash -c \"sudo apt-get install """
-        inst1_p2 = """; exec bash\"' """
 
         fo = open("scripts/apt_cache.list", "r")
         content = fo.readlines()
@@ -1874,7 +1872,9 @@ class Frame4(ttk.Frame):
 
         def inst_btn1():
             entry_text = self.combo_box.get()
-            popen(inst1_p1 + entry_text + inst1_p2)
+            popen(
+                f"xterm -e 'bash -c \"sudo apt-get install {self.combo_box.get()}; exec bash\"'"
+            )
 
         def uninst_btn1():
             popen("sudo synaptic")
@@ -1917,23 +1917,14 @@ class Frame4(ttk.Frame):
             row=0,
         )
         self.combo_box.grid(column=2, row=0)
-        # self.eingabefeld1.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
 
         # pi-apps_entry
-        inst3_p1 = """ xterm -e 'bash -c \"~/pi-apps/manage install """
-        inst3_p2 = """; exec bash\"' """
-
         def inst_pi_apps():
             entry_text = self.eingabefeld3.get()
-            popen(inst3_p1 + entry_text + inst3_p2)
-
-        uninst3_p1 = """ xterm -e 'bash -c \"~/pi-apps/manage uninstall """
-        uninst3_p2 = """; exec bash\"' """
-
-        def uninst_pi_apps():
-            entry_text = self.eingabefeld3.get()
-            popen(uninst3_p1 + entry_text + uninst3_p2)
+            popen(
+                f"xterm -e 'bash -c \"~/pi-apps/manage install {self.eingabefeld3.get()}; exec bash\"'"
+            )
 
         def pi_apps_list():
             popen("xterm -e 'bash -c \"ls ~/pi-apps/apps/ ; exec bash\"'")
@@ -1964,12 +1955,11 @@ class Frame4(ttk.Frame):
         self.pi_apps_inst_btn.grid(column=1, row=3)
 
         # snap_entry
-        inst2_p1 = """ xterm -e 'bash -c \"sudo snap install """
-        inst2_p2 = """; exec bash\"' """
-
         def inst_btn2():
             entry_text = self.eingabefeld2.get()
-            popen(inst2_p1 + entry_text + inst2_p2)
+            popen(
+                f"xterm -e 'bash -c \"sudo snap install {self.eingabefeld2.get()}; exec bash\"'"
+            )
 
         self.i6 = Image.open("images/icons/snap.png")
         self.p6 = ImageTk.PhotoImage(self.i6)
@@ -2005,12 +1995,11 @@ class Frame4(ttk.Frame):
         self.il03 = Label(image=self.ip03)
 
         # flat_entry
-        inst4_p1 = """ xterm -e 'bash -c \"sudo flatpak install flathub """
-        inst4_p2 = """; exec bash\"' """
-
         def inst_btn4():
             entry_text = self.eingabefeld4.get()
-            popen(inst4_p1 + entry_text + inst4_p2)
+            popen(
+                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.eingabefeld4.get()}; exec bash\"'"
+            )
 
         self.i66 = Image.open("images/icons/flathub.png")
         self.p66 = ImageTk.PhotoImage(self.i66)
@@ -3929,7 +3918,7 @@ class CreateToolTip(object):
             tw.destroy()
 
 
-# End Of The Line xD xD xD... If you're reading this, you've read the code that I've put into over 1000 hours of work.
+# End Of The Line
 if __name__ == "__main__":
     app = MainApplication()
     app.mainloop()

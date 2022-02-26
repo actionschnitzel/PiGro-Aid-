@@ -104,6 +104,7 @@ list = [
     "Go ahead, make my day.",
     "My Little Pony\nis not for Children",
     "Try the New\nMUST HAVES on Installer TAB",
+    "f-String is God!!!!",
 ]
 item = random.choice(list)
 # print(item)
