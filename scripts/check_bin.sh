@@ -6,7 +6,7 @@ if [ -f /usr/local/bin/pigro ];then
   echo "goood!"
 
 else
-  sudo cp ~/PiGro-Aid-/scripts/pigro /usr/local/bin/ 
+  sudo cp $HOME/PiGro-Aid-/scripts/pigro /usr/local/bin/ 
   
 
   sudo chmod +x /usr/local/bin/pigro

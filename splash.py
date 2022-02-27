@@ -11,6 +11,11 @@ from os import system as cmd
 import apt
 import threading
 import requests
+from pathlib import Path
+
+global home
+home = str(Path.home())
+print(f"{home} is your home directory!")
 
 
 class aptFind(apt.Cache):
@@ -138,10 +143,10 @@ else:
     splash.after(3000, splash.destroy)
 
 
-popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
-popen("~/PiGro-Aid-/scripts/check_bin.sh")
+popen('find $HOME/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+popen("$HOME/PiGro-Aid-/scripts/check_bin.sh")
 os.system(
-    "xterm -e 'bash -c \"apt-cache pkgnames > ~/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
+    "xterm -e 'bash -c \"apt-cache pkgnames > $HOME/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
 )
 
 mainloop()

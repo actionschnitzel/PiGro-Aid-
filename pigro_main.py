@@ -10,16 +10,17 @@ from PIL import ImageTk, Image
 import platform
 import psutil
 from collections import namedtuple
-import resource
-import threading
 from datetime import datetime
 import distro
-import time
 import socket
-from gpiozero import CPUTemperature  # rpitemp
-
-
+from gpiozero import CPUTemperature
 import splash
+from pathlib import Path
+
+global home
+home = str(Path.home())
+print(f"{home} is your home directory!")
+
 
 #
 def actionhome():
@@ -176,7 +177,7 @@ class Frame1(ttk.Frame):
         self.tpinfp = ImageTk.PhotoImage(self.tab_tpinfp)
         self.tlinfp = Label(image=self.tpinfp)
 
-        self.bg = PhotoImage(file="~/PiGro-Aid-/images/backgrounds/pigronew.png")
+        self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
         self.my_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
         self.my_canvas.pack(fill="both", expand=True)
         self.my_canvas.create_image(0, 0, image=self.bg, anchor="nw")
@@ -244,19 +245,19 @@ class Frame2(ttk.Frame):
 
         def update_btn():
             os.popen(
-                'xterm -into %d -bg Grey1 -geometry 120x25 -e "~/PiGro-Aid-/scripts/update.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && read -p PRESS_ENTER && exit; exec bash"'
                 % self.wid
             )
 
         def upgrade_btn():
             os.popen(
-                'xterm -into %d -bg Grey1 -geometry 120x25 -e "~/PiGro-Aid-/scripts/upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
                 % self.wid
             )
 
         def full_upgrade_btn():
             os.popen(
-                'xterm -into %d -bg Grey1 -geometry 120x25 -e "~/PiGro-Aid-/scripts/full_upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
                 % self.wid
             )
 
@@ -268,7 +269,7 @@ class Frame2(ttk.Frame):
 
         def add_unsi_btn():
             os.popen(
-                "xterm -into %d -bg Grey1 -geometry 120x25 -e ~/PiGro-Aid-/scripts/addunsignedrepo.sh &"
+                f"xterm -into %d -bg Grey1 -geometry 120x25 -e {home}/PiGro-Aid-/scripts/addunsignedrepo.sh &"
                 % self.wid
             )
 
@@ -486,7 +487,8 @@ class Frame3(ttk.Frame):
             popen("sudo gparted")
 
         def onc_ben():
-            popen("sudo xdg-open ~")
+            popen("sudo xdg-open $HOME")
+            print("With great power comes great responsibility")
 
         def button_lk():
             popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
@@ -1777,7 +1779,7 @@ class Frame4(ttk.Frame):
 
         # PDL
         def shop():
-            os.system("python3 ~/PiGro-Aid-/PDL.py")
+            os.system("python3 $HOME/PiGro-Aid-/PDL.py")
 
         # images/icons/BG
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
@@ -1923,11 +1925,11 @@ class Frame4(ttk.Frame):
         def inst_pi_apps():
             entry_text = self.eingabefeld3.get()
             popen(
-                f"xterm -e 'bash -c \"~/pi-apps/manage install {self.eingabefeld3.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.eingabefeld3.get()}; exec bash\"'"
             )
 
         def pi_apps_list():
-            popen("xterm -e 'bash -c \"ls ~/pi-apps/apps/ ; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
 
         self.ia6 = Image.open("images/icons/pi-app.png")
         self.pa6 = ImageTk.PhotoImage(self.ia6)
@@ -2185,7 +2187,9 @@ class Frame5(ttk.Frame):
             )
 
         def xfcefix2():
-            popen("xterm -e 'bash -c \"~/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'")
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'"
+            )
 
         def xfce_make():
             popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
@@ -2568,6 +2572,10 @@ class Frame6(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
+        def open_expert_tuning():
+            expert_tuning = Expert_Tuning(self)
+            expert_tuning.grab_set()
+
         def z_inst():
             popen("xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
 
@@ -2644,7 +2652,7 @@ class Frame6(ttk.Frame):
         # overclocking_2000
         def ov_2000():
             popen(
-                "xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'"
             )
 
             global pop_2000
@@ -2708,9 +2716,9 @@ class Frame6(ttk.Frame):
         # overclocking_2147
         def ov_2147():
             popen(
-                "xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'"
             )
-            popen("mpg123 ~/PiGro-Aid-/scripts/HOLYPiT.mp3")
+            popen(f"mpg123 {home}/PiGro-Aid-/scripts/HOLYPiT.mp3")
 
             global pop_2147
             pop_2147 = Toplevel(self)
@@ -2772,10 +2780,10 @@ class Frame6(ttk.Frame):
         # overclocking_default/reset
         def set_default():
             popen(
-                "xterm -e 'bash -c \"sudo chmod +x ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo chmod +x {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
             popen(
-                "xterm -e 'bash -c \"sudo ~/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
 
             global pop_default
@@ -2838,9 +2846,9 @@ class Frame6(ttk.Frame):
         # overclocking_2200
         def ov_2200():
             popen(
-                "xterm -e 'bash -c \"~/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'"
             )
-            popen("mpg123 ~/PiGro-Aid-/scripts/over9000.mp3")
+            popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
             global pop_2200
             pop_2200 = Toplevel(self)
             pop_2200.config(bg="#333333")
@@ -3074,6 +3082,14 @@ class Frame6(ttk.Frame):
             foreground="white",
         ).grid(column=0, row=8, columnspan=3, pady=15)
 
+        self.tu_expert = Button(
+            self.ov_buttons,
+            text="Expert Mode",
+            command=open_expert_tuning,
+            font=("Helvetica", 10, "bold"),
+        )
+        # self.tu_expert.grid(column=1, row=10)
+
         # Misc_Frame
         self.rahmen622 = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
@@ -3143,12 +3159,12 @@ class Frame6(ttk.Frame):
 
             def top_inst():
                 os.system(
-                    "xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/install.sh; exec bash\"'"
+                    f"xterm -e 'bash -c \"{home}/PiGro-Aid-/essentials/bpytop/install.sh; exec bash\"'"
                 )
 
             def top_uninst():
                 os.system(
-                    "xterm -e 'bash -c \"~/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'"
+                    f"xterm -e 'bash -c \"{home}/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'"
                 )
 
             logo = Label(
@@ -3273,6 +3289,87 @@ class Frame6(ttk.Frame):
             command=info_tuning_tab,
         )
         self.info_tuning_btn.place(x=665, y=40)
+
+
+# Experter_Tuning /// In the worx
+class Expert_Tuning(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = "#333333"
+
+        def over_v_set():
+            pass
+
+        def arm_f_set():
+            pass
+
+        def gpu_f_set():
+            pass
+
+        def force_t_set():
+            pass
+
+        self.ex_frame = Frame(self, relief=GROOVE, borderwidth=0)
+        self.ex_frame["background"] = "#333333"
+        self.ex_frame.pack()
+
+        # over_voltage
+        self.o_v_label = Label(
+            self.ex_frame,
+            text="over_voltage=",
+            background="#333333",
+            foreground="white",
+        ).grid(row=1, column=0, padx=10)
+        self.o_v_input = Entry(self.ex_frame).grid(row=1, column=1, padx=5)
+        self.o_v_button = Button(
+            self.ex_frame,
+            text="Add",
+            background="#333333",
+            foreground="white",
+            command=over_v_set,
+            highlightthickness=0,
+        ).grid(row=1, column=2, padx=10)
+
+        # arm_freq
+        self.arm_freq_label = Label(
+            self.ex_frame, text="arm_freq=", background="#333333", foreground="white"
+        ).grid(row=2, column=0)
+        self.arm_freq_input = Entry(self.ex_frame).grid(row=2, column=1)
+        self.arm_freq_button = Button(
+            self.ex_frame,
+            text="Add",
+            background="#333333",
+            foreground="white",
+            highlightthickness=0,
+        ).grid(row=2, column=2)
+
+        # gpu_freq
+        self.gpu_freq_label = Label(
+            self.ex_frame, text="gpu_freq=", background="#333333", foreground="white"
+        ).grid(row=3, column=0)
+        self.gpu_freq_input = Entry(self.ex_frame).grid(row=3, column=1)
+        self.gpu_freq_button = Button(
+            self.ex_frame,
+            text="Add",
+            background="#333333",
+            foreground="white",
+            highlightthickness=0,
+        ).grid(row=3, column=2)
+
+        # force_turbo
+        self.force_turbo_label = Label(
+            self.ex_frame,
+            text="force_turbo=1",
+            background="#333333",
+            foreground="white",
+        ).grid(row=4, column=0)
+        self.force_turbo_button = Button(
+            self.ex_frame,
+            text="Add",
+            background="#333333",
+            foreground="white",
+            highlightthickness=0,
+        ).grid(row=4, column=2)
 
 
 # Links
@@ -3744,26 +3841,6 @@ class Frame8(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        # self.pig_x = Image.open("images/icons/poke_pig.jpg")
-        # self.pg0x = ImageTk.PhotoImage(self.pig_x)
-        # self.pl0x = Label(image=self.pg0x)
-
-        # def pick_at_you():
-        #    global pop_pig
-        #    pop_pig = Toplevel(self)
-        #    pop_pig["background"] = "white"
-
-        #    poke_pig = Label(pop_pig, image=self.pg0x, background="#333333").pack()
-
-        #    popen("mpg123  ~/PiGro-Aid-/scripts/poke_pig.mp3")
-
-        #    poke_pig1 = Label(
-        #        pop_pig,
-        #        text="Moral: Never post funny things about Pigro on forums!\nI could come up with even more stupid ideas\nand incorporate them into PiGro xD",
-        #        background="white",
-        #        fg="red",
-        #    ).pack()
-
         def poll():
             popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
 
@@ -3777,14 +3854,6 @@ class Frame8(ttk.Frame):
             popen(
                 "xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u"
             )
-
-        # self.pig_1 = Image.open("images/icons/pigpi_btn.png")
-        # self.pg01 = ImageTk.PhotoImage(self.pig_1)
-        # self.pl01 = Label(image=self.pg01)
-
-        # self.pig_logo = Button(
-        #    self, image=self.pg01, background="#333333", command=pick_at_you
-        # ).pack(pady=40)
 
         self.rahmen102 = Frame(
             self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10

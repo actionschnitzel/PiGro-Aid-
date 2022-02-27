@@ -18,9 +18,9 @@ git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 
 sudo chmod +x start.sh
-sudo cp pigro.desktop  /home/pi/Desktop
+sudo cp pigro.desktop  $HOME/Desktop
 sudo cp pigro.desktop /usr/share/applications/
-sudo chmod +x /home/pi/Desktop/pigro.desktop
+sudo chmod +x $HOME/Desktop/pigro.desktop
 cd
 clear
 
