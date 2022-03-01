@@ -7,15 +7,39 @@
  / ____/ / /_/ / /  / /_/ / 
 /_/   /_/\____/_/   \____/ 
 
-BUT NOTHING HAS CHANGED!!!
-WRONG EVERYTHING HAS CHANGED!
+
+
+BotSpot to Me: Ey Yo! What 'bout over_voltage=14
+
+And I was like .... wwwwooooohh
+
+when I thought ... screw is I'ma ganno do dis!xD
+
+Result: STABLE / 46 °C
+
+In short:
+
+NEW OVERCLOCKING OPTION!
+
+
+arm_freq=2300
+gpu_freq=500
+over_voltage=14
+force_turbo=1
+
+Have Fun ;-)
+
 
 - Folder structure improved
 - APT Fast Install has now a search funktion + combobox
 - Lot of code fixes
 - Icon & PNG improvements
-- Shop currently disabled due to makeover
+- Shop currently disabled due to makeover(I'm working on it)
 - More infos on the help button
+- New Overclocking option
+- Overclocking Berrys are now 
+  locked until you reset it / Close Pigro / Or reboot
+
 
 Best regards
 

@@ -11,6 +11,7 @@ sudo sed -i '/disable_splash/d' config.txt
 sudo sed -i '/#Pigro_Overclocking1/d' config.txt
 sudo sed -i '/#Pigro_Overclocking2/d' config.txt
 sudo sed -i '/#Pigro_Overclocking3/d' config.txt
+sudo sed -i '/#Pigro_Overclocking4/d' config.txt
 
 
 

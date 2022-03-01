@@ -1,15 +1,46 @@
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ****************************************************************
-***** Before using the overclocking function please delete *****
-***** previous made configs:                               *****
+***** If you want to use PiGro's tuning option            *****
+***** please click once on the green berry.                *****
+***** This removes all previous options:                   *****
 *****                                                      *****
 ***** arm_freq ...                                         *****
 ***** gpu_freq ...                                         *****
 ***** over_voltage ...                                     *****
-***** force_turbo ...                                      ***** 
+***** force_turbo ...                                      *****
+*****                                                      *****
+***** Now you can use savely the other Options             *****
 ****************************************************************
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+OPTIONS:
+
+- Crank It Up!:
+    arm_freq = 2000
+    gpu_freq = 750
+    over_voltage = 6
+    force_turbo = 1
+
+- Sir, You Need A Fan!:
+    arm_freq = 2147
+    gpu_freq = 750
+    over_voltage = 8
+    force_turbo = 1
+
+- Take It To The Max!:
+    arm_freq = 2200
+    gpu_freq = 750
+    over_voltage = 8
+    force_turbo = 1
+
+- Take It To The Max!:
+    arm_freq = 2300
+    gpu_freq = 500
+    over_voltage = 14
+    force_turbo = 1
+
+
 
 arm_freq:
 Frequency of the ARM CPU in MHz.

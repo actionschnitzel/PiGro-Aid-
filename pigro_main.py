@@ -14,8 +14,9 @@ from datetime import datetime
 import distro
 import socket
 from gpiozero import CPUTemperature
-import splash
 from pathlib import Path
+
+import splash
 
 global home
 home = str(Path.home())
@@ -65,6 +66,7 @@ class MainApplication(tk.Tk):
         self.Frame6 = Frame6(self.notebook)
         self.Frame7 = Frame7(self.notebook)
         self.Frame8 = Frame8(self.notebook)
+        self.Frame9 = Frame9(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
         tabi = Image.open("images/backgrounds/side_bar.png")
@@ -82,47 +84,46 @@ class MainApplication(tk.Tk):
         tab2l.place(x=-2, y=630)
 
         # Tab_Icons
-        self.tab_tp1 = Image.open("images/icons/Logotab.png")
-        self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
-        self.tl01 = Label(image=self.tp01)
+        # self.tab_tp1 = Image.open("images/icons/Logotab.png")
+        # self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
+        # self.tl01 = Label(image=self.tp01)
 
-        self.tab_tp12 = Image.open("images/icons/updatetab.png")
-        self.tp012 = ImageTk.PhotoImage(self.tab_tp12)
-        self.tl012 = Label(image=self.tp012)
-
-        self.tab_tp2 = Image.open("images/icons/system.png")
-        self.tp02 = ImageTk.PhotoImage(self.tab_tp2)
-        self.tl02 = Label(image=self.tp02)
-
-        self.tab_tp3 = Image.open("images/icons/installer_ico.png")
-        self.tp03 = ImageTk.PhotoImage(self.tab_tp3)
-        self.tl03 = Label(image=self.tp03)
-
-        self.tab_tp4 = Image.open("images/icons/look.png")
-        self.tp04 = ImageTk.PhotoImage(self.tab_tp4)
-        self.tl04 = Label(image=self.tp04)
-
-        self.tab_tp6 = Image.open("images/icons/tuning.png")
-        self.tp06 = ImageTk.PhotoImage(self.tab_tp6)
-        self.tl06 = Label(image=self.tp06)
-
-        self.sys_bp111 = Image.open("images/icons/dm.png")
-        self.bp0111 = ImageTk.PhotoImage(self.sys_bp111)
-        self.bl0111 = Label(image=self.bp0111)
-
-        self.tab_tp10 = Image.open("images/icons/pigpi.png")
-        self.tp10 = ImageTk.PhotoImage(self.tab_tp10)
-        self.tl10 = Label(image=self.tp10)
+        self.welcome_icon = PhotoImage(file=r"images/icons/Logotab.png")
+        self.system_icon = PhotoImage(file=r"images/icons/system.png")
+        self.update_icon = PhotoImage(file=r"images/icons/updatetab.png")
+        self.install_icon = PhotoImage(file=r"images/icons/installer_ico.png")
+        self.look_icon = PhotoImage(file=r"images/icons/look.png")
+        self.tuning_icon = PhotoImage(file=r"images/icons/tuning.png")
+        self.look_icon = PhotoImage(file=r"images/icons/look.png")
+        self.tuning_icon = PhotoImage(file=r"images/icons/tuning.png")
+        self.dm_icon = PhotoImage(file=r"images/icons/dm.png")
+        self.pig_icon = PhotoImage(file=r"images/icons/pigpi.png")
+        self.play_icon = PhotoImage(file=r"images/icons/play_ground.png")
 
         # Tabs
-        self.notebook.add(self.Frame1, compound=LEFT, text="Welcome", image=self.tp01)
-        self.notebook.add(self.Frame3, compound=LEFT, text="System", image=self.tp02)
-        self.notebook.add(self.Frame2, compound=LEFT, text="Update", image=self.tp012)
-        self.notebook.add(self.Frame4, compound=LEFT, text="Installer", image=self.tp03)
-        self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.tp04)
-        self.notebook.add(self.Frame6, compound=LEFT, text="Tuning", image=self.tp06)
-        self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.bp0111)
-        self.notebook.add(self.Frame8, compound=LEFT, text="PiG-Grow", image=self.tp10)
+        self.notebook.add(
+            self.Frame1, compound=LEFT, text="Welcome", image=self.welcome_icon
+        )
+        self.notebook.add(
+            self.Frame3, compound=LEFT, text="System", image=self.system_icon
+        )
+        self.notebook.add(
+            self.Frame2, compound=LEFT, text="Update", image=self.update_icon
+        )
+        self.notebook.add(
+            self.Frame4, compound=LEFT, text="Installer", image=self.install_icon
+        )
+        self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
+        self.notebook.add(
+            self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
+        )
+        self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
+        self.notebook.add(
+            self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
+        )
+        self.notebook.add(
+            self.Frame9, compound=LEFT, text="Play Ground", image=self.play_icon
+        )
 
         self.notebook.pack()
 
@@ -173,9 +174,7 @@ class Frame1(ttk.Frame):
             s_list.pack(anchor="w", fill=BOTH, expand=True)
             # scrollbar.config(command=mylist.yview)
 
-        self.tab_tpinfp = Image.open("images/icons/info_button_p.png")
-        self.tpinfp = ImageTk.PhotoImage(self.tab_tpinfp)
-        self.tlinfp = Label(image=self.tpinfp)
+        self.welc_info_btn = PhotoImage(file=r"images/icons/info_button_p.png")
 
         self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
         self.my_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
@@ -206,7 +205,7 @@ class Frame1(ttk.Frame):
 
         self.Chl = Button(
             self,
-            image=self.tpinfp,
+            image=self.welc_info_btn,
             font=(("Helvetica,bold"), "11"),
             highlightthickness=0,
             borderwidth=0,
@@ -292,9 +291,7 @@ class Frame2(ttk.Frame):
         def reboot_n():
             popen("sudo reboot")
 
-        self.tab_tpinfm = Image.open("images/icons/info_m.png")
-        self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
-        self.tlinfm = Label(image=self.tpinfm)
+        self.update_info_btn = PhotoImage(file=r"images/icons/info_m.png")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -441,7 +438,7 @@ class Frame2(ttk.Frame):
 
         self.info_up_btn = Button(
             self,
-            image=self.tpinfm,
+            image=self.update_info_btn,
             highlightthickness=0,
             borderwidth=0,
             command=info_update_tab,
@@ -491,7 +488,70 @@ class Frame3(ttk.Frame):
             print("With great power comes great responsibility")
 
         def button_lk():
-            popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
+            global pop_kernel
+            pop_kernel = Toplevel(self)
+            pop_kernel.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_kernel.winfo_screenwidth()
+            screen_height = pop_kernel.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_kernel.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_kernel.resizable(0, 0)
+
+            def pop_kernel_dest():
+                pop_kernel.destroy()
+
+            def do_it():
+                popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
+                print("Kernel Upgrade GO!")
+
+            frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel.pack()
+            frame_pop_kernel["background"] = "#333333"
+
+            frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel_1.pack()
+            frame_pop_kernel_1["background"] = "#333333"
+
+            pop_lbl_2000 = Label(
+                frame_pop_kernel,
+                anchor="w",
+                text="Do you really want to Upgrade the Kernel?",
+                font=("Helvetica", 12),
+                highlightthickness=0,
+                borderwidth=2,
+                background="#333333",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_lbl_2000.pack(pady=20)
+
+            pop_btn_2000 = Button(
+                frame_pop_kernel_1,
+                text="No",
+                anchor="w",
+                command=pop_kernel_dest,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#2246c4",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_2000.pack(padx=5, pady=20, side=LEFT)
+            pop_btn_shut = Button(
+                frame_pop_kernel_1,
+                text="Do It!",
+                anchor="w",
+                command=do_it,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#f03838",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_shut.pack(padx=5, pady=20)
 
         def button_dpfc():
             popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
@@ -545,81 +605,17 @@ class Frame3(ttk.Frame):
         # print(extract_ip())
 
         # Icon Set
-        self.sys_bp1 = Image.open("images/icons/raspberry-pi-logo.png")
-        self.bp01 = ImageTk.PhotoImage(self.sys_bp1)
-        self.bl01 = Label(image=self.bp01)
-
-        self.sys_bp2 = Image.open("images/icons/raspberry-pi-logo.png")
-        self.bp02 = ImageTk.PhotoImage(self.sys_bp2)
-        self.bl02 = Label(image=self.bp02)
-
-        self.sys_bp3 = Image.open("images/icons/terminal.png")
-        self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
-        self.bl03 = Label(image=self.bp03)
-
-        self.sys_bp33 = Image.open("images/icons/terminal3.png")
-        self.bp033 = ImageTk.PhotoImage(self.sys_bp33)
-        self.bl033 = Label(image=self.bp033)
-
-        self.sys_bp4 = Image.open("images/icons/gparted.png")
-        self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
-        self.bl04 = Label(image=self.bp04)
-
-        self.sys_bp5 = Image.open("images/icons/indicator-cpufreq.png")
-        self.bp05 = ImageTk.PhotoImage(self.sys_bp5)
-        self.bl05 = Label(image=self.bp05)
-
-        self.sys_bp6 = Image.open("images/icons/folder.png")
-        self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
-        self.bl06 = Label(image=self.bp06)
-
-        self.sys_bp7 = Image.open("images/icons/links.png")
-        self.bp07 = ImageTk.PhotoImage(self.sys_bp7)
-        self.bl07 = Label(image=self.bp07)
-
-        self.sys_bp1 = Image.open("images/icons/raspberry-pi-logo.png")
-        self.bp01 = ImageTk.PhotoImage(self.sys_bp1)
-        self.bl01 = Label(image=self.bp01)
-
-        self.sys_bp2 = Image.open("images/icons/raspberry-pi-logo.png")
-        self.bp02 = ImageTk.PhotoImage(self.sys_bp2)
-        self.bl02 = Label(image=self.bp02)
-
-        self.sys_bp3 = Image.open("images/icons/terminal.png")
-        self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
-        self.bl03 = Label(image=self.bp03)
-
-        self.sys_bp33 = Image.open("images/icons/terminal3.png")
-        self.bp033 = ImageTk.PhotoImage(self.sys_bp33)
-        self.bl033 = Label(image=self.bp033)
-
-        self.sys_bp4 = Image.open("images/icons/gparted.png")
-        self.bp04 = ImageTk.PhotoImage(self.sys_bp4)
-        self.bl04 = Label(image=self.bp04)
-
-        self.sys_bp5 = Image.open("images/icons/indicator-cpufreq.png")
-        self.bp05 = ImageTk.PhotoImage(self.sys_bp5)
-        self.bl05 = Label(image=self.bp05)
-
-        self.sys_bp6 = Image.open("images/icons/folder.png")
-        self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
-        self.bl06 = Label(image=self.bp06)
-
-        self.sys_bp7 = Image.open("images/icons/links.png")
-        self.bp07 = ImageTk.PhotoImage(self.sys_bp7)
-        self.bl07 = Label(image=self.bp07)
-
-        self.ico_1 = Image.open("images/icons/gui_icon.png")
-        self.ico_m = ImageTk.PhotoImage(self.ico_1)
-        self.ico_win = Label(image=self.ico_m)
-
-        self.ico_2 = Image.open("images/icons/weblink_icon.png")
-        self.ico_m2 = ImageTk.PhotoImage(self.ico_2)
-        self.ico_win2 = Label(image=self.ico_m2)
-
-        self.tab_tpinfm = Image.open("images/icons/info_m.png")
-        self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
-        self.tlinfm = Label(image=self.tpinfm)
+        self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
+        self.bp02 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
+        self.bp03 = PhotoImage(file=r"images/icons/terminal.png")
+        self.bp033 = PhotoImage(file=r"images/icons/terminal3.png")
+        self.bp04 = PhotoImage(file=r"images/icons/gparted.png")
+        self.bp05 = PhotoImage(file=r"images/icons/indicator-cpufreq.png")
+        self.bp06 = PhotoImage(file=r"images/icons/folder.png")
+        self.bp07 = PhotoImage(file=r"images/icons/links.png")
+        self.ico_m = PhotoImage(file=r"images/icons/gui_icon.png")
+        self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
+        self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -846,14 +842,14 @@ class Frame3(ttk.Frame):
         cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
 
-        self.rahmen21 = Frame(
+        self.sys_info_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
         )
-        self.rahmen21.pack(padx=40, pady=20, fill="both")
-        self.rahmen21["background"] = "#333333"
+        self.sys_info_frame.pack(padx=40, pady=20, fill="both")
+        self.sys_info_frame["background"] = "#333333"
 
         self.rahmen22 = Frame(
-            self.rahmen21,
+            self.sys_info_frame,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -880,14 +876,14 @@ class Frame3(ttk.Frame):
         )
         self.sysinf0.pack()
 
-        self.rahmen23 = Frame(
-            self.rahmen21, borderwidth=0, highlightthickness=0, relief=GROOVE
+        self.sys_stats_frame = Frame(
+            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-        self.rahmen23.grid(row=1, column=0)
-        self.rahmen23["background"] = "#333333"
+        self.sys_stats_frame.grid(row=1, column=0)
+        self.sys_stats_frame["background"] = "#333333"
 
         self.rahmen24 = Frame(
-            self.rahmen21, borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.rahmen24.grid(row=0, column=2)
         self.rahmen24["background"] = "#333333"
@@ -906,7 +902,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf0 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"System: {my_system.system}",
             font=("Helvetica", 10, "bold"),
             justify="left",
@@ -919,7 +915,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinfd = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"Distro: {distro}",
             justify="left",
             highlightthickness=0,
@@ -932,7 +928,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf1 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"Node Name: {my_system.node}",
             justify="left",
             background="#333333",
@@ -943,7 +939,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf9 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=Pi_Model.read(),
             justify="left",
             background="#333333",
@@ -954,7 +950,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf2 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"Kernel: {my_system.release}",
             justify="left",
             background="#333333",
@@ -965,7 +961,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf3 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"Machine: {my_system.machine}",
             justify="left",
             background="#333333",
@@ -976,7 +972,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf8 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text="",
             background="#333333",
             foreground="white",
@@ -987,7 +983,7 @@ class Frame3(ttk.Frame):
         self.sysinf8.pack()
 
         self.sysinf6 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
             justify="left",
             background="#333333",
@@ -998,7 +994,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf7 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
             justify="left",
             background="#333333",
@@ -1009,7 +1005,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf10 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text="",
             justify="left",
             background="#333333",
@@ -1021,7 +1017,7 @@ class Frame3(ttk.Frame):
         self.sysinf10.pack()
 
         self.sysinf3 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
             background="#333333",
@@ -1032,7 +1028,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf3 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
             background="#333333",
@@ -1043,7 +1039,7 @@ class Frame3(ttk.Frame):
         ).pack()
 
         self.sysinf9 = Label(
-            self.rahmen23,
+            self.sys_stats_frame,
             text=f"IP Address: {IPAddr}",
             justify="left",
             background="#333333",
@@ -1786,17 +1782,11 @@ class Frame4(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab_shop = Image.open("images/icons/shop.png")
-        self.ipshop = ImageTk.PhotoImage(self.tab_shop)
-        self.ilshop = Label(image=self.ipshop)
+        self.ipshop = PhotoImage(file=r"images/icons/shop.png")
 
-        self.tab_finst = Image.open("images/icons/fast_install.png")
-        self.ipfinst = ImageTk.PhotoImage(self.tab_finst)
-        self.ilfinst = Label(image=self.ipfinst)
+        self.ipfinst = PhotoImage(file=r"images/icons/fast_install.png")
 
-        self.tab_tpinfm = Image.open("images/icons/info_m.png")
-        self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
-        self.tlinfm = Label(image=self.tpinfm)
+        self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
 
         self.rahmen_shop = Frame(self, borderwidth=0, highlightthickness=1)
         self.rahmen_shop.pack(padx=40, pady=40)
@@ -1884,9 +1874,7 @@ class Frame4(ttk.Frame):
         def inst_syn():
             popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
 
-        self.i4 = Image.open("images/icons/apt-get.png")
-        self.p4 = ImageTk.PhotoImage(self.i4)
-        self.l4 = Label(image=self.p4)
+        self.p4 = PhotoImage(file=r"images/icons/apt-get.png")
 
         self.eingabefeld1 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
 
@@ -1931,9 +1919,7 @@ class Frame4(ttk.Frame):
         def pi_apps_list():
             popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
 
-        self.ia6 = Image.open("images/icons/pi-app.png")
-        self.pa6 = ImageTk.PhotoImage(self.ia6)
-        self.la6 = Label(image=self.pa6)
+        self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
 
         self.pi_apps_ico = Label(
             self.rahmen3, image=self.pa6, text="piapps install", fg="white"
@@ -1963,9 +1949,7 @@ class Frame4(ttk.Frame):
                 f"xterm -e 'bash -c \"sudo snap install {self.eingabefeld2.get()}; exec bash\"'"
             )
 
-        self.i6 = Image.open("images/icons/snap.png")
-        self.p6 = ImageTk.PhotoImage(self.i6)
-        self.l6 = Label(image=self.p6)
+        self.p6 = PhotoImage(file=r"images/icons/snap.png")
 
         self.snap_ico = Label(
             self.rahmen3, image=self.p6, text="Snap install", fg="white"
@@ -1992,9 +1976,7 @@ class Frame4(ttk.Frame):
         self.eingabefeld2.grid(column=2, row=1)
         self.snap_inst_btn.grid(column=1, row=1)
 
-        self.tab_ip3 = Image.open("images/icons/download_ico.png")
-        self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
-        self.il03 = Label(image=self.ip03)
+        self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
 
         # flat_entry
         def inst_btn4():
@@ -2003,9 +1985,7 @@ class Frame4(ttk.Frame):
                 f" xterm -e 'bash -c \"sudo flatpak install flathub {self.eingabefeld4.get()}; exec bash\"'"
             )
 
-        self.i66 = Image.open("images/icons/flathub.png")
-        self.p66 = ImageTk.PhotoImage(self.i66)
-        self.l66 = Label(image=self.p66)
+        self.p66 = PhotoImage(file=r"images/icons/flathub.png")
 
         self.flatp_ico = Label(
             self.rahmen3, image=self.p66, text="Flat install", fg="white"
@@ -2215,37 +2195,14 @@ class Frame5(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab_tpinfm = Image.open("images/icons/info_m.png")
-        self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
-        self.tlinfm = Label(image=self.tpinfm)
-
-        self.sys_bp6 = Image.open("images/icons/folder.png")
-        self.bp06 = ImageTk.PhotoImage(self.sys_bp6)
-        self.bl06 = Label(image=self.bp06)
-
-        self.ico_1 = Image.open("images/icons/gui_icon.png")
-        self.ico_m = ImageTk.PhotoImage(self.ico_1)
-        self.ico_win = Label(image=self.ico_m)
-
-        self.sys_bp3 = Image.open("images/icons/terminal.png")
-        self.bp03 = ImageTk.PhotoImage(self.sys_bp3)
-        self.bl03 = Label(image=self.bp03)
-
-        self.ico_2 = Image.open("images/icons/weblink_icon.png")
-        self.ico_m2 = ImageTk.PhotoImage(self.ico_2)
-        self.ico_win2 = Label(image=self.ico_m2)
-
-        self.tab_ip1 = Image.open("images/icons/download_ico.png")
-        self.ip01 = ImageTk.PhotoImage(self.tab_ip1)
-        self.il01 = Label(image=self.ip01)
-
-        self.tab_loktt = Image.open("images/icons/tuxterm.png")
-        self.ttp01 = ImageTk.PhotoImage(self.tab_loktt)
-        self.ttl01 = Label(image=self.ttp01)
-
-        self.tab_ip2 = Image.open("images/icons/fix1i.png")
-        self.ip02 = ImageTk.PhotoImage(self.tab_ip2)
-        self.il02 = Label(image=self.ip02)
+        self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
+        self.bp06 = PhotoImage(file=r"images/icons/folder.png")
+        self.ico_m = PhotoImage(file=r"images/icons/gui_icon.png")
+        self.bp03 = PhotoImage(file=r"images/icons/terminal.png")
+        self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
+        self.ip01 = PhotoImage(file=r"images/icons/download_ico.png")
+        self.ttp01 = PhotoImage(file=r"images/icons/tuxterm.png")
+        self.ip02 = PhotoImage(file=r"images/icons/fix1i.png")
 
         # Frame/Button Set
         self.rahmen4 = Frame(
@@ -2609,11 +2566,15 @@ class Frame6(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tu_tp1 = Image.open("images/icons/PiGroOV2.png")
+        self.tu_tp0 = Image.open("images/icons/PiGroOV_rm.png")
+        self.tu00 = ImageTk.PhotoImage(self.tu_tp0)
+        self.tul00 = Label(image=self.tu00)
+
+        self.tu_tp1 = Image.open("images/icons/PiGroOV1.png")
         self.tu01 = ImageTk.PhotoImage(self.tu_tp1)
         self.tul01 = Label(image=self.tu01)
 
-        self.tu_tp2 = Image.open("images/icons/PiGroOV.png")
+        self.tu_tp2 = Image.open("images/icons/PiGroOV2.png")
         self.tu02 = ImageTk.PhotoImage(self.tu_tp2)
         self.tul02 = Label(image=self.tu02)
 
@@ -2633,7 +2594,7 @@ class Frame6(ttk.Frame):
         self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
         self.il03 = Label(image=self.ip03)
 
-        # overclocking
+        # OV Notifications
         def pop_dest():
             pop_default.destroy()
 
@@ -2645,6 +2606,9 @@ class Frame6(ttk.Frame):
 
         def pop_dest3():
             pop_2200.destroy()
+
+        def pop_dest4():
+            pop_2300.destroy()
 
         def reboot_n():
             popen("sudo reboot")
@@ -2906,73 +2870,189 @@ class Frame6(ttk.Frame):
             )
             pop_btn_shut.pack(padx=5, pady=20)
 
-        self.rahmen6 = Frame(
+        # overclocking_2300
+        def ov_2300():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_4.sh && exit; exec bash\"'"
+            )
+            popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+            global pop_2300
+            pop_2300 = Toplevel(self)
+            pop_2300.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_2300.winfo_screenwidth()
+            screen_height = pop_2300.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_2300.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_2300.resizable(0, 0)
+
+            frame_pop_2300 = Frame(pop_2300, borderwidth=0, relief=GROOVE)
+            frame_pop_2300.pack()
+            frame_pop_2300["background"] = "#333333"
+
+            frame_pop_2300_1 = Frame(pop_2300, borderwidth=0, relief=GROOVE)
+            frame_pop_2300_1.pack(pady=10)
+            frame_pop_2300_1["background"] = "#333333"
+
+            pop_lbl_2300 = Label(
+                frame_pop_2300,
+                anchor="w",
+                text="Done! The new settings take effect after a reboot",
+                font=("Helvetica", 16),
+                highlightthickness=0,
+                borderwidth=2,
+                background="#333333",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_lbl_2300.pack(pady=20)
+            pop_btn_2300 = Button(
+                frame_pop_2300_1,
+                text="Continue",
+                anchor="w",
+                command=pop_dest4,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#2246c4",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_2300.pack(padx=5, pady=20, side=LEFT)
+            pop_btn_shut = Button(
+                frame_pop_2300_1,
+                text="Reboot",
+                anchor="w",
+                command=reboot_n,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#f03838",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_shut.pack(padx=5, pady=20)
+
+        self.ov_main_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20, padx=50
         )
-        self.rahmen6.pack(padx=20, pady=20, fill="both")
-        self.rahmen6["background"] = "#333333"
+        self.ov_main_frame.pack(padx=20, pady=20, fill="both")
+        self.ov_main_frame["background"] = "#333333"
 
-        # Header_Frame
-        self.ov_header = Frame(
-            self.rahmen6,
+        # OV_Display_Frame
+        self.ov_display_frame = Frame(
+            self.ov_main_frame,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            pady=20,
+            pady=50,
             padx=50,
         )
-        self.ov_header.pack()
-        self.ov_header["background"] = "#333333"
-
-        self.tu_lb0 = Label(
-            self.ov_header,
-            justify="left",
-            text="Pi4 Overclocking",
-            highlightthickness=0,
-            borderwidth=2,
-            background="#333333",
-            foreground="white",
-            font=("Helvetica", 18),
-            pady=5,
-        ).grid(column=0, row=0)
+        self.ov_display_frame.grid(row=0, column=1, padx=70)
+        self.ov_display_frame["background"] = "#333333"
 
         global tu_current
         tu_current = Label(
-            self.ov_header,
-            text="Current Settings: Base Clock",
+            self.ov_display_frame,
+            text="PiGro Settings: Not Configured\n",
             highlightthickness=0,
             borderwidth=2,
             background="#333333",
             foreground="green",
-            bg="black",
+            bg="#333333",
             font=("Helvetica", 12, "bold"),
-            padx=10,
         )
         tu_current.grid(column=1, row=0, columnspan=2)
 
-        # Butten_Frame
-        self.ov_buttons = Frame(
-            self.rahmen6, borderwidth=0, highlightthickness=0, relief=GROOVE, pady=20
+        global tu_current2
+        tu_current2 = Label(
+            self.ov_display_frame,
+            text="arm_freq not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="white",
+            bg="#333333",
+            font=("Helvetica", 12, "bold"),
         )
-        self.ov_buttons.pack()
+        tu_current2.grid(column=1, row=2, columnspan=2)
+
+        global tu_current3
+        tu_current3 = Label(
+            self.ov_display_frame,
+            text="gpu_freq not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="white",
+            bg="#333333",
+            font=("Helvetica", 12, "bold"),
+        )
+        tu_current3.grid(column=1, row=3, columnspan=2)
+
+        global tu_current4
+        tu_current4 = Label(
+            self.ov_display_frame,
+            text="over_voltage not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="white",
+            bg="#333333",
+            font=("Helvetica", 12, "bold"),
+        )
+        tu_current4.grid(column=1, row=4, columnspan=2)
+
+        global tu_current5
+        tu_current5 = Label(
+            self.ov_display_frame,
+            text="force_turbo not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="white",
+            bg="#333333",
+            font=("Helvetica", 12, "bold"),
+        )
+        tu_current5.grid(column=1, row=5, columnspan=2)
+
+        self.tu_info = Label(
+            self.ov_display_frame,
+            text="Settings tested with\nRaspberry Pi 4B 8 GB\n+ Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
+            font=("Helvetica", 8),
+            highlightthickness=0,
+            borderwidth=2,
+            background="#333333",
+            foreground="yellow",
+        ).grid(column=1, row=6, pady=20)
+
+        # Tuning_Button_Frame
+        self.ov_buttons = Frame(
+            self.ov_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+        )
+        self.ov_buttons.grid(row=0, column=0)
         self.ov_buttons["background"] = "#333333"
 
-        self.tu_lb3 = Label(
+        self.tuning_options = Label(
             self.ov_buttons,
-            text="\nReset Overclocking",
+            text="Tuning Options",
             highlightthickness=0,
             borderwidth=2,
             background="#333333",
             foreground="#d4244d",
-            font=("Helvetica", 14),
+            font=("Helvetica", 16),
             justify="left",
-        ).grid(column=1, row=1)
+        ).grid(column=0, row=1, pady=10)
 
-        self.tu_btn3 = Button(
+        self.tu_reset = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu03,
-            text="Base Clock       \n1.5 / 1.8 Ghz       ",
+            image=self.tu00,
+            text="Reset Overclocking",
             anchor="w",
             command=set_default,
             highlightthickness=2,
@@ -2981,24 +3061,14 @@ class Frame6(ttk.Frame):
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
-        ).grid(column=1, row=2)
-
-        self.tu_lb1 = Label(
-            self.ov_buttons,
-            justify="left",
-            text="\nCrank It Up",
-            highlightthickness=0,
-            borderwidth=2,
-            background="#333333",
-            foreground="#d4244d",
-            font=("Helvetica", 14),
-        ).grid(column=0, row=3)
+            width=200,
+        ).grid(column=0, row=2, pady=10)
 
         self.tu_btn1 = Button(
             self.ov_buttons,
             justify="left",
             image=self.tu01,
-            text="Arm_Freq = 2000\nGpu_Freq = 750\nOver_Voltage = 6",
+            text="Crank It Up",
             anchor="w",
             command=ov_2000,
             highlightthickness=2,
@@ -3007,25 +3077,15 @@ class Frame6(ttk.Frame):
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
+            width=200,
         )
-        self.tu_btn1.grid(column=0, row=4)
-
-        self.tu_lb2 = Label(
-            self.ov_buttons,
-            justify="left",
-            text="\nYou Sir... Need A Fan! ",
-            highlightthickness=0,
-            borderwidth=2,
-            background="#333333",
-            foreground="#d4244d",
-            font=("Helvetica", 14),
-        ).grid(column=1, row=3, padx=10)
+        self.tu_btn1.grid(column=0, row=4, pady=10)
 
         self.tu_btn2 = Button(
             self.ov_buttons,
             justify="left",
             image=self.tu02,
-            text="Arm_Freq = 2147\nGpu_Freq = 750\nOver_Voltage = 8",
+            text="You Sir... Need A Fan!",
             anchor="w",
             command=ov_2147,
             highlightthickness=2,
@@ -3034,24 +3094,15 @@ class Frame6(ttk.Frame):
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
-        ).grid(column=1, row=4)
+            width=200,
+        )
+        self.tu_btn2.grid(column=0, row=6, pady=10)
 
-        self.tu_lb4 = Label(
+        self.tu_btn3 = Button(
             self.ov_buttons,
             justify="left",
-            text="\nTake It To The Max!",
-            highlightthickness=0,
-            borderwidth=2,
-            background="#333333",
-            foreground="#d4244d",
-            font=("Helvetica", 14),
-        ).grid(column=2, row=3)
-
-        self.tu_btn4 = Button(
-            self.ov_buttons,
-            justify="left",
-            image=self.tu04,
-            text="Arm_Freq = 2200\nGpu_Freq = 750\nOver_Voltage = 8",
+            image=self.tu03,
+            text="Take It To The Max!",
             anchor="w",
             command=ov_2200,
             highlightthickness=2,
@@ -3060,79 +3111,77 @@ class Frame6(ttk.Frame):
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
-        ).grid(column=2, row=4)
+            width=200,
+        )
+        self.tu_btn3.grid(column=0, row=8, pady=10)
 
-        self.tu_info = Label(
+        self.tu_btn4 = Button(
             self.ov_buttons,
-            text="Settings tested with\nPi4 + Ice Tower Cooler and Pi400.\nI take no responsibility if\nyour Pi is damaged.",
-            font=("Helvetica", 8),
-            highlightthickness=0,
-            borderwidth=2,
-            background="#333333",
-            foreground="yellow",
-        ).grid(column=1, row=9, pady=20)
-
-        self.tu_info1 = Label(
-            self.ov_buttons,
-            text="*By clicking on one of the Tuning Berries PiGro also creates a backup file of config.txt ;-)",
-            font=("Helvetica", 8, "bold"),
-            highlightthickness=0,
-            borderwidth=2,
+            justify="left",
+            image=self.tu04,
+            text="Honey,\nthe fuse blew again!",
+            anchor="w",
+            command=ov_2300,
+            highlightthickness=2,
+            borderwidth=0,
             background="#333333",
             foreground="white",
-        ).grid(column=0, row=8, columnspan=3, pady=15)
-
-        self.tu_expert = Button(
-            self.ov_buttons,
-            text="Expert Mode",
-            command=open_expert_tuning,
+            compound=LEFT,
             font=("Helvetica", 10, "bold"),
+            width=200,
         )
-        # self.tu_expert.grid(column=1, row=10)
+        self.tu_btn4.grid(column=0, row=9, pady=10)
 
-        # Misc_Frame
-        self.rahmen622 = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
-        )  #
-        self.rahmen622.pack(padx=40, pady=15, fill="both")
-        self.rahmen622["background"] = "#333333"
-
-        self.rahmen61 = Frame(
-            self.rahmen622,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            padx=30,
-            pady=10,
-        )  #
-        self.rahmen61.pack(side=LEFT)
-        self.rahmen61["background"] = "#333333"
-
-        self.rahmen62 = Frame(
-            self.rahmen622,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            padx=10,
-            pady=10,
-        )  #
-        self.rahmen62.pack(padx=10, side=LEFT)
-        self.rahmen62["background"] = "#333333"
-
+        # Overclock Display Functions
         def OV1_label():
             tu_current.config(
-                text="Current Settings: Crank It Up", fg="yellow", bg="black"
+                text="Current Settings: Crank It Up\n", fg="yellow", bg="#333333"
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
 
         def OV2_label():
             tu_current.config(
-                text="Current Settings: You Sir... Need A Fan!", fg="red", bg="black"
+                text="Current Settings: You Sir... Need A Fan!\n",
+                fg="red",
+                bg="#333333",
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
 
         def OV3_label():
             tu_current.config(
-                text="Current Settings: Take It To The Max!", fg="pink", bg="black"
+                text="Current Settings: Take It To The Max!\n", fg="pink", bg="#333333"
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+        def OV4_label():
+            tu_current.config(
+                text="Honey,\nthe fuse blew again!\n", fg="purple", bg="#333333"
+            )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+        def a_f_label():
+            tu_current2.config(text=line1, fg="white", bg="#333333")
+
+        def g_f_label():
+            tu_current3.config(text=line2, fg="white", bg="#333333")
+
+        def o_v_label():
+            tu_current4.config(text=line3, fg="white", bg="#333333")
+
+        def f_t_label():
+            tu_current5.config(text=line3, fg="white", bg="#333333")
 
         with open("/boot/config.txt", "r") as fp:
             for line in lines_that_contain("#Pigro_Overclocking1", fp):
@@ -3151,6 +3200,65 @@ class Frame6(ttk.Frame):
                 print(line)
                 if line:
                     OV3_label()
+
+        with open("/boot/config.txt", "r") as fp:
+            for line in lines_that_contain("#Pigro_Overclocking4", fp):
+                print(line)
+                if line:
+                    OV4_label()
+
+        with open("/boot/config.txt", "r") as fp:
+            for line1 in lines_that_contain("arm_freq=", fp):
+                print(line1)
+                if line1:
+                    a_f_label()
+
+        with open("/boot/config.txt", "r") as fp:
+            for line2 in lines_that_contain("gpu_freq=", fp):
+                print(line2)
+                if line2:
+                    g_f_label()
+
+        with open("/boot/config.txt", "r") as fp:
+            for line3 in lines_that_contain("force_turbo=", fp):
+                print(line3)
+                if line3:
+                    f_t_label()
+
+        with open("/boot/config.txt", "r") as fp:
+            for line3 in lines_that_contain("over_voltage=", fp):
+                print(line3)
+                if line3:
+                    o_v_label()
+
+        # Misc_Frame
+        self.misc_main_frame = Frame(
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
+        )
+        self.misc_main_frame.pack(padx=40, pady=15, fill="both")
+        self.misc_main_frame["background"] = "#333333"
+
+        self.misc_zram_frame = Frame(
+            self.misc_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            padx=30,
+            pady=10,
+        )
+        self.misc_zram_frame.grid(row=0, column=1)
+        self.misc_zram_frame["background"] = "#333333"
+
+        self.misc_64mode_frame = Frame(
+            self.misc_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            padx=10,
+            pady=10,
+        )
+        self.misc_64mode_frame.grid(row=0, column=0)
+        self.misc_64mode_frame["background"] = "#333333"
 
         def z_ram():
             global z_ram_pop
@@ -3256,7 +3364,7 @@ class Frame6(ttk.Frame):
             ).grid(column=1, row=0)
 
         self.tu_zbtn = Button(
-            self.rahmen61,
+            self.misc_zram_frame,
             text="ZRAM",
             font=("Helvetica", 16),
             anchor="w",
@@ -3269,7 +3377,7 @@ class Frame6(ttk.Frame):
         ).grid(column=0, row=1)
 
         self.tu_bbtn = Button(
-            self.rahmen62,
+            self.misc_64mode_frame,
             text="64 Bit Mode",
             font=("Helvetica", 16),
             anchor="w",
@@ -3288,7 +3396,7 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             command=info_tuning_tab,
         )
-        self.info_tuning_btn.place(x=665, y=40)
+        self.info_tuning_btn.place(x=700, y=500)
 
 
 # Experter_Tuning /// In the worx
@@ -3834,6 +3942,99 @@ class Frame7(ttk.Frame):
 
 # Poll
 class Frame8(ttk.Frame):
+    def __init__(self, container):
+        super().__init__()
+
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg2.png")
+        self.bg_label = Label(self, image=self.bg)
+        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
+
+        def poll():
+            popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
+
+        def wpaps():
+            popen("xdg-open http://www.actionschnitzel.de/Wallpapers/")
+
+        def wiki():
+            popen("xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki")
+
+        def red_bub():
+            popen(
+                "xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u"
+            )
+
+        self.rahmen102 = Frame(
+            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10
+        )
+        self.rahmen102.place(x=60, y=300)
+        self.rahmen102["background"] = "#333333"
+
+        self.poke_pig_21 = Label(
+            self.rahmen102,
+            justify="left",
+            text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo\n\nQuestions or suggestions?:",
+            font=("Helvetica", 12),
+            background="#333333",
+            fg="white",
+            padx=5,
+            pady=3,
+        ).pack()
+
+        self.mail = Entry(self.rahmen102, bd=5, width=31, borderwidth=1)
+        self.mail.insert(END, "pigroxtrmo@gmail.com")
+        self.mail.pack(pady=5)
+
+        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
+        self.rahmen101.place(x=60, y=600)
+        self.rahmen101["background"] = "#333333"
+
+        self.pig_btn_1 = Button(
+            self.rahmen101,
+            text="User Poll",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#2FFC05",
+            command=poll,
+            font=(("Helvetica,bold"), "12", "bold"),
+        ).grid(column=0, row=0, pady=20, padx=20)
+
+        self.pig_btn_2 = Button(
+            self.rahmen101,
+            text="Wallpapers",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#EBFC05",
+            command=wpaps,
+            font=(("Helvetica,bold"), "12", "bold"),
+        ).grid(column=1, row=0, pady=20)
+
+        self.pig_btn_3 = Button(
+            self.rahmen101,
+            text="PiGro Manuel",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#053AFC",
+            command=wiki,
+            font=(("Helvetica,bold"), "12", "bold"),
+        ).grid(column=2, row=0, pady=20, padx=20)
+
+        self.pig_btn_4 = Button(
+            self.rahmen101,
+            text="Redbubble.com",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#FC05A0",
+            command=red_bub,
+            font=(("Helvetica,bold"), "12", "bold"),
+        ).grid(column=3, row=0, pady=20, padx=20)
+
+
+# Play Ground
+class Frame9(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 

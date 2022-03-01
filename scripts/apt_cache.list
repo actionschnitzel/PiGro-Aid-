@@ -23209,7 +23209,6 @@ calligra-l10n-engb
 pscan-tfbs
 freediameterd
 switcheroo-control
-box64
 twpsk
 fonts-cabin
 libjs-slick
@@ -28866,7 +28865,6 @@ postgresql-13-pgpool2
 libgphobos-10-dev-mips-cross
 r-cran-mitml
 r-cran-markovchain
-pi-apps-c08187a2
 elpa-solarized-theme
 amphetamine
 gem-plugin-tiff
@@ -32622,7 +32620,6 @@ texlive-bibtex-extra
 libbox2d2.3.0
 crossbuild-essential-mips
 thunderbird-l10n-de
-pi-apps-b87a649a
 fonts-joscelyn
 libdbi-test-perl
 python-mockldap-doc
@@ -39528,7 +39525,6 @@ libqapt3-runtime
 node-unorm
 education-highschool
 librust-ipconfig-dev
-ferdi
 freefem-examples
 libequinox-ds-java
 libtest-inter-perl
