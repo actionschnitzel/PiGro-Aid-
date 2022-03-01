@@ -1,6 +1,9 @@
-cd ~
+#!/bin/bash
+
+
+cd $HOME
 git clone https://github.com/DeskPi-Team/deskpi.git
-cd ~/deskpi/
+cd $HOME/deskpi/
 chmod +x install.sh
 sudo ./install.sh
 

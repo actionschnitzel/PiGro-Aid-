@@ -8,14 +8,9 @@ echo '
 
 echo 'Now I install dependencies'
 
-sudo apt-get install xterm -y
-sudo apt-get install python3-pil -y 
-sudo apt-get install python3-pil.imagetk -y
-sudo apt install python3-pip -y
-sudo apt install mpg123 -y
-sudo apt install lolcat -y
-pip3 install psutil
-pip3 install distro
+sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
+
+pip3 install psutil distro
 
 clear
 
@@ -23,9 +18,9 @@ git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 
 sudo chmod +x start.sh
-sudo cp pigro.desktop  /home/pi/Desktop
+sudo cp pigro.desktop  $HOME/Desktop
 sudo cp pigro.desktop /usr/share/applications/
-sudo chmod +x /home/pi/Desktop/pigro.desktop
+sudo chmod +x $HOME/Desktop/pigro.desktop
 cd
 clear
 

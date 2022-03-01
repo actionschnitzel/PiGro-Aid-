@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 cd
 sudo apt install libncursesw5-dev
 

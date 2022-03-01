@@ -1,0 +1,107 @@
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+****************************************************************
+***** If you want to use PiGro's tuning option            *****
+***** please click once on the green berry.                *****
+***** This removes all previous options:                   *****
+*****                                                      *****
+***** arm_freq ...                                         *****
+***** gpu_freq ...                                         *****
+***** over_voltage ...                                     *****
+***** force_turbo ...                                      *****
+*****                                                      *****
+***** Now you can use savely the other Options             *****
+****************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+OPTIONS:
+
+- Crank It Up!:
+    arm_freq = 2000
+    gpu_freq = 750
+    over_voltage = 6
+    force_turbo = 1
+
+- Sir, You Need A Fan!:
+    arm_freq = 2147
+    gpu_freq = 750
+    over_voltage = 8
+    force_turbo = 1
+
+- Take It To The Max!:
+    arm_freq = 2200
+    gpu_freq = 750
+    over_voltage = 8
+    force_turbo = 1
+
+- Take It To The Max!:
+    arm_freq = 2300
+    gpu_freq = 500
+    over_voltage = 14
+    force_turbo = 1
+
+
+
+arm_freq:
+Frequency of the ARM CPU in MHz.
+
+arm_boost:
+Increases arm_freq to the highest supported frequency for the board-type 
+and firmware. Set to 1 to enable.
+
+gpu_freq:
+Sets core_freq, h264_freq, isp_freq, v3d_freq and hevc_freq together
+
+over_voltage:
+CPU/GPU core upper voltage limit. 
+The value should be in the range [-16,8] 
+which equates to the range [0.95V,1.55V] ([0.8,1.4V] on RPi 1) 
+with 0.025V steps. In other words, specifying -16 will give 0.95V 
+(0.8V on RPi 1) as the maximum CPU/GPU core voltage, 
+and specifying 8 will allow up to 1.55V (1.4V on RPi 1). 
+For defaults see table below. 
+Values above 6 are only allowed when force_turbo=1 is specified: 
+this sets the warranty bit if over_voltage_* > 0 is also set.
+
+force_turbo:
+By default (force_turbo=0) the "On Demand" CPU frequency 
+driver will raise clocks to their maximum frequencies when the 
+ARM cores are busy and will lower them to the minimum 
+frequencies when the ARM cores are idle.
+force_turbo=1 overrides this behaviour and forces maximum 
+frequencies even when the ARM cores are not busy.
+Forces turbo mode frequencies even when the ARM cores are 
+not busy. 
+Enabling this may set the warranty bit if over_voltage_* is also set.
+
+gpu_mem_256:
+The gpu_mem_256 command sets the GPU memory in megabytes 
+for Raspberry Pis with 256MB of memory. 
+(It is ignored if memory size is not 256MB). 
+This overrides gpu_mem.
+
+gpu_mem_512:
+The gpu_mem_512 command sets the GPU memory in megabytes 
+for Raspberry Pis with 512MB of memory. 
+(It is ignored if memory size is not 512MB). 
+This overrides gpu_mem.
+
+gpu_mem_1024:
+The gpu_mem_1024 command sets the GPU memory in megabytes 
+for Raspberry Pis with 1GB or more of memory. 
+(It is ignored if memory size is smaller than 1GB). 
+This overrides gpu_mem.
+
+Taken from:
+https://www.raspberrypi.com/documentation/computers/config_txt.html
+
+
+
+Zram: This creates a compressing block device right in the computer's memory. 
+However, zRam is only used when the main memory is full: 
+the kernel first uses the entire available RAM, 
+then it tries to compress parts of it into zRam. 
+In this way, more data can be kept in memory. 
+In practice, this means that the system does not have to move to a slower 
+hard drive so quickly, 
+but the price is a slightly higher processor load.
