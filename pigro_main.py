@@ -66,7 +66,6 @@ class MainApplication(tk.Tk):
         self.Frame6 = Frame6(self.notebook)
         self.Frame7 = Frame7(self.notebook)
         self.Frame8 = Frame8(self.notebook)
-        self.Frame9 = Frame9(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
         tabi = Image.open("images/backgrounds/side_bar.png")
@@ -82,11 +81,6 @@ class MainApplication(tk.Tk):
         tab2l.image = tab2p
         tab2l["background"] = "#333333"
         tab2l.place(x=-2, y=630)
-
-        # Tab_Icons
-        # self.tab_tp1 = Image.open("images/icons/Logotab.png")
-        # self.tp01 = ImageTk.PhotoImage(self.tab_tp1)
-        # self.tl01 = Label(image=self.tp01)
 
         self.welcome_icon = PhotoImage(file=r"images/icons/Logotab.png")
         self.system_icon = PhotoImage(file=r"images/icons/system.png")
@@ -120,9 +114,6 @@ class MainApplication(tk.Tk):
         self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
         self.notebook.add(
             self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
-        )
-        self.notebook.add(
-            self.Frame9, compound=LEFT, text="Play Ground", image=self.play_icon
         )
 
         self.notebook.pack()
@@ -3942,99 +3933,6 @@ class Frame7(ttk.Frame):
 
 # Poll
 class Frame8(ttk.Frame):
-    def __init__(self, container):
-        super().__init__()
-
-        self.bg = PhotoImage(file="images/backgrounds/pigro_bg2.png")
-        self.bg_label = Label(self, image=self.bg)
-        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
-
-        def poll():
-            popen("xdg-open http://www.actionschnitzel.de/Pig-Grow-Poll/")
-
-        def wpaps():
-            popen("xdg-open http://www.actionschnitzel.de/Wallpapers/")
-
-        def wiki():
-            popen("xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki")
-
-        def red_bub():
-            popen(
-                "xdg-open https://www.redbubble.com/de/people/Actionschnitzel/shop?asc=u"
-            )
-
-        self.rahmen102 = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10
-        )
-        self.rahmen102.place(x=60, y=300)
-        self.rahmen102["background"] = "#333333"
-
-        self.poke_pig_21 = Label(
-            self.rahmen102,
-            justify="left",
-            text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo\n\nQuestions or suggestions?:",
-            font=("Helvetica", 12),
-            background="#333333",
-            fg="white",
-            padx=5,
-            pady=3,
-        ).pack()
-
-        self.mail = Entry(self.rahmen102, bd=5, width=31, borderwidth=1)
-        self.mail.insert(END, "pigroxtrmo@gmail.com")
-        self.mail.pack(pady=5)
-
-        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
-        self.rahmen101.place(x=60, y=600)
-        self.rahmen101["background"] = "#333333"
-
-        self.pig_btn_1 = Button(
-            self.rahmen101,
-            text="User Poll",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#2FFC05",
-            command=poll,
-            font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=0, row=0, pady=20, padx=20)
-
-        self.pig_btn_2 = Button(
-            self.rahmen101,
-            text="Wallpapers",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#EBFC05",
-            command=wpaps,
-            font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=1, row=0, pady=20)
-
-        self.pig_btn_3 = Button(
-            self.rahmen101,
-            text="PiGro Manuel",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#053AFC",
-            command=wiki,
-            font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=2, row=0, pady=20, padx=20)
-
-        self.pig_btn_4 = Button(
-            self.rahmen101,
-            text="Redbubble.com",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#FC05A0",
-            command=red_bub,
-            font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=3, row=0, pady=20, padx=20)
-
-
-# Play Ground
-class Frame9(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
