@@ -43,7 +43,22 @@ Nevertheless you should know what you are doing because most of it works with "S
 Documentation + Manual /// Still in work
 
 ---
-
+# :zap: Latest Improvements
+     
+- Folder structure improved
+- APT Fast Install has now a search funktion + combobox
+- Lot of code fixes
+- Icon & PNG improvements
+- Shop currently disabled due to makeover(I'm working on it)
+- More infos on the help button
+- Overclocking Berrys are now 
+  locked until you reset it / Close Pigro / Or reboot
+- NEW OVERCLOCKING OPTION:
+  arm_freq=2300
+  gpu_freq=500
+  over_voltage=14
+  force_turbo=1
+---
 # :rocket: To do [NEXT UPDATE]
 
 - [ ] Next vication put a Pi in the luggage
