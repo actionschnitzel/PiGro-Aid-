@@ -53,11 +53,12 @@ Documentation + Manual /// Still in work
 - More infos on the help button
 - Overclocking Berrys are now 
   locked until you reset it / Close Pigro / Or reboot
-- NEW OVERCLOCKING OPTION:
-  arm_freq=2300
-  gpu_freq=500
-  over_voltage=14
-  force_turbo=1
+- NEW OVERCLOCKING OPTION:    
+  arm_freq=2300    
+  gpu_freq=500    
+  over_voltage=14    
+  force_turbo=1    
+      
 ---
 # :rocket: To do [NEXT UPDATE]
 
