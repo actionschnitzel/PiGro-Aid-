@@ -51,15 +51,18 @@ def install_depends():
     global isInstalling
     isInstalling = True
     c = aptFind()
-    c.installIfNotInstalled("xterm")
-    c.installIfNotInstalled("python3-pil")
-    c.installIfNotInstalled("python3-pil.imagetk")
-    c.installIfNotInstalled("python3-pip")
-    c.installIfNotInstalled("mpg123")
-    c.installIfNotInstalled("lolcat")
+    for pkg in [
+        "xterm",
+        "python3-pil",
+        "python3-pil.imagetk",
+        "python3-pip",
+        "mpg123",
+        "lolcat",
+    ]:
+        c.installIfNotInstalled(pkg)
+
     pip_install("distro")
     pip_install("psutil")
-    # pip_install("pystray")
     isInstalling = False
 
 
@@ -94,24 +97,23 @@ splash_canvas.create_image(0, 0, image=bg, anchor="nw")
 
 list = [
     "Kamehameha\nwas the first king of\nHawaii",
-    "Run PiGro in\nTerminal by:\n'pigro' ;-)",
     "Sono pigro",
     "Heidi Ho Winslow!",
     "I love Ubuntu... Server...",
     "I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!",
-    "GO GO Power Rangers!",
-    "It is time to kick ass\nand chew bubble gum",
+    "It is time\nto kick ass\nand chew bubble gum",
     "Splash screens suck!",
     "Snake? Snake? SNAKE!",
     "Frostmourne hungers",
     "It's alive! It's alive!",
-    "They call it a Royale with cheese.",
+    "They call it\na Royale with cheese.",
     "Yo, Adrian!",
+    "Insert\nrandom Your Mom Joke:[ ]",
     "Go ahead, make my day.",
     "My Little Pony\nis not for Children",
-    "Try the New\nMUST HAVES on Installer TAB",
     "f-String is God!!!!",
     "Слава Україні",
+    "It's ALL Jar-Jar's fault!",
 ]
 item = random.choice(list)
 # print(item)

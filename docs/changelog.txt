@@ -14,17 +14,26 @@ All between 1 AM and 3 AM... If you get errors, it's Obi-Wan's fault!
 
 
 - Folder structure improved
-- APT Fast Install has now a search funktion + combobox
+- Added APT install funktion + combobox
+- Added APT search function + combobox
+- Added APT remove function + combobox
 - Lot of code fixes
 - Icon & PNG improvements
-- Shop currently disabled due to makeover(I'm working on it)
+- Install TAB:
+	- Renamed to Software
+	- Removed PDL
+	- New Shop
+
+- Tuning specifications can be viewed 
+  via the map button
+- GPU_Memory_Split option in Tuning
 - More infos on the help button
-- New Overclocking option
+
 - Overclocking Berrys are now 
   locked until you reset it / Close Pigro / Or reboot
 - NEW OVERCLOCKING OPTION:
   arm_freq=2300
-  gpu_freq=500
+  gpu_freq=700
   over_voltage=14
   force_turbo=1
 

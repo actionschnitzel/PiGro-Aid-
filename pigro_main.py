@@ -67,12 +67,12 @@ class MainApplication(tk.Tk):
         self.Frame1 = Frame1(self.notebook)
         self.Frame2 = Frame2(self.notebook)
         self.Frame3 = Frame3(self.notebook)
-        self.Frame10 = Frame10(self.notebook)
+        # self.Frame10 = Frame10(self.notebook)
         self.Frame4 = Frame4(self.notebook)
         self.Frame5 = Frame5(self.notebook)
         self.Frame6 = Frame6(self.notebook)
         self.Frame7 = Frame7(self.notebook)
-        self.Frame9 = Frame9(self.notebook)
+        # self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
@@ -112,9 +112,9 @@ class MainApplication(tk.Tk):
             self.Frame3, compound=LEFT, text="System", image=self.system_icon
         )
 
-        self.notebook.add(
-            self.Frame10, compound=LEFT, text="Config.txt", image=self.config_icon
-        )
+        #        self.notebook.add(
+        #            self.Frame10, compound=LEFT, text="Config.txt", image=self.config_icon
+        #        )
 
         self.notebook.add(
             self.Frame2, compound=LEFT, text="Update", image=self.update_icon
@@ -124,7 +124,7 @@ class MainApplication(tk.Tk):
         )
         self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
         self.notebook.add(
-            self.Frame6, compound=LEFT, text="Overclocking", image=self.tuning_icon
+            self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
         self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
 
@@ -4159,9 +4159,9 @@ class Frame6(ttk.Frame):
 
         # Misc_Frame
         self.misc_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE
         )
-        self.misc_main_frame.pack(padx=40, pady=15, fill="both")
+        self.misc_main_frame.pack(padx=20, pady=10, fill="both", expand=True)
         self.misc_main_frame["background"] = "#333333"
 
         self.misc_zram_frame = Frame(
@@ -4169,10 +4169,9 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            padx=30,
-            pady=10,
         )
-        self.misc_zram_frame.grid(row=0, column=1)
+        self.misc_zram_frame.pack(side=LEFT)
+        # .grid(row=0, column=1, pady=20)
         self.misc_zram_frame["background"] = "#333333"
 
         self.misc_64mode_frame = Frame(
@@ -4180,11 +4179,109 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            padx=10,
-            pady=10,
         )
-        self.misc_64mode_frame.grid(row=0, column=0)
+        self.misc_64mode_frame.pack(side=LEFT, padx=50)
+        # .grid(row=0, column=0)
         self.misc_64mode_frame["background"] = "#333333"
+        # dd
+
+        def lines_that_contain(string, fp):
+            global line_gpu_mem
+            return [line_gpu_mem for line_gpu_mem in fp if string in line_gpu_mem]
+
+        # Frame_GPU_MEM
+        def change_gpu_mem():
+
+            selection = self.clicked_gpu_mem.get()
+            with open("/boot/config.txt", "r") as fp:
+                for line_gpu_mem in lines_that_contain("#gpu_mem", fp):
+                    print(line_gpu_mem)
+                    if line_gpu_mem:
+                        popen(
+                            f"sudo xterm -e sed -i '/#gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
+                        )
+
+                    else:
+                        pass
+
+            with open("/boot/config.txt", "r") as fp:
+                for line_gpu_mem in lines_that_contain("gpu_mem", fp):
+                    print(line_gpu_mem)
+                    if line_gpu_mem:
+                        popen(
+                            f"sudo xterm -e sed -i '/gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
+                        )
+                    else:
+                        pass
+
+        # sed -i '/#gpu_mem/c\gpu_mem = {selection}'
+        def reset_gpu_mem():
+            popen(f"sudo xterm -e sed -i '/gpu_mem/c\#gpu_mem=16' /boot/config.txt")
+
+        with open("/boot/config.txt", "r") as fp:
+            for line_gpu_mem in lines_that_contain("gpu_mem", fp):
+                print(line_gpu_mem)
+
+        options_gpu_mem = [
+            f"Current:{line_gpu_mem}",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+        ]
+
+        self.gpu_mem_frame = Frame(
+            self.misc_main_frame,
+            highlightthickness=0,
+            bg="#333333",
+            width=100,
+            pady=5,
+            padx=5,
+        )
+        self.gpu_mem_frame.pack(side=LEFT)
+        # .grid(row=0, column=2, pady=2, padx=10)
+
+        self.gpu_mem_label = Label(
+            self.gpu_mem_frame,
+            text="GPU Memory",
+            justify=LEFT,
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 16),
+        )
+        self.gpu_mem_label.grid(row=0, column=0)
+
+        self.clicked_gpu_mem = StringVar()
+        self.clicked_gpu_mem.set(options_gpu_mem[0])
+
+        self.drop_gpu_mem = OptionMenu(
+            self.gpu_mem_frame, self.clicked_gpu_mem, *options_gpu_mem
+        )
+        self.drop_gpu_mem.grid(row=1, column=0)
+
+        self.gpu_mem_btn = Button(
+            self.gpu_mem_frame,
+            text="Set",
+            command=change_gpu_mem,
+            bg="#333333",
+            highlightthickness=0,
+            borderwidth=0,
+            fg="white",
+        )
+        self.gpu_mem_btn.grid(row=1, column=1)
+
+        self.gpu_mem_btn = Button(
+            self.gpu_mem_frame,
+            text="Reset",
+            bg="#333333",
+            highlightthickness=0,
+            borderwidth=0,
+            fg="white",
+            command=reset_gpu_mem,
+        )
+        self.gpu_mem_btn.grid(row=1, column=2)
 
         def z_ram():
             global z_ram_pop

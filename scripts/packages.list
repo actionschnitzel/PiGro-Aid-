@@ -30,8 +30,11 @@ binutils
 binutils-aarch64-linux-gnu			
 binutils-common:arm64				
 blt						
+blueman						
+bluetooth					
 bluez						
 bluez-firmware					
+bluez-obexd					
 brltty						
 bsdextrautils					
 bsdutils					
@@ -170,6 +173,7 @@ gimp
 gimp-data					
 gir1.2-atk-1.0:arm64				
 gir1.2-atspi-2.0:arm64				
+gir1.2-ayatanaappindicator3-0.1			
 gir1.2-freedesktop:arm64			
 gir1.2-gdkpixbuf-2.0:arm64			
 gir1.2-glib-2.0:arm64				
@@ -181,6 +185,7 @@ gir1.2-gtksource-3.0:arm64
 gir1.2-harfbuzz-0.0:arm64			
 gir1.2-javascriptcoregtk-4.0:arm64		
 gir1.2-keybinder-3.0				
+gir1.2-nm-1.0:arm64				
 gir1.2-notify-0.7:arm64				
 gir1.2-packagekitglib-1.0			
 gir1.2-pango-1.0:arm64				
@@ -613,6 +618,7 @@ libhunspell-1.7-0:arm64
 libhyphen0:arm64				
 libi2c0:arm64					
 libibverbs1:arm64				
+libical3:arm64					
 libice6:arm64					
 libicu67:arm64					
 libid3tag0:arm64				
