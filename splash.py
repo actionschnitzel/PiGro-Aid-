@@ -13,6 +13,7 @@ import threading
 import requests
 from pathlib import Path
 
+# Difines Home
 global home
 home = str(Path.home())
 print(f"{home} is your home directory!")
@@ -110,6 +111,7 @@ list = [
     "My Little Pony\nis not for Children",
     "Try the New\nMUST HAVES on Installer TAB",
     "f-String is God!!!!",
+    "Слава Україні",
 ]
 item = random.choice(list)
 # print(item)
@@ -142,11 +144,18 @@ else:
     )  # print in bold yellow
     splash.after(3000, splash.destroy)
 
-
+# Makes all Script executeble
 popen('find $HOME/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+# Checks if pigro bin exists
 popen("$HOME/PiGro-Aid-/scripts/check_bin.sh")
+# Gets list of all pakages avaleble on APT
 os.system(
     "xterm -e 'bash -c \"apt-cache pkgnames > $HOME/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
 )
+# Gets list of all installed pakages
+os.system(
+    "xterm -e 'bash -c \"dpkg --get-selections > ~/PiGro-Aid-/scripts/packages.list && sed -e s/install//g -i ~/PiGro-Aid-/scripts/packages.list && exit; exec bash\"'"
+)
 
+# Mainloop is Mainloop is Mainloop is Mainloop
 mainloop()
