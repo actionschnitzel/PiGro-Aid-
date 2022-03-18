@@ -16,6 +16,8 @@ from collections import namedtuple
 from datetime import datetime
 import distro
 import socket
+import subprocess
+
 
 # from gpiozero import CPUTemperature
 from pathlib import Path
@@ -378,9 +380,15 @@ class App:
 
     def albert_install(self):
         popen("xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Albert/install.sh; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Albert has been installed"]
+        )
 
     def albert_uninstall(self):
         popen("xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Albert/uninstall.sh; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Albert has been uninstalled"]
+        )
 
     # Argon One
     def ARGON_BTN_command(self):
@@ -451,9 +459,22 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Argon_One_Driver/install.sh; exec bash\"'"
         )
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Argon One Driver has been installed",
+            ]
+        )
 
     def argon_uninstall(self):
-        print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Pleas use Argons native uninstaller!",
+            ]
+        )
 
     # Blech Bit
     def BLEACH_BTN_command(self):
@@ -526,10 +547,16 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install bleachbit -y && exit; exec bash\"'"
         )
+        self.subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Bleach Bit has been installed"]
+        )
 
     def bleach_uninstall(self):
         popen(
             "xterm -e 'bash -c \"sudo apt-get remove bleachbit -y && exit; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Bleach Bit has been uninstalled"]
         )
 
     # BpyTop
@@ -601,9 +628,15 @@ class App:
 
     def bpytop_install(self):
         popen("xterm -e 'bash -c \"pip3 install bpytop && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "BpyTop has been installed"]
+        )
 
     def bpytop_uninstall(self):
         popen("xterm -e 'bash -c \"pip3 uninstall bpytop && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "BpyTop has been uninstalled"]
+        )
 
     # Commander Pi
     def CMNDR_BTN_command(self):
@@ -676,9 +709,19 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/CommanderPi/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Commander Pi has been installed"]
+        )
 
     def commanderpi_uninstall(self):
         print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Please use Commander Pis nativ uninstaller",
+            ]
+        )
 
     # Compiz
     def COMPIZ_BTN_command(self):
@@ -751,9 +794,13 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install compiz -y && exit; exec bash\"'"
         )
+        # subprocess.call(['notify-send','PiGro - Just Click It!','Compiz has been installed'])
 
     def compiz_uninstall(self):
         popen("xterm -e 'bash -c \"sudo apt-get remove compiz -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Compiz has been uninstalled"]
+        )
 
     # Deskpi Pro
     def DESKPI_BTN_command(self):
@@ -824,9 +871,23 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/DeskPi_Pro_Driver/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "DeskPi Driver has been installed",
+            ]
+        )
 
     def deskpi_uninstall(self):
         print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Pleas use DeskPis nativ uninstaller",
+            ]
+        )
 
     # FanShim
     def FanShim_BTN_command(self):
@@ -970,10 +1031,16 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install gnome-pie -y && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Gnome-Pie has been installed"]
+        )
 
     def gnomepie_uninstall(self):
         popen(
             "xterm -e 'bash -c \"sudo apt-get remove gnome-pie -y && exit; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Gnome-Pie has been uninstalled"]
         )
 
     # Gparted
@@ -1047,10 +1114,16 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install gparted -y && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Gparted has been installed"]
+        )
 
     def gparted_uninstall(self):
         popen(
             "xterm -e 'bash -c \"sudo apt-get remove gparted -y && exit; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Gparted has been uninstalled"]
         )
 
     # NeoFetch
@@ -1124,10 +1197,16 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install neofetch -y && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Neofetch has been installed"]
+        )
 
     def neofetch_uninstall(self):
         popen(
             "xterm -e 'bash -c \"sudo apt-get remove neofetch -y && exit; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Neofetch has been uninstalled"]
         )
 
     # Pi-Imager
@@ -1199,9 +1278,15 @@ class App:
         popen(
             "xterm -e 'bash -c \"sudo apt-get install imager -y && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Pi Imager has been installed"]
+        )
 
     def pi_imager_uninstall(self):
         popen("xterm -e 'bash -c \"sudo apt-get remove imager -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Pi Imager has been uninstalled"]
+        )
 
     # PiKiss
     def PIKISS_BTN_command(self):
@@ -1272,9 +1357,19 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Pikiss/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "PiKiss has been installed"]
+        )
 
     def pi_kiss_uninstall(self):
         print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Pleas use PiKiss nativ uninstaller",
+            ]
+        )
 
     # Plank
     def PLANK_BTN_command(self):
@@ -1345,9 +1440,15 @@ class App:
 
     def plank_install(self):
         popen("xterm -e 'bash -c \"sudo apt-get install plank -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Plank has been installed"]
+        )
 
     def plank_uninstall(self):
         popen("xterm -e 'bash -c \"sudo apt-get remove plank -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Plank has been uninstalled"]
+        )
 
     # Sub Text
     def SUB_TEXT_BTN_command(self):
@@ -1420,10 +1521,20 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Sublime_Text/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Sublime Text has been installed"]
+        )
 
     def sub_text_uninstall(self):
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Sublime_Text/uninstall.sh && exit; exec bash\"'"
+        )
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Sublime Text has been uninstalled",
+            ]
         )
 
     # Sub Merge
@@ -1495,10 +1606,24 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Sublime_Merge/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Sublime Merge has been installed",
+            ]
+        )
 
     def sub_merge_uninstall(self):
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Sublime_Merge/uninstall.sh && exit; exec bash\"'"
+        )
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Sublime Merge has been uninstalled",
+            ]
         )
 
     # Tetris
@@ -1570,10 +1695,16 @@ class App:
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Tetris-CLI/install.sh && exit; exec bash\"'"
         )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Tetris has been installed"]
+        )
 
     def tetris_uninstall(self):
         popen(
             "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/Tetris-CLI/uninstall.sh && exit; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Tetris has been uninstalled"]
         )
 
     # Tilix
@@ -1645,9 +1776,15 @@ class App:
 
     def tilix_install(self):
         popen("xterm -e 'bash -c \"sudo apt-get install tilix -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Tilix has been installed"]
+        )
 
     def tilix_uninstall(self):
         popen("xterm -e 'bash -c \"sudo apt-get remove tilix -y && exit; exec bash\"'")
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Tilix has been uninstalled"]
+        )
 
     # For Later
     def GButton_941_command(self):

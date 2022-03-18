@@ -16,6 +16,7 @@ import socket
 from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
+import subprocess
 import splash
 
 # Define Home
@@ -3540,7 +3541,17 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'"
             )
-
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+            subprocess.call(
+                [
+                    "notify-send",
+                    "New Settings:\n\n",
+                    "arm_freq = 2000\ngpu_fequ = 750\nover_voltage = 6\nforce_turbo = 1",
+                ]
+            )
             global pop_2000
             pop_2000 = Toplevel(self)
             pop_2000.config(bg="#333333")
@@ -3604,6 +3615,19 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'"
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+            subprocess.call(
+                [
+                    "notify-send",
+                    "New Settings:\n\n",
+                    "arm_freq = 2147\ngpu_fequ = 750\nover_voltage = 8\nforce_turbo = 1",
+                ]
+            )
+
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/HOLYPiT.mp3")
 
             global pop_2147
@@ -3671,6 +3695,17 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"sudo {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
+            self.tu_btn1.config(state=NORMAL)
+            self.tu_btn2.config(state=NORMAL)
+            self.tu_btn3.config(state=NORMAL)
+            self.tu_btn4.config(state=NORMAL)
+
+            subprocess.call(
+                [
+                    "notify-send",
+                    "All Settings Restored\n\n\n\n",
+                ]
+            )
 
             global pop_default
             pop_default = Toplevel(self)
@@ -3735,6 +3770,20 @@ class Frame6(ttk.Frame):
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'"
             )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+
+            subprocess.call(
+                [
+                    "notify-send",
+                    "New Settings:\n\n",
+                    "arm_freq = 2200\ngpu_fequ = 750\nover_voltage = 8\force_turbo = 1",
+                ]
+            )
+
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
             global pop_2200
             pop_2200 = Toplevel(self)
             pop_2200.config(bg="#333333")
@@ -3798,6 +3847,20 @@ class Frame6(ttk.Frame):
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_4.sh && exit; exec bash\"'"
             )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+            subprocess.call(
+                [
+                    "notify-send",
+                    "New Settings:\n\n",
+                    "arm_freq = 2300\ngpu_fequ = 700\nover_voltage = 14\nforce_turbo = 1",
+                ]
+            )
+
             global pop_2300
             pop_2300 = Toplevel(self)
             pop_2300.config(bg="#333333")
