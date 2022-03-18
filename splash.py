@@ -114,6 +114,7 @@ list = [
     "f-String is God!!!!",
     "Слава Україні",
     "It's ALL Jar-Jar's fault!",
+    "Rama Lama Ding Dong",
 ]
 item = random.choice(list)
 # print(item)

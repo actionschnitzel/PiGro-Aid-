@@ -43,6 +43,7 @@ build-essential
 busybox						
 bzip2						
 ca-certificates					
+chafa						
 chromium-browser				
 chromium-browser-l10n				
 chromium-codecs-ffmpeg-extra			
@@ -211,6 +212,8 @@ gnome-themes-standard
 gnupg						
 gnupg-l10n					
 gnupg-utils					
+gparted						
+gparted-common					
 gpg						
 gpg-agent					
 gpg-wks-client					
@@ -261,6 +264,7 @@ i2c-tools
 ibverbs-providers:arm64				
 ifupdown					
 iio-sensor-proxy				
+imagemagick-6-common				
 init						
 init-system-helpers				
 initramfs-tools					
@@ -402,6 +406,7 @@ libcdparanoia0:arm64
 libcdr-0.1-1:arm64				
 libcdt5:arm64					
 libcgraph6:arm64				
+libchafa0:arm64					
 libcholmod3:arm64				
 libchromaprint1:arm64				
 libclang1-11					
@@ -535,6 +540,7 @@ libgdk-pixbuf-2.0-0:arm64
 libgdk-pixbuf-xlib-2.0-0:arm64			
 libgdk-pixbuf2.0-0:arm64			
 libgdk-pixbuf2.0-common				
+libgee-0.8-2:arm64				
 libgegl-0.4-0:arm64				
 libgegl-common					
 libgexiv2-2:arm64				
@@ -691,6 +697,7 @@ liblouis20:arm64
 liblouisutdml-bin				
 liblouisutdml-data				
 liblouisutdml9:arm64				
+liblqr-1-0:arm64				
 liblsan0:arm64					
 libltc11:arm64					
 libltdl7:arm64					
@@ -703,6 +710,8 @@ liblzo2-2:arm64
 libmad0:arm64					
 libmagic-mgc					
 libmagic1:arm64					
+libmagickcore-6.q16-6:arm64			
+libmagickwand-6.q16-6:arm64			
 libmanette-0.2-0:arm64				
 libmatroska7:arm64				
 libmaxminddb0:arm64				
@@ -742,7 +751,9 @@ libmypaint-1.5-1:arm64
 libmypaint-common				
 libmysofa1:arm64				
 libmythes-1.2-0:arm64				
+libncurses-dev:arm64				
 libncurses6:arm64				
+libncursesw5-dev:arm64				
 libncursesw6:arm64				
 libndctl6:arm64					
 libndp0:arm64					
@@ -1265,6 +1276,7 @@ ncdu
 ncurses-base					
 ncurses-bin					
 ncurses-term					
+neofetch					
 net-tools					
 netbase						
 network-manager					

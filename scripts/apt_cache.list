@@ -8601,6 +8601,7 @@ libpgobject-simple-perl
 libbluray-bdj
 libcoq-ocaml-dev
 pim-data-exporter
+gstreamer1.0-gtk3-dbgsym
 libdevel-leak-perl
 kamailio-phonenum-modules
 libtest-async-http-perl
@@ -11443,6 +11444,7 @@ libamtk-5-common
 o-saft
 libreoffice-math-nogui
 ruby-omniauth-oauth2-generic
+gstreamer1.0-plugins-good-dbgsym
 nordugrid-arc-acix-scanner
 libweb-mrest-cli-perl
 libfannj-java
@@ -25949,6 +25951,7 @@ librte-net-sfc21
 libnet-openssh-perl
 python3-pbsuite-utils
 gdcm-doc
+gstreamer1.0-qt5-dbgsym
 gdc-10-arm-linux-gnueabi
 libnvidia-encode1
 libreoffice-report-builder-bin-nogui

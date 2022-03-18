@@ -1801,7 +1801,7 @@ class Must_Haves(tk.Toplevel):
         self.shop_whatsapp_info = Label(
             self.what_frame,
             width=60,
-            text="Albert is a desktop agnostic launcher.\nIts goals are usability and beauty, performance and extensibility.\nIt is written in C++ and based on the Qt framework.",
+            text="Albert is a desktop agnostic launcher.\nIts goals are usability and beauty, performance and extensibility.",
             anchor="w",
             highlightthickness=0,
             borderwidth=0,
@@ -1889,24 +1889,28 @@ class Must_Haves(tk.Toplevel):
 
         self.shop_argon_link["background"] = "#333333"
 
-        # Gparted
-        def gparted_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
+        # bpytop
+        def bpytop_inst():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/Shop/bpytop/install.sh; exec bash\"'"
+            )
 
-        def un_gparted_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get remove gparted; exec bash\"'")
+        def un_bpytop_inst():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/Shop/bpytop/install.sh; exec bash\"'"
+            )
 
-        self.gpa_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=2)
-        self.gpa_frame["background"] = "#333333"
-        self.gpa_frame.grid(column=1, row=3, pady=5)
+        self.bpt_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=2)
+        self.bpt_frame["background"] = "#333333"
+        self.bpt_frame.grid(column=1, row=3, pady=5)
 
-        self.shop_gparted_inst = Button(
-            self.gpa_frame,
+        self.shop_bpytop_inst = Button(
+            self.bpt_frame,
             width=120,
             image=self.ip03,
-            text="Gparted",
+            text="Bpytop",
             anchor="w",
-            command=gparted_inst,
+            command=bpytop_inst,
             highlightthickness=0,
             borderwidth=0,
             background="#d4244d",
@@ -1914,10 +1918,10 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=5)
 
-        self.shop_gparted_info = Label(
-            self.gpa_frame,
+        self.shop_bpytop_info = Label(
+            self.bpt_frame,
             width=60,
-            text="A Partition Manager",
+            text="Very good Task Manager",
             anchor="w",
             highlightthickness=0,
             borderwidth=0,
@@ -1926,11 +1930,11 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=1, row=5)
 
-        self.shop_gparted_uninst = Button(
-            self.gpa_frame,
+        self.shop_bpytop_uninst = Button(
+            self.bpt_frame,
             text="Uninstall",
             anchor="w",
-            command=un_gparted_inst,
+            command=un_bpytop_inst,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
@@ -1938,35 +1942,39 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=6)
 
-        self.shop_gparted_link = tk.Label(
-            self.gpa_frame,
-            text=r"https://gparted.org/",
+        self.shop_bpytop_link = tk.Label(
+            self.bpt_frame,
+            text=r"https://github.com/aristocratos/bpytop",
             fg="blue",
             cursor="hand2",
         )
-        self.shop_gparted_link.grid(column=1, row=6)
-        self.shop_gparted_link.bind("<Button-1>", callback)
+        self.shop_bpytop_link.grid(column=1, row=6)
+        self.shop_bpytop_link.bind("<Button-1>", callback)
 
-        self.shop_gparted_link["background"] = "#333333"
+        self.shop_bpytop_link["background"] = "#333333"
 
-        # Neofetch
-        def inst_neo():
-            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
+        # Deskpi Pro
+        def inst_dpp():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/Shop/DeskPi_Pro_Driver/install.sh; exec bash\"'"
+            )
 
-        def un_inst_neo():
-            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
+        def un_inst_dpp():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/Shop/DeskPi_Pro_Driver/uninstall.sh; exec bash\"'"
+            )
 
-        self.neo_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=2)
-        self.neo_frame["background"] = "#333333"
-        self.neo_frame.grid(column=1, row=4, pady=5)
+        self.dpp_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=2)
+        self.dpp_frame["background"] = "#333333"
+        self.dpp_frame.grid(column=1, row=4, pady=5)
 
-        self.shop_neofetch_inst = Button(
-            self.neo_frame,
+        self.shop_dpp_inst = Button(
+            self.dpp_frame,
             width=120,
             image=self.ip03,
-            text="NeoFetch",
+            text="Desk Pi Pro",
             anchor="w",
-            command=inst_neo,
+            command=inst_dpp,
             highlightthickness=0,
             borderwidth=0,
             background="#d4244d",
@@ -1974,10 +1982,10 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=0, row=7)
 
-        self.shop_neofetch_info = Label(
-            self.neo_frame,
+        self.shop_dpp_info = Label(
+            self.dpp_frame,
             width=60,
-            text="Shows system specs",
+            text="Driver for the DeskPi Pro Case",
             anchor="w",
             highlightthickness=0,
             borderwidth=0,
@@ -1986,22 +1994,21 @@ class Must_Haves(tk.Toplevel):
             compound=LEFT,
         ).grid(column=1, row=7)
 
-        self.shop_neofetch_link = tk.Label(
-            self.neo_frame,
-            text=r"https://github.com/dylanaraps/neofetch",
+        self.shop_dpp_link = tk.Label(
+            self.dpp_frame,
+            text=r"https://deskpi.com/collections/frontpage",
             fg="blue",
             cursor="hand2",
         )
-        self.shop_neofetch_link.grid(column=1, row=8)
-        self.shop_neofetch_link.bind("<Button-1>", callback)
+        self.shop_dpp_link.grid(column=1, row=8)
+        self.shop_dpp_link.bind("<Button-1>", callback)
 
-        self.shop_neofetch_link["background"] = "#333333"
+        self.shop_dpp_link["background"] = "#333333"
 
-        self.shop_neofetch_uninst = Button(
-            self.neo_frame,
+        self.shop_dpp_uninst = Button(
+            self.dpp_frame,
             text="Uninstall",
             anchor="w",
-            command=un_inst_neo,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
@@ -2565,8 +2572,9 @@ class Frame4(ttk.Frame):
             s_list.pack(anchor="w", fill=BOTH, expand=True)
 
         def open_must_haves():
-            must_haves = Must_Haves(self)
-            must_haves.grab_set()
+            # must_haves = Must_Haves(self)
+            # must_haves.grab_set()
+            os.system(f"python3 {home}/PiGro-Aid-/Shop/Shop.py")
 
         def callback(url):
             webbrowser.open_new(url)
