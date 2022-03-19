@@ -540,7 +540,6 @@ libgdk-pixbuf-2.0-0:arm64
 libgdk-pixbuf-xlib-2.0-0:arm64			
 libgdk-pixbuf2.0-0:arm64			
 libgdk-pixbuf2.0-common				
-libgee-0.8-2:arm64				
 libgegl-0.4-0:arm64				
 libgegl-common					
 libgexiv2-2:arm64				

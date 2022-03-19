@@ -63,6 +63,7 @@ def install_depends():
 
     pip_install("distro")
     pip_install("psutil")
+    pip_install("py-notifier")
     isInstalling = False
 
 
