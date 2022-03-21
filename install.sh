@@ -10,22 +10,14 @@ echo 'Now I install dependencies'
 
 sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
 
-pip3 install psutil distro
+pip3 install psutil distro py-notifier
 
 clear
 
-DIR="$HOME/Bla"
-if [ -d "$DIR" ]; then
-  ### Take action if $DIR exists ###
-  printf "\e[38;5;46m ${DIR} exists! Will Update\Reinstall! \n"
-  rm -d $HOME/PiGro-Aid-
-  git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-else
-  ###  Control will jump here if $DIR does NOT exists ###
-  printf "\e[38;5;46m ${DIR} not found. Installing PiGro for the first time.\n"
-  git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-  exit 1
-fi
+cd
+
+rm -d $HOME/PiGro-Aid-
+git clone -b April_Fix https://github.com/actionschnitzel/PiGro-Aid-.git
 
 clear
 

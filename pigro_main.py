@@ -17,7 +17,7 @@ from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
-import splash
+#import splash
 
 
 # Define Home
@@ -2941,103 +2941,6 @@ class Frame6(ttk.Frame):
         self.misc_64mode_frame["background"] = "#333333"
         # dd
 
-        def lines_that_contain(string, fp):
-            global line_gpu_mem
-            return [line_gpu_mem for line_gpu_mem in fp if string in line_gpu_mem]
-
-        # Frame_GPU_MEM
-        def change_gpu_mem():
-
-            selection = self.clicked_gpu_mem.get()
-            with open("/boot/config.txt", "r") as fp:
-                for line_gpu_mem in lines_that_contain("#gpu_mem", fp):
-                    print(line_gpu_mem)
-                    if line_gpu_mem:
-                        popen(
-                            f"sudo xterm -e sed -i '/#gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
-                        )
-
-                    else:
-                        pass
-
-            with open("/boot/config.txt", "r") as fp:
-                for line_gpu_mem in lines_that_contain("gpu_mem", fp):
-                    print(line_gpu_mem)
-                    if line_gpu_mem:
-                        popen(
-                            f"sudo xterm -e sed -i '/gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
-                        )
-                    else:
-                        pass
-
-        # sed -i '/#gpu_mem/c\gpu_mem = {selection}'
-        def reset_gpu_mem():
-            popen(f"sudo xterm -e sed -i '/gpu_mem/c\#gpu_mem=16' /boot/config.txt")
-
-        with open("/boot/config.txt", "r") as fp:
-            for line_gpu_mem in lines_that_contain("gpu_mem", fp):
-                print(line_gpu_mem)
-
-        options_gpu_mem = [
-            f"Current:{line_gpu_mem}",
-            "16",
-            "32",
-            "64",
-            "128",
-            "256",
-            "512",
-        ]
-
-        self.gpu_mem_frame = Frame(
-            self.misc_main_frame,
-            highlightthickness=0,
-            bg="#333333",
-            width=100,
-            pady=5,
-            padx=5,
-        )
-        self.gpu_mem_frame.pack(side=LEFT)
-        # .grid(row=0, column=2, pady=2, padx=10)
-
-        self.gpu_mem_label = Label(
-            self.gpu_mem_frame,
-            text="GPU Memory",
-            justify=LEFT,
-            bg="#333333",
-            fg="#d4244d",
-            font=("Helvetica", 16),
-        )
-        self.gpu_mem_label.grid(row=0, column=0)
-
-        self.clicked_gpu_mem = StringVar()
-        self.clicked_gpu_mem.set(options_gpu_mem[0])
-
-        self.drop_gpu_mem = OptionMenu(
-            self.gpu_mem_frame, self.clicked_gpu_mem, *options_gpu_mem
-        )
-        self.drop_gpu_mem.grid(row=1, column=0)
-
-        self.gpu_mem_btn = Button(
-            self.gpu_mem_frame,
-            text="Set",
-            command=change_gpu_mem,
-            bg="#333333",
-            highlightthickness=0,
-            borderwidth=0,
-            fg="white",
-        )
-        self.gpu_mem_btn.grid(row=1, column=1)
-
-        self.gpu_mem_btn = Button(
-            self.gpu_mem_frame,
-            text="Reset",
-            bg="#333333",
-            highlightthickness=0,
-            borderwidth=0,
-            fg="white",
-            command=reset_gpu_mem,
-        )
-        self.gpu_mem_btn.grid(row=1, column=2)
 
         def z_ram():
             global z_ram_pop
@@ -3849,7 +3752,7 @@ class Frame10(ttk.Frame):
         self.clicked_gpu_mem.set(options_gpu_mem[0])
 
         self.drop_gpu_mem = OptionMenu(
-            self.gpu_mem_frame, self.clicked_gpu_mem, *options_gpu_mem
+            self.gpu_mem_frame, clicked_gpu_mem, *options_gpu_mem
         )
         self.drop_gpu_mem.grid(row=1, column=0)
         self.drop_gpu_mem["background"] = "#333333"
