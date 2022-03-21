@@ -291,15 +291,18 @@ class App:
         TILIX_BTN.place(x=260, y=390, width=100, height=100)
         TILIX_BTN["command"] = self.TILIX_BTN_command
 
-    #         GButton_941=tk.Button(root)
-    #         GButton_941["bg"] = "#efefef"
-    #         ft = tkFont.Font(family='Helvetica',size=10)
-    #         GButton_941["font"] = ft
-    #         GButton_941["fg"] = "#000000"
-    #         GButton_941["justify"] = "center"
-    #         GButton_941["text"] = "Button"
-    #         GButton_941.place(x=380,y=390,width=100,height=100)
-    #         GButton_941["command"] = self.GButton_941_command
+        PIAPPS_BTN = tk.Button(root)
+        PIAPPS_BTN["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        PIAPPS_BTN["font"] = ft
+        PIAPPS_BTN["fg"] = "#000000"
+        PIAPPS_BTN["justify"] = "center"
+        PIAPPS_BTN["text"] = "Pi-Apps"
+        PIAPPS_BTN["image"] = self.piapps_icon
+        PIAPPS_BTN["compound"] = "top"
+        PIAPPS_BTN.place(x=380, y=390, width=220, height=100)
+        PIAPPS_BTN["command"] = self.PIAPPS_BTN_command
+
     #
     #         GButton_762=tk.Button(root)
     #         GButton_762["bg"] = "#efefef"
@@ -1786,12 +1789,17 @@ class App:
             ["notify-send", "PiGro - Just Click It!", "Tilix has been uninstalled"]
         )
 
-    # For Later
-    def GButton_941_command(self):
-        print("command")
+    def PIAPPS_BTN_command(self):
+        popen(
+            "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "Pi-Apps has been uninstalled"]
+        )
 
-    def GButton_762_command(self):
-        print("command")
+
+#    def GButton_762_command(self):
+#        print("command")
 
 
 if __name__ == "__main__":

@@ -14,6 +14,21 @@ pip3 install psutil distro
 
 clear
 
+DIR="$HOME/Bla"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  printf "\e[38;5;46m ${DIR} exists! Will Update\Reinstall! \n"
+  rm -d $HOME/PiGro-Aid-
+  git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  printf "\e[38;5;46m ${DIR} not found. Installing PiGro for the first time.\n"
+  git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+  exit 1
+fi
+
+clear
+
 git clone https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid-
 

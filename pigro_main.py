@@ -218,14 +218,14 @@ class Frame1(ttk.Frame):
 
         self.Chl = Button(
             self,
-            image=self.welc_info_btn,
-            font=(("Helvetica,bold"), "11"),
+            text="Changelog",
+            font=(("Helvetica,bold"), "16", "bold"),
             highlightthickness=0,
             borderwidth=0,
-            background="#d0a966",
-            foreground="white",
+            background="#fbc463",
+            foreground="grey",
             command=changelog,
-        ).place(x=110, y=400)
+        ).place(x=110, y=420)
 
 
 # Update Tab
@@ -458,9 +458,6 @@ class Frame2(ttk.Frame):
         )
         self.info_up_btn.place(x=650, y=320)
 
-
-# Gets Info of Distro / Makes error inside of system Tab (Frame3) Needs a workaround -.-
-distro = distro.id()
 
 # System tab
 class Frame3(ttk.Frame):
@@ -851,6 +848,9 @@ class Frame3(ttk.Frame):
         # System_Info/Frame2
 
         # Parameters for System
+        global distro
+        distro = distro.id()
+
         pid = os.getpid()
         ps = psutil.Process(pid)
         my_system = platform.uname()
