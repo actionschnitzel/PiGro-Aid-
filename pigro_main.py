@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+from turtle import width
 import webbrowser
 from os import popen
 from os import system as cmd
@@ -17,7 +18,9 @@ from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
-#import splash
+import math
+
+# import splash
 
 
 # Define Home
@@ -862,29 +865,34 @@ class Frame3(ttk.Frame):
         cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
 
-        self.sys_info_frame = Frame(
+        self.sys_info_main_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
         )
-        self.sys_info_frame.pack(padx=40, pady=20, fill="both")
-        self.sys_info_frame["background"] = "#333333"
+        self.sys_info_main_frame.pack(padx=40, pady=20, fill="both")
+        self.sys_info_main_frame["background"] = "#333333"
 
-        self.rahmen22 = Frame(
-            self.sys_info_frame,
+        self.sys_frame_left = Frame(
+            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
+        )
+        self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
+        self.sys_frame_left["background"] = "#333333"
+
+        self.sys_frame_right = Frame(
+            self.sys_info_main_frame,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
             pady=10,
             padx=20,
         )
-        self.rahmen22.grid(row=1, column=2)
-        self.rahmen22["background"] = "#333333"
+        self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
+        self.sys_frame_right["background"] = "#333333"
 
         self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
         self.my_label = Label(image=self.my_img)
 
         self.sysinf0 = Label(
-            self.rahmen22,
-            justify="left",
+            self.sys_frame_right,
             image=self.my_img,
             highlightthickness=0,
             borderwidth=0,
@@ -892,37 +900,12 @@ class Frame3(ttk.Frame):
             foreground="#d4244d",
             pady=20,
             padx=20,
-            anchor=W,
+            anchor=E,
         )
         self.sysinf0.pack()
 
-        self.sys_stats_frame = Frame(
-            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.sys_stats_frame.grid(row=1, column=0)
-        self.sys_stats_frame["background"] = "#333333"
-
-        self.rahmen24 = Frame(
-            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.rahmen24.grid(row=0, column=2)
-        self.rahmen24["background"] = "#333333"
-
         self.sysinf0 = Label(
-            self.rahmen24,
-            text="System Info",
-            font=("Helvetica", 16, "bold"),
-            justify="center",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#d4244d",
-            width=30,
-            anchor=W,
-        ).pack()
-
-        self.sysinf0 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"System: {my_system.system}",
             font=("Helvetica", 10, "bold"),
             justify="left",
@@ -930,141 +913,141 @@ class Frame3(ttk.Frame):
             borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             anchor=W,
         ).pack()
 
         self.sysinfd = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"Distro: {distro}",
             justify="left",
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf1 = Label(
-            self.sys_stats_frame,
-            text=f"Node Name: {my_system.node}",
+            self.sys_frame_left,
+            text=f"Device Name: {my_system.node}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf9 = Label(
-            self.sys_stats_frame,
-            text=Pi_Model.read(),
+            self.sys_frame_left,
+            text=f"Board: {Pi_Model.read()}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf2 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"Kernel: {my_system.release}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf3 = Label(
-            self.sys_stats_frame,
-            text=f"Machine: {my_system.machine}",
+            self.sys_frame_left,
+            text=f"Architecture: {my_system.machine}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf8 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text="",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         )
         self.sysinf8.pack()
 
         self.sysinf6 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf7 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf10 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text="",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         )
         self.sysinf10.pack()
 
         self.sysinf3 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf3 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
 
         self.sysinf9 = Label(
-            self.sys_stats_frame,
+            self.sys_frame_left,
             text=f"IP Address: {IPAddr}",
             justify="left",
             background="#333333",
             foreground="white",
-            width=30,
+            width=40,
             font=("Helvetica", 10, "bold"),
             anchor=W,
         ).pack()
@@ -1087,9 +1070,10 @@ class Frame3(ttk.Frame):
             svmem = psutil.virtual_memory()
             swap = psutil.swap_memory()
             cpu = CPUTemperature()
+            # print(cpu)
 
             self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
-            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature} °C")
+            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh)
 
         refresh()
@@ -2941,7 +2925,6 @@ class Frame6(ttk.Frame):
         self.misc_64mode_frame["background"] = "#333333"
         # dd
 
-
         def z_ram():
             global z_ram_pop
             z_ram_pop = Toplevel(self)
@@ -3695,75 +3678,6 @@ class Frame9(ttk.Frame):
     def video1(self):
         video = str(self.entry.get())
         popen(f"libcamera-vid -t 10000 -o {home}/{video}.h264")
-
-
-# Installer Config.txt
-class Frame10(ttk.Frame):
-    def __init__(self, container):
-        super().__init__()
-
-        def lines_that_contain(string, fp):
-            return [line for line in fp if string in line]
-
-        # Frame_GPU_MEM
-        def change_gpu_mem():
-
-            selection = self.clicked_gpu_mem.get()
-
-            with open("/boot/config.txt", "r") as fp:
-                for line in lines_that_contain("#gpu_mem", fp):
-                    print(line)
-                    if line:
-                        popen(
-                            f"sudo xterm -e sed -i '/#gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
-                        )
-
-                    else:
-                        pass
-
-            with open("/boot/config.txt", "r") as fp:
-                for line in lines_that_contain("gpu_mem", fp):
-                    print(line)
-                    if line:
-                        popen(
-                            f"sudo xterm -e sed -i '/gpu_mem/c\gpu_mem = {selection}' /boot/config.txt"
-                        )
-                    else:
-                        pass
-
-        # sed -i '/#gpu_mem/c\gpu_mem = {selection}'
-
-        options_gpu_mem = ["16", "32", "64", "128", "256", "512"]
-
-        self.gpu_mem_frame = Frame(self, highlightthickness=1, bg="#333333", width=100)
-        self.gpu_mem_frame.pack()
-
-        self.gpu_mem_label = Label(
-            self.gpu_mem_frame,
-            text="GPU Memory",
-            justify=LEFT,
-            bg="#333333",
-            fg="white",
-            font=("Helvetica", 16, "bold"),
-        )
-        self.gpu_mem_label.grid(row=0, column=0)
-
-        self.clicked_gpu_mem = StringVar()
-        self.clicked_gpu_mem.set(options_gpu_mem[0])
-
-        self.drop_gpu_mem = OptionMenu(
-            self.gpu_mem_frame, clicked_gpu_mem, *options_gpu_mem
-        )
-        self.drop_gpu_mem.grid(row=1, column=0)
-        self.drop_gpu_mem["background"] = "#333333"
-
-        self.gpu_mem_btn = Button(
-            self.gpu_mem_frame, text="Set", command=change_gpu_mem, bg="#333333"
-        )
-        self.gpu_mem_btn.grid(row=1, column=1)
-
-        self.gpu_mem_btn = Button(self.gpu_mem_frame, text="Reset", bg="#333333")
-        self.gpu_mem_btn.grid(row=1, column=2)
 
 
 # TOOLTIPZ

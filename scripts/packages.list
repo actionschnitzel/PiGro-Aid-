@@ -130,6 +130,7 @@ ffmpeg
 file						
 findutils					
 fio						
+firefox						
 firefox-esr					
 firmware-atheros				
 firmware-brcm80211				
@@ -1618,7 +1619,6 @@ rp-prefapps
 rpcbind						
 rpd-plym-splash					
 rpd-wallpaper					
-rpi-chromium-mods				
 rpi-eeprom					
 rpi-update					
 rpi.gpio-common:arm64				

@@ -475,7 +475,7 @@ class App:
             [
                 "notify-send",
                 "PiGro - Just Click It!",
-                "Pleas use Argons native uninstaller!",
+                "Please use Argons native uninstaller!",
             ]
         )
 
@@ -888,7 +888,7 @@ class App:
             [
                 "notify-send",
                 "PiGro - Just Click It!",
-                "Pleas use DeskPis nativ uninstaller",
+                "Please use DeskPis nativ uninstaller",
             ]
         )
 
@@ -1370,7 +1370,7 @@ class App:
             [
                 "notify-send",
                 "PiGro - Just Click It!",
-                "Pleas use PiKiss nativ uninstaller",
+                "Please use PiKiss nativ uninstaller",
             ]
         )
 
@@ -1790,11 +1790,87 @@ class App:
         )
 
     def PIAPPS_BTN_command(self):
+        global piapps_pop
+        piapps_pop = Toplevel()
+        # setting title
+        piapps_pop.title("")
+        # setting window size
+        width = 552
+        height = 280
+        screenwidth = piapps_pop.winfo_screenwidth()
+        screenheight = piapps_pop.winfo_screenheight()
+        alignstr = "%dx%d+%d+%d" % (
+            width,
+            height,
+            (screenwidth - width) / 2,
+            (screenheight - height) / 2,
+        )
+        piapps_pop.geometry(alignstr)
+        piapps_pop.resizable(width=False, height=False)
+
+        GLabel_804 = tk.Label(piapps_pop)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_804["font"] = ft
+        GLabel_804["fg"] = "#333333"
+        GLabel_804["justify"] = "center"
+        GLabel_804["text"] = "Icon"
+        GLabel_804["image"] = self.piapps_icon
+        GLabel_804.place(x=20, y=40, width=100, height=100)
+
+        GLabel_0 = tk.Label(piapps_pop)
+        ft = tkFont.Font(family="Helvetica", size=14)
+        GLabel_0["font"] = ft
+        GLabel_0["fg"] = "#333333"
+        GLabel_0["justify"] = "left"
+        GLabel_0["text"] = "Pi-Apps"
+        GLabel_0.place(x=160, y=30, width=391, height=33)
+
+        GLabel_29 = tk.Label(piapps_pop)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_29["font"] = ft
+        GLabel_29["fg"] = "#333333"
+        GLabel_29["justify"] = "left"
+        GLabel_29[
+            "text"
+        ] = "Introducing Pi-Apps, a well-maintained collection of\napp installation-scripts that you can run with one click.\nPi-Apps now serves over 1,000,000 people\nand hosts nearly 200 apps."
+        GLabel_29.place(x=140, y=70, width=390, height=194)
+
+        GButton_883 = tk.Button(piapps_pop)
+        GButton_883["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_883["font"] = ft
+        GButton_883["fg"] = "#000000"
+        GButton_883["justify"] = "center"
+        GButton_883["text"] = "Install"
+        GButton_883.place(x=30, y=190, width=70, height=25)
+        GButton_883["command"] = self.piapps_install
+
+        GButton_585 = tk.Button(piapps_pop)
+        GButton_585["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_585["font"] = ft
+        GButton_585["fg"] = "#000000"
+        GButton_585["justify"] = "center"
+        GButton_585["text"] = "Uninstall"
+        GButton_585.place(x=30, y=230, width=70, height=25)
+        GButton_585["command"] = self.piapps_uninstall
+
+    def piapps_install(self):
         popen(
             "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
         )
         subprocess.call(
             ["notify-send", "PiGro - Just Click It!", "Pi-Apps has been uninstalled"]
+        )
+
+    def piapps_uninstall(self):
+        print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Please use PiKiss nativ uninstaller",
+            ]
         )
 
 
