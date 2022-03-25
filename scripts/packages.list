@@ -218,7 +218,6 @@ gnupg
 gnupg-l10n					
 gnupg-utils					
 gobject-introspection				
-gparted						
 gparted-common					
 gpg						
 gpg-agent					
@@ -245,6 +244,7 @@ gstreamer1.0-x:arm64
 gtk-update-icon-cache				
 gtk2-engines:arm64				
 gtk2-engines-clearlookspix:arm64		
+gtk2-engines-murrine:arm64			
 gtk2-engines-pixbuf:arm64			
 gtk2-engines-pixflat:arm64			
 gui-pkinst					
@@ -1373,6 +1373,7 @@ nftables
 ninja-build					
 node-normalize.css				
 ntfs-3g						
+numix-gtk-theme					
 obconf						
 ocl-icd-libopencl1:arm64			
 openbox						

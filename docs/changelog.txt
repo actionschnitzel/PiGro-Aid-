@@ -11,8 +11,9 @@ This update was created while
 binge watching Star Wars: The Clone Wars and Rebels... 
 All between 1 AM and 3 AM... If you get errors, it's Obi-Wan's fault!
 
-And if you're from Russia: 
-It's not a Special Operation! It is War!
+Also I found a super cool Website: VisualTk
+I put it on Links Tab. On this site you can create Python/Tkinter GUIs
+and then download the code. Wish I had this years ago... -.-
 
 
 - Folder structure improved

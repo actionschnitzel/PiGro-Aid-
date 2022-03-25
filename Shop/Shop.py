@@ -894,42 +894,42 @@ class App:
 
     # FanShim
     def FanShim_BTN_command(self):
-        global deskpi_pop
-        deskpi_pop = Toplevel()
+        global fanshim_pop
+        fanshim_pop = Toplevel()
         # setting title
-        deskpi_pop.title("")
+        fanshim_pop.title("")
         # setting window size
         width = 552
         height = 280
-        screenwidth = deskpi_pop.winfo_screenwidth()
-        screenheight = deskpi_pop.winfo_screenheight()
+        screenwidth = fanshim_pop.winfo_screenwidth()
+        screenheight = fanshim_pop.winfo_screenheight()
         alignstr = "%dx%d+%d+%d" % (
             width,
             height,
             (screenwidth - width) / 2,
             (screenheight - height) / 2,
         )
-        deskpi_pop.geometry(alignstr)
-        deskpi_pop.resizable(width=False, height=False)
+        fanshim_pop.geometry(alignstr)
+        fanshim_pop.resizable(width=False, height=False)
 
-        GLabel_804 = tk.Label(deskpi_pop)
+        GLabel_804 = tk.Label(fanshim_pop)
         ft = tkFont.Font(family="Helvetica", size=10)
         GLabel_804["font"] = ft
         GLabel_804["fg"] = "#333333"
         GLabel_804["justify"] = "center"
         GLabel_804["text"] = "Icon"
-        GLabel_804["image"] = self.deskpi_icon
+        GLabel_804["image"] = self.fanshim_icon
         GLabel_804.place(x=20, y=40, width=100, height=100)
 
-        GLabel_0 = tk.Label(deskpi_pop)
+        GLabel_0 = tk.Label(fanshim_pop)
         ft = tkFont.Font(family="Helvetica", size=14)
         GLabel_0["font"] = ft
         GLabel_0["fg"] = "#333333"
         GLabel_0["justify"] = "left"
-        GLabel_0["text"] = "deskpi"
+        GLabel_0["text"] = "FanShim"
         GLabel_0.place(x=160, y=30, width=391, height=33)
 
-        GLabel_29 = tk.Label(deskpi_pop)
+        GLabel_29 = tk.Label(fanshim_pop)
         ft = tkFont.Font(family="Helvetica", size=10)
         GLabel_29["font"] = ft
         GLabel_29["fg"] = "#333333"
@@ -937,7 +937,7 @@ class App:
         GLabel_29["text"] = "Drivers for the FanShim"
         GLabel_29.place(x=140, y=70, width=390, height=194)
 
-        GButton_883 = tk.Button(deskpi_pop)
+        GButton_883 = tk.Button(fanshim_pop)
         GButton_883["bg"] = "#efefef"
         ft = tkFont.Font(family="Helvetica", size=10)
         GButton_883["font"] = ft
@@ -945,9 +945,9 @@ class App:
         GButton_883["justify"] = "center"
         GButton_883["text"] = "Install"
         GButton_883.place(x=30, y=190, width=70, height=25)
-        GButton_883["command"] = self.deskpi_install
+        GButton_883["command"] = self.fanshim_install
 
-        GButton_585 = tk.Button(deskpi_pop)
+        GButton_585 = tk.Button(fanshim_pop)
         GButton_585["bg"] = "#efefef"
         ft = tkFont.Font(family="Helvetica", size=10)
         GButton_585["font"] = ft
@@ -955,13 +955,25 @@ class App:
         GButton_585["justify"] = "center"
         GButton_585["text"] = "Uninstall"
         GButton_585.place(x=30, y=230, width=70, height=25)
-        GButton_585["command"] = self.deskpi_uninstall
+        GButton_585["command"] = self.fanshim_uninstall
 
-    def deskpi_install(self):
-        print("command")
+    def fanshim_install(self):
+        popen(
+            "xterm -e 'bash -c \"~/PiGro-Aid-/Shop/FanShim_Driver/install.sh; exec bash\"'"
+        )
+        subprocess.call(
+            ["notify-send", "PiGro - Just Click It!", "FanShim has been installed"]
+        )
 
-    def deskpi_uninstall(self):
+    def fanshim_uninstall(self):
         print("command")
+        subprocess.call(
+            [
+                "notify-send",
+                "PiGro - Just Click It!",
+                "Please use Fanshim nativ uninstaller",
+            ]
+        )
 
     # Gnome-Pie
     def GNOMEPI_BTN_command(self):
