@@ -6,23 +6,33 @@ echo '
 /_/   /_/\____/_/   \____/  /___/_/ /_/____/\__/\__,_/_/_/\___/_/     
                                                                       '
 
-echo 'Now I install dependencies'
+printf "${GREEN}I now install dependencies${NC}\n\n"
 
 sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
 
-pip3 install psutil distro py-notifier
+pip3 install psutil distro
 
 clear
 
-cd
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
-rm -d $HOME/PiGro-Aid-
-git clone -b April_Fix https://github.com/actionschnitzel/PiGro-Aid-.git
+
+if [ -d "$HOME/PiGro-Aid-" ] 
+then
+    printf "${YELLOW}[UPDATE]${NC}I will install the newest version.\n\n" 
+    rm -rf $HOME/PiGro-Aid-
+    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+    cd PiGro-Aid-
+else
+    printf "${YELLOW}[NEW INSTALL]${NC}I will now install PiGro\n\n"
+    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+    cd PiGro-Aid-
+fi
 
 clear
-
-git clone https://github.com/actionschnitzel/PiGro-Aid-.git
-cd PiGro-Aid-
 
 sudo chmod +x start.sh
 sudo cp pigro.desktop  $HOME/Desktop
@@ -45,4 +55,4 @@ echo  '
 ||__|||__|||__|||__|||_______|||__||
 |/__\|/__\|/__\|/__\|/_______\|/__\|'
 
-printf '\e[38;5;46m You can close this window now\n'
+printf "\n${GREEN}You can close this window now\n${NC}"

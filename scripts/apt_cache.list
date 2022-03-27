@@ -767,7 +767,6 @@ python3-prawcore
 firefox-locale-tr
 node-highlight.js
 rspamd
-linux-image-5.10.0-9-armmp-lpae
 libsdl-mixer1.2
 r-cran-gee
 golang-github-go-ldap-ldap-dev
@@ -1036,6 +1035,7 @@ libdate-convert-perl
 libopendht-dev
 japa
 libcomedi-dev
+linux-image-5.10.0-13-arm64-dbg
 st-console
 ocamlwc
 golang-gopkg-gorp.v1-dev
@@ -1077,7 +1077,6 @@ python-azure-doc
 espctag
 libqmenumodel-dev
 libglom-1.30-0
-linux-image-5.10.0-9-arm64-unsigned
 linux-headers-oracle
 libc6-dev-mips64-mipsel-cross
 prometheus-postgres-exporter
@@ -3322,7 +3321,6 @@ gnome-getting-started-docs-fr
 gir1.2-gconf-2.0
 libdbusmenu-qt5-dev
 python3-django-redis
-linux-image-5.10.0-9-armmp-dbg
 linux-image-4.15.0-1123-aws
 libcgi-session-serialize-yaml-perl
 ejabberd-mod-webpresence
@@ -3889,6 +3887,7 @@ puppet
 sigscheme
 binutils-mips64el-linux-gnuabin32
 libvtk7-qt-dev
+linux-headers-5.10.0-13-rt-arm64
 golang-github-gobwas-glob-dev
 lua-dbi-mysql-dev
 igtf-policy-experimental
@@ -4597,6 +4596,7 @@ libosinfo-bin
 node-trim-newlines
 libflamingo-java-doc
 gnome-wine-icon-theme
+linux-headers-5.10.0-13-rt-armmp
 ssldump
 libgettext-ocaml-dev
 libmtbl1
@@ -5354,6 +5354,7 @@ libkf5ldap5abi1
 fcitx5-chinese-addons
 kodi-pvr-mediaportal-tvserver-dbgsym
 node-cookies
+linux-image-5.10.0-13-cloud-arm64-unsigned
 freegish-data
 librust-half-dev
 kylin-nm
@@ -6031,7 +6032,6 @@ linux-tools-5.0.0-43-generic
 libpoe-component-client-dns-perl
 python-pyfftw-doc
 ruby-ref
-linux-image-5.10.0-9-cloud-arm64
 libthai0
 linux-image-4.15.0-1118-snapdragon
 jose
@@ -7157,7 +7157,6 @@ linux-aws-cloud-tools-4.15.0-1086
 linux-aws-cloud-tools-4.15.0-1087
 node-hashish
 librust-structopt+lints-dev
-linux-headers-5.10.0-9-arm64
 maint-guide-ru
 libgfortran-9-dev-armel-cross
 linux-aws-cloud-tools-4.15.0-1090
@@ -7809,7 +7808,6 @@ libregexp-reggrp-perl
 libstdc++-10-pic-armel-cross
 libghc-yesod-persistent-dev
 mariadb-plugin-s3
-linux-headers-5.10.0-9-armmp
 lloconv
 node-d3-time
 g++
@@ -8044,7 +8042,6 @@ libfelix-bundlerepository-java
 libpam-tmpdir
 fbi
 sdl-ball
-linux-headers-5.10.0-9-rt-arm64
 python3-tinycss2
 libapp-cell-perl
 ruby-stringex
@@ -8661,7 +8658,6 @@ libsmi2ldbl
 gr-iqbal
 linux-tools-4.15.0-1031-aws
 python3-flake8
-linux-headers-5.10.0-9-rt-armmp
 libepsilon-dev
 dict-freedict-fin-jpn
 golang-gocapability-dev
@@ -9951,6 +9947,7 @@ driverctl
 libtickit-widget-tabbed-perl
 kodi-screensaver-rsxs-euphoria
 libcss-squish-perl
+linux-image-5.10.0-13-rt-arm64-dbg
 libwcs7
 python3-cffi-backend
 python3-plac
@@ -16539,7 +16536,6 @@ sq-keyring-linter
 xnecview
 gitlab-cli
 python3-gccjit
-linux-image-5.10.0-9-cloud-arm64-dbg
 lib32stdc++-10-dev-mips64r6-cross
 libnet-twitter-perl
 golang-github-odeke-em-ripper-dev
@@ -17032,7 +17028,6 @@ lcmaps-plugins-basic-poolaccount
 libnet-tclink-perl
 sablecc
 golang-github-mattn-go-ieproxy-dev
-linux-headers-5.10.0-9-common
 libgwyddion20-doc
 backuppc
 postgresql-doc
@@ -17041,7 +17036,6 @@ golang-gopkg-asn1-ber.v1-dev
 sollya
 luksmeta
 python3-pysodium
-linux-headers-5.10.0-9-cloud-arm64
 libdraco1
 dict-wn
 libcss-parser0
@@ -17222,7 +17216,6 @@ vlan
 lxmenu-data
 libbg2-doc
 liblcmaps-without-gsi-dev
-linux-headers-5.10.0-9-common-rt
 fonts-lobster
 python3-cysignals-bare
 golang-github-phpdave11-gofpdi-dev
@@ -18345,7 +18338,6 @@ php-common
 dict-freedict-wol-fra
 php-horde-crypt
 ruby-blankslate
-libminify-maven-plugin-java
 fapg
 libspnav0
 libdrmaa1.0-java-doc
@@ -18420,6 +18412,7 @@ librte-net-hinic21
 libgo-9-dev-sparc64-cross
 librust-linear-map-dev
 mustang
+linux-image-5.10.0-13-armmp-lpae-dbg
 libassuan-mingw-w64-dev
 libclj-stacktrace-clojure
 flamethrower
@@ -18733,6 +18726,7 @@ lua-hamlib2
 golang-github-tonistiigi-fifo-dev
 libqdox-java
 yaws-chat
+linux-image-5.10.0-13-armmp-lpae
 g++-multilib-s390x-linux-gnu
 apcalc-common
 librte-vhost17.11
@@ -18950,7 +18944,6 @@ node-n3
 x2gobroker-loadchecker
 task-finnish
 siftool
-linux-image-5.10.0-9-arm64-dbg
 python3-stem-doc
 libghc-blaze-markup-dev
 qtquickcontrols2-5-examples
@@ -22690,6 +22683,7 @@ librust-publicsuffix+remote-list-dev
 libdevel-checkbin-perl
 librust-addr2line+std-object-dev
 libgfortran5-s390x-cross
+linux-headers-5.10.0-13-common
 python3-fontmake
 libgif-dev
 linux-modules-extra-4.15.0-1097-aws
@@ -24106,7 +24100,6 @@ libghc-uniplate-doc
 yorick-ml4
 libcwidget4
 python3-hisat2
-linux-image-5.10.0-9-rt-arm64-dbg
 python3-rfc6555
 binutils-dev
 libpod-plainer-perl
@@ -25228,7 +25221,6 @@ quassel
 python3-h5py
 libghc-hgettext-doc
 libespeak-dev
-linux-image-5.10.0-9-arm64
 ceilometer-agent-notification
 language-pack-zh-hans
 libwireshark-dev
@@ -25357,6 +25349,7 @@ pscan-tfbs
 linux-virtual-hwe-16.04-edge
 freediameterd
 switcheroo-control
+box64
 twpsk
 fonts-cabin
 libjs-slick
@@ -25507,7 +25500,6 @@ taggrepper
 libasan6-s390x-cross
 golang-github-go-macaron-csrf-dev
 libxau-dev
-linux-headers-5.10.0-9-armmp-lpae
 linux-image-unsigned-5.4.0-54-generic
 libuhd3.15.0
 linux-modules-extra-5.4.0-1020-aws
@@ -25848,7 +25840,6 @@ libreoffice-l10n-id
 libghc-lifted-async-prof
 language-pack-gnome-bn-base
 libxml-atom-simplefeed-perl
-linux-image-5.10.0-9-armmp
 libopenni-java
 libreoffice-l10n-in
 gtk2-engines-aurora
@@ -26735,7 +26726,6 @@ iesperanto
 node-v8flags
 libmono-windowsbase4.0-cil
 kodi-audiodecoder-gme-dbgsym
-linux-image-5.10.0-9-armmp-lpae-dbg
 libargtable2-docs
 python3-murano-dashboard
 linux-modules-4.15.0-39-snapdragon
@@ -28662,6 +28652,7 @@ python-tweepy-doc
 libspice-server1
 smb4k
 node-aws-sign2
+linux-image-5.10.0-13-rt-arm64
 libalias-perl
 linux-modules-4.15.0-1110-snapdragon
 librtimulib7-dbgsym
@@ -29258,6 +29249,7 @@ python3-ukui-menu
 liblingua-en-words2nums-perl
 libduppy-ocaml
 linux-gkeop-5.4-headers-5.4.0-1001
+linux-image-5.10.0-13-rt-armmp
 linux-gkeop-5.4-headers-5.4.0-1003
 linux-gkeop-5.4-headers-5.4.0-1004
 linux-gkeop-5.4-headers-5.4.0-1007
@@ -31938,6 +31930,7 @@ thunderbird-locale-de
 libghc-primitive-doc
 kodi-visualization-waveform-dbg
 libpappl-dev
+linux-headers-5.10.0-13-arm64
 opencv-doc
 libiconloader-java
 librust-futures-sink-dev
@@ -32602,6 +32595,7 @@ liboakleaf-doc
 libtexttools-doc
 libwbxml2-0-dbg
 linux-modules-extra-4.15.0-151-generic
+linux-headers-5.10.0-13-armmp
 quake3-server
 ruby-remcached
 golang-github-ianbruene-go-difflib-dev
@@ -34275,7 +34269,6 @@ r-cran-dygraphs
 kodi-pvr-argustv-dbg
 libghc-attoparsec-iso8601-prof
 fireqos
-libangular-maven-plugin-java
 ruby-charlock-holmes
 liboasis-ocaml-doc
 gfortran-mingw-w64-x86-64-posix
@@ -34881,6 +34874,7 @@ sg3-utils-udev
 libgetdata-perl
 bugsquish
 coinor-libosi-dev
+linux-image-5.10.0-13-cloud-arm64-dbg
 termtosvg
 libjs-skeleton
 midge
@@ -35568,6 +35562,7 @@ texlive-bibtex-extra
 libbox2d2.3.0
 crossbuild-essential-mips
 thunderbird-l10n-de
+pi-apps-b87a649a
 fonts-joscelyn
 libdbi-test-perl
 python-mockldap-doc
@@ -35576,6 +35571,7 @@ libc6-dev-armhf-cross
 libsiconos-mechanics6
 linux-modules-4.15.0-1123-snapdragon
 libstdc++-7-dev-ppc64el-cross
+linux-image-5.10.0-13-armmp-dbg
 wbritish
 gstreamer1.0-rtsp
 netcdf-bin
@@ -43879,7 +43875,6 @@ libplack-middleware-expires-perl
 libapache2-mod-geoip
 linux-modules-extra-5.4.0-1063-aws
 nautilus-extension-brasero
-linux-support-5.10.0-9
 polygen
 libsaaj-java
 libmagic-ocaml
@@ -44056,6 +44051,7 @@ alsa-topology-conf
 libequinox-metatype-java
 libsfark0
 python3-dotenv-cli
+linux-headers-5.10.0-13-armmp-lpae
 linux-base-sgx
 fonts-crosextra-caladea
 golang-github-farsightsec-go-nmsg-dev
@@ -44350,6 +44346,7 @@ libchicken11
 gnome-keyring
 libmmblib-dev
 opencubicplayer
+linux-image-5.10.0-13-rt-arm64-unsigned
 diffoscope
 libprotocol-websocket-perl
 libllvm7
@@ -45096,7 +45093,6 @@ php-opis-closure
 libkido-gui-osg0
 scowl
 libgoogle-http-client-java
-linux-image-5.10.0-9-cloud-arm64-unsigned
 libsnappy-java
 linux-tools-4.15.0-91
 linux-tools-4.15.0-96
@@ -48657,6 +48653,7 @@ libhmat-oss-dev
 elpa-ledger
 python-persistent-doc
 libghc-tasty-hspec-prof
+linux-headers-5.10.0-13-common-rt
 libn32gomp1-mips64el-cross
 golang-github-tarm-serial-dev
 r-cran-sass
@@ -50651,7 +50648,6 @@ libghc-th-bang-compat-prof
 ukui-session-manager
 language-pack-gnome-lt
 language-pack-gnome-lv
-linux-image-5.10.0-9-rt-arm64
 python3-eagerpy
 libcatmandu-perl
 libghc-githash-prof
@@ -51278,7 +51274,6 @@ libstdc++6-arm64-cross
 libguvcview-dev
 libjson-glib-dev
 codeblocks-common
-linux-image-5.10.0-9-rt-armmp
 golang-github-elisescu-pty-dev
 lib32gphobos-9-dev-amd64-cross
 libghc-memory-prof
@@ -52176,6 +52171,7 @@ lilypond-doc-pdf-hu
 thunderbird-locale-es-es
 libghc-bmp-dev
 parsnp
+linux-image-5.10.0-13-arm64
 lilypond-doc-pdf-it
 golang-github-jesseduffield-rollrus-dev
 python3-trezor
@@ -52500,6 +52496,7 @@ liblbfgsb0
 libghc-pipes-doc
 java-propose-classpath
 xdg-utils
+linux-headers-5.10.0-13-cloud-arm64
 makeparallel
 python3-dogpile.cache
 libnice-doc
@@ -52737,6 +52734,7 @@ dns323-firmware-tools
 mirage
 libtotem-dev
 gambas3-gb-gmp
+linux-image-5.10.0-13-armmp
 r-cran-epicalc
 pysatellites
 kcharselect
@@ -57236,6 +57234,7 @@ libghc-syb-doc
 containers-storage
 glbsp
 ruby-googleauth
+linux-image-5.10.0-13-arm64-unsigned
 libhiredis-dev
 libqt5feedback5
 python-ripe-atlas-sagan-doc
@@ -58228,7 +58227,6 @@ golang-github-openprinting-goipp-dev
 cellwriter
 librte-port17.11
 skkdic
-linux-image-5.10.0-9-rt-armmp-dbg
 portaudio19-dev
 libghc-emojis-doc
 lua-dbi-sqlite3
@@ -58482,6 +58480,7 @@ bbdb3
 libczmq4
 tcliis
 pdf.js-common
+linux-image-5.10.0-13-rt-armmp-dbg
 libdrm-etnaviv1
 libell0
 fonts-sil-charis-compact
@@ -59695,7 +59694,6 @@ libctemplate3
 isbg
 libclass-loader1d
 python3-pycurl-dbg
-libegl1-nvidia-tesla-450
 node-p-finally
 sortmail
 libmrpt-hwdrivers2.1
@@ -59990,7 +59988,6 @@ libxmlada-schema7
 python3-calmjs.types
 tran
 lib32stdc++6-s390x-cross
-linux-image-5.10.0-9-rt-arm64-unsigned
 ruby-awrence
 libidzebra-2.0-mod-grs-marc
 tetex-brev
@@ -61945,6 +61942,7 @@ libhttp-async-perl
 golang-github-anacrolix-ffprobe-dev
 r-cran-bdgraph
 liblunar-date-doc
+linux-image-5.10.0-13-cloud-arm64
 mcu8051ide
 python3-guiqwt
 lua-penlight
@@ -63312,6 +63310,7 @@ linux-support-5.10.0-10
 sugar-browse-activity
 linux-support-5.10.0-12
 gccgo-mips64el-linux-gnuabi64
+linux-support-5.10.0-13
 soapysdr-module-mirisdr
 ruby-et-orbi
 bs2b-ladspa

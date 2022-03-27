@@ -95,7 +95,6 @@ class MainApplication(tk.Tk):
         self.tuning_icon = PhotoImage(file=r"images/icons/tuning.png")
         self.dm_icon = PhotoImage(file=r"images/icons/dm.png")
         self.pig_icon = PhotoImage(file=r"images/icons/pigpi.png")
-        self.play_icon = PhotoImage(file=r"images/icons/play_ground.png")
         self.cam_icon = PhotoImage(file=r"images/icons/PyPiCam_Go.png")
         self.config_icon = PhotoImage(file=r"images/icons/config_txt.png")
 
@@ -240,31 +239,31 @@ class Frame2(ttk.Frame):
 
         def update_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'  # && read -p PRESS_ENTER && exit
                 % self.wid
             )
 
         def upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def full_upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def autoremove_btn():
             os.popen(
-                'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt autoremove -y && sudo apt clean && sudo apt-get purge -y && read -p PRESS_ENTER && exit ; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/auto_remove.sh && exit ; exec bash"'
                 % self.wid
             )
 
         def add_unsi_btn():
             os.popen(
-                f"xterm -into %d -bg Grey1 -geometry 120x25 -e {home}/PiGro-Aid-/scripts/addunsignedrepo.sh &"
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/addunsignedrepo.sh && exit; exec bash"'
                 % self.wid
             )
 
@@ -602,6 +601,9 @@ class Frame3(ttk.Frame):
                 st.close()
             return IP
 
+        def bash_log():
+            popen(f"xdg-open {home}/.bash_history")
+
         # Icon Set
         self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
         self.bp02 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
@@ -614,6 +616,7 @@ class Frame3(ttk.Frame):
         self.ico_m = PhotoImage(file=r"images/icons/gui_icon.png")
         self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
+        self.hist_doc = PhotoImage(file=r"images/icons/hist_doc.png")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -845,6 +848,20 @@ class Frame3(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         sys_btn11.grid(row=3, column=1)
+
+        sys_btn11 = Button(
+            self.rahmen2,
+            image=self.hist_doc,
+            text="Bash History",
+            command=bash_log,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_btn11.grid(row=3, column=2)
 
         # System_Info/Frame2
 
@@ -1333,19 +1350,19 @@ class Frame4(ttk.Frame):
             value = event.widget.get()
 
             if value == "":
-                self.combo_box["values"] = content
+                self.apt_inst_combo_box["values"] = content
             else:
                 data = []
                 for item in content:
                     if value.lower() in item.lower():
                         data.append(item)
 
-                self.combo_box["values"] = data
+                self.apt_inst_combo_box["values"] = data
 
         def inst_btn1():
-            entry_text = self.combo_box.get()
+            entry_text = self.apt_inst_combo_box.get()
             popen(
-                f"xterm -e 'bash -c \"sudo apt-get install {self.combo_box.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo apt-get install -y {self.apt_inst_combo_box.get()}; exec bash\"'"  #
             )
 
         def uninst_btn1():
@@ -1358,10 +1375,10 @@ class Frame4(ttk.Frame):
 
         self.eingabefeld1 = Entry(self.apt_frame, bd=5, width=31, borderwidth=1)
 
-        self.combo_box = ttk.Combobox(self.apt_frame)
-        self.combo_box["values"] = content
-        self.combo_box.bind("<KeyRelease>", check_input)
-        self.combo_box.config(width=30)
+        self.apt_inst_combo_box = ttk.Combobox(self.apt_frame)
+        self.apt_inst_combo_box["values"] = content
+        self.apt_inst_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_inst_combo_box.config(width=30)
 
         self.apt_inst_btn = Button(
             self.apt_frame,
@@ -1384,7 +1401,7 @@ class Frame4(ttk.Frame):
             column=0,
             row=0,
         )
-        self.combo_box.grid(column=2, row=0)
+        self.apt_inst_combo_box.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
 
         # APT- remove
@@ -1406,29 +1423,29 @@ class Frame4(ttk.Frame):
             value = event.widget.get()
 
             if value == "":
-                self.un_combo_box["values"] = un_content
+                self.apt_un_combo_box["values"] = un_content
             else:
                 data = []
                 for item in un_content:
                     if value.lower() in item.lower():
                         data.append(item)
 
-                self.un_combo_box["values"] = data
+                self.apt_un_combo_box["values"] = data
 
         def un_inst_btn1():
-            entry_text = self.un_combo_box.get()
+            entry_text = self.apt_un_combo_box.get()
             popen(
-                f"xterm -e 'bash -c \"sudo apt-get remove {self.un_combo_box.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo apt-get remove -y {self.apt_un_combo_box.get()}; exec bash\"'"
             )
 
         self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
 
         self.apt_un_entry = Entry(self.un_apt_frame, bd=5, width=31, borderwidth=1)
 
-        self.un_combo_box = ttk.Combobox(self.un_apt_frame)
-        self.un_combo_box["values"] = un_content
-        self.un_combo_box.bind("<KeyRelease>", check_input)
-        self.un_combo_box.config(width=30)
+        self.apt_un_combo_box = ttk.Combobox(self.un_apt_frame)
+        self.apt_un_combo_box["values"] = un_content
+        self.apt_un_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_un_combo_box.config(width=30)
 
         self.un_apt_inst_btn = Button(
             self.un_apt_frame,
@@ -1447,7 +1464,7 @@ class Frame4(ttk.Frame):
             column=0,
             row=0,
         )
-        self.un_combo_box.grid(column=2, row=0)
+        self.apt_un_combo_box.grid(column=2, row=0)
         self.un_apt_inst_btn.grid(column=1, row=0)
 
         # pi-apps_entry
@@ -1462,9 +1479,9 @@ class Frame4(ttk.Frame):
         self.pi_apps["background"] = "#333333"
 
         def inst_pi_apps():
-            entry_text = self.eingabefeld3.get()
+            entry_text = self.pi_apps_entry.get()
             popen(
-                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.eingabefeld3.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
             )
 
         def pi_apps_list():
@@ -1477,7 +1494,7 @@ class Frame4(ttk.Frame):
         )
         self.pi_apps_ico["background"] = "#333333"
 
-        self.eingabefeld3 = Entry(self.pi_apps, bd=5, width=31, borderwidth=1)
+        self.pi_apps_entry = Entry(self.pi_apps, bd=5, width=31, borderwidth=1)
         self.pi_apps_inst_btn = Button(
             self.pi_apps,
             text="install",
@@ -1490,7 +1507,7 @@ class Frame4(ttk.Frame):
         )
 
         self.pi_apps_ico.grid(column=0, row=3)
-        self.eingabefeld3.grid(column=2, row=3)
+        self.pi_apps_entry.grid(column=2, row=3)
         self.pi_apps_inst_btn.grid(column=1, row=3)
 
         # snap_entry
@@ -1504,9 +1521,9 @@ class Frame4(ttk.Frame):
         self.snap_frame["background"] = "#333333"
 
         def inst_btn2():
-            entry_text = self.eingabefeld2.get()
+            entry_text = self.snap_entry.get()
             popen(
-                f"xterm -e 'bash -c \"sudo snap install {self.eingabefeld2.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo snap install {self.snap_entry.get()}; exec bash\"'"
             )
 
         self.p6 = PhotoImage(file=r"images/icons/snap.png")
@@ -1516,7 +1533,7 @@ class Frame4(ttk.Frame):
         )
         self.snap_ico["background"] = "#333333"
 
-        self.eingabefeld2 = Entry(self.snap_frame, bd=5, width=31, borderwidth=1)
+        self.snap_entry = Entry(self.snap_frame, bd=5, width=31, borderwidth=1)
         self.snap_inst_btn = Button(
             self.snap_frame,
             text="install",
@@ -1533,7 +1550,7 @@ class Frame4(ttk.Frame):
         )
 
         self.snap_ico.grid(column=0, row=1)
-        self.eingabefeld2.grid(column=2, row=1)
+        self.snap_entry.grid(column=2, row=1)
         self.snap_inst_btn.grid(column=1, row=1)
 
         self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
@@ -1550,9 +1567,9 @@ class Frame4(ttk.Frame):
         self.flat_frame["background"] = "#333333"
 
         def inst_btn4():
-            entry_text = self.eingabefeld4.get()
+            entry_text = self.flat_entry.get()
             popen(
-                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.eingabefeld4.get()}; exec bash\"'"
+                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
             )
 
         self.p66 = PhotoImage(file=r"images/icons/flathub.png")
@@ -1562,7 +1579,7 @@ class Frame4(ttk.Frame):
         )
         self.flatp_ico["background"] = "#333333"
 
-        self.eingabefeld4 = Entry(self.flat_frame, bd=5, width=31, borderwidth=1)
+        self.flat_entry = Entry(self.flat_frame, bd=5, width=31, borderwidth=1)
         self.flatp_inst_btn = Button(
             self.flat_frame,
             text="install",
@@ -1579,7 +1596,7 @@ class Frame4(ttk.Frame):
         )
 
         self.flatp_ico.grid(column=0, row=7)
-        self.eingabefeld4.grid(column=2, row=7)
+        self.flat_entry.grid(column=2, row=7)
         self.flatp_inst_btn.grid(column=1, row=7)
 
         self.frame311 = Frame(
@@ -3157,6 +3174,9 @@ class Frame7(ttk.Frame):
         def vis_tk():
             popen("xdg-open https://visualtk.com/")
 
+        def papirus_nord():
+            popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
+
         # äö
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -3513,6 +3533,18 @@ class Frame7(ttk.Frame):
             text="VisualTk.com",
             anchor="w",
             command=vis_tk,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+        ).pack()
+
+        self.choice_link2 = Button(
+            sys_btn2,
+            width=50,
+            text="Papirus Nord Icon Theme",
+            anchor="w",
+            command=papirus_nord,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
