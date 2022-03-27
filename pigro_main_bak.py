@@ -174,30 +174,6 @@ class Frame1(ttk.Frame):
             s_list.pack(anchor="w", fill=BOTH, expand=True)
             # scrollbar.config(command=mylist.yview)
 
-        def get_size(bytes, suffix="B"):
-            """
-            Scale bytes to its proper format
-            e.g:
-                1253656 => '1.20MB'
-                1253656678 => '1.17GB'
-            """
-            factor = 1024
-            for unit in ["", "K", "M", "G", "T", "P"]:
-                if bytes < factor:
-                    return f"{bytes:.2f}{unit}{suffix}"
-                bytes /= factor
-
-        def extract_ip():
-            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            try:
-                st.connect(("10.255.255.255", 1))
-                IP = st.getsockname()[0]
-            except Exception:
-                IP = "127.0.0.1"
-            finally:
-                st.close()
-            return IP
-
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
@@ -237,227 +213,7 @@ class Frame1(ttk.Frame):
             background="#fbc463",
             foreground="grey",
             command=changelog,
-        ).place(x=40, y=125)
-
-        # Parameters for System
-
-        global distro
-        distro = distro.id()
-
-        pid = os.getpid()
-        ps = psutil.Process(pid)
-        my_system = platform.uname()
-        cpufreq = psutil.cpu_freq()
-        svmem = psutil.virtual_memory()
-        swap = psutil.swap_memory()
-        hostname = socket.gethostname()
-        IPAddr = extract_ip()
-        cpu = CPUTemperature()
-        Pi_Model = open("/proc/device-tree/model", "r")
-
-        self.sys_info_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
-        )
-        self.sys_info_main_frame.place(x=60, y=350)
-        self.sys_info_main_frame["background"] = "#333333"
-
-        self.sys_frame_left = Frame(
-            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
-        self.sys_frame_left["background"] = "#333333"
-
-        self.sys_frame_right = Frame(
-            self.sys_info_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            pady=10,
-            padx=20,
-        )
-        self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
-        self.sys_frame_right["background"] = "#333333"
-
-        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
-        self.my_label = Label(image=self.my_img)
-
-        self.sysinf0 = Label(
-            self.sys_frame_right,
-            image=self.my_img,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#d4244d",
-            pady=20,
-            padx=20,
-            anchor=E,
-        )
-        self.sysinf0.pack()
-
-        self.sysinf0 = Label(
-            self.sys_frame_left,
-            text=f"System: {my_system.system}",
-            font=("Helvetica", 10, "bold"),
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            width=40,
-            anchor=W,
-        ).pack()
-
-        self.sysinfd = Label(
-            self.sys_frame_left,
-            text=f"Distro: {distro}",
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf1 = Label(
-            self.sys_frame_left,
-            text=f"Device Name: {my_system.node}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf9 = Label(
-            self.sys_frame_left,
-            text=f"Board: {Pi_Model.read()}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf2 = Label(
-            self.sys_frame_left,
-            text=f"Kernel: {my_system.release}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf3 = Label(
-            self.sys_frame_left,
-            text=f"Architecture: {my_system.machine}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf8 = Label(
-            self.sys_frame_left,
-            text="",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        )
-        self.sysinf8.pack()
-
-        self.sysinf6 = Label(
-            self.sys_frame_left,
-            text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf7 = Label(
-            self.sys_frame_left,
-            text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf10 = Label(
-            self.sys_frame_left,
-            text="",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        )
-        self.sysinf10.pack()
-
-        self.sysinf3 = Label(
-            self.sys_frame_left,
-            text=f"RAM Total: {get_size(svmem.total)}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf3 = Label(
-            self.sys_frame_left,
-            text=f"SWAP Total: {get_size(swap.total)}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf9 = Label(
-            self.sys_frame_left,
-            text=f"IP Address: {IPAddr}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=40,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        def refresh():
-
-            # Parameters for System
-            pid = os.getpid()
-            ps = psutil.Process(pid)
-            cpufreq = psutil.cpu_freq()
-            svmem = psutil.virtual_memory()
-            swap = psutil.swap_memory()
-            cpu = CPUTemperature()
-            # print(cpu)
-
-            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
-            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
-            self.after(1000, refresh)
-
-        refresh()
+        ).place(x=125, y=90)
 
 
 # Update Tab
@@ -719,9 +475,6 @@ class Frame3(ttk.Frame):
         def gparted_exec():
             popen("sudo gparted")
 
-        def cron_job():
-            popen("sudo mousepad /etc/crontab")
-
         def onc_ben():
             popen("sudo xdg-open $HOME")
             print("With great power comes great responsibility")
@@ -732,11 +485,6 @@ class Frame3(ttk.Frame):
                 duration=5,
                 urgency="normal",
             ).send()
-
-        def sd_copy():
-            popen(
-                "env SUDO_ASKPASS=/usr/lib/piclone/pwdpic.sh sudo -AE dbus-launch piclone"
-            )
 
         def button_lk():
             global pop_kernel
@@ -829,6 +577,30 @@ class Frame3(ttk.Frame):
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
 
+        def get_size(bytes, suffix="B"):
+            """
+            Scale bytes to its proper format
+            e.g:
+                1253656 => '1.20MB'
+                1253656678 => '1.17GB'
+            """
+            factor = 1024
+            for unit in ["", "K", "M", "G", "T", "P"]:
+                if bytes < factor:
+                    return f"{bytes:.2f}{unit}{suffix}"
+                bytes /= factor
+
+        def extract_ip():
+            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:
+                st.connect(("10.255.255.255", 1))
+                IP = st.getsockname()[0]
+            except Exception:
+                IP = "127.0.0.1"
+            finally:
+                st.close()
+            return IP
+
         def bash_log():
             popen(f"xdg-open {home}/.bash_history")
 
@@ -857,7 +629,7 @@ class Frame3(ttk.Frame):
         self.rahmen2.pack(padx=40, pady=20, fill="both")
         self.rahmen2["background"] = "#333333"
 
-        sys_rc_cli_btn = Button(
+        sys_btn6 = Button(
             self.rahmen2,
             image=self.bp01,
             text="Raspi-Config CLI",
@@ -869,9 +641,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_rc_cli_btn.grid(row=0, column=0)
+        sys_btn6.grid(row=0, column=0)
 
-        sys_rc_gui_btn = Button(
+        sys_btn1 = Button(
             self.rahmen2,
             image=self.bp01,
             text="Raspi-Config GUI",
@@ -883,9 +655,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_rc_gui_btn.grid(row=0, column=1)
+        sys_btn1.grid(row=0, column=1)
 
-        sys_conf_btn = Button(
+        sys_btn2 = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Config.txt",
@@ -897,7 +669,7 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_conf_btn.grid(row=0, column=2)
+        sys_btn2.grid(row=0, column=2)
 
         sys_btnvs = Button(
             self.rahmen2,
@@ -913,7 +685,7 @@ class Frame3(ttk.Frame):
         )
         sys_btnvs.grid(row=0, column=3)
 
-        sys_gparted_btn = Button(
+        sys_btn3 = Button(
             self.rahmen2,
             image=self.bp04,
             text="Gparted",
@@ -925,16 +697,16 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_gparted_btn.grid(row=1, column=0)
+        sys_btn3.grid(row=1, column=0)
 
         if os.path.isfile("/usr/sbin/gparted"):
             print("Gparted exist")
-            sys_gparted_btn.configure(state=NORMAL)
+            sys_btn3.configure(state=NORMAL)
         else:
             print("Gparted does not exist")
-            sys_gparted_btn.configure(state=DISABLED)
+            sys_btn3.configure(state=DISABLED)
 
-        sys_neo_btn = Button(
+        sys_btn4 = Button(
             self.rahmen2,
             image=self.bp05,
             text="NeoFetch",
@@ -946,16 +718,16 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_neo_btn.grid(row=1, column=1)
+        sys_btn4.grid(row=1, column=1)
 
         if os.path.isfile("/bin/neofetch"):
             print("Neofetch exist")
-            sys_neo_btn.configure(state=NORMAL)
+            sys_btn4.configure(state=NORMAL)
         else:
             print("Neofetch does not exist")
-            sys_neo_btn.configure(state=DISABLED)
+            sys_btn4.configure(state=DISABLED)
 
-        sys_FMGM_btn = Button(
+        sys_btn5 = Button(
             self.rahmen2,
             image=self.bp06,
             text="FM God Mode",
@@ -967,13 +739,13 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_FMGM_btn.grid(row=1, column=2)
-        sys_FMGM_btn = CreateToolTip(
-            sys_FMGM_btn,
+        sys_btn5.grid(row=1, column=2)
+        sys_btn5_ttp = CreateToolTip(
+            sys_btn5,
             "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)",
         )
 
-        sys_kernel_btn = Button(
+        sys_btn6 = Button(
             self.rahmen2,
             image=self.bp07,
             text="Upgrade Linux Kernel",
@@ -985,9 +757,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_kernel_btn.grid(row=1, column=3)
+        sys_btn6.grid(row=1, column=3)
 
-        sys_dpp_btn = Button(
+        sys_btn7 = Button(
             self.rahmen2,
             image=self.bp03,
             text="DeskpiPro Control",
@@ -999,9 +771,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_dpp_btn.grid(row=2, column=0)
+        sys_btn7.grid(row=2, column=0)
 
-        sys_b_log_btn = Button(
+        sys_btn8 = Button(
             self.rahmen2,
             image=self.bp03,
             text="Boot Log",
@@ -1013,9 +785,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_b_log_btn.grid(row=2, column=1)
+        sys_btn8.grid(row=2, column=1)
 
-        sys_xf_auto_btn = Button(
+        sys_btn9 = Button(
             self.rahmen2,
             image=self.bp033,
             text="Xfce Autostarts",
@@ -1027,12 +799,12 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_xf_auto_btn.grid(row=2, column=2)
-        sys_xf_auto_btn.configure(state=DISABLED)
+        sys_btn9.grid(row=2, column=2)
+        sys_btn9.configure(state=DISABLED)
         if get_de == "XFCE":
-            sys_xf_auto_btn.configure(state=NORMAL)
+            sys_btn9.configure(state=NORMAL)
 
-        sys_xf_sett_btn = Button(
+        sys_btn91 = Button(
             self.rahmen2,
             image=self.bp033,
             text="Xfce Settings",
@@ -1044,12 +816,12 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_xf_sett_btn.grid(row=2, column=3)
-        sys_xf_sett_btn.configure(state=DISABLED)
+        sys_btn91.grid(row=2, column=3)
+        sys_btn91.configure(state=DISABLED)
         if get_de == "XFCE":
-            sys_xf_sett_btn.configure(state=NORMAL)
+            sys_btn91.configure(state=NORMAL)
 
-        sys_netset_btn = Button(
+        sys_btn10 = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Network Settings",
@@ -1061,9 +833,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_netset_btn.grid(row=3, column=0)
+        sys_btn10.grid(row=3, column=0)
 
-        sys_task_btn = Button(
+        sys_btn11 = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Taskmanager",
@@ -1075,9 +847,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_task_btn.grid(row=3, column=1)
+        sys_btn11.grid(row=3, column=1)
 
-        sys_bash_btn = Button(
+        sys_btn11 = Button(
             self.rahmen2,
             image=self.hist_doc,
             text="Bash History",
@@ -1089,35 +861,211 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_bash_btn.grid(row=3, column=2)
+        sys_btn11.grid(row=3, column=2)
 
-        sys_cron_btn = Button(
-            self.rahmen2,
-            image=self.hist_doc,
-            text="Cron Job",
-            command=cron_job,
+        # System_Info/Frame2
+
+        # Parameters for System
+        global distro
+        distro = distro.id()
+
+        pid = os.getpid()
+        ps = psutil.Process(pid)
+        my_system = platform.uname()
+        cpufreq = psutil.cpu_freq()
+        svmem = psutil.virtual_memory()
+        swap = psutil.swap_memory()
+        hostname = socket.gethostname()
+        IPAddr = extract_ip()
+        cpu = CPUTemperature()
+        Pi_Model = open("/proc/device-tree/model", "r")
+
+        self.sys_info_main_frame = Frame(
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
+        )
+        self.sys_info_main_frame.pack(padx=40, pady=20, fill="both")
+        self.sys_info_main_frame["background"] = "#333333"
+
+        self.sys_frame_left = Frame(
+            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
+        )
+        self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
+        self.sys_frame_left["background"] = "#333333"
+
+        self.sys_frame_right = Frame(
+            self.sys_info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=10,
+            padx=20,
+        )
+        self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
+        self.sys_frame_right["background"] = "#333333"
+
+        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
+        self.my_label = Label(image=self.my_img)
+
+        self.sysinf0 = Label(
+            self.sys_frame_right,
+            image=self.my_img,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#d4244d",
+            pady=20,
+            padx=20,
+            anchor=E,
+        )
+        self.sysinf0.pack()
+
+        self.sysinf0 = Label(
+            self.sys_frame_left,
+            text=f"System: {my_system.system}",
+            font=("Helvetica", 10, "bold"),
+            justify="left",
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            compound=TOP,
-            font=("Helvetica", 10, "bold"),
-        )
-        sys_cron_btn.grid(row=3, column=3)
+            width=40,
+            anchor=W,
+        ).pack()
 
-        sys_sd_btn = Button(
-            self.rahmen2,
-            image=self.ico_m,
-            text="SD Card Copier",
-            command=sd_copy,
+        self.sysinfd = Label(
+            self.sys_frame_left,
+            text=f"Distro: {distro}",
+            justify="left",
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            compound=TOP,
+            width=40,
             font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf1 = Label(
+            self.sys_frame_left,
+            text=f"Device Name: {my_system.node}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=f"Board: {Pi_Model.read()}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf2 = Label(
+            self.sys_frame_left,
+            text=f"Kernel: {my_system.release}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"Architecture: {my_system.machine}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf8 = Label(
+            self.sys_frame_left,
+            text="",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
         )
-        sys_sd_btn.grid(row=4, column=0)
+        self.sysinf8.pack()
+
+        self.sysinf6 = Label(
+            self.sys_frame_left,
+            text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf7 = Label(
+            self.sys_frame_left,
+            text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf10 = Label(
+            self.sys_frame_left,
+            text="",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        )
+        self.sysinf10.pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"RAM Total: {get_size(svmem.total)}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"SWAP Total: {get_size(swap.total)}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=f"IP Address: {IPAddr}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
 
         self.info_sys_btn = Button(
             self,
@@ -1127,6 +1075,23 @@ class Frame3(ttk.Frame):
             command=info_system_tab,
         )
         self.info_sys_btn.place(x=700, y=620)
+
+        def refresh():
+
+            # Parameters for System
+            pid = os.getpid()
+            ps = psutil.Process(pid)
+            cpufreq = psutil.cpu_freq()
+            svmem = psutil.virtual_memory()
+            swap = psutil.swap_memory()
+            cpu = CPUTemperature()
+            # print(cpu)
+
+            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
+            self.after(1000, refresh)
+
+        refresh()
 
 
 # [Overclocking_Legend] button in Frame6
@@ -2155,24 +2120,17 @@ class z_ram_pop(tk.Toplevel):
                     "xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'"
                 )
             )
-            Notification(
-                title="ZRAMr\n",
-                description="ZRAM has been installed",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+            # subprocess.call(['notify-send','PiGro - Just Click It!','z_ram has been installed'])
 
-        # ää
         def z_ram_uninstall():
             popen("xterm -e 'bash -c \"sudo apt-get remove zram-tools; exec bash\"'")
-            Notification(
-                title="ZRAMr\n",
-                description="ZRAM has been uninstalled",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+            subprocess.call(
+                [
+                    "notify-send",
+                    "PiGro - Just Click It!",
+                    "z_ram has been uninstalled",
+                ]
+            )
 
         GLabel_804 = tk.Label(self)
         ft = tkFont.Font(family="Helvetica", size=10)
@@ -2222,6 +2180,93 @@ class z_ram_pop(tk.Toplevel):
         GButton_585["command"] = z_ram_uninstall
 
 
+# 64 Bit Mode
+class six4_bit_pop(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        # self["background"] = "#333333"
+        self.title("")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 552
+        app_height = 280
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+
+        self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
+
+        def sixfour_bit_install():
+            popen(
+                popen(
+                    "xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'"
+                )
+            )
+            # subprocess.call(['notify-send','PiGro - Just Click It!','sixfour_bit has been installed'])
+
+        def sixfour_bit_uninstall():
+            popen(
+                "xterm -e 'bash -c \"sudo apt-get remove raspbian-nspawn-64; exec bash\"'"
+            )
+            subprocess.call(
+                [
+                    "notify-send",
+                    "PiGro - Just Click It!",
+                    "sixfour_bit has been uninstalled",
+                ]
+            )
+
+        GLabel_804 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_804["font"] = ft
+        GLabel_804["fg"] = "#333333"
+        GLabel_804["justify"] = "center"
+        GLabel_804["text"] = "Icon"
+        GLabel_804["image"] = self.ip03
+        GLabel_804.place(x=20, y=40, width=100, height=100)
+
+        GLabel_0 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=14)
+        GLabel_0["font"] = ft
+        GLabel_0["fg"] = "#333333"
+        GLabel_0["justify"] = "left"
+        GLabel_0["text"] = "64 Bit Mode"
+        GLabel_0.place(x=160, y=30, width=391, height=33)
+
+        GLabel_29 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_29["font"] = ft
+        GLabel_29["fg"] = "#333333"
+        GLabel_29["justify"] = "left"
+        GLabel_29[
+            "text"
+        ] = "This project is a bootable, microSD card 64-bit kernel,\n32-bit Raspbian Buster Desktop host OS + 64-bit\nDebian Buster guest OS image for the\nRaspberry Pi 4 model B,\nand Pi 3 model B/B+ single board computers (SBC).\nIt is intended for users who would like to retain\ntheir familiar Raspbian tools, desktop and\nrepos, but who also need to run one or\nmore 64-bit only software components on their Pi."
+        GLabel_29.place(x=140, y=70, width=390, height=194)
+
+        GButton_883 = tk.Button(self)
+        GButton_883["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_883["font"] = ft
+        GButton_883["fg"] = "#000000"
+        GButton_883["justify"] = "center"
+        GButton_883["text"] = "Install"
+        GButton_883.place(x=30, y=190, width=70, height=25)
+        GButton_883["command"] = sixfour_bit_install
+
+        GButton_585 = tk.Button(self)
+        GButton_585["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_585["font"] = ft
+        GButton_585["fg"] = "#000000"
+        GButton_585["justify"] = "center"
+        GButton_585["text"] = "Uninstall"
+        GButton_585.place(x=30, y=230, width=70, height=25)
+        GButton_585["command"] = sixfour_bit_uninstall
+
+
 # Tuning
 class Frame6(ttk.Frame):
     def __init__(self, container):
@@ -2254,6 +2299,10 @@ class Frame6(ttk.Frame):
         def tuning_legende():
             tu_le = Tuning_Legende(self)
             tu_le.grab_set()
+
+        def btswitch_64():
+            six_4 = six4_bit_pop(self)
+            six_4.grab_set()
 
         def z_ram():
             z_ram = z_ram_pop(self)
@@ -3026,6 +3075,19 @@ class Frame6(ttk.Frame):
             foreground="#d4244d",
         ).grid(column=0, row=1)
 
+        self.tu_bbtn = Button(
+            self.misc_64mode_frame,
+            text="64 Bit Mode",
+            font=("Helvetica", 16),
+            anchor="w",
+            command=btswitch_64,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#d4244d",
+            compound=LEFT,
+        ).grid(column=0, row=1)
+
         self.info_tuning_btn = Button(
             self,
             image=self.tpinfm,
@@ -3293,6 +3355,21 @@ class Frame7(ttk.Frame):
             anchor="w",
             text="Pop_OS",
             command=popo_bubi,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            width=150,
+        ).pack()
+
+        self.dist_btn11 = Button(
+            self.rahmen,
+            compound=LEFT,
+            justify="left",
+            image=self.pi64_os_ico,
+            anchor="w",
+            text="RPi OS 64 Bit",
+            command=six4_berry,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",

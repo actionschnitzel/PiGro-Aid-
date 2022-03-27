@@ -33,6 +33,8 @@ and then download the code. Wish I had this years ago... -.-
         force_turbo=1
 #ADDED# VisualTk added to Links
 #ADDED# Bash History on System Tab
+#ADDED# Cron Job in System
+#ADDED# SD Copier in System
 
 #FIXED# Temperature rounded to one number after the decimal point
 #FIXED# Folder structure improved
@@ -43,6 +45,7 @@ and then download the code. Wish I had this years ago... -.-
 #CHANGED# Image.open has been almost completely replaced by PhotoImage
 #CHANGED# Installer Renamed to Software
 #CHANGED# Fast Installer command "sudo apt-get install/remove" has now *option "-y"
+#CHANGED# 64 Bit Mode removed due to it's no more avaleble in repo
 
 Best regards
 
