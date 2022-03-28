@@ -96,10 +96,6 @@ Documentation + Manual /// Still in work
 
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
-
-April Test:
-wget -qO- https://github.com/actionschnitzel/PiGro-Aid-/blob/April_Fix/install.sh |bash
-
 ```
 
 (Extra easy for LTT employees)
