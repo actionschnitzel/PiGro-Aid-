@@ -690,6 +690,27 @@ class Frame3(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
+        def source_sett():
+            popen("pi-gpk-prefs")
+
+        def screen_sett():
+            popen("lxrandr")
+
+        def desk_sett():
+            popen("pcmanfm --desktop-pref")
+
+        def desk_sess_sett():
+            popen("lxsession-edit")
+
+        def printer_sett():
+            popen("system-config-printer")
+
+        def menu_sett():
+            popen("alacarte")
+
+        def mouse_key_sett():
+            popen("lxinput")
+
         def button_boot():
             popen("xterm -e 'bash -c \"dmesg; exec bash\"'")
 
@@ -845,6 +866,15 @@ class Frame3(ttk.Frame):
         self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
         self.hist_doc = PhotoImage(file=r"images/icons/hist_doc.png")
+        self.display_settings_icon = PhotoImage(
+            file=r"images/icons/display_settings_icon.png"
+        )
+        self.mouse_settings_icon = PhotoImage(
+            file=r"images/icons/mouse_settings_icon.png"
+        )
+        self.printer_settings_icon = PhotoImage(
+            file=r"images/icons/printer_settings_icon.png"
+        )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -1118,6 +1148,90 @@ class Frame3(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         sys_sd_btn.grid(row=4, column=0)
+
+        screen_sett_btn = Button(
+            self.rahmen2,
+            image=self.display_settings_icon,
+            text="Screen Settings",
+            command=screen_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        screen_sett_btn.grid(row=4, column=1)
+
+        desk_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Desktop Settings",
+            command=desk_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        desk_sett_btn.grid(row=4, column=2)
+
+        printer_sett_btn = Button(
+            self.rahmen2,
+            image=self.printer_settings_icon,
+            text="Printer Settings",
+            command=printer_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        printer_sett_btn.grid(row=4, column=3)
+
+        menu_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Menu Settings",
+            command=menu_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        menu_sett_btn.grid(row=5, column=0)
+
+        source_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Source Settings",
+            command=source_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        source_sett_btn.grid(row=5, column=1)
+
+        mouse_key_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Mouse & Keyboard",
+            command=mouse_key_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        mouse_key_sett_btn.grid(row=5, column=2)
 
         self.info_sys_btn = Button(
             self,

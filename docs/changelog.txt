@@ -35,6 +35,13 @@ and then download the code. Wish I had this years ago... -.-
 #ADDED# Bash History on System Tab
 #ADDED# Cron Job in System
 #ADDED# SD Copier in System
+#ADDED# Screen Settings
+#ADDED# Desktop Settings
+#ADDED# Desktop Session Settings
+#ADDED# Printer
+#ADDED# Menu Settings
+#ADDED# Pakage Sources
+#ADDED# Mous & Keyboard
 
 #FIXED# Temperature rounded to one number after the decimal point
 #FIXED# Folder structure improved

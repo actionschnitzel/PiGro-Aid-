@@ -101,6 +101,7 @@ list = [
     "Sono pigro",
     "Heidi Ho Winslow!",
     "I love Ubuntu... Server...",
+    "Why do people\nhate it when I call\nthem Oompa-Loompa?",
     "I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!",
     "It is time\nto kick ass\nand chew bubble gum",
     "Splash screens suck!",
