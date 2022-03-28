@@ -43,22 +43,48 @@ Nevertheless you should know what you are doing because most of it works with "S
 Documentation + Manual /// Still in work
 
 ---
+
 # :zap: Latest Improvements
-     
-- Folder structure improved
-- APT Fast Install has now a search funktion + combobox
-- Lot of code fixes
-- Icon & PNG improvements
-- Shop currently disabled due to makeover(I'm working on it)
-- More infos on the help button
-- Overclocking Berrys are now 
-  locked until you reset it / Close Pigro / Or reboot
-- NEW OVERCLOCKING OPTION:
-  arm_freq=2300
-  gpu_freq=500
-  over_voltage=14
-  force_turbo=1
+
+#ADDED# High Quality Welcome Tab Background  
+#ADDED# XFCE Options are disabled when using other desktop  
+#ADDED# Gparted & Neofetch Button disabled when not installed  
+#ADDED# Shop is better structured  
+#ADDED# Overclocking buttons are disabled immediately after clicking  
+#ADDED# APT install funktion + combobox  
+#ADDED# APT search function + combobox  
+#ADDED# APT remove function + combobox  
+#ADDED# Tuning specifications can be viewed via the map button  
+#ADDED# VisualTk added to Links  
+#ADDED# NEW OVERCLOCKING OPTION:  
+ arm_freq=2300  
+ gpu_freq=700  
+ over_voltage=14  
+ force_turbo=1  
+#ADDED# VisualTk added to Links  
+#ADDED# Bash History on System Tab  
+#ADDED# Cron Job in System  
+#ADDED# SD Copier in System  
+#ADDED# Screen Settings  
+#ADDED# Desktop Settings  
+#ADDED# Desktop Session Settings  
+#ADDED# Printer  
+#ADDED# Menu Settings  
+#ADDED# Pakage Sources  
+#ADDED# Mous & Keyboard
+
+#FIXED# Temperature rounded to one number after the decimal point  
+#FIXED# Folder structure improved  
+#FIXED# Icon & PNG improvements
+
+#CHANGED# Old and useless code has been deleted  
+#CHANGED# Image.open has been almost completely replaced by PhotoImage  
+#CHANGED# Installer Renamed to Software  
+#CHANGED# Fast Installer command "sudo apt-get install/remove" has now \*option "-y"  
+#CHANGED# 64 Bit Mode removed due to it's no more avaleble in repo
+
 ---
+
 # :rocket: To do [NEXT UPDATE]
 
 - [ ] Next vication put a Pi in the luggage
@@ -70,6 +96,10 @@ Documentation + Manual /// Still in work
 
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
+
+April Test:
+wget -qO- https://github.com/actionschnitzel/PiGro-Aid-/blob/April_Fix/install.sh |bash
+
 ```
 
 (Extra easy for LTT employees)
