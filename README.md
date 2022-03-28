@@ -115,7 +115,11 @@ https://twisteros.com/
 #### :exclamation: Installation Process & Updates
 
 If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use "git pull".
+If you install PiGro using the script, you can simply use:
+
+```
+"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
+```
 
 ---
 
