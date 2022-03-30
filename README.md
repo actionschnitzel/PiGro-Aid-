@@ -46,6 +46,7 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
+
 #ADDED# High Quality Welcome Tab Background  
 #ADDED# XFCE Options are disabled when using other desktop  
 #ADDED# Gparted & Neofetch Button disabled when not installed  
