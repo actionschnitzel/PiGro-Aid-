@@ -13,6 +13,7 @@ import threading
 import requests
 from pathlib import Path
 
+# Difines Home
 global home
 home = str(Path.home())
 print(f"{home} is your home directory!")
@@ -50,15 +51,19 @@ def install_depends():
     global isInstalling
     isInstalling = True
     c = aptFind()
-    c.installIfNotInstalled("xterm")
-    c.installIfNotInstalled("python3-pil")
-    c.installIfNotInstalled("python3-pil.imagetk")
-    c.installIfNotInstalled("python3-pip")
-    c.installIfNotInstalled("mpg123")
-    c.installIfNotInstalled("lolcat")
+    for pkg in [
+        "xterm",
+        "python3-pil",
+        "python3-pil.imagetk",
+        "python3-pip",
+        "mpg123",
+        "lolcat",
+    ]:
+        c.installIfNotInstalled(pkg)
+
     pip_install("distro")
     pip_install("psutil")
-    # pip_install("pystray")
+    pip_install("py-notifier")
     isInstalling = False
 
 
@@ -93,23 +98,25 @@ splash_canvas.create_image(0, 0, image=bg, anchor="nw")
 
 list = [
     "Kamehameha\nwas the first king of\nHawaii",
-    "Run PiGro in\nTerminal by:\n'pigro' ;-)",
     "Sono pigro",
     "Heidi Ho Winslow!",
     "I love Ubuntu... Server...",
+    "Why do people\nhate it when I call\nthem Oompa-Loompa?",
     "I DID NOTHING!\nTHE PAVEMENT\nWAS HIS ENEMY!",
-    "GO GO Power Rangers!",
-    "It is time to kick ass\nand chew bubble gum",
+    "It is time\nto kick ass\nand chew bubble gum",
     "Splash screens suck!",
     "Snake? Snake? SNAKE!",
     "Frostmourne hungers",
     "It's alive! It's alive!",
-    "They call it a Royale with cheese.",
+    "They call it\na Royale with cheese.",
     "Yo, Adrian!",
+    "Insert\nrandom Your Mom Joke:[ ]",
     "Go ahead, make my day.",
     "My Little Pony\nis not for Children",
-    "Try the New\nMUST HAVES on Installer TAB",
     "f-String is God!!!!",
+    "Слава Україні",
+    "It's ALL Jar-Jar's fault!",
+    "Rama Lama Ding Dong",
 ]
 item = random.choice(list)
 # print(item)
@@ -142,11 +149,18 @@ else:
     )  # print in bold yellow
     splash.after(3000, splash.destroy)
 
-
+# Makes all Script executeble
 popen('find $HOME/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+# Checks if pigro bin exists
 popen("$HOME/PiGro-Aid-/scripts/check_bin.sh")
+# Gets list of all pakages avaleble on APT
 os.system(
     "xterm -e 'bash -c \"apt-cache pkgnames > $HOME/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
 )
+# Gets list of all installed pakages
+os.system(
+    "xterm -e 'bash -c \"dpkg --get-selections > ~/PiGro-Aid-/scripts/packages.list && sed -e s/install//g -i ~/PiGro-Aid-/scripts/packages.list && exit; exec bash\"'"
+)
 
+# Mainloop is Mainloop is Mainloop is Mainloop
 mainloop()

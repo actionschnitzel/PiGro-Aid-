@@ -1,5 +1,9 @@
 import os
+import os.path
 import tkinter as tk
+from tkinter.dialog import DIALOG_ICON
+from turtle import width
+import tkinter.font as tkFont
 import webbrowser
 from os import popen
 from os import system as cmd
@@ -15,25 +19,23 @@ import distro
 import socket
 from gpiozero import CPUTemperature
 from pathlib import Path
+from cgitb import enable
+from pynotifier import Notification
 
-import splash
 
+# Define Home
 global home
 home = str(Path.home())
 print(f"{home} is your home directory!")
 
-
-#
-def actionhome():
-    popen("xdg-open https://www.actionschnitzel.de/PiGro/")
-
-
-def reboot_n():
-    popen("sudo reboot")
+# Get Desktop Environment
+global get_de
+get_de = os.environ.get("XDG_CURRENT_DESKTOP")
+print("You are using: " + get_de)
 
 
-def callback(event):
-    webbrowser.open_new(event.widget.cget("text"))
+# def reboot_n():
+#    popen("sudo reboot")
 
 
 # Main Winddow / Notebook Config
@@ -65,6 +67,7 @@ class MainApplication(tk.Tk):
         self.Frame5 = Frame5(self.notebook)
         self.Frame6 = Frame6(self.notebook)
         self.Frame7 = Frame7(self.notebook)
+        # self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
@@ -92,7 +95,8 @@ class MainApplication(tk.Tk):
         self.tuning_icon = PhotoImage(file=r"images/icons/tuning.png")
         self.dm_icon = PhotoImage(file=r"images/icons/dm.png")
         self.pig_icon = PhotoImage(file=r"images/icons/pigpi.png")
-        self.play_icon = PhotoImage(file=r"images/icons/play_ground.png")
+        self.cam_icon = PhotoImage(file=r"images/icons/PyPiCam_Go.png")
+        self.config_icon = PhotoImage(file=r"images/icons/config_txt.png")
 
         # Tabs
         self.notebook.add(
@@ -105,13 +109,18 @@ class MainApplication(tk.Tk):
             self.Frame2, compound=LEFT, text="Update", image=self.update_icon
         )
         self.notebook.add(
-            self.Frame4, compound=LEFT, text="Installer", image=self.install_icon
+            self.Frame4, compound=LEFT, text="Software", image=self.install_icon
         )
         self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
         self.notebook.add(
             self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
         self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
+
+        #        self.notebook.add(
+        #            self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
+        #        )
+
         self.notebook.add(
             self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
         )
@@ -165,57 +174,296 @@ class Frame1(ttk.Frame):
             s_list.pack(anchor="w", fill=BOTH, expand=True)
             # scrollbar.config(command=mylist.yview)
 
-        self.welc_info_btn = PhotoImage(file=r"images/icons/info_button_p.png")
+        def get_size(bytes, suffix="B"):
+            """
+            Scale bytes to its proper format
+            e.g:
+                1253656 => '1.20MB'
+                1253656678 => '1.17GB'
+            """
+            factor = 1024
+            for unit in ["", "K", "M", "G", "T", "P"]:
+                if bytes < factor:
+                    return f"{bytes:.2f}{unit}{suffix}"
+                bytes /= factor
+
+        def extract_ip():
+            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:
+                st.connect(("10.255.255.255", 1))
+                IP = st.getsockname()[0]
+            except Exception:
+                IP = "127.0.0.1"
+            finally:
+                st.close()
+            return IP
+
+        def callback(event):
+            webbrowser.open_new(event.widget.cget("text"))
 
         self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
-        self.my_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
-        self.my_canvas.pack(fill="both", expand=True)
-        self.my_canvas.create_image(0, 0, image=self.bg, anchor="nw")
+        self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
+        self.welcome_canvas.pack(fill="both", expand=True)
+        self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
-        self.al = tk.Label(
+        self.web_link = tk.Label(
             self,
             text=r"https://www.actionschnitzel.de/PiGro/",
             fg="blue",
             cursor="hand2",
         )
-        self.al.place(x=480, y=645)
-        self.al.bind("<Button-1>", callback)
+        self.web_link.place(x=480, y=645)
+        self.web_link.bind("<Button-1>", callback)
 
-        self.al["background"] = "#333333"
+        self.web_link["background"] = "#333333"
 
-        self.al2 = tk.Label(
+        self.gihub_link = tk.Label(
             self,
             text=r"https://github.com/actionschnitzel/PiGro-Aid-",
             fg="blue",
             cursor="hand2",
         )
-        self.al2.place(x=480, y=670)
-        self.al2.bind("<Button-1>", callback)
+        self.gihub_link.place(x=480, y=670)
+        self.gihub_link.bind("<Button-1>", callback)
 
-        self.al2["background"] = "#333333"
+        self.gihub_link["background"] = "#333333"
 
-        self.Chl = Button(
+        self.changelog_btn = Button(
             self,
-            image=self.welc_info_btn,
-            font=(("Helvetica,bold"), "11"),
+            text="Changelog",
+            font=(("Helvetica,bold"), "12", "bold"),
             highlightthickness=0,
             borderwidth=0,
-            background="#d0a966",
-            foreground="white",
+            background="#fbc463",
+            foreground="grey",
             command=changelog,
-        ).place(x=110, y=400)
+        ).place(x=40, y=125)
+
+        # Parameters for System
+
+        global distro
+        distro = distro.id()
+
+        pid = os.getpid()
+        ps = psutil.Process(pid)
+        my_system = platform.uname()
+        cpufreq = psutil.cpu_freq()
+        svmem = psutil.virtual_memory()
+        swap = psutil.swap_memory()
+        hostname = socket.gethostname()
+        IPAddr = extract_ip()
+        cpu = CPUTemperature()
+        Pi_Model = open("/proc/device-tree/model", "r")
+
+        self.sys_info_main_frame = Frame(
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
+        )
+        self.sys_info_main_frame.place(x=60, y=350)
+        self.sys_info_main_frame["background"] = "#333333"
+
+        self.sys_frame_left = Frame(
+            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
+        )
+        self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
+        self.sys_frame_left["background"] = "#333333"
+
+        self.sys_frame_right = Frame(
+            self.sys_info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=10,
+            padx=20,
+        )
+        self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
+        self.sys_frame_right["background"] = "#333333"
+
+        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
+        self.my_label = Label(image=self.my_img)
+
+        self.sysinf0 = Label(
+            self.sys_frame_right,
+            image=self.my_img,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#d4244d",
+            pady=20,
+            padx=20,
+            anchor=E,
+        )
+        self.sysinf0.pack()
+
+        self.sysinf0 = Label(
+            self.sys_frame_left,
+            text=f"System: {my_system.system}",
+            font=("Helvetica", 10, "bold"),
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            width=40,
+            anchor=W,
+        ).pack()
+
+        self.sysinfd = Label(
+            self.sys_frame_left,
+            text=f"Distro: {distro}",
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf1 = Label(
+            self.sys_frame_left,
+            text=f"Device Name: {my_system.node}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=f"Board: {Pi_Model.read()}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf2 = Label(
+            self.sys_frame_left,
+            text=f"Kernel: {my_system.release}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"Architecture: {my_system.machine}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf8 = Label(
+            self.sys_frame_left,
+            text="",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        )
+        self.sysinf8.pack()
+
+        self.sysinf6 = Label(
+            self.sys_frame_left,
+            text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf7 = Label(
+            self.sys_frame_left,
+            text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf10 = Label(
+            self.sys_frame_left,
+            text="",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        )
+        self.sysinf10.pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"RAM Total: {get_size(svmem.total)}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf3 = Label(
+            self.sys_frame_left,
+            text=f"SWAP Total: {get_size(swap.total)}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=f"IP Address: {IPAddr}",
+            justify="left",
+            background="#333333",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        def refresh():
+
+            # Parameters for System
+            pid = os.getpid()
+            ps = psutil.Process(pid)
+            cpufreq = psutil.cpu_freq()
+            svmem = psutil.virtual_memory()
+            swap = psutil.swap_memory()
+            cpu = CPUTemperature()
+            # print(cpu)
+
+            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
+            self.after(1000, refresh)
+
+        refresh()
 
 
 # Update Tab
 class Frame2(ttk.Frame):
     def __init__(self, container):
         super().__init__()
-
-        def send_entry_to_terminal(*args):
-            """*args needed since callback may be called from no arg (button)
-            or one arg (entry)
-            """
-            cmd("%s" % (BasicCovTests))
 
         def info_update_tab():
             global pop_changelog
@@ -235,31 +483,31 @@ class Frame2(ttk.Frame):
 
         def update_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'  # && read -p PRESS_ENTER && exit
                 % self.wid
             )
 
         def upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def full_upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && read -p PRESS_ENTER && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def autoremove_btn():
             os.popen(
-                'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt autoremove -y && sudo apt clean && sudo apt-get purge -y && read -p PRESS_ENTER && exit ; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/auto_remove.sh && exit ; exec bash"'
                 % self.wid
             )
 
         def add_unsi_btn():
             os.popen(
-                f"xterm -into %d -bg Grey1 -geometry 120x25 -e {home}/PiGro-Aid-/scripts/addunsignedrepo.sh &"
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/addunsignedrepo.sh && exit; exec bash"'
                 % self.wid
             )
 
@@ -288,9 +536,9 @@ class Frame2(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.rahmen11 = Frame(self, relief=GROOVE, borderwidth=0)
-        self.rahmen11.pack(padx=45, pady=40, anchor=W)
-        self.rahmen11["background"] = "#333333"
+        self.source_list_frame = Frame(self, relief=GROOVE, borderwidth=0)
+        self.source_list_frame.pack(padx=45, pady=40, anchor=W)
+        self.source_list_frame["background"] = "#333333"
 
         self.termf = Frame(
             self, height=270, width=700, padx=10, highlightthickness=2, borderwidth=0
@@ -298,23 +546,23 @@ class Frame2(ttk.Frame):
         self.wid = self.termf.winfo_id()
         self.termf["background"] = "#333333"
 
-        s_list = Text(self.rahmen11, width=1550, height=10, highlightthickness=1)
+        s_list = Text(
+            self.source_list_frame, width=1550, height=10, highlightthickness=1
+        )
         text_file = open("/etc/apt/sources.list", "r")
         stuff = text_file.read()
         s_list.insert(END, stuff)
         text_file.close()
         s_list.pack(anchor="w")
 
-        shadowcolor = "yellow"
-
-        self.rahmen112 = Frame(
+        self.update_btn_frame = Frame(
             self, borderwidth=0, relief=GROOVE, highlightthickness=2, padx=5, pady=5
         )
-        self.rahmen112.pack(padx=45, anchor="w")
-        self.rahmen112["background"] = "#333333"
+        self.update_btn_frame.pack(padx=45, anchor="w")
+        self.update_btn_frame["background"] = "#333333"
 
         self.update_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Update",
             width=15,
             anchor="w",
@@ -328,7 +576,7 @@ class Frame2(ttk.Frame):
         self.update_button.grid(column=0, row=0)
 
         self.update_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Upgrade",
             width=15,
             anchor="w",
@@ -342,7 +590,7 @@ class Frame2(ttk.Frame):
         self.update_button.grid(column=0, row=1)
 
         self.fupgrade_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Full Upgrade",
             width=15,
             anchor="w",
@@ -356,7 +604,7 @@ class Frame2(ttk.Frame):
         self.fupgrade_button.grid(column=0, row=2)
 
         self.gpk_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="GPK UpdateViewer",
             width=15,
             anchor="w",
@@ -370,7 +618,7 @@ class Frame2(ttk.Frame):
         self.gpk_button.grid(column=0, row=3)
 
         self.auth_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Allow Sources",
             width=20,
             anchor="w",
@@ -384,7 +632,7 @@ class Frame2(ttk.Frame):
         self.auth_button.grid(column=1, row=0)
 
         self.rm_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Remove Config Files",
             width=20,
             anchor="w",
@@ -398,7 +646,7 @@ class Frame2(ttk.Frame):
         self.rm_button.grid(column=1, row=1)
 
         self.sv_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Save Source List",
             width=20,
             anchor="w",
@@ -412,7 +660,7 @@ class Frame2(ttk.Frame):
         self.sv_button.grid(column=1, row=2)
 
         self.reboot_button = Button(
-            self.rahmen112,
+            self.update_btn_frame,
             text="Reboot",
             width=20,
             anchor="w",
@@ -437,18 +685,36 @@ class Frame2(ttk.Frame):
         self.info_up_btn.place(x=650, y=320)
 
 
-# System Tab
-distro = distro.id()
-
-
+# System tab
 class Frame3(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
+        def source_sett():
+            popen("pi-gpk-prefs")
+
+        def screen_sett():
+            popen("lxrandr")
+
+        def desk_sett():
+            popen("pcmanfm --desktop-pref")
+
+        def desk_sess_sett():
+            popen("lxsession-edit")
+
+        def printer_sett():
+            popen("system-config-printer")
+
+        def menu_sett():
+            popen("alacarte")
+
+        def mouse_key_sett():
+            popen("lxinput")
+
         def button_boot():
             popen("xterm -e 'bash -c \"dmesg; exec bash\"'")
 
-        def rm_vsc():
+        def rm_vscode():
             popen(
                 "xterm -e 'bash -c \"sudo rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'"
             )
@@ -474,9 +740,24 @@ class Frame3(ttk.Frame):
         def gparted_exec():
             popen("sudo gparted")
 
+        def cron_job():
+            popen("sudo mousepad /etc/crontab")
+
         def onc_ben():
             popen("sudo xdg-open $HOME")
             print("With great power comes great responsibility")
+            Notification(
+                title="Sudo File Manager\n",
+                description="With great power comes great responsibility\n\n                          - Oncle Ben",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+        def sd_copy():
+            popen(
+                "env SUDO_ASKPASS=/usr/lib/piclone/pwdpic.sh sudo -AE dbus-launch piclone"
+            )
 
         def button_lk():
             global pop_kernel
@@ -497,6 +778,7 @@ class Frame3(ttk.Frame):
             def do_it():
                 popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
                 print("Kernel Upgrade GO!")
+                pop_kernel.destroy()
 
             frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel.pack()
@@ -567,33 +849,9 @@ class Frame3(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
 
-        def get_size(bytes, suffix="B"):
-            """
-            Scale bytes to its proper format
-            e.g:
-                1253656 => '1.20MB'
-                1253656678 => '1.17GB'
-            """
-            factor = 1024
-            for unit in ["", "K", "M", "G", "T", "P"]:
-                if bytes < factor:
-                    return f"{bytes:.2f}{unit}{suffix}"
-                bytes /= factor
-
-        def extract_ip():
-            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            try:
-                st.connect(("10.255.255.255", 1))
-                IP = st.getsockname()[0]
-            except Exception:
-                IP = "127.0.0.1"
-            finally:
-                st.close()
-            return IP
-
-        # print(extract_ip())
+        def bash_log():
+            popen(f"xdg-open {home}/.bash_history")
 
         # Icon Set
         self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
@@ -607,6 +865,16 @@ class Frame3(ttk.Frame):
         self.ico_m = PhotoImage(file=r"images/icons/gui_icon.png")
         self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
+        self.hist_doc = PhotoImage(file=r"images/icons/hist_doc.png")
+        self.display_settings_icon = PhotoImage(
+            file=r"images/icons/display_settings_icon.png"
+        )
+        self.mouse_settings_icon = PhotoImage(
+            file=r"images/icons/mouse_settings_icon.png"
+        )
+        self.printer_settings_icon = PhotoImage(
+            file=r"images/icons/printer_settings_icon.png"
+        )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
@@ -619,7 +887,7 @@ class Frame3(ttk.Frame):
         self.rahmen2.pack(padx=40, pady=20, fill="both")
         self.rahmen2["background"] = "#333333"
 
-        sys_btn6 = Button(
+        sys_rc_cli_btn = Button(
             self.rahmen2,
             image=self.bp01,
             text="Raspi-Config CLI",
@@ -631,9 +899,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn6.grid(row=0, column=0)
+        sys_rc_cli_btn.grid(row=0, column=0)
 
-        sys_btn1 = Button(
+        sys_rc_gui_btn = Button(
             self.rahmen2,
             image=self.bp01,
             text="Raspi-Config GUI",
@@ -645,9 +913,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn1.grid(row=0, column=1)
+        sys_rc_gui_btn.grid(row=0, column=1)
 
-        sys_btn2 = Button(
+        sys_conf_btn = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Config.txt",
@@ -659,13 +927,13 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn2.grid(row=0, column=2)
+        sys_conf_btn.grid(row=0, column=2)
 
         sys_btnvs = Button(
             self.rahmen2,
             image=self.bp03,
             text="rm vscode.list ",
-            command=rm_vsc,
+            command=rm_vscode,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
@@ -675,7 +943,7 @@ class Frame3(ttk.Frame):
         )
         sys_btnvs.grid(row=0, column=3)
 
-        sys_btn3 = Button(
+        sys_gparted_btn = Button(
             self.rahmen2,
             image=self.bp04,
             text="Gparted",
@@ -687,9 +955,16 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn3.grid(row=1, column=0)
+        sys_gparted_btn.grid(row=1, column=0)
 
-        sys_btn4 = Button(
+        if os.path.isfile("/usr/sbin/gparted"):
+            print("Gparted exist")
+            sys_gparted_btn.configure(state=NORMAL)
+        else:
+            print("Gparted does not exist")
+            sys_gparted_btn.configure(state=DISABLED)
+
+        sys_neo_btn = Button(
             self.rahmen2,
             image=self.bp05,
             text="NeoFetch",
@@ -701,9 +976,16 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn4.grid(row=1, column=1)
+        sys_neo_btn.grid(row=1, column=1)
 
-        sys_btn5 = Button(
+        if os.path.isfile("/bin/neofetch"):
+            print("Neofetch exist")
+            sys_neo_btn.configure(state=NORMAL)
+        else:
+            print("Neofetch does not exist")
+            sys_neo_btn.configure(state=DISABLED)
+
+        sys_FMGM_btn = Button(
             self.rahmen2,
             image=self.bp06,
             text="FM God Mode",
@@ -715,13 +997,13 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn5.grid(row=1, column=2)
-        sys_btn5_ttp = CreateToolTip(
-            sys_btn5,
+        sys_FMGM_btn.grid(row=1, column=2)
+        sys_FMGM_btn = CreateToolTip(
+            sys_FMGM_btn,
             "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)",
         )
 
-        sys_btn6 = Button(
+        sys_kernel_btn = Button(
             self.rahmen2,
             image=self.bp07,
             text="Upgrade Linux Kernel",
@@ -733,9 +1015,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn6.grid(row=1, column=3)
+        sys_kernel_btn.grid(row=1, column=3)
 
-        sys_btn7 = Button(
+        sys_dpp_btn = Button(
             self.rahmen2,
             image=self.bp03,
             text="DeskpiPro Control",
@@ -747,9 +1029,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn7.grid(row=2, column=0)
+        sys_dpp_btn.grid(row=2, column=0)
 
-        sys_btn8 = Button(
+        sys_b_log_btn = Button(
             self.rahmen2,
             image=self.bp03,
             text="Boot Log",
@@ -761,9 +1043,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn8.grid(row=2, column=1)
+        sys_b_log_btn.grid(row=2, column=1)
 
-        sys_btn9 = Button(
+        sys_xf_auto_btn = Button(
             self.rahmen2,
             image=self.bp033,
             text="Xfce Autostarts",
@@ -775,9 +1057,12 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn9.grid(row=2, column=2)
+        sys_xf_auto_btn.grid(row=2, column=2)
+        sys_xf_auto_btn.configure(state=DISABLED)
+        if get_de == "XFCE":
+            sys_xf_auto_btn.configure(state=NORMAL)
 
-        sys_btn9 = Button(
+        sys_xf_sett_btn = Button(
             self.rahmen2,
             image=self.bp033,
             text="Xfce Settings",
@@ -789,9 +1074,12 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn9.grid(row=2, column=3)
+        sys_xf_sett_btn.grid(row=2, column=3)
+        sys_xf_sett_btn.configure(state=DISABLED)
+        if get_de == "XFCE":
+            sys_xf_sett_btn.configure(state=NORMAL)
 
-        sys_btn10 = Button(
+        sys_netset_btn = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Network Settings",
@@ -803,9 +1091,9 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn10.grid(row=3, column=0)
+        sys_netset_btn.grid(row=3, column=0)
 
-        sys_btn11 = Button(
+        sys_task_btn = Button(
             self.rahmen2,
             image=self.ico_m,
             text="Taskmanager",
@@ -817,228 +1105,133 @@ class Frame3(ttk.Frame):
             compound=TOP,
             font=("Helvetica", 10, "bold"),
         )
-        sys_btn11.grid(row=3, column=1)
+        sys_task_btn.grid(row=3, column=1)
 
-        # System_Info/Frame2
-
-        # Parameters for System
-        pid = os.getpid()
-        ps = psutil.Process(pid)
-        my_system = platform.uname()
-        cpufreq = psutil.cpu_freq()
-        svmem = psutil.virtual_memory()
-        swap = psutil.swap_memory()
-        hostname = socket.gethostname()
-        IPAddr = extract_ip()
-        cpu = CPUTemperature()
-        Pi_Model = open("/proc/device-tree/model", "r")
-
-        self.sys_info_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
-        )
-        self.sys_info_frame.pack(padx=40, pady=20, fill="both")
-        self.sys_info_frame["background"] = "#333333"
-
-        self.rahmen22 = Frame(
-            self.sys_info_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            pady=10,
-            padx=20,
-        )
-        self.rahmen22.grid(row=1, column=2)
-        self.rahmen22["background"] = "#333333"
-
-        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
-        self.my_label = Label(image=self.my_img)
-
-        self.sysinf0 = Label(
-            self.rahmen22,
-            justify="left",
-            image=self.my_img,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#d4244d",
-            pady=20,
-            padx=20,
-            anchor=W,
-        )
-        self.sysinf0.pack()
-
-        self.sys_stats_frame = Frame(
-            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.sys_stats_frame.grid(row=1, column=0)
-        self.sys_stats_frame["background"] = "#333333"
-
-        self.rahmen24 = Frame(
-            self.sys_info_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.rahmen24.grid(row=0, column=2)
-        self.rahmen24["background"] = "#333333"
-
-        self.sysinf0 = Label(
-            self.rahmen24,
-            text="System Info",
-            font=("Helvetica", 16, "bold"),
-            justify="center",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#d4244d",
-            width=30,
-            anchor=W,
-        ).pack()
-
-        self.sysinf0 = Label(
-            self.sys_stats_frame,
-            text=f"System: {my_system.system}",
-            font=("Helvetica", 10, "bold"),
-            justify="left",
+        sys_bash_btn = Button(
+            self.rahmen2,
+            image=self.hist_doc,
+            text="Bash History",
+            command=bash_log,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
-            anchor=W,
-        ).pack()
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_bash_btn.grid(row=3, column=2)
 
-        self.sysinfd = Label(
-            self.sys_stats_frame,
-            text=f"Distro: {distro}",
-            justify="left",
+        sys_cron_btn = Button(
+            self.rahmen2,
+            image=self.hist_doc,
+            text="Cron Job",
+            command=cron_job,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            compound=TOP,
             font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf1 = Label(
-            self.sys_stats_frame,
-            text=f"Node Name: {my_system.node}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf9 = Label(
-            self.sys_stats_frame,
-            text=Pi_Model.read(),
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf2 = Label(
-            self.sys_stats_frame,
-            text=f"Kernel: {my_system.release}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf3 = Label(
-            self.sys_stats_frame,
-            text=f"Machine: {my_system.machine}",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf8 = Label(
-            self.sys_stats_frame,
-            text="",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
         )
-        self.sysinf8.pack()
+        sys_cron_btn.grid(row=3, column=3)
 
-        self.sysinf6 = Label(
-            self.sys_stats_frame,
-            text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
-            justify="left",
+        sys_sd_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="SD Card Copier",
+            command=sd_copy,
+            highlightthickness=0,
+            borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            compound=TOP,
             font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf7 = Label(
-            self.sys_stats_frame,
-            text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
-
-        self.sysinf10 = Label(
-            self.sys_stats_frame,
-            text="",
-            justify="left",
-            background="#333333",
-            foreground="white",
-            width=30,
-            font=("Helvetica", 10, "bold"),
-            anchor=W,
         )
-        self.sysinf10.pack()
+        sys_sd_btn.grid(row=4, column=0)
 
-        self.sysinf3 = Label(
-            self.sys_stats_frame,
-            text=f"RAM Total: {get_size(svmem.total)}",
-            justify="left",
+        screen_sett_btn = Button(
+            self.rahmen2,
+            image=self.display_settings_icon,
+            text="Screen Settings",
+            command=screen_sett,
+            highlightthickness=0,
+            borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            compound=TOP,
             font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
+        )
+        screen_sett_btn.grid(row=4, column=1)
 
-        self.sysinf3 = Label(
-            self.sys_stats_frame,
-            text=f"SWAP Total: {get_size(swap.total)}",
-            justify="left",
+        desk_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Desktop Settings",
+            command=desk_sett,
+            highlightthickness=0,
+            borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            compound=TOP,
             font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
+        )
+        desk_sett_btn.grid(row=4, column=2)
 
-        self.sysinf9 = Label(
-            self.sys_stats_frame,
-            text=f"IP Address: {IPAddr}",
-            justify="left",
+        printer_sett_btn = Button(
+            self.rahmen2,
+            image=self.printer_settings_icon,
+            text="Printer Settings",
+            command=printer_sett,
+            highlightthickness=0,
+            borderwidth=0,
             background="#333333",
             foreground="white",
-            width=30,
+            compound=TOP,
             font=("Helvetica", 10, "bold"),
-            anchor=W,
-        ).pack()
+        )
+        printer_sett_btn.grid(row=4, column=3)
+
+        menu_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Menu Settings",
+            command=menu_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        menu_sett_btn.grid(row=5, column=0)
+
+        source_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Source Settings",
+            command=source_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        source_sett_btn.grid(row=5, column=1)
+
+        mouse_key_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Mouse & Keyboard",
+            command=mouse_key_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        mouse_key_sett_btn.grid(row=5, column=2)
 
         self.info_sys_btn = Button(
             self,
@@ -1049,672 +1242,151 @@ class Frame3(ttk.Frame):
         )
         self.info_sys_btn.place(x=700, y=620)
 
-        def refresh():
 
-            # Parameters for System
-            pid = os.getpid()
-            ps = psutil.Process(pid)
-            cpufreq = psutil.cpu_freq()
-            svmem = psutil.virtual_memory()
-            swap = psutil.swap_memory()
-            cpu = CPUTemperature()
-
-            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
-            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature} °C")
-            self.after(1000, refresh)
-
-        refresh()
-
-
-# Sec Window [Must HAVES]
-class Must_Haves(tk.Toplevel):
+# [Overclocking_Legend] button in Frame6
+class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = "#333333"
+        self.title("Overclocking Legend")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 500
+        app_height = 600
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
-        self.tab_ip3 = Image.open("images/icons/download_ico.png")
-        self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
-        self.il03 = Label(image=self.ip03)
+        self.tu_1 = PhotoImage(file=r"images/icons/PiGroOV_rm.png")
+        self.tu_2 = PhotoImage(file=r"images/icons/PiGroOV1.png")
+        self.tu_3 = PhotoImage(file=r"images/icons/PiGroOV2.png")
+        self.tu_4 = PhotoImage(file=r"images/icons/PiGroOV3.png")
+        self.tu_5 = PhotoImage(file=r"images/icons/PiGroOV4.png")
 
-        # Whatsapp
-        def w_app():
-            popen("xterm -e 'bash -c \"sudo snap install kesty-whatsapp; exec bash\"'")
-
-        def un_w_app():
-            popen(
-                "xterm -e 'bash -c \"sudo snap uninstall kesty-whatsapp; exec bash\"'"
-            )
-
-        self.what_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        # Main Frame
+        self.tu_main_frame = Frame(self, bg="#333333")
+        self.tu_main_frame.pack(pady=20)
+        # xd
+        # Reset
+        self.rm_lbl = Label(
+            self.tu_main_frame,
+            text="Reset Settings",
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 14),
+            justify=LEFT,
         )
-        self.what_frame["background"] = "#333333"
-        self.what_frame.pack()
+        self.rm_lbl.grid(row=0, column=0)
 
-        self.shop_whatsapp_inst = Button(
-            self.what_frame,
-            width=120,
-            image=self.ip03,
-            text="Whatsapp\n(Snap)",
-            anchor="w",
-            command=w_app,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=1)
+        self.rm_ov = Label(self.tu_main_frame, image=self.tu_1, bg="#333333")
+        self.rm_ov.grid(row=1, column=0)
 
-        self.shop_whatsapp_uninst = Button(
-            self.what_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_w_app,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=2)
-
-        self.shop_whatsapp_info = Label(
-            self.what_frame,
-            width=60,
-            text="The desktop version of the popular messenger(unofficial)",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=1)
-
-        self.shop_whatsapp_link = tk.Label(
-            self.what_frame,
-            text=r"https://snapcraft.io/kesty-whatsapp",
-            fg="blue",
-            cursor="hand2",
+        self.rm_text = Label(
+            self.tu_main_frame,
+            text="Removes all\noverclocking parameters\n\n",
+            justify=LEFT,
+            bg="#333333",
+            fg="white",
         )
-        self.shop_whatsapp_link.grid(column=1, row=2)
-        self.shop_whatsapp_link.bind("<Button-1>", callback)
+        self.rm_text.grid(row=1, column=1)
 
-        self.shop_whatsapp_link["background"] = "#333333"
-
-        # Compiz
-        def compiz_button():
-            popen("xterm -e 'bash -c \"sudo apt-get install compiz; exec bash\"'")
-
-        def un_compiz_button():
-            popen("xterm -e 'bash -c \"sudo apt-get remove compiz; exec bash\"'")
-
-        self.comp_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        # OV_1
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Crank It Up!",
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 14),
+            justify=LEFT,
         )
-        self.comp_frame["background"] = "grey"
-        self.comp_frame.pack()
+        self.ov1_lbl.grid(row=2, column=0)
 
-        self.shop_compiz_inst = Button(
-            self.comp_frame,
-            width=120,
-            image=self.ip03,
-            text="Compiz",
-            anchor="w",
-            command=compiz_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=3)
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2, bg="#333333", fg="white")
+        self.ov_1.grid(row=3, column=0)
 
-        self.shop_compiz_uninst = Button(
-            self.comp_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_compiz_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=4)
-
-        self.shop_compiz_info = Label(
-            self.comp_frame,
-            width=60,
-            text="Compiz is a compositing window manager",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=3)
-
-        self.shop_compiz_link = tk.Label(
-            self.comp_frame,
-            text=r"http://wiki.compiz.org/",
-            fg="blue",
-            cursor="hand2",
+        self.ov_1_text = Label(
+            self.tu_main_frame,
+            text="arm_freq = 2000\ngpu_freq = 750\nover_voltage = 6\nforce_turbo = 1",
+            justify=LEFT,
+            bg="#333333",
+            fg="white",
         )
-        self.shop_compiz_link.grid(column=1, row=4)
-        self.shop_compiz_link.bind("<Button-1>", callback)
+        self.ov_1_text.grid(row=3, column=1)
 
-        self.shop_compiz_link["background"] = "grey"
-
-        # Gparted
-        def gparted_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install gparted; exec bash\"'")
-
-        def un_gparted_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get remove gparted; exec bash\"'")
-
-        self.gpa_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.gpa_frame["background"] = "#333333"
-        self.gpa_frame.pack()
-
-        self.shop_gparted_inst = Button(
-            self.gpa_frame,
-            width=120,
-            image=self.ip03,
-            text="Gparted",
-            anchor="w",
-            command=gparted_inst,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=5)
-
-        self.shop_gparted_info = Label(
-            self.gpa_frame,
-            width=60,
-            text="A Partition Manager",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=5)
-
-        self.shop_gparted_uninst = Button(
-            self.gpa_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_gparted_inst,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=6)
-
-        self.shop_gparted_link = tk.Label(
-            self.gpa_frame,
-            text=r"https://gparted.org/",
-            fg="blue",
-            cursor="hand2",
+        # OV_2
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Sir, You Need A Fan!",
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 14),
+            justify=LEFT,
         )
-        self.shop_gparted_link.grid(column=1, row=6)
-        self.shop_gparted_link.bind("<Button-1>", callback)
+        self.ov1_lbl.grid(row=4, column=0)
 
-        self.shop_gparted_link["background"] = "#333333"
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3, bg="#333333", fg="white")
+        self.ov_1.grid(row=5, column=0)
 
-        # Neofetch
-        def inst_neo():
-            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
-
-        def un_inst_neo():
-            popen("xterm -e 'bash -c \"sudo apt-get install neofetch; exec bash\"'")
-
-        self.neo_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.neo_frame["background"] = "grey"
-        self.neo_frame.pack()
-
-        self.shop_neofetch_inst = Button(
-            self.neo_frame,
-            width=120,
-            image=self.ip03,
-            text="NeoFetch",
-            anchor="w",
-            command=inst_neo,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=7)
-
-        self.shop_neofetch_info = Label(
-            self.neo_frame,
-            width=60,
-            text="Shows system specs",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=7)
-
-        self.shop_neofetch_link = tk.Label(
-            self.neo_frame,
-            text=r"https://github.com/dylanaraps/neofetch",
-            fg="blue",
-            cursor="hand2",
+        self.ov_1_text = Label(
+            self.tu_main_frame,
+            text="arm_freq = 2147\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
+            justify=LEFT,
+            bg="#333333",
+            fg="white",
         )
-        self.shop_neofetch_link.grid(column=1, row=8)
-        self.shop_neofetch_link.bind("<Button-1>", callback)
+        self.ov_1_text.grid(row=5, column=1)
 
-        self.shop_neofetch_link["background"] = "grey"
-
-        self.shop_neofetch_uninst = Button(
-            self.neo_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_inst_neo,
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=8)
-
-        # piKiss
-        def kiss_button():
-            popen(
-                "xterm -e 'bash -c \"curl -sSL https://git.io/JfAPE | bash; exec bash\"'"
-            )
-
-        self.kiss_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
+        # OV_3
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Take It To The Max!",
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 14),
+            justify=LEFT,
         )
-        self.kiss_frame["background"] = "#333333"
-        self.kiss_frame.pack()
+        self.ov1_lbl.grid(row=6, column=0)
 
-        self.shop_pikiss_inst = Button(
-            self.kiss_frame,
-            width=120,
-            image=self.ip03,
-            text="PiKiss",
-            anchor="w",
-            command=kiss_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=9)
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4, bg="#333333", fg="white")
+        self.ov_1.grid(row=7, column=0)
 
-        self.shop_pikiss_info = Label(
-            self.kiss_frame,
-            width=60,
-            text="Pi Config Tool/Game-Installer",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=9)
-
-        self.shop_pikiss_link = tk.Label(
-            self.kiss_frame,
-            text=r"https://github.com/jmcerrejon/PiKISS",
-            fg="blue",
-            cursor="hand2",
+        self.ov_1_text = Label(
+            self.tu_main_frame,
+            text="arm_freq = 2200\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
+            justify=LEFT,
+            bg="#333333",
+            fg="white",
         )
-        self.shop_pikiss_link.bind("<Button-1>", callback)
-        self.shop_pikiss_link.grid(column=1, row=10)
-        self.shop_pikiss_link["background"] = "#333333"
+        self.ov_1_text.grid(row=7, column=1)
 
-        # bleechbit
-        def inst_bleach():
-            popen("xterm -e 'bash -c \"sudo apt-get install bleachbit ; exec bash\"'")
-
-        def un_inst_bleach():
-            popen("xterm -e 'bash -c \"sudo apt-get remove bleachbit ; exec bash\"'")
-
-        self.bit_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.bit_frame["background"] = "grey"
-        self.bit_frame.pack()
-
-        self.shop_bleech_inst = Button(
-            self.bit_frame,
-            width=120,
-            image=self.ip03,
-            text="Bleach Bit",
-            anchor="w",
-            command=inst_bleach,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=11)
-
-        self.shop_bleech_info = Label(
-            self.bit_frame,
-            width=60,
-            text="Cleans the System",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=11)
-
-        self.shop_bleech_link = tk.Label(
-            self.bit_frame,
-            text=r"https://www.bleachbit.org/",
-            fg="blue",
-            cursor="hand2",
+        # OV_4
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Honey,the fuse blew again!",
+            bg="#333333",
+            fg="#d4244d",
+            font=("Helvetica", 14),
+            justify=LEFT,
         )
-        self.shop_bleech_link.bind("<Button-1>", callback)
-        self.shop_bleech_link.grid(column=1, row=12)
-        self.shop_bleech_link["background"] = "grey"
+        self.ov1_lbl.grid(row=8, column=0)
 
-        self.shop_bleech_uninst = Button(
-            self.bit_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_inst_bleach,
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=12)
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5, bg="#333333", fg="white")
+        self.ov_1.grid(row=9, column=0)
 
-        # Pi Imager
-        def inst_ima():
-            popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
-
-        def un_inst_ima():
-            popen("xterm -e 'bash -c \"sudo apt install rpi-imager; exec bash\"'")
-
-        self.ima_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.ima_frame["background"] = "#333333"
-        self.ima_frame.pack()
-
-        self.shop_imager_inst = Button(
-            self.ima_frame,
-            width=120,
-            image=self.ip03,
-            text="Pi Imager",
-            anchor="w",
-            command=inst_ima,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=13)
-
-        self.shop_imager_info = Label(
-            self.ima_frame,
-            width=60,
-            text="Flash RPiOS to SD/USB Drive",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=13)
-
-        self.shop_imager_link = tk.Label(
-            self.ima_frame,
-            text=r"https://www.raspberrypi.com/software/",
-            fg="blue",
-            cursor="hand2",
+        self.ov_1_text = Label(
+            self.tu_main_frame,
+            text="arm_freq = 2300\ngpu_freq = 700\nover_voltage = 14\nforce_turbo = 1",
+            justify=LEFT,
+            bg="#333333",
+            fg="white",
         )
-        self.shop_imager_link.bind("<Button-1>", callback)
-        self.shop_imager_link.grid(column=1, row=14)
-        self.shop_imager_link["background"] = "#333333"
-
-        self.shop_imager_uninst = Button(
-            self.ima_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_inst_ima,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=14)
-
-        # gnome-pie
-        def gnome_pie():
-            popen("xterm -e 'bash -c \"sudo apt-get install gnome-pie; exec bash\"'")
-
-        def un_gnome_pie():
-            popen("xterm -e 'bash -c \"sudo apt-get remove gnome-pie; exec bash\"'")
-
-        self.gpi_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.gpi_frame["background"] = "grey"
-        self.gpi_frame.pack()
-
-        self.shop_gpi_inst = Button(
-            self.gpi_frame,
-            width=120,
-            image=self.ip03,
-            text="Gnome-Pie",
-            anchor="w",
-            command=gnome_pie,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=17)
-
-        self.shop_gpi_info = Label(
-            self.gpi_frame,
-            width=60,
-            compound=LEFT,
-            text="Gnome-Pie is a circular application launcher (pie menu) for Linux",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-        ).grid(column=1, row=17)
-
-        self.shop_gpi_link = tk.Label(
-            self.gpi_frame,
-            text=r"http://schneegans.github.io/gnome-pie",
-            fg="blue",
-            cursor="hand2",
-        )
-        self.shop_gpi_link.bind("<Button-1>", callback)
-        self.shop_gpi_link.grid(column=1, row=18)
-        self.shop_gpi_link["background"] = "grey"
-
-        self.shop_gpi_uninst = Button(
-            self.gpi_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_gnome_pie,
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=18)
-
-        # Pi-Apps
-        def pi_apps():
-            popen(
-                "xterm -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
-            )
-
-        self.papps_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=0
-        )
-        self.papps_frame["background"] = "#333333"
-        self.papps_frame.pack()
-
-        self.shop_papps_inst = Button(
-            self.papps_frame,
-            width=120,
-            image=self.ip03,
-            text="Pi-Apps",
-            anchor="w",
-            command=pi_apps,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=19)
-
-        self.shop_papps_info = Label(
-            self.papps_frame,
-            width=60,
-            text="THE APP-Store",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=19)
-
-        self.shop_papps_link = tk.Label(
-            self.papps_frame,
-            text=r"https://github.com/Botspot/pi-apps",
-            fg="blue",
-            cursor="hand2",
-        )
-        self.shop_papps_link.bind("<Button-1>", callback)
-        self.shop_papps_link.grid(column=1, row=20)
-        self.shop_papps_link["background"] = "#333333"
-
-        # Plank
-        def p_lank():
-            popen("xterm -e 'bash -c \"sudo apt-get install -y plank; exec bash\"'")
-
-        def un_p_lank():
-            popen("xterm -e 'bash -c \"sudo apt-get remove -y plank; exec bash\"'")
-
-        self.pla_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.pla_frame["background"] = "grey"
-        self.pla_frame.pack()
-
-        self.shop_plank_inst = Button(
-            self.pla_frame,
-            width=120,
-            image=self.ip03,
-            text="Plank",
-            anchor="w",
-            command=p_lank,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=21)
-
-        self.shop_plank_info = Label(
-            self.pla_frame,
-            width=60,
-            text="It's a Dock!",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=21)
-
-        self.shop_plank_link = tk.Label(
-            self.pla_frame,
-            text=r"https://launchpad.net/plank",
-            fg="blue",
-            cursor="hand2",
-        )
-        self.shop_plank_link.bind("<Button-1>", callback)
-        self.shop_plank_link.grid(column=1, row=22)
-        self.shop_plank_link["background"] = "grey"
-
-        self.shop_plank_uninst = Button(
-            self.pla_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_p_lank,
-            highlightthickness=0,
-            borderwidth=0,
-            background="grey",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=22)
-
-        # tilix
-        def inst_tilix():
-            popen("xterm -e 'bash -c \"sudo apt-get install -y tilix; exec bash\"'")
-
-        def un_inst_tilix():
-            popen("xterm -e 'bash -c \"sudo apt-get remove -y tilix; exec bash\"'")
-
-        self.til_frame = Frame(self, relief=GROOVE, borderwidth=0, highlightthickness=0)
-        self.til_frame["background"] = "#333333"
-        self.til_frame.pack()
-
-        self.shop_tilix_inst = Button(
-            self.til_frame,
-            width=120,
-            image=self.ip03,
-            text="Tilix",
-            anchor="w",
-            command=inst_tilix,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#d4244d",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=23)
-
-        self.shop_tilix_info = Label(
-            self.til_frame,
-            width=60,
-            text="Multi-Tiling-Terminal-Emulator",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=1, row=23)
-
-        self.shop_tilix_link = tk.Label(
-            self.til_frame,
-            text=r"https://gnunn1.github.io/tilix-web/",
-            fg="blue",
-            cursor="hand2",
-        )
-        self.shop_tilix_link.bind("<Button-1>", callback)
-        self.shop_tilix_link.grid(column=1, row=24)
-        self.shop_tilix_link["background"] = "#333333"
-
-        self.shop_tilix_uninst = Button(
-            self.til_frame,
-            text="Uninstall",
-            anchor="w",
-            command=un_inst_tilix,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=LEFT,
-        ).grid(column=0, row=24)
+        self.ov_1_text.grid(row=9, column=1)
 
 
-# Installer Tab
+# Software Tab
 class Frame4(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -1733,30 +1405,9 @@ class Frame4(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
 
         def open_must_haves():
-            must_haves = Must_Haves(self)
-            must_haves.grab_set()
-
-        def callback(url):
-            webbrowser.open_new(url)
-
-        def web_OVC():
-            popen("xdg-open https://www.gnome-look.org/p/1158321/")
-
-        def arc_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
-
-        def breeze_inst():
-            popen(
-                "xterm -e 'bash -c \"sudo apt-get install breeze-cursor-theme; exec bash\"'"
-            )
-
-        def papi_inst():
-            popen(
-                "xterm -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'"
-            )
+            os.system(f"python3 {home}/PiGro-Aid-/Shop/Shop.py")
 
         def snapcraft():
             popen("xdg-open https://snapcraft.io/store")
@@ -1764,21 +1415,16 @@ class Frame4(ttk.Frame):
         def flatflat():
             popen("xdg-open https://flathub.org/")
 
-        # PDL
-        def shop():
-            os.system("python3 $HOME/PiGro-Aid-/PDL.py")
-
         # images/icons/BG
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.ipshop = PhotoImage(file=r"images/icons/shop.png")
-
         self.ipfinst = PhotoImage(file=r"images/icons/fast_install.png")
-
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
 
+        # Shop
         self.rahmen_shop = Frame(self, borderwidth=0, highlightthickness=1)
         self.rahmen_shop.pack(padx=40, pady=40)
         self.rahmen_shop["background"] = "#333333"
@@ -1786,29 +1432,29 @@ class Frame4(ttk.Frame):
         self.shop_click = Button(
             self.rahmen_shop,
             image=self.ipshop,
-            command=shop,
+            command=open_must_haves,
             highlightthickness=1,
             borderwidth=5,
             background="green",
             foreground="white",
             compound=LEFT,
             width=500,
-            state=DISABLED,
         )
         self.shop_click.pack()
         self.shop_click_ttp = CreateToolTip(
             self.shop_click,
             "The shop is currently deactivated due to renovations. All installers can be found under Must Haves",
         )
-
-        self.rahmen3x = Frame(
+        # Fast_Installer Main_Frame
+        self.fast_main_frame = Frame(
             self, relief=GROOVE, borderwidth=1, highlightthickness=1, pady=10, padx=10
         )
-        self.rahmen3x["background"] = "green"
-        self.rahmen3x.pack()
+        self.fast_main_frame["background"] = "green"
+        self.fast_main_frame.pack()
 
+        # Definition Fast Installer Label
         self.sysinf0 = Label(
-            self.rahmen3x,
+            self.fast_main_frame,
             image=self.ipfinst,
             compound=LEFT,
             anchor="n",
@@ -1821,18 +1467,27 @@ class Frame4(ttk.Frame):
         )
         self.sysinf0.pack()
 
-        self.rahmen3 = Frame(
-            self.rahmen3x,
+        # Sec Fast Frame
+        self.fast_sec_frame = Frame(
+            self.fast_main_frame,
             relief=GROOVE,
             borderwidth=0,
             highlightthickness=1,
             padx=42,
             pady=20,
         )
-        self.rahmen3.pack()
-        self.rahmen3["background"] = "#333333"
+        self.fast_sec_frame.pack()
+        self.fast_sec_frame["background"] = "#333333"
 
         # apt-get_entry
+        self.apt_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.apt_frame.pack()
+        self.apt_frame["background"] = "#333333"
 
         fo = open("scripts/apt_cache.list", "r")
         content = fo.readlines()
@@ -1844,19 +1499,19 @@ class Frame4(ttk.Frame):
             value = event.widget.get()
 
             if value == "":
-                self.combo_box["values"] = content
+                self.apt_inst_combo_box["values"] = content
             else:
                 data = []
                 for item in content:
                     if value.lower() in item.lower():
                         data.append(item)
 
-                self.combo_box["values"] = data
+                self.apt_inst_combo_box["values"] = data
 
         def inst_btn1():
-            entry_text = self.combo_box.get()
+            entry_text = self.apt_inst_combo_box.get()
             popen(
-                f"xterm -e 'bash -c \"sudo apt-get install {self.combo_box.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo apt-get install -y {self.apt_inst_combo_box.get()}; exec bash\"'"  #
             )
 
         def uninst_btn1():
@@ -1867,17 +1522,15 @@ class Frame4(ttk.Frame):
 
         self.p4 = PhotoImage(file=r"images/icons/apt-get.png")
 
-        self.eingabefeld1 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
+        self.eingabefeld1 = Entry(self.apt_frame, bd=5, width=31, borderwidth=1)
 
-        self.combo_box = ttk.Combobox(self.rahmen3)
-        self.combo_box["values"] = content
-        self.combo_box.bind("<KeyRelease>", check_input)
-        self.combo_box.config(width=30)
-
-        # self.eingabefeld1.insert(0, "Enter Package Name")
+        self.apt_inst_combo_box = ttk.Combobox(self.apt_frame)
+        self.apt_inst_combo_box["values"] = content
+        self.apt_inst_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_inst_combo_box.config(width=30)
 
         self.apt_inst_btn = Button(
-            self.rahmen3,
+            self.apt_frame,
             text="install",
             command=inst_btn1,
             highlightthickness=0,
@@ -1891,20 +1544,93 @@ class Frame4(ttk.Frame):
             'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.',
         )
 
-        self.apt_ico = Label(self.rahmen3, image=self.p4, fg="white")
+        self.apt_ico = Label(self.apt_frame, image=self.p4, fg="white")
         self.apt_ico["background"] = "#333333"
         self.apt_ico.grid(
             column=0,
             row=0,
         )
-        self.combo_box.grid(column=2, row=0)
+        self.apt_inst_combo_box.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
 
-        # pi-apps_entry
-        def inst_pi_apps():
-            entry_text = self.eingabefeld3.get()
+        # APT- remove
+        self.un_apt_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.un_apt_frame.pack()
+        self.un_apt_frame["background"] = "#333333"
+
+        ua_fo = open("scripts/packages.list", "r")
+        un_content = ua_fo.readlines()
+        for i, s in enumerate(un_content):
+            un_content[i] = s.strip()
+
+        def check_input(event):
+            value = event.widget.get()
+
+            if value == "":
+                self.apt_un_combo_box["values"] = un_content
+            else:
+                data = []
+                for item in un_content:
+                    if value.lower() in item.lower():
+                        data.append(item)
+
+                self.apt_un_combo_box["values"] = data
+
+        def un_inst_btn1():
+            entry_text = self.apt_un_combo_box.get()
             popen(
-                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.eingabefeld3.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo apt-get remove -y {self.apt_un_combo_box.get()}; exec bash\"'"
+            )
+
+        self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
+
+        self.apt_un_entry = Entry(self.un_apt_frame, bd=5, width=31, borderwidth=1)
+
+        self.apt_un_combo_box = ttk.Combobox(self.un_apt_frame)
+        self.apt_un_combo_box["values"] = un_content
+        self.apt_un_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_un_combo_box.config(width=30)
+
+        self.un_apt_inst_btn = Button(
+            self.un_apt_frame,
+            text="remove",
+            command=un_inst_btn1,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="red",
+            font=(("Helvetica,bold"), "8"),
+        )
+
+        self.apt_ico = Label(self.un_apt_frame, fg="white", width=10)
+        self.apt_ico["background"] = "#333333"
+        self.apt_ico.grid(
+            column=0,
+            row=0,
+        )
+        self.apt_un_combo_box.grid(column=2, row=0)
+        self.un_apt_inst_btn.grid(column=1, row=0)
+
+        # pi-apps_entry
+
+        self.pi_apps = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.pi_apps.pack()
+        self.pi_apps["background"] = "#333333"
+
+        def inst_pi_apps():
+            entry_text = self.pi_apps_entry.get()
+            popen(
+                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
             )
 
         def pi_apps_list():
@@ -1913,13 +1639,13 @@ class Frame4(ttk.Frame):
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
 
         self.pi_apps_ico = Label(
-            self.rahmen3, image=self.pa6, text="piapps install", fg="white"
+            self.pi_apps, image=self.pa6, text="piapps install", fg="white"
         )
         self.pi_apps_ico["background"] = "#333333"
 
-        self.eingabefeld3 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
+        self.pi_apps_entry = Entry(self.pi_apps, bd=5, width=31, borderwidth=1)
         self.pi_apps_inst_btn = Button(
-            self.rahmen3,
+            self.pi_apps,
             text="install",
             command=inst_pi_apps,
             highlightthickness=0,
@@ -1930,26 +1656,35 @@ class Frame4(ttk.Frame):
         )
 
         self.pi_apps_ico.grid(column=0, row=3)
-        self.eingabefeld3.grid(column=2, row=3)
+        self.pi_apps_entry.grid(column=2, row=3)
         self.pi_apps_inst_btn.grid(column=1, row=3)
 
         # snap_entry
+        self.snap_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.snap_frame.pack()
+        self.snap_frame["background"] = "#333333"
+
         def inst_btn2():
-            entry_text = self.eingabefeld2.get()
+            entry_text = self.snap_entry.get()
             popen(
-                f"xterm -e 'bash -c \"sudo snap install {self.eingabefeld2.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"sudo snap install {self.snap_entry.get()}; exec bash\"'"
             )
 
         self.p6 = PhotoImage(file=r"images/icons/snap.png")
 
         self.snap_ico = Label(
-            self.rahmen3, image=self.p6, text="Snap install", fg="white"
+            self.snap_frame, image=self.p6, text="Snap install", fg="white"
         )
         self.snap_ico["background"] = "#333333"
 
-        self.eingabefeld2 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
+        self.snap_entry = Entry(self.snap_frame, bd=5, width=31, borderwidth=1)
         self.snap_inst_btn = Button(
-            self.rahmen3,
+            self.snap_frame,
             text="install",
             command=inst_btn2,
             highlightthickness=0,
@@ -1964,28 +1699,38 @@ class Frame4(ttk.Frame):
         )
 
         self.snap_ico.grid(column=0, row=1)
-        self.eingabefeld2.grid(column=2, row=1)
+        self.snap_entry.grid(column=2, row=1)
         self.snap_inst_btn.grid(column=1, row=1)
 
         self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
 
         # flat_entry
+
+        self.flat_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.flat_frame.pack()
+        self.flat_frame["background"] = "#333333"
+
         def inst_btn4():
-            entry_text = self.eingabefeld4.get()
+            entry_text = self.flat_entry.get()
             popen(
-                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.eingabefeld4.get()}; exec bash\"'"
+                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
             )
 
         self.p66 = PhotoImage(file=r"images/icons/flathub.png")
 
         self.flatp_ico = Label(
-            self.rahmen3, image=self.p66, text="Flat install", fg="white"
+            self.flat_frame, image=self.p66, text="Flat install", fg="white"
         )
         self.flatp_ico["background"] = "#333333"
 
-        self.eingabefeld4 = Entry(self.rahmen3, bd=5, width=31, borderwidth=1)
+        self.flat_entry = Entry(self.flat_frame, bd=5, width=31, borderwidth=1)
         self.flatp_inst_btn = Button(
-            self.rahmen3,
+            self.flat_frame,
             text="install",
             command=inst_btn4,
             highlightthickness=0,
@@ -2000,7 +1745,7 @@ class Frame4(ttk.Frame):
         )
 
         self.flatp_ico.grid(column=0, row=7)
-        self.eingabefeld4.grid(column=2, row=7)
+        self.flat_entry.grid(column=2, row=7)
         self.flatp_inst_btn.grid(column=1, row=7)
 
         self.frame311 = Frame(
@@ -2050,17 +1795,6 @@ class Frame4(ttk.Frame):
             self.uninst_button, "If nothing happens you must install Synaptic"
         )
 
-        self.goodstuff_btn = Button(
-            self.frame311,
-            text="Must Haves",
-            command=open_must_haves,
-            highlightthickness=1,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            font=(("Helvetica,bold"), "9"),
-        )
-
         self.flat_btn = Button(
             self.frame311,
             text="Flathub",
@@ -2075,7 +1809,6 @@ class Frame4(ttk.Frame):
         self.snapstore_btn.grid(column=0, row=6)
         self.pi_apps_inst_btn3.grid(column=1, row=6)
         self.uninst_button.grid(column=2, row=6)
-        self.goodstuff_btn.grid(column=4, row=6)
         self.flat_btn.grid(column=3, row=6)
 
         self.info_inst_btn = Button(
@@ -2092,9 +1825,6 @@ class Frame4(ttk.Frame):
 class Frame5(ttk.Frame):
     def __init__(self, container):
         super().__init__()
-
-        def callback(event):
-            webbrowser.open_new(event.widget.cget("text"))
 
         def xfce_make():
             popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
@@ -2164,19 +1894,6 @@ class Frame5(ttk.Frame):
 
         def xfce_make():
             popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
-
-        def arc_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install arc-theme; exec bash\"'")
-
-        def breeze_inst():
-            popen(
-                "xterm -e 'bash -c \"sudo apt-get install breeze-cursor-theme; exec bash\"'"
-            )
-
-        def papi_inst():
-            popen(
-                "xterm -e 'bash -c \"sudo apt-get install papirus-icon-theme; exec bash\"'"
-            )
 
         def web_OVC():
             popen("xdg-open https://www.xfce-look.org/browse/")
@@ -2352,6 +2069,7 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         self.in_btn3.grid(column=1, row=0, padx=5)
+        self.in_btn3.configure(state=DISABLED)
 
         self.in_btn5 = Button(
             self.rahmen41,
@@ -2369,8 +2087,9 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         self.in_btn5.grid(column=3, row=0)
+        self.in_btn5.configure(state=DISABLED)
 
-        self.in_btn5 = Button(
+        self.in_btn51 = Button(
             self.rahmen41,
             image=self.bp03,
             justify="left",
@@ -2385,9 +2104,10 @@ class Frame5(ttk.Frame):
             width=160,
             font=("Helvetica", 10, "bold"),
         )
-        self.in_btn5.grid(column=2, row=0)
+        self.in_btn51.grid(column=2, row=0)
+        self.in_btn51.configure(state=DISABLED)
 
-        self.in_btn5 = Button(
+        self.in_btn52 = Button(
             self.rahmen41,
             image=self.ico_m,
             justify="left",
@@ -2402,7 +2122,8 @@ class Frame5(ttk.Frame):
             width=160,
             font=("Helvetica", 10, "bold"),
         )
-        self.in_btn5.grid(column=1, row=1)
+        self.in_btn52.grid(column=1, row=1)
+        self.in_btn52.configure(state=DISABLED)
 
         self.in_btn7 = Button(
             self.rahmen41,
@@ -2420,6 +2141,7 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         self.in_btn7.grid(column=2, row=1)
+        self.in_btn7.configure(state=DISABLED)
 
         self.in_btn8 = Button(
             self.rahmen41,
@@ -2437,6 +2159,13 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         self.in_btn8.grid(column=3, row=1)
+
+        if get_de == "XFCE":
+            self.in_btn3.configure(state=NORMAL)
+            self.in_btn5.configure(state=NORMAL)
+            self.in_btn51.configure(state=NORMAL)
+            self.in_btn52.configure(state=NORMAL)
+            self.in_btn7.configure(state=NORMAL)
 
         # gui_tweaks
         self.rahmen42 = Frame(
@@ -2515,17 +2244,102 @@ class Frame5(ttk.Frame):
         self.info_look_btn.place(x=700, y=620)
 
 
-# Tuning_Tab
+# ZRAM
+class z_ram_pop(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        # self["background"] = "#333333"
+        self.title("")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 552
+        app_height = 280
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+
+        self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
+
+        def z_ram_install():
+            popen(
+                popen(
+                    "xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'"
+                )
+            )
+            Notification(
+                title="ZRAMr\n",
+                description="ZRAM has been installed",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+        # ää
+        def z_ram_uninstall():
+            popen("xterm -e 'bash -c \"sudo apt-get remove zram-tools; exec bash\"'")
+            Notification(
+                title="ZRAMr\n",
+                description="ZRAM has been uninstalled",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+        GLabel_804 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_804["font"] = ft
+        GLabel_804["fg"] = "#333333"
+        GLabel_804["justify"] = "center"
+        GLabel_804["text"] = "Icon"
+        GLabel_804["image"] = self.ip03
+        GLabel_804.place(x=20, y=40, width=100, height=100)
+
+        GLabel_0 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=14)
+        GLabel_0["font"] = ft
+        GLabel_0["fg"] = "#333333"
+        GLabel_0["justify"] = "left"
+        GLabel_0["text"] = "ZRAM"
+        GLabel_0.place(x=160, y=30, width=391, height=33)
+
+        GLabel_29 = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GLabel_29["font"] = ft
+        GLabel_29["fg"] = "#333333"
+        GLabel_29["justify"] = "left"
+        GLabel_29[
+            "text"
+        ] = "Zram is a Linux kernel module that allows\nyou to set up compressed filesystems in RAM.\nzram-tools uses this module to set up compressed \nswap space.\nThis is useful on systems with low memory or servers\nrunning a large amount of services with data that's\neasily swappable but that you may wish to swap back\nfast without sacrificing disk bandwidth.\n"
+        GLabel_29.place(x=140, y=70, width=390, height=194)
+
+        GButton_883 = tk.Button(self)
+        GButton_883["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_883["font"] = ft
+        GButton_883["fg"] = "#000000"
+        GButton_883["justify"] = "center"
+        GButton_883["text"] = "Install"
+        GButton_883.place(x=30, y=190, width=70, height=25)
+        GButton_883["command"] = z_ram_install
+
+        GButton_585 = tk.Button(self)
+        GButton_585["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        GButton_585["font"] = ft
+        GButton_585["fg"] = "#000000"
+        GButton_585["justify"] = "center"
+        GButton_585["text"] = "Uninstall"
+        GButton_585.place(x=30, y=230, width=70, height=25)
+        GButton_585["command"] = z_ram_uninstall
+
+
+# Tuning
 class Frame6(ttk.Frame):
     def __init__(self, container):
         super().__init__()
-
-        def open_expert_tuning():
-            expert_tuning = Expert_Tuning(self)
-            expert_tuning.grab_set()
-
-        def z_inst():
-            popen("xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'")
 
         # Current OV settings
         def lines_that_contain(string, fp):
@@ -2550,40 +2364,29 @@ class Frame6(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
+
+        def tuning_legende():
+            tu_le = Tuning_Legende(self)
+            tu_le.grab_set()
+
+        def z_ram():
+            z_ram = z_ram_pop(self)
+            z_ram.grab_set()
 
         # BG + Icons
+
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tu_tp0 = Image.open("images/icons/PiGroOV_rm.png")
-        self.tu00 = ImageTk.PhotoImage(self.tu_tp0)
-        self.tul00 = Label(image=self.tu00)
-
-        self.tu_tp1 = Image.open("images/icons/PiGroOV1.png")
-        self.tu01 = ImageTk.PhotoImage(self.tu_tp1)
-        self.tul01 = Label(image=self.tu01)
-
-        self.tu_tp2 = Image.open("images/icons/PiGroOV2.png")
-        self.tu02 = ImageTk.PhotoImage(self.tu_tp2)
-        self.tul02 = Label(image=self.tu02)
-
-        self.tu_tp3 = Image.open("images/icons/PiGroOV3.png")
-        self.tu03 = ImageTk.PhotoImage(self.tu_tp3)
-        self.tul03 = Label(image=self.tu03)
-
-        self.tu_tp4 = Image.open("images/icons/PiGroOV4.png")
-        self.tu04 = ImageTk.PhotoImage(self.tu_tp4)
-        self.tul04 = Label(image=self.tu04)
-
-        self.tab_tpinfm = Image.open("images/icons/info_m.png")
-        self.tpinfm = ImageTk.PhotoImage(self.tab_tpinfm)
-        self.tlinfm = Label(image=self.tpinfm)
-
-        self.tab_ip3 = Image.open("images/icons/download_ico.png")
-        self.ip03 = ImageTk.PhotoImage(self.tab_ip3)
-        self.il03 = Label(image=self.ip03)
+        self.rm_ov_icon = PhotoImage(file=r"images/icons/PiGroOV_rm.png")
+        self.ov1_icon = PhotoImage(file=r"images/icons/PiGroOV1.png")
+        self.ov2_icon = PhotoImage(file=r"images/icons/PiGroOV2.png")
+        self.ov3_icon = PhotoImage(file=r"images/icons/PiGroOV3.png")
+        self.ov4_icon = PhotoImage(file=r"images/icons/PiGroOV4.png")
+        self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
+        self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
+        self.tu_legend_ico = PhotoImage(file=r"images/icons/legende.png")
 
         # OV Notifications
         def pop_dest():
@@ -2609,6 +2412,18 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'"
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="arm_freq = 2000\ngpu_fequ = 750\nover_voltage = 6\nforce_turbo = 1",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
 
             global pop_2000
             pop_2000 = Toplevel(self)
@@ -2673,6 +2488,19 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'"
             )
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="arm_freq = 2147\ngpu_fequ = 750\nover_voltage = 8\nforce_turbo = 1",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/HOLYPiT.mp3")
 
             global pop_2147
@@ -2740,6 +2568,18 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"sudo {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
+            self.tu_btn1.config(state=NORMAL)
+            self.tu_btn2.config(state=NORMAL)
+            self.tu_btn3.config(state=NORMAL)
+            self.tu_btn4.config(state=NORMAL)
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="All Settings Restored\n\n",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
 
             global pop_default
             pop_default = Toplevel(self)
@@ -2804,6 +2644,20 @@ class Frame6(ttk.Frame):
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'"
             )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="arm_freq = 2200\ngpu_fequ = 750\nover_voltage = 8\force_turbo = 1",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
             global pop_2200
             pop_2200 = Toplevel(self)
             pop_2200.config(bg="#333333")
@@ -2867,6 +2721,20 @@ class Frame6(ttk.Frame):
                 f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/ov_4.sh && exit; exec bash\"'"
             )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+
+            self.tu_btn1.config(state=DISABLED)
+            self.tu_btn2.config(state=DISABLED)
+            self.tu_btn3.config(state=DISABLED)
+            self.tu_btn4.config(state=DISABLED)
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="arm_freq = 2300\ngpu_fequ = 700\nover_voltage = 14\nforce_turbo = 1",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
             global pop_2300
             pop_2300 = Toplevel(self)
             pop_2300.config(bg="#333333")
@@ -3017,6 +2885,18 @@ class Frame6(ttk.Frame):
             foreground="yellow",
         ).grid(column=1, row=6, pady=20)
 
+        self.tu_legende = Button(
+            self.ov_display_frame,
+            text="Legende",
+            font=("Helvetica", 8),
+            highlightthickness=2,
+            borderwidth=0,
+            background="#333333",
+            foreground="yellow",
+            command=tuning_legende,
+            image=self.tu_legend_ico,
+        ).grid(column=1, row=7)
+
         # Tuning_Button_Frame
         self.ov_buttons = Frame(
             self.ov_main_frame,
@@ -3030,7 +2910,7 @@ class Frame6(ttk.Frame):
 
         self.tuning_options = Label(
             self.ov_buttons,
-            text="Tuning Options",
+            text="Overclocking Options",
             highlightthickness=0,
             borderwidth=2,
             background="#333333",
@@ -3042,7 +2922,7 @@ class Frame6(ttk.Frame):
         self.tu_reset = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu00,
+            image=self.rm_ov_icon,
             text="Reset Overclocking",
             anchor="w",
             command=set_default,
@@ -3058,7 +2938,7 @@ class Frame6(ttk.Frame):
         self.tu_btn1 = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu01,
+            image=self.ov1_icon,
             text="Crank It Up",
             anchor="w",
             command=ov_2000,
@@ -3075,7 +2955,7 @@ class Frame6(ttk.Frame):
         self.tu_btn2 = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu02,
+            image=self.ov2_icon,
             text="You Sir... Need A Fan!",
             anchor="w",
             command=ov_2147,
@@ -3092,7 +2972,7 @@ class Frame6(ttk.Frame):
         self.tu_btn3 = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu03,
+            image=self.ov3_icon,
             text="Take It To The Max!",
             anchor="w",
             command=ov_2200,
@@ -3109,7 +2989,7 @@ class Frame6(ttk.Frame):
         self.tu_btn4 = Button(
             self.ov_buttons,
             justify="left",
-            image=self.tu04,
+            image=self.ov4_icon,
             text="Honey,\nthe fuse blew again!",
             anchor="w",
             command=ov_2300,
@@ -3224,9 +3104,9 @@ class Frame6(ttk.Frame):
 
         # Misc_Frame
         self.misc_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=100, pady=10
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=20
         )
-        self.misc_main_frame.pack(padx=40, pady=15, fill="both")
+        self.misc_main_frame.pack(padx=20, pady=10, fill="both", expand=True)
         self.misc_main_frame["background"] = "#333333"
 
         self.misc_zram_frame = Frame(
@@ -3234,10 +3114,8 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            padx=30,
-            pady=10,
         )
-        self.misc_zram_frame.grid(row=0, column=1)
+        self.misc_zram_frame.pack(side=LEFT)
         self.misc_zram_frame["background"] = "#333333"
 
         self.misc_64mode_frame = Frame(
@@ -3245,114 +3123,9 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            padx=10,
-            pady=10,
         )
-        self.misc_64mode_frame.grid(row=0, column=0)
+        self.misc_64mode_frame.pack(side=LEFT, padx=50)
         self.misc_64mode_frame["background"] = "#333333"
-
-        def z_ram():
-            global z_ram_pop
-            z_ram_pop = Toplevel(self)
-            z_ram_pop["background"] = "#333333"
-
-            def top_inst():
-                os.system(
-                    f"xterm -e 'bash -c \"{home}/PiGro-Aid-/essentials/bpytop/install.sh; exec bash\"'"
-                )
-
-            def top_uninst():
-                os.system(
-                    f"xterm -e 'bash -c \"{home}/PiGro-Aid-/essentials/bpytop/uninstall.sh; exec bash\"'"
-                )
-
-            logo = Label(
-                z_ram_pop,
-                image=self.ip03,
-                text="ZRAM",
-                font=("Helvetica", 16),
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=TOP,
-            ).grid(column=0, row=0)
-
-            bt_inst = Button(
-                z_ram_pop,
-                text="Install",
-                font=("Helvetica", 11, "bold"),
-                justify="left",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-                command=z_inst,
-            ).grid(column=0, row=1)
-
-            bt_info = Label(
-                z_ram_pop,
-                text="\nzram is a Linux kernel feature and userspace tools for creating compressible RAM-based block devices.\nIt has been included as a module of the mainline Linux since kernel version 3.14. \nStarting with kernel version 3.15, zram supports multiple compression streams and the ability to change \nthe compression algorithms without a system restart.",
-                justify="left",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=TOP,
-            ).grid(column=1, row=0)
-
-        def btswitch_64():
-            global six4_mode_pop
-            six4_mode_pop = Toplevel(self)
-            six4_mode_pop["background"] = "#333333"
-
-            def top_inst():
-                os.system(
-                    "xterm -e 'bash -c \"sudo apt-get install -y raspbian-nspawn-64; exec bash\"'"
-                )
-
-            logo = Label(
-                six4_mode_pop,
-                image=self.ip03,
-                text="64-Bit\nMode",
-                font=("Helvetica", 16),
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=TOP,
-            ).grid(column=0, row=0)
-
-            bt_inst = Button(
-                six4_mode_pop,
-                text="Install",
-                font=("Helvetica", 11, "bold"),
-                justify="left",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-                command=z_inst,
-            ).grid(column=0, row=1)
-
-            bt_info = Label(
-                six4_mode_pop,
-                text="\nAdds 64 bit support.\nRun >ds64-shell< in terminal.\nBut I recommend using the RPi OS 64 bit.\nYou can find the link under LINK TAB",
-                justify="left",
-                anchor="w",
-                highlightthickness=0,
-                borderwidth=0,
-                background="#333333",
-                foreground="white",
-                compound=TOP,
-            ).grid(column=1, row=0)
 
         self.tu_zbtn = Button(
             self.misc_zram_frame,
@@ -3367,19 +3140,6 @@ class Frame6(ttk.Frame):
             foreground="#d4244d",
         ).grid(column=0, row=1)
 
-        self.tu_bbtn = Button(
-            self.misc_64mode_frame,
-            text="64 Bit Mode",
-            font=("Helvetica", 16),
-            anchor="w",
-            command=btswitch_64,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="#d4244d",
-            compound=LEFT,
-        ).grid(column=0, row=1)
-
         self.info_tuning_btn = Button(
             self,
             image=self.tpinfm,
@@ -3388,87 +3148,6 @@ class Frame6(ttk.Frame):
             command=info_tuning_tab,
         )
         self.info_tuning_btn.place(x=700, y=500)
-
-
-# Experter_Tuning /// In the worx
-class Expert_Tuning(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-
-        def over_v_set():
-            pass
-
-        def arm_f_set():
-            pass
-
-        def gpu_f_set():
-            pass
-
-        def force_t_set():
-            pass
-
-        self.ex_frame = Frame(self, relief=GROOVE, borderwidth=0)
-        self.ex_frame["background"] = "#333333"
-        self.ex_frame.pack()
-
-        # over_voltage
-        self.o_v_label = Label(
-            self.ex_frame,
-            text="over_voltage=",
-            background="#333333",
-            foreground="white",
-        ).grid(row=1, column=0, padx=10)
-        self.o_v_input = Entry(self.ex_frame).grid(row=1, column=1, padx=5)
-        self.o_v_button = Button(
-            self.ex_frame,
-            text="Add",
-            background="#333333",
-            foreground="white",
-            command=over_v_set,
-            highlightthickness=0,
-        ).grid(row=1, column=2, padx=10)
-
-        # arm_freq
-        self.arm_freq_label = Label(
-            self.ex_frame, text="arm_freq=", background="#333333", foreground="white"
-        ).grid(row=2, column=0)
-        self.arm_freq_input = Entry(self.ex_frame).grid(row=2, column=1)
-        self.arm_freq_button = Button(
-            self.ex_frame,
-            text="Add",
-            background="#333333",
-            foreground="white",
-            highlightthickness=0,
-        ).grid(row=2, column=2)
-
-        # gpu_freq
-        self.gpu_freq_label = Label(
-            self.ex_frame, text="gpu_freq=", background="#333333", foreground="white"
-        ).grid(row=3, column=0)
-        self.gpu_freq_input = Entry(self.ex_frame).grid(row=3, column=1)
-        self.gpu_freq_button = Button(
-            self.ex_frame,
-            text="Add",
-            background="#333333",
-            foreground="white",
-            highlightthickness=0,
-        ).grid(row=3, column=2)
-
-        # force_turbo
-        self.force_turbo_label = Label(
-            self.ex_frame,
-            text="force_turbo=1",
-            background="#333333",
-            foreground="white",
-        ).grid(row=4, column=0)
-        self.force_turbo_button = Button(
-            self.ex_frame,
-            text="Add",
-            background="#333333",
-            foreground="white",
-            highlightthickness=0,
-        ).grid(row=4, column=2)
 
 
 # Links
@@ -3529,9 +3208,6 @@ class Frame7(ttk.Frame):
         def fitwo_p():
             popen("xdg-open https://www.52pi.com/")
 
-        def pi64_ld():
-            popen("xdg-open https://downloads.raspberrypi.org/raspios_arm64/images/")
-
         def ubi_bubi():
             popen("xdg-open https://ubuntu.com/download/raspberry-pi")
 
@@ -3547,56 +3223,29 @@ class Frame7(ttk.Frame):
         def pi_tuto():
             popen("xdg-open https://tutorials-raspberrypi.com/")
 
+        def vis_tk():
+            popen("xdg-open https://visualtk.com/")
+
+        def papirus_nord():
+            popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
+
+        # äö
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.tab8_dist1 = Image.open("images/icons/TwisterOSLogo-Large-New3.png")
-        self.di01 = ImageTk.PhotoImage(self.tab8_dist1)
-        self.dl01 = Label(image=self.di01)
-
-        self.tab8_dist2 = Image.open("images/icons/Puppy_Linux_Logo.png")
-        self.di02 = ImageTk.PhotoImage(self.tab8_dist2)
-        self.dl02 = Label(image=self.di02)
-
-        self.tab8_dist3 = Image.open("images/icons/dietpi.png")
-        self.di03 = ImageTk.PhotoImage(self.tab8_dist3)
-        self.dl03 = Label(image=self.di03)
-
-        self.tab8_dist4 = Image.open("images/icons/MX-icon.png")
-        self.di04 = ImageTk.PhotoImage(self.tab8_dist4)
-        self.dl04 = Label(image=self.di04)
-
-        self.tab8_dist5 = Image.open("images/icons/fydeos.png")
-        self.di05 = ImageTk.PhotoImage(self.tab8_dist5)
-        self.dl05 = Label(image=self.di05)
-
-        self.tab8_dist6 = Image.open("images/icons/android.png")
-        self.di06 = ImageTk.PhotoImage(self.tab8_dist6)
-        self.dl06 = Label(image=self.di06)
-
-        self.tab8_dist7 = Image.open("images/icons/logo_berryserver.png")
-        self.di07 = ImageTk.PhotoImage(self.tab8_dist7)
-        self.dl07 = Label(image=self.di07)
-
-        self.tab8_dist8 = Image.open("images/icons/NCP.png")
-        self.di08 = ImageTk.PhotoImage(self.tab8_dist8)
-        self.dl08 = Label(image=self.di08)
-
-        self.pop_os_ico = ImageTk.PhotoImage(
-            Image.open("images/icons/popo_os_icon.png")
-        )
-        self.pop_os_icol = Label(image=self.pop_os_ico)
-
-        self.ubu_os_ico = ImageTk.PhotoImage(
-            Image.open("images/icons/Logo-ubuntu_.png")
-        )
-        self.ubu_os_icol = Label(image=self.ubu_os_ico)
-
-        self.pi64_os_ico = ImageTk.PhotoImage(
-            Image.open("images/icons/Raspberry_Pi_Logo.png")
-        )
-        self.pi64_os_icol = Label(image=self.pi64_os_ico)
+        self.di01 = PhotoImage(file=r"images/icons/TwisterOSLogo-Large-New3.png")
+        self.di02 = PhotoImage(file=r"images/icons/Puppy_Linux_Logo.png")
+        self.di03 = PhotoImage(file=r"images/icons/dietpi.png")
+        self.di04 = PhotoImage(file=r"images/icons/MX-icon.png")
+        self.di05 = PhotoImage(file=r"images/icons/fydeos.png")
+        self.di06 = PhotoImage(file=r"images/icons/android.png")
+        self.di06 = PhotoImage(file=r"images/icons/android.png")
+        self.di07 = PhotoImage(file=r"images/icons/logo_berryserver.png")
+        self.di08 = PhotoImage(file=r"images/icons/NCP.png")
+        self.pop_os_ico = PhotoImage(file=r"images/icons/popo_os_icon.png")
+        self.ubu_os_ico = PhotoImage(file=r"images/icons/Logo-ubuntu_.png")
+        self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=10, pady=20
@@ -3765,29 +3414,14 @@ class Frame7(ttk.Frame):
             width=150,
         ).pack()
 
-        self.dist_btn11 = Button(
-            self.rahmen,
-            compound=LEFT,
-            justify="left",
-            image=self.pi64_os_ico,
-            anchor="w",
-            text="RPi OS 64 Bit",
-            command=six4_berry,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            width=150,
-        ).pack()
-
-        self.rahmen3 = Frame(
+        self.fast_sec_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10
         )
-        self.rahmen3.grid(row=0, column=1, pady=20)
-        self.rahmen3["background"] = "#333333"
+        self.fast_sec_frame.grid(row=0, column=1, pady=20)
+        self.fast_sec_frame["background"] = "#333333"
 
         sys_btn2 = Label(
-            self.rahmen3,
+            self.fast_sec_frame,
             text=" Other ",
             highlightthickness=0,
             borderwidth=0,
@@ -3798,11 +3432,11 @@ class Frame7(ttk.Frame):
         )
         sys_btn2.pack()
 
-        choice_link1 = Button(
+        self.choice_link1 = Button(
             sys_btn2,
             anchor="w",
             width=50,
-            text="Mankiere.com (Commandline Database)",
+            text="Mankier.com (Commandline Database)",
             command=link_mankier,
             highlightthickness=0,
             borderwidth=0,
@@ -3810,7 +3444,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             anchor="w",
             width=50,
@@ -3822,7 +3456,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             anchor="w",
             width=50,
@@ -3846,7 +3480,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             anchor="w",
             width=50,
@@ -3894,7 +3528,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             width=50,
             text="LCD Wiki",
@@ -3906,7 +3540,7 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             width=50,
             text="Offical Raspberry Pi Documentation",
@@ -3918,12 +3552,36 @@ class Frame7(ttk.Frame):
             foreground="white",
         ).pack()
 
-        choice_link2 = Button(
+        self.choice_link2 = Button(
             sys_btn2,
             width=50,
             text="Raspberry Pi Tutorials",
             anchor="w",
             command=pi_tuto,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+        ).pack()
+
+        self.choice_link2 = Button(
+            sys_btn2,
+            width=50,
+            text="VisualTk.com",
+            anchor="w",
+            command=vis_tk,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+        ).pack()
+
+        self.choice_link2 = Button(
+            sys_btn2,
+            width=50,
+            text="Papirus Nord Icon Theme",
+            anchor="w",
+            command=papirus_nord,
             highlightthickness=0,
             borderwidth=0,
             background="#333333",
@@ -4022,6 +3680,69 @@ class Frame8(ttk.Frame):
             command=red_bub,
             font=(("Helvetica,bold"), "12", "bold"),
         ).grid(column=3, row=0, pady=20, padx=20)
+
+
+# Cam
+class Frame9(ttk.Frame):
+    def __init__(self, container):
+        super().__init__()
+
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
+        self.bg_label = Label(self, image=self.bg)
+        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
+
+        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
+        self.rahmen101.pack(pady=200)
+        self.rahmen101["background"] = "#333333"
+
+        self.welcome_icon = PhotoImage(file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
+        self.head_frame = Frame(self.rahmen101)
+        self.head_frame.pack()
+        self.header_label = Label(
+            self.head_frame, image=self.welcome_icon, bg="#333333"
+        )
+        self.header_label.pack()
+
+        # Clicker_Frame
+        self.btn_frame = Frame(self.rahmen101, bg="#333333")
+        self.btn_frame.pack()
+        self.label = Label(
+            self.btn_frame,
+            text=f"Files will be saved in:\n{home}\n\nGive it a Name:",
+            bg="#333333",
+            fg="white",
+        )
+        self.label.pack()
+
+        self.entry = Entry(self.btn_frame, bd=5, width=31, borderwidth=1)
+        self.entry.pack()
+        self.photo_btn = Button(
+            self.btn_frame,
+            text="Take A Photo",
+            command=self.photo1,
+            bg="#333333",
+            fg="white",
+            highlightthickness=0,
+        )
+        self.photo_btn.pack()
+
+        self.video_btn = Button(
+            self.btn_frame,
+            text="Take A Video",
+            command=self.video1,
+            bg="#333333",
+            fg="white",
+            highlightthickness=0,
+        )
+        self.video_btn.pack()
+
+    def photo1(self):
+        photo = str(self.entry.get())
+        popen(f"libcamera-jpeg -o {home}/{photo}.jpg")
+
+    def video1(self):
+        video = str(self.entry.get())
+        popen(f"libcamera-vid -t 10000 -o {home}/{video}.h264")
 
 
 # TOOLTIPZ

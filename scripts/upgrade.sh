@@ -15,3 +15,12 @@ echo  '
 ||D |||O |||N |||E |||       |||! ||
 ||__|||__|||__|||__|||_______|||__||
 |/__\|/__\|/__\|/__\|/_______\|/__\|'|lolcat
+
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+printf "\n${GREEN}Terminal will close in 5 sec\n${NC}"
+sleep 5
+exit

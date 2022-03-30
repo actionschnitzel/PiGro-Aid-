@@ -1,7 +1,7 @@
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ****************************************************************
-***** If you want to use PiGro's tuning option            *****
+***** If you want to use PiGro's tuning option             *****
 ***** please click once on the green berry.                *****
 ***** This removes all previous options:                   *****
 *****                                                      *****
@@ -11,36 +11,20 @@
 ***** force_turbo ...                                      *****
 *****                                                      *****
 ***** Now you can use savely the other Options             *****
+*****							   *****
+*****							   *****
+***** "Why are there only four tuning options?":	   *****
+*****							   *****
+***** The options are the most used and tested. 	   *****
+***** If you google a bit, you will find exactly 	   *****
+***** these values.					   *****
+*****							   *****
+*****							   *****
+***** Anything in between makes the system unstable.       *****
+*****							   *****
+*****							   *****
 ****************************************************************
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-OPTIONS:
-
-- Crank It Up!:
-    arm_freq = 2000
-    gpu_freq = 750
-    over_voltage = 6
-    force_turbo = 1
-
-- Sir, You Need A Fan!:
-    arm_freq = 2147
-    gpu_freq = 750
-    over_voltage = 8
-    force_turbo = 1
-
-- Take It To The Max!:
-    arm_freq = 2200
-    gpu_freq = 750
-    over_voltage = 8
-    force_turbo = 1
-
-- Take It To The Max!:
-    arm_freq = 2300
-    gpu_freq = 500
-    over_voltage = 14
-    force_turbo = 1
-
-
 
 arm_freq:
 Frequency of the ARM CPU in MHz.
