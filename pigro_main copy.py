@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 import os
 import os.path
 import tkinter as tk
@@ -22,8 +21,7 @@ from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
-from subprocess import check_call, CalledProcessError
-from threading import Thread
+
 
 # Define Home
 global home
@@ -1245,32 +1243,6 @@ class Frame3(ttk.Frame):
         self.info_sys_btn.place(x=700, y=620)
 
 
-# [Progress Par]
-class Progress_Bar(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-        self.title("Overclocking Legend")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 500
-        app_height = 300
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-
-        # progressbar
-        pb = ttk.Progressbar(
-            self, orient="horizontal", mode="indeterminate", length=280
-        )
-        # place the progressbar
-        pb.pack()
-        pb.start()
-
-
 # [Overclocking_Legend] button in Frame6
 class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
@@ -1536,55 +1508,11 @@ class Frame4(ttk.Frame):
 
                 self.apt_inst_combo_box["values"] = data
 
-        # hhh
         def inst_btn1():
-            global pop_apt_inst
-            pop_apt_inst = Toplevel(self)
-            pop_apt_inst.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_apt_inst.winfo_screenwidth()
-            screen_height = pop_apt_inst.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_apt_inst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_apt_inst.resizable(0, 0)
-            pop_apt_inst.overrideredirect(True)
-
-            # progressbar
-            inst_show = Label(
-                pop_apt_inst,
-                text=f"Installing: {self.apt_inst_combo_box.get()}",
-                bg="#333333",
-                fg="white",
-            ).pack(pady=20)
-            pb = ttk.Progressbar(
-                pop_apt_inst, orient="horizontal", mode="indeterminate", length=280
-            )
-            # place the progressbar
-            pb.pack()
-            pb.start()
-
-            Thread(target=inst_apt).start()
-
-        def inst_apt():
             entry_text = self.apt_inst_combo_box.get()
-            try:
-
-                check_call(
-                    [
-                        "sudo",
-                        "apt-get",
-                        "install",
-                        "-y",
-                        self.apt_inst_combo_box.get(),
-                    ],
-                    stdout=open(os.devnull, "wb"),
-                )
-                print("Done")
-                pop_apt_inst.destroy()
-            except CalledProcessError as e:
-                print(e.output)
+            popen(
+                f"xterm -e 'bash -c \"sudo apt-get install -y {self.apt_inst_combo_box.get()}; exec bash\"'"  #
+            )
 
         def uninst_btn1():
             popen("sudo synaptic")
@@ -1654,53 +1582,10 @@ class Frame4(ttk.Frame):
                 self.apt_un_combo_box["values"] = data
 
         def un_inst_btn1():
-            global pop_apt_uninst
-            pop_apt_uninst = Toplevel(self)
-            pop_apt_uninst.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_apt_uninst.winfo_screenwidth()
-            screen_height = pop_apt_uninst.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_apt_uninst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_apt_uninst.resizable(0, 0)
-            pop_apt_uninst.overrideredirect(True)
-
-            # progressbar
-            inst_show = Label(
-                pop_apt_uninst,
-                text=f"Uninstalling: {self.apt_un_combo_box.get()}",
-                bg="#333333",
-                fg="white",
-            ).pack(pady=20)
-            pb = ttk.Progressbar(
-                pop_apt_uninst, orient="horizontal", mode="indeterminate", length=280
-            )
-            # place the progressbar
-            pb.pack()
-            pb.start()
-
-            Thread(target=uninst_apt).start()
-
-        def uninst_apt():
             entry_text = self.apt_un_combo_box.get()
-            try:
-
-                check_call(
-                    [
-                        "sudo",
-                        "apt-get",
-                        "remove",
-                        "-y",
-                        self.apt_un_combo_box.get(),
-                    ],
-                    stdout=open(os.devnull, "wb"),
-                )
-                print("Done")
-                pop_apt_uninst.destroy()
-            except CalledProcessError as e:
-                print(e.output)
+            popen(
+                f"xterm -e 'bash -c \"sudo apt-get remove -y {self.apt_un_combo_box.get()}; exec bash\"'"
+            )
 
         self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
 
