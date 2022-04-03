@@ -580,6 +580,7 @@ ayatana-indicator-printers
 libstdc++-10-pic-ppc64-cross
 libghc-stringprep-doc
 golang-github-machinebox-graphql-dev
+linux-tools-5.4.0-1071-aws
 dummydroid
 phpqrcode
 firefox-locale-he
@@ -2859,6 +2860,7 @@ openbox-kde-session
 linux-hwe-5.4-headers-5.4.0-104
 linux-hwe-5.4-headers-5.4.0-105
 gir1.2-champlain-0.12
+linux-hwe-5.4-headers-5.4.0-107
 gdc-arm-linux-gnueabi
 r-cran-mda
 libghc-glut-doc
@@ -2965,6 +2967,7 @@ libgm2-15-mips-cross
 libpixelif-dev
 lib64gfortran-10-dev-mipsr6el-cross
 check-pgbackrest
+linux-modules-extra-5.4.0-107-generic
 ptex-jtex
 r-cran-mnp
 golang-github-grpc-ecosystem-go-grpc-middleware-dev
@@ -3459,6 +3462,7 @@ zvbi
 linux-tools-5.4.0-52-generic
 python3-petsc4py
 python3-hy
+linux-headers-4.15.0-175-generic
 lv2proc
 gnome-getting-started-docs-sk
 linux-modules-extra-4.15.0-91-generic
@@ -4210,6 +4214,7 @@ libvariable-magic-perl
 mono-4.0-service
 libmrpt-io2.1
 libjava-string-similarity-java
+linux-aws-5.4-cloud-tools-5.4.0-1071
 listserialportsc
 xserver-xorg-core-hwe-18.04
 libtest-modern-perl
@@ -4457,6 +4462,7 @@ linux-snapdragon-headers-4.15.0-1122
 libghc-ghc-exactprint-dev
 linux-snapdragon-headers-4.15.0-1123
 xmms2-plugin-daap
+linux-snapdragon-headers-4.15.0-1125
 c3270
 iisemulator
 tdsodbc
@@ -5846,6 +5852,7 @@ libjaxws-api-java
 yakuake
 libkf5people-dev
 linux-modules-4.15.0-1083-snapdragon
+linux-modules-5.4.0-1071-aws
 elpa-gnuplot-mode
 libeclipse-ui-editors-java
 libafsauthent2
@@ -7460,6 +7467,7 @@ linux-aws-cloud-tools-4.15.0-1121
 linux-aws-cloud-tools-4.15.0-1123
 axiom-graphics-data
 linux-aws-cloud-tools-4.15.0-1124
+linux-aws-cloud-tools-4.15.0-1126
 libglvnd0
 libelf-dev
 asterisk-mysql
@@ -9582,6 +9590,7 @@ lua-messagepack
 libhx-doc
 librepository-java
 libsyslog-ocaml-dev
+linux-image-4.15.0-1126-aws
 libghc-mime-doc
 libparanamer-java-doc
 mcomix
@@ -9773,6 +9782,7 @@ libmrtd-dev
 libgtkmathview-bin
 python3-stardicter
 libopencc-doc
+linux-buildinfo-4.15.0-175-generic
 elpa-transient-doc
 linkchecker
 qtermwidget5-data
@@ -9865,6 +9875,7 @@ libnet-interface-perl
 libmorfologik-stemming-java
 php-horde-secret
 kdf
+linux-image-unsigned-5.4.0-1069-oracle
 libcddb2-dev
 libghc-xdg-desktop-entry-dev
 asterisk-core-sounds-en-gsm
@@ -10416,6 +10427,7 @@ lxqt-system-theme
 wireshark-doc
 postgresql-13-postgis-3-scripts
 n2n
+libiio0-dbgsym
 python3-pmix
 python3-ibm-cloud-sdk-core
 libforms-doc
@@ -13015,6 +13027,7 @@ libghc-recursion-schemes-dev
 dict-freedict-fra-swe
 knewstuff-dialog
 python3-invoke
+linux-image-unsigned-5.4.0-107-generic
 ruby-jekyll-gist
 eiskaltdcpp
 libhttp-throwable-perl
@@ -14090,6 +14103,7 @@ python3-placement
 libstax-java-doc
 libcdb-file-perl
 tryton-proteus
+linux-modules-extra-5.4.0-1069-oracle
 libghc-network-info-dev
 wcd
 linux-headers-4.15.0-167-generic
@@ -16506,6 +16520,7 @@ libdb-dev
 libghc-monoid-subclasses-prof
 r-cran-fexoticoptions
 gfortran-10-mipsisa32r6-linux-gnu
+linux-headers-4.15.0-1125-snapdragon
 golang-gopkg-yaml.v2-dev
 kde-telepathy-integration-module
 source-extractor
@@ -16597,6 +16612,7 @@ linux-aws-headers-4.15.0-1121
 libtemplate-plugin-comma-perl
 linux-aws-headers-4.15.0-1123
 linux-aws-headers-4.15.0-1124
+linux-aws-headers-4.15.0-1126
 python-sybil-doc
 libghc-process-extras-prof
 ebook2epub
@@ -18880,6 +18896,7 @@ python-soundfile-doc
 phpunit-object-enumerator
 linux-aws-tools-4.15.0-1123
 linux-aws-tools-4.15.0-1124
+linux-aws-tools-4.15.0-1126
 nova-compute-ironic
 zsh-doc
 pass-extension-tomb-basic
@@ -19574,6 +19591,7 @@ lua-fifo
 libghc-cipher-aes128-prof
 opendbx-utils
 tilix-common
+libiio-utils-dbgsym
 libantlr4-runtime4.9
 libusb-1.0-doc
 libtiff5
@@ -19952,6 +19970,7 @@ linux-snapdragon-tools-4.15.0-1120
 linux-snapdragon-tools-4.15.0-1122
 linux-snapdragon-tools-4.15.0-1123
 linux-buildinfo-5.4.0-1061-oracle
+linux-snapdragon-tools-4.15.0-1125
 node-eslint-utils
 python3-ospurge
 netdata-apache2
@@ -20597,6 +20616,7 @@ libbg-dev
 emacs-gtk
 linux-modules-5.0.0-65-generic
 librust-rand-pcg+serde-dev
+linux-image-5.4.0-1069-oracle
 dropbear-bin
 elpa-avy
 libvectorgraphics2d-java
@@ -21192,6 +21212,7 @@ liblucene8-java
 pentobi-kde-thumbnailer
 swish-e-dev
 libghc-svg-builder-prof
+linux-image-unsigned-4.15.0-1126-aws
 notcurses-data
 bibclean
 gnote
@@ -22057,6 +22078,7 @@ gtk2hs-buildtools
 linux-tools-4.15.0-1063-aws
 linux-buildinfo-4.15.0-1057-aws
 linux-kvm-headers-4.15.0-1110
+linux-kvm-headers-4.15.0-1112
 dietlibc-doc
 rt4-extension-calendar
 libdigest-bubblebabble-perl
@@ -22415,6 +22437,7 @@ librte-net-txgbe21
 gtans
 libconversant-disruptor-java
 partimage-server
+linux-tools-4.15.0-1125-snapdragon
 libcss-lessp-perl
 qtpdf5-examples
 qtdeclarative5-doc
@@ -23478,6 +23501,7 @@ libsqlite3-mod-virtualpg
 linux-headers-4.15.0-171
 linux-headers-4.15.0-173
 pgtop
+linux-headers-4.15.0-175
 libawl-php
 pdns-ixfrdist
 libcommons-logging-java-doc
@@ -23797,6 +23821,7 @@ linux-buildinfo-4.15.0-1097-snapdragon
 ruby-shellany
 linux-image-4.15.0-1120-snapdragon
 elpa-ediprolog
+zlib1g-dbg
 librust-phf+phf-macros-dev
 ttf2ufm
 python3-changelog
@@ -23988,6 +24013,7 @@ libghc-tasty-th-doc
 libsemver-perl
 libreoffice-help-pt-br
 libmail-imaptalk-perl
+linux-image-5.4.0-107-generic
 libkiwix9
 libmiral-dev
 libcatmandu-template-perl
@@ -26845,6 +26871,7 @@ libexiv2-dev
 tesseract-ocr-ron
 golang-github-hashicorp-go-retryablehttp-dev
 sopwith
+linux-tools-5.4.0-1069-oracle
 apcalc-dev
 fathom
 librust-libsystemd-dev
@@ -27736,6 +27763,7 @@ gftl-shared-dev
 creduce
 freeorion-data
 libapache2-mod-ruwsgi
+iiod-dbgsym
 linux-buildinfo-5.0.0-36-generic
 libwinpr-tools2-2
 tesseract-ocr-script-beng
@@ -28229,6 +28257,7 @@ libns3-3v5
 r-cran-rprotobuf
 linux-tools-4.15.0-123-generic
 python3-django-paintstore
+linux-image-4.15.0-175-generic
 python3-astroplan
 pyspectral-bin
 fonts-recommended
@@ -29306,6 +29335,7 @@ linux-gkeop-5.4-headers-5.4.0-1034
 linux-gkeop-5.4-headers-5.4.0-1036
 votca-csg
 linux-gkeop-5.4-headers-5.4.0-1037
+linux-gkeop-5.4-headers-5.4.0-1038
 mkvtoolnix-gui
 prettyping
 libghc-fold-debounce-doc
@@ -29903,6 +29933,7 @@ libcolorpicker-java
 libx32objc-10-dev-i386-cross
 xdvik-ja
 libobjc-9-dev-alpha-cross
+linux-tools-5.4.0-107-generic
 libghc-multistate-dev
 python3-gdcm
 libgtkglextmm-x11-1.2-dev
@@ -29945,6 +29976,7 @@ juce-modules-source
 librust-termcolor-dev
 libpetsc64-real3.14
 libmyguiengine3debian1v5
+linux-buildinfo-5.4.0-1071-aws
 fontconfig-config
 libmodpbase64-dev
 librust-lmdb-dev
@@ -32781,6 +32813,7 @@ lxqt
 python3-httmock
 liboobs-1-5-dbg
 libc6-mips32-mips64r6el-cross
+linux-modules-4.15.0-1126-aws
 nfswatch
 junit-doc
 language-pack-gnome-crh
@@ -33230,6 +33263,7 @@ gnome-icon-theme-nuovo
 linux-azure-5.4-headers-5.4.0-1070
 linux-azure-5.4-headers-5.4.0-1072
 linux-azure-5.4-headers-5.4.0-1073
+linux-azure-5.4-headers-5.4.0-1074
 python3-bip32utils
 linux-tools-4.15.0-1094-aws
 libqt5x11extras5-dev
@@ -33614,6 +33648,7 @@ libboost-serialization1.74-dev
 golang-github-jacobsa-reqtrace-dev
 linux-headers-5.4.0-1054-aws
 libcatalyst-plugin-smarturi-perl
+linux-aws-5.4-headers-5.4.0-1071
 odbcinst1debian2
 libpolled-camera-dev
 sword-comm-scofield
@@ -35486,6 +35521,7 @@ language-pack-tg-base
 linux-oracle-5.4-headers-5.4.0-1066
 linux-oracle-5.4-headers-5.4.0-1067
 libkf5texteditor-doc
+linux-oracle-5.4-headers-5.4.0-1069
 puppet-module-puppetlabs-rabbitmq
 python3-manuel
 python3-django-dbconn-retry
@@ -36302,6 +36338,7 @@ calligra-l10n-fi
 libmoosex-types-uri-perl
 gcc-9-x86-64-linux-gnu-base
 calligra-l10n-fr
+linux-modules-extra-4.15.0-1126-aws
 libmono-accessibility4.0-cil
 tourney-manager
 gcc-10-multilib-mips64-linux-gnuabi64
@@ -37546,6 +37583,7 @@ libppix-utilities-perl
 libosmo-gsup-client0
 libboost-container1.74-dev
 php-gmp
+linux-modules-4.15.0-1125-snapdragon
 android-libnativeloader
 libfixbuf-doc
 r-cran-extradistr
@@ -41642,6 +41680,7 @@ libghc-torrent-dev
 node-eslint-plugin-es
 shush
 protoc-gen-go
+linux-cloud-tools-4.15.0-1126-aws
 libsundials-nvecserial4
 fortunes-min
 node-browserify-rsa
@@ -42438,6 +42477,7 @@ tcl-tclreadline
 librte-pmd-crypto-scheduler17.11
 r-cran-dslabs
 gpick
+linux-headers-5.4.0-1069-oracle
 courier-base
 python3-ipy
 macutils
@@ -42903,6 +42943,7 @@ r-cran-plotmo
 python-sasmodels-doc
 erlang-yapp
 guile-gnome2-glib
+linux-modules-extra-5.4.0-1071-aws
 libghc-network-byte-order-dev
 dbf2mysql
 libghc-clock-doc
@@ -42948,6 +42989,7 @@ linux-headers-4.15.0-1097-snapdragon
 libpcl-search1.11
 r-cran-randomfields
 ruby-rack-protection
+linux-image-4.15.0-1125-snapdragon
 firefox-esr-l10n-ca-valencia
 argonaut-debconf
 gnome-control-center-data
@@ -43947,6 +43989,7 @@ vtgrab
 node-sinon
 d2x-rebirth
 developers-reference-fr
+linux-tools-4.15.0-175-generic
 xmountains
 pipewalker
 libmpj-java
@@ -44950,6 +44993,7 @@ libgecode-dev
 pi-top-os-apt-source
 snmpd
 clevis-dracut
+linux-buildinfo-5.4.0-107-generic
 librust-crossbeam+std-dev
 pioneers-metaserver
 linux-modules-5.4.0-1049-oracle
@@ -45640,6 +45684,7 @@ ruby-iniparse
 libjsonrpccpp-server0
 libacpi-dev
 python3-protobuf
+linux-headers-5.4.0-107-generic
 sass-elisp
 groonga-bin
 sympa
@@ -45668,6 +45713,7 @@ python3-segyio
 gir1.2-gegl-0.4
 linux-headers-rt-armmp
 elpa-uuid
+linux-modules-5.4.0-1069-oracle
 r-cran-robust
 ant-contrib
 afuse
@@ -45785,6 +45831,7 @@ node-load-json-file
 libjersey1-guice-java
 linux-azure-4.15-headers-4.15.0-1133
 linux-azure-4.15-headers-4.15.0-1134
+linux-azure-4.15-headers-4.15.0-1136
 kamailio-sctp-modules
 libsundials-kinsol4
 kodi-game-libretro-dbgsym
@@ -47044,6 +47091,7 @@ minetest
 libmoosex-traits-pluggable-perl
 vocproc
 exiftags
+linux-modules-4.15.0-175-generic
 eigensoft
 libgdl-3-common
 python-django-sitetree-doc
@@ -47962,6 +48010,7 @@ ktouch-data
 libdatetime-incomplete-perl
 libnrepl-clojure
 chkboot
+linux-headers-5.4.0-1071-aws
 puppet-lint
 libghc-pipes-bytestring-doc
 linux-modules-4.15.0-24-generic
@@ -48917,6 +48966,7 @@ libsnmp-session-perl
 libsfcgal-dev
 yaws
 gap-gapdoc
+linux-modules-5.4.0-107-generic
 info2www
 libjmock-java
 openscad-mcad
@@ -50266,6 +50316,7 @@ glabels-dev
 linux-tools-4.15.0-171
 linux-tools-4.15.0-173
 task-nepali-kde-desktop
+linux-tools-4.15.0-175
 gsequencer
 qt5qevercloud-dev
 debug-me
@@ -51601,6 +51652,7 @@ librust-backtrace+compiler-builtins-dev
 libklatexformula4-doc
 gobjc++-10-multilib-i686-linux-gnu
 ruby-rash-alt
+linux-image-5.4.0-1071-aws
 libtk-pod-perl
 libgcab-tests
 fusiondirectory-plugin-sympa
@@ -52977,6 +53029,7 @@ hy
 php-net-smtp
 libjs-of-ocaml-dev
 libnice10
+linux-tools-4.15.0-1126-aws
 prometheus-trafficserver-exporter
 help2man
 doclifter
@@ -53667,6 +53720,7 @@ python3-olefile
 libdime1
 japitools
 libmath-libm-perl
+linux-headers-4.15.0-1126-aws
 librust-xdg-dev
 openms
 python3-jupyter-server
@@ -55078,6 +55132,7 @@ libobjc4-riscv64-cross
 fp-units-rtl-3.2.0
 linux-oracle-headers-4.15.0-1090
 libecore-imf1
+linux-oracle-headers-4.15.0-1091
 gir1.2-gsf-1
 gcc-10-arm-linux-gnueabi-base
 twinkle-console
@@ -55929,6 +55984,7 @@ netconfd
 linux-headers-4.15.0-66-generic
 firefox-esr-l10n-ne-np
 dovecot-pop3d
+linux-buildinfo-5.4.0-1069-oracle
 qtmir-android
 fence-virtd
 libghc-options-doc
@@ -57819,6 +57875,7 @@ fonts-rufscript
 libwslay-doc
 python3-mshr-real
 zsync
+linux-cloud-tools-5.4.0-1071-aws
 libgwengui-gtk3-dev
 libstdc++-9-dev-riscv64-cross
 libaribb24-0
@@ -60608,6 +60665,7 @@ linux-oracle-5.4-tools-5.4.0-1063
 linux-oracle-5.4-tools-5.4.0-1064
 linux-oracle-5.4-tools-5.4.0-1066
 linux-oracle-5.4-tools-5.4.0-1067
+linux-oracle-5.4-tools-5.4.0-1069
 libquicktime2
 sigviewer
 linux-image-unsigned-5.4.0-86-generic
@@ -61172,6 +61230,7 @@ linux-aws-5.4-tools-5.4.0-1049
 php-zend-eventmanager
 linux-hwe-5.4-tools-5.4.0-104
 linux-hwe-5.4-tools-5.4.0-105
+linux-hwe-5.4-tools-5.4.0-107
 golang-github-urfave-cli-dev
 golang-golang-x-crypto-dev
 linux-headers-4.15.0-1032-aws
@@ -61213,6 +61272,7 @@ libcssparser-java
 python3-magics++
 libnss-mdns
 golang-github-xlab-handysort-dev
+linux-aws-5.4-tools-5.4.0-1071
 lxqt-notificationd
 linux-tools-5.3.0-62-generic
 libbison-dev
@@ -61355,6 +61415,7 @@ ruby-statsd
 tuxpaint
 opennlp
 cpupower-gui
+linux-buildinfo-4.15.0-1125-snapdragon
 python3-gi-cairo
 r-cran-ncdfgeom
 rasterlite2-bin
@@ -61971,6 +62032,7 @@ cl-bond
 uima-utils
 python3-leather
 libstring-similarity-perl
+linux-buildinfo-4.15.0-1126-aws
 librust-tokio-buf+util-dev
 linux-tools-4.15.0-151-generic
 py3c-dev
@@ -63099,6 +63161,7 @@ libgo16-riscv64-cross
 libubsan1-i386-cross
 libstd-srvs-dev
 libparse-dia-sql-perl
+linux-image-unsigned-5.4.0-1071-aws
 qtscrob
 librust-core-foundation+chrono-dev
 openstack-puppet-modules
@@ -64095,6 +64158,7 @@ python3-textile
 libnet-easytcp-perl
 librte-pdump17.11
 golang-github-tidwall-grect-dev
+linux-modules-extra-4.15.0-175-generic
 librust-rand-os-dev
 liblapack-dev
 libghc-ghc-paths-dev

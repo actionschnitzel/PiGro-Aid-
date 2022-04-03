@@ -516,6 +516,9 @@ class Frame2(ttk.Frame):
         def button_gpk():
             popen("sudo pi-gpk-update-viewer")
 
+        def button_list():
+            popen("xdg-open /etc/apt/sources.list.d/")
+
         def save_list():
             os.system("sudo chmod 777 -R /etc/apt/sources.list")
             text_file = open("/etc/apt/sources.list", "w")
@@ -661,6 +664,20 @@ class Frame2(ttk.Frame):
         )
         self.sv_button.grid(column=1, row=2)
 
+        self.sv_button = Button(
+            self.update_btn_frame,
+            text="Open Sources.list.d",
+            width=20,
+            anchor="w",
+            command=button_list,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="#d4244d",
+            font=("Helvetica", 12, "bold"),
+        )
+        self.sv_button.grid(column=1, row=3)
+
         self.reboot_button = Button(
             self.update_btn_frame,
             text="Reboot",
@@ -673,7 +690,7 @@ class Frame2(ttk.Frame):
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
-        self.reboot_button.grid(column=1, row=3)
+        self.reboot_button.grid(column=1, row=4)
 
         self.termf.pack(padx=45, pady=20, anchor=W)
 
@@ -1245,32 +1262,6 @@ class Frame3(ttk.Frame):
         self.info_sys_btn.place(x=700, y=620)
 
 
-# [Progress Par]
-class Progress_Bar(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-        self.title("Overclocking Legend")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 500
-        app_height = 300
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-
-        # progressbar
-        pb = ttk.Progressbar(
-            self, orient="horizontal", mode="indeterminate", length=280
-        )
-        # place the progressbar
-        pb.pack()
-        pb.start()
-
-
 # [Overclocking_Legend] button in Frame6
 class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
@@ -1434,6 +1425,59 @@ class Frame4(ttk.Frame):
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
 
+        def info_done():
+            global done_pop
+            done_pop = Toplevel()
+            done_pop.title("")
+            # setting window size
+            width = 247
+            height = 179
+            screenwidth = done_pop.winfo_screenwidth()
+            screenheight = done_pop.winfo_screenheight()
+            alignstr = "%dx%d+%d+%d" % (
+                width,
+                height,
+                (screenwidth - width) / 2,
+                (screenheight - height) / 2,
+            )
+            done_pop.geometry(alignstr)
+            done_pop.resizable(width=False, height=False)
+            done_pop["bg"] = "#333333"
+
+            def GButton_234_command():
+                done_pop.destroy()
+
+            GLabel_198 = tk.Label(done_pop)
+            ft = tkFont.Font(family="Helvetica", size=10)
+            GLabel_198["font"] = ft
+            GLabel_198["fg"] = "white"
+            GLabel_198["justify"] = "center"
+            GLabel_198["text"] = "label"
+            GLabel_198["image"] = self.ip03
+            GLabel_198.place(x=10, y=20, width=75, height=76)
+            GLabel_198["bg"] = "#333333"
+
+            GLabel_159 = tk.Label(done_pop)
+            ft = tkFont.Font(family="Helvetica", size=14)
+            GLabel_159["font"] = ft
+            GLabel_159["fg"] = "white"
+            GLabel_159["justify"] = "center"
+            GLabel_159["text"] = "Done!"
+            GLabel_159.place(x=90, y=40, width=131, height=32)
+            GLabel_159["bg"] = "#333333"
+
+            GButton_234 = tk.Button(done_pop)
+            GButton_234["bg"] = "#333333"
+            ft = tkFont.Font(family="Helvetica", size=10)
+            GButton_234["font"] = ft
+            GButton_234["fg"] = "white"
+            GButton_234["justify"] = "center"
+            GButton_234["text"] = "OK"
+            GButton_234.place(x=150, y=130, width=81, height=31)
+            GButton_234["command"] = GButton_234_command
+            GButton_234["highlightthickness"] = 2
+            GButton_234["borderwidth"] = 0
+
         def open_must_haves():
             os.system(f"python3 {home}/PiGro-Aid-/Shop/Shop.py")
 
@@ -1536,7 +1580,6 @@ class Frame4(ttk.Frame):
 
                 self.apt_inst_combo_box["values"] = data
 
-        # hhh
         def inst_btn1():
             global pop_apt_inst
             pop_apt_inst = Toplevel(self)
@@ -1550,6 +1593,7 @@ class Frame4(ttk.Frame):
             pop_apt_inst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
             pop_apt_inst.resizable(0, 0)
             pop_apt_inst.overrideredirect(True)
+            pop_apt_inst["highlightthickness"] = 2
 
             # progressbar
             inst_show = Label(
@@ -1585,6 +1629,7 @@ class Frame4(ttk.Frame):
                 pop_apt_inst.destroy()
             except CalledProcessError as e:
                 print(e.output)
+            info_done()
 
         def uninst_btn1():
             popen("sudo synaptic")
@@ -1666,6 +1711,7 @@ class Frame4(ttk.Frame):
             pop_apt_uninst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
             pop_apt_uninst.resizable(0, 0)
             pop_apt_uninst.overrideredirect(True)
+            pop_apt_uninst["highlightthickness"] = 2
 
             # progressbar
             inst_show = Label(
@@ -1701,6 +1747,7 @@ class Frame4(ttk.Frame):
                 pop_apt_uninst.destroy()
             except CalledProcessError as e:
                 print(e.output)
+            info_done()
 
         self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
 
