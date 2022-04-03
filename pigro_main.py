@@ -153,6 +153,9 @@ class MainApplication(tk.Tk):
             background=[("selected", "#333333")],
             foreground=[("selected", "#d4244d")],
         )
+        self.noteStyler.configure(
+            "red.Horizontal.TProgressbar", foreground="red", background="green"
+        )
 
 
 # Welcome Tab
@@ -1602,9 +1605,15 @@ class Frame4(ttk.Frame):
                 bg="#333333",
                 fg="white",
             ).pack(pady=20)
+
             pb = ttk.Progressbar(
-                pop_apt_inst, orient="horizontal", mode="indeterminate", length=280
+                pop_apt_inst,
+                orient="horizontal",
+                mode="indeterminate",
+                length=280,
+                style="red.Horizontal.TProgressbar",
             )
+
             # place the progressbar
             pb.pack()
             pb.start()
@@ -1720,9 +1729,15 @@ class Frame4(ttk.Frame):
                 bg="#333333",
                 fg="white",
             ).pack(pady=20)
+
             pb = ttk.Progressbar(
-                pop_apt_uninst, orient="horizontal", mode="indeterminate", length=280
+                pop_apt_uninst,
+                orient="horizontal",
+                mode="indeterminate",
+                length=280,
+                style="red.Horizontal.TProgressbar",
             )
+
             # place the progressbar
             pb.pack()
             pb.start()
