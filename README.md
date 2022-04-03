@@ -46,7 +46,7 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
-#ADDED# xdg-open /etc/apt/sources.list.d/ Button in Update
+#ADDED# xdg-open /etc/apt/sources.list.d/ Button in Update  
 #ADDED# Installer uses now APT in a background process
 #ADDED# High Quality Welcome Tab Background  
 #ADDED# XFCE Options are disabled when using other desktop  

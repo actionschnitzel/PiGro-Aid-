@@ -117,6 +117,7 @@ list = [
     "Слава Україні",
     "It's ALL Jar-Jar's fault!",
     "Rama Lama Ding Dong",
+    "Yes! Do as I say!",
 ]
 item = random.choice(list)
 # print(item)
