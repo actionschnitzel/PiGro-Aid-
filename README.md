@@ -34,8 +34,7 @@ Nevertheless you should know what you are doing because most of it works with "S
 
 # :doughnut: Showcase (Click 2 Enlage)
 
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/4.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/5.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/7.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/8.png" width="200">    
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/9.png" width="200">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200">
 
 ---
 
@@ -47,7 +46,8 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
-
+#ADDED# xdg-open /etc/apt/sources.list.d/ Button in Update  
+#ADDED# Installer uses now APT in a background process
 #ADDED# High Quality Welcome Tab Background  
 #ADDED# XFCE Options are disabled when using other desktop  
 #ADDED# Gparted & Neofetch Button disabled when not installed  
