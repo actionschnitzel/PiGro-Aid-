@@ -30,6 +30,10 @@ My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding princi
 Yup! It's open source, after all.
 Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
 
+# :wrench: Info  
+    
+PiGro is only compatible with operating systems based on Raspberry Pi OS. I have tried several times to program an Ubuntu version. Unfortunately, it turns out again and again that Ubuntu is unstable and bugged for the Pi. Should there ever be an Ubuntu-Pi version that is STABLE from installation and runs smoothly, I will get to work.
+
 ---
 
 # :doughnut: Showcase (Click 2 Enlage)
