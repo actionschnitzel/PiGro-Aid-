@@ -29,6 +29,8 @@ My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding princi
 
 Yup! It's open source, after all.
 Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
+    
+---
 
 # :wrench: Info  
     
