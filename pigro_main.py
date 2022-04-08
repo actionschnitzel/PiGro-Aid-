@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 import os
 import os.path
 import tkinter as tk
@@ -24,6 +23,14 @@ from cgitb import enable
 from pynotifier import Notification
 from subprocess import check_call, CalledProcessError
 from threading import Thread
+from concurrent.futures import thread
+
+
+
+# Say Hallo!
+global user
+user = os.environ.get('USER')
+print(f"Hi,{user} waz uuuuup?!")
 
 # Define Home
 global home
@@ -35,9 +42,6 @@ global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
 print("You are using: " + get_de)
 
-
-# def reboot_n():
-#    popen("sudo reboot")
 
 
 # Main Winddow / Notebook Config
@@ -86,6 +90,7 @@ class MainApplication(tk.Tk):
         tab2l.image = tab2p
         tab2l["background"] = "#333333"
         tab2l.place(x=-2, y=630)
+
 
         self.welcome_icon = PhotoImage(file=r"images/icons/Logotab.png")
         self.system_icon = PhotoImage(file=r"images/icons/system.png")
@@ -157,6 +162,16 @@ class MainApplication(tk.Tk):
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
 
+if user == "timo":
+    Notification(
+        title="OMG it is leepsp\n",
+        description="look at my sick rhymes & styles yo!\n\n",
+        icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+        duration=10,
+        urgency="normal",
+    ).send()
+else:
+    pass
 
 # Welcome Tab
 class Frame1(ttk.Frame):
@@ -875,6 +890,9 @@ class Frame3(ttk.Frame):
         def bash_log():
             popen(f"xdg-open {home}/.bash_history")
 
+        def rename_user():
+            popen("sudo rename-user")
+
         # Icon Set
         self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
         self.bp02 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
@@ -1254,6 +1272,20 @@ class Frame3(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         mouse_key_sett_btn.grid(row=5, column=2)
+
+        rename_user_btn = Button(
+            self.rahmen2,
+            image=self.bp01,
+            text="Rename User",
+            command=rename_user,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        rename_user_btn.grid(row=5, column=3)
 
         self.info_sys_btn = Button(
             self,
