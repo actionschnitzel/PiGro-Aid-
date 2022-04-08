@@ -42,7 +42,6 @@ DIRECTORY="$(readlink -f "$(dirname "$0")")"
 if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash ];then
   DIRECTORY="$HOME/PiGro-Aid-"
   
-echo "Creating Settings menu button..."
 
 fi
 echo "[Desktop Entry]
@@ -64,7 +63,6 @@ DIRECTORY="$(readlink -f "$(dirname "$0")")"
 if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash ];then
   DIRECTORY="$HOME/PiGro-Aid-"
   
-echo "Creating Settings menu button..."
 
 fi
 echo "[Desktop Entry]
