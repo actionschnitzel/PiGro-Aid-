@@ -15,11 +15,11 @@ printf "${GREEN}I now install dependencies${NC}\n\n"
 
 sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
 
-pip3 install psutil distro
+pip3 install psutil distro py-notifier
 
 clear
 
-
+cd
 
 
 if [ -d "$HOME/PiGro-Aid-" ] 
@@ -37,9 +37,48 @@ fi
 clear
 
 sudo chmod +x start.sh
-sudo cp pigro.desktop  $HOME/Desktop
-sudo cp pigro.desktop /usr/share/applications/
-sudo chmod +x $HOME/Desktop/pigro.desktop
+
+DIRECTORY="$(readlink -f "$(dirname "$0")")"
+if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash ];then
+  DIRECTORY="$HOME/PiGro-Aid-"
+  
+echo "Creating Settings menu button..."
+
+fi
+echo "[Desktop Entry]
+Version=2.1
+Exec=${DIRECTORY}/start.sh
+Name=PiGro
+GenericName=PiGro
+Encoding=UTF-8
+Terminal=false
+Type=Application
+Categories=System
+Icon=${DIRECTORY}/images/icons/logo.png
+Path=${DIRECTORY}/" > ~/Desktop/pigro.desktop
+
+sudo chmod +x ~/Desktop/pigro.desktop
+
+
+DIRECTORY="$(readlink -f "$(dirname "$0")")"
+if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash ];then
+  DIRECTORY="$HOME/PiGro-Aid-"
+  
+echo "Creating Settings menu button..."
+
+fi
+echo "[Desktop Entry]
+Version=2.1
+Exec=${DIRECTORY}/start.sh
+Name=PiGro
+GenericName=PiGro
+Encoding=UTF-8
+Terminal=false
+Type=Application
+Categories=System
+Icon=${DIRECTORY}/images/icons/logo.png
+Path=${DIRECTORY}/" > ~/.local/share/applications/pipigro.desktop
+
 cd
 clear
 
