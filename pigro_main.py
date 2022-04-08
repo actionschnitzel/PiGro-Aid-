@@ -162,7 +162,9 @@ class MainApplication(tk.Tk):
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
 
-if user == "timo":
+# Don't mind this code xD
+
+if user == "leepsp":
     Notification(
         title="OMG it is leepsp\n",
         description="look at my sick rhymes & styles yo!\n\n",
@@ -225,6 +227,13 @@ class Frame1(ttk.Frame):
         self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
+
+        self.welcome_canvas.create_text(
+            150, 50, text=f"Hi, {user} waz up?!", font=("Helvetica", 18, "bold"), fill="white"
+        )
+        
+
+        
 
         self.web_link = tk.Label(
             self,
