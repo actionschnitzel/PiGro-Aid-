@@ -43,7 +43,7 @@ if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash 
   DIRECTORY="$HOME/PiGro-Aid-"
   
 
-fi
+
 echo "[Desktop Entry]
 Version=2.1
 Exec=${DIRECTORY}/start.sh
@@ -58,7 +58,7 @@ Path=${DIRECTORY}/" > ~/Desktop/pigro.desktop
 
 sudo chmod +x ~/Desktop/pigro.desktop
 
-fi
+
 echo "[Desktop Entry]
 Version=2.1
 Exec=${DIRECTORY}/start.sh
