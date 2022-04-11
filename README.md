@@ -95,8 +95,9 @@ Documentation + Manual /// Still in work
 
 # :rocket: To do [NEXT UPDATE]
 
-- [ ] Next vication put a Pi in the luggage
-- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
+- [x]  :pizza: [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce][Family Size]    
+####                         Total Count Since 1st Commit: 20
+
 
 ---
 
