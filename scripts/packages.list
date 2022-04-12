@@ -10,6 +10,7 @@ apt-listchanges
 apt-transport-https				
 apt-utils					
 arandr						
+aria2						
 aspell						
 aspell-en					
 avahi-daemon					
@@ -43,6 +44,7 @@ cifs-utils
 code						
 colord						
 colord-data					
+conky-all					
 console-setup					
 console-setup-linux				
 coreutils					
@@ -112,6 +114,7 @@ ffmpeg
 file						
 findutils					
 fio						de
+firefox						
 firmware-atheros				
 firmware-brcm80211				
 firmware-libertas				
@@ -195,6 +198,7 @@ gstreamer1.0-plugins-good:arm64
 gstreamer1.0-x:arm64				
 gtk-update-icon-cache				
 gtk2-engines:arm64				
+gtk2-engines-murrine:arm64			
 gtk2-engines-pixbuf:arm64			
 gvfs:arm64					
 gvfs-backends					
@@ -216,6 +220,9 @@ hyphen-en-gb
 i2c-tools					
 ibverbs-providers:arm64				de
 ifupdown					
+imagemagick					
+imagemagick-6-common				
+imagemagick-6.q16				
 init						
 init-system-helpers				
 initramfs-tools					
@@ -248,6 +255,7 @@ libappstream4:arm64
 libapt-pkg6.0:arm64				
 libarchive13:arm64				
 libargon2-1:arm64				
+libaria2-0:arm64				
 libaribb24-0:arm64				
 libasan6:arm64					
 libasound2:arm64				
@@ -266,6 +274,7 @@ libatomic1:arm64
 libatopology2:arm64				
 libatspi2.0-0:arm64				
 libattr1:arm64					
+libaudclient2:arm64				
 libaudio2:arm64					
 libaudit-common					
 libaudit1:arm64					
@@ -309,6 +318,7 @@ libbs2b0:arm64
 libbsd0:arm64					
 libburn4:arm64					
 libbz2-1.0:arm64				
+libc-ares2:arm64				
 libc-bin					
 libc-dev-bin					
 libc-devtools					
@@ -448,6 +458,7 @@ libgdk-pixbuf-xlib-2.0-0:arm64
 libgdk-pixbuf2.0-0:arm64			
 libgdk-pixbuf2.0-common				
 libgfortran5:arm64				
+libgif7:arm64					
 libgirepository-1.0-1:arm64			
 libgl1:arm64					
 libgl1-mesa-dri:arm64				
@@ -505,6 +516,7 @@ libgupnp-igd-1.0-4:arm64
 libgusb2:arm64					
 libharfbuzz-icu0:arm64				
 libharfbuzz0b:arm64				
+libheif1:arm64					
 libhogweed6:arm64				
 libhpmud0:arm64					
 libhunspell-1.7-0:arm64				
@@ -513,6 +525,7 @@ libi2c0:arm64
 libical3:arm64					
 libice6:arm64					
 libicu67:arm64					
+libid3tag0:arm64				
 libidn11:arm64					
 libidn2-0:arm64					
 libiec61883-0:arm64				
@@ -520,12 +533,14 @@ libieee1284-3:arm64
 libijs-0.35:arm64				
 libilmbase25:arm64				
 libimagequant0:arm64				
+libimlib2:arm64					
 libimobiledevice6:arm64				
 libinput-bin					
 libinput10:arm64				
 libinstpatch-1.0-2:arm64			
 libip4tc2:arm64					
 libip6tc2:arm64					
+libircclient1					
 libisc-export1105:arm64				
 libisl23:arm64					
 libisofs6:arm64					
@@ -573,10 +588,12 @@ liblouis20:arm64
 liblouisutdml-bin				
 liblouisutdml-data				
 liblouisutdml9:arm64				
+liblqr-1-0:arm64				
 liblsan0:arm64					
 libltc11:arm64					
 libltdl7:arm64					
 liblua5.2-0:arm64				
+liblua5.3-0:arm64				
 libluajit-5.1-2:arm64				
 libluajit-5.1-common				
 liblz4-1:arm64					
@@ -585,6 +602,8 @@ liblzo2-2:arm64
 libmad0:arm64					
 libmagic-mgc					
 libmagic1:arm64					
+libmagickcore-6.q16-6:arm64			
+libmagickwand-6.q16-6:arm64			
 libmanette-0.2-0:arm64				
 libmatroska7:arm64				
 libmaxminddb0:arm64				
@@ -755,6 +774,7 @@ libreadline8:arm64
 libresid-builder0c2a				
 librest-0.7-0:arm64				
 librsvg2-2:arm64				
+librsvg2-bin					
 librsvg2-common:arm64				
 librtimulib-dev					
 librtimulib-utils				
@@ -968,6 +988,7 @@ libxkbfile1:arm64
 libxkbregistry0:arm64				
 libxklavier16:arm64				
 libxml2:arm64					
+libxmmsclient6					
 libxmu6:arm64					
 libxmuu1:arm64					
 libxnvctrl0:arm64				
@@ -1053,6 +1074,7 @@ nfs-common
 nftables					
 notification-daemon				
 ntfs-3g						
+numix-gtk-theme					
 ocl-icd-libopencl1:arm64			
 openresolv					
 openssh-client					
@@ -1266,6 +1288,7 @@ rfkill
 ristretto					
 rng-tools					
 rng-tools-debian				
+rp-bookshelf					
 rp-prefapps					
 rpcbind						
 rpi-chromium-mods				
@@ -1294,6 +1317,7 @@ sense-hat
 sensible-utils					
 sgml-base					
 shared-mime-info				
+shellcheck					
 slick-greeter					
 sound-theme-freedesktop				
 ssh						
@@ -1454,8 +1478,10 @@ xserver-xorg-video-vesa
 xterm						
 xxd						
 xz-utils					
+yad						
 zenity						
 zenity-common					
 zip						
 zlib1g:arm64					
 zlib1g-dev:arm64				
+zram-tools					

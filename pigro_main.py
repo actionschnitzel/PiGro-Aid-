@@ -29,7 +29,7 @@ from concurrent.futures import thread
 
 # Say Hallo!
 global user
-user = os.environ.get('USER')
+user = os.environ.get('LOGNAME')
 print(f"Hi,{user} waz uuuuup?!")
 
 # Define Home
@@ -161,17 +161,6 @@ class MainApplication(tk.Tk):
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
 
-# Don't mind this code xD
-if user == "leepsp":
-    Notification(
-        title="OMG it is leepsp\n",
-        description="look at my sick rhymes & styles yo!\n\n",
-        icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
-        duration=10,
-        urgency="normal",
-    ).send()
-else:
-    pass
 
 # Welcome Tab
 class Frame1(ttk.Frame):
@@ -3272,49 +3261,49 @@ class Frame6(ttk.Frame):
 
         with open("/boot/config.txt", "r") as fp:
             for line in lines_that_contain("#Pigro_Overclocking1", fp):
-                print(line)
+                #print(line)
                 if line:
                     OV1_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line in lines_that_contain("#Pigro_Overclocking2", fp):
-                print(line)
+                #print(line)
                 if line:
                     OV2_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line in lines_that_contain("#Pigro_Overclocking3", fp):
-                print(line)
+                #print(line)
                 if line:
                     OV3_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line in lines_that_contain("#Pigro_Overclocking4", fp):
-                print(line)
+                #print(line)
                 if line:
                     OV4_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line1 in lines_that_contain("arm_freq=", fp):
-                print(line1)
+                #print(line1)
                 if line1:
                     a_f_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line2 in lines_that_contain("gpu_freq=", fp):
-                print(line2)
+                #print(line2)
                 if line2:
                     g_f_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line3 in lines_that_contain("force_turbo=", fp):
-                print(line3)
+                #print(line3)
                 if line3:
                     f_t_label()
 
         with open("/boot/config.txt", "r") as fp:
             for line3 in lines_that_contain("over_voltage=", fp):
-                print(line3)
+                #print(line3)
                 if line3:
                     o_v_label()
 
