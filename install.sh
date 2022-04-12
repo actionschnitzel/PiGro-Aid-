@@ -41,8 +41,7 @@ sudo chmod +x start.sh
 DIRECTORY="$(readlink -f "$(dirname "$0")")"
 if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash ];then
   DIRECTORY="$HOME/PiGro-Aid-"
-  
-
+fi
 
 echo "[Desktop Entry]
 Version=2.1

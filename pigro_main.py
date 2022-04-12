@@ -73,7 +73,7 @@ class MainApplication(tk.Tk):
         self.Frame5 = Frame5(self.notebook)
         self.Frame6 = Frame6(self.notebook)
         self.Frame7 = Frame7(self.notebook)
-        # self.Frame9 = Frame9(self.notebook)
+        self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
@@ -124,9 +124,8 @@ class MainApplication(tk.Tk):
         )
         self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
 
-        #        self.notebook.add(
-        #            self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
-        #        )
+        self.notebook.add(
+        self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon)
 
         self.notebook.add(
             self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
@@ -163,7 +162,6 @@ class MainApplication(tk.Tk):
         )
 
 # Don't mind this code xD
-
 if user == "leepsp":
     Notification(
         title="OMG it is leepsp\n",
@@ -3909,17 +3907,28 @@ class Frame9(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
-        self.rahmen101.pack(pady=200)
+        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2,pady=20,padx=10)
+        self.rahmen101.pack(pady=20)
         self.rahmen101["background"] = "#333333"
 
+        self.btn_frame = Frame(self.rahmen101, bg="#333333")
+        self.btn_frame.pack()
+        self.label = Label(
+            self.btn_frame,
+            text="#NOTE: This is just for fun ;-)\nand it works with the new camlibs",
+            bg="#333333",
+            fg="white",
+        )
+        self.label.pack()
+
+
         self.welcome_icon = PhotoImage(file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
-        self.head_frame = Frame(self.rahmen101)
+        self.head_frame = Frame(self.rahmen101, bg="#333333")
         self.head_frame.pack()
         self.header_label = Label(
             self.head_frame, image=self.welcome_icon, bg="#333333"
         )
-        self.header_label.pack()
+        self.header_label.pack(pady=20)
 
         # Clicker_Frame
         self.btn_frame = Frame(self.rahmen101, bg="#333333")
@@ -3942,7 +3951,7 @@ class Frame9(ttk.Frame):
             fg="white",
             highlightthickness=0,
         )
-        self.photo_btn.pack()
+        self.photo_btn.pack(pady=10)
 
         self.video_btn = Button(
             self.btn_frame,
@@ -3954,13 +3963,26 @@ class Frame9(ttk.Frame):
         )
         self.video_btn.pack()
 
+        self.sec_ent_label = Label(
+            self.btn_frame,
+            text="REC time in seconds:",
+            bg="#333333",
+            fg="white",
+        )
+        self.sec_ent_label.pack()
+
+        self.sec_entry = Entry(self.btn_frame, bd=5, width=5, borderwidth=1)
+        self.sec_entry.pack()
+
+
     def photo1(self):
         photo = str(self.entry.get())
         popen(f"libcamera-jpeg -o {home}/{photo}.jpg")
 
     def video1(self):
         video = str(self.entry.get())
-        popen(f"libcamera-vid -t 10000 -o {home}/{video}.h264")
+        rec_time = str(self.sec_entry.get()+"000")
+        popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
 
 
 # TOOLTIPZ
