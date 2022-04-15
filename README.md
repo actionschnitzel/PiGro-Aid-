@@ -96,7 +96,6 @@ Documentation + Manual /// Still in work
 # :rocket: To do [NEXT UPDATE]
 
 - [ ] Check Back rutines
-- [ ] 
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 ---
