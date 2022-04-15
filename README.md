@@ -95,7 +95,8 @@ Documentation + Manual /// Still in work
 
 # :rocket: To do [NEXT UPDATE]
 
-- [ ] Next vication put a Pi in the luggage
+- [ ] Check Back rutines
+- [ ] 
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 ---
