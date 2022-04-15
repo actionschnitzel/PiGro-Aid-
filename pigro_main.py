@@ -1,3 +1,4 @@
+from faulthandler import disable
 import os
 import os.path
 import tkinter as tk
@@ -42,6 +43,28 @@ global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
 print("You are using: " + get_de)
 
+#Checks if pi-apps exists
+global piapps_path
+piapps_path = os.path.isdir(f'{home}/pi-apps') # Need full path
+
+if piapps_path == False:
+    print("Pi-Apps not found")
+if piapps_path == True:
+    print("Pi-Apps is installed")
+
+#Checks if snapd exists
+
+if os.path.isfile("/bin/snapd"):
+    print("Snap is installed")
+else:
+    print("Snap is not installed")
+
+#Checks if flatpak exists
+
+if os.path.isfile("/bin/flatpak"):
+    print("Flatpak is installed")
+else:
+    print("Flatpak is not installed")
 
 
 # Main Winddow / Notebook Config
@@ -216,7 +239,7 @@ class Frame1(ttk.Frame):
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.welcome_canvas.create_text(
-            150, 50, text=f"Hi, {user} waz up?!", font=("Helvetica", 18, "bold"), fill="white"
+            150, 55, text=f"Hi, {user} waz up?!", font=("Helvetica", 18, "bold"), fill="black"
         )
         
 
@@ -764,6 +787,9 @@ class Frame3(ttk.Frame):
         def lx_task():
             popen("lxtask")
 
+        def pix_wipe():
+            popen(f"python3 {home}/PiGro-Aid-/scripts/pix_wipe.py")
+
         def contxt_button():
             popen("sudo mousepad /boot/config.txt")
 
@@ -994,10 +1020,10 @@ class Frame3(ttk.Frame):
         sys_gparted_btn.grid(row=1, column=0)
 
         if os.path.isfile("/usr/sbin/gparted"):
-            print("Gparted exist")
+            print("Gparted is installed")
             sys_gparted_btn.configure(state=NORMAL)
         else:
-            print("Gparted does not exist")
+            print("Gparted is not installed")
             sys_gparted_btn.configure(state=DISABLED)
 
         sys_neo_btn = Button(
@@ -1015,10 +1041,10 @@ class Frame3(ttk.Frame):
         sys_neo_btn.grid(row=1, column=1)
 
         if os.path.isfile("/bin/neofetch"):
-            print("Neofetch exist")
+            print("Neofetch is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("Neofetch does not exist")
+            print("Neofetch is not installed")
             sys_neo_btn.configure(state=DISABLED)
 
         sys_FMGM_btn = Button(
@@ -1282,6 +1308,20 @@ class Frame3(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         rename_user_btn.grid(row=5, column=3)
+
+        pixel_wipe_btn = Button(
+            self.rahmen2,
+            image=self.bp01,
+            text="Pixel Wiper",
+            command=pix_wipe,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        pixel_wipe_btn.grid(row=6, column=0)
 
         self.info_sys_btn = Button(
             self,
@@ -1859,6 +1899,11 @@ class Frame4(ttk.Frame):
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
+        if piapps_path == False:
+            print("Pi-Apps not found")
+            self.pi_apps_entry.insert(0,"Pi-Apps is not installed")
+            self.pi_apps_inst_btn.configure(state=DISABLED)
+
 
         self.pi_apps_ico.grid(column=0, row=3)
         self.pi_apps_entry.grid(column=2, row=3)
@@ -1902,6 +1947,12 @@ class Frame4(ttk.Frame):
             self.snap_inst_btn,
             "*to use snap install, you must\napt-get install snapd xD lol",
         )
+
+        if os.path.isfile("/bin/snapd"):
+            self.snap_inst_btn.configure(state=NORMAL)
+        else:
+            self.snap_inst_btn.configure(state=DISABLED)
+            self.snap_entry.insert(0,"Snap is not installed")
 
         self.snap_ico.grid(column=0, row=1)
         self.snap_entry.grid(column=2, row=1)
@@ -1948,6 +1999,12 @@ class Frame4(ttk.Frame):
             self.flatp_inst_btn,
             "*past without--->>>flatpak install flathub<<< org.mozilla.firefox",
         )
+        if os.path.isfile("/bin/flatpak"):
+            self.flatp_inst_btn.configure(state=NORMAL)
+        else:
+            self.flatp_inst_btn.configure(state=DISABLED)
+            self.flat_entry.insert(0,"Flatpak is not installed")
+
 
         self.flatp_ico.grid(column=0, row=7)
         self.flat_entry.grid(column=2, row=7)
@@ -2767,9 +2824,6 @@ class Frame6(ttk.Frame):
 
         # overclocking_default/reset
         def set_default():
-            popen(
-                f"xterm -e 'bash -c \"sudo chmod +x {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
-            )
             popen(
                 f"xterm -e 'bash -c \"sudo {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
@@ -3904,7 +3958,7 @@ class Frame9(ttk.Frame):
         self.btn_frame.pack()
         self.label = Label(
             self.btn_frame,
-            text="#NOTE: This is just for fun ;-)\nand it works with the new camlibs",
+            text="#NOTE: This is experimentel\nDon't know it will be continued ;-)\nand it works with the new camlibs",
             bg="#333333",
             fg="white",
         )

@@ -7875,6 +7875,7 @@ fusiondirectory-plugin-user-reminder-schema
 libio-interactive-tiny-perl
 epm
 svn-all-fast-export
+cantab-screensaver
 libgoogle-glog0v5
 fuse-emulator-gtk
 varnish
@@ -16625,6 +16626,7 @@ mupen64plus-rsp-all
 python3-flask-flatpages
 libcogl20
 libmime-tools-perl
+cantab-screensaver-dbgsym
 linux-buildinfo-5.4.0-1022-aws
 nut-snmp
 libnucleotidelikelihoodcore0
@@ -16994,6 +16996,7 @@ libnet-rendezvous-publish-perl
 liborlite-perl
 libkf5identitymanagement-dev
 libgraph-perl
+cantab-theme
 fusiondirectory-plugin-quota-schema
 crossfire-client-images
 fcitx-module-punc-ng
@@ -26792,6 +26795,7 @@ libghc-safe-exceptions-dev
 libsqlite3-mod-rasterlite2
 libb-hooks-parser-perl
 gnome-shell-extension-xrdesktop
+pi-apps-08f5abf3
 ser2net
 libghc-type-level-numbers-dev
 libeclipse-osgi-java

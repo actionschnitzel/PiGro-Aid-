@@ -37,6 +37,7 @@ build-essential
 busybox						
 bzip2						
 ca-certificates					
+chafa						
 chromium-browser				
 chromium-browser-l10n				
 chromium-codecs-ffmpeg-extra			
@@ -121,6 +122,7 @@ firmware-libertas
 firmware-misc-nonfree				
 firmware-realtek				
 flashrom					
+flatpak						
 fontconfig					
 fontconfig-config				
 fonts-cantarell					
@@ -128,6 +130,7 @@ fonts-dejavu-core
 fonts-droid-fallback				
 fonts-freefont-ttf				
 fonts-lato					
+fonts-liberation				
 fonts-liberation2				
 fonts-noto-mono					
 fonts-quicksand					
@@ -148,6 +151,8 @@ geany
 geany-common					
 gettext-base					
 ghostscript					
+gimp						
+gimp-data					
 gir1.2-atk-1.0:arm64				
 gir1.2-ayatanaappindicator3-0.1			
 gir1.2-freedesktop:arm64			
@@ -179,6 +184,8 @@ gnome-themes-standard
 gnupg						
 gnupg-l10n					
 gnupg-utils					
+gparted						
+gparted-common					
 gpg						
 gpg-agent					
 gpg-wks-client					
@@ -187,9 +194,11 @@ gpgconf
 gpgsm						
 gpgv						
 gpicview					
+graphviz					
 grep						
 groff-base					
 gsettings-desktop-schemas			
+gsfonts						
 gstreamer1.0-alsa:arm64				
 gstreamer1.0-libav:arm64			
 gstreamer1.0-plugins-bad:arm64			
@@ -249,8 +258,11 @@ libacl1:arm64
 libalgorithm-diff-perl				
 libalgorithm-diff-xs-perl			
 libalgorithm-merge-perl				
+libamd2:arm64					
+libann0						
 libaom0:arm64					
 libapparmor1:arm64				
+libappstream-glib8:arm64			
 libappstream4:arm64				
 libapt-pkg6.0:arm64				
 libarchive13:arm64				
@@ -294,6 +306,7 @@ libayatana-appindicator3-1
 libayatana-ido3-0.4-0:arm64			
 libayatana-indicator3-7:arm64			
 libbabeltrace1:arm64				
+libbabl-0.1-0:arm64				
 libbasicusageenvironment1:arm64			
 libbinutils:arm64				
 libblas3:arm64					
@@ -327,9 +340,12 @@ libc6:arm64
 libc6-dbg:arm64					
 libc6-dev:arm64					
 libcaca0:arm64					
+libcairo-gobject-perl				
 libcairo-gobject2:arm64				
+libcairo-perl:arm64				
 libcairo2:arm64					
 libcairomm-1.0-1v5:arm64			
+libcamd2:arm64					
 libcamera-apps					
 libcamera-tools					
 libcamera0:arm64				
@@ -340,13 +356,19 @@ libcap2:arm64
 libcap2-bin					
 libcbor0:arm64					
 libcc1-0:arm64					
+libccolamd2:arm64				
 libcddb2					
 libcdio-cdda2:arm64				
 libcdio-paranoia2:arm64				
 libcdio19:arm64					
 libcdparanoia0:arm64				
+libcdt5:arm64					
+libcgraph6:arm64				
+libchafa0:arm64					
+libcholmod3:arm64				
 libchromaprint1:arm64				
 libcodec2-0.9:arm64				
+libcolamd2:arm64				
 libcolord2:arm64				
 libcolorhug2:arm64				
 libcom-err2:arm64				
@@ -397,16 +419,20 @@ libegl1:arm64
 libelf1:arm64					
 libenchant-2-2:arm64				
 libepoxy0:arm64					
+libept1.6.0:arm64				
 liberror-perl					
 libestr0:arm64					
 libevdev2:arm64					
 libevent-2.1-7:arm64				
 libexif12:arm64					
+libexiv2-27:arm64				
 libexo-2-0:arm64				
 libexo-common					
 libexpat1:arm64					
 libexpat1-dev:arm64				
 libext2fs2:arm64				
+libextutils-depends-perl			
+libextutils-pkgconfig-perl			
 libfaad2:arm64					
 libfakeroot:arm64				
 libfastjson4:arm64				
@@ -437,6 +463,7 @@ libfreetype6-dev:arm64
 libfribidi0:arm64				
 libfstrm0:arm64					
 libftdi1-2:arm64				
+libfuse2:arm64					
 libfuse3-3:arm64				
 libgarcon-1-0:arm64				
 libgarcon-common				
@@ -457,8 +484,12 @@ libgdk-pixbuf-2.0-0:arm64
 libgdk-pixbuf-xlib-2.0-0:arm64			
 libgdk-pixbuf2.0-0:arm64			
 libgdk-pixbuf2.0-common				
+libgegl-0.4-0:arm64				
+libgegl-common					
+libgexiv2-2:arm64				
 libgfortran5:arm64				
 libgif7:arm64					
+libgimp2.0:arm64				
 libgirepository-1.0-1:arm64			
 libgl1:arm64					
 libgl1-mesa-dri:arm64				
@@ -466,6 +497,8 @@ libglapi-mesa:arm64
 libgles1:arm64					
 libgles2:arm64					
 libgles2-mesa:arm64				
+libglib-object-introspection-perl		
+libglib-perl:arm64				
 libglib2.0-0:arm64				
 libglib2.0-bin					
 libglib2.0-data					
@@ -504,16 +537,21 @@ libgtk-3-common
 libgtk2.0-0:arm64				
 libgtk2.0-bin					
 libgtk2.0-common				
+libgtk3-perl					
 libgtkd-3-0:arm64				
 libgtkmm-3.0-1v5:arm64				
 libgtksourceview-3.0-1:arm64			
 libgtksourceview-3.0-common			
 libgtop-2.0-11:arm64				
 libgtop2-common					
+libgts-0.7-5:arm64				
+libgts-bin					
 libgudev-1.0-0:arm64				
 libgupnp-1.2-0:arm64				
 libgupnp-igd-1.0-4:arm64			
 libgusb2:arm64					
+libgvc6						
+libgvpr2:arm64					
 libharfbuzz-icu0:arm64				
 libharfbuzz0b:arm64				
 libheif1:arm64					
@@ -570,6 +608,7 @@ libkmod2:arm64
 libkrb5-3:arm64					
 libkrb5support0:arm64				
 libksba8:arm64					
+liblab-gamut1:arm64				
 liblapack3:arm64				
 liblcms2-2:arm64				
 libldap-2.4-2:arm64				
@@ -604,6 +643,7 @@ libmagic-mgc
 libmagic1:arm64					
 libmagickcore-6.q16-6:arm64			
 libmagickwand-6.q16-6:arm64			
+libmalcontent-0-0:arm64				
 libmanette-0.2-0:arm64				
 libmatroska7:arm64				
 libmaxminddb0:arm64				
@@ -613,10 +653,12 @@ libmd0:arm64
 libmd4c0:arm64					
 libmenu-cache-bin				
 libmenu-cache3:arm64				
+libmetis5:arm64					
 libmikmod3:arm64				
 libmjpegutils-2.1-0:arm64			
 libmm-glib0:arm64				
 libmms0:arm64					
+libmng1:arm64					
 libmnl0:arm64					
 libmodplug1:arm64				
 libmount1:arm64					
@@ -634,6 +676,8 @@ libmtp-common
 libmtp-runtime					
 libmtp9:arm64					
 libmutter-7-0:arm64				
+libmypaint-1.5-1:arm64				
+libmypaint-common				
 libmysofa1:arm64				
 libncurses6:arm64				
 libncursesw6:arm64				
@@ -677,6 +721,7 @@ libopenni2-0:arm64
 libopus0:arm64					
 liborc-0.4-0:arm64				
 libossp-uuid16:arm64				
+libostree-1-1:arm64				
 libout123-0:arm64				
 libp11-kit0:arm64				
 libpackagekit-glib2-18:arm64			
@@ -695,6 +740,7 @@ libpaper-utils
 libpaper1:arm64					
 libparted-fs-resize0:arm64			
 libparted2:arm64				
+libpathplan4:arm64				
 libpcap0.8:arm64				
 libpci3:arm64					
 libpciaccess0:arm64				
@@ -770,6 +816,7 @@ libraspberrypi-dev
 libraspberrypi-doc				
 libraspberrypi0:arm64				
 libraw1394-11:arm64				
+libraw20:arm64					
 libreadline8:arm64				
 libresid-builder0c2a				
 librest-0.7-0:arm64				
@@ -845,6 +892,7 @@ libstartup-notification0:arm64
 libstdc++-10-dev:arm64				
 libstdc++6:arm64				
 libstemmer0d:arm64				
+libsuitesparseconfig5:arm64			
 libswresample3:arm64				
 libswscale5:arm64				
 libsyn123-0:arm64				
@@ -880,6 +928,7 @@ libuchardet0:arm64
 libudev1:arm64					
 libudfread0:arm64				
 libudisks2-0:arm64				
+libumfpack5:arm64				
 libunistring2:arm64				
 libunwind8:arm64				
 libupnp13:arm64					
@@ -930,6 +979,7 @@ libwebpdemux2:arm64
 libwebpmux3:arm64				
 libwebrtc-audio-processing1:arm64		
 libwildmidi2:arm64				
+libwmf0.2-7:arm64				
 libwnck-3-0:arm64				
 libwnck-3-common				
 libwoff1:arm64					
@@ -941,6 +991,7 @@ libx11-data
 libx11-xcb1:arm64				
 libx264-160:arm64				
 libx265-192:arm64				
+libxapian30:arm64				
 libxau6:arm64					
 libxaw7:arm64					
 libxcb-composite0:arm64				
@@ -1066,6 +1117,7 @@ ncdu
 ncurses-base					
 ncurses-bin					
 ncurses-term					
+neofetch					
 net-tools					
 netbase						
 network-manager					
@@ -1097,6 +1149,7 @@ pcmanfm
 perl						
 perl-base					
 perl-modules-5.32				
+pi-apps-08f5abf3				
 pi-bluetooth					
 pi-greeter					de
 pi-language-support				
@@ -1327,6 +1380,7 @@ strace
 sublime-merge					
 sublime-text					
 sudo						
+synaptic					
 system-config-printer				
 system-config-printer-common			
 system-config-printer-udev			
@@ -1405,6 +1459,8 @@ xauth
 xbitmaps					
 xcompmgr					
 xdg-dbus-proxy					
+xdg-desktop-portal				
+xdg-desktop-portal-gtk				
 xdg-user-dirs					
 xdg-utils					
 xfburn						
