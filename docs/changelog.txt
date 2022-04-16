@@ -7,53 +7,27 @@
  / ____/ / /_/ / /  / /_/ / 
 /_/   /_/\____/_/   \____/  Changelog
 
-This update was created while 
-binge watching Star Wars: The Clone Wars and Rebels... 
-All between 1 AM and 3 AM... If you get errors, it's Obi-Wan's fault!
+May-ntenance! 
 
-Also I found a super cool Website: VisualTk
-I put it on Links Tab. On this site you can create Python/Tkinter GUIs
-and then download the code. Wish I had this years ago... -.-
+Hahah hahah ... i'm so funny .... not...!
 
 
-#ADDED# Installer uses now APT in a background process 
-#ADDED# High Quality Welcome Tab Background
-#ADDED# XFCE Options are disabled when using other desktop
-#ADDED# Gparted & Neofetch Button disabled when not installed
-#ADDED# Shop is better structured
-#ADDED# Overclocking buttons are disabled immediately after clicking
-#ADDED# APT install funktion + combobox
-#ADDED# APT search function + combobox
-#ADDED# APT remove function + combobox
-#ADDED# Tuning specifications can be viewed via the map button
-#ADDED# VisualTk added to Links
-#ADDED# NEW OVERCLOCKING OPTION:
-        arm_freq=2300
-        gpu_freq=700
-        over_voltage=14
-        force_turbo=1
-#ADDED# VisualTk added to Links
-#ADDED# Bash History on System Tab
-#ADDED# Cron Job in System
-#ADDED# SD Copier in System
-#ADDED# Screen Settings
-#ADDED# Desktop Settings
-#ADDED# Desktop Session Settings
-#ADDED# Printer
-#ADDED# Menu Settings
-#ADDED# Pakage Sources
-#ADDED# Mous & Keyboard
 
-#FIXED# Temperature rounded to one number after the decimal point
-#FIXED# Folder structure improved
-#FIXED# Icon & PNG improvements
+#ADDED# PiGro move now to SysTray(Menu Bar) I like it :-P 
+        You can close close/show it from there.
 
+#ADDED# I added a Pi Camera Tab just for fun. Never saw an Apps
+        that does Pi Cam stuff in a GUI ...
+        So maybe it stay in PiGro maby not... time will tell.
 
-#CHANGED# Old and useless code has been deleted
-#CHANGED# Image.open has been almost completely replaced by PhotoImage
-#CHANGED# Installer Renamed to Software
-#CHANGED# Fast Installer command "sudo apt-get install/remove" has now *option "-y"
-#CHANGED# 64 Bit Mode removed due to it's no more avaleble in repo
+#FIXED# If Snap/Pi-Apps/Flatpak is not installed the buttons
+        are disabled
+
+#FIXED# As always there are code improvements
+
+#CHANGED# User Pi said goodbye! PiGro now full supports user names and
+          greets you by your name :-)
+
 
 Best regards
 

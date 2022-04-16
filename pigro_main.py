@@ -25,7 +25,8 @@ from pynotifier import Notification
 from subprocess import check_call, CalledProcessError
 from threading import Thread
 from concurrent.futures import thread
-
+from pystray import MenuItem as item
+import pystray
 
 
 # Say Hallo!
@@ -67,7 +68,7 @@ else:
     print("Flatpak is not installed")
 
 
-# Main Winddow / Notebook Config
+# Main Winddow / Notebook Config / SysTray
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -87,8 +88,39 @@ class MainApplication(tk.Tk):
         self.wait_visibility(self)
         self.wm_attributes("-alpha", 0.95)
 
-        self.notebook = ttk.Notebook(self)
+        # SysTray
+        # Define a function for quit the window
+        def quit_window(icon, item):
+            icon.stop()
+            self.destroy()
 
+        # Define a function to show the window again
+        def show_window(icon, item):
+            icon.stop()
+            self.after(0,self.deiconify())
+
+        def pi_configbutton():
+            popen("xterm -e 'bash -c \"sudo raspi-config; exec bash\"'")
+
+        def pi_configbutton2():
+            popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
+
+        def contxt_button():
+            popen("sudo mousepad /boot/config.txt") 
+
+        # Hide the window and show on the system taskbar
+        def hide_window():
+            self.withdraw()
+            image=Image.open("/home/timo/PiGro-Aid-/images/icons/pigro_tray.png")
+            menu=( item('Open PiGro', show_window), item('Open RC_GUI', pi_configbutton2), item('Open Raspi-Config', pi_configbutton), item('Edit Config.txt', contxt_button),item('Quit PiGro', quit_window))
+            icon=pystray.Icon("name", image, "My System Tray Icon", menu)
+            icon.run()
+           
+
+        self.protocol('WM_DELETE_WINDOW', hide_window)
+
+        #Notebook Definition
+        self.notebook = ttk.Notebook(self)
         self.Frame1 = Frame1(self.notebook)
         self.Frame2 = Frame2(self.notebook)
         self.Frame3 = Frame3(self.notebook)
@@ -1312,7 +1344,7 @@ class Frame3(ttk.Frame):
         pixel_wipe_btn = Button(
             self.rahmen2,
             image=self.bp01,
-            text="Pixel Wiper",
+            text="Go Xfce",
             command=pix_wipe,
             highlightthickness=0,
             borderwidth=0,
@@ -1495,6 +1527,22 @@ class Frame4(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
+
+        def pi_apps_list():
+            global pop_pi_apps_list
+            pop_pi_apps_list = Toplevel()
+            pop_pi_apps_list.geometry("700x800")
+            pop_pi_apps_list.title("pi_apps_list")
+            scrollbar = Scrollbar(pop_pi_apps_list)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_pi_apps_list, yscrollcommand=scrollbar.set)
+            text_file = open("scripts/pi-apps_list.list")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+            # scrollbar.config(command=mylist.yview)
 
         def info_done():
             global done_pop
@@ -1878,8 +1926,8 @@ class Frame4(ttk.Frame):
                 f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
             )
 
-        def pi_apps_list():
-            popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
+        #def pi_apps_list():
+        #    popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
 
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
 
