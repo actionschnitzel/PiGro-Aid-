@@ -110,11 +110,21 @@ class MainApplication(tk.Tk):
 
         # Hide the window and show on the system taskbar
         def hide_window():
+
+            Notification(
+                title="PiGro - Just Click It! \n",
+                description="I'm up here in the System Tray!",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=4,
+                urgency="normal",
+            ).send()
+
             self.withdraw()
             image=Image.open("/home/timo/PiGro-Aid-/images/icons/pigro_tray.png")
             menu=( item('Open PiGro', show_window), item('Open RC_GUI', pi_configbutton2), item('Open Raspi-Config', pi_configbutton), item('Edit Config.txt', contxt_button),item('Quit PiGro', quit_window))
             icon=pystray.Icon("name", image, "My System Tray Icon", menu)
             icon.run()
+
            
 
         self.protocol('WM_DELETE_WINDOW', hide_window)
@@ -271,7 +281,7 @@ class Frame1(ttk.Frame):
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.welcome_canvas.create_text(
-            150, 55, text=f"Hi, {user} waz up?!", font=("Helvetica", 18, "bold"), fill="black"
+            300, 110, text=f"Hi, {user}\nwaz up?!", font=("Helvetica", 12, "bold"), fill="black"
         )
         
 

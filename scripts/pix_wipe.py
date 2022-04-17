@@ -93,12 +93,13 @@ class App:
         pix_info_text["font"] = ft
         pix_info_text["fg"] = "#333333"
         pix_info_text["justify"] = "left"
-        pix_info_text["text"] = "#Note: I personally use this script to set up a fresh Pi OS\nthe way I like to use it.\nYou use it at your own risk.\n\nA clean installation of Xfce4 and lightDM is done:\n\nxfce4 xfce4-terminal xfce4-goodies lightdm slick-greeter bluetooth\npulseaudio-module-bluetooth blueman bluez-firmware\nnetwork-manager-gnome\n\nIf you continue,\nall PIXEL and LXDE desktop elements will be permanently removed:\n\nlxde* pipanel lxpanel openbox* obconf\n\n\nTo continue,\ntype 'Yes, do as I say!' in the field and click Ok!"
+        pix_info_text["text"] = "#Note:\n\nYou use it at your own risk.\nA clean installation of Xfce4 and lightDM is done:\n\nxfce4 xfce4-terminal xfce4-goodies lightdm slick-greeter bluetooth\npulseaudio-module-bluetooth blueman bluez-firmware\nnetwork-manager-gnome\n\nIf you continue,\nall PIXEL and LXDE desktop elements will be permanently removed:\n\nlxde* pipanel lxpanel openbox* obconf\n\n\nTo continue,\ntype 'Yes, do as I say!' in the field and click Ok!"
         pix_info_text.place(x=130,y=50,width=422,height=325)
 
     def killer_btn_command(self):
         if pix_entry.get() == "Yes, do as I say!":
-            print("command")
+            popen("xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/hallo_xfce.sh; exec bash\"'")
+
         else:
             pix_entry.delete(0,'end')
             pix_entry.insert(0,"Nope, try again!")
