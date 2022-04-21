@@ -15,7 +15,7 @@ printf "${GREEN}I now install dependencies${NC}\n\n"
 
 sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
 
-pip3 install psutil distro py-notifier
+pip3 install psutil distro py-notifier pystray
 
 clear
 

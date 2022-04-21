@@ -85,6 +85,7 @@ desktop-base
 desktop-file-utils				
 device-tree-compiler				
 dhcpcd5						
+dialog						
 dictionaries-common				
 diffutils					
 dillo						

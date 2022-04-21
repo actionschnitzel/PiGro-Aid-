@@ -1,4 +1,5 @@
-from faulthandler import disable
+#!/usr/bin/env python3
+
 import os
 import os.path
 import tkinter as tk
@@ -27,7 +28,7 @@ from threading import Thread
 from concurrent.futures import thread
 from pystray import MenuItem as item
 import pystray
-
+from faulthandler import disable
 
 # Say Hallo!
 global user
@@ -39,10 +40,35 @@ global home
 home = str(Path.home())
 print(f"{home} is your home directory!")
 
+# Get Distro
+distro_get = distro.id()
+print("Your Distro is: " + distro_get)
+
+#Legitimation Vars // Test for Ubuntu compatiblety
+global configpath
+config_path = "/boot/config.txt"
+global legit
+legit = "sudo"
+
+# Config.txt Path
+if distro_get == "ubuntu":
+    config_path = "/boot/firmware/config.txt"
+else:
+    config_path = "/boot/config.txt"
+
+# Legitimation
+if distro_get == "ubuntu":
+    legit = "pkexec"
+else:
+    legit = "sudo"
+
+
+
+
 # Get Desktop Environment
 global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
-print("You are using: " + get_de)
+print("Your DE is: " + get_de)
 
 #Checks if pi-apps exists
 global piapps_path
@@ -100,13 +126,13 @@ class MainApplication(tk.Tk):
             self.after(0,self.deiconify())
 
         def pi_configbutton():
-            popen("xterm -e 'bash -c \"sudo raspi-config; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
 
         def pi_configbutton2():
             popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
 
         def contxt_button():
-            popen("sudo mousepad /boot/config.txt") 
+            popen(f"{legit} mousepad /boot/config.txt") 
 
         # Hide the window and show on the system taskbar
         def hide_window():
@@ -125,9 +151,13 @@ class MainApplication(tk.Tk):
             icon=pystray.Icon("name", image, "My System Tray Icon", menu)
             icon.run()
 
-           
+        if get_de == "XFCE":
+            self.protocol('WM_DELETE_WINDOW', hide_window)
+        else:
+            pass
+            
 
-        self.protocol('WM_DELETE_WINDOW', hide_window)
+        #self.protocol('WM_DELETE_WINDOW', hide_window)
 
         #Notebook Definition
         self.notebook = ttk.Notebook(self)
@@ -593,13 +623,13 @@ class Frame2(ttk.Frame):
             )
 
         def button_gpk():
-            popen("sudo pi-gpk-update-viewer")
+            popen(f"{legit} pi-gpk-update-viewer")
 
         def button_list():
             popen("xdg-open /etc/apt/sources.list.d/")
 
         def save_list():
-            os.system("sudo chmod 777 -R /etc/apt/sources.list")
+            os.system(f"{legit} chmod 777 -R /etc/apt/sources.list")
             text_file = open("/etc/apt/sources.list", "w")
             text_file.write(s_list.get(1.0, END))
             m_text = "\
@@ -612,7 +642,7 @@ class Frame2(ttk.Frame):
             messagebox.showinfo(message=m_text, title="Infos")
 
         def reboot_n():
-            popen("sudo reboot")
+            popen(f"{legit} reboot")
 
         self.update_info_btn = PhotoImage(file=r"images/icons/info_m.png")
 
@@ -814,14 +844,14 @@ class Frame3(ttk.Frame):
 
         def rm_vscode():
             popen(
-                "xterm -e 'bash -c \"sudo rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'"
             )
 
         def net_set():
             popen("nm-connection-editor")
 
         def pi_configbutton():
-            popen("xterm -e 'bash -c \"sudo raspi-config; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
 
         def pi_configbutton2():
             popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
@@ -833,19 +863,19 @@ class Frame3(ttk.Frame):
             popen(f"python3 {home}/PiGro-Aid-/scripts/pix_wipe.py")
 
         def contxt_button():
-            popen("sudo mousepad /boot/config.txt")
+            popen(f"{legit} mousepad /boot/config.txt")
 
         def neofetch_button():
             popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
 
         def gparted_exec():
-            popen("sudo gparted")
+            popen(f"{legit} gparted")
 
         def cron_job():
-            popen("sudo mousepad /etc/crontab")
+            popen(f"{legit} mousepad /etc/crontab")
 
         def onc_ben():
-            popen("sudo xdg-open $HOME")
+            popen(f"{legit} xdg-open $HOME")
             print("With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
@@ -877,7 +907,7 @@ class Frame3(ttk.Frame):
                 pop_kernel.destroy()
 
             def do_it():
-                popen("xterm -e 'bash -c \"sudo BRANCH=next rpi-update; exec bash\"'")
+                popen(f"xterm -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'")
                 print("Kernel Upgrade GO!")
                 pop_kernel.destroy()
 
@@ -955,7 +985,7 @@ class Frame3(ttk.Frame):
             popen(f"xdg-open {home}/.bash_history")
 
         def rename_user():
-            popen("sudo rename-user")
+            popen(f"{legit} rename-user")
 
         # Icon Set
         self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
@@ -1351,19 +1381,6 @@ class Frame3(ttk.Frame):
         )
         rename_user_btn.grid(row=5, column=3)
 
-        pixel_wipe_btn = Button(
-            self.rahmen2,
-            image=self.bp01,
-            text="Go Xfce",
-            command=pix_wipe,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            compound=TOP,
-            font=("Helvetica", 10, "bold"),
-        )
-        pixel_wipe_btn.grid(row=6, column=0)
 
         self.info_sys_btn = Button(
             self,
@@ -1767,10 +1784,10 @@ class Frame4(ttk.Frame):
             info_done()
 
         def uninst_btn1():
-            popen("sudo synaptic")
+            popen(f"{legit} synaptic")
 
         def inst_syn():
-            popen("xterm -e 'bash -c \"sudo apt-get install synaptic; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} apt-get install synaptic; exec bash\"'")
 
         self.p4 = PhotoImage(file=r"images/icons/apt-get.png")
 
@@ -1980,7 +1997,7 @@ class Frame4(ttk.Frame):
         def inst_btn2():
             entry_text = self.snap_entry.get()
             popen(
-                f"xterm -e 'bash -c \"sudo snap install {self.snap_entry.get()}; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
             )
 
         self.p6 = PhotoImage(file=r"images/icons/snap.png")
@@ -2032,7 +2049,7 @@ class Frame4(ttk.Frame):
         def inst_btn4():
             entry_text = self.flat_entry.get()
             popen(
-                f" xterm -e 'bash -c \"sudo flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
+                f" xterm -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
             )
 
         self.p66 = PhotoImage(file=r"images/icons/flathub.png")
@@ -2172,7 +2189,7 @@ class Frame5(ttk.Frame):
             popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
 
         def opbox_button():
-            popen("sudo obconf")
+            popen(f"{legit} obconf")
 
         def lxap_button():
             popen("lxappearance")
@@ -2181,30 +2198,30 @@ class Frame5(ttk.Frame):
             popen("xfce4-appearance-settings")
 
         def tasksel_button():
-            popen("xterm -e 'bash -c \"sudo tasksel; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} tasksel; exec bash\"'")
 
         def xfcelook_f():
             popen("xdg-open https://www.xfce-look.org/browse/cat/")
 
         def ch_desk():
             popen(
-                "xterm -e 'bash -c \"sudo update-alternatives --config x-session-manager; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} update-alternatives --config x-session-manager; exec bash\"'"
             )
 
         def button_xfwm():
             popen(
-                "xterm -e 'bash -c \"sudo update-alternatives --config x-window-manager; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} update-alternatives --config x-window-manager; exec bash\"'"
             )
 
         def theme_f():
-            popen("sudo xdg-open /usr/share/themes/")
+            popen(f"{legit} xdg-open /usr/share/themes/")
 
         def icon_f():
-            popen("sudo xdg-open /usr/share/images/icons/")
+            popen(f"{legit} xdg-open /usr/share/images/icons/")
 
         def xfcefix():
             popen(
-                "xterm -e 'bash -c \"sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'"
             )
 
         def xfcefix2():
@@ -2586,7 +2603,7 @@ class z_ram_pop(tk.Toplevel):
         def z_ram_install():
             popen(
                 popen(
-                    "xterm -e 'bash -c \"sudo apt-get install zram-tools; exec bash\"'"
+                    f"xterm -e 'bash -c \"{legit} apt-get install zram-tools; exec bash\"'"
                 )
             )
             Notification(
@@ -2599,7 +2616,7 @@ class z_ram_pop(tk.Toplevel):
 
         # ää
         def z_ram_uninstall():
-            popen("xterm -e 'bash -c \"sudo apt-get remove zram-tools; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} apt-get remove zram-tools; exec bash\"'")
             Notification(
                 title="ZRAMr\n",
                 description="ZRAM has been uninstalled",
@@ -2725,7 +2742,7 @@ class Frame6(ttk.Frame):
             pop_2300.destroy()
 
         def reboot_n():
-            popen("sudo reboot")
+            popen(f"{legit} reboot")
 
         # overclocking_2000
         def ov_2000():
@@ -2883,7 +2900,7 @@ class Frame6(ttk.Frame):
         # overclocking_default/reset
         def set_default():
             popen(
-                f"xterm -e 'bash -c \"sudo {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
             self.tu_btn1.config(state=NORMAL)
             self.tu_btn2.config(state=NORMAL)

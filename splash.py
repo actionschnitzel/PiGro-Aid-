@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from tkinter import *
 import subprocess
 import sys
@@ -64,6 +66,8 @@ def install_depends():
     pip_install("distro")
     pip_install("psutil")
     pip_install("py-notifier")
+    pip_install("pystray")
+
     isInstalling = False
 
 
