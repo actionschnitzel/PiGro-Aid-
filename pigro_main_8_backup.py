@@ -63,6 +63,8 @@ else:
     legit = "sudo"
 
 
+
+
 # Get Desktop Environment
 global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
@@ -78,25 +80,26 @@ if piapps_path == True:
     print("Pi-Apps is installed")
 
 #Checks if snapd exists
+
 if os.path.isfile("/bin/snapd"):
     print("Snap is installed")
 else:
     print("Snap is not installed")
 
 #Checks if flatpak exists
+
 if os.path.isfile("/bin/flatpak"):
     print("Flatpak is installed")
 else:
     print("Flatpak is not installed")
 
 
-# [Main Winddow / Notebook Config / SysTray]
+# Main Winddow / Notebook Config / SysTray
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        # Window Basics
-        self.title("PiGro - Stupida Medusa!")
+        self.title("PiGro - Vincitore_Fedele")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = "#333333"
@@ -167,11 +170,6 @@ class MainApplication(tk.Tk):
         self.Frame7 = Frame7(self.notebook)
         self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
-        self.Frame11 = Frame11(self.notebook)
-
-
-
-       
 
         # Notebook Decoration TOP_BOTTOM
         tabi = Image.open("images/backgrounds/side_bar.png")
@@ -201,8 +199,6 @@ class MainApplication(tk.Tk):
         self.pig_icon = PhotoImage(file=r"images/icons/pigpi.png")
         self.cam_icon = PhotoImage(file=r"images/icons/PyPiCam_Go.png")
         self.config_icon = PhotoImage(file=r"images/icons/config_txt.png")
-        self.ubuntu_icon = PhotoImage(file=r"images/icons/ubuntu_logo.png")
-
 
         # Tabs
         self.notebook.add(
@@ -211,9 +207,6 @@ class MainApplication(tk.Tk):
         self.notebook.add(
             self.Frame3, compound=LEFT, text="System", image=self.system_icon
         )
-
-        self.notebook.add(self.Frame11, compound=LEFT, text="Ubuntu Stuff", image=self.ubuntu_icon)
-
         self.notebook.add(
             self.Frame2, compound=LEFT, text="Update", image=self.update_icon
         )
@@ -221,7 +214,6 @@ class MainApplication(tk.Tk):
             self.Frame4, compound=LEFT, text="Software", image=self.install_icon
         )
         self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
-
         self.notebook.add(
             self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
@@ -235,13 +227,6 @@ class MainApplication(tk.Tk):
         )
 
         self.notebook.pack()
-
-        if distro_get == "debian":
-            self.notebook.hide(self.Frame11)
-
-        if distro_get == "ubuntu":
-            self.notebook.hide(self.Frame3)
-            self.notebook.hide(self.Frame5)
 
         # Notebook Themeing
         self.noteStyler = ttk.Style(self)
@@ -270,9 +255,9 @@ class MainApplication(tk.Tk):
         self.noteStyler.configure(
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
-        self.noteStyler.configure("Line.TSeparator", background="grey")
 
-# [Welcome] Tab
+
+# Welcome Tab
 class Frame1(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -586,7 +571,7 @@ class Frame1(ttk.Frame):
         refresh()
 
 
-# [Update] Tab
+# Update Tab
 class Frame2(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -828,7 +813,7 @@ class Frame2(ttk.Frame):
         self.info_up_btn.place(x=650, y=320)
 
 
-# [System] tab
+# System tab
 class Frame3(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -1407,7 +1392,7 @@ class Frame3(ttk.Frame):
         self.info_sys_btn.place(x=700, y=620)
 
 
-# [Overclocking_Legend] Child
+# [Overclocking_Legend] button in Frame6
 class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
@@ -1550,166 +1535,7 @@ class Tuning_Legende(tk.Toplevel):
         self.ov_1_text.grid(row=9, column=1)
 
 
-# [APT Installer Popup] Child
-class APT_Installer_Popup(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-        self.title(f"Installing ... {apt_inst_combo_box.get()}")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 700
-        app_height = 250
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.overrideredirect(True)
-
-
-        # progressbar
-        global inst_show
-        inst_show = Label(
-            self,
-            text="",# {apt_inst_combo_box.get()}
-            bg="#333333",
-            fg="white",
-        )
-        inst_show.pack(pady=20)
-        global pb
-        pb = ttk.Progressbar(
-            self,
-            orient="horizontal",
-            mode="indeterminate",
-            length=600,
-            style="red.Horizontal.TProgressbar",
-        )
-        pb.pack()
-
-        
-        self.apt_inst_termf = Frame(
-            self, height=50, width=600, highlightthickness=0, borderwidth=0
-        )
-        
-        self.apt_inst_wid = self.apt_inst_termf.winfo_id()
-
-        
-        self.apt_inst_termf["background"] = "#333333"
-        self.apt_inst_termf.pack(padx=45, pady=20)
-
-        def install_parameter():
-            os.system(f'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt install -y {apt_inst_combo_box.get()} && exit ; exec bash"'% self.apt_inst_wid)
-            pb.stop()
-            GButton_916.configure(state=NORMAL)
-            self.title(f"Done!")
-            inst_show.configure(text="Done!")
-
-
-        # place the progressbar
-
-        def GButton_916_command():
-            #Inst_compl_Popup.destroy()
-            #Installer_Popup.destroy()
-            APT_Installer_Popup.destroy(self) 
-
-        GButton_916=tk.Button(self)
-        GButton_916["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family='Helvetica',size=12)
-        GButton_916["font"] = ft
-        GButton_916["fg"] = "white"
-        GButton_916["justify"] = "center"
-        GButton_916["bg"] = "#333333"
-        GButton_916["text"] = "Close"
-        GButton_916.place(x=580,y=200,width=70,height=25)
-        GButton_916["command"] = GButton_916_command
-        GButton_916.configure(state=DISABLED)
-
-        pb.start()
-        Thread(target=install_parameter).start() 
-
-# [APT Uninstaller Popup] Child
-class APT_Uninstaller_Popup(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "grey"
-        self.title(f"Removing ... {apt_un_combo_box.get()}")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 700
-        app_height = 250
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.overrideredirect(True)
-
-
-        # progressbar
-        global inst_show
-        inst_show = Label(
-            self,
-            text="",# {apt_inst_combo_box.get()}
-            bg="grey",
-            fg="white",
-        )
-        inst_show.pack(pady=20)
-        global pb
-        pb = ttk.Progressbar(
-            self,
-            orient="horizontal",
-            mode="indeterminate",
-            length=600,
-            style="red.Horizontal.TProgressbar",
-        )
-        pb.pack()
-
-        
-        self.apt_inst_termf = Frame(
-            self, height=50, width=600, highlightthickness=0, borderwidth=0
-        )
-        
-        self.apt_inst_wid = self.apt_inst_termf.winfo_id()
-
-        
-        self.apt_inst_termf["background"] = "grey"
-        self.apt_inst_termf.pack(padx=45, pady=20)
-
-        def install_parameter():
-            os.system(f'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt remove -y {apt_un_combo_box.get()} && exit ; exec bash"'% self.apt_inst_wid)
-            pb.stop()
-            GButton_916.configure(state=NORMAL)
-            self.title(f"Done!")
-            inst_show.configure(text="Done!")
-
-
-        # place the progressbar
-
-        def GButton_916_command():
-            #Inst_compl_Popup.destroy()
-            #Installer_Popup.destroy()
-            APT_Installer_Popup.destroy(self) 
-
-        GButton_916=tk.Button(self)
-        GButton_916["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family='Helvetica',size=12)
-        GButton_916["font"] = ft
-        GButton_916["fg"] = "white"
-        GButton_916["justify"] = "center"
-        GButton_916["bg"] = "grey"
-        GButton_916["text"] = "Close"
-        GButton_916.place(x=580,y=200,width=70,height=25)
-        GButton_916["command"] = GButton_916_command
-        GButton_916.configure(state=DISABLED)
-
-        pb.start()
-        Thread(target=install_parameter).start() 
-
-
-# [Software] Tab
+# Software Tab
 class Frame4(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -1855,9 +1681,9 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             background="green",
             foreground="white",
-            
+            pady=20,
         )
-        self.sysinf0.pack(pady=5)
+        self.sysinf0.pack()
 
         # Sec Fast Frame
         self.fast_sec_frame = Frame(
@@ -1891,34 +1717,87 @@ class Frame4(ttk.Frame):
             value = event.widget.get()
 
             if value == "":
-                apt_inst_combo_box["values"] = content
+                self.apt_inst_combo_box["values"] = content
             else:
                 data = []
                 for item in content:
                     if value.lower() in item.lower():
                         data.append(item)
-                apt_inst_combo_box["values"] = data
+
+                self.apt_inst_combo_box["values"] = data
 
         def inst_btn1():
-            inst_pop = APT_Installer_Popup(self)
-            inst_pop.grab_set()
+            global pop_apt_inst
+            pop_apt_inst = Toplevel(self)
+            pop_apt_inst.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_apt_inst.winfo_screenwidth()
+            screen_height = pop_apt_inst.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_apt_inst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_apt_inst.resizable(0, 0)
+            pop_apt_inst.overrideredirect(True)
+            pop_apt_inst["highlightthickness"] = 2
 
+            # progressbar
+            inst_show = Label(
+                pop_apt_inst,
+                text=f"Installing: {self.apt_inst_combo_box.get()}",
+                bg="#333333",
+                fg="white",
+            ).pack(pady=20)
 
+            pb = ttk.Progressbar(
+                pop_apt_inst,
+                orient="horizontal",
+                mode="indeterminate",
+                length=280,
+                style="red.Horizontal.TProgressbar",
+            )
 
+            # place the progressbar
+            pb.pack()
+            pb.start()
+
+            Thread(target=inst_apt).start()
+
+        def inst_apt():
+            entry_text = self.apt_inst_combo_box.get()
+            try:
+
+                check_call(
+                    [
+                        "sudo",
+                        "apt-get",
+                        "install",
+                        "-y",
+                        self.apt_inst_combo_box.get(),
+                    ],
+                    stdout=open(os.devnull, "wb"),
+                )
+                print("Done")
+                pop_apt_inst.destroy()
+            except CalledProcessError as e:
+                print(e.output)
+            info_done()
 
         def uninst_btn1():
             popen(f"{legit} synaptic")
 
+        def inst_syn():
+            popen(f"xterm -e 'bash -c \"{legit} apt-get install synaptic; exec bash\"'")
 
         self.p4 = PhotoImage(file=r"images/icons/apt-get.png")
 
-        #self.eingabefeld1 = Entry(self.apt_frame, bd=5, width=31, borderwidth=1)
-        global apt_inst_combo_box
-        apt_inst_combo_box = ttk.Combobox(self.apt_frame)
-        apt_inst_combo_box["values"] = content 
-        apt_inst_combo_box.bind("<KeyRelease>", check_input)
-        apt_inst_combo_box.config(width=30)
-   
+        self.eingabefeld1 = Entry(self.apt_frame, bd=5, width=31, borderwidth=1)
+
+        self.apt_inst_combo_box = ttk.Combobox(self.apt_frame)
+        self.apt_inst_combo_box["values"] = content
+        self.apt_inst_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_inst_combo_box.config(width=30)
+
         self.apt_inst_btn = Button(
             self.apt_frame,
             text="install",
@@ -1940,7 +1819,7 @@ class Frame4(ttk.Frame):
             column=0,
             row=0,
         )
-        apt_inst_combo_box.grid(column=2, row=0)
+        self.apt_inst_combo_box.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
 
         # APT- remove
@@ -1972,16 +1851,70 @@ class Frame4(ttk.Frame):
                 self.apt_un_combo_box["values"] = data
 
         def un_inst_btn1():
-            uninst_pop = APT_Uninstaller_Popup(self)
-            uninst_pop.grab_set()
+            global pop_apt_uninst
+            pop_apt_uninst = Toplevel(self)
+            pop_apt_uninst.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_apt_uninst.winfo_screenwidth()
+            screen_height = pop_apt_uninst.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_apt_uninst.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_apt_uninst.resizable(0, 0)
+            pop_apt_uninst.overrideredirect(True)
+            pop_apt_uninst["highlightthickness"] = 2
+
+            # progressbar
+            inst_show = Label(
+                pop_apt_uninst,
+                text=f"Uninstalling: {self.apt_un_combo_box.get()}",
+                bg="#333333",
+                fg="white",
+            ).pack(pady=20)
+
+            pb = ttk.Progressbar(
+                pop_apt_uninst,
+                orient="horizontal",
+                mode="indeterminate",
+                length=280,
+                style="red.Horizontal.TProgressbar",
+            )
+
+            # place the progressbar
+            pb.pack()
+            pb.start()
+
+            Thread(target=uninst_apt).start()
+
+        def uninst_apt():
+            entry_text = self.apt_un_combo_box.get()
+            try:
+
+                check_call(
+                    [
+                        "sudo",
+                        "apt-get",
+                        "remove",
+                        "-y",
+                        self.apt_un_combo_box.get(),
+                    ],
+                    stdout=open(os.devnull, "wb"),
+                )
+                print("Done")
+                pop_apt_uninst.destroy()
+            except CalledProcessError as e:
+                print(e.output)
+            info_done()
 
         self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
 
-        global apt_un_combo_box
-        apt_un_combo_box = ttk.Combobox(self.un_apt_frame)
-        apt_un_combo_box["values"] = un_content
-        apt_un_combo_box.bind("<KeyRelease>", check_input)
-        apt_un_combo_box.config(width=30)
+        self.apt_un_entry = Entry(self.un_apt_frame, bd=5, width=31, borderwidth=1)
+
+        self.apt_un_combo_box = ttk.Combobox(self.un_apt_frame)
+        self.apt_un_combo_box["values"] = un_content
+        self.apt_un_combo_box.bind("<KeyRelease>", check_input)
+        self.apt_un_combo_box.config(width=30)
 
         self.un_apt_inst_btn = Button(
             self.un_apt_frame,
@@ -2000,12 +1933,8 @@ class Frame4(ttk.Frame):
             column=0,
             row=0,
         )
-        apt_un_combo_box.grid(column=2, row=0)
+        self.apt_un_combo_box.grid(column=2, row=0)
         self.un_apt_inst_btn.grid(column=1, row=0)
-
-        # Separator Line
-        self.separator = ttk.Separator(self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator")
-        self.separator.pack(fill='x',pady=10)
 
         # pi-apps_entry
 
@@ -2045,33 +1974,15 @@ class Frame4(ttk.Frame):
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
-
-        self.pi_apps_inst_btn3 = Button(
-            self.pi_apps,
-            text="Search Pi-Apps",
-            command=pi_apps_list,
-            highlightthickness=1,
-            borderwidth=0,
-            width=32,
-            background="#333333",
-            foreground="white",
-            font=(("Helvetica,bold"), "9"),
-        )
-
         if piapps_path == False:
             print("Pi-Apps not found")
             self.pi_apps_entry.insert(0,"Pi-Apps is not installed")
             self.pi_apps_inst_btn.configure(state=DISABLED)
 
 
-        self.pi_apps_ico.grid(column=0, row=0)
-        self.pi_apps_entry.grid(column=2, row=0)
-        self.pi_apps_inst_btn.grid(column=1, row=0)
-        self.pi_apps_inst_btn3.grid(column=2, row=1)
-
-        # Separator Line
-        self.separator = ttk.Separator(self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator")
-        self.separator.pack(fill='x',pady=10)
+        self.pi_apps_ico.grid(column=0, row=3)
+        self.pi_apps_entry.grid(column=2, row=3)
+        self.pi_apps_inst_btn.grid(column=1, row=3)
 
         # snap_entry
         self.snap_frame = Frame(
@@ -2112,37 +2023,20 @@ class Frame4(ttk.Frame):
             "*to use snap install, you must\napt-get install snapd xD lol",
         )
 
-        self.snapstore_btn = Button(
-            self.snap_frame,
-            text="Search Snaps",
-            command=snapcraft,
-            highlightthickness=1,
-            borderwidth=0,
-            width=32,
-            background="#333333",
-            foreground="white",
-            font=(("Helvetica,bold"), "9"),
-        )
-
         if os.path.isfile("/bin/snapd"):
             self.snap_inst_btn.configure(state=NORMAL)
         else:
             self.snap_inst_btn.configure(state=DISABLED)
             self.snap_entry.insert(0,"Snap is not installed")
 
-        self.snap_ico.grid(column=0, row=0)
-        self.snap_entry.grid(column=2, row=0)
-        self.snap_inst_btn.grid(column=1, row=0)
-        self.snapstore_btn.grid(column=2, row=1)
-
+        self.snap_ico.grid(column=0, row=1)
+        self.snap_entry.grid(column=2, row=1)
+        self.snap_inst_btn.grid(column=1, row=1)
 
         self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
 
-        # Separator Line
-        self.separator = ttk.Separator(self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator")
-        self.separator.pack(fill='x',pady=10)
-
         # flat_entry
+
         self.flat_frame = Frame(
             self.fast_sec_frame,
             relief=GROOVE,
@@ -2180,19 +2074,6 @@ class Frame4(ttk.Frame):
             self.flatp_inst_btn,
             "*past without--->>>flatpak install flathub<<< org.mozilla.firefox",
         )
-
-        self.flat_btn = Button(
-            self.flat_frame,
-            text="Search Flathub",
-            command=flatflat,
-            highlightthickness=1,
-            width=32,
-            borderwidth=0,
-            background="#333333",
-            foreground="white",
-            font=(("Helvetica,bold"), "9"),
-        )
-
         if os.path.isfile("/bin/flatpak"):
             self.flatp_inst_btn.configure(state=NORMAL)
         else:
@@ -2200,10 +2081,73 @@ class Frame4(ttk.Frame):
             self.flat_entry.insert(0,"Flatpak is not installed")
 
 
-        self.flatp_ico.grid(column=0, row=0)
-        self.flat_entry.grid(column=2, row=0)
-        self.flatp_inst_btn.grid(column=1, row=0)
-        self.flat_btn.grid(column=2, row=1)
+        self.flatp_ico.grid(column=0, row=7)
+        self.flat_entry.grid(column=2, row=7)
+        self.flatp_inst_btn.grid(column=1, row=7)
+
+        self.frame311 = Frame(
+            self,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=1,
+            pady=5,
+            padx=50,
+            bg="green",
+        )
+        self.frame311.pack(pady=10)
+
+        self.snapstore_btn = Button(
+            self.frame311,
+            text="snapcraft.io",
+            command=snapcraft,
+            highlightthickness=1,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            font=(("Helvetica,bold"), "9"),
+        )
+
+        self.pi_apps_inst_btn3 = Button(
+            self.frame311,
+            text="list all pi-apps",
+            command=pi_apps_list,
+            highlightthickness=1,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            font=(("Helvetica,bold"), "9"),
+        )
+
+        self.uninst_button = Button(
+            self.frame311,
+            text="Synaptic",
+            command=uninst_btn1,
+            highlightthickness=1,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            font=(("Helvetica,bold"), "9"),
+        )
+        self.uninst_button_ttp = CreateToolTip(
+            self.uninst_button, "If nothing happens you must install Synaptic"
+        )
+
+        self.flat_btn = Button(
+            self.frame311,
+            text="Flathub",
+            command=flatflat,
+            highlightthickness=1,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            font=(("Helvetica,bold"), "9"),
+        )
+
+        self.snapstore_btn.grid(column=0, row=6)
+        self.pi_apps_inst_btn3.grid(column=1, row=6)
+        self.uninst_button.grid(column=2, row=6)
+        self.flat_btn.grid(column=3, row=6)
+
         self.info_inst_btn = Button(
             self,
             image=self.tpinfm,
@@ -2214,7 +2158,7 @@ class Frame4(ttk.Frame):
         self.info_inst_btn.place(x=700, y=620)
 
 
-# [Look] Tab
+# Look
 class Frame5(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -2637,7 +2581,7 @@ class Frame5(ttk.Frame):
         self.info_look_btn.place(x=700, y=620)
 
 
-# [ZRAM] Child
+# ZRAM
 class z_ram_pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
@@ -2729,7 +2673,7 @@ class z_ram_pop(tk.Toplevel):
         GButton_585["command"] = z_ram_uninstall
 
 
-# [Tuning] Tab
+# Tuning
 class Frame6(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -3540,7 +3484,7 @@ class Frame6(ttk.Frame):
         self.info_tuning_btn.place(x=700, y=500)
 
 
-# [Links] Tab
+# Links
 class Frame7(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -3979,7 +3923,7 @@ class Frame7(ttk.Frame):
         ).pack()
 
 
-# [Poll] Tab
+# Poll
 class Frame8(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -4072,7 +4016,7 @@ class Frame8(ttk.Frame):
         ).grid(column=3, row=0, pady=20, padx=20)
 
 
-# [Cam] Tab
+# Cam
 class Frame9(ttk.Frame):
     def __init__(self, container):
         super().__init__()
@@ -4159,17 +4103,7 @@ class Frame9(ttk.Frame):
         popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
 
 
-# [Ubuntu Stuff] Tab
-class Frame11(ttk.Frame):
-    def __init__(self, container):
-        super().__init__()
-
-        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
-        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
-
-
-# [TOOLTIPZ]
+# TOOLTIPZ
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
@@ -4231,7 +4165,7 @@ class CreateToolTip(object):
             tw.destroy()
 
 
-# [End Of The Line]
+# End Of The Line
 if __name__ == "__main__":
     app = MainApplication()
     app.mainloop()

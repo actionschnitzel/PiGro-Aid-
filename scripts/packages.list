@@ -185,7 +185,6 @@ gnome-themes-standard
 gnupg						
 gnupg-l10n					
 gnupg-utils					
-gparted						
 gparted-common					
 gpg						
 gpg-agent					
@@ -283,6 +282,8 @@ libatk-bridge2.0-0:arm64
 libatk1.0-0:arm64				
 libatk1.0-data					
 libatkmm-1.6-1v5:arm64				
+libatlas-base-dev:arm64				
+libatlas3-base:arm64				
 libatomic1:arm64				
 libatopology2:arm64				
 libatspi2.0-0:arm64				
@@ -1378,6 +1379,7 @@ ssh
 ssh-import-id					
 ssl-cert					
 strace						
+stress						
 sublime-merge					
 sublime-text					
 sudo						

@@ -11,12 +11,18 @@ May-ntenance! loooool xD
 
 Hahah hahah ... I'm so funny .... not...!
 
+It turned out that Ubuntu 22.04 is kind of stable xD
+Yes I'm shocked too! I made PiGro Ubuntu compateple!
+But that means not Ubuntu Mate! And never ever ask for an Arch version.
+Not gonna happen bro!
+
+So this deserves a new code name! "PiGro - Stupida Medusa!"
 
 
 #ADDED# PiGro move now to SysTray(Menu Bar) I like it :-P 
-        You can close close/show it from there.
+        You can close close/show it from there.(Only XFCE)
 
-#ADDED# I added a Pi Camera Tab just for fun. Never saw an Apps
+#ADDED# I added a Pi Camera Tab just for fun. Never saw an App
         that does Pi Cam stuff in a GUI ...
         So maybe it stay in PiGro maby not... time will tell.
 
