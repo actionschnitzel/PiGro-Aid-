@@ -112,26 +112,6 @@ class MainApplication(tk.Tk):
         self.wait_visibility(self)
         self.wm_attributes("-alpha", 0.95)
 
-        # SysTray
-        # Define a function for quit the window
-        def quit_window(icon, item):
-            icon.stop()
-            self.destroy()
-
-        # Define a function to show the window again
-        def show_window(icon, item):
-            icon.stop()
-            self.after(0, self.deiconify())
-
-        def pi_configbutton():
-            popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
-
-        def pi_configbutton2():
-            popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
-
-        def contxt_button():
-            popen(f"{legit} mousepad /boot/config.txt")
-
         # Notebook Definition
         self.notebook = ttk.Notebook(self)
         self.Frame1 = Frame1(self.notebook)
@@ -144,6 +124,7 @@ class MainApplication(tk.Tk):
         self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
         self.Frame11 = Frame11(self.notebook)
+        self.Frame12 = Frame12(self.notebook)
 
         # Notebook Decoration TOP_BOTTOM
         tabi = Image.open("images/backgrounds/side_bar.png")
@@ -178,8 +159,13 @@ class MainApplication(tk.Tk):
         self.notebook.add(
             self.Frame1, compound=LEFT, text="Welcome", image=self.welcome_icon
         )
+
         self.notebook.add(
             self.Frame3, compound=LEFT, text="System", image=self.system_icon
+        )
+
+        self.notebook.add(
+            self.Frame12, compound=LEFT, text="System", image=self.system_icon
         )
 
         self.notebook.add(
@@ -192,12 +178,14 @@ class MainApplication(tk.Tk):
         self.notebook.add(
             self.Frame4, compound=LEFT, text="Software", image=self.install_icon
         )
-        self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
+        self.notebook.add(self.Frame5, compound=LEFT,
+                          text="Look", image=self.look_icon)
 
         self.notebook.add(
             self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
-        self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
+        self.notebook.add(self.Frame7, compound=LEFT,
+                          text="Links", image=self.dm_icon)
 
         self.notebook.add(
             self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
@@ -211,6 +199,7 @@ class MainApplication(tk.Tk):
 
         if distro_get == "debian":
             self.notebook.hide(self.Frame11)
+            self.notebook.hide(self.Frame12)
 
         if distro_get == "ubuntu":
             self.notebook.hide(self.Frame3)
@@ -294,8 +283,10 @@ class Frame1(ttk.Frame):
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
-        self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
-        self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
+        self.bg = PhotoImage(
+            file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
+        self.welcome_canvas = Canvas(
+            self, width=900, height=700, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
@@ -379,7 +370,8 @@ class Frame1(ttk.Frame):
         self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
         self.sys_frame_right["background"] = "#333333"
 
-        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
+        self.my_img = ImageTk.PhotoImage(
+            Image.open("images/icons/deb_logo.png"))
         self.my_label = Label(image=self.my_img)
 
         self.sysinf0 = Label(
@@ -554,7 +546,8 @@ class Frame1(ttk.Frame):
             cpu = CPUTemperature()
             # print(cpu)
 
-            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf8.configure(
+                text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
             self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh)
 
@@ -584,7 +577,8 @@ class Frame2(ttk.Frame):
 
         def update_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'  # && read -p PRESS_ENTER && exit
+                # && read -p PRESS_ENTER && exit
+                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'
                 % self.wid
             )
 
@@ -849,9 +843,6 @@ class Frame3(ttk.Frame):
         def lx_task():
             popen("lxtask")
 
-        def pix_wipe():
-            popen(f"python3 {home}/PiGro-Aid-/scripts/pix_wipe.py")
-
         def contxt_button():
             popen(f"{legit} mousepad /boot/config.txt")
 
@@ -865,7 +856,7 @@ class Frame3(ttk.Frame):
             popen(f"{legit} mousepad /etc/crontab")
 
         def onc_ben():
-            popen(f"{legit} xdg-open $HOME")
+            popen(f"{legit} nautilus $HOME")
             print("With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
@@ -907,7 +898,8 @@ class Frame3(ttk.Frame):
             frame_pop_kernel.pack()
             frame_pop_kernel["background"] = "#333333"
 
-            frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel_1 = Frame(
+                pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel_1.pack()
             frame_pop_kernel_1["background"] = "#333333"
 
@@ -1383,6 +1375,581 @@ class Frame3(ttk.Frame):
         self.info_sys_btn.place(x=700, y=620)
 
 
+# [System For Ubuntu] tab
+class Frame12(ttk.Frame):
+    def __init__(self, container):
+        super().__init__()
+
+        def source_sett():
+            popen("pi-gpk-prefs")
+
+        def screen_sett():
+            popen("lxrandr")
+
+        def desk_sett():
+            popen("pcmanfm --desktop-pref")
+
+        def printer_sett():
+            popen("gnome-control-center printers")
+
+        def menu_sett():
+            popen("alacarte")
+
+        def mouse_key_sett():
+            popen("lxinput")
+
+        def button_boot():
+            popen("xterm -e 'bash -c \"{legit} dmesg; exec bash\"'")
+
+        def rm_vscode():
+            popen(
+                f"xterm -e 'bash -c \"{legit} rm /etc/apt/sources.list.d/vscode.list & echo DONE!; exec bash\"'"
+            )
+
+        def net_set():
+            popen("nm-connection-editor")
+
+        def pi_configbutton():
+            popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
+
+        def pi_configbutton2():
+            popen("env SUDO_ASKPASS=/usr/lib/rc-gui/pwdrcg.sh sudo -AE rc_gui")
+
+        def lx_task():
+            popen("lxtask")
+
+        def contxt_button():
+            popen(f"{legit} gedit /boot/firmware/config.txt")
+
+        def neofetch_button():
+            popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
+
+        def gparted_exec():
+            popen(f"{legit} gparted")
+
+        def cron_job():
+            popen(f"{legit} gedit /etc/crontab")
+
+        def onc_ben():
+            popen("pkexec nautilus")
+            print("With great power comes great responsibility")
+            Notification(
+                title="Sudo File Manager\n",
+                description="With great power comes great responsibility\n\n                          - Oncle Ben",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+        def sd_copy():
+            popen(
+                "env SUDO_ASKPASS=/usr/lib/piclone/pwdpic.sh sudo -AE dbus-launch piclone"
+            )
+
+        def button_lk():
+            global pop_kernel
+            pop_kernel = Toplevel(self)
+            pop_kernel.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_kernel.winfo_screenwidth()
+            screen_height = pop_kernel.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_kernel.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_kernel.resizable(0, 0)
+
+            def pop_kernel_dest():
+                pop_kernel.destroy()
+
+            def do_it():
+                popen(
+                    f"xterm -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'"
+                )
+                print("Kernel Upgrade GO!")
+                pop_kernel.destroy()
+
+            frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel.pack()
+            frame_pop_kernel["background"] = "#333333"
+
+            frame_pop_kernel_1 = Frame(
+                pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel_1.pack()
+            frame_pop_kernel_1["background"] = "#333333"
+
+            pop_lbl_2000 = Label(
+                frame_pop_kernel,
+                anchor="w",
+                text="Do you really want to Upgrade the Kernel?",
+                font=("Helvetica", 12),
+                highlightthickness=0,
+                borderwidth=2,
+                background="#333333",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_lbl_2000.pack(pady=20)
+
+            pop_btn_2000 = Button(
+                frame_pop_kernel_1,
+                text="No",
+                anchor="w",
+                command=pop_kernel_dest,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#2246c4",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_2000.pack(padx=5, pady=20, side=LEFT)
+            pop_btn_shut = Button(
+                frame_pop_kernel_1,
+                text="Do It!",
+                anchor="w",
+                command=do_it,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#f03838",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_shut.pack(padx=5, pady=20)
+
+        def button_dpfc():
+            popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
+
+        def button_auto():
+            popen("xfce4-session-settings")
+
+        def button_xsett():
+            popen("xfce4-settings-manager")
+
+        def info_system_tab():
+            global pop_changelog
+            pop_changelog = Toplevel()
+            pop_changelog.geometry("700x800")
+            pop_changelog.title("System Info")
+            scrollbar = Scrollbar(pop_changelog)
+            scrollbar.pack(side=RIGHT, fill=Y)
+            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
+            text_file = open("docs/system_info.txt")
+            stuff = text_file.read()
+            s_list.insert(END, stuff)
+            text_file.close()
+            s_list.config(state=DISABLED)
+            s_list.pack(anchor="w", fill=BOTH, expand=True)
+
+        def bash_log():
+            popen(f"xdg-open {home}/.bash_history")
+
+        def rename_user():
+            popen(f"{legit} rename-user")
+
+        # Icon Set
+        self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
+        self.bp02 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
+        self.bp03 = PhotoImage(file=r"images/icons/terminal.png")
+        self.bp033 = PhotoImage(file=r"images/icons/terminal3.png")
+        self.bp04 = PhotoImage(file=r"images/icons/gparted.png")
+        self.bp05 = PhotoImage(file=r"images/icons/indicator-cpufreq.png")
+        self.bp06 = PhotoImage(file=r"images/icons/folder.png")
+        self.bp07 = PhotoImage(file=r"images/icons/links.png")
+        self.ico_m = PhotoImage(file=r"images/icons/gui_icon.png")
+        self.ico_m2 = PhotoImage(file=r"images/icons/weblink_icon.png")
+        self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
+        self.hist_doc = PhotoImage(file=r"images/icons/hist_doc.png")
+        self.display_settings_icon = PhotoImage(
+            file=r"images/icons/display_settings_icon.png"
+        )
+        self.mouse_settings_icon = PhotoImage(
+            file=r"images/icons/mouse_settings_icon.png"
+        )
+        self.printer_settings_icon = PhotoImage(
+            file=r"images/icons/printer_settings_icon.png"
+        )
+
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
+        self.bg_label = Label(self, image=self.bg)
+        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
+
+        # Button Set/Frame1
+        self.rahmen2 = Frame(
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=60, pady=10
+        )
+        self.rahmen2.pack(padx=40, pady=20, fill="both")
+        self.rahmen2["background"] = "#333333"
+
+        sys_rc_cli_btn = Button(
+            self.rahmen2,
+            image=self.bp01,
+            text="Raspi-Config CLI",
+            command=pi_configbutton,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_rc_cli_btn.grid(row=0, column=0)
+
+        sys_rc_gui_btn = Button(
+            self.rahmen2,
+            image=self.bp01,
+            text="Nix",
+            command=pi_configbutton2,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_rc_gui_btn.grid(row=0, column=1)
+
+        sys_conf_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Config.txt",
+            command=contxt_button,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_conf_btn.grid(row=0, column=2)
+
+        sys_btnvs = Button(
+            self.rahmen2,
+            image=self.bp03,
+            text="rm vscode.list ",
+            command=rm_vscode,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_btnvs.grid(row=0, column=3)
+
+        sys_gparted_btn = Button(
+            self.rahmen2,
+            image=self.bp04,
+            text="Gparted",
+            command=gparted_exec,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_gparted_btn.grid(row=1, column=0)
+
+        if os.path.isfile("/usr/sbin/gparted"):
+            print("Gparted is installed")
+            sys_gparted_btn.configure(state=NORMAL)
+        else:
+            print("Gparted is not installed")
+            sys_gparted_btn.configure(state=DISABLED)
+
+        sys_neo_btn = Button(
+            self.rahmen2,
+            image=self.bp05,
+            text="NeoFetch",
+            command=neofetch_button,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_neo_btn.grid(row=1, column=1)
+
+        if os.path.isfile("/bin/neofetch"):
+            print("Neofetch is installed")
+            sys_neo_btn.configure(state=NORMAL)
+        else:
+            print("Neofetch is not installed")
+            sys_neo_btn.configure(state=DISABLED)
+
+        sys_FMGM_btn = Button(
+            self.rahmen2,
+            image=self.bp06,
+            text="FM God Mode",
+            command=onc_ben,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_FMGM_btn.grid(row=1, column=2)
+        sys_FMGM_btn = CreateToolTip(
+            sys_FMGM_btn,
+            "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)",
+        )
+
+        sys_kernel_btn = Button(
+            self.rahmen2,
+            image=self.bp07,
+            text="Upgrade Linux Kernel",
+            command=button_lk,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_kernel_btn.grid(row=1, column=3)
+
+        sys_dpp_btn = Button(
+            self.rahmen2,
+            image=self.bp03,
+            text="DeskpiPro Control",
+            command=button_dpfc,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_dpp_btn.grid(row=2, column=0)
+
+        sys_b_log_btn = Button(
+            self.rahmen2,
+            image=self.bp03,
+            text="Boot Log",
+            command=button_boot,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_b_log_btn.grid(row=2, column=1)
+
+        sys_xf_auto_btn = Button(
+            self.rahmen2,
+            image=self.bp033,
+            text="Xfce Autostarts",
+            command=button_auto,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_xf_auto_btn.grid(row=2, column=2)
+        sys_xf_auto_btn.configure(state=DISABLED)
+        if get_de == "XFCE":
+            sys_xf_auto_btn.configure(state=NORMAL)
+
+        sys_xf_sett_btn = Button(
+            self.rahmen2,
+            image=self.bp033,
+            text="Xfce Settings",
+            command=button_xsett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_xf_sett_btn.grid(row=2, column=3)
+        sys_xf_sett_btn.configure(state=DISABLED)
+        if get_de == "XFCE":
+            sys_xf_sett_btn.configure(state=NORMAL)
+
+        sys_netset_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Network Settings",
+            command=net_set,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_netset_btn.grid(row=3, column=0)
+
+        sys_task_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Taskmanager",
+            command=lx_task,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_task_btn.grid(row=3, column=1)
+
+        sys_bash_btn = Button(
+            self.rahmen2,
+            image=self.hist_doc,
+            text="Bash History",
+            command=bash_log,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_bash_btn.grid(row=3, column=2)
+
+        sys_cron_btn = Button(
+            self.rahmen2,
+            image=self.hist_doc,
+            text="Cron Job",
+            command=cron_job,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_cron_btn.grid(row=3, column=3)
+
+        sys_sd_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="SD Card Copier",
+            command=sd_copy,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        sys_sd_btn.grid(row=4, column=0)
+
+        screen_sett_btn = Button(
+            self.rahmen2,
+            image=self.display_settings_icon,
+            text="Screen Settings",
+            command=screen_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        screen_sett_btn.grid(row=4, column=1)
+
+        desk_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Desktop Settings",
+            command=desk_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        desk_sett_btn.grid(row=4, column=2)
+
+        printer_sett_btn = Button(
+            self.rahmen2,
+            image=self.printer_settings_icon,
+            text="Printer Settings",
+            command=printer_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        printer_sett_btn.grid(row=4, column=3)
+
+        menu_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Menu Settings",
+            command=menu_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        menu_sett_btn.grid(row=5, column=0)
+
+        source_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Source Settings",
+            command=source_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        source_sett_btn.grid(row=5, column=1)
+
+        mouse_key_sett_btn = Button(
+            self.rahmen2,
+            image=self.ico_m,
+            text="Mouse & Keyboard",
+            command=mouse_key_sett,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        mouse_key_sett_btn.grid(row=5, column=2)
+
+        rename_user_btn = Button(
+            self.rahmen2,
+            image=self.bp01,
+            text="Rename User",
+            command=rename_user,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=TOP,
+            font=("Helvetica", 10, "bold"),
+        )
+        rename_user_btn.grid(row=5, column=3)
+
+        self.info_sys_btn = Button(
+            self,
+            image=self.tpinfm,
+            highlightthickness=0,
+            borderwidth=0,
+            command=info_system_tab,
+        )
+        self.info_sys_btn.place(x=700, y=620)
+
+
 # [Overclocking_Legend] Child
 class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
@@ -1444,7 +2011,8 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=2, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2,
+                          bg="#333333", fg="white")
         self.ov_1.grid(row=3, column=0)
 
         self.ov_1_text = Label(
@@ -1467,7 +2035,8 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=4, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3,
+                          bg="#333333", fg="white")
         self.ov_1.grid(row=5, column=0)
 
         self.ov_1_text = Label(
@@ -1490,7 +2059,8 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=6, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4,
+                          bg="#333333", fg="white")
         self.ov_1.grid(row=7, column=0)
 
         self.ov_1_text = Label(
@@ -1513,7 +2083,8 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=8, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5,
+                          bg="#333333", fg="white")
         self.ov_1.grid(row=9, column=0)
 
         self.ov_1_text = Label(
@@ -1572,6 +2143,7 @@ class APT_Installer_Popup(tk.Toplevel):
         self.apt_inst_termf["background"] = "#333333"
         self.apt_inst_termf.pack(padx=45, pady=20)
         # ää
+
         def install_parameter():
 
             if distro_get == "ubuntu":
@@ -3622,7 +4194,8 @@ class Frame7(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.di01 = PhotoImage(file=r"images/icons/TwisterOSLogo-Large-New3.png")
+        self.di01 = PhotoImage(
+            file=r"images/icons/TwisterOSLogo-Large-New3.png")
         self.di02 = PhotoImage(file=r"images/icons/Puppy_Linux_Logo.png")
         self.di03 = PhotoImage(file=r"images/icons/dietpi.png")
         self.di04 = PhotoImage(file=r"images/icons/MX-icon.png")
@@ -3633,7 +4206,8 @@ class Frame7(ttk.Frame):
         self.di08 = PhotoImage(file=r"images/icons/NCP.png")
         self.pop_os_ico = PhotoImage(file=r"images/icons/popo_os_icon.png")
         self.ubu_os_ico = PhotoImage(file=r"images/icons/Logo-ubuntu_.png")
-        self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
+        self.pi64_os_ico = PhotoImage(
+            file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=10, pady=20
@@ -4021,7 +4595,8 @@ class Frame8(ttk.Frame):
         self.mail.insert(END, "pigroxtrmo@gmail.com")
         self.mail.pack(pady=5)
 
-        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
+        self.rahmen101 = Frame(self, borderwidth=0,
+                               relief=GROOVE, highlightthickness=2)
         self.rahmen101.place(x=60, y=600)
         self.rahmen101["background"] = "#333333"
 
@@ -4095,7 +4670,8 @@ class Frame9(ttk.Frame):
         )
         self.label.pack()
 
-        self.welcome_icon = PhotoImage(file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
+        self.welcome_icon = PhotoImage(
+            file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
         self.head_frame = Frame(self.rahmen101, bg="#333333")
         self.head_frame.pack()
         self.header_label = Label(
@@ -4162,8 +4738,10 @@ class Frame11(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigro_bg.png")
-        self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
+        self.bg = PhotoImage(
+            file=f"{home}/PiGro-Aid-/images/backgrounds/pigro_bg.png")
+        self.welcome_canvas = Canvas(
+            self, width=900, height=700, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
