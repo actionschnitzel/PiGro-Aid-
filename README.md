@@ -34,7 +34,7 @@ Nevertheless you should know what you are doing because most of it works with "S
 
 # :wrench: Info  
     
-PiGro is only compatible with operating systems based on Raspberry Pi OS. I have tried several times to program an Ubuntu version. Unfortunately, it turns out again and again that Ubuntu is unstable and bugged for the Pi. Should there ever be an Ubuntu-Pi version that is STABLE from installation and runs smoothly, I will get to work.
+Funny story... The other day I was ranting about the fact that Ubuntu is total garbage for the Pi. That has changed since v22.04 was out. The PiGro #May '22 FIX will fully support Ubuntu!
 
 ---
 
