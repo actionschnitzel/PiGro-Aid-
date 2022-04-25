@@ -1950,7 +1950,7 @@ class Frame12(ttk.Frame):
         self.info_sys_btn.place(x=700, y=620)
 
 
-# [Overclocking_Legend] Child
+# [Overclocking_Legend Popup] Child
 class Tuning_Legende(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
@@ -2095,6 +2095,249 @@ class Tuning_Legende(tk.Toplevel):
             fg="white",
         )
         self.ov_1_text.grid(row=9, column=1)
+
+
+# [Overclocking_Expert Popup] Child
+class Overclocking_Expert(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = "#333333"
+        self.title("Expert Mode")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 500
+        app_height = 600
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+
+        def error_mass():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
+
+        def set_arm_freq():
+            if arm_freq_entry.get() == "Default is 1500/1800" or arm_freq_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_arm_freq\narm_freq={arm_freq_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    arm_freq_set.config(state=DISABLED)
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_arm_freq\narm_freq={arm_freq_entry.get()}" >> /boot/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED) 
+                    tu_btn5.config(state=DISABLED)       
+                    arm_freq_set.config(state=DISABLED)
+        def set_gpu_freq():
+            if gpu_freq_entry.get() == "Default is 500" or gpu_freq_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_gpu_freq\ngpu_freq={gpu_freq_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    gpu_freq_set.config(state=DISABLED)
+
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_gpu_freq\ngpu_freq={gpu_freq_entry.get()}" >> /boot/config.txt'""")  
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    gpu_freq_set.config(state=DISABLED)
+
+
+        def set_gpu_mem():
+            if gpu_mem_entry.get() == "Minimum 16" or gpu_mem_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_gpu_mem\ngpu_mem={gpu_mem_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    gpu_mem_set.config(state=DISABLED)
+
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_gpu_mem\ngpu_mem={gpu_mem_entry.get()}" >> /boot/config.txt'""")        
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    gpu_mem_set.config(state=DISABLED)
+
+
+        def set_over_voltage():
+            if over_voltage_entry.get() == "Default 0" or over_voltage_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_over_voltage\nover_voltage={over_voltage_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    over_voltage_set.config(state=DISABLED)
+
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_over_voltage\nover_voltage={over_voltage_entry.get()}" >> /boot/config.txt'""")        
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    over_voltage_set.config(state=DISABLED)
+
+
+        def set_disable_splash():
+            if disable_splash_entry.get() == "Default 0" or disable_splash_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_disable_splash\ndisable_splash={disable_splash_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    disable_splash_set.config(state=DISABLED)
+
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_disable_splash\ndisable_splash={disable_splash_entry.get()}" >> /boot/config.txt'""")    
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    disable_splash_set.config(state=DISABLED)
+ 
+
+        def set_force_turbo():
+            if force_turbo_entry.get() == "Default 0" or force_turbo_entry.get() == "":
+                error_mass()
+            else:
+                if distro_get == "ubuntu":
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_force_turbo\nforce_turbo={force_turbo_entry.get()}" >> /boot/firmware/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    force_turbo_set.config(state=DISABLED)
+                else:
+                    os.system(f"""{legit} sh -c 'echo "#Pigro_Custom_force_turbo\nforce_turbo={force_turbo_entry.get()}" >> /boot/config.txt'""")
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                    tu_btn5.config(state=DISABLED)
+                    force_turbo_set.config(state=DISABLED)     
+
+        # Expert Frame
+        x_mode_frame = Frame(self,bg="#333333")
+        x_mode_frame.pack()
+
+
+        # arm_freq
+        arm_freq_label = Label(x_mode_frame,text="arm_freq = ",bg="#333333",foreground="white")
+        arm_freq_label.grid(row=0,column=0)
+
+        global arm_freq_entry
+        arm_freq_entry = Entry(x_mode_frame,borderwidth=0,highlightthickness=2)
+        arm_freq_entry.grid(row=0,column=1)
+        arm_freq_entry.insert(0, "Default is 1500/1800")
+
+        global arm_freq_set
+        arm_freq_set = Button(x_mode_frame,text="Set",command=set_arm_freq,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        arm_freq_set.grid(row=0,column=2,padx=10,pady=10)
+
+
+        # gpu_freq
+        gpu_freq_label = Label(x_mode_frame,text="gpu_freq = ",bg="#333333",foreground="white")
+        gpu_freq_label.grid(row=1,column=0)
+
+        global gpu_freq_entry
+        gpu_freq_entry = Entry(x_mode_frame,)
+        gpu_freq_entry.grid(row=1,column=1)
+        gpu_freq_entry.insert(0, "Default is 500")
+
+        global gpu_freq_set
+        gpu_freq_set = Button(x_mode_frame,text="Set",command=set_gpu_freq,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        gpu_freq_set.grid(row=1,column=2)
+
+
+        # gpu_mem
+        gpu_mem_label = Label(x_mode_frame,text="gpu_mem = ",bg="#333333",foreground="white")
+        gpu_mem_label.grid(row=2,column=0)
+
+        global gpu_mem_entry
+        gpu_mem_entry = Entry(x_mode_frame,)
+        gpu_mem_entry.grid(row=2,column=1)
+        gpu_mem_entry.insert(0, "Minimum 16")
+
+        global gpu_mem_set
+        gpu_mem_set = Button(x_mode_frame,text="Set",command=set_gpu_mem,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        gpu_mem_set.grid(row=2,column=2,padx=10,pady=10)
+
+
+        # over_voltage
+        over_voltage_label = Label(x_mode_frame,text="over_voltage = ",bg="#333333",foreground="white")
+        over_voltage_label.grid(row=3,column=0)
+
+        global over_voltage_entry
+        over_voltage_entry = Entry(x_mode_frame,)
+        over_voltage_entry.grid(row=3,column=1)
+        over_voltage_entry.insert(0, "Default 0")
+
+        global over_voltage_set
+        over_voltage_set = Button(x_mode_frame,text="Set",command=set_over_voltage,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        over_voltage_set.grid(row=3,column=2)
+
+
+        # disable_splash
+        disable_splash_label = Label(x_mode_frame,text="disable_splash = ",bg="#333333",foreground="white")
+        disable_splash_label.grid(row=4,column=0)
+
+        global disable_splash_entry
+        disable_splash_entry = Entry(x_mode_frame,)
+        disable_splash_entry.grid(row=4,column=1)
+        disable_splash_entry.insert(0, "Default 0")
+
+        global disable_splash_set
+        disable_splash_set = Button(x_mode_frame,text="Set",command=set_disable_splash,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        disable_splash_set.grid(row=4,column=2,padx=10,pady=10)
+
+
+        # force_turbo
+        force_turbo_label = Label(x_mode_frame,text="force_turbo = ",bg="#333333",foreground="white")
+        force_turbo_label.grid(row=5,column=0)
+
+        global force_turbo_entry
+        force_turbo_entry = Entry(x_mode_frame,)
+        force_turbo_entry.grid(row=5,column=1)
+        force_turbo_entry.insert(0, "Default 0")
+
+        global force_turbo_set
+        force_turbo_set = Button(x_mode_frame,text="Set",command=set_force_turbo,bg="#333333",foreground="white",borderwidth=0,highlightthickness=2)
+        force_turbo_set.grid(row=5,column=2)
 
 
 # [APT Installer Popup] Child
@@ -2468,9 +2711,16 @@ class Frame4(ttk.Frame):
                         data.append(item)
                 apt_inst_combo_box["values"] = data
 
+        def error_mass():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
+
         def inst_btn1():
-            inst_pop = APT_Installer_Popup(self)
-            inst_pop.grab_set()
+            if apt_inst_combo_box.get() == "":
+                error_mass()
+            else:
+                inst_pop = APT_Installer_Popup(self)
+                inst_pop.grab_set()
 
         def uninst_btn1():
             popen(f"{legit} synaptic")
@@ -2537,8 +2787,11 @@ class Frame4(ttk.Frame):
                 self.apt_un_combo_box["values"] = data
 
         def un_inst_btn1():
-            uninst_pop = APT_Uninstaller_Popup(self)
-            uninst_pop.grab_set()
+            if apt_un_combo_box.get() == "":
+                error_mass()
+            else:
+                uninst_pop = APT_Uninstaller_Popup(self)
+                uninst_pop.grab_set()
 
         self.apt_un_ico = PhotoImage(file=r"images/icons/apt-get.png")
 
@@ -2586,10 +2839,13 @@ class Frame4(ttk.Frame):
         self.pi_apps["background"] = "#333333"
 
         def inst_pi_apps():
-            entry_text = self.pi_apps_entry.get()
-            popen(
-                f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
-            )
+            if self.pi_apps_entry.get() == "":
+                error_mass()
+            else:
+            #entry_text = self.pi_apps_entry.get()
+                popen(
+                    f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
+                )
 
         # def pi_apps_list():
         #    popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
@@ -2652,10 +2908,12 @@ class Frame4(ttk.Frame):
         self.snap_frame["background"] = "#333333"
 
         def inst_btn2():
-            entry_text = self.snap_entry.get()
-            popen(
-                f"xterm -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
-            )
+            if self.snap_entry.get() == "":
+                error_mass()
+            else:
+                popen(
+                    f"xterm -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
+                )
 
         self.p6 = PhotoImage(file=r"images/icons/snap.png")
 
@@ -2722,10 +2980,12 @@ class Frame4(ttk.Frame):
         self.flat_frame["background"] = "#333333"
 
         def inst_btn4():
-            entry_text = self.flat_entry.get()
-            popen(
-                f" xterm -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
-            )
+            if self.flat_entry.get() == "":
+                error_mass()
+            else:
+                popen(
+                    f" xterm -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
+                )
 
         self.p66 = PhotoImage(file=r"images/icons/flathub.png")
 
@@ -3225,11 +3485,14 @@ class z_ram_pop(tk.Toplevel):
         self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
 
         def z_ram_install():
-            popen(
-                popen(
-                    f"xterm -e 'bash -c \"{legit} apt-get install zram-tools; exec bash\"'"
-                )
-            )
+
+            if distro_get == "ubuntu":
+                popen(f"xterm -e 'bash -c \"{legit} apt install zram-config ; exec bash\"'")
+            else:
+                popen(f"xterm -e 'bash -c \"{legit} apt install zram-tools; exec bash\"'")
+
+            
+
             Notification(
                 title="ZRAMr\n",
                 description="ZRAM has been installed",
@@ -3240,9 +3503,12 @@ class z_ram_pop(tk.Toplevel):
 
         # ää
         def z_ram_uninstall():
-            popen(
-                f"xterm -e 'bash -c \"{legit} apt-get remove zram-tools; exec bash\"'"
-            )
+
+            if distro_get == "ubuntu":
+                popen(f"xterm -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'")
+            else:
+                popen(f"xterm -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'")
+
             Notification(
                 title="ZRAMr\n",
                 description="ZRAM has been uninstalled",
@@ -3336,6 +3602,13 @@ class Frame6(ttk.Frame):
             z_ram = z_ram_pop(self)
             z_ram.grab_set()
 
+        def expert_mode():
+            x_mode = Overclocking_Expert(self)
+            x_mode.grab_set()
+
+
+
+
         # BG + Icons
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
@@ -3347,6 +3620,7 @@ class Frame6(ttk.Frame):
         self.ov2_icon = PhotoImage(file=r"images/icons/PiGroOV2.png")
         self.ov3_icon = PhotoImage(file=r"images/icons/PiGroOV3.png")
         self.ov4_icon = PhotoImage(file=r"images/icons/PiGroOV4.png")
+        self.ov5_icon = PhotoImage(file=r"images/icons/PiGroOV5.png")
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
         self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
         self.tu_legend_ico = PhotoImage(file=r"images/icons/legende.png")
@@ -3370,15 +3644,100 @@ class Frame6(ttk.Frame):
         def reboot_n():
             popen(f"{legit} reboot")
 
+
+
+
+        # overclocking_default/reset
+        def set_default():
+            os.system(
+                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
+            )
+            tu_btn1.config(state=NORMAL)
+            tu_btn2.config(state=NORMAL)
+            tu_btn3.config(state=NORMAL)
+            tu_btn4.config(state=NORMAL)
+            tu_btn5.config(state=NORMAL)
+
+            Notification(
+                title="PiGro Overclocking\n",
+                description="All Settings Restored\n\n",
+                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                duration=5,
+                urgency="normal",
+            ).send()
+
+            global pop_default
+            pop_default = Toplevel(self)
+            pop_default.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_default.winfo_screenwidth()
+            screen_height = pop_default.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_default.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_default.resizable(0, 0)
+
+            frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
+            frame_pop_de.pack()
+            frame_pop_de["background"] = "#333333"
+
+            frame_pop_de1 = Frame(pop_default, borderwidth=0, relief=GROOVE)
+            frame_pop_de1.pack(pady=10)
+            frame_pop_de1["background"] = "#333333"
+
+            pop_lbl_default = Label(
+                frame_pop_de,
+                anchor="w",
+                text="Settings Restored",
+                font=("Helvetica", 16),
+                highlightthickness=0,
+                borderwidth=2,
+                background="#333333",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_lbl_default.pack(pady=20)
+            pop_btn_default = Button(
+                frame_pop_de1,
+                text="Continue",
+                anchor="w",
+                command=pop_dest,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#2246c4",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_default.pack(padx=5, pady=20, side=LEFT)
+            pop_btn_shut = Button(
+                frame_pop_de1,
+                text="Reboot",
+                anchor="w",
+                command=reboot_n,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#f03838",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_shut.pack(padx=5, pady=20)
+
+
         # overclocking_2000
         def ov_2000():
-            os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/ov_1.sh && exit; exec bash\"'"
-            )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+
+            if distro_get == "ubuntu":
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
+            else:
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
+
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3448,13 +3807,17 @@ class Frame6(ttk.Frame):
 
         # overclocking_2147
         def ov_2147():
-            os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/ov_2.sh && exit; exec bash\"'"
-            )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+
+            if distro_get == "ubuntu":
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
+            else:
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3523,86 +3886,17 @@ class Frame6(ttk.Frame):
             )
             pop_btn_shut.pack(padx=5, pady=20)
 
-        # overclocking_default/reset
-        def set_default():
-            os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
-            )
-            self.tu_btn1.config(state=NORMAL)
-            self.tu_btn2.config(state=NORMAL)
-            self.tu_btn3.config(state=NORMAL)
-            self.tu_btn4.config(state=NORMAL)
-
-            Notification(
-                title="PiGro Overclocking\n",
-                description="All Settings Restored\n\n",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
-
-            global pop_default
-            pop_default = Toplevel(self)
-            pop_default.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_default.winfo_screenwidth()
-            screen_height = pop_default.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_default.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_default.resizable(0, 0)
-
-            frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
-            frame_pop_de.pack()
-            frame_pop_de["background"] = "#333333"
-
-            frame_pop_de1 = Frame(pop_default, borderwidth=0, relief=GROOVE)
-            frame_pop_de1.pack(pady=10)
-            frame_pop_de1["background"] = "#333333"
-
-            pop_lbl_default = Label(
-                frame_pop_de,
-                anchor="w",
-                text="Settings Restored",
-                font=("Helvetica", 16),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_default.pack(pady=20)
-            pop_btn_default = Button(
-                frame_pop_de1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_default.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_de1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
 
         # overclocking_2200
         def ov_2200():
-            os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/ov_3.sh && exit; exec bash\"'"
-            )
+
+            if distro_get == "ubuntu":
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
+            else:
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+
+
+
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
 
             Notification(
@@ -3613,10 +3907,11 @@ class Frame6(ttk.Frame):
                 urgency="normal",
             ).send()
 
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
 
             global pop_2200
             pop_2200 = Toplevel(self)
@@ -3677,15 +3972,21 @@ class Frame6(ttk.Frame):
 
         # overclocking_2300
         def ov_2300():
-            os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/ov_4.sh && exit; exec bash\"'"
-            )
+
+
+            if distro_get == "ubuntu":
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
+            else:
+                os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+
+
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
 
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3753,7 +4054,7 @@ class Frame6(ttk.Frame):
             pop_btn_shut.pack(padx=5, pady=20)
 
         self.ov_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=20, padx=50
+            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=50
         )
         self.ov_main_frame.pack(padx=20, pady=20, fill="both")
         self.ov_main_frame["background"] = "#333333"
@@ -3895,7 +4196,8 @@ class Frame6(ttk.Frame):
             width=200,
         ).grid(column=0, row=2, pady=10)
 
-        self.tu_btn1 = Button(
+        global tu_btn1 
+        tu_btn1 = Button(
             self.ov_buttons,
             justify="left",
             image=self.ov1_icon,
@@ -3910,9 +4212,10 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             width=200,
         )
-        self.tu_btn1.grid(column=0, row=4, pady=10)
+        tu_btn1.grid(column=0, row=4, pady=10)
 
-        self.tu_btn2 = Button(
+        global tu_btn2
+        tu_btn2 = Button(
             self.ov_buttons,
             justify="left",
             image=self.ov2_icon,
@@ -3927,9 +4230,10 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             width=200,
         )
-        self.tu_btn2.grid(column=0, row=6, pady=10)
+        tu_btn2.grid(column=0, row=6, pady=10)
 
-        self.tu_btn3 = Button(
+        global tu_btn3
+        tu_btn3 = Button(
             self.ov_buttons,
             justify="left",
             image=self.ov3_icon,
@@ -3944,9 +4248,10 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             width=200,
         )
-        self.tu_btn3.grid(column=0, row=8, pady=10)
+        tu_btn3.grid(column=0, row=8, pady=10)
 
-        self.tu_btn4 = Button(
+        global tu_btn4
+        tu_btn4 = Button(
             self.ov_buttons,
             justify="left",
             image=self.ov4_icon,
@@ -3961,17 +4266,37 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             width=200,
         )
-        self.tu_btn4.grid(column=0, row=9, pady=10)
+        tu_btn4.grid(column=0, row=9, pady=10)
+
+        global tu_btn5
+        tu_btn5 = Button(
+            self.ov_buttons,
+            justify="left",
+            image=self.ov5_icon,
+            text="I really like typing\nin random numbers and\nsee what happens!",
+            command=expert_mode,
+            highlightthickness=2,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            compound=LEFT,
+            font=("Helvetica", 10, "bold"),
+            width=200,
+        )
+        tu_btn5.grid(column=0, row=10, pady=10)
+
+
 
         # Overclock Display Functions
         def OV1_label():
             tu_current.config(
                 text="Current Settings: Crank It Up\n", fg="yellow", bg="#333333"
             )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
 
         def OV2_label():
             tu_current.config(
@@ -3979,28 +4304,44 @@ class Frame6(ttk.Frame):
                 fg="red",
                 bg="#333333",
             )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
+
 
         def OV3_label():
             tu_current.config(
                 text="Current Settings: Take It To The Max!\n", fg="pink", bg="#333333"
             )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
+
 
         def OV4_label():
             tu_current.config(
                 text="Honey,\nthe fuse blew again!\n", fg="purple", bg="#333333"
             )
-            self.tu_btn1.config(state=DISABLED)
-            self.tu_btn2.config(state=DISABLED)
-            self.tu_btn3.config(state=DISABLED)
-            self.tu_btn4.config(state=DISABLED)
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
+
+        def OV5_label():
+            tu_current.config(
+                text="Custom Settings\n", fg="purple", bg="#333333"
+            )
+            tu_btn1.config(state=DISABLED)
+            tu_btn2.config(state=DISABLED)
+            tu_btn3.config(state=DISABLED)
+            tu_btn4.config(state=DISABLED)
+            tu_btn5.config(state=DISABLED)
+
 
         def a_f_label():
             tu_current2.config(text=line1, fg="white", bg="#333333")
@@ -4039,6 +4380,12 @@ class Frame6(ttk.Frame):
                     OV4_label()
 
         with open(f"{config_path}", "r") as fp:
+            for line in lines_that_contain("#Pigro_Custom", fp):
+                # print(line)
+                if line:
+                    OV5_label()
+
+        with open(f"{config_path}", "r") as fp:
             for line1 in lines_that_contain("arm_freq=", fp):
                 # print(line1)
                 if line1:
@@ -4062,11 +4409,13 @@ class Frame6(ttk.Frame):
                 if line3:
                     o_v_label()
 
+    
+
         # Misc_Frame
         self.misc_main_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=20
         )
-        self.misc_main_frame.pack(padx=20, pady=10, fill="both", expand=True)
+        self.misc_main_frame.pack(padx=20, fill="both")
         self.misc_main_frame["background"] = "#333333"
 
         self.misc_zram_frame = Frame(
@@ -4078,19 +4427,11 @@ class Frame6(ttk.Frame):
         self.misc_zram_frame.pack(side=LEFT)
         self.misc_zram_frame["background"] = "#333333"
 
-        self.misc_64mode_frame = Frame(
-            self.misc_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.misc_64mode_frame.pack(side=LEFT, padx=50)
-        self.misc_64mode_frame["background"] = "#333333"
 
         self.tu_zbtn = Button(
             self.misc_zram_frame,
-            text="ZRAM",
-            font=("Helvetica", 16),
+            text="Install ZRAM",
+            font=("Helvetica", 12),
             anchor="w",
             command=z_ram,
             highlightthickness=0,
@@ -4753,6 +5094,43 @@ class Frame11(ttk.Frame):
             fill="white",
         )
 
+# [Error Massage] Child
+class Error_Mass(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = "#333333"
+        self.title("")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 400
+        app_height = 200
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+#ää
+
+        def cu_error():
+            Error_Mass.destroy(self)
+
+        self.e_m = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/yuno.png")
+
+        error_frame = Frame(self,bg="#333333")
+        error_frame.pack(pady=10)
+
+        error_img = Label(error_frame,image=self.e_m,bg="#333333")
+        error_img.grid(row=0,column=0,rowspan=2)
+
+        error_y = Label(error_frame,text="Y U MAKE ERROR?",fg="white",bg="#333333")
+        error_y.grid(row=0,column=1)
+
+        error_y2 = Label(error_frame,text="You did not enter a value",fg="white",bg="#333333")
+        error_y2.grid(row=1,column=1)
+
+        error_btn = Button(error_frame,text="OK OK OK!",fg="white",bg="#333333",command=cu_error)
+        error_btn.grid(row=3,column=1)
 
 # [TOOLTIPZ]
 class CreateToolTip(object):

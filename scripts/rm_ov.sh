@@ -14,9 +14,11 @@ if  grep -q 'NAME="Ubuntu"' "/etc/os-release" ; then
 	sed -i '/#Pigro_Overclocking2/d' config.txt
 	sed -i '/#Pigro_Overclocking3/d' config.txt
 	sed -i '/#Pigro_Overclocking4/d' config.txt
+	sed -i '/#Pigro_Custom/d' config.txt
+
 else
 	echo 'Using Debian Config Path' ; 
-	cd /boot/firmware/
+	cd /boot/
 
 	sed -i '/arm_freq/d' config.txt
 	sed -i '/gpu_freq/d' config.txt
@@ -28,6 +30,8 @@ else
 	sed -i '/#Pigro_Overclocking2/d' config.txt
 	sed -i '/#Pigro_Overclocking3/d' config.txt
 	sed -i '/#Pigro_Overclocking4/d' config.txt
+	sed -i '/#Pigro_Custom/d' config.txt
+	
 fi
 
 

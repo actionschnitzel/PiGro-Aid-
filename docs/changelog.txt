@@ -35,6 +35,26 @@ So this deserves a new code name! "PiGro - Stupida Medusa!"
           greets you by your name :-)
 
 
+# ADDED Cute Tux greets you with your user name
+
+# CHANGED Rearranged the Fast Installer Frame
+
+# FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is 
+notInstalled"
+
+# APT-GET Installer shows now terminal output due to transperency reasons 
+
+# CODE CHANGES:
+
+PiGro now uses even more of Python's "OS Modules" to collect system information. Not for spying, but for the reason I decided to squeeze the Ubuntu version between the Pi OS code. Ubuntu really doesn't have much in common with Debian. 
+
+Long story short: 
+
+It's a huge pile of "if, else, then, f-string" stuff.
+
+
+
+
 Best regards
 
 Timo
