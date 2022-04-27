@@ -1010,7 +1010,6 @@ libbusiness-onlinepayment-transactioncentral-perl
 libttspico-dev
 mairix
 postgrey
-linux-objects-nvidia-510-server-5.15.0-27-lowlatency
 pushover-data
 linux-buildinfo-5.15.0-1003-gcp
 nsca-ng-client
@@ -1028,7 +1027,6 @@ python3-pyside2.qtscxml
 xfonts-jmk
 node-basic-auth
 libgenometools0-dev
-linux-image-5.15.0-27-lowlatency
 pyotherside-doc
 ruby-rails-timeago
 liblibreoffice-java
@@ -1198,7 +1196,6 @@ spell
 libgladeui-dev
 astrometry.net
 lib64gphobos76-x32-cross
-linux-modules-nvidia-495-lowlatency-64k-hwe-22.04-edge
 libblimps3
 python3-flake8-docstrings
 alienblaster-data
@@ -1333,7 +1330,6 @@ libkeyutils1
 libprotocol-osc-perl
 librust-gumdrop+default-expr-dev
 xmorph
-linux-modules-nvidia-510-5.15.0-27-generic-64k
 python-opcodes-doc
 tcl-itcl4-doc
 task-slovenian-desktop
@@ -2207,7 +2203,6 @@ node-esrecurse
 libzmq-jni
 libghc-interpolate-doc
 qt5-doc-html
-linux-headers-5.15.0-1005-azure
 r-cran-logger
 rime-data-cangjie5
 libvamp-hostsdk3v5
@@ -3085,7 +3080,6 @@ libxfconf-0-dev
 kde-telepathy-kaccounts
 libvirt-daemon-driver-xen
 profphd-net
-linux-buildinfo-5.15.0-1004-gcp
 odpic-doc
 xfce4-diskperf-plugin
 libmaeparser1
@@ -3189,7 +3183,6 @@ mlterm-im-wnn
 libgtkmm-3.0-doc
 designate-mdns
 liboggplay1-dev
-linux-buildinfo-5.15.0-1005-aws
 libplexus-archiver-java
 libmrpt-core2.4
 batmand
@@ -3909,7 +3902,6 @@ libalgorithm-numerical-sample-perl
 dh-buildinfo
 python3-colored
 golang-github-twmb-murmur3-dev
-linux-signatures-nvidia-5.15.0-27-lowlatency
 gir1.2-gexiv2-0.10
 python3-oslo.log
 commit-patch
@@ -3922,7 +3914,6 @@ python3-angles
 libext2fs2
 golang-github-dgryski-go-bits-dev
 octave-splines
-linux-modules-nvidia-510-lowlatency-64k-hwe-22.04
 xzoom
 libpcaudio-dev
 node-cookie
@@ -4374,7 +4365,6 @@ golang-github-elazarl-goproxy-dev
 libghc-project-template-prof
 libghc-curl-prof
 libghc-servant-client-core-prof
-linux-modules-nvidia-510-server-5.15.0-27-generic-64k
 gourmet
 language-pack-gnome-vi-base
 python3-cobra
@@ -7931,7 +7921,6 @@ bustools
 dmrconfig
 libmenlo-perl
 libnet-irr-perl
-linux-objects-nvidia-510-5.15.0-27-generic-64k
 indi-limesdr
 libghc-first-class-families-dev
 libclass-date-perl
@@ -8265,7 +8254,6 @@ libfcgi-perl
 dict-elements
 libghc-persistent-template-doc
 php-mapi
-linux-modules-nvidia-495-lowlatency-64k-hwe-22.04
 libsensors-config
 libkf5pty-dev
 libqgis-dev
@@ -8679,7 +8667,6 @@ gpw
 gpx
 python3-djangorestframework-gis
 libdtools-ocaml-dev
-linux-signatures-nvidia-5.15.0-27-generic-64k
 natbraille-doc
 libvdestack0
 avahi-autoipd
@@ -8853,7 +8840,6 @@ python3-boto3
 schism
 rmlint
 libsamplerate-ocaml-dev
-linux-modules-extra-5.15.0-27-generic
 apache2-suexec-pristine
 kphotoalbum
 ruby-proc-to-ast
@@ -8936,7 +8922,6 @@ bowtie2
 python3-sphinxcontrib.restbuilder
 libnetcdf-c++4-doc
 language-pack-xh-base
-linux-modules-nvidia-510-lowlatency-hwe-22.04-edge
 gstreamer1.0-packagekit
 scim-m17n
 uuid
@@ -8968,7 +8953,6 @@ libjson-rpc-perl
 libjs-material-design-lite
 libglbsp-dev
 ruby-pluggaloid
-linux-cloud-tools-5.15.0-1005-azure
 libgroove-dev
 libnum-ocaml-dev
 x11proto-record-dev
@@ -9276,7 +9260,6 @@ elpa-magit-forge
 euslisp-doc
 igv
 libxml-atom-service-perl
-linux-image-unsigned-5.15.0-27-lowlatency-64k
 php-easyrdf
 python3-cached-property
 python3-txacme
@@ -9911,7 +9894,6 @@ gamemode-daemon
 rime-data-ipa-yunlong
 libqgis-app3.22.4
 task-icelandic
-linux-image-unsigned-5.15.0-27-lowlatency
 minlog
 libmrtd-dev
 python3-stardicter
@@ -10921,7 +10903,6 @@ libghc-vault-prof
 libdigest-bcrypt-perl
 ir-keytable
 qflow
-linux-buildinfo-5.15.0-27-lowlatency
 libhdf5-mpich-103
 vstream-client-dev
 r-bioc-ebseq
@@ -11094,7 +11075,6 @@ libc6-dev-mipsn32r6el-cross
 elpa-xelb
 golang-github-youmark-pkcs8-dev
 libcypher-parser-dev
-linux-headers-5.15.0-27-generic-64k
 uim-gtk3
 libmuscle1
 planets
@@ -11980,7 +11960,6 @@ r4d
 node-builtin-modules
 pvm
 r-cran-gparotation
-linux-modules-nvidia-510-server-5.15.0-27-lowlatency
 libpetal-perl
 liblastfm-fingerprint5-1
 tmispell-voikko
@@ -12160,7 +12139,6 @@ grub-legacy-ec2
 libmeanwhile-dev
 qtgraphicaleffects5-doc-html
 python3-offtrac
-linux-headers-5.15.0-27-lowlatency
 gm2-9-x86-64-linux-gnu
 libtest-portability-files-perl
 libfmt-dev
@@ -12206,7 +12184,6 @@ quake2-server
 lua-redis
 libchasen2
 libxdmf-dev
-linux-modules-nvidia-510-server-lowlatency-64k-hwe-22.04-edge
 libjni-inchi-java
 libterm-table-perl
 python3-cffsubr
@@ -12764,7 +12741,6 @@ golang-github-joyent-gocommon-dev
 simavr
 eclib-tools
 doublecmd-help-uk
-linux-modules-nvidia-510-server-5.15.0-27-generic
 libdigest-sha3-perl
 phylip-doc
 libsoundtouch-ocaml-dev
@@ -12942,7 +12918,6 @@ libghc-hoogle-dev
 linux-image-5.15.0-1004-aws
 linux-aws-headers-5.15.0-1004
 libsylfilter0
-linux-aws-headers-5.15.0-1005
 libchemistry-mol-perl
 python3-pydrive
 libavkys8
@@ -14047,7 +14022,6 @@ hunspell-mn
 python3-puremagic
 cairo-dock-drop-indicator-plug-in
 alienblaster
-linux-modules-nvidia-510-server-lowlatency-hwe-22.04
 libmsv-java
 librinci-perl
 libdbix-xml-rdb-perl
@@ -14107,10 +14081,8 @@ libghc-regex-base-doc
 python3-websocket
 libgnat-12-arm64-cross
 hunspell-ro
-linux-modules-nvidia-495-lowlatency
 linux-ibm-headers-5.15.0-1002
 hunspell-ru
-linux-ibm-headers-5.15.0-1003
 liburcu-dev
 librte-common-iavf22
 python3-xstatic-moment
@@ -14878,7 +14850,6 @@ pagure-logcom
 pycsw-wsgi
 python3-dolfin-real
 python3-outcome
-linux-image-unsigned-5.15.0-27-generic-64k
 xqf
 python3-pyfg
 apertium-arg-cat
@@ -14989,7 +14960,6 @@ udunits-bin
 kodi-peripheral-xarcade
 python3-tk-dbg
 zbd-utils
-linux-image-5.15.0-1004-gcp
 python3-django-csp
 libscout
 razercfg
@@ -15115,7 +15085,6 @@ ruby-thor
 s51dude
 kworkflow
 php-symfony-oh-my-smtp-mailer
-linux-image-5.15.0-1005-aws
 radeontool
 mlterm-im-scim
 lib32gfortran-9-dev-mips64r6-cross
@@ -16054,7 +16023,6 @@ manila-common
 libghc-sdl2-prof
 libopenzwave1.6-dev
 golang-github-spf13-pflag-dev
-linux-buildinfo-5.15.0-1005-azure
 golang-github-google-blueprint-dev
 libapt-pkg6.0
 libbigstringaf-ocaml-dev
@@ -16166,7 +16134,6 @@ libmro-compat-perl
 python3-csscompressor
 ripperx
 libjdom2-intellij-java-doc
-linux-lowlatency-tools-5.15.0-27
 mbrola-gr1
 mbrola-gr2
 libring-codec-clojure
@@ -16363,7 +16330,6 @@ libghc-dice-entropy-conduit-prof
 dtach
 alsa-source
 pykwalify
-linux-modules-5.15.0-27-generic-64k
 mbrola-hb1
 libpurple0
 mbrola-hb2
@@ -17599,7 +17565,6 @@ python3-spectral
 bluez-obexd
 libmrpt-ros1bridge-dev
 libgnat-11-ppc64el-cross
-linux-objects-nvidia-510-5.15.0-27-generic
 libblockdev-dev
 libtss2-tcti-swtpm0
 omniorb-doc
@@ -17631,7 +17596,6 @@ puppet-module-openstacklib
 libphutil
 librust-foreign-types-0.3-dev
 libgo16-s390x-cross
-linux-modules-nvidia-495-lowlatency-hwe-22.04
 bdbvu
 plasmidomics
 libtulip-python-5.4
@@ -17838,7 +17802,6 @@ libjs-jquery-ui
 libghc-x509-validation-prof
 arandr
 libdata-transformer-perl
-linux-modules-nvidia-495-lowlatency-64k
 rgbpaint
 libendless-bin
 libdynalang-java
@@ -18089,7 +18052,6 @@ libjs-handlebars.runtime
 libmessage-passing-perl
 golang-github-hansrodtang-randomcolor-dev
 linux-azure-tools-5.15.0-1003
-linux-azure-tools-5.15.0-1005
 libwcat1
 libgfortran-11-dev-amd64-cross
 ruby-contracts
@@ -18153,7 +18115,6 @@ zfs-dkms
 libwayland-server0
 libc6-mips32-mipsn32r6-cross
 linux-aws-cloud-tools-5.15.0-1004
-linux-aws-cloud-tools-5.15.0-1005
 libghc-authenticate-oauth-dev
 gnat-mingw-w64-x86-64-posix
 gerris
@@ -18957,7 +18918,6 @@ libdbix-class-inflatecolumn-fs-perl
 lua-hamlib2
 golang-github-tonistiigi-fifo-dev
 libqdox-java
-linux-image-unsigned-5.15.0-27-generic
 yaws-chat
 g++-multilib-s390x-linux-gnu
 apcalc-common
@@ -19938,7 +19898,6 @@ librust-svgdom-dev
 festvox-czech-machac
 ruby-retryable
 libdata-url-java
-linux-modules-5.15.0-1005-azure
 feedbackd-device-themes
 ruby-handlebars-assets
 ruby-capture-output
@@ -20769,7 +20728,6 @@ python3-zaqar
 libmtdev1
 libbg-dev
 emacs-gtk
-linux-image-5.15.0-27-generic-64k
 dropbear-bin
 elpa-avy
 libvectorgraphics2d-java
@@ -20929,7 +20887,6 @@ libmygui.opengl3platform0debian1v5
 resource-agents-base
 libtree-r-perl
 linux-azure-cloud-tools-5.15.0-1003
-linux-azure-cloud-tools-5.15.0-1005
 python-oslo.upgradecheck-doc
 libgomp1-mips64r6-cross
 librust-slog-async-dev
@@ -21286,7 +21243,6 @@ libio-async-perl
 debtags
 python3-djvu-dbg
 libdislocker0.7
-linux-modules-nvidia-510-lowlatency-64k
 discodos
 libopenxr1-monado
 ticgitweb
@@ -21521,7 +21477,6 @@ libnih-dbus-dev
 docker2aci
 bibledit
 dis51
-linux-tools-5.15.0-27-generic
 golang-github-intel-tfortools-dev
 libmed11
 libghc-text-short-doc
@@ -22944,7 +22899,6 @@ libspring-messaging-java
 dodgy
 libghc-th-lift-dev
 libtagsoup-java
-linux-signatures-nvidia-5.15.0-27-lowlatency-64k
 system-config-printer-udev
 librttr-dev
 elpa-vimish-fold
@@ -23523,7 +23477,6 @@ libosinfo-1.0-dev
 qdbm-cgi
 php8.1-imap
 fonts-sil-shimenkan-zonghe
-linux-buildinfo-5.15.0-27-lowlatency-64k
 librust-ansi-term+derive-serde-style-dev
 libogg-dbg
 libstonithd26
@@ -24306,7 +24259,6 @@ python3-oslo.concurrency
 tesseract-ocr-kat
 uxplay
 tesseract-ocr-kaz
-linux-objects-nvidia-510-5.15.0-27-lowlatency
 opendnssec-enforcer-sqlite3
 libkissfft-dev
 python3-softlayer
@@ -25575,7 +25527,6 @@ lib64gphobos-9-dev-i386-cross
 libghc-tls-session-manager-prof
 linux-lowlatency-headers-5.15.0-24
 r-bioc-sparsematrixstats
-linux-lowlatency-headers-5.15.0-27
 librust-glib-sys-dev
 linux-oracle-tools-5.15.0-1002
 libjalali-dev
@@ -26653,7 +26604,6 @@ golang-go.uber-multierr-dev
 gfortran-9-mipsisa32r6el-linux-gnu
 python-click-doc
 beets-doc
-linux-image-unsigned-5.15.0-1004-gcp
 liboxford-calendar-perl
 libbiosoup-dev
 cl-chunga
@@ -26779,7 +26729,6 @@ libn32gphobos1-mips64r6-cross
 libsane
 python3-ipalib
 libnunit-framework2.6.3-cil
-linux-image-unsigned-5.15.0-1005-aws
 libnppc11
 libghc-haxr-dev
 linkchecker-web
@@ -27640,7 +27589,6 @@ python-flask-api-common
 libghc-tasty-smallcheck-doc
 yaz-doc
 elpa-eshell-z
-linux-modules-nvidia-510-server-lowlatency-64k-hwe-22.04
 elpa-pod-mode
 lxd-installer
 libpostproc55
@@ -29518,7 +29466,6 @@ wifi-qr
 ugene-data
 neuron-dev
 qml6-module-qtqml-xmllistmodel
-linux-signatures-nvidia-5.15.0-27-generic
 mate-system-monitor
 libfcitx-config4
 libcgif-dev
@@ -29555,7 +29502,6 @@ python3-sahara-dashboard
 golang-github-jaytaylor-html2text-dev
 linux-aws-tools-5.15.0-1004
 libgphobos2-arm64-cross
-linux-aws-tools-5.15.0-1005
 libxxf86dga1
 r-cran-stringi
 libghc-splitmix-prof
@@ -29677,7 +29623,6 @@ libfuzzer-13-dev
 muttdown
 python3-sortedm2m
 python3-sunpinyin
-linux-image-5.15.0-27-generic
 libdevel-calltrace-perl
 librust-x11-dev
 libclass-loader-dev
@@ -33401,7 +33346,6 @@ games-card
 libseat1
 node-widest-line
 helpman
-linux-modules-nvidia-495-lowlatency-hwe-22.04-edge
 rebound
 nzbget
 r-bioc-phyloseq
@@ -33500,7 +33444,6 @@ cloud-utils
 mini-buildd-doc
 libdbus2.0-cil-dev
 libhx32
-linux-headers-5.15.0-27-lowlatency-64k
 libtext-greeking-perl
 ratpoison
 libcifti-dev
@@ -34477,7 +34420,6 @@ gmic
 liblv-perl
 murano-api
 libespeak-ng-dev
-linux-modules-nvidia-510-server-lowlatency
 cpipe
 espeak-data
 libopenimageio-doc
@@ -36243,7 +36185,6 @@ gav-themes
 gem-plugin-v4l2
 rabbit-mode
 asunder
-linux-modules-nvidia-510-lowlatency-64k-hwe-22.04-edge
 libghc-crypto-pubkey-prof
 libghc-generic-trie-doc
 libf2j-java
@@ -37095,7 +37036,6 @@ librust-podio-dev
 libxml-easy-perl
 libgnome-desktop-3-19
 beep
-linux-headers-5.15.0-27-generic
 python3-numpy
 ejabberd-mod-muc-log-http
 libocamlgsl-ocaml
@@ -37218,7 +37158,6 @@ gir1.2-appstreamcompose-1.0
 swaybg
 evolution-plugin-pstimport
 linux-riscv-headers-5.15.0-1007
-linux-riscv-headers-5.15.0-1008
 rsem
 linux-generic-64k
 esnacc-doc
@@ -37251,7 +37190,6 @@ python-flufl.i18n-doc
 gdc-9-multilib-mips64el-linux-gnuabi64
 fcitx-table-bingchan
 libprocesscore9
-linux-modules-nvidia-510-server-lowlatency-64k
 libevdev-tools
 libs6-dev
 libio-socket-portstate-perl
@@ -37335,7 +37273,6 @@ gulp
 mythes-ro
 linux-azure-headers-5.15.0-1003
 pythonpy
-linux-azure-headers-5.15.0-1005
 mythes-ru
 libequinox-p2-publisher-java
 db5.3-sql-util
@@ -38333,7 +38270,6 @@ lib32gphobos-9-dev-mips64-cross
 libpoppler118
 flatpak-xdg-utils
 libc6-dev-mips64-mipsn32r6el-cross
-linux-modules-extra-5.15.0-1005-azure
 dict-freedict-eng-nor
 libzeitgeist-2.0-dev
 libapp-fatpacker-perl
@@ -39433,7 +39369,6 @@ librtklib1
 libid3tag0
 libgm2-0-mips64el-cross
 fonts-pc
-linux-modules-nvidia-510-5.15.0-27-lowlatency-64k
 mdadm
 libaqbanking-data
 gtk3-engines-breeze
@@ -39536,7 +39471,6 @@ python3-myst-parser
 apt-xapian-index
 libpar-packer-perl
 gfortran-12-multilib-s390x-linux-gnu
-linux-objects-nvidia-510-server-5.15.0-27-generic
 tiddit
 python3-fasteners
 dlm-controld
@@ -41099,7 +41033,6 @@ libkf5service-doc
 golang-github-lestrrat-go-envload-dev
 linux-gcp-headers-5.15.0-1003
 python3-certifi
-linux-gcp-headers-5.15.0-1004
 libgtkextra-3.0
 cargo-lock
 libqnodeeditor2
@@ -41562,7 +41495,6 @@ games-tasks
 resource-agents-paf
 libjson-pp-perl
 libjs-bootsidemenu
-linux-modules-extra-5.15.0-1004-gcp
 libgo14-arm64-cross
 arptables
 libjemalloc2
@@ -41696,7 +41628,6 @@ php-file-iterator
 librust-crossterm-winapi-dev
 wmnet
 msmtp-mta
-linux-modules-extra-5.15.0-1005-aws
 libossp-sa12
 pidgin-mpris
 r-cran-solrium
@@ -45188,7 +45119,6 @@ libreoffice-help-common
 libgcc-s2-m68k-cross
 gedit-plugin-word-completion
 libghc-http-date-doc
-linux-modules-nvidia-510-lowlatency
 gir1.2-gnomebg-4.0
 node-indent-string
 libdolphinvcs-dev
@@ -45733,7 +45663,6 @@ gm2-9-x86-64-linux-gnux32
 libxml-compile-tester-perl
 libsugarext-dev
 golang-github-huandu-go-assert-dev
-linux-modules-nvidia-510-5.15.0-27-generic
 r-cran-spatial
 lua-rings-dev
 ros-visualization-msgs
@@ -47187,7 +47116,6 @@ python3-plplot-qt
 libgwenhywfar-doc
 smtm
 python3.10-dbg
-linux-cloud-tools-5.15.0-1005-aws
 libobjc-10-dev-sparc64-cross
 libmoox-locale-passthrough-perl
 golang-golang-x-sys-dev
@@ -47857,7 +47785,6 @@ lua-sql-doc
 liblwjgl-java-doc
 r-cran-dotcall64
 python3-xdg
-linux-buildinfo-5.15.0-27-generic-64k
 python3-xdo
 ivtools-bin
 libsfml-graphics2.5
@@ -48413,7 +48340,6 @@ libxine2-misc-plugins
 libgnome-bluetooth-3.0-dev
 tiemu-skinedit
 elpa-boxquote
-linux-modules-nvidia-510-5.15.0-27-lowlatency
 siconos-mechanics-tools
 linux-image-5.15.0-24-lowlatency
 gdc-12-x86-64-linux-gnux32
@@ -48568,7 +48494,6 @@ norsp
 libx32gphobos-10-dev-amd64-cross
 guake-indicator
 node-cached-path-relative
-linux-image-unsigned-5.15.0-1005-azure
 maelstrom
 r-cran-tmvtnorm
 libghc-yi-misc-modes-prof
@@ -48755,7 +48680,6 @@ python3-suds
 ubuntu-packaging-guide-html-pt-br
 warmux-servers
 python3-email-validator
-linux-modules-nvidia-510-server-5.15.0-27-lowlatency-64k
 jsbeautifier
 libxfce4util7
 flextra
@@ -49589,7 +49513,6 @@ libchromaprint1
 libjchart2d-java
 python3-sphinx-rst-builder
 libknet-doc
-linux-tools-5.15.0-27-lowlatency
 libavahi-gobject-dev
 ruby-timers
 hexyl
@@ -50401,7 +50324,6 @@ librust-plotters-backend-dev
 libkf5holidays-data
 codfis
 erlang-ssh
-linux-modules-nvidia-510-lowlatency-hwe-22.04
 erlang-ssl
 libnode-dev
 python-liblo-docs
@@ -50904,7 +50826,6 @@ language-pack-gnome-my
 libjdom1-java-doc
 libboost-date-time-dev
 postgresql
-linux-buildinfo-5.15.0-27-generic
 librust-proptest+default-dev
 language-pack-gnome-nb
 network-manager-vpnc
@@ -51181,7 +51102,6 @@ libequinox-region-java
 python3-notebook
 node-define-property
 libgfortran-12-dev-ppc64el-cross
-linux-tools-5.15.0-1005-azure
 libgtk3.0-cil
 librust-nitrokey-dev
 golang-github-stoewer-go-strcase-dev
@@ -52210,7 +52130,6 @@ storj
 pgreplay
 libghc-hgettext-prof
 libplack-perl
-linux-objects-nvidia-510-5.15.0-27-lowlatency-64k
 libgtk-3-common
 littlewizard-data
 ykcs11
@@ -52605,7 +52524,6 @@ python3-dynaconf
 libghc-storable-tuple-doc
 libmath-prime-util-perl
 fonts-yozvox-yozfont-edu
-linux-modules-5.15.0-1004-gcp
 ruby-coffee-script-source
 erlang-public-key
 coda
@@ -52726,7 +52644,6 @@ readstat
 rosdiagnostic
 ukui-control-center
 python-glance-store-doc
-linux-modules-5.15.0-1005-aws
 wmtemp
 elpa-elisp-refs
 tpm-udev
@@ -52774,7 +52691,6 @@ libtess2-tulip-5.4
 cl-ptester
 linux-tools-5.15.0-25
 scim-gtk-immodule
-linux-tools-5.15.0-27
 libgm2-10-dev-s390x-cross
 pybind11-json-dev
 nautilus
@@ -53033,7 +52949,6 @@ python3-ujson
 python-kivy-examples
 linux-headers-5.15.0-25
 lib32gcc-9-dev-s390x-cross
-linux-headers-5.15.0-27
 games-c++-dev
 ogre-1.9-doc
 libghc-diagrams-gtk-doc
@@ -54875,7 +54790,6 @@ libsimple-xml-java
 python-pyresample-test
 pure-ftpd-postgresql
 unixodbc
-linux-modules-5.15.0-27-generic
 libplack-middleware-status-perl
 pcb-rnd-export
 libstarlink-pal0
@@ -55967,7 +55881,6 @@ ruby-rails-observers
 qml-module-snapd
 junior-games-gl
 libeclipse-ui-views-java
-linux-objects-nvidia-510-server-5.15.0-27-generic-64k
 libopenimageio2.2
 python3-magic-wormhole-mailbox-server
 node-rollup-plugin-sass
@@ -56539,7 +56452,6 @@ libghc-text-postgresql-prof
 librplay3
 libpulse-jni
 sweethome3d-textures-editor
-linux-modules-5.15.0-27-lowlatency
 linux-lowlatency-64k-hwe-20.04-edge
 crudini
 elpa-modus-themes
@@ -58525,7 +58437,6 @@ neurodebian-archive-keyring
 trocla
 linux-firmware-xilinx-ap1302
 forensics-samples-files
-linux-tools-5.15.0-1004-gcp
 python3-charon
 libpcl-octree1.12
 openjdk-17-jre-zero
@@ -58633,7 +58544,6 @@ bcache-tools
 libxmmsclient++-glib-dev
 libnb-platform18-java
 libaudtag3
-linux-tools-5.15.0-1005-aws
 node-chownr
 heimdal-clients
 studio-controls
@@ -58921,7 +58831,6 @@ python3-ceph-argparse
 libperl-destruct-level-perl
 libsixel1
 libzxing-javase-java
-linux-objects-nvidia-510-server-5.15.0-27-lowlatency-64k
 pcf2bdf
 kylin-video
 osm2pgsql
@@ -59171,7 +59080,6 @@ python3-neovim
 libhtml-tagfilter-perl
 login-duo
 libavcodec-dev
-linux-headers-5.15.0-1004-gcp
 elpa-bind-chord
 ipig
 libghc-microlens-ghc-doc
@@ -59272,9 +59180,7 @@ libtf2-ros1d
 libghc-tasty-lua-doc
 libmodule-starter-plugin-simplestore-perl
 libpreferencepanes-dev
-linux-headers-5.15.0-1005-aws
 units-master
-linux-image-5.15.0-1005-azure
 libosmoctrl-doc
 libcifpp2
 subunit
@@ -59473,7 +59379,6 @@ libnm0
 libpsimd-dev
 libstdc++-9-pic-mips64r6-cross
 libc6-dev-powerpc-cross
-linux-modules-nvidia-510-server-lowlatency-hwe-22.04-edge
 libghc-persistent-sqlite-dev
 libapache2-mod-ruid2
 libdbix-class-htmlwidget-perl
@@ -60098,7 +60003,6 @@ go-mtpfs
 nx-x11-common
 task-serbian-kde-desktop
 ubuntu-packaging-guide-pdf-uk
-linux-modules-5.15.0-27-lowlatency-64k
 fusiondirectory-plugin-weblink
 mythtv-backend
 libguestfs-ocaml-dev
@@ -61867,7 +61771,6 @@ qml6-module-quick3d-effects
 libghc-hxt-regex-xmlschema-doc
 cairo-dock-remote-control-plug-in
 libqt5remoteobjects5-dev
-linux-image-5.15.0-27-lowlatency-64k
 tcl-signal
 php-ldap
 librem5-tweaks
@@ -62225,7 +62128,6 @@ zulumount-gui
 libmia-2.4-doc
 malaga-doc
 libpst4
-linux-tools-5.15.0-27-generic-64k
 oinkmaster
 libmikmod3
 node-express
@@ -62730,7 +62632,6 @@ libvarnishapi-dev
 libsfcutil0
 redir
 redis
-linux-tools-5.15.0-27-lowlatency-64k
 ruby-json-schemer
 librust-serde-json+alloc-dev
 mathgl
@@ -63647,7 +63548,6 @@ libgo16-riscv64-cross
 libubsan1-i386-cross
 libstd-srvs-dev
 linux-gcp-tools-5.15.0-1003
-linux-gcp-tools-5.15.0-1004
 libparse-dia-sql-perl
 qtscrob
 librust-core-foundation+chrono-dev

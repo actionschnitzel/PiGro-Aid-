@@ -66,6 +66,8 @@ def install_depends():
     pip_install("distro")
     pip_install("psutil")
     pip_install("py-notifier")
+    pip_install("RPi.GPIO")
+    pip_install("gpiozero")
 
     isInstalling = False
 
