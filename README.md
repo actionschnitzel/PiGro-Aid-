@@ -30,20 +30,26 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 ### And there is a lot more!
 
 
-With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
+With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.     
+     
+---
 
-### Tested and working on:
-- [X] Raspberry Pi OS Bullseye with PIXEL(No desktop notification support,due to reduced desktop)    
-- [X] Raspberry Pi OS Buster with PIXEL (No desktop notification support,due to reduced desktop)    
-- [X] Raspberry Pi OS Bullseye with XFCE (FULL Support, no problems)
-- [X] Raspberry Pi OS Buster with XFCE (FULL Support, no problems)
-- [X] Twister OS (FULL Support)
-- [x] Ubuntu 22.04 (FULL Support with some Wayland caused work arounds)    
-            - needs RPI.GPIO & gpiozero from pip(not preinstalled)    
-                will be added to install script
-- [ ] Diet Pi with XFCE (Testing in progress)    
+### Tested Distros:
+
+| Distro  | Tested | Status |
+| ------------- | ------------- | ------------- |
+| Pi OS Buster with PIXEL  | Yes  |Works fine, No desktop notification support,due to reduced desktop  |
+| Pi OS Bullsey with PIXEL  | Yes  |Works fine, No desktop notification support,due to reduced desktop  |
+| Pi OS Bullseye with XFCE  | Yes  |FULL Support, No problems  |
+| Pi OS Buster with XFCE  | Yes  |FULL Support, No problems  |
+| Twister OS  | Yes  |FULL Support, no problems  |
+|Ubuntu 22.04 | Yes  |FULL Support with some Wayland caused work arounds, Frames on Installer slightly shifted |
+| Pop_OS!  | No  |  |
+| Diet Pi  | No  |  |
     
-#### The "No desktop notification support" Info is not a Problem thats affects PiGro's functionality
+#### The "No desktop notification support" Info is not a Problem thats affects PiGro's functionality    
+    
+---
 
 #### Can you trust me?
 
