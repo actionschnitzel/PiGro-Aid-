@@ -9,9 +9,13 @@
 
 #### PiGro - Just Click It! is a control panel that bundles the most important options.
 
-The most important settings that are used again and again must be entered on the Pi using a terminal.
-Pigro is a graphically appealing GUI that does these settings with the click of a button.
-My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.
+Due to the reduced desktop, Raspberry Pi OS lacks a control center that makes all options accessible at a glance. I started working with opensuse when I was young and still do. I love the possibilities of its control center YaSt.
+
+And that's exactly what PiGro is, a tool inspired by the possibilities of YasT.
+
+With a clear and graphically appealing GUI you can access the system deeply, overclock the Pi or replace the entire desktop environment. Everything you need to use the Pi as a desktop computer.
+
+PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
 ##### :wrench: Sudo apt-get update/upgrade
 
@@ -25,6 +29,22 @@ My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding princi
 
 ### And there is a lot more!
 
+
+With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also on Ubuntu.
+
+### Tested and working on:
+- [X] Raspberry Pi OS Bullseye with PIXEL(No desktop notification support,due to reduced desktop)    
+- [X] Raspberry Pi OS Buster with PIXEL (No desktop notification support,due to reduced desktop)    
+- [X] Raspberry Pi OS Bullseye with XFCE (FULL Support, no problems)
+- [X] Raspberry Pi OS Buster with XFCE (FULL Support, no problems)
+- [X] Twister OS (FULL Support)
+- [x] Ubuntu 22.04 (FULL Support with some Wayland caused work arounds)    
+            - needs RPI.GPIO & gpiozero from pip(not preinstalled)    
+                will be added to install script
+- [ ] Diet Pi with XFCE (Testing in progress)    
+    
+#### The "No desktop notification support" Info is not a Problem thats affects PiGro's functionality
+
 #### Can you trust me?
 
 Yup! It's open source, after all.
@@ -32,11 +52,6 @@ Nevertheless you should know what you are doing because most of it works with "S
     
 ---
 
-# :wrench: Info  
-    
-Funny story... The other day I was ranting about the fact that Ubuntu is total garbage for the Pi. That has changed since v22.04 was out. The PiGro #May '22 FIX will fully support Ubuntu!
-
----
 
 # :doughnut: Showcase (Click 2 Enlage)
 
@@ -52,44 +67,14 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
-#ADDED# xdg-open /etc/apt/sources.list.d/ Button in Update      
-#ADDED# Installer uses now APT in a background process     
-#ADDED# High Quality Welcome Tab Background  
-#ADDED# XFCE Options are disabled when using other desktop  
-#ADDED# Gparted & Neofetch Button disabled when not installed  
-#ADDED# Shop is better structured  
-#ADDED# Overclocking buttons are disabled immediately after clicking  
-#ADDED# APT install funktion + combobox  
-#ADDED# APT search function + combobox  
-#ADDED# APT remove function + combobox  
-#ADDED# Tuning specifications can be viewed via the map button  
-#ADDED# VisualTk added to Links  
-#ADDED# NEW OVERCLOCKING OPTION:  
- arm_freq=2300  
- gpu_freq=700  
- over_voltage=14  
- force_turbo=1  
-#ADDED# VisualTk added to Links  
-#ADDED# Bash History on System Tab  
-#ADDED# Cron Job in System  
-#ADDED# SD Copier in System  
-#ADDED# Screen Settings  
-#ADDED# Desktop Settings  
-#ADDED# Desktop Session Settings  
-#ADDED# Printer  
-#ADDED# Menu Settings  
-#ADDED# Pakage Sources  
-#ADDED# Mous & Keyboard
+#ADDED#
 
-#FIXED# Temperature rounded to one number after the decimal point  
-#FIXED# Folder structure improved  
-#FIXED# Icon & PNG improvements
 
-#CHANGED# Old and useless code has been deleted  
-#CHANGED# Image.open has been almost completely replaced by PhotoImage  
-#CHANGED# Installer Renamed to Software  
-#CHANGED# Fast Installer command "sudo apt-get install/remove" has now \*option "-y"  
-#CHANGED# 64 Bit Mode removed due to it's no more avaleble in repo
+#FIXED#
+
+
+#CHANGED#
+
 
 ---
 
