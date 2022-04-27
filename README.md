@@ -30,7 +30,7 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 ### And there is a lot more!
 
 
-With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also on Ubuntu.
+With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
 
 ### Tested and working on:
 - [X] Raspberry Pi OS Bullseye with PIXEL(No desktop notification support,due to reduced desktop)    
