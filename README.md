@@ -49,6 +49,7 @@ With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also w
     
 #### The "No desktop notification support" Info is not a Problem thats affects PiGro's functionality    
     
+#### For more infos visit: [Behavior in the different distributors](https://github.com)
 ---
 
 #### Can you trust me?
