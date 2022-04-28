@@ -9,9 +9,9 @@
 
 #### PiGro - Just Click It! is a control panel that bundles the most important options.
 
-Due to the reduced desktop, Raspberry Pi OS lacks a control center that makes all options accessible at a glance. I started using opensuse when I was young and still do. I love the possibilities of its control center YaSt.
+Due to the reduced desktop, Raspberry Pi OS lacks a control center that makes all options accessible at a glance. I started using opensuse when I was young and still do. I love the possibilities of its control center YaST.
 
-And that's exactly what PiGro is, a tool inspired by the possibilities of YasT.
+And that's exactly what PiGro is, a tool inspired by the possibilities of YaST.
 
 With a clear and graphically appealing GUI you can access the system deeply, overclock the Pi or replace the entire desktop environment. Everything you need to use the Pi as a desktop computer.
 
