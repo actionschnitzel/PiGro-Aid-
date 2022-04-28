@@ -1,7 +1,7 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
 
 ---
 
