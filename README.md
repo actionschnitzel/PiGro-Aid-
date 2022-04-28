@@ -34,37 +34,46 @@ With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also w
      
 ---
 
-### Tested Distros:
+# :doughnut: Showcase (Click 2 Enlage)
 
-| Distro  | Tested | Status |
-| ------------- | ------------- | ------------- |
-| Pi OS Buster with PIXEL  | Yes  |Works fine, No desktop notification support,due to reduced desktop  |
-| Pi OS Bullsey with PIXEL  | Yes  |Works fine, No desktop notification support,due to reduced desktop  |
-| Pi OS Bullseye with XFCE  | Yes  |FULL Support, No problems  |
-| Pi OS Buster with XFCE  | Yes  |FULL Support, No problems  |
-| Twister OS  | Yes  |FULL Support, no problems  |
-|Ubuntu 22.04 | Yes  |FULL Support with some Wayland caused work arounds, Frames on Installer slightly shifted |
-| Pop_OS!  | No  |  |
-| Diet Pi  | No  |  |
-    
-#### The "No desktop notification support" Info is not a Problem thats affects PiGro's functionality    
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200">
+
+      
+---
+
+
+# :floppy_disk: Install
+Open a terminal and run this command:    
+```
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
+```
+
+(Extra easy for LTT employees)
+
+OR:
+
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
+
+#### Supported systems:
+
+- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye): fully supported.
+- [Twister OS](https://twisteros.com/download.html): fully supported.
+- [Ubuntu](https://ubuntu.com/download): fully supported.
+
+
+#### :exclamation: Installation Process & Updates
+
+If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
+If you install PiGro using the script, you can simply use:
+
+```
+"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
+```
+
     
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
 ---
 
-#### Can you trust me?
-
-Yup! It's open source, after all.
-Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
-    
----
-
-
-# :doughnut: Showcase (Click 2 Enlage)
-
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200">
-
----
 
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
 
@@ -90,32 +99,6 @@ Documentation + Manual /// Still in work
 - [ ] Check Back rutines
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
----
-
-# :floppy_disk: Install
-
-```
-wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
-```
-
-(Extra easy for LTT employees)
-
-OR:
-
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
-
-#### Runs best on:
-
-https://twisteros.com/
-
-#### :exclamation: Installation Process & Updates
-
-If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use:
-
-```
-"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
-```
 
 ---
 
