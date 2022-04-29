@@ -94,9 +94,8 @@ Documentation + Manual /// Still in work
 
 ---
 
-# :rocket: To do [NEXT UPDATE]
-
-- [ ] Check Back rutines
+# :rocket: To do
+- [ ] Add fully fuctional tkinter rip-off of raspi-config :partying_face: :imp:
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 
