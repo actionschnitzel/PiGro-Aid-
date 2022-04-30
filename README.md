@@ -29,21 +29,20 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 
 ### And there is a lot more!
 
+With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
 
-With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.     
-     
 ---
 
 # :doughnut: Showcase (Click 2 Enlage)
 
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200">
 
-      
 ---
 
-
 # :floppy_disk: Install
-Open a terminal and run this command:    
+
+Open a terminal and run this command:
+
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
 ```
@@ -60,7 +59,6 @@ OR:
 - [Twister OS](https://twisteros.com/download.html): fully supported.
 - [Ubuntu](https://ubuntu.com/download): fully supported.
 
-
 #### :exclamation: Installation Process & Updates
 
 If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
@@ -70,10 +68,9 @@ If you install PiGro using the script, you can simply use:
 "wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
 ```
 
-    
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
----
 
+---
 
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
 
@@ -83,21 +80,36 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
-#ADDED#
+#ADDED I added a Pi Camera Tab just for fun. Never saw an App
+that does Pi Cam stuff in a GUI ...
+So maybe it stay in PiGro maby not... time will tell.
 
+#ADDED Rename user option for old pi installations
 
-#FIXED#
+#ADDED Expert Mode for Tuning
 
+#ADDED Cute Tux greets you with your user name
 
-#CHANGED#
+#CHANGED User Pi said goodbye! PiGro now full supports user names and
+greets you by your name :-)
 
+#CHANGED Rearranged Software tab
+
+#FIXED If Snap/Pi-Apps/Flatpak is not installed the buttons
+are disabled
+
+#FIXED As always there are code improvements
+
+#FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is notInstalled"
+
+#APT-GET Installer shows now terminal output due to transperency reasons
 
 ---
 
 # :rocket: To do
+
 - [ ] Add fully fuctional tkinter rip-off of raspi-config :partying_face: :imp:
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
-
 
 ---
 

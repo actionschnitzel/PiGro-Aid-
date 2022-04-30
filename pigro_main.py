@@ -24,6 +24,7 @@ from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
 from subprocess import check_call, CalledProcessError
+import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
@@ -324,7 +325,6 @@ class Frame1(ttk.Frame):
         ).place(x=40, y=125)
 
         # Parameters for System
-
         global distro
         distro = distro.id()
 
@@ -569,7 +569,6 @@ class Frame2(ttk.Frame):
 
         def update_btn():
             os.popen(
-                # && read -p PRESS_ENTER && exit
                 f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'
                 % self.wid
             )
@@ -1850,168 +1849,157 @@ class Overclocking_Expert(tk.Toplevel):
             if arm_freq_entry.get() == "Default is 1500/1800" or arm_freq_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    arm_freq_set.config(state=DISABLED)
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    arm_freq_set.config(state=DISABLED)
+                os.system(f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                arm_freq_set.config(state=DISABLED)
+                arm_freq_reset.config(state=NORMAL)
 
         def reset_arm_freq():
-            arm_freq_set.config(state=NORMAL)
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/arm_freq/d' config.txt")
+                arm_freq_set.config(state=NORMAL)
+                arm_freq_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
+                arm_freq_set.config(state=NORMAL)
+                arm_freq_reset.config(state=DISABLED)
+
+            
 
         #gpu_freq
         def set_gpu_freq():
             if gpu_freq_entry.get() == "Default is 500" or gpu_freq_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    gpu_freq_set.config(state=DISABLED)
+                os.system(
+                    f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                gpu_freq_set.config(state=DISABLED)
+                gpu_freq_reset.config(state=NORMAL)
 
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    gpu_freq_set.config(state=DISABLED)
 
         def reset_gpu_freq():
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                gpu_freq_set.config(state=NORMAL)
+                gpu_freq_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                gpu_freq_set.config(state=NORMAL)
+                gpu_freq_reset.config(state=DISABLED)
 
         #set_gpu_mem
         def set_gpu_mem():
             if gpu_mem_entry.get() == "Minimum 16" or gpu_mem_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    gpu_mem_set.config(state=DISABLED)
+                os.system(
+                    f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                gpu_mem_set.config(state=DISABLED)
+                gpu_mem_reset.config(state=NORMAL)
 
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    gpu_mem_set.config(state=DISABLED)
         def reset_gpu_mem():
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                gpu_mem_set.config(state=NORMAL)
+                gpu_mem_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                gpu_mem_set.config(state=NORMAL)
+                gpu_mem_reset.config(state=DISABLED)
 
+
+        #set_over_voltage
         def set_over_voltage():
             if over_voltage_entry.get() == "Default 0" or over_voltage_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    over_voltage_set.config(state=DISABLED)
-
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    over_voltage_set.config(state=DISABLED)
+                os.system(
+                    f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                over_voltage_set.config(state=DISABLED)
+                over_voltage_reset.config(state=NORMAL)
 
         def reset_over_voltage():
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/over_voltage/d' config.txt")
+                over_voltage_set.config(state=NORMAL)
+                over_voltage_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
+                over_voltage_set.config(state=NORMAL)
+                over_voltage_reset.config(state=DISABLED)
 
-
+        #set_disable_splash
         def set_disable_splash():
             if disable_splash_entry.get() == "Default 0" or disable_splash_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    disable_splash_set.config(state=DISABLED)
-
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    disable_splash_set.config(state=DISABLED)
+                os.system(f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                disable_splash_set.config(state=DISABLED)
+                disable_splash_reset.config(state=NORMAL)
 
         def reset_disable_splash():
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/disable_splash/d' config.txt")
+                disable_splash_set.config(state=NORMAL)
+                disable_splash_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
+                disable_splash_set.config(state=NORMAL)
+                disable_splash_reset.config(state=DISABLED)
 
+        #set_force_turbo
         def set_force_turbo():
             if force_turbo_entry.get() == "Default 0" or force_turbo_entry.get() == "":
                 error_mass()
             else:
-                if distro_get == "ubuntu":
-                    os.system(
-                        f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> /boot/firmware/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    force_turbo_set.config(state=DISABLED)
-                else:
-                    os.system(
-                        f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> /boot/config.txt'""")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-                    force_turbo_set.config(state=DISABLED)
+                os.system(
+                    f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> {config_path}'""")
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                force_turbo_set.config(state=DISABLED)
+                force_turbo_reset.config(state=NORMAL)
+
 
         def reset_force_turbo():
-            pass
+            if distro_get == "ubuntu":
+                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/force_turbo/d' config.txt")
+                force_turbo_set.config(state=NORMAL)
+                force_turbo_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
+                force_turbo_set.config(state=NORMAL)
+                force_turbo_reset.config(state=DISABLED)
+
+        def lines_that_contain(string, fp):
+            return [line for line in fp if string in line]
+
+        def reboot_n():
+            popen(f"{legit} reboot")
 
         # Expert Frame
         x_mode_frame = Frame(self, bg="#333333")
-        x_mode_frame.pack()
+        x_mode_frame.pack(pady=20)
 
         # arm_freq
         arm_freq_label = Label(
@@ -2029,12 +2017,19 @@ class Overclocking_Expert(tk.Toplevel):
                               bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
 
+
         global arm_freq_reset
         arm_freq_reset = Button(x_mode_frame, text="Reset", command=reset_arm_freq,
                               bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
-        arm_freq_reset.config(state=DISABLED)
+        
 
+        with open(f"{config_path}", "r") as fp:
+            for line_a_f in lines_that_contain("arm_freq", fp):
+                # print(line3)
+                if line_a_f:
+                    arm_freq_set.config(state=DISABLED)
+                    arm_freq_reset.config(state=NORMAL)
         # gpu_freq
         gpu_freq_label = Label(
             x_mode_frame,justify=LEFT, text="gpu_freq = ", bg="#333333", foreground="white",anchor='w',width=15)
@@ -2054,8 +2049,13 @@ class Overclocking_Expert(tk.Toplevel):
         gpu_freq_reset = Button(x_mode_frame, text="Reset", command=reset_gpu_freq,
                               bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         gpu_freq_reset.grid(row=1, column=3)
-        gpu_freq_reset.config(state=DISABLED)
 
+        with open(f"{config_path}", "r") as fp:
+            for line_g_f in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_g_f:
+                    gpu_freq_set.config(state=DISABLED)
+                    gpu_freq_reset.config(state=NORMAL)
         # gpu_mem
         gpu_mem_label = Label(x_mode_frame,justify=LEFT, text="gpu_mem = ",
                               bg="#333333", foreground="white",anchor='w',width=15)
@@ -2075,7 +2075,14 @@ class Overclocking_Expert(tk.Toplevel):
         gpu_mem_reset = Button(x_mode_frame, text="Reset", command=reset_gpu_mem,
                              bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
-        gpu_mem_reset.config(state=DISABLED)
+        
+
+        with open(f"{config_path}", "r") as fp:
+            for line_g_m in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_g_m:
+                    gpu_mem_set.config(state=DISABLED)
+                    gpu_mem_reset.config(state=NORMAL)
 
         # over_voltage
         over_voltage_label = Label(
@@ -2096,7 +2103,14 @@ class Overclocking_Expert(tk.Toplevel):
         over_voltage_reset = Button(x_mode_frame, text="Reset", command=reset_over_voltage,
                                   bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         over_voltage_reset.grid(row=3, column=3)
-        over_voltage_reset.config(state=DISABLED)
+        
+
+        with open(f"{config_path}", "r") as fp:
+            for line_o_v in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_o_v:
+                    over_voltage_set.config(state=DISABLED)
+                    over_voltage_reset.config(state=NORMAL) 
 
 
         # disable_splash
@@ -2118,7 +2132,14 @@ class Overclocking_Expert(tk.Toplevel):
         disable_splash_reset = Button(x_mode_frame, text="Reset", command=reset_disable_splash,
                                     bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
-        disable_splash_reset.config(state=DISABLED)
+        
+
+        with open(f"{config_path}", "r") as fp:
+            for line_d_s in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_d_s:
+                    disable_splash_set.config(state=DISABLED)
+                    disable_splash_reset.config(state=NORMAL)       
 
         # force_turbo
         force_turbo_label = Label(
@@ -2139,13 +2160,21 @@ class Overclocking_Expert(tk.Toplevel):
         force_turbo_reset = Button(x_mode_frame, text="Reset", command=reset_force_turbo,
                                  bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
         force_turbo_reset.grid(row=5, column=3)
-        force_turbo_reset.config(state=DISABLED)
+        
+        with open(f"{config_path}", "r") as fp:
+            for line_f_t in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_f_t:
+                    force_turbo_set.config(state=DISABLED)
+                    force_turbo_reset.config(state=NORMAL) 
 
 
-
+        reboot_e = Button(self, justify=LEFT, font=("Helvetica", 12, "bold"),
+                       text="Reboot",bg="#333333", foreground="white", borderwidth=0, highlightthickness=2,command=reboot_n)
+        reboot_e.pack()
 
         note_e = Label(self, justify=LEFT, font=("Helvetica", 12, "bold"),
-                       text="#Note:\n\nAt the moment here are only the usual\ntuning functions.\nWhat you see is 500 lines of code.\nI will expand this window so that it can\nreplace raspi-config.\nI calculate with 5000 linese of code.\nSo that will take a while :-P", bg="#333333", foreground="white")
+                       text="Soon More!", bg="#333333", foreground="white")
         note_e.pack(pady=20)
 
 
@@ -2656,8 +2685,6 @@ class Frame4(ttk.Frame):
                     f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
                 )
 
-        # def pi_apps_list():
-        #    popen(f"xterm -e 'bash -c \"ls {home}/pi-apps/apps/ ; exec bash\"'")
 
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
 
@@ -3458,11 +3485,18 @@ class Frame6(ttk.Frame):
             os.system(
                 f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
+#oooo
             tu_btn1.config(state=NORMAL)
             tu_btn2.config(state=NORMAL)
             tu_btn3.config(state=NORMAL)
             tu_btn4.config(state=NORMAL)
-            tu_btn5.config(state=NORMAL)
+
+            tu_current.config(text="PiGro Settings: Not Configured\n", fg="green")
+            tu_current2.config(text="arm_freq not configured")
+            tu_current3.config(text="gpu_freq not configured")
+            gpu_m_current.config(text="gpu_mem not configured")
+            tu_current4.config(text="over_voltage not configured")
+            tu_current5.config(text="force_turbo not configured")
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3532,19 +3566,12 @@ class Frame6(ttk.Frame):
         # overclocking_2000
 
         def ov_2000():
-
-            if distro_get == "ubuntu":
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
 
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
-            tu_btn5.config(state=DISABLED)
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3614,19 +3641,12 @@ class Frame6(ttk.Frame):
 
         # overclocking_2147
         def ov_2147():
-
-            if distro_get == "ubuntu":
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
+            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
 
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
-            tu_btn5.config(state=DISABLED)
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -3698,14 +3718,7 @@ class Frame6(ttk.Frame):
         # overclocking_2200
 
         def ov_2200():
-
-            if distro_get == "ubuntu":
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
-
+            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
 
             Notification(
@@ -3720,7 +3733,6 @@ class Frame6(ttk.Frame):
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
-            tu_btn5.config(state=DISABLED)
 
             global pop_2200
             pop_2200 = Toplevel(self)
@@ -3781,21 +3793,13 @@ class Frame6(ttk.Frame):
 
         # overclocking_2300
         def ov_2300():
-
-            if distro_get == "ubuntu":
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> /boot/firmware/config.txt'""")
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> /boot/config.txt'""")
-
+            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
 
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
-            tu_btn5.config(state=DISABLED)
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -4107,126 +4111,121 @@ class Frame6(ttk.Frame):
         )
         tu_btn5.grid(column=0, row=10, pady=10)
 
-        # Overclock Display Functions
-        with open(f"{config_path}", "r") as fp:
-            for line in lines_that_contain("#Pigro_Overclocking1", fp):
-                # print(line)
-                if line:
-                    tu_current.config(text="Current Settings: Crank It Up\n", fg="yellow", bg="#333333")
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
+        def ov_display():
+            # Overclock Display Functions
+            with open(f"{config_path}", "r") as fp:
+                for line in lines_that_contain("#Pigro_Overclocking1", fp):
+                    # print(line)
+                    if line:
+                        tu_current.config(text="Current Settings: Crank It Up\n", fg="yellow", bg="#333333")
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
 
-        with open(f"{config_path}", "r") as fp:
-            for line in lines_that_contain("#Pigro_Overclocking2", fp):
-                # print(line)
-                if line:
-                    tu_current.config(
-                        text="Current Settings: You Sir... Need A Fan!\n",
-                        fg="red",
-                        bg="#333333",
-                    )
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-
-
-        with open(f"{config_path}", "r") as fp:
-            for line in lines_that_contain("#Pigro_Overclocking3", fp):
-                # print(line)
-                if line:
-                    tu_current.config(
-                        text="Current Settings: Take It To The Max!\n", fg="pink", bg="#333333"
-                    )
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-
-        with open(f"{config_path}", "r") as fp:
-            for line in lines_that_contain("#Pigro_Overclocking4", fp):
-                # print(line)
-                if line:
-                    tu_current.config(
-                        text="Honey,\nthe fuse blew again!\n", fg="purple", bg="#333333"
-                    )
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-
-        with open(f"{config_path}", "r") as fp:
-            for line in lines_that_contain("#Pigro_Custom", fp):
-                # print(line)
-                if line:
-                    tu_current.config(
-                        text="Custom Settings\n", fg="white", bg="#333333"
-                    )
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-#ööö
-        with open(f"{config_path}", "r") as fp:
-            for line1 in lines_that_contain("arm_freq=", fp):
-                # print(line1)
-                if line1:
-                    tu_current2.config(text=line1.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
-
-        with open(f"{config_path}", "r") as fp:
-            for line2 in lines_that_contain("gpu_freq=", fp):
-                # print(line2)
-                if line2:
-                    tu_current3.config(text=line2.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
+            with open(f"{config_path}", "r") as fp:
+                for line in lines_that_contain("#Pigro_Overclocking2", fp):
+                    # print(line)
+                    if line:
+                        tu_current.config(
+                            text="Current Settings: You Sir... Need A Fan!\n",
+                            fg="red",
+                            bg="#333333",
+                        )
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
 
 
-        with open(f"{config_path}", "r") as fp:
-            for line3 in lines_that_contain("force_turbo=", fp):
-                # print(line3)
-                if line3:
-                    tu_current5.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
+            with open(f"{config_path}", "r") as fp:
+                for line in lines_that_contain("#Pigro_Overclocking3", fp):
+                    # print(line)
+                    if line:
+                        tu_current.config(
+                            text="Current Settings: Take It To The Max!\n", fg="pink", bg="#333333"
+                        )
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
 
-        with open(f"{config_path}", "r") as fp:
-            for line3 in lines_that_contain("over_voltage=", fp):
-                # print(line3)
-                if line3:
-                    tu_current4.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
-                    tu_btn1.config(state=DISABLED)
-                    tu_btn2.config(state=DISABLED)
-                    tu_btn3.config(state=DISABLED)
-                    tu_btn4.config(state=DISABLED)
-                    tu_btn5.config(state=DISABLED)
+            with open(f"{config_path}", "r") as fp:
+                for line in lines_that_contain("#Pigro_Overclocking4", fp):
+                    # print(line)
+                    if line:
+                        tu_current.config(
+                            text="Honey,\nthe fuse blew again!\n", fg="purple", bg="#333333"
+                        )
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
 
-        with open(f"{config_path}", "r") as fp:
-            for line3 in lines_that_contain("gpu_mem=", fp):
-                # print(line3)
-                if line3:
-                    gpu_m_current.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+            with open(f"{config_path}", "r") as fp:
+                for line in lines_that_contain("#Pigro_Custom", fp):
+                    # print(line)
+                    if line:
+                        tu_current.config(
+                            text="Custom Settings\n", fg="white", bg="#333333"
+                        )
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
+    #ööö
+            with open(f"{config_path}", "r") as fp:
+                for line1 in lines_that_contain("arm_freq=", fp):
+                    # print(line1)
+                    if line1:
+                        tu_current2.config(text=line1.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
 
 
-         
+            with open(f"{config_path}", "r") as fp:
+                for line2 in lines_that_contain("gpu_freq=", fp):
+                    # print(line2)
+                    if line2:
+                        tu_current3.config(text=line2.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
+
+            with open(f"{config_path}", "r") as fp:
+                for line3 in lines_that_contain("force_turbo=", fp):
+                    # print(line3)
+                    if line3:
+                        tu_current5.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
+
+            with open(f"{config_path}", "r") as fp:
+                for line3 in lines_that_contain("over_voltage=", fp):
+                    # print(line3)
+                    if line3:
+                        tu_current4.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_btn1.config(state=DISABLED)
+                        tu_btn2.config(state=DISABLED)
+                        tu_btn3.config(state=DISABLED)
+                        tu_btn4.config(state=DISABLED)
+#gggg
+            with open(f"{config_path}", "r") as fp:
+                for line3 in lines_that_contain("gpu_mem=", fp):
+                    # print(line3)
+                    if line3:
+                        gpu_m_current.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+
+        def refresher2():
+            #print 'refreshing'
+            ov_display()
+            threading.Timer(1, refresher2).start()
+        refresher2()      
 
         # Misc_Frame
         self.misc_main_frame = Frame(

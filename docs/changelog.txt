@@ -19,34 +19,36 @@ Not gonna happen bro!
 So this deserves a new code name! "PiGro - Stupida Medusa!"
 
 
-#ADDED# PiGro move now to SysTray(Menu Bar) I like it :-P 
-        You can close close/show it from there.(Only XFCE)
 
-#ADDED# I added a Pi Camera Tab just for fun. Never saw an App
+#ADDED I added a Pi Camera Tab just for fun. Never saw an App
         that does Pi Cam stuff in a GUI ...
         So maybe it stay in PiGro maby not... time will tell.
 
-#FIXED# If Snap/Pi-Apps/Flatpak is not installed the buttons
-        are disabled
+#ADDED Rename user option for old pi installations
 
-#FIXED# As always there are code improvements
+#ADDED Expert Mode for Tuning
 
-#CHANGED# User Pi said goodbye! PiGro now full supports user names and
+#ADDED Cute Tux greets you with your user name
+
+#CHANGED User Pi said goodbye! PiGro now full supports user names and
           greets you by your name :-)
 
+#CHANGED Rearranged Software tab 
 
-# ADDED Cute Tux greets you with your user name
+#FIXED If Snap/Pi-Apps/Flatpak is not installed the buttons
+        are disabled
 
-# CHANGED Rearranged the Fast Installer Frame
+#FIXED As always there are code improvements
 
-# FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is 
-notInstalled"
+#FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is notInstalled"
 
-# APT-GET Installer shows now terminal output due to transperency reasons 
+#APT-GET Installer shows now terminal output due to transperency reasons 
 
-# CODE CHANGES:
+#CODE CHANGES:
 
-PiGro now uses even more of Python's "OS Modules" to collect system information. Not for spying, but for the reason I decided to squeeze the Ubuntu version between the Pi OS code. Ubuntu really doesn't have much in common with Debian. 
+PiGro now uses even more of Python's "OS Modules" to collect system information. 
+Not for spying, but for the reason I decided to squeeze the Ubuntu version 
+between the Pi OS code. Ubuntu really doesn't have much in common with Debian. 
 
 Long story short: 
 
