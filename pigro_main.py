@@ -190,7 +190,7 @@ class MainApplication(tk.Tk):
 
         self.notebook.pack()
 
-        if distro_get == "debian":
+        if distro_get == "debian" or distro_get == "raspbian":
             self.notebook.hide(self.Frame12)
 
         if distro_get == "ubuntu":
@@ -847,7 +847,7 @@ class Frame3(ttk.Frame):
             popen(f"{legit} mousepad /etc/crontab")
 
         def onc_ben():
-            popen(f"{legit} nautilus $HOME")
+            popen("sudo xdg-open $HOME")
             print("With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
