@@ -18,6 +18,9 @@ Not gonna happen bro!
 
 So this deserves a new code name! "PiGro - Stupida Medusa!"
 
+#IMPORTANT: For some reason you must click on Reset Overclocking twice to
+unlock the tuning berries. I could not find the causing line but I'm on it.
+1st BUG xD ... Yeah!
 
 
 #ADDED I added a Pi Camera Tab just for fun. Never saw an App
@@ -30,8 +33,7 @@ So this deserves a new code name! "PiGro - Stupida Medusa!"
 
 #ADDED Cute Tux greets you with your user name
 
-#CHANGED User Pi said goodbye! PiGro now full supports user names and
-          greets you by your name :-)
+#CHANGED User Pi said goodbye! PiGro now full supports user names 
 
 #CHANGED Rearranged Software tab 
 
@@ -40,7 +42,6 @@ So this deserves a new code name! "PiGro - Stupida Medusa!"
 
 #FIXED As always there are code improvements
 
-#FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is notInstalled"
 
 #APT-GET Installer shows now terminal output due to transperency reasons 
 

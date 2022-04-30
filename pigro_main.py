@@ -1819,9 +1819,6 @@ class Tuning_Legende(tk.Toplevel):
         self.tu_main_frame2.pack(pady=20)
 
 
-        self.warning = Label(self.tu_main_frame2,justify=LEFT, text="I see more and more Youtubers happily overclocking\nto 2300 Mhz. The fact is, this only works with Board Rev. 1.2!\nDouble check this before I get a black screen.",bg="#333333", fg="white")
-        self.warning.pack()
-
 
 # [Overclocking_Expert Popup] Child
 class Overclocking_Expert(tk.Toplevel):
@@ -2051,7 +2048,7 @@ class Overclocking_Expert(tk.Toplevel):
         gpu_freq_reset.grid(row=1, column=3)
 
         with open(f"{config_path}", "r") as fp:
-            for line_g_f in lines_that_contain("force_turbo", fp):
+            for line_g_f in lines_that_contain("gpu_freq", fp):
                 # print(line3)
                 if line_g_f:
                     gpu_freq_set.config(state=DISABLED)
@@ -2064,7 +2061,7 @@ class Overclocking_Expert(tk.Toplevel):
         global gpu_mem_entry
         gpu_mem_entry = Entry(x_mode_frame,)
         gpu_mem_entry.grid(row=2, column=1)
-        gpu_mem_entry.insert(0, "Minimum 16")
+        gpu_mem_entry.insert(0, "Minimum 16/Not Set")
 
         global gpu_mem_set
         gpu_mem_set = Button(x_mode_frame, text="Set", command=set_gpu_mem,
@@ -2078,7 +2075,7 @@ class Overclocking_Expert(tk.Toplevel):
         
 
         with open(f"{config_path}", "r") as fp:
-            for line_g_m in lines_that_contain("force_turbo", fp):
+            for line_g_m in lines_that_contain("gpu_mem", fp):
                 # print(line3)
                 if line_g_m:
                     gpu_mem_set.config(state=DISABLED)
@@ -2092,7 +2089,7 @@ class Overclocking_Expert(tk.Toplevel):
         global over_voltage_entry
         over_voltage_entry = Entry(x_mode_frame,)
         over_voltage_entry.grid(row=3, column=1)
-        over_voltage_entry.insert(0, "Default 0")
+        over_voltage_entry.insert(0, "Default is 0/Not Set")
 
         global over_voltage_set
         over_voltage_set = Button(x_mode_frame, text="Set", command=set_over_voltage,
@@ -2106,7 +2103,7 @@ class Overclocking_Expert(tk.Toplevel):
         
 
         with open(f"{config_path}", "r") as fp:
-            for line_o_v in lines_that_contain("force_turbo", fp):
+            for line_o_v in lines_that_contain("over_voltage", fp):
                 # print(line3)
                 if line_o_v:
                     over_voltage_set.config(state=DISABLED)
@@ -2121,7 +2118,7 @@ class Overclocking_Expert(tk.Toplevel):
         global disable_splash_entry
         disable_splash_entry = Entry(x_mode_frame,)
         disable_splash_entry.grid(row=4, column=1)
-        disable_splash_entry.insert(0, "Default 0")
+        disable_splash_entry.insert(0, "Default is 0/Not Set")
 
         global disable_splash_set
         disable_splash_set = Button(x_mode_frame, text="Set", command=set_disable_splash,
@@ -2135,7 +2132,7 @@ class Overclocking_Expert(tk.Toplevel):
         
 
         with open(f"{config_path}", "r") as fp:
-            for line_d_s in lines_that_contain("force_turbo", fp):
+            for line_d_s in lines_that_contain("disable_splash", fp):
                 # print(line3)
                 if line_d_s:
                     disable_splash_set.config(state=DISABLED)
@@ -2149,7 +2146,7 @@ class Overclocking_Expert(tk.Toplevel):
         global force_turbo_entry
         force_turbo_entry = Entry(x_mode_frame,)
         force_turbo_entry.grid(row=5, column=1)
-        force_turbo_entry.insert(0, "Default 0")
+        force_turbo_entry.insert(0, "Default is 0/Not Set")
 
         global force_turbo_set
         force_turbo_set = Button(x_mode_frame, text="Set", command=set_force_turbo,
@@ -3964,7 +3961,7 @@ class Frame6(ttk.Frame):
 
         self.tu_info = Label(
             self.ov_display_frame,
-            text="Settings tested with:\nRaspberry Pi 4B 8 GB Rev.1.2\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
+            text="Settings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
             font=("Helvetica", 8),
             highlightthickness=0,
             borderwidth=2,
