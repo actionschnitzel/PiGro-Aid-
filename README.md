@@ -90,8 +90,7 @@ So maybe it stay in PiGro maby not... time will tell.
 
 #ADDED Cute Tux greets you with your user name
 
-#CHANGED User Pi said goodbye! PiGro now full supports user names and
-greets you by your name :-)
+#CHANGED User Pi said goodbye! PiGro now full supports user names
 
 #CHANGED Rearranged Software tab
 
@@ -99,8 +98,6 @@ greets you by your name :-)
 are disabled
 
 #FIXED As always there are code improvements
-
-#FIXED If not installed SNAP/Pi-Apps/Flatpak showes "Is notInstalled"
 
 #APT-GET Installer shows now terminal output due to transperency reasons
 
