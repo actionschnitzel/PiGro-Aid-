@@ -18,9 +18,7 @@ Not gonna happen bro!
 
 So this deserves a new code name! "PiGro - Stupida Medusa!"
 
-#IMPORTANT: For some reason you must click on Reset Overclocking twice to
-unlock the tuning berries. I could not find the causing line but I'm on it.
-1st BUG xD ... Yeah!
+
 
 
 #ADDED I added a Pi Camera Tab just for fun. Never saw an App

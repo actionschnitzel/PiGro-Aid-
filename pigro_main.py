@@ -527,7 +527,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        def refresh():
+        def refresh_sys_stats():
 
             # Parameters for System
             pid = os.getpid()
@@ -541,9 +541,9 @@ class Frame1(ttk.Frame):
             self.sysinf8.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
             self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
-            self.after(1000, refresh)
+            self.after(1000, refresh_sys_stats)
 
-        refresh()
+        refresh_sys_stats()
 
 
 # [Update] Tab
@@ -1746,13 +1746,23 @@ class Tuning_Legende(tk.Toplevel):
         # OV_2
         self.ov1_lbl = Label(
             self.tu_main_frame,
-            text="Sir, You Need A Fan!",
+            text="You Sir, Need A Fan!",
             bg="#333333",
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=4, column=0)
+
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Works for rev. 1.4 & Pi400",
+            bg="#333333",
+            fg="yellow",
+            font=("Helvetica", 9),
+            justify=LEFT,
+        )
+        self.ov1_lbl.grid(row=4, column=1)
 
         self.ov_1 = Label(self.tu_main_frame, image=self.tu_3,
                           bg="#333333", fg="white")
@@ -1778,6 +1788,16 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=6, column=0)
 
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Works for rev. 1.4 & Pi400",
+            bg="#333333",
+            fg="yellow",
+            font=("Helvetica", 9),
+            justify=LEFT,
+        )
+        self.ov1_lbl.grid(row=6, column=1)
+
         self.ov_1 = Label(self.tu_main_frame, image=self.tu_4,
                           bg="#333333", fg="white")
         self.ov_1.grid(row=7, column=0)
@@ -1802,6 +1822,16 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=8, column=0)
 
+        self.ov1_lbl = Label(
+            self.tu_main_frame,
+            text="Works for rev. 1.4 & Pi400",
+            bg="#333333",
+            fg="yellow",
+            font=("Helvetica", 9),
+            justify=LEFT,
+        )
+        self.ov1_lbl.grid(row=8, column=1)
+
         self.ov_1 = Label(self.tu_main_frame, image=self.tu_5,
                           bg="#333333", fg="white")
         self.ov_1.grid(row=9, column=0)
@@ -1817,7 +1847,6 @@ class Tuning_Legende(tk.Toplevel):
 
         self.tu_main_frame2 = Frame(self, bg="#333333")
         self.tu_main_frame2.pack(pady=20)
-
 
 
 # [Overclocking_Expert Popup] Child
@@ -3479,10 +3508,10 @@ class Frame6(ttk.Frame):
         # overclocking_default/reset
 
         def set_default():
-            os.system(
+            popen(
                 f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
-#oooo
+
             tu_btn1.config(state=NORMAL)
             tu_btn2.config(state=NORMAL)
             tu_btn3.config(state=NORMAL)
@@ -4160,18 +4189,6 @@ class Frame6(ttk.Frame):
                         tu_btn4.config(state=DISABLED)
 
             with open(f"{config_path}", "r") as fp:
-                for line in lines_that_contain("#Pigro_Custom", fp):
-                    # print(line)
-                    if line:
-                        tu_current.config(
-                            text="Custom Settings\n", fg="white", bg="#333333"
-                        )
-                        tu_btn1.config(state=DISABLED)
-                        tu_btn2.config(state=DISABLED)
-                        tu_btn3.config(state=DISABLED)
-                        tu_btn4.config(state=DISABLED)
-    #ööö
-            with open(f"{config_path}", "r") as fp:
                 for line1 in lines_that_contain("arm_freq=", fp):
                     # print(line1)
                     if line1:
@@ -4211,18 +4228,17 @@ class Frame6(ttk.Frame):
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
                         tu_btn4.config(state=DISABLED)
-#gggg
+
             with open(f"{config_path}", "r") as fp:
                 for line3 in lines_that_contain("gpu_mem=", fp):
                     # print(line3)
                     if line3:
                         gpu_m_current.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
 
-        def refresher2():
-            #print 'refreshing'
+        def refresh_OV_stats():
             ov_display()
-            threading.Timer(1, refresher2).start()
-        refresher2()      
+            self.after(3000, refresh_OV_stats)
+        refresh_OV_stats()
 
         # Misc_Frame
         self.misc_main_frame = Frame(
