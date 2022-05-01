@@ -29,13 +29,75 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 
 ### And there is a lot more!
 
+
 With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
+
 
 ---
 
 # :doughnut: Showcase (Click 2 Enlage)
 
+
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200">
+
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200">
+
+---
+
+# :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
+
+Documentation + Manual /// Still in work
+
+---
+
+# :zap: Latest Improvements
+
+#ADDED# xdg-open /etc/apt/sources.list.d/ Button in Update      
+#ADDED# Installer uses now APT in a background process     
+#ADDED# High Quality Welcome Tab Background  
+#ADDED# XFCE Options are disabled when using other desktop  
+#ADDED# Gparted & Neofetch Button disabled when not installed  
+#ADDED# Shop is better structured  
+#ADDED# Overclocking buttons are disabled immediately after clicking  
+#ADDED# APT install funktion + combobox  
+#ADDED# APT search function + combobox  
+#ADDED# APT remove function + combobox  
+#ADDED# Tuning specifications can be viewed via the map button  
+#ADDED# VisualTk added to Links  
+#ADDED# NEW OVERCLOCKING OPTION:  
+ arm_freq=2300  
+ gpu_freq=700  
+ over_voltage=14  
+ force_turbo=1  
+#ADDED# VisualTk added to Links  
+#ADDED# Bash History on System Tab  
+#ADDED# Cron Job in System  
+#ADDED# SD Copier in System  
+#ADDED# Screen Settings  
+#ADDED# Desktop Settings  
+#ADDED# Desktop Session Settings  
+#ADDED# Printer  
+#ADDED# Menu Settings  
+#ADDED# Pakage Sources  
+#ADDED# Mous & Keyboard
+
+#FIXED# Temperature rounded to one number after the decimal point  
+#FIXED# Folder structure improved  
+#FIXED# Icon & PNG improvements
+
+#CHANGED# Old and useless code has been deleted  
+#CHANGED# Image.open has been almost completely replaced by PhotoImage  
+#CHANGED# Installer Renamed to Software  
+#CHANGED# Fast Installer command "sudo apt-get install/remove" has now \*option "-y"  
+#CHANGED# 64 Bit Mode removed due to it's no more avaleble in repo
+
+---
+
+# :rocket: To do [NEXT UPDATE]
+
+- [ ] Check Back rutines
+- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
+
 
 ---
 
