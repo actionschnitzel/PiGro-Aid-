@@ -1,7 +1,7 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header%20X.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
 
 ---
 
@@ -9,9 +9,13 @@
 
 #### PiGro - Just Click It! is a control panel that bundles the most important options.
 
-The most important settings that are used again and again must be entered on the Pi using a terminal.
-Pigro is a graphically appealing GUI that does these settings with the click of a button.
-My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding principle for me is that PiGro goes very much in the direction of YaSt.
+Due to the reduced desktop, Raspberry Pi OS lacks a control center that makes all options accessible at a glance. I started using opensuse when I was young and still do. I love the possibilities of its control center YaST.
+
+And that's exactly what PiGro is, a tool inspired by the possibilities of YaST.
+
+With a clear and graphically appealing GUI you can access the system deeply, overclock the Pi or replace the entire desktop environment. Everything you need to use the Pi as a desktop computer.
+
+PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
 ##### :wrench: Sudo apt-get update/upgrade
 
@@ -25,20 +29,16 @@ My first Ĺinux distro was Suse Linux 9.0 and I loved YaST.So the guiding princi
 
 ### And there is a lot more!
 
-#### Can you trust me?
 
-Yup! It's open source, after all.
-Nevertheless you should know what you are doing because most of it works with "SUDO" in PiGro.
-    
----
+With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
 
-# :wrench: Info  
-    
-Funny story... The other day I was ranting about the fact that Ubuntu is total garbage for the Pi. That has changed since v22.04 was out. The PiGro #May '22 FIX will fully support Ubuntu!
 
 ---
 
 # :doughnut: Showcase (Click 2 Enlage)
+
+
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200">
 
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/welcome.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/system.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/update.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/installer.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/link.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_pix/tuning.png" width="200">
 
@@ -98,9 +98,12 @@ Documentation + Manual /// Still in work
 - [ ] Check Back rutines
 - [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
+
 ---
 
 # :floppy_disk: Install
+
+Open a terminal and run this command:
 
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
@@ -112,9 +115,11 @@ OR:
 
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
 
-#### Runs best on:
+#### Supported systems:
 
-https://twisteros.com/
+- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye): fully supported.
+- [Twister OS](https://twisteros.com/download.html): fully supported.
+- [Ubuntu](https://ubuntu.com/download): fully supported.
 
 #### :exclamation: Installation Process & Updates
 
@@ -124,6 +129,46 @@ If you install PiGro using the script, you can simply use:
 ```
 "wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
 ```
+
+#### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
+
+---
+
+# :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
+
+Documentation + Manual /// Still in work
+
+---
+
+# :zap: Latest Improvements
+
+#ADDED I added a Pi Camera Tab just for fun. Never saw an App
+that does Pi Cam stuff in a GUI ...
+So maybe it stay in PiGro maby not... time will tell.
+
+#ADDED Rename user option for old pi installations
+
+#ADDED Expert Mode for Tuning
+
+#ADDED Cute Tux greets you with your user name
+
+#CHANGED User Pi said goodbye! PiGro now full supports user names
+
+#CHANGED Rearranged Software tab
+
+#FIXED If Snap/Pi-Apps/Flatpak is not installed the buttons
+are disabled
+
+#FIXED As always there are code improvements
+
+#APT-GET Installer shows now terminal output due to transperency reasons
+
+---
+
+# :rocket: To do
+
+- [ ] Add fully fuctional tkinter rip-off of raspi-config :partying_face: :imp:
+- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
 
 ---
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from tkinter import *
 import subprocess
 import sys
@@ -64,6 +66,9 @@ def install_depends():
     pip_install("distro")
     pip_install("psutil")
     pip_install("py-notifier")
+    pip_install("RPi.GPIO")
+    pip_install("gpiozero")
+
     isInstalling = False
 
 
@@ -124,7 +129,7 @@ item = random.choice(list)
 splash_canvas.create_text(
     130,
     20,
-    text="Checked Dependencies - Lets GO!!!",
+    text="Checking Dependencies",
     font=("Helvetica", 11, "bold"),
     fill="white",
 )
@@ -162,6 +167,20 @@ os.system(
 os.system(
     "xterm -e 'bash -c \"dpkg --get-selections > ~/PiGro-Aid-/scripts/packages.list && sed -e s/install//g -i ~/PiGro-Aid-/scripts/packages.list && exit; exec bash\"'"
 )
+# Checks if pi-apps exists
+piapps_path = os.path.isdir(f'{home}/pi-apps')  # Need full path
+
+if piapps_path == False:
+    print("Pi-Apps not found")
+
+# Creates list of all programms on pi-apps
+if piapps_path == True:
+    print("Pi-Apps is installed")
+    popen("ls ~/pi-apps/apps/ > ~/PiGro-Aid-/scripts/pi-apps_list.list")
+
+
+# Creates list of all programms on pi-apps
+
 
 # Mainloop is Mainloop is Mainloop is Mainloop
 mainloop()
