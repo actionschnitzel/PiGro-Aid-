@@ -171,14 +171,12 @@ class MainApplication(tk.Tk):
         self.notebook.add(
             self.Frame4, compound=LEFT, text="Software", image=self.install_icon
         )
-        self.notebook.add(self.Frame5, compound=LEFT,
-                          text="Look", image=self.look_icon)
+        self.notebook.add(self.Frame5, compound=LEFT, text="Look", image=self.look_icon)
 
         self.notebook.add(
             self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
-        self.notebook.add(self.Frame7, compound=LEFT,
-                          text="Links", image=self.dm_icon)
+        self.notebook.add(self.Frame7, compound=LEFT, text="Links", image=self.dm_icon)
 
         self.notebook.add(
             self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
@@ -276,10 +274,8 @@ class Frame1(ttk.Frame):
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
-        self.bg = PhotoImage(
-            file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
-        self.welcome_canvas = Canvas(
-            self, width=900, height=700, highlightthickness=0)
+        self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
+        self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
@@ -362,8 +358,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
         self.sys_frame_right["background"] = "#333333"
 
-        self.my_img = ImageTk.PhotoImage(
-            Image.open("images/icons/deb_logo.png"))
+        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
         self.my_label = Label(image=self.my_img)
 
         self.sysinf0 = Label(
@@ -538,8 +533,7 @@ class Frame1(ttk.Frame):
             cpu = CPUTemperature()
             # print(cpu)
 
-            self.sysinf8.configure(
-                text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
             self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh_sys_stats)
 
@@ -889,8 +883,7 @@ class Frame3(ttk.Frame):
             frame_pop_kernel.pack()
             frame_pop_kernel["background"] = "#333333"
 
-            frame_pop_kernel_1 = Frame(
-                pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel_1.pack()
             frame_pop_kernel_1["background"] = "#333333"
 
@@ -1394,11 +1387,13 @@ class Frame12(ttk.Frame):
 
         def contxt_button():
             popen(
-                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_config_txt.sh; exec bash\"'")
+                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_config_txt.sh; exec bash\"'"
+            )
 
         def onc_ben():
             popen(
-                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_FMGM.sh; exec bash\"'")
+                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_FMGM.sh; exec bash\"'"
+            )
             print("With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
@@ -1730,8 +1725,7 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=2, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2,
-                          bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2, bg="#333333", fg="white")
         self.ov_1.grid(row=3, column=0)
 
         self.ov_1_text = Label(
@@ -1764,8 +1758,7 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=4, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3,
-                          bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3, bg="#333333", fg="white")
         self.ov_1.grid(row=5, column=0)
 
         self.ov_1_text = Label(
@@ -1798,8 +1791,7 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=6, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4,
-                          bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4, bg="#333333", fg="white")
         self.ov_1.grid(row=7, column=0)
 
         self.ov_1_text = Label(
@@ -1832,8 +1824,7 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov1_lbl.grid(row=8, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5,
-                          bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5, bg="#333333", fg="white")
         self.ov_1.grid(row=9, column=0)
 
         self.ov_1_text = Label(
@@ -1847,6 +1838,62 @@ class Tuning_Legende(tk.Toplevel):
 
         self.tu_main_frame2 = Frame(self, bg="#333333")
         self.tu_main_frame2.pack(pady=20)
+
+
+# [Done_Reboot Popup] Child
+class Done_Reboot(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = "#333333"
+        self.title("")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 292
+        app_height = 180
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+
+        cont_btn = tk.Button(self)
+        cont_btn["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        cont_btn["font"] = ft
+        cont_btn["fg"] = "white"
+        cont_btn["bg"] = "#333333"
+        cont_btn["justify"] = "center"
+        cont_btn["highlightthickness"] = 2
+        cont_btn["borderwidth"] = 0
+        cont_btn["text"] = "Continue"
+        cont_btn.place(x=50, y=130, width=70, height=25)
+        cont_btn["command"] = self.destroy
+
+        rebt_btn = tk.Button(self)
+        rebt_btn["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        rebt_btn["font"] = ft
+        rebt_btn["fg"] = "white"
+        rebt_btn["bg"] = "#333333"
+        rebt_btn["justify"] = "center"
+        rebt_btn["highlightthickness"] = 2
+        rebt_btn["borderwidth"] = 0
+        rebt_btn["text"] = "Reboot"
+        rebt_btn.place(x=160, y=130, width=70, height=25)
+        rebt_btn["command"] = self.rebt_btn_command
+
+        done_label = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=14)
+        done_label["font"] = ft
+        done_label["fg"] = "white"
+        done_label["bg"] = "#333333"
+        done_label["justify"] = "center"
+        done_label["text"] = "Done !"
+        done_label.place(x=110, y=40, width=70, height=25)
+
+    def rebt_btn_command(self):
+        popen(f"{legit} reboot")
 
 
 # [Overclocking_Expert Popup] Child
@@ -1870,12 +1917,17 @@ class Overclocking_Expert(tk.Toplevel):
             e_mass = Error_Mass(self)
             e_mass.grab_set()
 
-        #arm_freq
+        # arm_freq
         def set_arm_freq():
-            if arm_freq_entry.get() == "Default is 1500/1800" or arm_freq_entry.get() == "":
+            if (
+                arm_freq_entry.get() == "Default is 1500/1800"
+                or arm_freq_entry.get() == ""
+            ):
                 error_mass()
             else:
-                os.system(f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> {config_path}'""")
+                os.system(
+                    f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -1885,7 +1937,9 @@ class Overclocking_Expert(tk.Toplevel):
 
         def reset_arm_freq():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/arm_freq/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/arm_freq/d' config.txt"
+                )
                 arm_freq_set.config(state=NORMAL)
                 arm_freq_reset.config(state=DISABLED)
             else:
@@ -1893,15 +1947,14 @@ class Overclocking_Expert(tk.Toplevel):
                 arm_freq_set.config(state=NORMAL)
                 arm_freq_reset.config(state=DISABLED)
 
-            
-
-        #gpu_freq
+        # gpu_freq
         def set_gpu_freq():
             if gpu_freq_entry.get() == "Default is 500" or gpu_freq_entry.get() == "":
                 error_mass()
             else:
                 os.system(
-                    f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> {config_path}'""")
+                    f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -1909,10 +1962,11 @@ class Overclocking_Expert(tk.Toplevel):
                 gpu_freq_set.config(state=DISABLED)
                 gpu_freq_reset.config(state=NORMAL)
 
-
         def reset_gpu_freq():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_freq/d' config.txt"
+                )
                 gpu_freq_set.config(state=NORMAL)
                 gpu_freq_reset.config(state=DISABLED)
             else:
@@ -1920,13 +1974,14 @@ class Overclocking_Expert(tk.Toplevel):
                 gpu_freq_set.config(state=NORMAL)
                 gpu_freq_reset.config(state=DISABLED)
 
-        #set_gpu_mem
+        # set_gpu_mem
         def set_gpu_mem():
             if gpu_mem_entry.get() == "Minimum 16" or gpu_mem_entry.get() == "":
                 error_mass()
             else:
                 os.system(
-                    f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> {config_path}'""")
+                    f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -1936,7 +1991,9 @@ class Overclocking_Expert(tk.Toplevel):
 
         def reset_gpu_mem():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_mem/d' config.txt"
+                )
                 gpu_mem_set.config(state=NORMAL)
                 gpu_mem_reset.config(state=DISABLED)
             else:
@@ -1944,14 +2001,17 @@ class Overclocking_Expert(tk.Toplevel):
                 gpu_mem_set.config(state=NORMAL)
                 gpu_mem_reset.config(state=DISABLED)
 
-
-        #set_over_voltage
+        # set_over_voltage
         def set_over_voltage():
-            if over_voltage_entry.get() == "Default 0" or over_voltage_entry.get() == "":
+            if (
+                over_voltage_entry.get() == "Default 0"
+                or over_voltage_entry.get() == ""
+            ):
                 error_mass()
             else:
                 os.system(
-                    f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> {config_path}'""")
+                    f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -1961,7 +2021,9 @@ class Overclocking_Expert(tk.Toplevel):
 
         def reset_over_voltage():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/over_voltage/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/over_voltage/d' config.txt"
+                )
                 over_voltage_set.config(state=NORMAL)
                 over_voltage_reset.config(state=DISABLED)
             else:
@@ -1969,12 +2031,17 @@ class Overclocking_Expert(tk.Toplevel):
                 over_voltage_set.config(state=NORMAL)
                 over_voltage_reset.config(state=DISABLED)
 
-        #set_disable_splash
+        # set_disable_splash
         def set_disable_splash():
-            if disable_splash_entry.get() == "Default 0" or disable_splash_entry.get() == "":
+            if (
+                disable_splash_entry.get() == "Default 0"
+                or disable_splash_entry.get() == ""
+            ):
                 error_mass()
             else:
-                os.system(f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> {config_path}'""")
+                os.system(
+                    f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -1984,7 +2051,9 @@ class Overclocking_Expert(tk.Toplevel):
 
         def reset_disable_splash():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/disable_splash/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/disable_splash/d' config.txt"
+                )
                 disable_splash_set.config(state=NORMAL)
                 disable_splash_reset.config(state=DISABLED)
             else:
@@ -1992,13 +2061,14 @@ class Overclocking_Expert(tk.Toplevel):
                 disable_splash_set.config(state=NORMAL)
                 disable_splash_reset.config(state=DISABLED)
 
-        #set_force_turbo
+        # set_force_turbo
         def set_force_turbo():
             if force_turbo_entry.get() == "Default 0" or force_turbo_entry.get() == "":
                 error_mass()
             else:
                 os.system(
-                    f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> {config_path}'""")
+                    f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> {config_path}'"""
+                )
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
@@ -2006,10 +2076,11 @@ class Overclocking_Expert(tk.Toplevel):
                 force_turbo_set.config(state=DISABLED)
                 force_turbo_reset.config(state=NORMAL)
 
-
         def reset_force_turbo():
             if distro_get == "ubuntu":
-                os.popen(f" cd /boot/firmware/ && {legit} sed -i '/force_turbo/d' config.txt")
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/force_turbo/d' config.txt"
+                )
                 force_turbo_set.config(state=NORMAL)
                 force_turbo_reset.config(state=DISABLED)
             else:
@@ -2029,26 +2100,44 @@ class Overclocking_Expert(tk.Toplevel):
 
         # arm_freq
         arm_freq_label = Label(
-            x_mode_frame,justify=LEFT, text="arm_freq = ", bg="#333333", foreground="white",anchor='w',width=15)
+            x_mode_frame,
+            justify=LEFT,
+            text="arm_freq = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         arm_freq_label.grid(row=0, column=0)
 
         global arm_freq_entry
-        arm_freq_entry = Entry(
-            x_mode_frame, borderwidth=0, highlightthickness=2)
+        arm_freq_entry = Entry(x_mode_frame, borderwidth=0, highlightthickness=2)
         arm_freq_entry.grid(row=0, column=1)
         arm_freq_entry.insert(0, "Default is 1500/1800")
 
         global arm_freq_set
-        arm_freq_set = Button(x_mode_frame, text="Set", command=set_arm_freq,
-                              bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        arm_freq_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_arm_freq,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
 
-
         global arm_freq_reset
-        arm_freq_reset = Button(x_mode_frame, text="Reset", command=reset_arm_freq,
-                              bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        arm_freq_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_arm_freq,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
-        
 
         with open(f"{config_path}", "r") as fp:
             for line_a_f in lines_that_contain("arm_freq", fp):
@@ -2058,22 +2147,45 @@ class Overclocking_Expert(tk.Toplevel):
                     arm_freq_reset.config(state=NORMAL)
         # gpu_freq
         gpu_freq_label = Label(
-            x_mode_frame,justify=LEFT, text="gpu_freq = ", bg="#333333", foreground="white",anchor='w',width=15)
+            x_mode_frame,
+            justify=LEFT,
+            text="gpu_freq = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         gpu_freq_label.grid(row=1, column=0)
 
         global gpu_freq_entry
-        gpu_freq_entry = Entry(x_mode_frame,)
+        gpu_freq_entry = Entry(
+            x_mode_frame,
+        )
         gpu_freq_entry.grid(row=1, column=1)
         gpu_freq_entry.insert(0, "Default is 500")
 
         global gpu_freq_set
-        gpu_freq_set = Button(x_mode_frame, text="Set", command=set_gpu_freq,
-                              bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        gpu_freq_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_gpu_freq,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         gpu_freq_set.grid(row=1, column=2)
 
         global gpu_freq_reset
-        gpu_freq_reset = Button(x_mode_frame, text="Reset", command=reset_gpu_freq,
-                              bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        gpu_freq_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_gpu_freq,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         gpu_freq_reset.grid(row=1, column=3)
 
         with open(f"{config_path}", "r") as fp:
@@ -2083,25 +2195,47 @@ class Overclocking_Expert(tk.Toplevel):
                     gpu_freq_set.config(state=DISABLED)
                     gpu_freq_reset.config(state=NORMAL)
         # gpu_mem
-        gpu_mem_label = Label(x_mode_frame,justify=LEFT, text="gpu_mem = ",
-                              bg="#333333", foreground="white",anchor='w',width=15)
+        gpu_mem_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="gpu_mem = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         gpu_mem_label.grid(row=2, column=0)
 
         global gpu_mem_entry
-        gpu_mem_entry = Entry(x_mode_frame,)
+        gpu_mem_entry = Entry(
+            x_mode_frame,
+        )
         gpu_mem_entry.grid(row=2, column=1)
         gpu_mem_entry.insert(0, "Minimum 16/Not Set")
 
         global gpu_mem_set
-        gpu_mem_set = Button(x_mode_frame, text="Set", command=set_gpu_mem,
-                             bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        gpu_mem_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_gpu_mem,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         gpu_mem_set.grid(row=2, column=2, padx=10, pady=10)
 
         global gpu_mem_reset
-        gpu_mem_reset = Button(x_mode_frame, text="Reset", command=reset_gpu_mem,
-                             bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        gpu_mem_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_gpu_mem,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
-        
 
         with open(f"{config_path}", "r") as fp:
             for line_g_m in lines_that_contain("gpu_mem", fp):
@@ -2112,95 +2246,175 @@ class Overclocking_Expert(tk.Toplevel):
 
         # over_voltage
         over_voltage_label = Label(
-            x_mode_frame,justify=LEFT, text="over_voltage = ", bg="#333333", foreground="white",anchor='w',width=15)
+            x_mode_frame,
+            justify=LEFT,
+            text="over_voltage = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         over_voltage_label.grid(row=3, column=0)
 
         global over_voltage_entry
-        over_voltage_entry = Entry(x_mode_frame,)
+        over_voltage_entry = Entry(
+            x_mode_frame,
+        )
         over_voltage_entry.grid(row=3, column=1)
         over_voltage_entry.insert(0, "Default is 0/Not Set")
 
         global over_voltage_set
-        over_voltage_set = Button(x_mode_frame, text="Set", command=set_over_voltage,
-                                  bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        over_voltage_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_over_voltage,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         over_voltage_set.grid(row=3, column=2)
 
         global over_voltage_reset
-        over_voltage_reset = Button(x_mode_frame, text="Reset", command=reset_over_voltage,
-                                  bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        over_voltage_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_over_voltage,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         over_voltage_reset.grid(row=3, column=3)
-        
 
         with open(f"{config_path}", "r") as fp:
             for line_o_v in lines_that_contain("over_voltage", fp):
                 # print(line3)
                 if line_o_v:
                     over_voltage_set.config(state=DISABLED)
-                    over_voltage_reset.config(state=NORMAL) 
-
+                    over_voltage_reset.config(state=NORMAL)
 
         # disable_splash
         disable_splash_label = Label(
-            x_mode_frame,justify=LEFT, text="disable_splash = ", bg="#333333", foreground="white",anchor='w',width=15)
+            x_mode_frame,
+            justify=LEFT,
+            text="disable_splash = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         disable_splash_label.grid(row=4, column=0)
 
         global disable_splash_entry
-        disable_splash_entry = Entry(x_mode_frame,)
+        disable_splash_entry = Entry(
+            x_mode_frame,
+        )
         disable_splash_entry.grid(row=4, column=1)
         disable_splash_entry.insert(0, "Default is 0/Not Set")
 
         global disable_splash_set
-        disable_splash_set = Button(x_mode_frame, text="Set", command=set_disable_splash,
-                                    bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        disable_splash_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_disable_splash,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         disable_splash_set.grid(row=4, column=2, padx=10, pady=10)
 
         global disable_splash_reset
-        disable_splash_reset = Button(x_mode_frame, text="Reset", command=reset_disable_splash,
-                                    bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        disable_splash_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_disable_splash,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
-        
 
         with open(f"{config_path}", "r") as fp:
             for line_d_s in lines_that_contain("disable_splash", fp):
                 # print(line3)
                 if line_d_s:
                     disable_splash_set.config(state=DISABLED)
-                    disable_splash_reset.config(state=NORMAL)       
+                    disable_splash_reset.config(state=NORMAL)
 
         # force_turbo
         force_turbo_label = Label(
-            x_mode_frame,justify=LEFT, text="force_turbo = ", bg="#333333", foreground="white",anchor='w',width=15)
+            x_mode_frame,
+            justify=LEFT,
+            text="force_turbo = ",
+            bg="#333333",
+            foreground="white",
+            anchor="w",
+            width=15,
+        )
         force_turbo_label.grid(row=5, column=0)
 
         global force_turbo_entry
-        force_turbo_entry = Entry(x_mode_frame,)
+        force_turbo_entry = Entry(
+            x_mode_frame,
+        )
         force_turbo_entry.grid(row=5, column=1)
         force_turbo_entry.insert(0, "Default is 0/Not Set")
 
         global force_turbo_set
-        force_turbo_set = Button(x_mode_frame, text="Set", command=set_force_turbo,
-                                 bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        force_turbo_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_force_turbo,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         force_turbo_set.grid(row=5, column=2)
 
         global force_turbo_reset
-        force_turbo_reset = Button(x_mode_frame, text="Reset", command=reset_force_turbo,
-                                 bg="#333333", foreground="white", borderwidth=0, highlightthickness=2)
+        force_turbo_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_force_turbo,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+        )
         force_turbo_reset.grid(row=5, column=3)
-        
+
         with open(f"{config_path}", "r") as fp:
             for line_f_t in lines_that_contain("force_turbo", fp):
                 # print(line3)
                 if line_f_t:
                     force_turbo_set.config(state=DISABLED)
-                    force_turbo_reset.config(state=NORMAL) 
+                    force_turbo_reset.config(state=NORMAL)
 
-
-        reboot_e = Button(self, justify=LEFT, font=("Helvetica", 12, "bold"),
-                       text="Reboot",bg="#333333", foreground="white", borderwidth=0, highlightthickness=2,command=reboot_n)
+        reboot_e = Button(
+            self,
+            justify=LEFT,
+            font=("Helvetica", 12, "bold"),
+            text="Reboot",
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=2,
+            command=reboot_n,
+        )
         reboot_e.pack()
 
-        note_e = Label(self, justify=LEFT, font=("Helvetica", 12, "bold"),
-                       text="Soon More!", bg="#333333", foreground="white")
+        note_e = Label(
+            self,
+            justify=LEFT,
+            font=("Helvetica", 12, "bold"),
+            text="Soon More!",
+            bg="#333333",
+            foreground="white",
+        )
         note_e.pack(pady=20)
 
 
@@ -2706,11 +2920,10 @@ class Frame4(ttk.Frame):
             if self.pi_apps_entry.get() == "":
                 error_mass()
             else:
-                #entry_text = self.pi_apps_entry.get()
+                # entry_text = self.pi_apps_entry.get()
                 popen(
                     f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
                 )
-
 
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
 
@@ -3350,10 +3563,12 @@ class z_ram_pop(tk.Toplevel):
 
             if distro_get == "ubuntu":
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt install zram-config ; exec bash\"'")
+                    f"xterm -e 'bash -c \"{legit} apt install zram-config ; exec bash\"'"
+                )
             else:
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt install zram-tools; exec bash\"'")
+                    f"xterm -e 'bash -c \"{legit} apt install zram-tools; exec bash\"'"
+                )
 
             Notification(
                 title="ZRAMr\n",
@@ -3368,10 +3583,12 @@ class z_ram_pop(tk.Toplevel):
 
             if distro_get == "ubuntu":
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'")
+                    f"xterm -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'"
+                )
             else:
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'")
+                    f"xterm -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'"
+                )
 
             Notification(
                 title="ZRAMr\n",
@@ -3487,23 +3704,10 @@ class Frame6(ttk.Frame):
         self.tu_legend_ico = PhotoImage(file=r"images/icons/legende.png")
 
         # OV Notifications
-        def pop_dest():
-            pop_default.destroy()
 
-        def pop_dest1():
-            pop_2147.destroy()
-
-        def pop_dest2():
-            pop_2000.destroy()
-
-        def pop_dest3():
-            pop_2200.destroy()
-
-        def pop_dest4():
-            pop_2300.destroy()
-
-        def reboot_n():
-            popen(f"{legit} reboot")
+        def done_msg():
+            d_msg = Done_Reboot(self)
+            d_msg.grab_set()
 
         # overclocking_default/reset
 
@@ -3511,7 +3715,7 @@ class Frame6(ttk.Frame):
             popen(
                 f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
             )
-
+            done_msg()
             tu_btn1.config(state=NORMAL)
             tu_btn2.config(state=NORMAL)
             tu_btn3.config(state=NORMAL)
@@ -3532,68 +3736,13 @@ class Frame6(ttk.Frame):
                 urgency="normal",
             ).send()
 
-            global pop_default
-            pop_default = Toplevel(self)
-            pop_default.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_default.winfo_screenwidth()
-            screen_height = pop_default.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_default.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_default.resizable(0, 0)
-
-            frame_pop_de = Frame(pop_default, borderwidth=0, relief=GROOVE)
-            frame_pop_de.pack()
-            frame_pop_de["background"] = "#333333"
-
-            frame_pop_de1 = Frame(pop_default, borderwidth=0, relief=GROOVE)
-            frame_pop_de1.pack(pady=10)
-            frame_pop_de1["background"] = "#333333"
-
-            pop_lbl_default = Label(
-                frame_pop_de,
-                anchor="w",
-                text="Settings Restored",
-                font=("Helvetica", 16),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_default.pack(pady=20)
-            pop_btn_default = Button(
-                frame_pop_de1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_default.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_de1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
-
         # overclocking_2000
 
         def ov_2000():
-            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
-
+            os.system(
+                f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            )
+            done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
@@ -3607,68 +3756,12 @@ class Frame6(ttk.Frame):
                 urgency="normal",
             ).send()
 
-            global pop_2000
-            pop_2000 = Toplevel(self)
-            pop_2000.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_2000.winfo_screenwidth()
-            screen_height = pop_2000.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_2000.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_2000.resizable(0, 0)
-
-            frame_pop_2000 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
-            frame_pop_2000.pack()
-            frame_pop_2000["background"] = "#333333"
-
-            frame_pop_2000_1 = Frame(pop_2000, borderwidth=0, relief=GROOVE)
-            frame_pop_2000_1.pack()
-            frame_pop_2000_1["background"] = "#333333"
-
-            pop_lbl_2000 = Label(
-                frame_pop_2000,
-                anchor="w",
-                text="Done! The new settings take effect after a reboot",
-                font=("Helvetica", 12),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_2000.pack(pady=20)
-
-            pop_btn_2000 = Button(
-                frame_pop_2000_1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest2,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_2000.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_2000_1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
-
         # overclocking_2147
         def ov_2147():
-            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
-
+            os.system(
+                f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            )
+            done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
@@ -3684,69 +3777,14 @@ class Frame6(ttk.Frame):
 
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/HOLYPiT.mp3")
 
-            global pop_2147
-            pop_2147 = Toplevel(self)
-            pop_2147.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_2147.winfo_screenwidth()
-            screen_height = pop_2147.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_2147.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_2147.resizable(0, 0)
-
-            frame_pop_2147 = Frame(pop_2147, borderwidth=0, relief=GROOVE)
-            frame_pop_2147.pack()
-            frame_pop_2147["background"] = "#333333"
-
-            frame_pop_2147_1 = Frame(pop_2147, borderwidth=0, relief=GROOVE)
-            frame_pop_2147_1.pack(pady=10)
-            frame_pop_2147_1["background"] = "#333333"
-
-            pop_lbl_2147 = Label(
-                frame_pop_2147,
-                anchor="w",
-                text="Done! The new settings take effect after a reboot",
-                font=("Helvetica", 12),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_2147.pack(pady=20)
-            pop_btn_2147 = Button(
-                frame_pop_2147_1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest1,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_2147.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_2147_1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
-
         # overclocking_2200
 
         def ov_2200():
-            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
+            os.system(
+                f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
-
+            done_msg()
             Notification(
                 title="PiGro Overclocking\n",
                 description="arm_freq = 2200\ngpu_fequ = 750\nover_voltage = 8\force_turbo = 1",
@@ -3760,68 +3798,13 @@ class Frame6(ttk.Frame):
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
 
-            global pop_2200
-            pop_2200 = Toplevel(self)
-            pop_2200.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_2200.winfo_screenwidth()
-            screen_height = pop_2200.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_2200.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_2200.resizable(0, 0)
-
-            frame_pop_2200 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
-            frame_pop_2200.pack()
-            frame_pop_2200["background"] = "#333333"
-
-            frame_pop_2200_1 = Frame(pop_2200, borderwidth=0, relief=GROOVE)
-            frame_pop_2200_1.pack(pady=10)
-            frame_pop_2200_1["background"] = "#333333"
-
-            pop_lbl_2200 = Label(
-                frame_pop_2200,
-                anchor="w",
-                text="Done! The new settings take effect after a reboot",
-                font=("Helvetica", 16),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_2200.pack(pady=20)
-            pop_btn_2200 = Button(
-                frame_pop_2200_1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest3,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_2200.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_2200_1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
-
         # overclocking_2300
         def ov_2300():
-            os.system(f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""")
+            os.system(
+                f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            )
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
-
+            done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
             tu_btn3.config(state=DISABLED)
@@ -3834,63 +3817,6 @@ class Frame6(ttk.Frame):
                 duration=5,
                 urgency="normal",
             ).send()
-
-            global pop_2300
-            pop_2300 = Toplevel(self)
-            pop_2300.config(bg="#333333")
-            app_width = 500
-            app_height = 150
-            screen_width = pop_2300.winfo_screenwidth()
-            screen_height = pop_2300.winfo_screenheight()
-            x = (screen_width / 2) - (app_width / 2)
-            y = (screen_height / 2) - (app_height / 2)
-            pop_2300.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-            pop_2300.resizable(0, 0)
-
-            frame_pop_2300 = Frame(pop_2300, borderwidth=0, relief=GROOVE)
-            frame_pop_2300.pack()
-            frame_pop_2300["background"] = "#333333"
-
-            frame_pop_2300_1 = Frame(pop_2300, borderwidth=0, relief=GROOVE)
-            frame_pop_2300_1.pack(pady=10)
-            frame_pop_2300_1["background"] = "#333333"
-
-            pop_lbl_2300 = Label(
-                frame_pop_2300,
-                anchor="w",
-                text="Done! The new settings take effect after a reboot",
-                font=("Helvetica", 16),
-                highlightthickness=0,
-                borderwidth=2,
-                background="#333333",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_lbl_2300.pack(pady=20)
-            pop_btn_2300 = Button(
-                frame_pop_2300_1,
-                text="Continue",
-                anchor="w",
-                command=pop_dest4,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#2246c4",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_2300.pack(padx=5, pady=20, side=LEFT)
-            pop_btn_shut = Button(
-                frame_pop_2300_1,
-                text="Reboot",
-                anchor="w",
-                command=reboot_n,
-                highlightthickness=0,
-                borderwidth=0,
-                background="#f03838",
-                foreground="white",
-                compound=LEFT,
-            )
-            pop_btn_shut.pack(padx=5, pady=20)
 
         self.ov_main_frame = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=50
@@ -4143,7 +4069,11 @@ class Frame6(ttk.Frame):
                 for line in lines_that_contain("#Pigro_Overclocking1", fp):
                     # print(line)
                     if line:
-                        tu_current.config(text="Current Settings: Crank It Up\n", fg="yellow", bg="#333333")
+                        tu_current.config(
+                            text="Current Settings: Crank It Up\n",
+                            fg="yellow",
+                            bg="#333333",
+                        )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
@@ -4163,13 +4093,14 @@ class Frame6(ttk.Frame):
                         tu_btn3.config(state=DISABLED)
                         tu_btn4.config(state=DISABLED)
 
-
             with open(f"{config_path}", "r") as fp:
                 for line in lines_that_contain("#Pigro_Overclocking3", fp):
                     # print(line)
                     if line:
                         tu_current.config(
-                            text="Current Settings: Take It To The Max!\n", fg="pink", bg="#333333"
+                            text="Current Settings: Take It To The Max!\n",
+                            fg="pink",
+                            bg="#333333",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4181,7 +4112,9 @@ class Frame6(ttk.Frame):
                     # print(line)
                     if line:
                         tu_current.config(
-                            text="Honey,\nthe fuse blew again!\n", fg="purple", bg="#333333"
+                            text="Honey,\nthe fuse blew again!\n",
+                            fg="purple",
+                            bg="#333333",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4192,18 +4125,27 @@ class Frame6(ttk.Frame):
                 for line1 in lines_that_contain("arm_freq=", fp):
                     # print(line1)
                     if line1:
-                        tu_current2.config(text=line1.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_current2.config(
+                            text=line1.splitlines(),
+                            fg="white",
+                            bg="#333333",
+                            font=("Helvetica", 12, "bold"),
+                        )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
                         tu_btn4.config(state=DISABLED)
 
-
             with open(f"{config_path}", "r") as fp:
                 for line2 in lines_that_contain("gpu_freq=", fp):
                     # print(line2)
                     if line2:
-                        tu_current3.config(text=line2.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_current3.config(
+                            text=line2.splitlines(),
+                            fg="white",
+                            bg="#333333",
+                            font=("Helvetica", 12, "bold"),
+                        )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
@@ -4213,7 +4155,12 @@ class Frame6(ttk.Frame):
                 for line3 in lines_that_contain("force_turbo=", fp):
                     # print(line3)
                     if line3:
-                        tu_current5.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_current5.config(
+                            text=line3.splitlines(),
+                            fg="white",
+                            bg="#333333",
+                            font=("Helvetica", 12, "bold"),
+                        )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
@@ -4223,7 +4170,12 @@ class Frame6(ttk.Frame):
                 for line3 in lines_that_contain("over_voltage=", fp):
                     # print(line3)
                     if line3:
-                        tu_current4.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        tu_current4.config(
+                            text=line3.splitlines(),
+                            fg="white",
+                            bg="#333333",
+                            font=("Helvetica", 12, "bold"),
+                        )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
                         tu_btn3.config(state=DISABLED)
@@ -4233,11 +4185,17 @@ class Frame6(ttk.Frame):
                 for line3 in lines_that_contain("gpu_mem=", fp):
                     # print(line3)
                     if line3:
-                        gpu_m_current.config(text=line3.splitlines(), fg="white", bg="#333333",font=("Helvetica", 12, "bold"))
+                        gpu_m_current.config(
+                            text=line3.splitlines(),
+                            fg="white",
+                            bg="#333333",
+                            font=("Helvetica", 12, "bold"),
+                        )
 
         def refresh_OV_stats():
             ov_display()
             self.after(3000, refresh_OV_stats)
+
         refresh_OV_stats()
 
         # Misc_Frame
@@ -4363,8 +4321,7 @@ class Frame7(ttk.Frame):
         self.bg_label = Label(self, image=self.bg)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
-        self.di01 = PhotoImage(
-            file=r"images/icons/TwisterOSLogo-Large-New3.png")
+        self.di01 = PhotoImage(file=r"images/icons/TwisterOSLogo-Large-New3.png")
         self.di02 = PhotoImage(file=r"images/icons/Puppy_Linux_Logo.png")
         self.di03 = PhotoImage(file=r"images/icons/dietpi.png")
         self.di04 = PhotoImage(file=r"images/icons/MX-icon.png")
@@ -4375,8 +4332,7 @@ class Frame7(ttk.Frame):
         self.di08 = PhotoImage(file=r"images/icons/NCP.png")
         self.pop_os_ico = PhotoImage(file=r"images/icons/popo_os_icon.png")
         self.ubu_os_ico = PhotoImage(file=r"images/icons/Logo-ubuntu_.png")
-        self.pi64_os_ico = PhotoImage(
-            file=r"images/icons/Raspberry_Pi_Logo.png")
+        self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=10, pady=20
@@ -4764,8 +4720,7 @@ class Frame8(ttk.Frame):
         self.mail.insert(END, "pigroxtrmo@gmail.com")
         self.mail.pack(pady=5)
 
-        self.rahmen101 = Frame(self, borderwidth=0,
-                               relief=GROOVE, highlightthickness=2)
+        self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
         self.rahmen101.place(x=60, y=600)
         self.rahmen101["background"] = "#333333"
 
@@ -4839,8 +4794,7 @@ class Frame9(ttk.Frame):
         )
         self.label.pack()
 
-        self.welcome_icon = PhotoImage(
-            file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
+        self.welcome_icon = PhotoImage(file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
         self.head_frame = Frame(self.rahmen101, bg="#333333")
         self.head_frame.pack()
         self.header_label = Label(
@@ -4922,8 +4876,7 @@ class Error_Mass(tk.Toplevel):
         def cu_error():
             Error_Mass.destroy(self)
 
-        self.e_m = PhotoImage(
-            file=f"{home}/PiGro-Aid-/images/backgrounds/yuno.png")
+        self.e_m = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/yuno.png")
 
         error_frame = Frame(self, bg="#333333")
         error_frame.pack(pady=10)
@@ -4931,16 +4884,17 @@ class Error_Mass(tk.Toplevel):
         error_img = Label(error_frame, image=self.e_m, bg="#333333")
         error_img.grid(row=0, column=0, rowspan=2)
 
-        error_y = Label(error_frame, text="Y U MAKE ERROR?",
-                        fg="white", bg="#333333")
+        error_y = Label(error_frame, text="Y U MAKE ERROR?", fg="white", bg="#333333")
         error_y.grid(row=0, column=1)
 
         error_y2 = Label(
-            error_frame, text="You did not enter a value", fg="white", bg="#333333")
+            error_frame, text="You did not enter a value", fg="white", bg="#333333"
+        )
         error_y2.grid(row=1, column=1)
 
-        error_btn = Button(error_frame, text="OK OK OK!",
-                           fg="white", bg="#333333", command=cu_error)
+        error_btn = Button(
+            error_frame, text="OK OK OK!", fg="white", bg="#333333", command=cu_error
+        )
         error_btn.grid(row=3, column=1)
 
 

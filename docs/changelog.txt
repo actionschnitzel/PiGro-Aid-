@@ -18,7 +18,7 @@ Not gonna happen bro!
 
 So this deserves a new code name! "PiGro - Stupida Medusa!"
 
-
+#HOTFIX 5/4/22 : Fix Tuning Pop Window Bug
 
 
 #ADDED I added a Pi Camera Tab just for fun. Never saw an App
