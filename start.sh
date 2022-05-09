@@ -3,4 +3,4 @@
 
 python3 ~/PiGro-Aid-/splash.py
 
-python3 ~/PiGro-Aid-/pigro_main.py
+sudo $(python3 ~/PiGro-Aid-/pigro_main.py)
