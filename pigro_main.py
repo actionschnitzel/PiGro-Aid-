@@ -241,13 +241,26 @@ class Change_Log(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Changelog")
-        self.update_info_btn = PhotoImage(file=r"images/icons//pigro_logo/128x128.png")
+        self.update_info_btn = PhotoImage(file=r"images/icons/pigro_icons/128x128.png")
         logo_lbl = Label(self, image=self.update_info_btn,text="Changelog",highlightthickness=0,borderwidth=0,compound=TOP,font=("Helvetica", 20, "bold"),)
         logo_lbl.pack(pady=20)
-        changelog_label=Label(self,justify="left",anchor=W,text="Added:\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\nChanged:\n\nFixed:\n\n")
+        changelog_label=Label(self,justify="left",anchor=W,text="#Added:\n-Stressberry Support\n\n#Changed:\n-Icons improved.. Yes! Again!\n\n-Changelog pops up und fist start\nor after update \n\n#Improved:\n-Fixed some problems with the new overclocking options\n")
         changelog_label.pack()
 
-
+        #read input file
+        fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "rt")
+        #read file contents to string
+        data = fin.read()
+        #replace all occurrences of the required string
+        data = data.replace('First_Run = True', 'First_Run = False')
+        #close the input file
+        fin.close()
+        #open the input file in write mode
+        fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "wt")
+        #overrite the input file with the resulting data
+        fin.write(data)
+        #close the file
+        fin.close()
 
 
 # [Welcome] Tab
@@ -293,6 +306,11 @@ class Frame1(ttk.Frame):
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
+        def stress_b():
+            popen(
+                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/stressberry.sh & echo DONE!; exec bash\"'"
+            )
+
         self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
         self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
@@ -327,6 +345,16 @@ class Frame1(ttk.Frame):
         self.gihub_link.bind("<Button-1>", callback)
 
         self.gihub_link["background"] = "#333333"
+
+        self.stress = Button(self, 
+            text="Run/Install Stressberry",
+            font=(("Helvetica,bold"), "10",),
+            highlightthickness=2,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            command=stress_b,)
+        self.stress.place(x=60,y=650)
 
         self.changelog_btn = Button(
             self,
@@ -557,6 +585,7 @@ class Frame1(ttk.Frame):
             self.after(1000, refresh_sys_stats)
 
         refresh_sys_stats()
+
 
 
 # [Update] Tab

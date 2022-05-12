@@ -15,7 +15,7 @@ Encoding=UTF-8
 Terminal=false
 Type=Application
 Categories=System
-Icon=${DIRECTORY}/images/icons/pigro_icons/96x96.png
+Icon=${DIRECTORY}/images/icons/logo.png
 Path=${DIRECTORY}/" > ~/Desktop/pigro.desktop
 
 sudo chmod +x ~/Desktop/pigro.desktop
@@ -30,7 +30,7 @@ Encoding=UTF-8
 Terminal=false
 Type=Application
 Categories=System
-Icon=${DIRECTORY}/images/icons/pigro_icons/96x96.png
+Icon=${DIRECTORY}/images/icons/logo.png
 Path=${DIRECTORY}/" > ~/.local/share/applications/pigro.desktop
 
 cd
