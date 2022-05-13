@@ -72,7 +72,13 @@ If you install PiGro using the script, you can simply use:
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
 
 ---
-
+# :exclamation: Important
+    
+#### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
+     
+Open the File Manager (`pcmanfm`) > `Edit` >`Preferences` > `Advanced`. Then set the `Terminal Emulator` to `lxterminal %s` or the Terminal Emulater of your choice
+     
+---
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
 
 Documentation + Manual /// Still in work
