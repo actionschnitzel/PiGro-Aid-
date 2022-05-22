@@ -121,4 +121,7 @@ are disabled
 
 #### You want support me?
 
-[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/kisspng-donation-computer-icons-portable-network-graphics-5b972c7ded3449.9709889315366339819716.png)](https://paypal.me/actionschnitzel?locale.x=de_DE)
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
+    
+[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)    
+ 
