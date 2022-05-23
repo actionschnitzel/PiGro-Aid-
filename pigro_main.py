@@ -244,7 +244,7 @@ class Change_Log(tk.Toplevel):
         self.update_info_btn = PhotoImage(file=r"images/icons/pigro_icons/128x128.png")
         logo_lbl = Label(self, image=self.update_info_btn,text="Changelog",highlightthickness=0,borderwidth=0,compound=TOP,font=("Helvetica", 20, "bold"),)
         logo_lbl.pack(pady=20)
-        changelog_label=Label(self,justify="left",anchor=W,text="#Added:\n-Stressberry Support\n\n#Changed:\n-Icons improved.. Yes! Again!\n\n-Changelog pops up und fist start\nor after update \n\n#Improved:\n-Fixed some problems with the new overclocking options\n")
+        changelog_label=Label(self,justify="left",anchor=W,text="#Changed:\n\nSplash Screen only starts on fresh install.\nThis improves loading time to 100%\n")
         changelog_label.pack()
 
         #read input file
