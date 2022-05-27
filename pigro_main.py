@@ -29,6 +29,15 @@ from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
 
+# Gets list of all installeble pakages
+os.system(
+    "xterm -e 'bash -c \"apt-cache pkgnames > $HOME/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
+)
+# Gets list of all installed pakages
+os.system(
+    "xterm -e 'bash -c \"dpkg --get-selections > ~/PiGro-Aid-/scripts/packages.list && sed -e s/install//g -i ~/PiGro-Aid-/scripts/packages.list && exit; exec bash\"'"
+)
+
 # Say Hallo!
 global user
 user = os.environ.get("LOGNAME")
@@ -48,6 +57,7 @@ global config_path
 config_path = "/boot/config.txt"
 global legit
 legit = "sudo"
+
 
 # Config.txt Path
 if distro_get == "ubuntu":
@@ -75,6 +85,7 @@ if piapps_path == False:
     print("Pi-Apps not found")
 if piapps_path == True:
     print("Pi-Apps is installed")
+    popen("ls ~/pi-apps/apps/ > ~/PiGro-Aid-/scripts/pi-apps_list.list")
 
 # Checks if snapd exists
 if os.path.isfile("/bin/snap"):
@@ -228,7 +239,7 @@ class MainApplication(tk.Tk):
 class Change_Log(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        #self["background"] = "#333333"
+        # self["background"] = "#333333"
         self.title("Overclocking Legend")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -242,24 +253,37 @@ class Change_Log(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Changelog")
         self.update_info_btn = PhotoImage(file=r"images/icons/pigro_icons/128x128.png")
-        logo_lbl = Label(self, image=self.update_info_btn,text="Changelog",highlightthickness=0,borderwidth=0,compound=TOP,font=("Helvetica", 20, "bold"),)
+        logo_lbl = Label(
+            self,
+            image=self.update_info_btn,
+            text="Changelog",
+            highlightthickness=0,
+            borderwidth=0,
+            compound=TOP,
+            font=("Helvetica", 20, "bold"),
+        )
         logo_lbl.pack(pady=20)
-        changelog_label=Label(self,justify="left",anchor=W,text="#Changed:\n\nSplash Screen only starts on fresh install.\nThis improves loading time to 100%\n")
+        changelog_label = Label(
+            self,
+            justify="left",
+            anchor=W,
+            text="#Changed:\n\nSplash Screen only starts on fresh install.\nThis improves loading time to 100%\n",
+        )
         changelog_label.pack()
 
-        #read input file
+        # read input file
         fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "rt")
-        #read file contents to string
+        # read file contents to string
         data = fin.read()
-        #replace all occurrences of the required string
-        data = data.replace('First_Run = True', 'First_Run = False')
-        #close the input file
+        # replace all occurrences of the required string
+        data = data.replace("First_Run = True", "First_Run = False")
+        # close the input file
         fin.close()
-        #open the input file in write mode
+        # open the input file in write mode
         fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "wt")
-        #overrite the input file with the resulting data
+        # overrite the input file with the resulting data
         fin.write(data)
-        #close the file
+        # close the file
         fin.close()
 
 
@@ -346,15 +370,20 @@ class Frame1(ttk.Frame):
 
         self.gihub_link["background"] = "#333333"
 
-        self.stress = Button(self, 
+        self.stress = Button(
+            self,
             text="Run/Install Stressberry",
-            font=(("Helvetica,bold"), "10",),
+            font=(
+                ("Helvetica,bold"),
+                "10",
+            ),
             highlightthickness=2,
             borderwidth=0,
             background="#333333",
             foreground="white",
-            command=stress_b,)
-        self.stress.place(x=60,y=650)
+            command=stress_b,
+        )
+        self.stress.place(x=60, y=650)
 
         self.changelog_btn = Button(
             self,
@@ -585,7 +614,6 @@ class Frame1(ttk.Frame):
             self.after(1000, refresh_sys_stats)
 
         refresh_sys_stats()
-
 
 
 # [Update] Tab
@@ -1017,7 +1045,7 @@ class Frame3(ttk.Frame):
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
         self.hist_doc = PhotoImage(file=r"images/icons/hist_doc.png")
         self.keyboard = PhotoImage(file=r"images/icons/keyboard.png")
-        self.deskpi_ico = PhotoImage(file=r"images/icons/deskpi.png")        
+        self.deskpi_ico = PhotoImage(file=r"images/icons/deskpi.png")
         self.net = PhotoImage(file=r"images/icons/net.png")
         self.sd = PhotoImage(file=r"images/icons/sd.png")
         self.neo = PhotoImage(file=r"images/icons/neofetch.png")
@@ -3938,9 +3966,6 @@ class Frame6(ttk.Frame):
             compound=LEFT,
             foreground="#d4244d",
         ).pack(pady=20)
-
-
-
 
         # Additional Infos
         self.ov_helps_frame = Frame(
