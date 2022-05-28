@@ -1,0 +1,1 @@
+sudo xdg-open $HOME
