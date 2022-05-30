@@ -27,7 +27,8 @@ import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
-import customtkinter  # Ma gucken
+from tkinter import filedialog
+
 
 
 # import splash
@@ -107,7 +108,7 @@ else:
 
 
 # [Main Winddow / Notebook Config / SysTray]
-class MainApplication(customtkinter.CTk):
+class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
@@ -225,8 +226,7 @@ class MainApplication(customtkinter.CTk):
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
         self.noteStyler.configure("Line.TSeparator", background="grey")
-        customtkinter.set_default_color_theme("green")
-
+        
 
 # [Changelog] Child
 class Change_Log(tk.Toplevel):
@@ -372,7 +372,7 @@ class Frame1(ttk.Frame):
             ),
             highlightthickness=2,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             command=stress_b,
         )
@@ -406,16 +406,16 @@ class Frame1(ttk.Frame):
         total, used, free = shutil.disk_usage("/")
 
         self.sys_info_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=3, relief=GROOVE, pady=10, padx=20
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10, padx=20
         )
         self.sys_info_main_frame.place(x=160, y=360)
-        self.sys_info_main_frame["background"] = "#333333"
+        self.sys_info_main_frame["background"] = "#222222"
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
-        self.sys_frame_left["background"] = "#333333"
+        self.sys_frame_left["background"] = "#222222"
 
         self.sys_frame_right = Frame(
             self.sys_info_main_frame,
@@ -426,7 +426,7 @@ class Frame1(ttk.Frame):
             padx=20,
         )
         self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
-        self.sys_frame_right["background"] = "#333333"
+        self.sys_frame_right["background"] = "#222222"
 
         self.raspi_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
         self.raspi_label = Label(image=self.raspi_img)
@@ -436,7 +436,7 @@ class Frame1(ttk.Frame):
             image=self.raspi_img,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             pady=10,
             padx=20,
@@ -451,7 +451,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             anchor=W,
@@ -463,7 +463,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -474,7 +474,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Device Name: {my_system.node}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -485,7 +485,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Board: {Pi_Model.read()}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -496,7 +496,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Kernel: {my_system.release}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -507,7 +507,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Architecture: {my_system.machine}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -517,7 +517,7 @@ class Frame1(ttk.Frame):
         self.sysinf8 = Label(
             self.sys_frame_left,
             text="",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -529,7 +529,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -540,7 +540,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -551,7 +551,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text="",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -563,7 +563,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -574,7 +574,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -585,7 +585,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"IP Address: {IPAddr}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -596,7 +596,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Total Disk Space: %d GiB" % (total // (2**30))),
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -607,7 +607,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Used Disk Space: %d GiB" % (used // (2**30))),
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -618,7 +618,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Free Disk Space: %d GiB" % (free // (2**30))),
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -742,10 +742,10 @@ class Frame2(ttk.Frame):
         s_list.pack(anchor="w")
 
         self.update_btn_frame = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, padx=5, pady=5
+            self, borderwidth=0, relief=GROOVE, highlightthickness=5, padx=5, pady=5
         )
         self.update_btn_frame.pack(padx=45, anchor="w")
-        self.update_btn_frame["background"] = "#333333"
+        self.update_btn_frame["background"] = "#222222"
 
         self.update_button = Button(
             self.update_btn_frame,
@@ -755,7 +755,7 @@ class Frame2(ttk.Frame):
             command=update_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -769,7 +769,7 @@ class Frame2(ttk.Frame):
             command=upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -783,7 +783,7 @@ class Frame2(ttk.Frame):
             command=full_upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -797,7 +797,7 @@ class Frame2(ttk.Frame):
             command=button_gpk,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -811,7 +811,7 @@ class Frame2(ttk.Frame):
             command=add_unsi_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -825,7 +825,7 @@ class Frame2(ttk.Frame):
             command=autoremove_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -839,7 +839,7 @@ class Frame2(ttk.Frame):
             command=save_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -853,7 +853,7 @@ class Frame2(ttk.Frame):
             command=button_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -867,7 +867,7 @@ class Frame2(ttk.Frame):
             command=reboot_n,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -882,7 +882,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             command=info_update_tab,
         )
-        self.info_up_btn.place(x=650, y=320)
+        self.info_up_btn.place(x=900, y=720)
 
 
 # [System] tab
@@ -1096,7 +1096,7 @@ class Frame3(ttk.Frame):
 
         # Button Set/Frame1
         self.rahmen2 = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=20, pady=20
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=20, pady=20
         )
         self.rahmen2.pack(pady=20)
         self.rahmen2["background"] = "#222222"
@@ -2912,7 +2912,7 @@ class Frame4(ttk.Frame):
         )
         # Fast_Installer Main_Frame
         self.fast_main_frame = Frame(
-            self, relief=GROOVE, borderwidth=1, highlightthickness=1, pady=10, padx=10
+            self, relief=GROOVE, borderwidth=0, highlightthickness=5, pady=10, padx=10
         )
         self.fast_main_frame["background"] = "#222222"
         self.fast_main_frame.pack()
@@ -3382,6 +3382,20 @@ class Frame5(ttk.Frame):
 
         def web_OVC():
             popen("xdg-open https://www.xfce-look.org/browse/")
+#kl
+        def set_wp():
+            global my_image
+            self.filename = filedialog.askopenfilename(
+                initialdir="~",
+                title="Select A File",
+                filetypes=(
+                    ("jpeg files", "*.jpeg"),
+                    ("jpg files", "*.jpg"),
+                    ("png files", "*.png"),
+                    ("all files", "*.*"),
+                ),
+            )
+            os.popen(f"pcmanfm --set-wallpaper {self.filename}")
 
         # Images/Icons
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
@@ -3429,7 +3443,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn1.grid(column=1, row=0, padx=5)
+        self.in_btn1.grid(column=0, row=0, padx=5)
 
         self.in_btn2 = Button(
             self.rahmen4,
@@ -3445,7 +3459,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn2.grid(column=1, row=1, padx=5)
+        self.in_btn2.grid(column=1, row=0, padx=5)
 
         self.in_btn3 = Button(
             self.rahmen4,
@@ -3461,7 +3475,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn3.grid(column=1, row=2, padx=5)
+        self.in_btn3.grid(column=2, row=0, padx=5)
 
         self.in_btn7 = Button(
             self.rahmen4,
@@ -3475,9 +3489,9 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=0, padx=5, pady=5)
+        self.in_btn7.grid(column=0, row=1, padx=5, pady=5)
 
         self.in_btn7 = Button(
             self.rahmen4,
@@ -3491,9 +3505,9 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=1, padx=5)
+        self.in_btn7.grid(column=1, row=1, padx=5)
 
         self.xfcelook_ttp = CreateToolTip(
             self.in_btn7,
@@ -3512,9 +3526,9 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=2, padx=5)
+        self.in_btn7.grid(column=2, row=1, padx=5)
 
         # xfce_tweaks
         self.rahmen41 = LabelFrame(
@@ -3711,6 +3725,23 @@ class Frame5(ttk.Frame):
         )
         self.lxde.grid(column=3, row=0)
 
+        self.set_wp_btn = Button(
+            self.rahmen42,
+            image=self.ico_m,
+            justify="left",
+            text="Set Wallpaper",
+            compound=LEFT,
+            command=set_wp,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            width=160,
+            anchor="w",
+            font=("Helvetica", 10, "bold"),
+        )
+        self.set_wp_btn.grid(column=4, row=0)
+#öü
         self.info_look_btn = Button(
             self,
             image=self.tpinfm,
@@ -3718,7 +3749,7 @@ class Frame5(ttk.Frame):
             borderwidth=0,
             command=info_look_tab,
         )
-        self.info_look_btn.place(x=700, y=620)
+        self.info_look_btn.place(x=900, y=720)
 
 
 # [ZRAM] Child
@@ -4000,19 +4031,14 @@ class Frame6(ttk.Frame):
                 urgency="normal",
             ).send()
 
-        # OV_MAIN_Frame
-        #        self.ov_main_frame = Frame(
-        #            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=50
-        #        )
-        #        self.ov_main_frame.pack(padx=20, pady=20)
-        #        self.ov_main_frame["background"] = "#333333"
+
 
         # OV_Button_Frame
         self.ov_buttons = Frame(
             self,
             # self.ov_main_frame,
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=5,
             relief=GROOVE,
             pady=20,
             padx=20,
@@ -4020,20 +4046,20 @@ class Frame6(ttk.Frame):
         self.ov_buttons.pack(
             side=LEFT, pady=20, padx=20, fill=BOTH
         )  # .grid(row=0, column=0)
-        self.ov_buttons["background"] = "#333333"
+        self.ov_buttons["background"] = "#222222"
 
         # Overclocking State Main Frame
         self.ov_state_display_frame = Frame(
             self,
             # self.ov_main_frame,
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=5,
             relief=GROOVE,
         )
         self.ov_state_display_frame.pack(
             anchor="n", padx=10, pady=20, fill=BOTH, expand=True
         )
-        self.ov_state_display_frame["background"] = "#333333"
+        self.ov_state_display_frame["background"] = "#222222"
 
         self.settings_header = Label(
             self.ov_state_display_frame,
@@ -4041,7 +4067,7 @@ class Frame6(ttk.Frame):
             text="Current Settings",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 16),
             justify="left",
@@ -4057,7 +4083,7 @@ class Frame6(ttk.Frame):
             pady=5,
         )
         self.ov_display_frame.pack(anchor="n")  # .grid(row=0, column=1, padx=20)
-        self.ov_display_frame["background"] = "#333333"
+        self.ov_display_frame["background"] = "#222222"
 
         # ZRAM Button
         self.tu_zbtn = Button(
@@ -4083,7 +4109,7 @@ class Frame6(ttk.Frame):
             relief=GROOVE,
         )
         self.ov_helps_frame.pack(padx=20)  # .grid(row=0, column=1, padx=20)
-        self.ov_helps_frame["background"] = "#333333"
+        self.ov_helps_frame["background"] = "#222222"
 
         # Overclocking Stats
 
@@ -4095,9 +4121,9 @@ class Frame6(ttk.Frame):
             text="PiGro Berry: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
+            
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4111,7 +4137,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="green",
             bg="#333333",
             font=("Helvetica", 12, "bold"),
@@ -4126,9 +4152,8 @@ class Frame6(ttk.Frame):
             text="Arm Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4142,9 +4167,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4157,9 +4181,8 @@ class Frame6(ttk.Frame):
             text="Gpu Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4173,9 +4196,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4188,9 +4210,8 @@ class Frame6(ttk.Frame):
             text="Gpu Mem: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4204,9 +4225,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4219,9 +4239,8 @@ class Frame6(ttk.Frame):
             text="Over Voltage: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4235,9 +4254,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4250,9 +4268,8 @@ class Frame6(ttk.Frame):
             text="Force Turbo: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4266,9 +4283,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4280,21 +4296,11 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 8),
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="yellow",
         ).pack()
 
-        self.tu_legende = Button(
-            self.ov_helps_frame,
-            text="Legende",
-            font=("Helvetica", 8),
-            highlightthickness=2,
-            borderwidth=0,
-            background="#333333",
-            foreground="yellow",
-            command=tuning_legende,
-            image=self.tu_legend_ico,
-        ).pack()
+
 
         # Tuning_Button_Frame
         self.tuning_options = Label(
@@ -4302,7 +4308,7 @@ class Frame6(ttk.Frame):
             text="Overclocking Options",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 16),
             justify="left",
@@ -4413,6 +4419,18 @@ class Frame6(ttk.Frame):
         )
         tu_btn5.grid(column=0, row=10, pady=10)
 
+        self.tu_legende = Button(
+            self.ov_buttons,
+            text="Legende",
+            font=("Helvetica", 8),
+            highlightthickness=2,
+            borderwidth=0,
+            background="#333333",
+            foreground="yellow",
+            command=tuning_legende,
+            image=self.tu_legend_ico,
+        ).grid(column=0, row=11, pady=10)        
+
         def ov_display():
             # Overclock Display Functions
             with open(f"{config_path}", "r") as fp:
@@ -4422,7 +4440,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Crank It Up",
                             fg="yellow",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4436,7 +4454,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Need A Fan!",
                             fg="red",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4450,7 +4468,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Take It To The Max!",
                             fg="pink",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4464,7 +4482,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Honey,the fuse blew again!",
                             fg="purple",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4478,7 +4496,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4493,7 +4511,7 @@ class Frame6(ttk.Frame):
                     gpu_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4508,7 +4526,7 @@ class Frame6(ttk.Frame):
                     force_t_display.config(
                         text=line[12:-1],
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4523,7 +4541,7 @@ class Frame6(ttk.Frame):
                     over_v_display.config(
                         text=line[13:-1],
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4538,7 +4556,7 @@ class Frame6(ttk.Frame):
                     gpu_m_display.config(
                         text=line[8:-1] + " MB",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
 
@@ -4556,7 +4574,7 @@ class Frame6(ttk.Frame):
             command=info_tuning_tab,
         )
         # ex
-        self.info_tuning_btn.place(x=670, y=530)
+        self.info_tuning_btn.place(x=900, y=700)
 
 
 # [Links] Tab
@@ -4657,7 +4675,7 @@ class Frame7(ttk.Frame):
         self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=10, pady=20
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=10, pady=20
         )
         self.rahmen.grid(row=0, rowspan=11, column=0, pady=20, padx=40)
         self.rahmen["background"] = "#333333"
@@ -4824,7 +4842,7 @@ class Frame7(ttk.Frame):
         ).pack()
 
         self.fast_sec_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10
         )
         self.fast_sec_frame.grid(row=0, column=1, pady=20)
         self.fast_sec_frame["background"] = "#333333"
@@ -5101,9 +5119,9 @@ class Frame9(ttk.Frame):
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.rahmen101 = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=20, padx=10
+            self, borderwidth=0, relief=GROOVE, highlightthickness=5, pady=20, padx=10
         )
-        self.rahmen101.pack(pady=20)
+        self.rahmen101.pack(pady=50)
         self.rahmen101["background"] = "#333333"
 
         self.btn_frame = Frame(self.rahmen101, bg="#333333")
