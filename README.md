@@ -1,6 +1,5 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
-![forthebadge for-rpi](https://github.com/actionschnitzel/tingsandstuff/blob/main/4rpi.png)
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
 
@@ -72,13 +71,7 @@ If you install PiGro using the script, you can simply use:
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
 
 ---
-# :exclamation: Important
-    
-#### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
-     
-Open the File Manager (`pcmanfm`) > `Edit` >`Preferences` > `Advanced`. Then set the `Terminal Emulator` to `lxterminal %s` or the Terminal Emulater of your choice
-     
----
+
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
 
 Documentation + Manual /// Still in work
@@ -121,7 +114,4 @@ are disabled
 
 #### You want support me?
 
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-    
-[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)    
- 
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/kisspng-donation-computer-icons-portable-network-graphics-5b972c7ded3449.9709889315366339819716.png)](https://paypal.me/actionschnitzel?locale.x=de_DE)

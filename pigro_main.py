@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import os
 import os.path
 import tkinter as tk
@@ -9,11 +8,14 @@ import tkinter.font as tkFont
 import webbrowser
 from os import popen
 from os import system as cmd
+from os import listdir
+from os.path import isfile, join
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from PIL import ImageTk, Image
 import platform
+import shutil
 import psutil
 from collections import namedtuple
 from datetime import datetime
@@ -28,36 +30,45 @@ import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
+from tkinter import filedialog
 
-# Gets list of all installeble pakages
-os.system(
-    "xterm -e 'bash -c \"apt-cache pkgnames > $HOME/PiGro-Aid-/scripts/apt_cache.list && exit; exec bash\"'"
-)
-# Gets list of all installed pakages
-os.system(
-    "xterm -e 'bash -c \"dpkg --get-selections > ~/PiGro-Aid-/scripts/packages.list && sed -e s/install//g -i ~/PiGro-Aid-/scripts/packages.list && exit; exec bash\"'"
-)
+
+# import splash
+
+# To Do:
+# Always clear apt_cache,packages,PiGro.config
+# before PUSH!
+
 
 # Say Hallo!
 global user
 user = os.environ.get("LOGNAME")
-print(f"Hi,{user} waz uuuuup?!")
+print(f"INFO: Hi,{user} waz uuuuup?!")
 
 # Define Home
 global home
 home = str(Path.home())
-print(f"{home} is your home directory!")
+print(f"INFO: {home} is your home directory!")
+
+# Gets path to PiGro
+global Application_path
+Application_path = str(Path().absolute())
+print(f"INFO: PiGro directory is {Application_path}")
+
+# Makes all .sh files in /sripts executable if PiGro in $HOME
+if Application_path == f"{home}/PiGro-Aid-":
+    popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+    print("INFO: All files executable")
 
 # Get Distro
 distro_get = distro.id()
-print("Your Distro is: " + distro_get)
+print("INFO: Your Distro is: " + distro_get)
 
 # Legitimation Vars // Test for Ubuntu compatiblety
 global config_path
 config_path = "/boot/config.txt"
 global legit
 legit = "sudo"
-
 
 # Config.txt Path
 if distro_get == "ubuntu":
@@ -75,29 +86,27 @@ else:
 # Get Desktop Environment
 global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
-print("Your DE is: " + get_de)
+print("INFO: Your DE is: " + get_de)
 
 # Checks if pi-apps exists
 global piapps_path
 piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
-
 if piapps_path == False:
-    print("Pi-Apps not found")
+    print("INFO: Pi-Apps not found")
 if piapps_path == True:
-    print("Pi-Apps is installed")
-    popen("ls ~/pi-apps/apps/ > ~/PiGro-Aid-/scripts/pi-apps_list.list")
+    print("INFO: Pi-Apps is installed")
 
 # Checks if snapd exists
 if os.path.isfile("/bin/snap"):
-    print("Snap is installed")
+    print("INFO: Snap is installed")
 else:
-    print("Snap is not installed")
+    print("INFO: Snap is not installed")
 
 # Checks if flatpak exists
 if os.path.isfile("/bin/flatpak"):
-    print("Flatpak is installed")
+    print("INFO: Flatpak is installed")
 else:
-    print("Flatpak is not installed")
+    print("INFO: Flatpak is not installed")
 
 
 # [Main Winddow / Notebook Config / SysTray]
@@ -106,13 +115,13 @@ class MainApplication(tk.Tk):
         super().__init__()
 
         # Window Basics
-        self.title("PiGro - Stupida Medusa!")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.title("PiGro - Il Re Cornelius")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_icons/256x256.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = "#333333"
         self.resizable(0, 0)
-        app_width = 1000
-        app_height = 700
+        app_width = 1200
+        app_height = 800
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         x = (screen_width / 2) - (app_width / 2)
@@ -133,22 +142,9 @@ class MainApplication(tk.Tk):
         self.Frame9 = Frame9(self.notebook)
         self.Frame8 = Frame8(self.notebook)
         self.Frame12 = Frame12(self.notebook)
+        self.Frame13 = Frame13(self.notebook)
 
-        # Notebook Decoration TOP_BOTTOM
-        tabi = Image.open("images/backgrounds/side_bar.png")
-        tabp = ImageTk.PhotoImage(tabi)
-        tabl = Label(self.notebook, image=tabp)
-        tabl.image = tabp
-        tabl["background"] = "#333333"
-        tabl.place(x=-2, y=0)
-
-        tab2i = Image.open("images/backgrounds/side_bar2.png")
-        tab2p = ImageTk.PhotoImage(tab2i)
-        tab2l = Label(self.notebook, image=tab2p)
-        tab2l.image = tab2p
-        tab2l["background"] = "#333333"
-        tab2l.place(x=-2, y=630)
-
+        # Notebook Icons
         self.welcome_icon = PhotoImage(file=r"images/icons/pigro_icons/Tab_Welcome.png")
         self.system_icon = PhotoImage(file=r"images/icons/system.png")
         self.update_icon = PhotoImage(file=r"images/icons/updatetab.png")
@@ -160,6 +156,7 @@ class MainApplication(tk.Tk):
         self.cam_icon = PhotoImage(file=r"images/icons/PyPiCam_Go.png")
         self.config_icon = PhotoImage(file=r"images/icons/config_txt.png")
         self.ubuntu_icon = PhotoImage(file=r"images/icons/ubuntu_logo.png")
+        self.auto_start = PhotoImage(file=r"images/icons/autostart_icon.png")
 
         # Tabs
         self.notebook.add(
@@ -168,6 +165,10 @@ class MainApplication(tk.Tk):
 
         self.notebook.add(
             self.Frame3, compound=LEFT, text="System", image=self.system_icon
+        )
+
+        self.notebook.add(
+            self.Frame13, compound=LEFT, text="Autostart", image=self.auto_start
         )
 
         self.notebook.add(
@@ -195,7 +196,7 @@ class MainApplication(tk.Tk):
             self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
         )
 
-        self.notebook.pack()
+        self.notebook.pack(fill="both", expand=True, anchor=W)
 
         if distro_get == "debian" or distro_get == "raspbian":
             self.notebook.hide(self.Frame12)
@@ -210,23 +211,23 @@ class MainApplication(tk.Tk):
         self.noteStyler.configure(
             "TNotebook",
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             tabposition="w",
             highlightthickness=0,
         )
         self.noteStyler.configure(
             "TNotebook.Tab",
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 16),
             width=13,
             highlightthickness=0,
         )
-        self.noteStyler.configure("TFrame", background="#333333")
+        self.noteStyler.configure("TFrame", background="#222222")
         self.noteStyler.map(
             "TNotebook.Tab",
-            background=[("selected", "#333333")],
+            background=[("selected", "#222222")],
             foreground=[("selected", "#d4244d")],
         )
         self.noteStyler.configure(
@@ -239,7 +240,6 @@ class MainApplication(tk.Tk):
 class Change_Log(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        # self["background"] = "#333333"
         self.title("Overclocking Legend")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -267,12 +267,12 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Changed:\n\nSplash Screen only starts on fresh install.\nThis improves loading time to 100%\n",
+            text="#Added:\n-Stressberry Support\n\n#Changed:\n-Icons improved.. Yes! Again!\n\n-Changelog pops up und fist start\nor after update \n\n#Improved:\n-Fixed some problems with the new overclocking options\n",
         )
         changelog_label.pack()
 
         # read input file
-        fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "rt")
+        fin = open(f"{Application_path}/scripts/PiGro.conf", "rt")
         # read file contents to string
         data = fin.read()
         # replace all occurrences of the required string
@@ -280,7 +280,7 @@ class Change_Log(tk.Toplevel):
         # close the input file
         fin.close()
         # open the input file in write mode
-        fin = open(f"{home}/PiGro-Aid-/scripts/PiGro.conf", "wt")
+        fin = open(f"{Application_path}/scripts/PiGro.conf", "wt")
         # overrite the input file with the resulting data
         fin.write(data)
         # close the file
@@ -297,7 +297,7 @@ class Frame1(ttk.Frame):
             c_log.grab_set()
 
         # Check if Update or First run
-        with open(f"{home}/PiGro-Aid-/scripts/PiGro.conf") as f:
+        with open(f"{Application_path}/scripts/PiGro.conf") as f:
             if "First_Run = True" in f.read():
                 print("First Run")
 
@@ -332,17 +332,17 @@ class Frame1(ttk.Frame):
 
         def stress_b():
             popen(
-                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/stressberry.sh & echo DONE!; exec bash\"'"
+                f"xterm -e 'bash -c \"{Application_path}/scripts/stressberry.sh & echo DONE!; exec bash\"'"
             )
 
-        self.bg = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/pigronew.png")
-        self.welcome_canvas = Canvas(self, width=900, height=700, highlightthickness=0)
+        self.bg = PhotoImage(file=f"{Application_path}/images/backgrounds/pigronew.png")
+        self.welcome_canvas = Canvas(self, width=900, height=800, highlightthickness=0)
         self.welcome_canvas.pack(fill="both", expand=True)
         self.welcome_canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.welcome_canvas.create_text(
-            300,
-            110,
+            350,
+            90,
             text=f"Hi, {user}\nwaz up?!",
             font=("Helvetica", 12, "bold"),
             fill="black",
@@ -354,7 +354,7 @@ class Frame1(ttk.Frame):
             fg="blue",
             cursor="hand2",
         )
-        self.web_link.place(x=480, y=645)
+        self.web_link.place(x=670, y=740)
         self.web_link.bind("<Button-1>", callback)
 
         self.web_link["background"] = "#333333"
@@ -365,7 +365,7 @@ class Frame1(ttk.Frame):
             fg="blue",
             cursor="hand2",
         )
-        self.gihub_link.place(x=480, y=670)
+        self.gihub_link.place(x=670, y=770)
         self.gihub_link.bind("<Button-1>", callback)
 
         self.gihub_link["background"] = "#333333"
@@ -379,11 +379,11 @@ class Frame1(ttk.Frame):
             ),
             highlightthickness=2,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             command=stress_b,
         )
-        self.stress.place(x=60, y=650)
+        self.stress.place(x=160, y=700)
 
         self.changelog_btn = Button(
             self,
@@ -394,7 +394,7 @@ class Frame1(ttk.Frame):
             background="#fbc463",
             foreground="grey",
             command=ch_log,
-        ).place(x=40, y=125)
+        ).place(x=95, y=125)
 
         # Parameters for System
         global distro
@@ -410,41 +410,42 @@ class Frame1(ttk.Frame):
         IPAddr = extract_ip()
         cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
+        total, used, free = shutil.disk_usage("/")
 
         self.sys_info_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=20
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10, padx=20
         )
-        self.sys_info_main_frame.place(x=60, y=350)
-        self.sys_info_main_frame["background"] = "#333333"
+        self.sys_info_main_frame.place(x=160, y=360)
+        self.sys_info_main_frame["background"] = "#222222"
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-        self.sys_frame_left.pack(side=LEFT)  # grid(row=1, column=0)
-        self.sys_frame_left["background"] = "#333333"
+        self.sys_frame_left.pack(side=LEFT)
+        self.sys_frame_left["background"] = "#222222"
 
         self.sys_frame_right = Frame(
             self.sys_info_main_frame,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            pady=10,
+            pady=0,
             padx=20,
         )
-        self.sys_frame_right.pack(pady=20)  # grid(row=1, column=1)
-        self.sys_frame_right["background"] = "#333333"
+        self.sys_frame_right.pack(pady=20)
+        self.sys_frame_right["background"] = "#222222"
 
-        self.my_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
-        self.my_label = Label(image=self.my_img)
+        self.raspi_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
+        self.raspi_label = Label(image=self.raspi_img)
 
         self.sysinf0 = Label(
             self.sys_frame_right,
-            image=self.my_img,
+            image=self.raspi_img,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
-            pady=20,
+            pady=10,
             padx=20,
             anchor=E,
         )
@@ -457,7 +458,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             anchor=W,
@@ -469,7 +470,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -480,7 +481,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Device Name: {my_system.node}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -491,7 +492,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Board: {Pi_Model.read()}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -502,7 +503,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Kernel: {my_system.release}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -513,7 +514,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Architecture: {my_system.machine}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -523,7 +524,7 @@ class Frame1(ttk.Frame):
         self.sysinf8 = Label(
             self.sys_frame_left,
             text="",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -535,7 +536,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -546,7 +547,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -557,7 +558,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text="",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -569,7 +570,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -580,7 +581,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
-            background="#333333",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -591,7 +592,40 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"IP Address: {IPAddr}",
             justify="left",
-            background="#333333",
+            background="#222222",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=("Total Disk Space: %d GiB" % (total // (2**30))),
+            justify="left",
+            background="#222222",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=("Used Disk Space: %d GiB" % (used // (2**30))),
+            justify="left",
+            background="#222222",
+            foreground="white",
+            width=40,
+            font=("Helvetica", 10, "bold"),
+            anchor=W,
+        ).pack()
+
+        self.sysinf9 = Label(
+            self.sys_frame_left,
+            text=("Free Disk Space: %d GiB" % (free // (2**30))),
+            justify="left",
+            background="#222222",
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -635,35 +669,34 @@ class Frame2(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
 
         def update_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/update.sh && exit ; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 1000x25 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
                 % self.wid
             )
 
         def upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/upgrade.sh && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 1000x25 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def full_upgrade_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/full_upgrade.sh && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 1000x25 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
                 % self.wid
             )
 
         def autoremove_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/auto_remove.sh && exit ; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 1000x25 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
                 % self.wid
             )
 
         def add_unsi_btn():
             os.popen(
-                f'xterm -into %d -bg Grey1 -geometry 120x25 -e "{home}/PiGro-Aid-/scripts/addunsignedrepo.sh && exit; exec bash"'
+                f'xterm -into %d -bg Grey1 -geometry 1000x25 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
                 % self.wid
             )
 
@@ -696,7 +729,7 @@ class Frame2(ttk.Frame):
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.source_list_frame = Frame(self, relief=GROOVE, borderwidth=0)
-        self.source_list_frame.pack(padx=45, pady=40, anchor=W)
+        self.source_list_frame.pack(padx=45, pady=40, anchor="w", fill=BOTH)
         self.source_list_frame["background"] = "#333333"
 
         self.termf = Frame(
@@ -715,10 +748,10 @@ class Frame2(ttk.Frame):
         s_list.pack(anchor="w")
 
         self.update_btn_frame = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, padx=5, pady=5
+            self, borderwidth=0, relief=GROOVE, highlightthickness=5, padx=5, pady=5
         )
         self.update_btn_frame.pack(padx=45, anchor="w")
-        self.update_btn_frame["background"] = "#333333"
+        self.update_btn_frame["background"] = "#222222"
 
         self.update_button = Button(
             self.update_btn_frame,
@@ -728,7 +761,7 @@ class Frame2(ttk.Frame):
             command=update_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -742,7 +775,7 @@ class Frame2(ttk.Frame):
             command=upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -756,7 +789,7 @@ class Frame2(ttk.Frame):
             command=full_upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -770,7 +803,7 @@ class Frame2(ttk.Frame):
             command=button_gpk,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -784,7 +817,7 @@ class Frame2(ttk.Frame):
             command=add_unsi_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -798,7 +831,7 @@ class Frame2(ttk.Frame):
             command=autoremove_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -812,7 +845,7 @@ class Frame2(ttk.Frame):
             command=save_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -826,7 +859,7 @@ class Frame2(ttk.Frame):
             command=button_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -840,13 +873,13 @@ class Frame2(ttk.Frame):
             command=reboot_n,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
         self.reboot_button.grid(column=1, row=4)
 
-        self.termf.pack(padx=45, pady=20, anchor=W)
+        self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
 
         self.info_up_btn = Button(
             self,
@@ -855,7 +888,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             command=info_update_tab,
         )
-        self.info_up_btn.place(x=650, y=320)
+        self.info_up_btn.place(x=900, y=720)
 
 
 # [System] tab
@@ -917,12 +950,16 @@ class Frame3(ttk.Frame):
             popen(f"{legit} mousepad /etc/crontab")
 
         def onc_ben():
-            popen("sudo xdg-open $HOME")
-            print("With great power comes great responsibility")
+            if get_de == "XFCE":
+                popen("sudo thunar /")
+            else:
+                popen("sudo pcmanfm /")
+
+            print("INFO: With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
                 description="With great power comes great responsibility\n\n                          - Oncle Ben",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -952,7 +989,7 @@ class Frame3(ttk.Frame):
                 popen(
                     f"xterm -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'"
                 )
-                print("Kernel Upgrade GO!")
+                print("INFO: Kernel Upgrade GO!")
                 pop_kernel.destroy()
 
             frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
@@ -1060,24 +1097,26 @@ class Frame3(ttk.Frame):
         )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#222222")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         # Button Set/Frame1
         self.rahmen2 = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=60, pady=10
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=20, pady=20
         )
-        self.rahmen2.pack(padx=40, pady=20, fill="both")
-        self.rahmen2["background"] = "#333333"
+        self.rahmen2.pack(pady=20)
+        self.rahmen2["background"] = "#222222"
 
         sys_rc_cli_btn = Button(
             self.rahmen2,
             image=self.bp01,
+            width=140,
+            height=100,
             text="Raspi-Config CLI",
             command=pi_configbutton,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1087,11 +1126,13 @@ class Frame3(ttk.Frame):
         sys_rc_gui_btn = Button(
             self.rahmen2,
             image=self.bp01,
+            width=140,
+            height=100,
             text="Raspi-Config GUI",
             command=pi_configbutton2,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1101,11 +1142,13 @@ class Frame3(ttk.Frame):
         sys_conf_btn = Button(
             self.rahmen2,
             image=self.hist_doc,
+            width=140,
+            height=100,
             text="Config.txt",
             command=contxt_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1115,11 +1158,13 @@ class Frame3(ttk.Frame):
         sys_btnvs = Button(
             self.rahmen2,
             image=self.bp03,
+            width=140,
+            height=100,
             text="rm vscode.list ",
             command=rm_vscode,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1129,11 +1174,13 @@ class Frame3(ttk.Frame):
         sys_gparted_btn = Button(
             self.rahmen2,
             image=self.bp04,
+            width=140,
+            height=100,
             text="Gparted",
             command=gparted_exec,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1141,20 +1188,22 @@ class Frame3(ttk.Frame):
         sys_gparted_btn.grid(row=1, column=0)
 
         if os.path.isfile("/usr/sbin/gparted"):
-            print("Gparted is installed")
+            print("INFO: Gparted is installed")
             sys_gparted_btn.configure(state=NORMAL)
         else:
-            print("Gparted is not installed")
+            print("INFO: Gparted is not installed")
             sys_gparted_btn.configure(state=DISABLED)
 
         sys_neo_btn = Button(
             self.rahmen2,
             image=self.neo,
+            width=140,
+            height=100,
             text="NeoFetch",
             command=neofetch_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1162,20 +1211,22 @@ class Frame3(ttk.Frame):
         sys_neo_btn.grid(row=1, column=1)
 
         if os.path.isfile("/bin/neofetch"):
-            print("Neofetch is installed")
+            print("INFO: Neofetch is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("Neofetch is not installed")
+            print("INFO: Neofetch is not installed")
             sys_neo_btn.configure(state=DISABLED)
 
         sys_FMGM_btn = Button(
             self.rahmen2,
             image=self.bp06,
+            width=140,
+            height=100,
             text="FM God Mode",
             command=onc_ben,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1189,11 +1240,13 @@ class Frame3(ttk.Frame):
         sys_kernel_btn = Button(
             self.rahmen2,
             image=self.bp07,
+            width=140,
+            height=100,
             text="Upgrade Linux Kernel",
             command=button_lk,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1203,11 +1256,13 @@ class Frame3(ttk.Frame):
         sys_dpp_btn = Button(
             self.rahmen2,
             image=self.deskpi_ico,
+            width=140,
+            height=100,
             text="DeskpiPro Control",
             command=button_dpfc,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1217,11 +1272,13 @@ class Frame3(ttk.Frame):
         sys_b_log_btn = Button(
             self.rahmen2,
             image=self.bp03,
+            width=140,
+            height=100,
             text="Boot Log",
             command=button_boot,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1231,11 +1288,13 @@ class Frame3(ttk.Frame):
         sys_xf_auto_btn = Button(
             self.rahmen2,
             image=self.bp033,
+            width=140,
+            height=100,
             text="Xfce Autostarts",
             command=button_auto,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1248,11 +1307,13 @@ class Frame3(ttk.Frame):
         sys_xf_sett_btn = Button(
             self.rahmen2,
             image=self.bp033,
+            width=140,
+            height=100,
             text="Xfce Settings",
             command=button_xsett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1265,11 +1326,13 @@ class Frame3(ttk.Frame):
         sys_netset_btn = Button(
             self.rahmen2,
             image=self.net,
+            width=140,
+            height=100,
             text="Network Settings",
             command=net_set,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1279,11 +1342,13 @@ class Frame3(ttk.Frame):
         sys_task_btn = Button(
             self.rahmen2,
             image=self.ico_m,
+            width=140,
+            height=100,
             text="Taskmanager",
             command=lx_task,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1293,11 +1358,13 @@ class Frame3(ttk.Frame):
         sys_bash_btn = Button(
             self.rahmen2,
             image=self.hist_doc,
+            width=140,
+            height=100,
             text="Bash History",
             command=bash_log,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1307,11 +1374,13 @@ class Frame3(ttk.Frame):
         sys_cron_btn = Button(
             self.rahmen2,
             image=self.hist_doc,
+            width=140,
+            height=100,
             text="Cron Job",
             command=cron_job,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1321,11 +1390,13 @@ class Frame3(ttk.Frame):
         sys_sd_btn = Button(
             self.rahmen2,
             image=self.sd,
+            width=140,
+            height=100,
             text="SD Card Copier",
             command=sd_copy,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1335,11 +1406,13 @@ class Frame3(ttk.Frame):
         screen_sett_btn = Button(
             self.rahmen2,
             image=self.display_settings_icon,
+            width=140,
+            height=100,
             text="Screen Settings",
             command=screen_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1349,11 +1422,13 @@ class Frame3(ttk.Frame):
         desk_sett_btn = Button(
             self.rahmen2,
             image=self.ico_m,
+            width=140,
+            height=100,
             text="Desktop Settings",
             command=desk_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1363,11 +1438,13 @@ class Frame3(ttk.Frame):
         printer_sett_btn = Button(
             self.rahmen2,
             image=self.printer_settings_icon,
+            width=140,
+            height=100,
             text="Printer Settings",
             command=printer_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1377,11 +1454,13 @@ class Frame3(ttk.Frame):
         menu_sett_btn = Button(
             self.rahmen2,
             image=self.ico_m,
+            width=140,
+            height=100,
             text="Menu Settings",
             command=menu_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1391,11 +1470,13 @@ class Frame3(ttk.Frame):
         source_sett_btn = Button(
             self.rahmen2,
             image=self.ico_m,
+            width=140,
+            height=100,
             text="Source Settings",
             command=source_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1405,11 +1486,13 @@ class Frame3(ttk.Frame):
         mouse_key_sett_btn = Button(
             self.rahmen2,
             image=self.keyboard,
+            width=140,
+            height=100,
             text="Mouse & Keyboard",
             command=mouse_key_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1419,11 +1502,13 @@ class Frame3(ttk.Frame):
         rename_user_btn = Button(
             self.rahmen2,
             image=self.bp01,
+            width=140,
+            height=100,
             text="Rename User",
             command=rename_user,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#222222",
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1437,7 +1522,7 @@ class Frame3(ttk.Frame):
             borderwidth=0,
             command=info_system_tab,
         )
-        self.info_sys_btn.place(x=700, y=620)
+        self.info_sys_btn.place(x=900, y=720)
 
 
 # [System For Ubuntu] tab
@@ -1468,18 +1553,18 @@ class Frame12(ttk.Frame):
 
         def contxt_button():
             popen(
-                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_config_txt.sh; exec bash\"'"
+                f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_config_txt.sh; exec bash\"'"
             )
 
         def onc_ben():
             popen(
-                f"gnome-terminal -e 'bash -c \"{home}/PiGro-Aid-/scripts/ubu_FMGM.sh; exec bash\"'"
+                f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_FMGM.sh; exec bash\"'"
             )
-            print("With great power comes great responsibility")
+            print("INFO: With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
                 description="With great power comes great responsibility\n\n                          - Oncle Ben",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -1532,7 +1617,7 @@ class Frame12(ttk.Frame):
         )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         # Button Set/Frame1
@@ -1557,10 +1642,10 @@ class Frame12(ttk.Frame):
         sys_rc_cli_btn.grid(row=0, column=0)
 
         if os.path.isfile("/bin/raspi-config"):
-            print("Raspi-Config is installed")
+            print("INFO: Raspi-Config is installed")
             sys_rc_cli_btn.configure(state=NORMAL)
         else:
-            print("Raspi-Config is not installed")
+            print("INFO: Raspi-Config is not installed")
             sys_rc_cli_btn.configure(state=DISABLED)
 
         sys_ubu_pref_btn = Button(
@@ -1606,10 +1691,10 @@ class Frame12(ttk.Frame):
         sys_neo_btn.grid(row=0, column=3)
 
         if os.path.isfile("/bin/neofetch"):
-            print("Neofetch is installed")
+            print("INFO: Neofetch is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("Neofetch is not installed")
+            print("INFO: Neofetch is not installed")
             sys_neo_btn.configure(state=DISABLED)
 
         sys_dpp_btn = Button(
@@ -1655,10 +1740,10 @@ class Frame12(ttk.Frame):
         g_tweaks_btn.grid(row=1, column=2)
 
         if os.path.isfile("/bin/gnome-tweaks"):
-            print("gnome-tweaks is installed")
+            print("INFO: gnome-tweaks is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("gnome-tweaks is not installed")
+            print("INFO: gnome-tweaks is not installed")
             g_tweaks_btn.configure(state=DISABLED)
 
         menu_sett_btn = Button(
@@ -1676,10 +1761,10 @@ class Frame12(ttk.Frame):
         menu_sett_btn.grid(row=1, column=3)
 
         if os.path.isfile("/bin/alacarte"):
-            print("alacarte is installed")
+            print("INFO: alacarte is installed")
             menu_sett_btn.configure(state=NORMAL)
         else:
-            print("Gparted is not installed")
+            print("INFO: Gparted is not installed")
             menu_sett_btn.configure(state=DISABLED)
 
         sys_gparted_btn = Button(
@@ -1697,10 +1782,10 @@ class Frame12(ttk.Frame):
         sys_gparted_btn.grid(row=1, column=4)
 
         if os.path.isfile("/usr/sbin/gparted"):
-            print("Gparted is installed")
+            print("INFO: Gparted is installed")
             sys_gparted_btn.configure(state=NORMAL)
         else:
-            print("Gparted is not installed")
+            print("INFO: Gparted is not installed")
             sys_gparted_btn.configure(state=DISABLED)
 
         sys_FMGM_btn = Button(
@@ -1742,7 +1827,220 @@ class Frame12(ttk.Frame):
             borderwidth=0,
             command=info_system_tab,
         )
-        self.info_sys_btn.place(x=700, y=620)
+        self.info_sys_btn.place(x=900, y=720)
+
+
+# [Autostarts] tab
+class Frame13(ttk.Frame):
+    def __init__(self, container):
+        super().__init__()
+
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
+        self.bg_label = Label(self, image=self.bg)
+        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
+
+        def add_auto():
+            add_child = Add_Autostart(self)
+            add_child.grab_set()
+
+        # Checks is autostart folder exists
+        dir = os.path.join(f"{home}/.config/autostart")  #
+        if not os.path.exists(dir):
+            print(f"INFO: {dir} does not exist.")
+            print(f"INFO: Created {dir} does not exist.")
+            os.mkdir(dir)
+        else:
+            print(f"INFO: {dir} exists.")
+
+        onlyfiles = [
+            f
+            for f in listdir(f"{home}/.config/autostart")
+            if isfile(join(f"{home}/.config/autostart", f))
+        ]
+
+        # print(onlyfiles)
+
+        with open("scripts/autostart.list", "w") as f:
+            for item in onlyfiles:
+                f.write("%s\n" % item)
+
+        auto_main_frame = Frame(
+            self,
+            borderwidth=0,
+            highlightthickness=5,
+            background="#222222",
+            pady=20,
+            padx=20,
+        )
+        auto_main_frame.pack(pady=20)
+
+        auto_button_frame = Frame(
+            auto_main_frame,
+            borderwidth=0,
+            background="#222222",
+            highlightthickness=0,
+            pady=10,
+        )
+        auto_button_frame.pack(side="left", anchor="n", fill=BOTH, expand=True)
+
+        auto_select_frame = Frame(
+            auto_main_frame,
+            borderwidth=0,
+            background="#222222",
+            highlightthickness=0,
+            pady=10,
+        )
+        auto_select_frame.pack()
+
+        def del_enrty():
+            os.remove(f"{home}/.config/autostart/{my_entry3.get()}")
+            my_list3.delete(tk.ACTIVE)
+
+        # Update the listbox
+        def update3(data3):
+            # Clear the listbox
+            my_list3.delete(0, END)
+
+            # Add toppings to listbox
+            for item3 in data3:
+                my_list3.insert(END, item3)
+
+        # Update entry box with listbox clicked
+
+        def fillout3(event):
+            # Delete wot is in  Box
+            my_entry3.delete(0, END)
+            # Add clicked list item to enty box
+            my_entry3.insert(0, my_list3.get(ACTIVE))
+
+        # Checkfunktion Entry vs. List
+
+        def check3(event):
+            # grad inserted
+            typed3 = my_entry3.get()
+
+            if typed3 == "":
+                data3 = content3
+            else:
+                data3 = []
+                for item3 in content3:
+                    if typed3.lower() in item3.lower():
+                        data3.append(item3)
+
+            # updates listbox with selected item
+            update3(data3)
+
+        fo3 = open("scripts/autostart.list", "r")
+        content3 = fo3.readlines()
+        # print(content3)
+
+        inst_btn3 = Button(
+            auto_button_frame,
+            text="Selected:",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#222222",
+            foreground="white",
+            font=(("Helvetica,bold"), "14"),
+        )
+        inst_btn3.pack(anchor="n")
+
+        inst_btn3 = Button(
+            auto_button_frame,
+            text="Delete",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#222222",
+            foreground="white",
+            font=(("Helvetica,bold"), "12"),
+            command=del_enrty,
+        )
+        inst_btn3.pack(anchor="s")
+
+        uninst_btn3 = Button(
+            auto_button_frame,
+            text="Add",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#222222",
+            foreground="white",
+            font=(("Helvetica,bold"), "12"),
+            command=add_auto,
+        )
+        uninst_btn3.pack(anchor="s")
+
+        # Create an entry box
+        my_entry3 = Entry(auto_select_frame, font=("Helvetica", 12), width=60)
+        my_entry3.pack()
+
+        global my_list3
+        my_list3 = Listbox(auto_select_frame, width=60, height=30)
+        my_list3.pack()
+
+        fo3 = open("scripts/autostart.list", "r")
+        content3 = fo3.readlines()
+        for i3, s3 in enumerate(content3):
+            content3[i3] = s3.strip()
+        # print(content3)
+
+        # Add toppings
+        update3(content3)
+
+        # Create binding
+        my_list3.bind("<<ListboxSelect>>", fillout3)
+        my_entry3.bind("<KeyRelease>", check3)
+
+
+# [Autostart Child]
+class Add_Autostart(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Overclocking Legend")
+        # self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        # self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 500
+        app_height = 120
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+        self.title("Changelog")
+
+        def add_enrty():
+            file_name = f"{home}/.config/autostart/{add_name.get()}.desktop"
+            f = open(file_name, "a+")  # open file in append mode
+            f.write(
+                f"[Desktop Entry]\nName={add_name.get()}\nExec={add_path.get()}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true\nHidden=false\n"
+            )
+            f.close()
+            my_list3.insert("end", f"{add_name.get()}.desktop")
+
+            with open("scripts/autostart.list", "a") as file:
+                file.write(f"{add_name.get()}.desktop")
+
+        add_frame = Frame(self)
+        add_frame.pack(padx=10, pady=10)
+
+        add_name_lbl = Label(
+            add_frame, text="Name:", justify="left", anchor="w", width=10
+        )
+        add_name_lbl.grid(row=0, column=0)
+
+        add_path_lbl = Label(
+            add_frame, text="Path to File:", justify="left", anchor="w", width=10
+        )
+        add_path_lbl.grid(row=1, column=0)
+
+        add_name = Entry(add_frame, width=50)
+        add_name.grid(row=0, column=1)
+
+        add_path = Entry(add_frame, width=50)
+        add_path.grid(row=1, column=1)
+
+        set_auto = Button(add_frame, text="Add", width=10, command=add_enrty)
+        set_auto.grid(row=2, column=0, pady=5)
 
 
 # [Overclocking_Legend Popup] Child
@@ -1771,7 +2069,7 @@ class Tuning_Legende(tk.Toplevel):
         # Main Frame
         self.tu_main_frame = Frame(self, bg="#333333")
         self.tu_main_frame.pack(pady=20)
-        # xd
+
         # Reset
         self.rm_lbl = Label(
             self.tu_main_frame,
@@ -2185,6 +2483,9 @@ class Overclocking_Expert(tk.Toplevel):
         def reboot_n():
             popen(f"{legit} reboot")
 
+        def fi_fy_fo_bar():
+            self.title("This tool is great for Youtuberts to make useless vidios")
+
         # Expert Frame
         x_mode_frame = Frame(self, bg="#333333")
         x_mode_frame.pack(pady=20)
@@ -2508,6 +2809,16 @@ class Overclocking_Expert(tk.Toplevel):
         )
         note_e.pack(pady=20)
 
+        buttton_button = Button(
+            self,
+            bg="#333333",
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=0,
+            command=fi_fy_fo_bar,
+        )
+        buttton_button.place(x=495, y=595)
+
 
 # [APT Installer Popup] Child
 class APT_Installer_Popup(tk.Toplevel):
@@ -2780,7 +3091,7 @@ class Frame4(ttk.Frame):
             GButton_234["borderwidth"] = 0
 
         def open_must_haves():
-            os.system(f"python3 {home}/PiGro-Aid-/Shop/Shop.py")
+            os.system(f"python3 {Application_path}/Shop/Shop.py")
 
         def snapcraft():
             popen("xdg-open https://snapcraft.io/store")
@@ -2790,7 +3101,7 @@ class Frame4(ttk.Frame):
 
         # images/icons/BG
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.ipshop = PhotoImage(file=r"images/icons/shop.png")
@@ -2808,7 +3119,7 @@ class Frame4(ttk.Frame):
             command=open_must_haves,
             highlightthickness=1,
             borderwidth=5,
-            background="green",
+            background="#222222",
             foreground="white",
             compound=LEFT,
             width=500,
@@ -2820,9 +3131,9 @@ class Frame4(ttk.Frame):
         )
         # Fast_Installer Main_Frame
         self.fast_main_frame = Frame(
-            self, relief=GROOVE, borderwidth=1, highlightthickness=1, pady=10, padx=10
+            self, relief=GROOVE, borderwidth=0, highlightthickness=5, pady=10, padx=10
         )
-        self.fast_main_frame["background"] = "green"
+        self.fast_main_frame["background"] = "#222222"
         self.fast_main_frame.pack()
 
         # Definition Fast Installer Label
@@ -2834,7 +3145,7 @@ class Frame4(ttk.Frame):
             font=("Helvetica", 16),
             highlightthickness=0,
             borderwidth=0,
-            background="green",
+            background="#222222",
             foreground="white",
         )
         self.sysinf0.pack(pady=5)
@@ -3012,7 +3323,7 @@ class Frame4(ttk.Frame):
             else:
                 # entry_text = self.pi_apps_entry.get()
                 popen(
-                    f"xterm -e 'bash -c \"{home}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
+                    f"xterm -e 'bash -c \"{Application_path}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
                 )
 
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
@@ -3047,7 +3358,7 @@ class Frame4(ttk.Frame):
         )
 
         if piapps_path == False:
-            print("Pi-Apps not found")
+            print("INFO: Pi-Apps not found")
             self.pi_apps_entry.insert(0, "Pi-Apps is not installed")
             self.pi_apps_inst_btn.configure(state=DISABLED)
 
@@ -3197,6 +3508,7 @@ class Frame4(ttk.Frame):
         self.flat_entry.grid(column=2, row=0)
         self.flatp_inst_btn.grid(column=1, row=0)
         self.flat_btn.grid(column=2, row=1)
+
         self.info_inst_btn = Button(
             self,
             image=self.tpinfm,
@@ -3204,7 +3516,7 @@ class Frame4(ttk.Frame):
             borderwidth=0,
             command=info_installer_tab,
         )
-        self.info_inst_btn.place(x=700, y=620)
+        self.info_inst_btn.place(x=900, y=720)
 
 
 # [Look] Tab
@@ -3263,10 +3575,16 @@ class Frame5(ttk.Frame):
             )
 
         def theme_f():
-            popen(f"{legit} xdg-open /usr/share/themes/")
+            if get_de == "XFCE":
+                popen("sudo thunar /usr/share/themes/")
+            else:
+                popen("sudo pcmanfm /usr/share/themes/")
 
         def icon_f():
-            popen(f"{legit} xdg-open /usr/share/images/icons/")
+            if get_de == "XFCE":
+                popen("sudo thunar /usr/share/images/icons/")
+            else:
+                popen("sudo pcmanfm /usr/share/images/icons/")
 
         def xfcefix():
             popen(
@@ -3275,7 +3593,7 @@ class Frame5(ttk.Frame):
 
         def xfcefix2():
             popen(
-                f"xterm -e 'bash -c \"{home}/PiGro-Aid-/scripts/xfce4fix.sh; exec bash\"'"
+                f"xterm -e 'bash -c \"{Application_path}/scripts/xfce4fix.sh; exec bash\"'"
             )
 
         def xfce_make():
@@ -3284,9 +3602,24 @@ class Frame5(ttk.Frame):
         def web_OVC():
             popen("xdg-open https://www.xfce-look.org/browse/")
 
+        # kl
+        def set_wp():
+            global my_image
+            self.filename = filedialog.askopenfilename(
+                initialdir="~",
+                title="Select A File",
+                filetypes=(
+                    ("jpeg files", "*.jpeg"),
+                    ("jpg files", "*.jpg"),
+                    ("png files", "*.png"),
+                    ("all files", "*.*"),
+                ),
+            )
+            os.popen(f"pcmanfm --set-wallpaper {self.filename}")
+
         # Images/Icons
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
@@ -3299,11 +3632,15 @@ class Frame5(ttk.Frame):
         self.ip02 = PhotoImage(file=r"images/icons/fix1i.png")
         self.bluetooth = PhotoImage(file=r"images/icons/bluetooth.png")
         self.wifi = PhotoImage(file=r"images/icons/wifi.png")
+
         # Frame/Button Set
-        self.rahmen4 = Frame(
+        self.rahmen4 = LabelFrame(
             self,
+            text="GUI Tweaks",
+            font=("Helvetica", 14, "bold"),
+            foreground="#d4244d",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=5,
             relief=GROOVE,
             pady=10,
             padx=10,
@@ -3311,16 +3648,6 @@ class Frame5(ttk.Frame):
         )
         self.rahmen4.pack(pady=40, padx=40, fill="both")  #
         self.rahmen4["background"] = "#333333"
-
-        self.guitweaks = Label(
-            self.rahmen4,
-            text="GUI Tweaks",
-            font=("Helvetica", 14, "bold"),
-            background="#333333",
-            foreground="#d4244d",
-            anchor="w",
-        )
-        self.guitweaks.grid(column=0, row=0)
 
         self.in_btn1 = Button(
             self.rahmen4,
@@ -3336,7 +3663,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn1.grid(column=1, row=0, padx=5)
+        self.in_btn1.grid(column=0, row=0, padx=5)
 
         self.in_btn2 = Button(
             self.rahmen4,
@@ -3352,7 +3679,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn2.grid(column=1, row=1, padx=5)
+        self.in_btn2.grid(column=1, row=0, padx=5)
 
         self.in_btn3 = Button(
             self.rahmen4,
@@ -3368,7 +3695,7 @@ class Frame5(ttk.Frame):
             anchor="w",
             width=220,
         )
-        self.in_btn3.grid(column=1, row=2, padx=5)
+        self.in_btn3.grid(column=2, row=0, padx=5)
 
         self.in_btn7 = Button(
             self.rahmen4,
@@ -3382,9 +3709,9 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=0, padx=5, pady=5)
+        self.in_btn7.grid(column=0, row=1, padx=5, pady=5)
 
         self.in_btn7 = Button(
             self.rahmen4,
@@ -3398,9 +3725,9 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=1, padx=5)
+        self.in_btn7.grid(column=1, row=1, padx=5)
 
         self.xfcelook_ttp = CreateToolTip(
             self.in_btn7,
@@ -3419,26 +3746,24 @@ class Frame5(ttk.Frame):
             foreground="white",
             compound=LEFT,
             anchor="w",
-            width=200,
+            width=220,
         )
-        self.in_btn7.grid(column=2, row=2, padx=5)
+        self.in_btn7.grid(column=2, row=1, padx=5)
 
         # xfce_tweaks
-        self.rahmen41 = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=15
+        self.rahmen41 = LabelFrame(
+            self,
+            text="Xfce Tweaks",
+            font=("Helvetica", 14, "bold"),
+            foreground="#d4244d",
+            borderwidth=0,
+            highlightthickness=5,
+            relief=GROOVE,
+            pady=10,
+            padx=15,
         )
         self.rahmen41.pack(padx=40, pady=20, fill="both")
         self.rahmen41["background"] = "#333333"
-
-        self.xfce = Label(
-            self.rahmen41,
-            text="Xfce Tweaks",
-            font=("Helvetica", 14, "bold"),
-            background="#333333",
-            foreground="#d4244d",
-            width=10,
-        )
-        self.xfce.grid(column=0, row=0)
 
         self.in_btn3 = Button(
             self.rahmen41,
@@ -3555,20 +3880,19 @@ class Frame5(ttk.Frame):
             self.in_btn7.configure(state=NORMAL)
 
         # gui_tweaks
-        self.rahmen42 = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=15
+        self.rahmen42 = LabelFrame(
+            self,
+            text="PIXEL Tweaks",
+            font=("Helvetica", 14, "bold"),
+            foreground="#d4244d",
+            borderwidth=0,
+            highlightthickness=5,
+            relief=FLAT,
+            pady=10,
+            padx=15,
         )
         self.rahmen42.pack(padx=40, pady=20, fill="both")
         self.rahmen42["background"] = "#333333"
-
-        self.lxde = Label(
-            self.rahmen42,
-            text="Pixel Tweaks",
-            font=("Helvetica", 14, "bold"),
-            background="#333333",
-            foreground="#d4244d",
-        )
-        self.lxde.grid(column=0, row=0)
 
         self.lx_btn0 = Button(
             self.rahmen42,
@@ -3621,6 +3945,23 @@ class Frame5(ttk.Frame):
         )
         self.lxde.grid(column=3, row=0)
 
+        self.set_wp_btn = Button(
+            self.rahmen42,
+            image=self.ico_m,
+            justify="left",
+            text="Set Wallpaper",
+            compound=LEFT,
+            command=set_wp,
+            highlightthickness=0,
+            borderwidth=0,
+            background="#333333",
+            foreground="white",
+            width=160,
+            anchor="w",
+            font=("Helvetica", 10, "bold"),
+        )
+        self.set_wp_btn.grid(column=4, row=0)
+        # öü
         self.info_look_btn = Button(
             self,
             image=self.tpinfm,
@@ -3628,7 +3969,7 @@ class Frame5(ttk.Frame):
             borderwidth=0,
             command=info_look_tab,
         )
-        self.info_look_btn.place(x=700, y=620)
+        self.info_look_btn.place(x=900, y=720)
 
 
 # [ZRAM] Child
@@ -3664,7 +4005,7 @@ class z_ram_pop(tk.Toplevel):
             Notification(
                 title="ZRAMr\n",
                 description="ZRAM has been installed",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -3684,7 +4025,7 @@ class z_ram_pop(tk.Toplevel):
             Notification(
                 title="ZRAMr\n",
                 description="ZRAM has been uninstalled",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -3781,7 +4122,7 @@ class Frame6(ttk.Frame):
         # BG + Icons
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.rm_ov_icon = PhotoImage(file=r"images/icons/PiGroOV_rm.png")
@@ -3805,7 +4146,7 @@ class Frame6(ttk.Frame):
 
         def set_default():
             os.system(
-                f"xterm -e 'bash -c \"{legit} {home}/PiGro-Aid-/scripts/rm_ov.sh && exit; exec bash\"'"
+                f"xterm -e 'bash -c \"{legit} {Application_path}/scripts/rm_ov.sh && exit; exec bash\"'"
             )
             done_msg()
             tu_btn1.config(state=NORMAL)
@@ -3823,7 +4164,7 @@ class Frame6(ttk.Frame):
             Notification(
                 title="PiGro Overclocking\n",
                 description="All Settings Restored\n\n",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -3843,7 +4184,7 @@ class Frame6(ttk.Frame):
             Notification(
                 title="PiGro Overclocking\n",
                 description="arm_freq = 2000\ngpu_fequ = 750\nover_voltage = 6\nforce_turbo = 1",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -3862,12 +4203,12 @@ class Frame6(ttk.Frame):
             Notification(
                 title="PiGro Overclocking\n",
                 description="arm_freq = 2147\ngpu_fequ = 750\nover_voltage = 8\nforce_turbo = 1",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
 
-            popen(f"mpg123 {home}/PiGro-Aid-/scripts/HOLYPiT.mp3")
+            popen(f"mpg123 {Application_path}/scripts/HOLYPiT.mp3")
 
         # overclocking_2200
 
@@ -3875,12 +4216,12 @@ class Frame6(ttk.Frame):
             os.system(
                 f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
             )
-            popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+            popen(f"mpg123 {Application_path}/scripts/over9000.mp3")
             done_msg()
             Notification(
                 title="PiGro Overclocking\n",
                 description="arm_freq = 2200\ngpu_fequ = 750\nover_voltage = 8\force_turbo = 1",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
@@ -3895,7 +4236,7 @@ class Frame6(ttk.Frame):
             os.system(
                 f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=700\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
             )
-            popen(f"mpg123 {home}/PiGro-Aid-/scripts/over9000.mp3")
+            popen(f"mpg123 {Application_path}/scripts/over9000.mp3")
             done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
@@ -3905,40 +4246,45 @@ class Frame6(ttk.Frame):
             Notification(
                 title="PiGro Overclocking\n",
                 description="arm_freq = 2300\ngpu_fequ = 700\nover_voltage = 14\nforce_turbo = 1",
-                icon_path=f"{home}/PiGro-Aid-/images/icons/Logotab.png",
+                icon_path=f"{Application_path}/images/icons/Logotab.png",
                 duration=5,
                 urgency="normal",
             ).send()
 
-        # OV_MAIN_Frame
-        self.ov_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10, padx=50
-        )
-        self.ov_main_frame.pack(padx=20, pady=20, fill="both")
-        self.ov_main_frame["background"] = "#333333"
-
         # OV_Button_Frame
         self.ov_buttons = Frame(
-            self.ov_main_frame,
+            self,
             borderwidth=0,
-            highlightthickness=0,
+            highlightthickness=5,
             relief=GROOVE,
             pady=20,
+            padx=20,
         )
-        self.ov_buttons.pack(side=LEFT)  # .grid(row=0, column=0)
-        self.ov_buttons["background"] = "#333333"
+        self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH)
+        self.ov_buttons["background"] = "#222222"
 
         # Overclocking State Main Frame
         self.ov_state_display_frame = Frame(
-            self.ov_main_frame,
+            self,
             borderwidth=0,
-            highlightthickness=0,
+            highlightthickness=5,
             relief=GROOVE,
         )
         self.ov_state_display_frame.pack(
-            anchor="n", padx=10, pady=70
-        )  # .grid(row=0, column=1, padx=20)
-        self.ov_state_display_frame["background"] = "#333333"
+            anchor="n", padx=10, pady=20, fill=BOTH, expand=True
+        )
+        self.ov_state_display_frame["background"] = "#222222"
+
+        self.settings_header = Label(
+            self.ov_state_display_frame,
+            text="Current Settings",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#222222",
+            foreground="#d4244d",
+            font=("Helvetica", 16),
+            justify="left",
+        ).pack(pady=20)
 
         # Overclocking Values Frame
         self.ov_display_frame = Frame(
@@ -3949,8 +4295,8 @@ class Frame6(ttk.Frame):
             padx=5,
             pady=5,
         )
-        self.ov_display_frame.pack(anchor="n")  # .grid(row=0, column=1, padx=20)
-        self.ov_display_frame["background"] = "#333333"
+        self.ov_display_frame.pack(anchor="n")
+        self.ov_display_frame["background"] = "#222222"
 
         # ZRAM Button
         self.tu_zbtn = Button(
@@ -3968,16 +4314,19 @@ class Frame6(ttk.Frame):
         ).pack(pady=20)
 
         # Additional Infos
+
         self.ov_helps_frame = Frame(
-            self.ov_main_frame,
+            self.ov_state_display_frame,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
         )
-        self.ov_helps_frame.pack(anchor="n")  # .grid(row=0, column=1, padx=20)
-        self.ov_helps_frame["background"] = "#333333"
+        self.ov_helps_frame.pack(padx=20)
+        self.ov_helps_frame["background"] = "#222222"
 
         # Overclocking Stats
+
+        # Tuning_Button_Frame
         pigro_t_label = Label(
             self.ov_display_frame,
             anchor="e",
@@ -3985,9 +4334,8 @@ class Frame6(ttk.Frame):
             text="PiGro Berry: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4001,7 +4349,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="green",
             bg="#333333",
             font=("Helvetica", 12, "bold"),
@@ -4016,9 +4364,8 @@ class Frame6(ttk.Frame):
             text="Arm Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4032,9 +4379,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4047,9 +4393,8 @@ class Frame6(ttk.Frame):
             text="Gpu Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4063,9 +4408,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4078,9 +4422,8 @@ class Frame6(ttk.Frame):
             text="Gpu Mem: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4094,9 +4437,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4109,9 +4451,8 @@ class Frame6(ttk.Frame):
             text="Over Voltage: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4125,9 +4466,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4140,9 +4480,8 @@ class Frame6(ttk.Frame):
             text="Force Turbo: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=15,
         )
@@ -4156,9 +4495,8 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="white",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4170,20 +4508,8 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 8),
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="yellow",
-        ).pack()
-
-        self.tu_legende = Button(
-            self.ov_helps_frame,
-            text="Legende",
-            font=("Helvetica", 8),
-            highlightthickness=2,
-            borderwidth=0,
-            background="#333333",
-            foreground="yellow",
-            command=tuning_legende,
-            image=self.tu_legend_ico,
         ).pack()
 
         # Tuning_Button_Frame
@@ -4192,7 +4518,7 @@ class Frame6(ttk.Frame):
             text="Overclocking Options",
             highlightthickness=0,
             borderwidth=2,
-            background="#333333",
+            background="#222222",
             foreground="#d4244d",
             font=("Helvetica", 16),
             justify="left",
@@ -4303,6 +4629,18 @@ class Frame6(ttk.Frame):
         )
         tu_btn5.grid(column=0, row=10, pady=10)
 
+        self.tu_legende = Button(
+            self.ov_buttons,
+            text="Legende",
+            font=("Helvetica", 8),
+            highlightthickness=2,
+            borderwidth=0,
+            background="#333333",
+            foreground="yellow",
+            command=tuning_legende,
+            image=self.tu_legend_ico,
+        ).grid(column=0, row=11, pady=10)
+
         def ov_display():
             # Overclock Display Functions
             with open(f"{config_path}", "r") as fp:
@@ -4312,7 +4650,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Crank It Up",
                             fg="yellow",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4326,7 +4664,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Need A Fan!",
                             fg="red",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4340,7 +4678,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Take It To The Max!",
                             fg="pink",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4354,7 +4692,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Honey,the fuse blew again!",
                             fg="purple",
-                            bg="#333333",
+                            bg="#222222",
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -4368,7 +4706,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4383,7 +4721,7 @@ class Frame6(ttk.Frame):
                     gpu_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4398,7 +4736,7 @@ class Frame6(ttk.Frame):
                     force_t_display.config(
                         text=line[12:-1],
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4413,7 +4751,7 @@ class Frame6(ttk.Frame):
                     over_v_display.config(
                         text=line[13:-1],
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -4428,7 +4766,7 @@ class Frame6(ttk.Frame):
                     gpu_m_display.config(
                         text=line[8:-1] + " MB",
                         fg="white",
-                        bg="#333333",
+                        bg="#222222",
                         font=("Helvetica", 12, "bold"),
                     )
 
@@ -4445,7 +4783,7 @@ class Frame6(ttk.Frame):
             borderwidth=0,
             command=info_tuning_tab,
         )
-        self.info_tuning_btn.place(x=670, y=530)
+        self.info_tuning_btn.place(x=900, y=700)
 
 
 # [Links] Tab
@@ -4529,7 +4867,7 @@ class Frame7(ttk.Frame):
 
         # äö
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.di01 = PhotoImage(file=r"images/icons/TwisterOSLogo-Large-New3.png")
@@ -4546,7 +4884,7 @@ class Frame7(ttk.Frame):
         self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=10, pady=20
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=10, pady=20
         )
         self.rahmen.grid(row=0, rowspan=11, column=0, pady=20, padx=40)
         self.rahmen["background"] = "#333333"
@@ -4713,7 +5051,7 @@ class Frame7(ttk.Frame):
         ).pack()
 
         self.fast_sec_frame = Frame(
-            self, borderwidth=0, highlightthickness=2, relief=GROOVE, pady=10
+            self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10
         )
         self.fast_sec_frame.grid(row=0, column=1, pady=20)
         self.fast_sec_frame["background"] = "#333333"
@@ -4893,7 +5231,7 @@ class Frame8(ttk.Frame):
         super().__init__()
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg2.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         def poll():
@@ -4986,13 +5324,13 @@ class Frame9(ttk.Frame):
         super().__init__()
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg)
+        self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.rahmen101 = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=20, padx=10
+            self, borderwidth=0, relief=GROOVE, highlightthickness=5, pady=20, padx=10
         )
-        self.rahmen101.pack(pady=20)
+        self.rahmen101.pack(pady=50)
         self.rahmen101["background"] = "#333333"
 
         self.btn_frame = Frame(self.rahmen101, bg="#333333")
@@ -5087,7 +5425,7 @@ class Error_Mass(tk.Toplevel):
         def cu_error():
             Error_Mass.destroy(self)
 
-        self.e_m = PhotoImage(file=f"{home}/PiGro-Aid-/images/backgrounds/yuno.png")
+        self.e_m = PhotoImage(file=f"{Application_path}/images/backgrounds/yuno.png")
 
         error_frame = Frame(self, bg="#333333")
         error_frame.pack(pady=10)
