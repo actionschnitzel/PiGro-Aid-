@@ -4503,7 +4503,6 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background="#222222",
             foreground="green",
-            bg="#333333",
             font=("Helvetica", 12, "bold"),
             width=25,
         )
@@ -4865,6 +4864,19 @@ class Frame6(ttk.Frame):
                     tu_btn2.config(state=DISABLED)
                     tu_btn3.config(state=DISABLED)
                     tu_btn4.config(state=DISABLED)
+                if "#arm_freq=800" in line:
+                    arm_f_display.config(
+                        text="not configured",
+                        fg="white",
+                        bg="#222222",
+                        font=("Helvetica", 12, "bold"),
+                    )
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+
+
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
