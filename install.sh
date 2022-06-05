@@ -13,9 +13,7 @@ NC='\033[0m' # No Color
 
 printf "${GREEN}I now install dependencies${NC}\n\n"
 
-sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip mpg123 lolcat -y
-
-pip3 install psutil distro py-notifier gpiozero RPi.GPIO
+sudo apt-get install xterm mpg123 lolcat rpi.gpio python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distropython3-gpiozero libnotify-bin -y
 
 clear
 
@@ -26,11 +24,11 @@ if [ -d "$HOME/PiGro-Aid-" ]
 then
     printf "${YELLOW}[UPDATE]${NC}I will install the newest version.\n\n" 
     rm -rf $HOME/PiGro-Aid-
-    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+    git clone -b big_update https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 else
     printf "${YELLOW}[NEW INSTALL]${NC}I will now install PiGro\n\n"
-    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
+    git clone -b big_update https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 fi
 

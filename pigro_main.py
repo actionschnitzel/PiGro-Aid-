@@ -33,8 +33,6 @@ from faulthandler import disable
 from tkinter import filedialog
 
 
-# import splash
-
 # To Do:
 # Always clear apt_cache,packages,PiGro.config
 # before PUSH!
@@ -109,13 +107,16 @@ else:
     print("INFO: Flatpak is not installed")
 
 
+
+
 # [Main Winddow / Notebook Config / SysTray]
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
+        """Base Class That Sets Notbook And Theme"""
 
         # Window Basics
-        self.title("PiGro - Il Re Cornelius")
+        self.title("PiGro - Just Click It! (Stupida Medusa)")
         self.icon = tk.PhotoImage(file="images/icons/pigro_icons/256x256.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = "#333333"
@@ -192,9 +193,7 @@ class MainApplication(tk.Tk):
             self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
         )
 
-        self.notebook.add(
-            self.Frame8, compound=LEFT, text="PiG-Grow", image=self.pig_icon
-        )
+        self.notebook.add(self.Frame8, compound=LEFT, text="Pig-Grow", image=self.pig_icon)
 
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
@@ -534,7 +533,7 @@ class Frame1(ttk.Frame):
 
         self.sysinf6 = Label(
             self.sys_frame_left,
-            text=f"CPU Max Freq: {cpufreq.max:.2f}Mhz",
+            text=f"CPU Max Freq: {cpufreq.max:.0f} Mhz",
             justify="left",
             background="#222222",
             foreground="white",
@@ -545,7 +544,7 @@ class Frame1(ttk.Frame):
 
         self.sysinf7 = Label(
             self.sys_frame_left,
-            text=f"CPU Min Freq: {cpufreq.min:.2f}Mhz",
+            text=f"CPU Min Freq: {cpufreq.min:.0f} Mhz",
             justify="left",
             background="#222222",
             foreground="white",
@@ -643,7 +642,7 @@ class Frame1(ttk.Frame):
             cpu = CPUTemperature()
             # print(cpu)
 
-            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.2f}Mhz")
+            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh_sys_stats)
 
@@ -748,7 +747,13 @@ class Frame2(ttk.Frame):
         s_list.pack(anchor="w")
 
         self.update_btn_frame = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=5, padx=5, pady=5
+            self,
+            borderwidth=0,
+            relief=GROOVE,
+            highlightthickness=3,
+            highlightcolor="white",
+            padx=5,
+            pady=5,
         )
         self.update_btn_frame.pack(padx=45, anchor="w")
         self.update_btn_frame["background"] = "#222222"
@@ -1066,7 +1071,71 @@ class Frame3(ttk.Frame):
             popen(f"xdg-open {home}/.bash_history")
 
         def rename_user():
-            popen(f"{legit} rename-user")
+            global pop_u_name
+            pop_u_name = Toplevel(self)
+            pop_u_name.config(bg="#333333")
+            app_width = 500
+            app_height = 150
+            screen_width = pop_u_name.winfo_screenwidth()
+            screen_height = pop_u_name.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_u_name.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_u_name.resizable(0, 0)
+
+            def pop_u_name_dest():
+                pop_u_name.destroy()
+
+            def do_it():
+                popen(f"{legit} rename-user")
+                print("INFO: Name will be changed")
+                pop_u_name.destroy()
+
+            frame_pop_u_name = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
+            frame_pop_u_name.pack()
+            frame_pop_u_name["background"] = "#333333"
+
+            frame_pop_u_name_1 = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
+            frame_pop_u_name_1.pack()
+            frame_pop_u_name_1["background"] = "#333333"
+
+            pop_lbl_2000 = Label(
+                frame_pop_u_name,
+                anchor="w",
+                text="Do you really want to change the user name?\nrename-user will run on reboot.",
+                font=("Helvetica", 12),
+                highlightthickness=0,
+                borderwidth=2,
+                background="#333333",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_lbl_2000.pack(pady=20)
+
+            pop_btn_2000 = Button(
+                frame_pop_u_name_1,
+                text="No",
+                anchor="w",
+                command=pop_u_name_dest,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#2246c4",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_2000.pack(padx=5, pady=20, side=LEFT)
+            pop_btn_shut = Button(
+                frame_pop_u_name_1,
+                text="Do It!",
+                anchor="w",
+                command=do_it,
+                highlightthickness=0,
+                borderwidth=0,
+                background="#f03838",
+                foreground="white",
+                compound=LEFT,
+            )
+            pop_btn_shut.pack(padx=5, pady=20)
 
         # Icon Set
         self.bp01 = PhotoImage(file=r"images/icons/raspberry-pi-logo.png")
@@ -1102,7 +1171,13 @@ class Frame3(ttk.Frame):
 
         # Button Set/Frame1
         self.rahmen2 = Frame(
-            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=20, pady=20
+            self,
+            borderwidth=0,
+            highlightthickness=3,
+            highlightcolor="white",
+            relief=GROOVE,
+            padx=20,
+            pady=20,
         )
         self.rahmen2.pack(pady=20)
         self.rahmen2["background"] = "#222222"
@@ -1867,7 +1942,8 @@ class Frame13(ttk.Frame):
         auto_main_frame = Frame(
             self,
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             background="#222222",
             pady=20,
             padx=20,
@@ -1934,13 +2010,13 @@ class Frame13(ttk.Frame):
         content3 = fo3.readlines()
         # print(content3)
 
-        inst_btn3 = Button(
+        inst_btn3 = Label(
             auto_button_frame,
-            text="Selected:",
+            text="Selected: \n",
             highlightthickness=0,
             borderwidth=0,
             background="#222222",
-            foreground="white",
+            foreground="#d4244d",
             font=(("Helvetica,bold"), "14"),
         )
         inst_btn3.pack(anchor="n")
@@ -1970,8 +2046,19 @@ class Frame13(ttk.Frame):
         uninst_btn3.pack(anchor="s")
 
         # Create an entry box
+
+
         my_entry3 = Entry(auto_select_frame, font=("Helvetica", 12), width=60)
         my_entry3.pack()
+
+        note_lbl = Label(
+            auto_select_frame,
+            text="double click to select",
+            background="#222222",
+            foreground="yellow",
+            font=("Helvetica", 14)
+        )
+        note_lbl.pack(pady=5)
 
         global my_list3
         my_list3 = Listbox(auto_select_frame, width=60, height=30)
@@ -1991,56 +2078,110 @@ class Frame13(ttk.Frame):
         my_entry3.bind("<KeyRelease>", check3)
 
 
-# [Autostart Child]
+# [Autostart Add Entry Child]
 class Add_Autostart(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Overclocking Legend")
-        # self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
-        # self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 500
-        app_height = 120
+        app_height = 180
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.title("Changelog")
+        self.title("Add Entry")
+        self["background"] = "#333333"
+
+        def error_mass():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
 
         def add_enrty():
-            file_name = f"{home}/.config/autostart/{add_name.get()}.desktop"
-            f = open(file_name, "a+")  # open file in append mode
-            f.write(
-                f"[Desktop Entry]\nName={add_name.get()}\nExec={add_path.get()}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true\nHidden=false\n"
-            )
-            f.close()
-            my_list3.insert("end", f"{add_name.get()}.desktop")
 
-            with open("scripts/autostart.list", "a") as file:
-                file.write(f"{add_name.get()}.desktop")
+            if add_name.get() == "" or add_path.get() == "":
+                error_mass()
+            else:
+                file_name = f"{home}/.config/autostart/{add_name.get()}.desktop"
+                f = open(file_name, "a+")  # open file in append mode
+                f.write(
+                    f"[Desktop Entry]\nName={add_name.get()}\nExec={add_path.get()}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true\nHidden=false\n"
+                )
+                f.close()
+                my_list3.insert("end", f"{add_name.get()}.desktop")
 
-        add_frame = Frame(self)
+                with open("scripts/autostart.list", "a") as file:
+                    file.write(f"{add_name.get()}.desktop")
+
+        add_frame = Frame(self, background="#333333")
         add_frame.pack(padx=10, pady=10)
 
         add_name_lbl = Label(
-            add_frame, text="Name:", justify="left", anchor="w", width=10
+            add_frame,
+            text="Name:",
+            justify="left",
+            anchor="w",
+            width=10,
+            background="#333333",
+            foreground="white",
         )
         add_name_lbl.grid(row=0, column=0)
 
         add_path_lbl = Label(
-            add_frame, text="Path to File:", justify="left", anchor="w", width=10
+            add_frame,
+            text="Path to File:",
+            justify="left",
+            anchor="w",
+            width=10,
+            background="#333333",
+            foreground="white",
         )
         add_path_lbl.grid(row=1, column=0)
 
-        add_name = Entry(add_frame, width=50)
+        add_name = Entry(add_frame, width=45)
         add_name.grid(row=0, column=1)
 
-        add_path = Entry(add_frame, width=50)
+        add_path = Entry(add_frame, width=45)
         add_path.grid(row=1, column=1)
 
-        set_auto = Button(add_frame, text="Add", width=10, command=add_enrty)
-        set_auto.grid(row=2, column=0, pady=5)
+        example_path_lbl = Label(
+            add_frame,
+            text="Example: /bin/conky",
+            justify="left",
+            anchor="w",
+            width=45,
+            background="#333333",
+            foreground="white",
+        )
+        example_path_lbl.grid(row=2, column=1)
+
+        set_auto = Button(
+            add_frame,
+            text="Add",
+            width=10,
+            command=add_enrty,
+            background="#333333",
+            foreground="white",
+            highlightthickness=1,
+            borderwidth=0,
+            highlightcolor="white",
+        )
+        set_auto.grid(row=3, column=0, pady=5)
+
+        cancel_add = Button(
+            add_frame,
+            text="Close",
+            width=10,
+            command=self.destroy,
+            background="#333333",
+            foreground="white",
+            highlightthickness=1,
+            borderwidth=0,
+            highlightcolor="white",
+        )
+        cancel_add.grid(row=4, column=0, pady=5)
 
 
 # [Overclocking_Legend Popup] Child
@@ -2484,7 +2625,7 @@ class Overclocking_Expert(tk.Toplevel):
             popen(f"{legit} reboot")
 
         def fi_fy_fo_bar():
-            self.title("This tool is great for Youtuberts to make useless vidios")
+            self.title("This tool is great for Youtubers to make useless vidios")
 
         # Expert Frame
         x_mode_frame = Frame(self, bg="#333333")
@@ -3119,7 +3260,7 @@ class Frame4(ttk.Frame):
             command=open_must_haves,
             highlightthickness=1,
             borderwidth=5,
-            background="#222222",
+            background="green",
             foreground="white",
             compound=LEFT,
             width=500,
@@ -3131,9 +3272,15 @@ class Frame4(ttk.Frame):
         )
         # Fast_Installer Main_Frame
         self.fast_main_frame = Frame(
-            self, relief=GROOVE, borderwidth=0, highlightthickness=5, pady=10, padx=10
+            self,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=3,
+            highlightcolor="white",
+            pady=10,
+            padx=10,
         )
-        self.fast_main_frame["background"] = "#222222"
+        self.fast_main_frame["background"] = "green"
         self.fast_main_frame.pack()
 
         # Definition Fast Installer Label
@@ -3145,7 +3292,7 @@ class Frame4(ttk.Frame):
             font=("Helvetica", 16),
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background="green",
             foreground="white",
         )
         self.sysinf0.pack(pady=5)
@@ -3640,7 +3787,8 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 14, "bold"),
             foreground="#d4244d",
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             relief=GROOVE,
             pady=10,
             padx=10,
@@ -3757,7 +3905,8 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 14, "bold"),
             foreground="#d4244d",
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             relief=GROOVE,
             pady=10,
             padx=15,
@@ -3886,7 +4035,8 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 14, "bold"),
             foreground="#d4244d",
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             relief=FLAT,
             pady=10,
             padx=15,
@@ -4255,7 +4405,8 @@ class Frame6(ttk.Frame):
         self.ov_buttons = Frame(
             self,
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             relief=GROOVE,
             pady=20,
             padx=20,
@@ -4267,7 +4418,8 @@ class Frame6(ttk.Frame):
         self.ov_state_display_frame = Frame(
             self,
             borderwidth=0,
-            highlightthickness=5,
+            highlightthickness=3,
+            highlightcolor="white",
             relief=GROOVE,
         )
         self.ov_state_display_frame.pack(
@@ -4884,7 +5036,13 @@ class Frame7(ttk.Frame):
         self.pi64_os_ico = PhotoImage(file=r"images/icons/Raspberry_Pi_Logo.png")
 
         self.rahmen = Frame(
-            self, borderwidth=0, highlightthickness=5, relief=GROOVE, padx=10, pady=20
+            self,
+            borderwidth=0,
+            highlightthickness=3,
+            highlightcolor="white",
+            relief=GROOVE,
+            padx=10,
+            pady=20,
         )
         self.rahmen.grid(row=0, rowspan=11, column=0, pady=20, padx=40)
         self.rahmen["background"] = "#333333"
@@ -5051,7 +5209,12 @@ class Frame7(ttk.Frame):
         ).pack()
 
         self.fast_sec_frame = Frame(
-            self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10
+            self,
+            borderwidth=0,
+            highlightthickness=3,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=10,
         )
         self.fast_sec_frame.grid(row=0, column=1, pady=20)
         self.fast_sec_frame["background"] = "#333333"
@@ -5230,7 +5393,9 @@ class Frame8(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.bg = PhotoImage(file="images/backgrounds/pigro_bg2.png")
+        self.auto_start = PhotoImage(file=r"images/icons/actionschnitzel_logo.png")
+
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
@@ -5251,8 +5416,14 @@ class Frame8(ttk.Frame):
         self.rahmen102 = Frame(
             self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10
         )
-        self.rahmen102.place(x=60, y=300)
+        self.rahmen102.pack(fill=BOTH, padx=50, pady=20)
         self.rahmen102["background"] = "#333333"
+
+        self.actn_shn = Label(
+            self.rahmen102,
+            image=self.auto_start,
+            background="#333333",
+        ).pack(pady=20)
 
         self.poke_pig_21 = Label(
             self.rahmen102,
@@ -5270,7 +5441,7 @@ class Frame8(ttk.Frame):
         self.mail.pack(pady=5)
 
         self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
-        self.rahmen101.place(x=60, y=600)
+        self.rahmen101.pack(fill=BOTH, padx=50, pady=20)
         self.rahmen101["background"] = "#333333"
 
         self.pig_btn_1 = Button(
@@ -5282,7 +5453,7 @@ class Frame8(ttk.Frame):
             foreground="#2FFC05",
             command=poll,
             font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=0, row=0, pady=20, padx=20)
+        ).pack()
 
         self.pig_btn_2 = Button(
             self.rahmen101,
@@ -5293,7 +5464,7 @@ class Frame8(ttk.Frame):
             foreground="#EBFC05",
             command=wpaps,
             font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=1, row=0, pady=20)
+        ).pack()
 
         self.pig_btn_3 = Button(
             self.rahmen101,
@@ -5304,7 +5475,7 @@ class Frame8(ttk.Frame):
             foreground="#053AFC",
             command=wiki,
             font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=2, row=0, pady=20, padx=20)
+        ).pack()
 
         self.pig_btn_4 = Button(
             self.rahmen101,
@@ -5315,13 +5486,24 @@ class Frame8(ttk.Frame):
             foreground="#FC05A0",
             command=red_bub,
             font=(("Helvetica,bold"), "12", "bold"),
-        ).grid(column=3, row=0, pady=20, padx=20)
+        ).pack()
+
 
 
 # [Cam] Tab
 class Frame9(ttk.Frame):
     def __init__(self, container):
         super().__init__()
+
+        def photo1():
+            photo = str(entry.get())
+            popen(f"libcamera-jpeg -o {home}/{photo}.jpg")
+
+        def video1():
+            video = str(entry.get())
+            rec_time = str(sec_entry.get() + "000")
+            popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
+
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg, bg="#333333")
@@ -5362,47 +5544,40 @@ class Frame9(ttk.Frame):
         )
         self.label.pack()
 
-        self.entry = Entry(self.btn_frame, bd=5, width=31, borderwidth=1)
-        self.entry.pack()
-        self.photo_btn = Button(
+        entry = Entry(self.btn_frame, bd=5, width=31, borderwidth=1)
+        entry.pack()
+        photo_btn = Button(
             self.btn_frame,
             text="Take A Photo",
-            command=self.photo1,
+            command=photo1,
             bg="#333333",
             fg="white",
             highlightthickness=0,
         )
-        self.photo_btn.pack(pady=10)
+        photo_btn.pack(pady=10)
 
-        self.video_btn = Button(
+        video_btn = Button(
             self.btn_frame,
             text="Take A Video",
-            command=self.video1,
+            command=video1,
             bg="#333333",
             fg="white",
             highlightthickness=0,
         )
-        self.video_btn.pack()
+        video_btn.pack()
 
-        self.sec_ent_label = Label(
+        sec_ent_label = Label(
             self.btn_frame,
             text="REC time in seconds:",
             bg="#333333",
             fg="white",
         )
-        self.sec_ent_label.pack()
+        sec_ent_label.pack()
 
-        self.sec_entry = Entry(self.btn_frame, bd=5, width=5, borderwidth=1)
-        self.sec_entry.pack()
+        sec_entry = Entry(self.btn_frame, bd=5, width=5, borderwidth=1)
+        sec_entry.pack()
 
-    def photo1(self):
-        photo = str(self.entry.get())
-        popen(f"libcamera-jpeg -o {home}/{photo}.jpg")
 
-    def video1(self):
-        video = str(self.entry.get())
-        rec_time = str(self.sec_entry.get() + "000")
-        popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
 
 
 # [Error Massage] Child
