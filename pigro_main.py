@@ -58,6 +58,20 @@ if Application_path == f"{home}/PiGro-Aid-":
     popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
     print("INFO: All files executable")
 
+# Checks if pigro bin exists
+popen(f"{Application_path}/scripts/check_bin.sh")
+# Gets list of all pakages avaleble on APT
+os.system(
+    f"xterm -e 'bash -c \"apt-cache pkgnames > {Application_path}/scripts/apt_cache.list && exit; exec bash\"'"
+)
+print(f"INFO: APT-CACHE loaded")
+
+# Gets list of all installed pakages
+os.system(
+    f"xterm -e 'bash -c \"dpkg --get-selections > {Application_path}/scripts/packages.list && sed -e s/install//g -i {Application_path}/scripts/packages.list && exit; exec bash\"'"
+)
+print(f"INFO: Instaled pakages loaded")
+
 # Get Distro
 distro_get = distro.id()
 print("INFO: Your Distro is: " + distro_get)
@@ -92,7 +106,9 @@ piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
 if piapps_path == False:
     print("INFO: Pi-Apps not found")
 if piapps_path == True:
-    print("INFO: Pi-Apps is installed")
+    print("INFO: Pi-Apps is installed list will be added")
+    popen(f"ls ~/pi-apps/apps/ > {Application_path}/scripts/pi-apps_list.list")
+
 
 # Checks if snapd exists
 if os.path.isfile("/bin/snap"):
@@ -105,8 +121,6 @@ if os.path.isfile("/bin/flatpak"):
     print("INFO: Flatpak is installed")
 else:
     print("INFO: Flatpak is not installed")
-
-
 
 
 # [Main Winddow / Notebook Config / SysTray]
@@ -193,7 +207,9 @@ class MainApplication(tk.Tk):
             self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
         )
 
-        self.notebook.add(self.Frame8, compound=LEFT, text="Pig-Grow", image=self.pig_icon)
+        self.notebook.add(
+            self.Frame8, compound=LEFT, text="Pig-Grow", image=self.pig_icon
+        )
 
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
@@ -266,7 +282,7 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Added:\n-Stressberry Support\n\n#Changed:\n-Icons improved.. Yes! Again!\n\n-Changelog pops up und fist start\nor after update \n\n#Improved:\n-Fixed some problems with the new overclocking options\n",
+            text="#Added:\n-Disk Space Display\n-Autostart Tab\n\n#Changed:\n-Main Color #222222(Why? Because!)\n\n#Improved:\n-arm_freq=800 bug fixed\n-Code Improvments\n-New CLI output structure\nfor better debuging",
         )
         changelog_label.pack()
 
@@ -298,7 +314,7 @@ class Frame1(ttk.Frame):
         # Check if Update or First run
         with open(f"{Application_path}/scripts/PiGro.conf") as f:
             if "First_Run = True" in f.read():
-                print("First Run")
+                print("INFO: First Run")
 
                 ch_log()
 
@@ -2047,7 +2063,6 @@ class Frame13(ttk.Frame):
 
         # Create an entry box
 
-
         my_entry3 = Entry(auto_select_frame, font=("Helvetica", 12), width=60)
         my_entry3.pack()
 
@@ -2056,7 +2071,7 @@ class Frame13(ttk.Frame):
             text="double click to select",
             background="#222222",
             foreground="yellow",
-            font=("Helvetica", 14)
+            font=("Helvetica", 14),
         )
         note_lbl.pack(pady=5)
 
@@ -2148,7 +2163,7 @@ class Add_Autostart(tk.Toplevel):
 
         example_path_lbl = Label(
             add_frame,
-            text="Example: /bin/conky",
+            text="Example: /bin/conky (*options)",
             justify="left",
             anchor="w",
             width=45,
@@ -4792,6 +4807,19 @@ class Frame6(ttk.Frame):
             image=self.tu_legend_ico,
         ).grid(column=0, row=11, pady=10)
 
+        self.pigro_t_info = Label(
+            self.ov_buttons,
+            anchor="w",
+            justify=LEFT,
+            text="To unlock the overclocking options\non 'first use' click on:\nReset Overclocking",
+            highlightthickness=0,
+            borderwidth=2,
+            background="#222222",
+            foreground="yellow",
+            font=("Helvetica", 8, "bold"),
+        )
+        self.pigro_t_info.grid(column=0, row=12)
+
         def ov_display():
             # Overclock Display Functions
             with open(f"{config_path}", "r") as fp:
@@ -4875,8 +4903,6 @@ class Frame6(ttk.Frame):
                     tu_btn2.config(state=DISABLED)
                     tu_btn3.config(state=DISABLED)
                     tu_btn4.config(state=DISABLED)
-
-
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
@@ -5501,7 +5527,6 @@ class Frame8(ttk.Frame):
         ).pack()
 
 
-
 # [Cam] Tab
 class Frame9(ttk.Frame):
     def __init__(self, container):
@@ -5515,7 +5540,6 @@ class Frame9(ttk.Frame):
             video = str(entry.get())
             rec_time = str(sec_entry.get() + "000")
             popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
-
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg, bg="#333333")
@@ -5588,8 +5612,6 @@ class Frame9(ttk.Frame):
 
         sec_entry = Entry(self.btn_frame, bd=5, width=5, borderwidth=1)
         sec_entry.pack()
-
-
 
 
 # [Error Massage] Child
