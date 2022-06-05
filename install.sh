@@ -24,11 +24,11 @@ if [ -d "$HOME/PiGro-Aid-" ]
 then
     printf "${YELLOW}[UPDATE]${NC}I will install the newest version.\n\n" 
     rm -rf $HOME/PiGro-Aid-
-    git clone -b big_update https://github.com/actionschnitzel/PiGro-Aid-.git
+    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 else
     printf "${YELLOW}[NEW INSTALL]${NC}I will now install PiGro\n\n"
-    git clone -b big_update https://github.com/actionschnitzel/PiGro-Aid-.git
+    git clone https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 fi
 
