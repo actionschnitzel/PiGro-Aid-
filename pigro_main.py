@@ -253,7 +253,10 @@ class MainApplication(tk.Tk):
 
 # [Changelog] Child
 class Change_Log(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(
+        self,
+        parent,
+    ):
         super().__init__(parent)
         self.title("Overclocking Legend")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
@@ -303,8 +306,13 @@ class Change_Log(tk.Toplevel):
 
 
 # [Welcome] Tab
-class Frame1(ttk.Frame):
-    def __init__(self, container):
+class Frame1(
+    ttk.Frame,
+):
+    def __init__(
+        self,
+        container,
+    ):
         super().__init__()
 
         def ch_log():
@@ -1934,6 +1942,10 @@ class Frame13(ttk.Frame):
             add_child = Add_Autostart(self)
             add_child.grab_set()
 
+        def edit_auto():
+            edit_child = Edit_Autostart(self)
+            edit_child.grab_set()
+
         # Checks is autostart folder exists
         dir = os.path.join(f"{home}/.config/autostart")  #
         if not os.path.exists(dir):
@@ -1985,31 +1997,31 @@ class Frame13(ttk.Frame):
         auto_select_frame.pack()
 
         def del_enrty():
-            os.remove(f"{home}/.config/autostart/{my_entry3.get()}")
-            my_list3.delete(tk.ACTIVE)
+            os.remove(f"{home}/.config/autostart/{auto_selected.get()}")
+            auto_list.delete(tk.ACTIVE)
 
         # Update the listbox
         def update3(data3):
             # Clear the listbox
-            my_list3.delete(0, END)
+            auto_list.delete(0, END)
 
             # Add toppings to listbox
             for item3 in data3:
-                my_list3.insert(END, item3)
+                auto_list.insert(END, item3)
 
         # Update entry box with listbox clicked
 
         def fillout3(event):
             # Delete wot is in  Box
-            my_entry3.delete(0, END)
+            auto_selected.delete(0, END)
             # Add clicked list item to enty box
-            my_entry3.insert(0, my_list3.get(ACTIVE))
+            auto_selected.insert(0, auto_list.get(ACTIVE))
 
         # Checkfunktion Entry vs. List
 
         def check3(event):
             # grad inserted
-            typed3 = my_entry3.get()
+            typed3 = auto_selected.get()
 
             if typed3 == "":
                 data3 = content3
@@ -2061,10 +2073,22 @@ class Frame13(ttk.Frame):
         )
         uninst_btn3.pack(anchor="s")
 
-        # Create an entry box
+        uninst_btn3 = Button(
+            auto_button_frame,
+            text="Details/\nEdit",
+            highlightthickness=0,
+            borderwidth=0,
+            background="#222222",
+            foreground="white",
+            font=(("Helvetica,bold"), "12"),
+            command=edit_auto,
+        )
+        uninst_btn3.pack(anchor="s")
 
-        my_entry3 = Entry(auto_select_frame, font=("Helvetica", 12), width=60)
-        my_entry3.pack()
+        # Create an entry box
+        global auto_selected
+        auto_selected = Entry(auto_select_frame, font=("Helvetica", 12), width=60)
+        auto_selected.pack()
 
         note_lbl = Label(
             auto_select_frame,
@@ -2075,9 +2099,9 @@ class Frame13(ttk.Frame):
         )
         note_lbl.pack(pady=5)
 
-        global my_list3
-        my_list3 = Listbox(auto_select_frame, width=60, height=30)
-        my_list3.pack()
+        global auto_list
+        auto_list = Listbox(auto_select_frame, width=60, height=30)
+        auto_list.pack()
 
         fo3 = open("scripts/autostart.list", "r")
         content3 = fo3.readlines()
@@ -2089,8 +2113,238 @@ class Frame13(ttk.Frame):
         update3(content3)
 
         # Create binding
-        my_list3.bind("<<ListboxSelect>>", fillout3)
-        my_entry3.bind("<KeyRelease>", check3)
+        auto_list.bind("<<ListboxSelect>>", fillout3)
+        auto_selected.bind("<KeyRelease>", check3)
+
+
+# [Autostart Edit Entry Child]
+class Edit_Autostart(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 630
+        app_height = 500
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+        self.title("Details & Edit")
+        self["background"] = "#333333"
+
+        def done_edit():
+            done_child = Done_(self)
+            done_child.grab_set()
+
+        def edit_entries():
+            # open file
+            with open(f"{home}/.config/autostart/{auto_selected.get()}", "w") as file:
+                # write to file
+                file.writelines(
+                    [
+                        f"Name={name_entry.get()}\n",
+                        f"Exec={exec_entry.get()}\n",
+                        f"Icon={icon_entry.get()}\n",
+                        f"Terminal={terminal_entry.get()}\n",
+                        f"Type={type_entry.get()}\n",
+                        f"X-GNOME-Autostart-enabled={x_g_entry.get()}\n",
+                        f"Hidden={hidden_entry.get()}\n",
+                        f"NoDisplay={no_display_entry.get()}\n",
+                    ]
+                )
+            done_edit()
+
+
+
+        # App Name
+        name_label = Label(
+            self,
+            text="Name:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        name_label.grid(column=0, row=0, padx=5, pady=5, sticky="w")
+
+        name_entry = Entry(self, width=50)
+        name_entry.grid(column=1, row=0, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Name=" in line:
+                name_entry.insert(0, line[5:-1])
+
+        # App Exec#
+        exec_label = Label(
+            self,
+            text="Exec:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        exec_label.grid(column=0, row=1, padx=5, pady=5, sticky="w")
+
+        exec_entry = Entry(self, width=50)
+        exec_entry.grid(column=1, row=1, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Exec=" in line:
+                exec_entry.insert(0, line[5:-1])
+
+        # App Icon
+        icon_label = Label(
+            self,
+            text="Icon:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        icon_label.grid(column=0, row=2, padx=5, pady=5, sticky="w")
+
+        icon_entry = Entry(self, width=50)
+        icon_entry.grid(column=1, row=2, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Icon=" in line:
+                icon_entry.insert(0, line[5:-1])
+
+        # App Terminal
+        terminal_label = Label(
+            self,
+            text="Terminal:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        terminal_label.grid(column=0, row=3, padx=5, pady=5, sticky="w")
+
+        terminal_entry = Entry(self, width=50)
+        terminal_entry.grid(column=1, row=3, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Terminal=" in line:
+                terminal_entry.insert(0, line[9:-1])
+
+        # App Type
+        type_label = Label(
+            self,
+            text="Type:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        type_label.grid(column=0, row=4, padx=5, pady=5, sticky="w")
+
+        type_entry = Entry(self, width=50)
+        type_entry.grid(column=1, row=4, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Type=" in line:
+                type_entry.insert(0, line[5:-1])
+
+        # App X-GNOME-Autostart-enabled
+        x_g_label = Label(
+            self,
+            text="GNOME Autostart:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        x_g_label.grid(column=0, row=5, padx=5, pady=5, sticky="w")
+
+        x_g_entry = Entry(self, width=50)
+        x_g_entry.grid(column=1, row=5, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "X-GNOME-Autostart-enabled=" in line:
+                x_g_entry.insert(0, line[26:-1])
+
+        # App Hidden
+        hidden_label = Label(
+            self,
+            text="Hidden:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        hidden_label.grid(column=0, row=6, padx=5, pady=5, sticky="w")
+
+        hidden_entry = Entry(self, width=50)
+        hidden_entry.grid(column=1, row=6, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "Hidden=" in line:
+                hidden_entry.insert(0, line[7:-1])
+
+        # App NoDisplay
+        no_display_label = Label(
+            self,
+            text="NoDisplay:",
+            justify="left",
+            anchor="w",
+            width=15,
+            background="#333333",
+            foreground="white",
+        )
+        no_display_label.grid(column=0, row=7, padx=5, pady=5, sticky="w")
+
+        no_display_entry = Entry(self, width=50)
+        no_display_entry.grid(column=1, row=7, padx=5, pady=5, sticky="w")
+
+        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+            datafile = pi_conf.readlines()
+        for line in datafile:
+            if "NoDisplay=" in line:
+                no_display_entry.insert(0, line[10:-1])
+
+        set_btn = Button(
+            self,
+            text="Set",
+            width=10,
+            background="#333333",
+            foreground="white",
+            command=edit_entries,
+        )
+        set_btn.grid(column=0, row=8, padx=5, pady=5, sticky="w")
+
+        close_butn = Button(
+            self,
+            text="Close",
+            width=10,
+            background="#333333",
+            foreground="white",
+            command=self.destroy,
+        )
+        close_butn.grid(column=0, row=9, padx=5, pady=5, sticky="w")
 
 
 # [Autostart Add Entry Child]
@@ -2125,7 +2379,7 @@ class Add_Autostart(tk.Toplevel):
                     f"[Desktop Entry]\nName={add_name.get()}\nExec={add_path.get()}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true\nHidden=false\n"
                 )
                 f.close()
-                my_list3.insert("end", f"{add_name.get()}.desktop")
+                auto_list.insert("end", f"{add_name.get()}.desktop")
 
                 with open("scripts/autostart.list", "a") as file:
                     file.write(f"{add_name.get()}.desktop")
@@ -2373,6 +2627,45 @@ class Tuning_Legende(tk.Toplevel):
 
         self.tu_main_frame2 = Frame(self, bg="#333333")
         self.tu_main_frame2.pack(pady=20)
+
+# [Done Popup] Child
+class Done_(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = "#333333"
+        self.title("")
+        self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 292
+        app_height = 180
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+
+        cont_btn = tk.Button(self)
+        cont_btn["bg"] = "#efefef"
+        ft = tkFont.Font(family="Helvetica", size=10)
+        cont_btn["font"] = ft
+        cont_btn["fg"] = "white"
+        cont_btn["bg"] = "#333333"
+        cont_btn["justify"] = "center"
+        cont_btn["highlightthickness"] = 2
+        cont_btn["borderwidth"] = 0
+        cont_btn["text"] = "Continue"
+        cont_btn.place(x=50, y=130, width=70, height=25)
+        cont_btn["command"] = self.destroy
+
+        done_label = tk.Label(self)
+        ft = tkFont.Font(family="Helvetica", size=14)
+        done_label["font"] = ft
+        done_label["fg"] = "white"
+        done_label["bg"] = "#333333"
+        done_label["justify"] = "center"
+        done_label["text"] = "Done !"
+        done_label.place(x=110, y=40, width=70, height=25)
 
 
 # [Done_Reboot Popup] Child
