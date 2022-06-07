@@ -40,7 +40,7 @@ from tkinter import filedialog
 
 # Say Hallo!
 global user
-user = os.environ.get("LOGNAME")
+user = os.getlogin()
 print(f"INFO: Hi,{user} waz uuuuup?!")
 
 # Define Home
@@ -50,7 +50,7 @@ print(f"INFO: {home} is your home directory!")
 
 # Gets path to PiGro
 global Application_path
-Application_path = str(Path().absolute())
+Application_path = str(os.getcwd())
 print(f"INFO: PiGro directory is {Application_path}")
 
 # Makes all .sh files in /sripts executable if PiGro in $HOME
@@ -59,16 +59,16 @@ if Application_path == f"{home}/PiGro-Aid-":
     print("INFO: All files executable")
 
 # Checks if pigro bin exists
-popen(f"{Application_path}/scripts/check_bin.sh")
+popen(f"{Application_path}/scripts/check_bin.sh ")
 # Gets list of all pakages avaleble on APT
 os.system(
-    f"xterm -e 'bash -c \"apt-cache pkgnames > {Application_path}/scripts/apt_cache.list && exit; exec bash\"'"
+    f"xterm > /dev/null 2>&1 -e 'bash -c \"apt-cache pkgnames > {Application_path}/scripts/apt_cache.list && exit; exec bash\"'"
 )
 print(f"INFO: APT-CACHE loaded")
 
 # Gets list of all installed pakages
 os.system(
-    f"xterm -e 'bash -c \"dpkg --get-selections > {Application_path}/scripts/packages.list && sed -e s/install//g -i {Application_path}/scripts/packages.list && exit; exec bash\"'"
+    f"xterm > /dev/null 2>&1 -e 'bash -c \"dpkg --get-selections > {Application_path}/scripts/packages.list && sed -e s/install//g -i {Application_path}/scripts/packages.list && exit; exec bash\"'"
 )
 print(f"INFO: Instaled pakages loaded")
 
@@ -1997,7 +1997,7 @@ class Frame13(ttk.Frame):
         auto_select_frame.pack()
 
         def del_enrty():
-            os.remove(f"{home}/.config/autostart/{auto_selected.get()}")
+            os.remove(f"/home/{user}/.config/autostart/{auto_selected.get()}")
             auto_list.delete(tk.ACTIVE)
 
         # Update the listbox
@@ -2140,7 +2140,9 @@ class Edit_Autostart(tk.Toplevel):
 
         def edit_entries():
             # open file
-            with open(f"{home}/.config/autostart/{auto_selected.get()}", "w") as file:
+            with open(
+                f"/home/{user}/.config/autostart/{auto_selected.get()}", "w"
+            ) as file:
                 # write to file
                 file.writelines(
                     [
@@ -2155,8 +2157,6 @@ class Edit_Autostart(tk.Toplevel):
                     ]
                 )
             done_edit()
-
-
 
         # App Name
         name_label = Label(
@@ -2173,7 +2173,7 @@ class Edit_Autostart(tk.Toplevel):
         name_entry = Entry(self, width=50)
         name_entry.grid(column=1, row=0, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Name=" in line:
@@ -2194,7 +2194,7 @@ class Edit_Autostart(tk.Toplevel):
         exec_entry = Entry(self, width=50)
         exec_entry.grid(column=1, row=1, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Exec=" in line:
@@ -2215,7 +2215,7 @@ class Edit_Autostart(tk.Toplevel):
         icon_entry = Entry(self, width=50)
         icon_entry.grid(column=1, row=2, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Icon=" in line:
@@ -2236,7 +2236,7 @@ class Edit_Autostart(tk.Toplevel):
         terminal_entry = Entry(self, width=50)
         terminal_entry.grid(column=1, row=3, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Terminal=" in line:
@@ -2257,7 +2257,7 @@ class Edit_Autostart(tk.Toplevel):
         type_entry = Entry(self, width=50)
         type_entry.grid(column=1, row=4, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Type=" in line:
@@ -2278,7 +2278,7 @@ class Edit_Autostart(tk.Toplevel):
         x_g_entry = Entry(self, width=50)
         x_g_entry.grid(column=1, row=5, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "X-GNOME-Autostart-enabled=" in line:
@@ -2299,7 +2299,7 @@ class Edit_Autostart(tk.Toplevel):
         hidden_entry = Entry(self, width=50)
         hidden_entry.grid(column=1, row=6, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "Hidden=" in line:
@@ -2320,7 +2320,7 @@ class Edit_Autostart(tk.Toplevel):
         no_display_entry = Entry(self, width=50)
         no_display_entry.grid(column=1, row=7, padx=5, pady=5, sticky="w")
 
-        with open(f"{home}/.config/autostart/{auto_selected.get()}") as pi_conf:
+        with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
         for line in datafile:
             if "NoDisplay=" in line:
@@ -2328,7 +2328,7 @@ class Edit_Autostart(tk.Toplevel):
 
         set_btn = Button(
             self,
-            text="Set",
+            text="Apply",
             width=10,
             background="#333333",
             foreground="white",
@@ -2373,7 +2373,7 @@ class Add_Autostart(tk.Toplevel):
             if add_name.get() == "" or add_path.get() == "":
                 error_mass()
             else:
-                file_name = f"{home}/.config/autostart/{add_name.get()}.desktop"
+                file_name = f"/home/{user}/.config/autostart/{add_name.get()}.desktop"
                 f = open(file_name, "a+")  # open file in append mode
                 f.write(
                     f"[Desktop Entry]\nName={add_name.get()}\nExec={add_path.get()}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true\nHidden=false\n"
@@ -2627,6 +2627,7 @@ class Tuning_Legende(tk.Toplevel):
 
         self.tu_main_frame2 = Frame(self, bg="#333333")
         self.tu_main_frame2.pack(pady=20)
+
 
 # [Done Popup] Child
 class Done_(tk.Toplevel):
