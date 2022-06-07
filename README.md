@@ -76,7 +76,7 @@ If you install PiGro using the script, you can simply use:
     
 #### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
      
-Open the File Manager (`pcmanfm`) > `Edit` >`Preferences` > `Advanced`. Then set the `Terminal Emulator` to `lxterminal %s` or the Terminal Emulater of your choice
+Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
      
 ---
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
