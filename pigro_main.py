@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import os
 import os.path
 import tkinter as tk
@@ -33,48 +33,56 @@ from faulthandler import disable
 from tkinter import filedialog
 
 
-# To Do:
-# Always clear apt_cache,packages,PiGro.config
-# before PUSH!
-
-
 # Say Hallo!
 global user
 user = os.getlogin()
-print(f"INFO: Hi,{user} waz uuuuup?!")
+print(f"[Info]: Hi,{user} waz uuuuup?!")
 
 # Define Home
 global home
 home = str(Path.home())
-print(f"INFO: {home} is your home directory!")
+print(f"[Info]: {home} is your home directory!")
 
 # Gets path to PiGro
 global Application_path
 Application_path = str(os.getcwd())
-print(f"INFO: PiGro directory is {Application_path}")
+print(f"[Info]: PiGro directory is {Application_path}")
 
 # Makes all .sh files in /sripts executable if PiGro in $HOME
 if Application_path == f"{home}/PiGro-Aid-":
     popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
-    print("INFO: All files executable")
+    print(f"[Info]: All files executable")
+
+# Checks if settings folder exists
+pigro_conf_folder = os.path.isdir(f"{home}/.pigro")  # Need full path
+if pigro_conf_folder == False:
+    print("[Info]: Folder:/.pigro not found will created")
+    os.mkdir(f"{home}/.pigro")
+    open(f"{home}/.pigro/apt_cache.list", "a").close()
+    open(f"{home}/.pigro/autostart.list", "a").close()
+    open(f"{home}/.pigro/packages.list", "a").close()
+    open(f"{home}/.pigro/pi-apps_list.list", "a").close()
+if pigro_conf_folder == True:
+    print("[Info]: .pigro exsists")
+
 
 # Checks if pigro bin exists
 popen(f"{Application_path}/scripts/check_bin.sh ")
 # Gets list of all pakages avaleble on APT
 os.system(
-    f"xterm > /dev/null 2>&1 -e 'bash -c \"apt-cache pkgnames > {Application_path}/scripts/apt_cache.list && exit; exec bash\"'"
+    f"xterm > /dev/null 2>&1 -e 'bash -c \"apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list && exit; exec bash\"'"
 )
-print(f"INFO: APT-CACHE loaded")
+print("[Info]: APT-CACHE loaded")
 
 # Gets list of all installed pakages
 os.system(
-    f"xterm > /dev/null 2>&1 -e 'bash -c \"dpkg --get-selections > {Application_path}/scripts/packages.list && sed -e s/install//g -i {Application_path}/scripts/packages.list && exit; exec bash\"'"
+    f"xterm > /dev/null 2>&1 -e 'bash -c \"dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list && exit; exec bash\"'"
 )
-print(f"INFO: Instaled pakages loaded")
+print("[Info]: Instaled pakages loaded")
 
 # Get Distro
 distro_get = distro.id()
-print("INFO: Your Distro is: " + distro_get)
+print("[Info]: Your Distro is: " + str(distro_get))
 
 # Legitimation Vars // Test for Ubuntu compatiblety
 global config_path
@@ -98,29 +106,29 @@ else:
 # Get Desktop Environment
 global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
-print("INFO: Your DE is: " + get_de)
+print("[Info]: Your DE is: " + str(get_de))
 
 # Checks if pi-apps exists
 global piapps_path
 piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
 if piapps_path == False:
-    print("INFO: Pi-Apps not found")
+    print("[Info]: Pi-Apps not found")
 if piapps_path == True:
-    print("INFO: Pi-Apps is installed list will be added")
-    popen(f"ls ~/pi-apps/apps/ > {Application_path}/scripts/pi-apps_list.list")
+    print("[Info]: Pi-Apps is installed list will be added")
+    popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
 
 # Checks if snapd exists
 if os.path.isfile("/bin/snap"):
-    print("INFO: Snap is installed")
+    print("[Info]: Snap is installed")
 else:
-    print("INFO: Snap is not installed")
+    print("[Info]: Snap is not installed")
 
 # Checks if flatpak exists
 if os.path.isfile("/bin/flatpak"):
-    print("INFO: Flatpak is installed")
+    print("[Info]: Flatpak is installed")
 else:
-    print("INFO: Flatpak is not installed")
+    print("[Info]: Flatpak is not installed")
 
 
 # [Main Winddow / Notebook Config / SysTray]
@@ -289,26 +297,9 @@ class Change_Log(tk.Toplevel):
         )
         changelog_label.pack()
 
-        # read input file
-        fin = open(f"{Application_path}/scripts/PiGro.conf", "rt")
-        # read file contents to string
-        data = fin.read()
-        # replace all occurrences of the required string
-        data = data.replace("First_Run = True", "First_Run = False")
-        # close the input file
-        fin.close()
-        # open the input file in write mode
-        fin = open(f"{Application_path}/scripts/PiGro.conf", "wt")
-        # overrite the input file with the resulting data
-        fin.write(data)
-        # close the file
-        fin.close()
-
 
 # [Welcome] Tab
-class Frame1(
-    ttk.Frame,
-):
+class Frame1(ttk.Frame):
     def __init__(
         self,
         container,
@@ -318,13 +309,6 @@ class Frame1(
         def ch_log():
             c_log = Change_Log(self)
             c_log.grab_set()
-
-        # Check if Update or First run
-        with open(f"{Application_path}/scripts/PiGro.conf") as f:
-            if "First_Run = True" in f.read():
-                print("INFO: First Run")
-
-                ch_log()
 
         def get_size(bytes, suffix="B"):
             """
@@ -984,7 +968,7 @@ class Frame3(ttk.Frame):
             else:
                 popen("sudo pcmanfm /")
 
-            print("INFO: With great power comes great responsibility")
+            print("[Info]: With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
                 description="With great power comes great responsibility\n\n                          - Oncle Ben",
@@ -1018,7 +1002,7 @@ class Frame3(ttk.Frame):
                 popen(
                     f"xterm -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'"
                 )
-                print("INFO: Kernel Upgrade GO!")
+                print("[Info]: Kernel Upgrade GO!")
                 pop_kernel.destroy()
 
             frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
@@ -1112,7 +1096,7 @@ class Frame3(ttk.Frame):
 
             def do_it():
                 popen(f"{legit} rename-user")
-                print("INFO: Name will be changed")
+                print("[Info]: Name will be changed")
                 pop_u_name.destroy()
 
             frame_pop_u_name = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
@@ -1287,10 +1271,10 @@ class Frame3(ttk.Frame):
         sys_gparted_btn.grid(row=1, column=0)
 
         if os.path.isfile("/usr/sbin/gparted"):
-            print("INFO: Gparted is installed")
+            print("[Info]: Gparted is installed")
             sys_gparted_btn.configure(state=NORMAL)
         else:
-            print("INFO: Gparted is not installed")
+            print("[Info]: Gparted is not installed")
             sys_gparted_btn.configure(state=DISABLED)
 
         sys_neo_btn = Button(
@@ -1310,10 +1294,10 @@ class Frame3(ttk.Frame):
         sys_neo_btn.grid(row=1, column=1)
 
         if os.path.isfile("/bin/neofetch"):
-            print("INFO: Neofetch is installed")
+            print("[Info]: Neofetch is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("INFO: Neofetch is not installed")
+            print("[Info]: Neofetch is not installed")
             sys_neo_btn.configure(state=DISABLED)
 
         sys_FMGM_btn = Button(
@@ -1659,7 +1643,7 @@ class Frame12(ttk.Frame):
             popen(
                 f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_FMGM.sh; exec bash\"'"
             )
-            print("INFO: With great power comes great responsibility")
+            print("[Info]: With great power comes great responsibility")
             Notification(
                 title="Sudo File Manager\n",
                 description="With great power comes great responsibility\n\n                          - Oncle Ben",
@@ -1741,10 +1725,10 @@ class Frame12(ttk.Frame):
         sys_rc_cli_btn.grid(row=0, column=0)
 
         if os.path.isfile("/bin/raspi-config"):
-            print("INFO: Raspi-Config is installed")
+            print("[Info]: Raspi-Config is installed")
             sys_rc_cli_btn.configure(state=NORMAL)
         else:
-            print("INFO: Raspi-Config is not installed")
+            print("[Info]: Raspi-Config is not installed")
             sys_rc_cli_btn.configure(state=DISABLED)
 
         sys_ubu_pref_btn = Button(
@@ -1790,10 +1774,10 @@ class Frame12(ttk.Frame):
         sys_neo_btn.grid(row=0, column=3)
 
         if os.path.isfile("/bin/neofetch"):
-            print("INFO: Neofetch is installed")
+            print("[Info]: Neofetch is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("INFO: Neofetch is not installed")
+            print("[Info]: Neofetch is not installed")
             sys_neo_btn.configure(state=DISABLED)
 
         sys_dpp_btn = Button(
@@ -1839,10 +1823,10 @@ class Frame12(ttk.Frame):
         g_tweaks_btn.grid(row=1, column=2)
 
         if os.path.isfile("/bin/gnome-tweaks"):
-            print("INFO: gnome-tweaks is installed")
+            print("[Info]: gnome-tweaks is installed")
             sys_neo_btn.configure(state=NORMAL)
         else:
-            print("INFO: gnome-tweaks is not installed")
+            print("[Info]: gnome-tweaks is not installed")
             g_tweaks_btn.configure(state=DISABLED)
 
         menu_sett_btn = Button(
@@ -1860,10 +1844,10 @@ class Frame12(ttk.Frame):
         menu_sett_btn.grid(row=1, column=3)
 
         if os.path.isfile("/bin/alacarte"):
-            print("INFO: alacarte is installed")
+            print("[Info]: alacarte is installed")
             menu_sett_btn.configure(state=NORMAL)
         else:
-            print("INFO: Gparted is not installed")
+            print("[Info]: Gparted is not installed")
             menu_sett_btn.configure(state=DISABLED)
 
         sys_gparted_btn = Button(
@@ -1881,10 +1865,10 @@ class Frame12(ttk.Frame):
         sys_gparted_btn.grid(row=1, column=4)
 
         if os.path.isfile("/usr/sbin/gparted"):
-            print("INFO: Gparted is installed")
+            print("[Info]: Gparted is installed")
             sys_gparted_btn.configure(state=NORMAL)
         else:
-            print("INFO: Gparted is not installed")
+            print("[Info]: Gparted is not installed")
             sys_gparted_btn.configure(state=DISABLED)
 
         sys_FMGM_btn = Button(
@@ -1947,13 +1931,13 @@ class Frame13(ttk.Frame):
             edit_child.grab_set()
 
         # Checks is autostart folder exists
-        dir = os.path.join(f"{home}/.config/autostart")  #
+        dir = os.path.join(f"{home}/.config/autostart")
         if not os.path.exists(dir):
-            print(f"INFO: {dir} does not exist.")
-            print(f"INFO: Created {dir} does not exist.")
+            print(f"[Info]: {dir} does not exist.")
+            print(f"[Info]: Created {dir} does not exist.")
             os.mkdir(dir)
         else:
-            print(f"INFO: {dir} exists.")
+            print(f"[Info]: {dir} exists.")
 
         onlyfiles = [
             f
@@ -1963,7 +1947,7 @@ class Frame13(ttk.Frame):
 
         # print(onlyfiles)
 
-        with open("scripts/autostart.list", "w") as f:
+        with open(f"/home/{user}/.pigro/autostart.list", "w") as f:
             for item in onlyfiles:
                 f.write("%s\n" % item)
 
@@ -1997,8 +1981,59 @@ class Frame13(ttk.Frame):
         auto_select_frame.pack()
 
         def del_enrty():
-            os.remove(f"/home/{user}/.config/autostart/{auto_selected.get()}")
-            auto_list.delete(tk.ACTIVE)
+            global pop_del_entry
+            pop_del_entry = Toplevel()
+            pop_del_entry.title = " "
+            pop_del_entry.config(bg="#333333")
+            app_width = 330
+            app_height = 179
+            screen_width = pop_del_entry.winfo_screenwidth()
+            screen_height = pop_del_entry.winfo_screenheight()
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+            pop_del_entry.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_del_entry.resizable(0, 0)
+
+            def yes_btn_command():
+                os.remove(f"/home/{user}/.config/autostart/{auto_selected.get()}")
+                auto_list.delete(tk.ACTIVE)
+                pop_del_entry.destroy()
+
+            def no_btn_command():
+                pop_del_entry.destroy()
+
+            yes_btn = tk.Button(pop_del_entry)
+            yes_btn["bg"] = "#333333"
+            ft = tkFont.Font(family="Helvetica", size=10)
+            yes_btn["borderwidth"] = 0
+            yes_btn["highlightthickness"] = 1
+            yes_btn["font"] = ft
+            yes_btn["fg"] = "white"
+            yes_btn["justify"] = "center"
+            yes_btn["text"] = "Yes"
+            yes_btn.place(x=70, y=120, width=70, height=25)
+            yes_btn["command"] = yes_btn_command
+
+            no_btn = tk.Button(pop_del_entry)
+            no_btn["bg"] = "#333333"
+            ft = tkFont.Font(family="Helvetica", size=10)
+            no_btn["borderwidth"] = 0
+            no_btn["highlightthickness"] = 1
+            no_btn["font"] = ft
+            no_btn["fg"] = "white"
+            no_btn["justify"] = "center"
+            no_btn["text"] = "No"
+            no_btn.place(x=180, y=120, width=70, height=25)
+            no_btn["command"] = no_btn_command
+
+            del_label = tk.Label(pop_del_entry)
+            ft = tkFont.Font(family="Helvetica", size=10)
+            del_label["font"] = ft
+            del_label["bg"] = "#333333"
+            del_label["fg"] = "white"
+            del_label["justify"] = "center"
+            del_label["text"] = f"Do you really want delete:\n{auto_selected.get()}?"
+            del_label.place(x=40, y=40, width=249, height=30)
 
         # Update the listbox
         def update3(data3):
@@ -2034,7 +2069,7 @@ class Frame13(ttk.Frame):
             # updates listbox with selected item
             update3(data3)
 
-        fo3 = open("scripts/autostart.list", "r")
+        fo3 = open(f"/home/{user}/.pigro/autostart.list", "r")
         content3 = fo3.readlines()
         # print(content3)
 
@@ -2103,7 +2138,7 @@ class Frame13(ttk.Frame):
         auto_list = Listbox(auto_select_frame, width=60, height=30)
         auto_list.pack()
 
-        fo3 = open("scripts/autostart.list", "r")
+        fo3 = open(f"/home/{user}/.pigro/autostart.list", "r")
         content3 = fo3.readlines()
         for i3, s3 in enumerate(content3):
             content3[i3] = s3.strip()
@@ -2381,7 +2416,7 @@ class Add_Autostart(tk.Toplevel):
                 f.close()
                 auto_list.insert("end", f"{add_name.get()}.desktop")
 
-                with open("scripts/autostart.list", "a") as file:
+                with open(f"/home/{user}/.pigro/autostart.list", "a") as file:
                     file.write(f"{add_name.get()}.desktop")
 
         add_frame = Frame(self, background="#333333")
@@ -3313,7 +3348,6 @@ class APT_Installer_Popup(tk.Toplevel):
 
         self.apt_inst_termf["background"] = "#333333"
         self.apt_inst_termf.pack(padx=45, pady=20)
-        # ää
 
         def install_parameter():
 
@@ -3343,8 +3377,6 @@ class APT_Installer_Popup(tk.Toplevel):
         # place the progressbar
 
         def GButton_916_command():
-            # Inst_compl_Popup.destroy()
-            # Installer_Popup.destroy()
             APT_Installer_Popup.destroy(self)
 
         GButton_916 = tk.Button(self)
@@ -3432,8 +3464,6 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         # place the progressbar
 
         def GButton_916_command():
-            # Inst_compl_Popup.destroy()
-            # Installer_Popup.destroy()
             APT_Installer_Popup.destroy(self)
 
         GButton_916 = tk.Button(self)
@@ -3479,13 +3509,12 @@ class Frame4(ttk.Frame):
             scrollbar = Scrollbar(pop_pi_apps_list)
             scrollbar.pack(side=RIGHT, fill=Y)
             s_list = Text(pop_pi_apps_list, yscrollcommand=scrollbar.set)
-            text_file = open("scripts/pi-apps_list.list")
+            text_file = open(f"/home/{user}/.pigro/pi-apps_list.list")
             stuff = text_file.read()
             s_list.insert(END, stuff)
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
 
         def info_done():
             global done_pop
@@ -3628,7 +3657,7 @@ class Frame4(ttk.Frame):
         self.apt_frame.pack()
         self.apt_frame["background"] = "#333333"
 
-        fo = open("scripts/apt_cache.list", "r")
+        fo = open(f"/home/{user}/.pigro/apt_cache.list", "r")
         content = fo.readlines()
         for i, s in enumerate(content):
             content[i] = s.strip()
@@ -3662,7 +3691,6 @@ class Frame4(ttk.Frame):
 
         self.p4 = PhotoImage(file=r"images/icons/apt-get.png")
 
-        # self.eingabefeld1 = Entry(self.apt_frame, bd=5, width=31, borderwidth=1)
         global apt_inst_combo_box
         apt_inst_combo_box = ttk.Combobox(self.apt_frame)
         apt_inst_combo_box["values"] = content
@@ -3703,7 +3731,7 @@ class Frame4(ttk.Frame):
         self.un_apt_frame.pack()
         self.un_apt_frame["background"] = "#333333"
 
-        ua_fo = open("scripts/packages.list", "r")
+        ua_fo = open(f"/home/{user}/.pigro/packages.list", "r")
         un_content = ua_fo.readlines()
         for i, s in enumerate(un_content):
             un_content[i] = s.strip()
@@ -3777,7 +3805,6 @@ class Frame4(ttk.Frame):
             if self.pi_apps_entry.get() == "":
                 error_mass()
             else:
-                # entry_text = self.pi_apps_entry.get()
                 popen(
                     f"xterm -e 'bash -c \"{Application_path}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
                 )
@@ -3814,7 +3841,7 @@ class Frame4(ttk.Frame):
         )
 
         if piapps_path == False:
-            print("INFO: Pi-Apps not found")
+            print("[Info]: Pi-Apps not found")
             self.pi_apps_entry.insert(0, "Pi-Apps is not installed")
             self.pi_apps_inst_btn.configure(state=DISABLED)
 
@@ -4000,7 +4027,6 @@ class Frame5(ttk.Frame):
             text_file.close()
             s_list.config(state=DISABLED)
             s_list.pack(anchor="w", fill=BOTH, expand=True)
-            # scrollbar.config(command=mylist.yview)
 
         def pi_appear():
             popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
@@ -4058,7 +4084,6 @@ class Frame5(ttk.Frame):
         def web_OVC():
             popen("xdg-open https://www.xfce-look.org/browse/")
 
-        # kl
         def set_wp():
             global my_image
             self.filename = filedialog.askopenfilename(
@@ -4420,7 +4445,7 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
         self.set_wp_btn.grid(column=4, row=0)
-        # öü
+
         self.info_look_btn = Button(
             self,
             image=self.tpinfm,
@@ -4435,7 +4460,6 @@ class Frame5(ttk.Frame):
 class z_ram_pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        # self["background"] = "#333333"
         self.title("")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -4469,7 +4493,6 @@ class z_ram_pop(tk.Toplevel):
                 urgency="normal",
             ).send()
 
-        # ää
         def z_ram_uninstall():
 
             if distro_get == "ubuntu":
@@ -5349,7 +5372,6 @@ class Frame7(ttk.Frame):
         def papirus_nord():
             popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
 
-        # äö
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
         self.bg_label = Label(self, image=self.bg, bg="#333333")
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
@@ -5855,7 +5877,7 @@ class Frame9(ttk.Frame):
         )
         self.label.pack()
 
-        self.welcome_icon = PhotoImage(file=r"~/PiGro-Aid-/images/icons/Pi-Camera.png")
+        self.welcome_icon = PhotoImage(file="images/icons/Pi-Camera.png")
         self.head_frame = Frame(self.rahmen101, bg="#333333")
         self.head_frame.pack()
         self.header_label = Label(

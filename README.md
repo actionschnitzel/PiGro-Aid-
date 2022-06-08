@@ -28,6 +28,8 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 
 ##### :wrench: Install and change the DE
 
+##### :wrench: Add Autostart on DE Login
+
 ### And there is a lot more!
 
 With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
@@ -36,7 +38,7 @@ With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also w
 
 # :doughnut: Showcase (Click 2 Enlage)
 
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200">  <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200">
 
 ---
 
@@ -72,13 +74,15 @@ If you install PiGro using the script, you can simply use:
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
 
 ---
+
 # :exclamation: Important
-    
+
 #### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
-     
+
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
-     
+
 ---
+
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
 
 Documentation + Manual /// Still in work
@@ -91,22 +95,22 @@ Documentation + Manual /// Still in work
 that does Pi Cam stuff in a GUI ...
 So maybe it stay in PiGro maby not... time will tell.
 
-#ADDED Rename user option for old pi installations
+#ADDED: ask:yes/no/cancel popups to critikal options
 
-#ADDED Expert Mode for Tuning
+#ADDED: Disk space usage on Welcome tab
 
-#ADDED Cute Tux greets you with your user name
+#ADDED: Autostart tab
 
-#CHANGED User Pi said goodbye! PiGro now full supports user names
+#ADDED: Change Wallpaper for PIXEL Desktop
 
-#CHANGED Rearranged Software tab
+#CHANGED: straighter visual appearance
 
-#FIXED If Snap/Pi-Apps/Flatpak is not installed the buttons
-are disabled
+- bigger icons - main color #222222 - removed tab decoration
 
-#FIXED As always there are code improvements
+#CHANGED: *.list,*conf files moved to ~/.pigro
+(./pigro is a hidden config folder that stores cache files and pigro configs. This way nothing will in the all it self an git pull works again)
 
-#APT-GET Installer shows now terminal output due to transperency reasons
+#FIXED: #arm_freq=800 bug on Tuning Display fixed
 
 ---
 
@@ -122,6 +126,5 @@ are disabled
 #### You want support me?
 
 PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-    
-[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)    
- 
+
+[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)
