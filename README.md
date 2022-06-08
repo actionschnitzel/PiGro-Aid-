@@ -91,9 +91,7 @@ Documentation + Manual /// Still in work
 
 # :zap: Latest Improvements
 
-#ADDED I added a Pi Camera Tab just for fun. Never saw an App
-that does Pi Cam stuff in a GUI ...
-So maybe it stay in PiGro maby not... time will tell.
+
 
 #ADDED: ask:yes/no/cancel popups to critikal options
 
@@ -105,12 +103,16 @@ So maybe it stay in PiGro maby not... time will tell.
 
 #CHANGED: straighter visual appearance
 
-- bigger icons - main color #222222 - removed tab decoration
-
+- bigger icons     
+- main color #222222    
+- removed tab decoration    
+    
 #CHANGED: *.list,*conf files moved to ~/.pigro
 (./pigro is a hidden config folder that stores cache files and pigro configs. This way nothing will in the all it self an git pull works again)
 
-#FIXED: #arm_freq=800 bug on Tuning Display fixed
+#CHANGED: Bye Splash Screen(PiGro starts now faster)    
+    
+#FIXED: #arm_freq=800 bug on Tuning Display fixed    
 
 ---
 
