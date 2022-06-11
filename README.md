@@ -108,7 +108,7 @@ Documentation + Manual /// Still in work
 - removed tab decoration    
     
 #CHANGED: *.list,*conf files moved to ~/.pigro
-(./pigro is a hidden config folder that stores cache files and pigro configs. This way nothing will in the all it self an git pull works again)
+(./pigro is a hidden config folder that stores cache files and pigro configs. This way git pull works again)
 
 #CHANGED: Bye Splash Screen(PiGro starts now faster)    
     
