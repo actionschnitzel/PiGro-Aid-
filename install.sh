@@ -13,8 +13,7 @@ NC='\033[0m' # No Color
 
 printf "${GREEN}I now install dependencies${NC}\n\n"
 
-sudo apt-get install xterm mpg123 lolcat rpi.gpio python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distro python3-gpiozero libnotify-bin -y
-pip3 install py-notifier
+sudo apt-get install xterm mpg123 lolcat rpi.gpio python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distropython3-gpiozero libnotify-bin -y
 
 clear
 
