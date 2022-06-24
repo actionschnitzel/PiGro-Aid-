@@ -19,23 +19,24 @@ With a clear and graphically appealing GUI you can access the system deeply, ove
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
 ##### :wrench: Sudo apt-get update/upgrade
-
 ##### :wrench: Sudo apt-get install ...
-
 ##### :wrench: Sudo nano boot / config.txt
-
 ##### :wrench: Overclocking
-
 ##### :wrench: Install and change the DE
-
 ##### :wrench: Add Autostart on DE Login
-
 ### And there is a lot more!
 
-With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
-
 ---
+### :two_hearts: You want support me?
 
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
+
+[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)    
+    
+or:    
+    
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    
+---
 # :doughnut: Showcase (Click 2 Enlage)
 
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/4.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/7.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/10.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/5.png" width="200">
@@ -125,8 +126,3 @@ Documentation + Manual /// Still in work
 
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
-#### You want support me?
-
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-
-[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)
