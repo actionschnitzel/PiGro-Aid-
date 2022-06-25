@@ -143,7 +143,7 @@ class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        """Base Class That Sets Notbook And Theme"""
+        """defines the look of the app"""
 
         # Window Basics
         self.title("PiGro - Just Click It! (Stupida Medusa)")
@@ -243,13 +243,6 @@ class MainApplication(tk.Tk):
             self.notebook.hide(self.Frame5)
             self.notebook.hide(self.Frame9)
 
-        # ttk Theme
-        # global style
-        # style = ttk.Style()
-        # style.theme_use('clam')
-        # style.configure('TButton', font=('American typewriter', 14), background='#232323', foreground='white',borderwidth=0,highlightthickness=0)
-        # style.map('TButton', background=[('active', '#ff0000')])
-
         # Notebook Themeing
         global noteStyler
         noteStyler = ttk.Style(self)
@@ -283,6 +276,8 @@ class MainApplication(tk.Tk):
 
 # [Changelog] Child
 class Change_Log(tk.Toplevel):
+    """ "child window to display the changelog"""
+
     def __init__(
         self,
         parent,
@@ -315,13 +310,15 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Added:\n-Disk Space Display\n-Autostart Tab\n\n#Changed:\n-Main Color #222222(Why? Because!)\n\n#Improved:\n-arm_freq=800 bug fixed\n-Code Improvments\n-New CLI output structure\nfor better debuging",
+            text="#Added:\n-Processes Tab\n\n#Changed:\n-Some Buttons a blue now",
         )
         changelog_label.pack()
 
 
 # [Welcome] Tab
 class Frame1(ttk.Frame):
+    """shows system stats, user name, an changelog"""
+
     def __init__(
         self,
         container,
@@ -402,13 +399,10 @@ class Frame1(ttk.Frame):
         self.stress = Button(
             self,
             text="Run/Install Stressberry",
-            font=(
-                ("Helvetica,bold"),
-                "10",
-            ),
-            highlightthickness=2,
+            font=("Helvetica", 10, "bold"),
+            highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             command=stress_b,
         )
@@ -944,6 +938,8 @@ class Frame2(ttk.Frame):
 
 # [System] tab
 class Frame3(ttk.Frame):
+    """standard system tab for all rpi os distros"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -1648,6 +1644,8 @@ class Frame3(ttk.Frame):
 
 # [System For Ubuntu] tab
 class Frame12(ttk.Frame):
+    """system tab for ubuntu"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -1953,6 +1951,8 @@ class Frame12(ttk.Frame):
 
 # [Autostarts] tab
 class Frame13(ttk.Frame):
+    """displays all files in the autostart folder in a listbox"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -2192,6 +2192,8 @@ class Frame13(ttk.Frame):
 
 # [Autostart Edit Entry Child]
 class Edit_Autostart(tk.Toplevel):
+    """child window for editing a .desktopfile in autostart folder"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
@@ -2422,6 +2424,8 @@ class Edit_Autostart(tk.Toplevel):
 
 # [Autostart Add Entry Child]
 class Add_Autostart(tk.Toplevel):
+    """child window for creating a .desktopfile in autostart folder"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
@@ -2528,6 +2532,8 @@ class Add_Autostart(tk.Toplevel):
 
 # [Overclocking_Legend Popup] Child
 class Tuning_Legende(tk.Toplevel):
+    """child window that shows tuning options in detail"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -2704,6 +2710,8 @@ class Tuning_Legende(tk.Toplevel):
 
 # [Done Popup] Child
 class Done_(tk.Toplevel):
+    """custom messagebox"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -2744,6 +2752,8 @@ class Done_(tk.Toplevel):
 
 # [Done_Reboot Popup] Child
 class Done_Reboot(tk.Toplevel):
+    """a custom massagebox"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -2800,6 +2810,8 @@ class Done_Reboot(tk.Toplevel):
 
 # [Overclocking_Expert Popup] Child
 class Overclocking_Expert(tk.Toplevel):
+    """entry fields to custom configure config.txt"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -3035,10 +3047,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_arm_freq,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
 
@@ -3047,10 +3059,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_arm_freq,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
 
@@ -3084,10 +3096,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_gpu_freq,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_freq_set.grid(row=1, column=2)
 
@@ -3096,10 +3108,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_gpu_freq,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_freq_reset.grid(row=1, column=3)
 
@@ -3133,10 +3145,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_gpu_mem,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_mem_set.grid(row=2, column=2, padx=10, pady=10)
 
@@ -3145,10 +3157,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_gpu_mem,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
 
@@ -3183,10 +3195,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_over_voltage,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         over_voltage_set.grid(row=3, column=2)
 
@@ -3195,10 +3207,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_over_voltage,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         over_voltage_reset.grid(row=3, column=3)
 
@@ -3233,10 +3245,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_disable_splash,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         disable_splash_set.grid(row=4, column=2, padx=10, pady=10)
 
@@ -3245,10 +3257,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_disable_splash,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
 
@@ -3283,10 +3295,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_force_turbo,
-            bg=maincolor,
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         force_turbo_set.grid(row=5, column=2)
 
@@ -3295,10 +3307,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_force_turbo,
-            bg=maincolor,
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         force_turbo_reset.grid(row=5, column=3)
 
@@ -3345,6 +3357,8 @@ class Overclocking_Expert(tk.Toplevel):
 
 # [APT Installer Popup] Child
 class APT_Installer_Popup(tk.Toplevel):
+    """child window that makes the the install process graphicle"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -3434,6 +3448,8 @@ class APT_Installer_Popup(tk.Toplevel):
 
 # [APT Uninstaller Popup] Child
 class APT_Uninstaller_Popup(tk.Toplevel):
+    """child window that makes the the install process graphicle"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -3522,6 +3538,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 # [Software] Tab
 class Frame4(ttk.Frame):
     def __init__(self, container):
+        """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
         def info_installer_tab():
@@ -3870,10 +3887,10 @@ class Frame4(ttk.Frame):
             self.pi_apps,
             text="Search Pi-Apps",
             command=pi_apps_list,
-            highlightthickness=1,
+            highlightthickness=0,
             borderwidth=0,
             width=32,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -3939,10 +3956,10 @@ class Frame4(ttk.Frame):
             self.snap_frame,
             text="Search Snaps",
             command=snapcraft,
-            highlightthickness=1,
+            highlightthickness=0,
             borderwidth=0,
             width=32,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -4011,10 +4028,10 @@ class Frame4(ttk.Frame):
             self.flat_frame,
             text="Search Flathub",
             command=flatflat,
-            highlightthickness=1,
+            highlightthickness=0,
             width=32,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -4042,6 +4059,8 @@ class Frame4(ttk.Frame):
 
 # [Look] Tab
 class Frame5(ttk.Frame):
+    """a tool collection to customize the debian desktop"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -4496,6 +4515,8 @@ class Frame5(ttk.Frame):
 
 # [ZRAM] Child
 class z_ram_pop(tk.Toplevel):
+    """child window that lets one install zram"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.title("")
@@ -4600,6 +4621,8 @@ class z_ram_pop(tk.Toplevel):
 
 # [Tuning] Tab
 class Frame6(ttk.Frame):
+    """tool to edit profomance relevant options in config.txt/displays these settings"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -4830,9 +4853,9 @@ class Frame6(ttk.Frame):
             command=z_ram,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             compound=LEFT,
-            foreground="#d4244d",
+            foreground="white",
         ).pack(pady=20)
 
         # Additional Infos
@@ -5054,7 +5077,7 @@ class Frame6(ttk.Frame):
             command=set_default,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5071,7 +5094,7 @@ class Frame6(ttk.Frame):
             command=ov_2000,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5089,7 +5112,7 @@ class Frame6(ttk.Frame):
             command=ov_2147,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5107,7 +5130,7 @@ class Frame6(ttk.Frame):
             command=ov_2200,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5125,7 +5148,7 @@ class Frame6(ttk.Frame):
             command=ov_2300,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5142,7 +5165,7 @@ class Frame6(ttk.Frame):
             command=expert_mode,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5333,6 +5356,8 @@ class Frame6(ttk.Frame):
 
 # [Links] Tab
 class Frame7(ttk.Frame):
+    """a tab that display lot of links to cool websites"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -5780,7 +5805,10 @@ class Frame7(ttk.Frame):
         ).pack()
 
 
+# [Runing Processes]
 class ProcessTree(ttk.Frame):
+    """sets up a treeview of all runnning processes"""
+
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
@@ -5821,6 +5849,8 @@ class ProcessTree(ttk.Frame):
 
 # [Processes] Tab
 class Frame14(ttk.Frame):
+    """shows all running pocesses in a treeview"""
+
     def __init__(self, container, *args, **kwargs):
         super().__init__()
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
@@ -5852,6 +5882,8 @@ class Frame14(ttk.Frame):
 
 # [Poll] Tab
 class Frame8(ttk.Frame):
+    """this tab contains infos and links to the devs website"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -5953,6 +5985,8 @@ class Frame8(ttk.Frame):
 
 # [Cam] Tab
 class Frame9(ttk.Frame):
+    """basic gui for the raspberry pi camera functions"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -6010,9 +6044,10 @@ class Frame9(ttk.Frame):
             self.btn_frame,
             text="Take A Photo",
             command=photo1,
-            bg=maincolor,
+            bg="#0075b7",
             fg="white",
             highlightthickness=0,
+            borderwidth=0,
         )
         photo_btn.pack(pady=10)
 
@@ -6020,9 +6055,10 @@ class Frame9(ttk.Frame):
             self.btn_frame,
             text="Take A Video",
             command=video1,
-            bg=maincolor,
+            bg="#0075b7",
             fg="white",
             highlightthickness=0,
+            borderwidth=0,
         )
         video_btn.pack()
 
@@ -6040,6 +6076,8 @@ class Frame9(ttk.Frame):
 
 # [Error Massage] Child
 class Error_Mass(tk.Toplevel):
+    """opens a popup when entry field is empty"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = maincolor
@@ -6082,9 +6120,7 @@ class Error_Mass(tk.Toplevel):
 
 # [TOOLTIPZ]
 class CreateToolTip(object):
-    """
-    create a tooltip for a given widget
-    """
+    """create a tooltip for a given widget"""
 
     def __init__(self, widget, text="widget info"):
         self.waittime = 500  # miliseconds
@@ -6144,6 +6180,8 @@ class CreateToolTip(object):
 
 # [THROBBER]
 class Loading_Throbber(Label):
+    """This class animates the the .GIF in the install window"""
+
     def __init__(self, master, filename):
         im = Image.open(filename)
         seq = []

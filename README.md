@@ -32,9 +32,17 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 
 ### And there is a lot more!
 
-With the latest release (codename: Stupida Medusa) PiGro - Just Click It! also works on Ubuntu.
-
 ---
+
+### :two_hearts: You want support me?
+
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
+
+[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)
+
+or:
+
+## [![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)
 
 # :doughnut: Showcase (Click 2 Enlage)
 
@@ -78,9 +86,9 @@ If you install PiGro using the script, you can simply use:
 # :exclamation: Important
 
 #### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
-     
+
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
-     
+
 ---
 
 # :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
@@ -90,8 +98,6 @@ Documentation + Manual /// Still in work
 ---
 
 # :zap: Latest Improvements
-
-
 
 #ADDED: ask:yes/no/cancel popups to critikal options
 
@@ -103,16 +109,17 @@ Documentation + Manual /// Still in work
 
 #CHANGED: straighter visual appearance
 
-- bigger icons     
-- main color #222222    
-- removed tab decoration    
-    
+- bigger icons
+- main color #222222
+- removed tab decoration  
+
+
 #CHANGED: *.list,*conf files moved to ~/.pigro
 (./pigro is a hidden config folder that stores cache files and pigro configs. This way git pull works again)
 
-#CHANGED: Bye Splash Screen(PiGro starts now faster)    
-    
-#FIXED: #arm_freq=800 bug on Tuning Display fixed    
+#CHANGED: Bye Splash Screen(PiGro starts now faster)
+
+#FIXED: #arm_freq=800 bug on Tuning Display fixed
 
 ---
 
@@ -124,9 +131,3 @@ Documentation + Manual /// Still in work
 ---
 
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
-
-#### You want support me?
-
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-
-[RedBubble](https://www.redbubble.com/de/people/Actionschnitzel/shop?anchor=profile&asc=u)
