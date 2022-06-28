@@ -93,6 +93,7 @@ Documentation + Manual /// Still in work
 # :zap: Latest Improvements
 
 
+#ADDED: Process Viewer/ Killer
 
 #ADDED: ask:yes/no/cancel popups to critikal options
 

@@ -31,6 +31,7 @@ from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
 from tkinter import filedialog
+from turtle import width
 
 
 # Say Hallo!
@@ -102,7 +103,6 @@ if distro_get == "ubuntu":
 else:
     legit = "sudo"
 
-
 # Get Desktop Environment
 global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
@@ -130,18 +130,26 @@ if os.path.isfile("/bin/flatpak"):
 else:
     print("[Info]: Flatpak is not installed")
 
+# Color Theme
+global maincolor
+# maincolor = "#E8E8E8"
+# main_font = "black"
+maincolor = "#222222"
+main_font = "white"
+
 
 # [Main Winddow / Notebook Config / SysTray]
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
-        """Base Class That Sets Notbook And Theme"""
+
+        """defines the look of the app"""
 
         # Window Basics
         self.title("PiGro - Just Click It! (Stupida Medusa)")
         self.icon = tk.PhotoImage(file="images/icons/pigro_icons/256x256.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.resizable(0, 0)
         app_width = 1200
         app_height = 800
@@ -166,6 +174,7 @@ class MainApplication(tk.Tk):
         self.Frame8 = Frame8(self.notebook)
         self.Frame12 = Frame12(self.notebook)
         self.Frame13 = Frame13(self.notebook)
+        self.Frame14 = Frame14(self.notebook)
 
         # Notebook Icons
         self.welcome_icon = PhotoImage(file=r"images/icons/pigro_icons/Tab_Welcome.png")
@@ -180,6 +189,7 @@ class MainApplication(tk.Tk):
         self.config_icon = PhotoImage(file=r"images/icons/config_txt.png")
         self.ubuntu_icon = PhotoImage(file=r"images/icons/ubuntu_logo.png")
         self.auto_start = PhotoImage(file=r"images/icons/autostart_icon.png")
+        self.kill_proc = PhotoImage(file=r"images/icons/proc.png")
 
         # Tabs
         self.notebook.add(
@@ -192,6 +202,10 @@ class MainApplication(tk.Tk):
 
         self.notebook.add(
             self.Frame13, compound=LEFT, text="Autostart", image=self.auto_start
+        )
+
+        self.notebook.add(
+            self.Frame14, compound=LEFT, text="Processes", image=self.kill_proc
         )
 
         self.notebook.add(
@@ -230,37 +244,40 @@ class MainApplication(tk.Tk):
             self.notebook.hide(self.Frame9)
 
         # Notebook Themeing
-        self.noteStyler = ttk.Style(self)
-        self.noteStyler.configure(
+        global noteStyler
+        noteStyler = ttk.Style(self)
+        noteStyler.configure(
             "TNotebook",
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             tabposition="w",
             highlightthickness=0,
         )
-        self.noteStyler.configure(
+        noteStyler.configure(
             "TNotebook.Tab",
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 16),
             width=13,
             highlightthickness=0,
         )
-        self.noteStyler.configure("TFrame", background="#222222")
-        self.noteStyler.map(
+        noteStyler.configure("TFrame", background=maincolor)
+        noteStyler.map(
             "TNotebook.Tab",
-            background=[("selected", "#222222")],
+            background=[("selected", maincolor)],
             foreground=[("selected", "#d4244d")],
         )
-        self.noteStyler.configure(
+        noteStyler.configure(
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
-        self.noteStyler.configure("Line.TSeparator", background="grey")
+        noteStyler.configure("Line.TSeparator", background="grey")
 
 
 # [Changelog] Child
 class Change_Log(tk.Toplevel):
+    """ "child window to display the changelog"""
+
     def __init__(
         self,
         parent,
@@ -293,13 +310,15 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Added:\n-Disk Space Display\n-Autostart Tab\n\n#Changed:\n-Main Color #222222(Why? Because!)\n\n#Improved:\n-arm_freq=800 bug fixed\n-Code Improvments\n-New CLI output structure\nfor better debuging",
+            text="#Added:\n-Processes Tab\n\n#Changed:\n-Some Buttons a blue now",
         )
         changelog_label.pack()
 
 
 # [Welcome] Tab
 class Frame1(ttk.Frame):
+    """shows system stats, user name, an changelog"""
+
     def __init__(
         self,
         container,
@@ -364,7 +383,7 @@ class Frame1(ttk.Frame):
         self.web_link.place(x=670, y=740)
         self.web_link.bind("<Button-1>", callback)
 
-        self.web_link["background"] = "#333333"
+        self.web_link["background"] = maincolor
 
         self.gihub_link = tk.Label(
             self,
@@ -375,18 +394,15 @@ class Frame1(ttk.Frame):
         self.gihub_link.place(x=670, y=770)
         self.gihub_link.bind("<Button-1>", callback)
 
-        self.gihub_link["background"] = "#333333"
+        self.gihub_link["background"] = maincolor
 
         self.stress = Button(
             self,
             text="Run/Install Stressberry",
-            font=(
-                ("Helvetica,bold"),
-                "10",
-            ),
-            highlightthickness=2,
+            font=("Helvetica", 10, "bold"),
+            highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background="#0075b7",
             foreground="white",
             command=stress_b,
         )
@@ -402,6 +418,22 @@ class Frame1(ttk.Frame):
             foreground="grey",
             command=ch_log,
         ).place(x=95, y=125)
+
+        # Theme Selction Dropdown Menu
+        # theme_select_frame = Frame(self)
+        # theme_select_frame.place(x=770,y=10)
+        # options = [
+        #    "Dark Theme",
+        #    "Light Theme",
+        # ]
+        # global selcet_clicked
+        # selcet_clicked = StringVar()
+        # selcet_clicked.set( "Select Theme" )
+        # drop = OptionMenu(theme_select_frame , selcet_clicked, *options )
+        # drop.grid(column=0,row=0)
+
+        # select_theme_btn = Button(theme_select_frame , text = "Select")
+        # select_theme_btn.grid(column=1,row=0)
 
         # Parameters for System
         global distro
@@ -423,13 +455,13 @@ class Frame1(ttk.Frame):
             self, borderwidth=0, highlightthickness=5, relief=GROOVE, pady=10, padx=20
         )
         self.sys_info_main_frame.place(x=160, y=360)
-        self.sys_info_main_frame["background"] = "#222222"
+        self.sys_info_main_frame["background"] = maincolor
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_left.pack(side=LEFT)
-        self.sys_frame_left["background"] = "#222222"
+        self.sys_frame_left["background"] = maincolor
 
         self.sys_frame_right = Frame(
             self.sys_info_main_frame,
@@ -440,7 +472,7 @@ class Frame1(ttk.Frame):
             padx=20,
         )
         self.sys_frame_right.pack(pady=20)
-        self.sys_frame_right["background"] = "#222222"
+        self.sys_frame_right["background"] = maincolor
 
         self.raspi_img = ImageTk.PhotoImage(Image.open("images/icons/deb_logo.png"))
         self.raspi_label = Label(image=self.raspi_img)
@@ -450,7 +482,7 @@ class Frame1(ttk.Frame):
             image=self.raspi_img,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             pady=10,
             padx=20,
@@ -465,7 +497,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             anchor=W,
@@ -477,7 +509,7 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -488,7 +520,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Device Name: {my_system.node}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -499,7 +531,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Board: {Pi_Model.read()}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -510,7 +542,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Kernel: {my_system.release}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -521,7 +553,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"Architecture: {my_system.machine}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -531,7 +563,7 @@ class Frame1(ttk.Frame):
         self.sysinf8 = Label(
             self.sys_frame_left,
             text="",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -543,7 +575,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Max Freq: {cpufreq.max:.0f} Mhz",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -554,7 +586,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"CPU Min Freq: {cpufreq.min:.0f} Mhz",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -565,7 +597,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text="",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -577,7 +609,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -588,7 +620,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -599,7 +631,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=f"IP Address: {IPAddr}",
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -610,7 +642,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Total Disk Space: %d GiB" % (total // (2**30))),
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -621,7 +653,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Used Disk Space: %d GiB" % (used // (2**30))),
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -632,7 +664,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_left,
             text=("Free Disk Space: %d GiB" % (free // (2**30))),
             justify="left",
-            background="#222222",
+            background=maincolor,
             foreground="white",
             width=40,
             font=("Helvetica", 10, "bold"),
@@ -737,13 +769,13 @@ class Frame2(ttk.Frame):
 
         self.source_list_frame = Frame(self, relief=GROOVE, borderwidth=0)
         self.source_list_frame.pack(padx=45, pady=40, anchor="w", fill=BOTH)
-        self.source_list_frame["background"] = "#333333"
+        self.source_list_frame["background"] = maincolor
 
         self.termf = Frame(
             self, height=270, width=700, padx=10, highlightthickness=2, borderwidth=0
         )
         self.wid = self.termf.winfo_id()
-        self.termf["background"] = "#333333"
+        self.termf["background"] = maincolor
 
         s_list = Text(
             self.source_list_frame, width=1550, height=10, highlightthickness=1
@@ -764,7 +796,7 @@ class Frame2(ttk.Frame):
             pady=5,
         )
         self.update_btn_frame.pack(padx=45, anchor="w")
-        self.update_btn_frame["background"] = "#222222"
+        self.update_btn_frame["background"] = maincolor
 
         self.update_button = Button(
             self.update_btn_frame,
@@ -774,7 +806,7 @@ class Frame2(ttk.Frame):
             command=update_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -788,7 +820,7 @@ class Frame2(ttk.Frame):
             command=upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -802,7 +834,7 @@ class Frame2(ttk.Frame):
             command=full_upgrade_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -816,7 +848,7 @@ class Frame2(ttk.Frame):
             command=button_gpk,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -830,7 +862,7 @@ class Frame2(ttk.Frame):
             command=add_unsi_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -844,7 +876,7 @@ class Frame2(ttk.Frame):
             command=autoremove_btn,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
         )
@@ -858,7 +890,7 @@ class Frame2(ttk.Frame):
             command=save_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -872,7 +904,7 @@ class Frame2(ttk.Frame):
             command=button_list,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -886,7 +918,7 @@ class Frame2(ttk.Frame):
             command=reboot_n,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             font=("Helvetica", 12, "bold"),
         )
@@ -906,6 +938,8 @@ class Frame2(ttk.Frame):
 
 # [System] tab
 class Frame3(ttk.Frame):
+    """standard system tab for all rpi os distros"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -985,7 +1019,7 @@ class Frame3(ttk.Frame):
         def button_lk():
             global pop_kernel
             pop_kernel = Toplevel(self)
-            pop_kernel.config(bg="#333333")
+            pop_kernel.config(bg=maincolor)
             app_width = 500
             app_height = 150
             screen_width = pop_kernel.winfo_screenwidth()
@@ -1007,11 +1041,11 @@ class Frame3(ttk.Frame):
 
             frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel.pack()
-            frame_pop_kernel["background"] = "#333333"
+            frame_pop_kernel["background"] = maincolor
 
             frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel_1.pack()
-            frame_pop_kernel_1["background"] = "#333333"
+            frame_pop_kernel_1["background"] = maincolor
 
             pop_lbl_2000 = Label(
                 frame_pop_kernel,
@@ -1020,7 +1054,7 @@ class Frame3(ttk.Frame):
                 font=("Helvetica", 12),
                 highlightthickness=0,
                 borderwidth=2,
-                background="#333333",
+                background=maincolor,
                 foreground="white",
                 compound=LEFT,
             )
@@ -1081,7 +1115,7 @@ class Frame3(ttk.Frame):
         def rename_user():
             global pop_u_name
             pop_u_name = Toplevel(self)
-            pop_u_name.config(bg="#333333")
+            pop_u_name.config(bg=maincolor)
             app_width = 500
             app_height = 150
             screen_width = pop_u_name.winfo_screenwidth()
@@ -1101,11 +1135,11 @@ class Frame3(ttk.Frame):
 
             frame_pop_u_name = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
             frame_pop_u_name.pack()
-            frame_pop_u_name["background"] = "#333333"
+            frame_pop_u_name["background"] = maincolor
 
             frame_pop_u_name_1 = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
             frame_pop_u_name_1.pack()
-            frame_pop_u_name_1["background"] = "#333333"
+            frame_pop_u_name_1["background"] = maincolor
 
             pop_lbl_2000 = Label(
                 frame_pop_u_name,
@@ -1114,7 +1148,7 @@ class Frame3(ttk.Frame):
                 font=("Helvetica", 12),
                 highlightthickness=0,
                 borderwidth=2,
-                background="#333333",
+                background=maincolor,
                 foreground="white",
                 compound=LEFT,
             )
@@ -1174,7 +1208,7 @@ class Frame3(ttk.Frame):
         )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#222222")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         # Button Set/Frame1
@@ -1188,7 +1222,7 @@ class Frame3(ttk.Frame):
             pady=20,
         )
         self.rahmen2.pack(pady=20)
-        self.rahmen2["background"] = "#222222"
+        self.rahmen2["background"] = maincolor
 
         sys_rc_cli_btn = Button(
             self.rahmen2,
@@ -1199,7 +1233,7 @@ class Frame3(ttk.Frame):
             command=pi_configbutton,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1215,7 +1249,7 @@ class Frame3(ttk.Frame):
             command=pi_configbutton2,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1231,7 +1265,7 @@ class Frame3(ttk.Frame):
             command=contxt_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1247,7 +1281,7 @@ class Frame3(ttk.Frame):
             command=rm_vscode,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1263,7 +1297,7 @@ class Frame3(ttk.Frame):
             command=gparted_exec,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1286,7 +1320,7 @@ class Frame3(ttk.Frame):
             command=neofetch_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1309,7 +1343,7 @@ class Frame3(ttk.Frame):
             command=onc_ben,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1329,7 +1363,7 @@ class Frame3(ttk.Frame):
             command=button_lk,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1345,7 +1379,7 @@ class Frame3(ttk.Frame):
             command=button_dpfc,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1361,7 +1395,7 @@ class Frame3(ttk.Frame):
             command=button_boot,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1377,7 +1411,7 @@ class Frame3(ttk.Frame):
             command=button_auto,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1396,7 +1430,7 @@ class Frame3(ttk.Frame):
             command=button_xsett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1415,7 +1449,7 @@ class Frame3(ttk.Frame):
             command=net_set,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1431,7 +1465,7 @@ class Frame3(ttk.Frame):
             command=lx_task,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1447,7 +1481,7 @@ class Frame3(ttk.Frame):
             command=bash_log,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1463,7 +1497,7 @@ class Frame3(ttk.Frame):
             command=cron_job,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1479,7 +1513,7 @@ class Frame3(ttk.Frame):
             command=sd_copy,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1495,7 +1529,7 @@ class Frame3(ttk.Frame):
             command=screen_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1511,7 +1545,7 @@ class Frame3(ttk.Frame):
             command=desk_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1527,7 +1561,7 @@ class Frame3(ttk.Frame):
             command=printer_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1543,7 +1577,7 @@ class Frame3(ttk.Frame):
             command=menu_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1559,7 +1593,7 @@ class Frame3(ttk.Frame):
             command=source_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1575,7 +1609,7 @@ class Frame3(ttk.Frame):
             command=mouse_key_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1591,7 +1625,7 @@ class Frame3(ttk.Frame):
             command=rename_user,
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1610,6 +1644,8 @@ class Frame3(ttk.Frame):
 
 # [System For Ubuntu] tab
 class Frame12(ttk.Frame):
+    """system tab for ubuntu"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -1700,7 +1736,7 @@ class Frame12(ttk.Frame):
         )
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         # Button Set/Frame1
@@ -1708,7 +1744,7 @@ class Frame12(ttk.Frame):
             self, borderwidth=0, highlightthickness=2, relief=GROOVE, padx=60, pady=10
         )
         self.rahmen2.pack(padx=40, pady=20, fill="both")
-        self.rahmen2["background"] = "#333333"
+        self.rahmen2["background"] = maincolor
 
         sys_rc_cli_btn = Button(
             self.rahmen2,
@@ -1717,7 +1753,7 @@ class Frame12(ttk.Frame):
             command=pi_configbutton,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1738,7 +1774,7 @@ class Frame12(ttk.Frame):
             command=ubu_prefs,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1752,7 +1788,7 @@ class Frame12(ttk.Frame):
             command=contxt_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1766,7 +1802,7 @@ class Frame12(ttk.Frame):
             command=neofetch_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1787,7 +1823,7 @@ class Frame12(ttk.Frame):
             command=button_dpfc,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1801,7 +1837,7 @@ class Frame12(ttk.Frame):
             command=bash_log,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1815,7 +1851,7 @@ class Frame12(ttk.Frame):
             command=g_tweaks,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1836,7 +1872,7 @@ class Frame12(ttk.Frame):
             command=menu_sett,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1857,7 +1893,7 @@ class Frame12(ttk.Frame):
             command=gparted_exec,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1878,7 +1914,7 @@ class Frame12(ttk.Frame):
             command=onc_ben,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1896,7 +1932,7 @@ class Frame12(ttk.Frame):
             command=gX_web,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 10, "bold"),
@@ -1915,6 +1951,8 @@ class Frame12(ttk.Frame):
 
 # [Autostarts] tab
 class Frame13(ttk.Frame):
+    """displays all files in the autostart folder in a listbox"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -1956,7 +1994,7 @@ class Frame13(ttk.Frame):
             borderwidth=0,
             highlightthickness=3,
             highlightcolor="white",
-            background="#222222",
+            background=maincolor,
             pady=20,
             padx=20,
         )
@@ -1965,7 +2003,7 @@ class Frame13(ttk.Frame):
         auto_button_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             highlightthickness=0,
             pady=10,
         )
@@ -1974,7 +2012,7 @@ class Frame13(ttk.Frame):
         auto_select_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             highlightthickness=0,
             pady=10,
         )
@@ -1984,7 +2022,7 @@ class Frame13(ttk.Frame):
             global pop_del_entry
             pop_del_entry = Toplevel()
             pop_del_entry.title = " "
-            pop_del_entry.config(bg="#333333")
+            pop_del_entry.config(bg=maincolor)
             app_width = 330
             app_height = 179
             screen_width = pop_del_entry.winfo_screenwidth()
@@ -2003,7 +2041,7 @@ class Frame13(ttk.Frame):
                 pop_del_entry.destroy()
 
             yes_btn = tk.Button(pop_del_entry)
-            yes_btn["bg"] = "#333333"
+            yes_btn["bg"] = maincolor
             ft = tkFont.Font(family="Helvetica", size=10)
             yes_btn["borderwidth"] = 0
             yes_btn["highlightthickness"] = 1
@@ -2015,7 +2053,7 @@ class Frame13(ttk.Frame):
             yes_btn["command"] = yes_btn_command
 
             no_btn = tk.Button(pop_del_entry)
-            no_btn["bg"] = "#333333"
+            no_btn["bg"] = maincolor
             ft = tkFont.Font(family="Helvetica", size=10)
             no_btn["borderwidth"] = 0
             no_btn["highlightthickness"] = 1
@@ -2029,7 +2067,7 @@ class Frame13(ttk.Frame):
             del_label = tk.Label(pop_del_entry)
             ft = tkFont.Font(family="Helvetica", size=10)
             del_label["font"] = ft
-            del_label["bg"] = "#333333"
+            del_label["bg"] = maincolor
             del_label["fg"] = "white"
             del_label["justify"] = "center"
             del_label["text"] = f"Do you really want delete:\n{auto_selected.get()}?"
@@ -2078,7 +2116,7 @@ class Frame13(ttk.Frame):
             text="Selected: \n",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             font=(("Helvetica,bold"), "14"),
         )
@@ -2089,7 +2127,7 @@ class Frame13(ttk.Frame):
             text="Delete",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
             command=del_enrty,
@@ -2101,7 +2139,7 @@ class Frame13(ttk.Frame):
             text="Add",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
             command=add_auto,
@@ -2113,7 +2151,7 @@ class Frame13(ttk.Frame):
             text="Details/\nEdit",
             highlightthickness=0,
             borderwidth=0,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
             command=edit_auto,
@@ -2128,7 +2166,7 @@ class Frame13(ttk.Frame):
         note_lbl = Label(
             auto_select_frame,
             text="double click to select",
-            background="#222222",
+            background=maincolor,
             foreground="yellow",
             font=("Helvetica", 14),
         )
@@ -2154,6 +2192,8 @@ class Frame13(ttk.Frame):
 
 # [Autostart Edit Entry Child]
 class Edit_Autostart(tk.Toplevel):
+    """child window for editing a .desktopfile in autostart folder"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
@@ -2167,7 +2207,7 @@ class Edit_Autostart(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Details & Edit")
-        self["background"] = "#333333"
+        self["background"] = maincolor
 
         def done_edit():
             done_child = Done_(self)
@@ -2200,7 +2240,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         name_label.grid(column=0, row=0, padx=5, pady=5, sticky="w")
@@ -2221,7 +2261,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         exec_label.grid(column=0, row=1, padx=5, pady=5, sticky="w")
@@ -2242,7 +2282,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         icon_label.grid(column=0, row=2, padx=5, pady=5, sticky="w")
@@ -2263,7 +2303,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         terminal_label.grid(column=0, row=3, padx=5, pady=5, sticky="w")
@@ -2284,7 +2324,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         type_label.grid(column=0, row=4, padx=5, pady=5, sticky="w")
@@ -2305,7 +2345,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         x_g_label.grid(column=0, row=5, padx=5, pady=5, sticky="w")
@@ -2326,7 +2366,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         hidden_label.grid(column=0, row=6, padx=5, pady=5, sticky="w")
@@ -2347,7 +2387,7 @@ class Edit_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=15,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         no_display_label.grid(column=0, row=7, padx=5, pady=5, sticky="w")
@@ -2365,7 +2405,7 @@ class Edit_Autostart(tk.Toplevel):
             self,
             text="Apply",
             width=10,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             command=edit_entries,
         )
@@ -2375,7 +2415,7 @@ class Edit_Autostart(tk.Toplevel):
             self,
             text="Close",
             width=10,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             command=self.destroy,
         )
@@ -2384,6 +2424,8 @@ class Edit_Autostart(tk.Toplevel):
 
 # [Autostart Add Entry Child]
 class Add_Autostart(tk.Toplevel):
+    """child window for creating a .desktopfile in autostart folder"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
@@ -2397,7 +2439,7 @@ class Add_Autostart(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Add Entry")
-        self["background"] = "#333333"
+        self["background"] = maincolor
 
         def error_mass():
             e_mass = Error_Mass(self)
@@ -2419,7 +2461,7 @@ class Add_Autostart(tk.Toplevel):
                 with open(f"/home/{user}/.pigro/autostart.list", "a") as file:
                     file.write(f"{add_name.get()}.desktop")
 
-        add_frame = Frame(self, background="#333333")
+        add_frame = Frame(self, background=maincolor)
         add_frame.pack(padx=10, pady=10)
 
         add_name_lbl = Label(
@@ -2428,7 +2470,7 @@ class Add_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=10,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         add_name_lbl.grid(row=0, column=0)
@@ -2439,7 +2481,7 @@ class Add_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=10,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         add_path_lbl.grid(row=1, column=0)
@@ -2456,7 +2498,7 @@ class Add_Autostart(tk.Toplevel):
             justify="left",
             anchor="w",
             width=45,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         )
         example_path_lbl.grid(row=2, column=1)
@@ -2466,7 +2508,7 @@ class Add_Autostart(tk.Toplevel):
             text="Add",
             width=10,
             command=add_enrty,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             highlightthickness=1,
             borderwidth=0,
@@ -2479,7 +2521,7 @@ class Add_Autostart(tk.Toplevel):
             text="Close",
             width=10,
             command=self.destroy,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             highlightthickness=1,
             borderwidth=0,
@@ -2490,9 +2532,11 @@ class Add_Autostart(tk.Toplevel):
 
 # [Overclocking_Legend Popup] Child
 class Tuning_Legende(tk.Toplevel):
+    """child window that shows tuning options in detail"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title("Overclocking Legend")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -2512,28 +2556,28 @@ class Tuning_Legende(tk.Toplevel):
         self.tu_5 = PhotoImage(file=r"images/icons/PiGroOV4.png")
 
         # Main Frame
-        self.tu_main_frame = Frame(self, bg="#333333")
+        self.tu_main_frame = Frame(self, bg=maincolor)
         self.tu_main_frame.pack(pady=20)
 
         # Reset
         self.rm_lbl = Label(
             self.tu_main_frame,
             text="Reset Settings",
-            bg="#333333",
+            bg=maincolor,
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
         )
         self.rm_lbl.grid(row=0, column=0)
 
-        self.rm_ov = Label(self.tu_main_frame, image=self.tu_1, bg="#333333")
+        self.rm_ov = Label(self.tu_main_frame, image=self.tu_1, bg=maincolor)
         self.rm_ov.grid(row=1, column=0)
 
         self.rm_text = Label(
             self.tu_main_frame,
             text="Removes all\noverclocking parameters\n\n",
             justify=LEFT,
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.rm_text.grid(row=1, column=1)
@@ -2542,21 +2586,21 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Crank It Up!",
-            bg="#333333",
+            bg=maincolor,
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=2, column=0)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_2, bg=maincolor, fg="white")
         self.ov_1.grid(row=3, column=0)
 
         self.ov_1_text = Label(
             self.tu_main_frame,
             text="arm_freq = 2000\ngpu_freq = 750\nover_voltage = 6\nforce_turbo = 1",
             justify=LEFT,
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.ov_1_text.grid(row=3, column=1)
@@ -2565,7 +2609,7 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="You Sir, Need A Fan!",
-            bg="#333333",
+            bg=maincolor,
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
@@ -2575,21 +2619,21 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg="#333333",
+            bg=maincolor,
             fg="yellow",
             font=("Helvetica", 9),
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=4, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_3, bg=maincolor, fg="white")
         self.ov_1.grid(row=5, column=0)
 
         self.ov_1_text = Label(
             self.tu_main_frame,
             text="arm_freq = 2147\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
             justify=LEFT,
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.ov_1_text.grid(row=5, column=1)
@@ -2598,7 +2642,7 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Take It To The Max!",
-            bg="#333333",
+            bg=maincolor,
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
@@ -2608,21 +2652,21 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg="#333333",
+            bg=maincolor,
             fg="yellow",
             font=("Helvetica", 9),
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=6, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_4, bg=maincolor, fg="white")
         self.ov_1.grid(row=7, column=0)
 
         self.ov_1_text = Label(
             self.tu_main_frame,
             text="arm_freq = 2200\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
             justify=LEFT,
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.ov_1_text.grid(row=7, column=1)
@@ -2631,7 +2675,7 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Honey,the fuse blew again!",
-            bg="#333333",
+            bg=maincolor,
             fg="#d4244d",
             font=("Helvetica", 14),
             justify=LEFT,
@@ -2641,34 +2685,36 @@ class Tuning_Legende(tk.Toplevel):
         self.ov1_lbl = Label(
             self.tu_main_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg="#333333",
+            bg=maincolor,
             fg="yellow",
             font=("Helvetica", 9),
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=8, column=1)
 
-        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5, bg="#333333", fg="white")
+        self.ov_1 = Label(self.tu_main_frame, image=self.tu_5, bg=maincolor, fg="white")
         self.ov_1.grid(row=9, column=0)
 
         self.ov_1_text = Label(
             self.tu_main_frame,
             text="arm_freq = 2300\ngpu_freq = 700\nover_voltage = 14\nforce_turbo = 1",
             justify=LEFT,
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.ov_1_text.grid(row=9, column=1)
 
-        self.tu_main_frame2 = Frame(self, bg="#333333")
+        self.tu_main_frame2 = Frame(self, bg=maincolor)
         self.tu_main_frame2.pack(pady=20)
 
 
 # [Done Popup] Child
 class Done_(tk.Toplevel):
+    """custom messagebox"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title("")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -2686,7 +2732,7 @@ class Done_(tk.Toplevel):
         ft = tkFont.Font(family="Helvetica", size=10)
         cont_btn["font"] = ft
         cont_btn["fg"] = "white"
-        cont_btn["bg"] = "#333333"
+        cont_btn["bg"] = maincolor
         cont_btn["justify"] = "center"
         cont_btn["highlightthickness"] = 2
         cont_btn["borderwidth"] = 0
@@ -2698,7 +2744,7 @@ class Done_(tk.Toplevel):
         ft = tkFont.Font(family="Helvetica", size=14)
         done_label["font"] = ft
         done_label["fg"] = "white"
-        done_label["bg"] = "#333333"
+        done_label["bg"] = maincolor
         done_label["justify"] = "center"
         done_label["text"] = "Done !"
         done_label.place(x=110, y=40, width=70, height=25)
@@ -2706,9 +2752,11 @@ class Done_(tk.Toplevel):
 
 # [Done_Reboot Popup] Child
 class Done_Reboot(tk.Toplevel):
+    """a custom massagebox"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title("")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -2726,7 +2774,7 @@ class Done_Reboot(tk.Toplevel):
         ft = tkFont.Font(family="Helvetica", size=10)
         cont_btn["font"] = ft
         cont_btn["fg"] = "white"
-        cont_btn["bg"] = "#333333"
+        cont_btn["bg"] = maincolor
         cont_btn["justify"] = "center"
         cont_btn["highlightthickness"] = 2
         cont_btn["borderwidth"] = 0
@@ -2739,7 +2787,7 @@ class Done_Reboot(tk.Toplevel):
         ft = tkFont.Font(family="Helvetica", size=10)
         rebt_btn["font"] = ft
         rebt_btn["fg"] = "white"
-        rebt_btn["bg"] = "#333333"
+        rebt_btn["bg"] = maincolor
         rebt_btn["justify"] = "center"
         rebt_btn["highlightthickness"] = 2
         rebt_btn["borderwidth"] = 0
@@ -2751,7 +2799,7 @@ class Done_Reboot(tk.Toplevel):
         ft = tkFont.Font(family="Helvetica", size=14)
         done_label["font"] = ft
         done_label["fg"] = "white"
-        done_label["bg"] = "#333333"
+        done_label["bg"] = maincolor
         done_label["justify"] = "center"
         done_label["text"] = "Done !"
         done_label.place(x=110, y=40, width=70, height=25)
@@ -2762,9 +2810,11 @@ class Done_Reboot(tk.Toplevel):
 
 # [Overclocking_Expert Popup] Child
 class Overclocking_Expert(tk.Toplevel):
+    """entry fields to custom configure config.txt"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title("Expert Mode")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -2972,7 +3022,7 @@ class Overclocking_Expert(tk.Toplevel):
             self.title("This tool is great for Youtubers to make useless vidios")
 
         # Expert Frame
-        x_mode_frame = Frame(self, bg="#333333")
+        x_mode_frame = Frame(self, bg=maincolor)
         x_mode_frame.pack(pady=20)
 
         # arm_freq
@@ -2980,7 +3030,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="arm_freq = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -2997,10 +3047,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_arm_freq,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
 
@@ -3009,10 +3059,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_arm_freq,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
 
@@ -3027,7 +3077,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="gpu_freq = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -3046,10 +3096,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_gpu_freq,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_freq_set.grid(row=1, column=2)
 
@@ -3058,10 +3108,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_gpu_freq,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_freq_reset.grid(row=1, column=3)
 
@@ -3076,7 +3126,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="gpu_mem = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -3095,10 +3145,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_gpu_mem,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_mem_set.grid(row=2, column=2, padx=10, pady=10)
 
@@ -3107,10 +3157,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_gpu_mem,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
 
@@ -3126,7 +3176,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="over_voltage = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -3145,10 +3195,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_over_voltage,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         over_voltage_set.grid(row=3, column=2)
 
@@ -3157,10 +3207,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_over_voltage,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         over_voltage_reset.grid(row=3, column=3)
 
@@ -3176,7 +3226,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="disable_splash = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -3195,10 +3245,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_disable_splash,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         disable_splash_set.grid(row=4, column=2, padx=10, pady=10)
 
@@ -3207,10 +3257,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_disable_splash,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
 
@@ -3226,7 +3276,7 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             justify=LEFT,
             text="force_turbo = ",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             anchor="w",
             width=15,
@@ -3245,10 +3295,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Set",
             command=set_force_turbo,
-            bg="#333333",
+            bg="#0075b7",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         force_turbo_set.grid(row=5, column=2)
 
@@ -3257,10 +3307,10 @@ class Overclocking_Expert(tk.Toplevel):
             x_mode_frame,
             text="Reset",
             command=reset_force_turbo,
-            bg="#333333",
+            bg="red",
             foreground="white",
             borderwidth=0,
-            highlightthickness=2,
+            highlightthickness=0,
         )
         force_turbo_reset.grid(row=5, column=3)
 
@@ -3276,7 +3326,7 @@ class Overclocking_Expert(tk.Toplevel):
             justify=LEFT,
             font=("Helvetica", 12, "bold"),
             text="Reboot",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             borderwidth=0,
             highlightthickness=2,
@@ -3289,14 +3339,14 @@ class Overclocking_Expert(tk.Toplevel):
             justify=LEFT,
             font=("Helvetica", 12, "bold"),
             text="Soon More!",
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
         )
         note_e.pack(pady=20)
 
         buttton_button = Button(
             self,
-            bg="#333333",
+            bg=maincolor,
             foreground="white",
             borderwidth=0,
             highlightthickness=0,
@@ -3307,9 +3357,11 @@ class Overclocking_Expert(tk.Toplevel):
 
 # [APT Installer Popup] Child
 class APT_Installer_Popup(tk.Toplevel):
+    """child window that makes the the install process graphicle"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title(f"Installing ... {apt_inst_combo_box.get()}")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -3328,7 +3380,7 @@ class APT_Installer_Popup(tk.Toplevel):
         inst_show = Label(
             self,
             text="",  # {apt_inst_combo_box.get()}
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         inst_show.pack(pady=20)
@@ -3346,7 +3398,7 @@ class APT_Installer_Popup(tk.Toplevel):
 
         self.apt_inst_wid = self.apt_inst_termf.winfo_id()
 
-        self.apt_inst_termf["background"] = "#333333"
+        self.apt_inst_termf["background"] = maincolor
         self.apt_inst_termf.pack(padx=45, pady=20)
 
         def install_parameter():
@@ -3385,7 +3437,7 @@ class APT_Installer_Popup(tk.Toplevel):
         GButton_916["font"] = ft
         GButton_916["fg"] = "white"
         GButton_916["justify"] = "center"
-        GButton_916["bg"] = "#333333"
+        GButton_916["bg"] = maincolor
         GButton_916["text"] = "Close"
         GButton_916.place(x=580, y=200, width=70, height=25)
         GButton_916["command"] = GButton_916_command
@@ -3396,9 +3448,11 @@ class APT_Installer_Popup(tk.Toplevel):
 
 # [APT Uninstaller Popup] Child
 class APT_Uninstaller_Popup(tk.Toplevel):
+    """child window that makes the the install process graphicle"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title(f"Removing ... {apt_un_combo_box.get()}")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -3417,7 +3471,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         inst_show = Label(
             self,
             text="",  # {apt_inst_combo_box.get()}
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         inst_show.pack(pady=20)
@@ -3435,7 +3489,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 
         self.apt_inst_wid = self.apt_inst_termf.winfo_id()
 
-        self.apt_inst_termf["background"] = "#333333"
+        self.apt_inst_termf["background"] = maincolor
         self.apt_inst_termf.pack(padx=45, pady=20)
 
         def install_parameter():
@@ -3484,6 +3538,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 # [Software] Tab
 class Frame4(ttk.Frame):
     def __init__(self, container):
+        """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
         def info_installer_tab():
@@ -3533,7 +3588,7 @@ class Frame4(ttk.Frame):
             )
             done_pop.geometry(alignstr)
             done_pop.resizable(width=False, height=False)
-            done_pop["bg"] = "#333333"
+            done_pop["bg"] = maincolor
 
             def GButton_234_command():
                 done_pop.destroy()
@@ -3546,7 +3601,7 @@ class Frame4(ttk.Frame):
             GLabel_198["text"] = "label"
             GLabel_198["image"] = self.ip03
             GLabel_198.place(x=10, y=20, width=75, height=76)
-            GLabel_198["bg"] = "#333333"
+            GLabel_198["bg"] = maincolor
 
             GLabel_159 = tk.Label(done_pop)
             ft = tkFont.Font(family="Helvetica", size=14)
@@ -3555,10 +3610,10 @@ class Frame4(ttk.Frame):
             GLabel_159["justify"] = "center"
             GLabel_159["text"] = "Done!"
             GLabel_159.place(x=90, y=40, width=131, height=32)
-            GLabel_159["bg"] = "#333333"
+            GLabel_159["bg"] = maincolor
 
             GButton_234 = tk.Button(done_pop)
-            GButton_234["bg"] = "#333333"
+            GButton_234["bg"] = maincolor
             ft = tkFont.Font(family="Helvetica", size=10)
             GButton_234["font"] = ft
             GButton_234["fg"] = "white"
@@ -3580,7 +3635,7 @@ class Frame4(ttk.Frame):
 
         # images/icons/BG
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.ipshop = PhotoImage(file=r"images/icons/shop.png")
@@ -3590,7 +3645,7 @@ class Frame4(ttk.Frame):
         # Shop
         self.rahmen_shop = Frame(self, borderwidth=0, highlightthickness=1)
         self.rahmen_shop.pack(padx=40, pady=40)
-        self.rahmen_shop["background"] = "#333333"
+        self.rahmen_shop["background"] = maincolor
 
         self.shop_click = Button(
             self.rahmen_shop,
@@ -3645,7 +3700,7 @@ class Frame4(ttk.Frame):
             pady=20,
         )
         self.fast_sec_frame.pack()
-        self.fast_sec_frame["background"] = "#333333"
+        self.fast_sec_frame["background"] = maincolor
 
         # apt-get_entry
         self.apt_frame = Frame(
@@ -3655,7 +3710,7 @@ class Frame4(ttk.Frame):
             highlightthickness=0,
         )
         self.apt_frame.pack()
-        self.apt_frame["background"] = "#333333"
+        self.apt_frame["background"] = maincolor
 
         fo = open(f"/home/{user}/.pigro/apt_cache.list", "r")
         content = fo.readlines()
@@ -3703,7 +3758,7 @@ class Frame4(ttk.Frame):
             command=inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
@@ -3713,7 +3768,7 @@ class Frame4(ttk.Frame):
         )
 
         self.apt_ico = Label(self.apt_frame, image=self.p4, fg="white")
-        self.apt_ico["background"] = "#333333"
+        self.apt_ico["background"] = maincolor
         self.apt_ico.grid(
             column=0,
             row=0,
@@ -3729,7 +3784,7 @@ class Frame4(ttk.Frame):
             highlightthickness=0,
         )
         self.un_apt_frame.pack()
-        self.un_apt_frame["background"] = "#333333"
+        self.un_apt_frame["background"] = maincolor
 
         ua_fo = open(f"/home/{user}/.pigro/packages.list", "r")
         un_content = ua_fo.readlines()
@@ -3770,13 +3825,13 @@ class Frame4(ttk.Frame):
             command=un_inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="red",
             font=(("Helvetica,bold"), "8"),
         )
 
         self.apt_ico = Label(self.un_apt_frame, fg="white", width=10)
-        self.apt_ico["background"] = "#333333"
+        self.apt_ico["background"] = maincolor
         self.apt_ico.grid(
             column=0,
             row=0,
@@ -3799,7 +3854,7 @@ class Frame4(ttk.Frame):
             highlightthickness=0,
         )
         self.pi_apps.pack()
-        self.pi_apps["background"] = "#333333"
+        self.pi_apps["background"] = maincolor
 
         def inst_pi_apps():
             if self.pi_apps_entry.get() == "":
@@ -3814,7 +3869,7 @@ class Frame4(ttk.Frame):
         self.pi_apps_ico = Label(
             self.pi_apps, image=self.pa6, text="piapps install", fg="white"
         )
-        self.pi_apps_ico["background"] = "#333333"
+        self.pi_apps_ico["background"] = maincolor
 
         self.pi_apps_entry = Entry(self.pi_apps, bd=5, width=31, borderwidth=1)
         self.pi_apps_inst_btn = Button(
@@ -3823,7 +3878,7 @@ class Frame4(ttk.Frame):
             command=inst_pi_apps,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
@@ -3832,10 +3887,10 @@ class Frame4(ttk.Frame):
             self.pi_apps,
             text="Search Pi-Apps",
             command=pi_apps_list,
-            highlightthickness=1,
+            highlightthickness=0,
             borderwidth=0,
             width=32,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -3864,7 +3919,7 @@ class Frame4(ttk.Frame):
             highlightthickness=0,
         )
         self.snap_frame.pack()
-        self.snap_frame["background"] = "#333333"
+        self.snap_frame["background"] = maincolor
 
         def inst_btn2():
             if self.snap_entry.get() == "":
@@ -3879,7 +3934,7 @@ class Frame4(ttk.Frame):
         self.snap_ico = Label(
             self.snap_frame, image=self.p6, text="Snap install", fg="white"
         )
-        self.snap_ico["background"] = "#333333"
+        self.snap_ico["background"] = maincolor
 
         self.snap_entry = Entry(self.snap_frame, bd=5, width=31, borderwidth=1)
         self.snap_inst_btn = Button(
@@ -3888,7 +3943,7 @@ class Frame4(ttk.Frame):
             command=inst_btn2,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
@@ -3901,10 +3956,10 @@ class Frame4(ttk.Frame):
             self.snap_frame,
             text="Search Snaps",
             command=snapcraft,
-            highlightthickness=1,
+            highlightthickness=0,
             borderwidth=0,
             width=32,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -3936,7 +3991,7 @@ class Frame4(ttk.Frame):
             highlightthickness=0,
         )
         self.flat_frame.pack()
-        self.flat_frame["background"] = "#333333"
+        self.flat_frame["background"] = maincolor
 
         def inst_btn4():
             if self.flat_entry.get() == "":
@@ -3951,7 +4006,7 @@ class Frame4(ttk.Frame):
         self.flatp_ico = Label(
             self.flat_frame, image=self.p66, text="Flat install", fg="white"
         )
-        self.flatp_ico["background"] = "#333333"
+        self.flatp_ico["background"] = maincolor
 
         self.flat_entry = Entry(self.flat_frame, bd=5, width=31, borderwidth=1)
         self.flatp_inst_btn = Button(
@@ -3960,7 +4015,7 @@ class Frame4(ttk.Frame):
             command=inst_btn4,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             font=(("Helvetica,bold"), "12"),
         )
@@ -3973,10 +4028,10 @@ class Frame4(ttk.Frame):
             self.flat_frame,
             text="Search Flathub",
             command=flatflat,
-            highlightthickness=1,
+            highlightthickness=0,
             width=32,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             font=(("Helvetica,bold"), "9"),
         )
@@ -4004,6 +4059,8 @@ class Frame4(ttk.Frame):
 
 # [Look] Tab
 class Frame5(ttk.Frame):
+    """a tool collection to customize the debian desktop"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -4100,7 +4157,7 @@ class Frame5(ttk.Frame):
 
         # Images/Icons
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.tpinfm = PhotoImage(file=r"images/icons/info_m.png")
@@ -4129,7 +4186,7 @@ class Frame5(ttk.Frame):
             width=300,
         )
         self.rahmen4.pack(pady=40, padx=40, fill="both")  #
-        self.rahmen4["background"] = "#333333"
+        self.rahmen4["background"] = maincolor
 
         self.in_btn1 = Button(
             self.rahmen4,
@@ -4139,7 +4196,7 @@ class Frame5(ttk.Frame):
             command=tasksel_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4155,7 +4212,7 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4171,7 +4228,7 @@ class Frame5(ttk.Frame):
             font=("Helvetica", 10, "bold"),
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4187,7 +4244,7 @@ class Frame5(ttk.Frame):
             command=theme_f,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4203,7 +4260,7 @@ class Frame5(ttk.Frame):
             command=icon_f,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4224,7 +4281,7 @@ class Frame5(ttk.Frame):
             command=web_OVC,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4246,7 +4303,7 @@ class Frame5(ttk.Frame):
             padx=15,
         )
         self.rahmen41.pack(padx=40, pady=20, fill="both")
-        self.rahmen41["background"] = "#333333"
+        self.rahmen41["background"] = maincolor
 
         self.in_btn3 = Button(
             self.rahmen41,
@@ -4256,7 +4313,7 @@ class Frame5(ttk.Frame):
             command=button_xf4s,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=LEFT,
             anchor="w",
@@ -4275,7 +4332,7 @@ class Frame5(ttk.Frame):
             command=xfcefix2,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4293,7 +4350,7 @@ class Frame5(ttk.Frame):
             command=xfcefix,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             anchor="w",
             width=160,
@@ -4311,7 +4368,7 @@ class Frame5(ttk.Frame):
             command=xfceappear_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             anchor="w",
             width=160,
@@ -4329,7 +4386,7 @@ class Frame5(ttk.Frame):
             command=xfcelook_f,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4347,7 +4404,7 @@ class Frame5(ttk.Frame):
             command=xfce_make,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4376,7 +4433,7 @@ class Frame5(ttk.Frame):
             padx=15,
         )
         self.rahmen42.pack(padx=40, pady=20, fill="both")
-        self.rahmen42["background"] = "#333333"
+        self.rahmen42["background"] = maincolor
 
         self.lx_btn0 = Button(
             self.rahmen42,
@@ -4387,7 +4444,7 @@ class Frame5(ttk.Frame):
             command=lxap_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4404,7 +4461,7 @@ class Frame5(ttk.Frame):
             command=opbox_button,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4421,7 +4478,7 @@ class Frame5(ttk.Frame):
             command=pi_appear,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4438,7 +4495,7 @@ class Frame5(ttk.Frame):
             command=set_wp,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=160,
             anchor="w",
@@ -4458,6 +4515,8 @@ class Frame5(ttk.Frame):
 
 # [ZRAM] Child
 class z_ram_pop(tk.Toplevel):
+    """child window that lets one install zram"""
+
     def __init__(self, parent):
         super().__init__(parent)
         self.title("")
@@ -4515,7 +4574,7 @@ class z_ram_pop(tk.Toplevel):
         GLabel_804 = tk.Label(self)
         ft = tkFont.Font(family="Helvetica", size=10)
         GLabel_804["font"] = ft
-        GLabel_804["fg"] = "#333333"
+        GLabel_804["fg"] = maincolor
         GLabel_804["justify"] = "center"
         GLabel_804["text"] = "Icon"
         GLabel_804["image"] = self.ip03
@@ -4524,7 +4583,7 @@ class z_ram_pop(tk.Toplevel):
         GLabel_0 = tk.Label(self)
         ft = tkFont.Font(family="Helvetica", size=14)
         GLabel_0["font"] = ft
-        GLabel_0["fg"] = "#333333"
+        GLabel_0["fg"] = maincolor
         GLabel_0["justify"] = "left"
         GLabel_0["text"] = "ZRAM"
         GLabel_0.place(x=160, y=30, width=391, height=33)
@@ -4532,7 +4591,7 @@ class z_ram_pop(tk.Toplevel):
         GLabel_29 = tk.Label(self)
         ft = tkFont.Font(family="Helvetica", size=10)
         GLabel_29["font"] = ft
-        GLabel_29["fg"] = "#333333"
+        GLabel_29["fg"] = maincolor
         GLabel_29["justify"] = "left"
         GLabel_29[
             "text"
@@ -4562,6 +4621,8 @@ class z_ram_pop(tk.Toplevel):
 
 # [Tuning] Tab
 class Frame6(ttk.Frame):
+    """tool to edit profomance relevant options in config.txt/displays these settings"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -4604,7 +4665,7 @@ class Frame6(ttk.Frame):
         # BG + Icons
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.rm_ov_icon = PhotoImage(file=r"images/icons/PiGroOV_rm.png")
@@ -4744,7 +4805,7 @@ class Frame6(ttk.Frame):
             padx=20,
         )
         self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH)
-        self.ov_buttons["background"] = "#222222"
+        self.ov_buttons["background"] = maincolor
 
         # Overclocking State Main Frame
         self.ov_state_display_frame = Frame(
@@ -4757,14 +4818,14 @@ class Frame6(ttk.Frame):
         self.ov_state_display_frame.pack(
             anchor="n", padx=10, pady=20, fill=BOTH, expand=True
         )
-        self.ov_state_display_frame["background"] = "#222222"
+        self.ov_state_display_frame["background"] = maincolor
 
         self.settings_header = Label(
             self.ov_state_display_frame,
             text="Current Settings",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="#d4244d",
             font=("Helvetica", 16),
             justify="left",
@@ -4780,7 +4841,7 @@ class Frame6(ttk.Frame):
             pady=5,
         )
         self.ov_display_frame.pack(anchor="n")
-        self.ov_display_frame["background"] = "#222222"
+        self.ov_display_frame["background"] = maincolor
 
         # ZRAM Button
         self.tu_zbtn = Button(
@@ -4790,11 +4851,11 @@ class Frame6(ttk.Frame):
             font=("Helvetica", 12),
             anchor="w",
             command=z_ram,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             compound=LEFT,
-            foreground="#d4244d",
+            foreground="white",
         ).pack(pady=20)
 
         # Additional Infos
@@ -4806,7 +4867,7 @@ class Frame6(ttk.Frame):
             relief=GROOVE,
         )
         self.ov_helps_frame.pack(padx=20)
-        self.ov_helps_frame["background"] = "#222222"
+        self.ov_helps_frame["background"] = maincolor
 
         # Overclocking Stats
 
@@ -4818,7 +4879,7 @@ class Frame6(ttk.Frame):
             text="PiGro Berry: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4833,7 +4894,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="green",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4847,7 +4908,7 @@ class Frame6(ttk.Frame):
             text="Arm Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4862,7 +4923,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4876,7 +4937,7 @@ class Frame6(ttk.Frame):
             text="Gpu Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4891,7 +4952,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4905,7 +4966,7 @@ class Frame6(ttk.Frame):
             text="Gpu Mem: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4920,7 +4981,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4934,7 +4995,7 @@ class Frame6(ttk.Frame):
             text="Over Voltage: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4949,7 +5010,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4963,7 +5024,7 @@ class Frame6(ttk.Frame):
             text="Force Turbo: ",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=15,
@@ -4978,7 +5039,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 12, "bold"),
             width=25,
@@ -4990,8 +5051,8 @@ class Frame6(ttk.Frame):
             text="Settings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
             font=("Helvetica", 8),
             highlightthickness=0,
-            borderwidth=2,
-            background="#222222",
+            borderwidth=0,
+            background=maincolor,
             foreground="yellow",
         ).pack()
 
@@ -5000,8 +5061,8 @@ class Frame6(ttk.Frame):
             self.ov_buttons,
             text="Overclocking Options",
             highlightthickness=0,
-            borderwidth=2,
-            background="#222222",
+            borderwidth=0,
+            background=maincolor,
             foreground="#d4244d",
             font=("Helvetica", 16),
             justify="left",
@@ -5014,9 +5075,9 @@ class Frame6(ttk.Frame):
             text="Reset Overclocking",
             anchor="w",
             command=set_default,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5031,9 +5092,9 @@ class Frame6(ttk.Frame):
             text="Crank It Up",
             anchor="w",
             command=ov_2000,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5049,9 +5110,9 @@ class Frame6(ttk.Frame):
             text="You Sir... Need A Fan!",
             anchor="w",
             command=ov_2147,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5067,9 +5128,9 @@ class Frame6(ttk.Frame):
             text="Take It To The Max!",
             anchor="w",
             command=ov_2200,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5085,9 +5146,9 @@ class Frame6(ttk.Frame):
             text="Honey,\nthe fuse blew again!",
             anchor="w",
             command=ov_2300,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5102,9 +5163,9 @@ class Frame6(ttk.Frame):
             image=self.ov5_icon,
             text="I really like typing\nin random numbers and\nsee what happens!",
             command=expert_mode,
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background="#0075b7",
             foreground="white",
             compound=LEFT,
             font=("Helvetica", 10, "bold"),
@@ -5116,9 +5177,9 @@ class Frame6(ttk.Frame):
             self.ov_buttons,
             text="Legende",
             font=("Helvetica", 8),
-            highlightthickness=2,
+            highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="yellow",
             command=tuning_legende,
             image=self.tu_legend_ico,
@@ -5131,7 +5192,7 @@ class Frame6(ttk.Frame):
             text="To unlock the overclocking options\non 'first use' click on:\nReset Overclocking",
             highlightthickness=0,
             borderwidth=2,
-            background="#222222",
+            background=maincolor,
             foreground="yellow",
             font=("Helvetica", 8, "bold"),
         )
@@ -5146,7 +5207,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Crank It Up",
                             fg="yellow",
-                            bg="#222222",
+                            bg=maincolor,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -5160,7 +5221,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Need A Fan!",
                             fg="red",
-                            bg="#222222",
+                            bg=maincolor,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -5174,7 +5235,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Take It To The Max!",
                             fg="pink",
-                            bg="#222222",
+                            bg=maincolor,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -5188,7 +5249,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Honey,the fuse blew again!",
                             fg="purple",
-                            bg="#222222",
+                            bg=maincolor,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -5202,7 +5263,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -5213,7 +5274,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text="not configured",
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -5228,7 +5289,7 @@ class Frame6(ttk.Frame):
                     gpu_f_display.config(
                         text=line[9:-1] + " MHz",
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -5243,7 +5304,7 @@ class Frame6(ttk.Frame):
                     force_t_display.config(
                         text=line[12:-1],
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -5258,7 +5319,7 @@ class Frame6(ttk.Frame):
                     over_v_display.config(
                         text=line[13:-1],
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
                     tu_btn1.config(state=DISABLED)
@@ -5273,7 +5334,7 @@ class Frame6(ttk.Frame):
                     gpu_m_display.config(
                         text=line[8:-1] + " MB",
                         fg="white",
-                        bg="#222222",
+                        bg=maincolor,
                         font=("Helvetica", 12, "bold"),
                     )
 
@@ -5295,6 +5356,8 @@ class Frame6(ttk.Frame):
 
 # [Links] Tab
 class Frame7(ttk.Frame):
+    """a tab that display lot of links to cool websites"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -5373,7 +5436,7 @@ class Frame7(ttk.Frame):
             popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.di01 = PhotoImage(file=r"images/icons/TwisterOSLogo-Large-New3.png")
@@ -5399,14 +5462,14 @@ class Frame7(ttk.Frame):
             pady=20,
         )
         self.rahmen.grid(row=0, rowspan=11, column=0, pady=20, padx=40)
-        self.rahmen["background"] = "#333333"
+        self.rahmen["background"] = maincolor
 
         sys_btn2 = Label(
             self.rahmen,
             text="Distros",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             font=("Helvetica", 16, "bold"),
         )
@@ -5422,7 +5485,7 @@ class Frame7(ttk.Frame):
             command=down_twist,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5437,7 +5500,7 @@ class Frame7(ttk.Frame):
             command=down_puppy,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5452,7 +5515,7 @@ class Frame7(ttk.Frame):
             command=down_diet,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5467,7 +5530,7 @@ class Frame7(ttk.Frame):
             command=down_mx,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5482,7 +5545,7 @@ class Frame7(ttk.Frame):
             command=down_fy,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5497,7 +5560,7 @@ class Frame7(ttk.Frame):
             command=down_kk,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5512,7 +5575,7 @@ class Frame7(ttk.Frame):
             command=down_bb,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5527,7 +5590,7 @@ class Frame7(ttk.Frame):
             command=down_NCP,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5542,7 +5605,7 @@ class Frame7(ttk.Frame):
             command=ubi_bubi,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5557,7 +5620,7 @@ class Frame7(ttk.Frame):
             command=popo_bubi,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             width=150,
         ).pack()
@@ -5571,14 +5634,14 @@ class Frame7(ttk.Frame):
             pady=10,
         )
         self.fast_sec_frame.grid(row=0, column=1, pady=20)
-        self.fast_sec_frame["background"] = "#333333"
+        self.fast_sec_frame["background"] = maincolor
 
         sys_btn2 = Label(
             self.fast_sec_frame,
             text=" Other ",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
             compound=TOP,
             font=("Helvetica", 14, "bold"),
@@ -5593,7 +5656,7 @@ class Frame7(ttk.Frame):
             command=link_mankier,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5605,7 +5668,7 @@ class Frame7(ttk.Frame):
             command=link_guake,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5617,7 +5680,7 @@ class Frame7(ttk.Frame):
             command=link_onBoard,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5629,7 +5692,7 @@ class Frame7(ttk.Frame):
             command=link_drac,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5641,7 +5704,7 @@ class Frame7(ttk.Frame):
             command=link_star,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5653,7 +5716,7 @@ class Frame7(ttk.Frame):
             command=lern_l,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5665,7 +5728,7 @@ class Frame7(ttk.Frame):
             command=rb_tv,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5677,7 +5740,7 @@ class Frame7(ttk.Frame):
             command=fitwo_p,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5689,7 +5752,7 @@ class Frame7(ttk.Frame):
             command=l4_e,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5701,7 +5764,7 @@ class Frame7(ttk.Frame):
             command=pi_doc,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5713,7 +5776,7 @@ class Frame7(ttk.Frame):
             command=pi_tuto,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5725,7 +5788,7 @@ class Frame7(ttk.Frame):
             command=vis_tk,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
@@ -5737,20 +5800,97 @@ class Frame7(ttk.Frame):
             command=papirus_nord,
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="white",
         ).pack()
 
 
+# [Runing Processes]
+class ProcessTree(ttk.Frame):
+    """sets up a treeview of all runnning processes"""
+
+    def __init__(self, parent, *args, **kwargs):
+        ttk.Frame.__init__(self, parent, *args, **kwargs)
+        self.parent = parent
+        self.tree = ttk.Treeview(self, columns=("PID", "Name", "Memory"), height=30)
+        self.tree.heading("#0", text="Process")
+        self.tree.heading("#1", text="PID")
+        self.tree.heading("#2", text="Memory")
+        self.tree.column("#0", stretch=tk.YES)
+        self.tree.column("#1", stretch=tk.YES)
+        self.tree.column("#2", stretch=tk.YES)
+        self.tree.grid(row=0, column=0, sticky="nsew")
+        self.tree.bind("<Double-1>", self.OnDoubleClick)
+        self.vsb = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
+        self.vsb.grid(row=0, column=1, sticky="nsew")
+        self.populate_tree()
+
+    def populate_tree(self):
+        for proc in psutil.process_iter():
+            try:
+                pinfo = proc.as_dict(attrs=["pid", "name", "memory_percent"])
+                self.tree.insert(
+                    "",
+                    "end",
+                    text=pinfo["name"],
+                    values=(pinfo["pid"], pinfo["memory_percent"]),
+                )
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+
+    def OnDoubleClick(self, event):
+        item = self.tree.identify_row(event.y)
+        item_text = self.tree.item(item, "text")
+        pid = self.tree.item(item, "values")[0]
+        print(f"[Info]: Killed {item_text} with PID {pid}")
+        os.system(f"kill {pid}")
+        self.tree.delete(item)
+
+
+# [Processes] Tab
+class Frame14(ttk.Frame):
+    """shows all running pocesses in a treeview"""
+
+    def __init__(self, container, *args, **kwargs):
+        super().__init__()
+        self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
+        self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
+
+        self.proc_frame = Frame(
+            self,
+            bg=maincolor,
+            highlightthickness=3,
+            highlightcolor="white",
+            pady=10,
+            padx=10,
+        )
+        self.proc_frame.pack(pady=40)
+        self.tree = ProcessTree(self.proc_frame)
+        self.tree.pack(fill="both", expand=True)
+
+        self.kill_button = Label(
+            self.proc_frame,
+            text="Double Click To Kill Process",
+            bg=maincolor,
+            fg="yellow",
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.kill_button.pack(side="left", pady=10)
+
+
 # [Poll] Tab
 class Frame8(ttk.Frame):
+    """this tab contains infos and links to the devs website"""
+
     def __init__(self, container):
         super().__init__()
 
         self.auto_start = PhotoImage(file=r"images/icons/actionschnitzel_logo.png")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         def poll():
@@ -5771,12 +5911,12 @@ class Frame8(ttk.Frame):
             self, borderwidth=0, relief=GROOVE, highlightthickness=2, pady=10, padx=10
         )
         self.rahmen102.pack(fill=BOTH, padx=50, pady=20)
-        self.rahmen102["background"] = "#333333"
+        self.rahmen102["background"] = maincolor
 
         self.actn_shn = Label(
             self.rahmen102,
             image=self.auto_start,
-            background="#333333",
+            background=maincolor,
         ).pack(pady=20)
 
         self.poke_pig_21 = Label(
@@ -5784,7 +5924,7 @@ class Frame8(ttk.Frame):
             justify="left",
             text="I never thought that so many people would use Pigro.\nAs open source lives from community,I want you to have a say in that too.\nIf you click on poll, you can vote on what else I should add to Pigro.\nSo ... let's fatten up the hog! xD\nIf you want to support me, click on the RedBubble button below.\nHere you can get Pi / Linux design from me.\n\nBest regards\n\nTimo\n\nQuestions or suggestions?:",
             font=("Helvetica", 12),
-            background="#333333",
+            background=maincolor,
             fg="white",
             padx=5,
             pady=3,
@@ -5796,14 +5936,14 @@ class Frame8(ttk.Frame):
 
         self.rahmen101 = Frame(self, borderwidth=0, relief=GROOVE, highlightthickness=2)
         self.rahmen101.pack(fill=BOTH, padx=50, pady=20)
-        self.rahmen101["background"] = "#333333"
+        self.rahmen101["background"] = maincolor
 
         self.pig_btn_1 = Button(
             self.rahmen101,
             text="User Poll",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="#2FFC05",
             command=poll,
             font=(("Helvetica,bold"), "12", "bold"),
@@ -5814,7 +5954,7 @@ class Frame8(ttk.Frame):
             text="Wallpapers",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="#EBFC05",
             command=wpaps,
             font=(("Helvetica,bold"), "12", "bold"),
@@ -5825,7 +5965,7 @@ class Frame8(ttk.Frame):
             text="PiGro Manuel",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="#053AFC",
             command=wiki,
             font=(("Helvetica,bold"), "12", "bold"),
@@ -5836,7 +5976,7 @@ class Frame8(ttk.Frame):
             text="Redbubble.com",
             highlightthickness=0,
             borderwidth=0,
-            background="#333333",
+            background=maincolor,
             foreground="#FC05A0",
             command=red_bub,
             font=(("Helvetica,bold"), "12", "bold"),
@@ -5845,6 +5985,8 @@ class Frame8(ttk.Frame):
 
 # [Cam] Tab
 class Frame9(ttk.Frame):
+    """basic gui for the raspberry pi camera functions"""
+
     def __init__(self, container):
         super().__init__()
 
@@ -5858,40 +6000,40 @@ class Frame9(ttk.Frame):
             popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
 
         self.bg = PhotoImage(file="images/backgrounds/pigro_bg.png")
-        self.bg_label = Label(self, image=self.bg, bg="#333333")
+        self.bg_label = Label(self, image=self.bg, bg=maincolor)
         self.bg_label.place(x=-1, y=-1, relwidth=1, relheight=1)
 
         self.rahmen101 = Frame(
             self, borderwidth=0, relief=GROOVE, highlightthickness=5, pady=20, padx=10
         )
         self.rahmen101.pack(pady=50)
-        self.rahmen101["background"] = "#333333"
+        self.rahmen101["background"] = maincolor
 
-        self.btn_frame = Frame(self.rahmen101, bg="#333333")
+        self.btn_frame = Frame(self.rahmen101, bg=maincolor)
         self.btn_frame.pack()
         self.label = Label(
             self.btn_frame,
             text="#NOTE: This is experimentel\nDon't know it will be continued ;-)\nand it works with the new camlibs",
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.label.pack()
 
         self.welcome_icon = PhotoImage(file="images/icons/Pi-Camera.png")
-        self.head_frame = Frame(self.rahmen101, bg="#333333")
+        self.head_frame = Frame(self.rahmen101, bg=maincolor)
         self.head_frame.pack()
         self.header_label = Label(
-            self.head_frame, image=self.welcome_icon, bg="#333333"
+            self.head_frame, image=self.welcome_icon, bg=maincolor
         )
         self.header_label.pack(pady=20)
 
         # Clicker_Frame
-        self.btn_frame = Frame(self.rahmen101, bg="#333333")
+        self.btn_frame = Frame(self.rahmen101, bg=maincolor)
         self.btn_frame.pack()
         self.label = Label(
             self.btn_frame,
             text=f"Files will be saved in:\n{home}\n\nGive it a Name:",
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         self.label.pack()
@@ -5902,9 +6044,10 @@ class Frame9(ttk.Frame):
             self.btn_frame,
             text="Take A Photo",
             command=photo1,
-            bg="#333333",
+            bg="#0075b7",
             fg="white",
             highlightthickness=0,
+            borderwidth=0,
         )
         photo_btn.pack(pady=10)
 
@@ -5912,16 +6055,17 @@ class Frame9(ttk.Frame):
             self.btn_frame,
             text="Take A Video",
             command=video1,
-            bg="#333333",
+            bg="#0075b7",
             fg="white",
             highlightthickness=0,
+            borderwidth=0,
         )
         video_btn.pack()
 
         sec_ent_label = Label(
             self.btn_frame,
             text="REC time in seconds:",
-            bg="#333333",
+            bg=maincolor,
             fg="white",
         )
         sec_ent_label.pack()
@@ -5932,9 +6076,11 @@ class Frame9(ttk.Frame):
 
 # [Error Massage] Child
 class Error_Mass(tk.Toplevel):
+    """opens a popup when entry field is empty"""
+
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = "#333333"
+        self["background"] = maincolor
         self.title("")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -5952,31 +6098,29 @@ class Error_Mass(tk.Toplevel):
 
         self.e_m = PhotoImage(file=f"{Application_path}/images/backgrounds/yuno.png")
 
-        error_frame = Frame(self, bg="#333333")
+        error_frame = Frame(self, bg=maincolor)
         error_frame.pack(pady=10)
 
-        error_img = Label(error_frame, image=self.e_m, bg="#333333")
+        error_img = Label(error_frame, image=self.e_m, bg=maincolor)
         error_img.grid(row=0, column=0, rowspan=2)
 
-        error_y = Label(error_frame, text="Y U MAKE ERROR?", fg="white", bg="#333333")
+        error_y = Label(error_frame, text="Y U MAKE ERROR?", fg="white", bg=maincolor)
         error_y.grid(row=0, column=1)
 
         error_y2 = Label(
-            error_frame, text="You did not enter a value", fg="white", bg="#333333"
+            error_frame, text="You did not enter a value", fg="white", bg=maincolor
         )
         error_y2.grid(row=1, column=1)
 
         error_btn = Button(
-            error_frame, text="OK OK OK!", fg="white", bg="#333333", command=cu_error
+            error_frame, text="OK OK OK!", fg="white", bg=maincolor, command=cu_error
         )
         error_btn.grid(row=3, column=1)
 
 
 # [TOOLTIPZ]
 class CreateToolTip(object):
-    """
-    create a tooltip for a given widget
-    """
+    """create a tooltip for a given widget"""
 
     def __init__(self, widget, text="widget info"):
         self.waittime = 500  # miliseconds
@@ -6036,6 +6180,8 @@ class CreateToolTip(object):
 
 # [THROBBER]
 class Loading_Throbber(Label):
+    """This class animates the the .GIF in the install window"""
+
     def __init__(self, master, filename):
         im = Image.open(filename)
         seq = []
