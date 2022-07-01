@@ -3861,7 +3861,7 @@ class Frame4(ttk.Frame):
                 error_mass()
             else:
                 popen(
-                    f"xterm -e 'bash -c \"{Application_path}/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
+                    f"xterm -e 'bash -c \"~/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
                 )
 
         self.pa6 = PhotoImage(file=r"images/icons/pi-app.png")
