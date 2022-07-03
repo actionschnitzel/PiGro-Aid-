@@ -11,8 +11,7 @@
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
-#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI |     
-#### Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
+#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI | Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
 
 ---
 ### :two_hearts: You want support me?
