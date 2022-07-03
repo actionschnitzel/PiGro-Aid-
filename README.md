@@ -6,9 +6,8 @@
 
 ---
 
-## All settings in one place! :key: :mag: :hammer: :toilet:
+## All settings in one place! :key: :mag: :hammer:
 
-### PiGro - Just Click It! is a control panel that bundles the most important options.
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
@@ -33,8 +32,6 @@ Open a terminal and run this command:
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
 ```
-
-(Extra easy for LTT employees)
 
 OR:
 
