@@ -8,23 +8,12 @@
 
 ## All settings in one place! :key: :mag: :hammer: :toilet:
 
-#### PiGro - Just Click It! is a control panel that bundles the most important options.
-
-Due to the reduced desktop, Raspberry Pi OS lacks a control center that makes all options accessible at a glance. I started using opensuse when I was young and still do. I love the possibilities of its control center YaST.
-
-And that's exactly what PiGro is, a tool inspired by the possibilities of YaST.
-
-With a clear and graphically appealing GUI you can access the system deeply, overclock the Pi or replace the entire desktop environment. Everything you need to use the Pi as a desktop computer.
+### PiGro - Just Click It! is a control panel that bundles the most important options.
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
-##### :wrench: Sudo apt-get update/upgrade
-##### :wrench: Sudo apt-get install ...
-##### :wrench: Sudo nano boot / config.txt
-##### :wrench: Overclocking
-##### :wrench: Install and change the DE
-##### :wrench: Add Autostart on DE Login
-### And there is a lot more!
+#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI |     
+#### Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
 
 ---
 ### :two_hearts: You want support me?
@@ -37,12 +26,6 @@ or:
     
 [![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    
 ---
-# :doughnut: Showcase (Click 2 Enlage)
-
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/1.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/2.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/3.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/4.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/5.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/6.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/7.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/8.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/9.png" width="200"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/10.png" width="200">
-
----
-
 # :floppy_disk: Install
 
 Open a terminal and run this command:
@@ -80,50 +63,23 @@ If you install PiGro using the script, you can simply use:
 
 #### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
      
-Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
-     
----
-
-# :question: Pigro [Wiki](https://github.com/actionschnitzel/PiGro-Aid-/wiki)
-
-Documentation + Manual /// Still in work
+Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.    
 
 ---
+# :doughnut: Showcase (Click 2 Enlage)
 
-# :zap: Latest Improvements
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/1.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/2.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/3.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/4.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/5.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/6.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/7.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/8.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/9.png)
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/10.png)
 
 
-#ADDED: Process Viewer/ Killer
-
-#ADDED: ask:yes/no/cancel popups to critikal options
-
-#ADDED: Disk space usage on Welcome tab
-
-#ADDED: Autostart tab
-
-#ADDED: Change Wallpaper for PIXEL Desktop
-
-#CHANGED: straighter visual appearance
-
-- bigger icons     
-- main color #222222    
-- removed tab decoration    
-    
-#CHANGED: *.list,*conf files moved to ~/.pigro
-(./pigro is a hidden config folder that stores cache files and pigro configs. This way git pull works again)
-
-#CHANGED: Bye Splash Screen(PiGro starts now faster)    
-    
-#FIXED: #arm_freq=800 bug on Tuning Display fixed    
-
----
-
-# :rocket: To do
-
-- [ ] Add fully fuctional tkinter rip-off of raspi-config :partying_face: :imp:
-- [x] [Order Pizza with Steak, Cheese , Jalapeño , Bacon & Hollandaise Sauce :goberserk:]
-
----
 
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
