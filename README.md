@@ -62,7 +62,7 @@ If you install PiGro using the script, you can simply use:
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.    
 
 ---
-# :doughnut: Showcase (Click 2 Enlage)
+# :doughnut: Showcase
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/1.png)
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/2.png)
