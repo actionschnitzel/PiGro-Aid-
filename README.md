@@ -65,15 +65,7 @@ Open the Terminal and type `sudo update-alternatives --config x-terminal-emulato
 # :doughnut: Showcase
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/1.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/2.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/3.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/4.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/5.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/6.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/7.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/8.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/9.png)
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Stupida_Medusa_Release/8.5.2/10.png)
+
 
 
 
