@@ -31,7 +31,7 @@ or:
 Open a terminal and run this command:
 
 ```
-wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
 ```
 
 OR:
@@ -50,7 +50,7 @@ If you install PiGro via Pi-Apps, you will automatically receive an update notif
 If you install PiGro using the script, you can simply use:
 
 ```
-"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/main/install.sh |bash".
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
 ```
 
 #### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
