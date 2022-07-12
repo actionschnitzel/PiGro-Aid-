@@ -36,7 +36,8 @@ wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer
 
 OR:
 
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
+
 
 #### Supported systems:
 
