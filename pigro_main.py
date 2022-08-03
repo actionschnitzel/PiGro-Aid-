@@ -310,7 +310,7 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Added:\n-Processes Tab\n\n#Changed:\n-Some Buttons a blue now",
+            text="#Added:\n-Cancel button on APT Installer\n-linuxommandlibrary to Links\n\n#Fixed:\n-Throbber matches BG",
         )
         changelog_label.pack()
 
@@ -3361,7 +3361,7 @@ class APT_Installer_Popup(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        self["background"] = "#333333"
         self.title(f"Installing ... {apt_inst_combo_box.get()}")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -3380,7 +3380,7 @@ class APT_Installer_Popup(tk.Toplevel):
         inst_show = Label(
             self,
             text="",  # {apt_inst_combo_box.get()}
-            bg=maincolor,
+            bg="#333333",
             fg="white",
         )
         inst_show.pack(pady=20)
@@ -3398,12 +3398,13 @@ class APT_Installer_Popup(tk.Toplevel):
 
         self.apt_inst_wid = self.apt_inst_termf.winfo_id()
 
-        self.apt_inst_termf["background"] = maincolor
+        self.apt_inst_termf["background"] = "#333333"
         self.apt_inst_termf.pack(padx=45, pady=20)
 
         def install_parameter():
 
             if distro_get == "ubuntu":
+
                 os.system(
                     f'xterm -into %d -bg Grey1 -geometry 120x25 -e "pkexec apt install -y {apt_inst_combo_box.get()} && exit ; exec bash"'
                     % self.apt_inst_wid
@@ -3413,7 +3414,7 @@ class APT_Installer_Popup(tk.Toplevel):
                 GButton_916.configure(state=NORMAL)
                 self.title(f"Done!")
                 inst_show.configure(text="Done!")
-
+                GButton_9161.place_forget()
             else:
                 os.system(
                     f'xterm -into %d -bg Grey1 -geometry 120x25 -e "sudo apt install -y {apt_inst_combo_box.get()} && exit ; exec bash"'
@@ -3425,6 +3426,8 @@ class APT_Installer_Popup(tk.Toplevel):
                 GButton_916.configure(state=NORMAL)
                 self.title(f"Done!")
                 inst_show.configure(text="Done!")
+                GButton_9161.place_forget()
+
 
         # place the progressbar
 
@@ -3437,11 +3440,23 @@ class APT_Installer_Popup(tk.Toplevel):
         GButton_916["font"] = ft
         GButton_916["fg"] = "white"
         GButton_916["justify"] = "center"
-        GButton_916["bg"] = maincolor
+        GButton_916["bg"] = "#333333"
         GButton_916["text"] = "Close"
         GButton_916.place(x=580, y=200, width=70, height=25)
         GButton_916["command"] = GButton_916_command
         GButton_916.configure(state=DISABLED)
+
+        GButton_9161 = tk.Button(self)
+        GButton_9161["bg"] = "#e9e9ed"
+        ft = tkFont.Font(family="Helvetica", size=12)
+        GButton_9161["font"] = ft
+        GButton_9161["fg"] = "white"
+        GButton_9161["justify"] = "center"
+        GButton_9161["bg"] = "#333333"
+        GButton_9161["text"] = "Cancel"
+        GButton_9161.place(x=500, y=200, width=70, height=25)
+        GButton_9161["command"] = GButton_916_command
+        
 
         Thread(target=install_parameter).start()
 
@@ -3452,7 +3467,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        self["background"] = "#333333"
         self.title(f"Removing ... {apt_un_combo_box.get()}")
         self.icon = tk.PhotoImage(file="images/icons/pigro_spalsh.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -3471,7 +3486,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         inst_show = Label(
             self,
             text="",  # {apt_inst_combo_box.get()}
-            bg=maincolor,
+            bg="#333333",
             fg="white",
         )
         inst_show.pack(pady=20)
@@ -3489,7 +3504,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 
         self.apt_inst_wid = self.apt_inst_termf.winfo_id()
 
-        self.apt_inst_termf["background"] = maincolor
+        self.apt_inst_termf["background"] = "#333333"
         self.apt_inst_termf.pack(padx=45, pady=20)
 
         def install_parameter():
@@ -3503,6 +3518,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
                 GButton_916.configure(state=NORMAL)
                 self.title(f"Done!")
                 inst_show.configure(text="Done!")
+                GButton_9161.place_forget()
 
             else:
                 os.system(
@@ -3514,6 +3530,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
                 GButton_916.configure(state=NORMAL)
                 self.title(f"Done!")
                 inst_show.configure(text="Done!")
+                GButton_9161.place_forget()
 
         # place the progressbar
 
@@ -3526,11 +3543,22 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         GButton_916["font"] = ft
         GButton_916["fg"] = "white"
         GButton_916["justify"] = "center"
-        GButton_916["bg"] = "grey"
+        GButton_916["bg"] = "#333333"
         GButton_916["text"] = "Close"
         GButton_916.place(x=580, y=200, width=70, height=25)
         GButton_916["command"] = GButton_916_command
         GButton_916.configure(state=DISABLED)
+
+        GButton_9161 = tk.Button(self)
+        GButton_9161["bg"] = "#e9e9ed"
+        ft = tkFont.Font(family="Helvetica", size=12)
+        GButton_9161["font"] = ft
+        GButton_9161["fg"] = "white"
+        GButton_9161["justify"] = "center"
+        GButton_9161["bg"] = "#333333"
+        GButton_9161["text"] = "Cancel"
+        GButton_9161.place(x=500, y=200, width=70, height=25)
+        GButton_9161["command"] = GButton_916_command
 
         Thread(target=install_parameter).start()
 
@@ -5406,7 +5434,7 @@ class Frame7(ttk.Frame):
             popen("xdg-open https://www.learnlinux.tv/")
 
         def rb_tv():
-            popen("xdg-open https://rocketbeans.tv/")
+            popen("xdg-open https://linuxcommandlibrary.com/")
 
         def l4_e():
             popen("xdg-open http://www.lcdwiki.com/Main_Page")
@@ -5723,7 +5751,7 @@ class Frame7(ttk.Frame):
         choice_link2 = Button(
             sys_btn2,
             width=50,
-            text="Rocket Beans(ger.)",
+            text="Linuxcommandlibrary.com",
             anchor="w",
             command=rb_tv,
             highlightthickness=0,
