@@ -1,9 +1,10 @@
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
-![forthebadge for-rpi](https://github.com/actionschnitzel/tingsandstuff/blob/main/4rpi.png)
+
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
+![forthebadge for-rpi](https://github.com/actionschnitzel/tingsandstuff/blob/main/4rpi.png)
 ---
 
 ## All settings in one place! :key: :mag: :hammer:
