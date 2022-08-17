@@ -8,11 +8,14 @@
 ---
 
 ## All settings in one place! :key: :mag: :hammer:
-
+     
+#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI | Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
-#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI | Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
+PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.
+
+
 
 
 ---
