@@ -14,18 +14,7 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 
 #### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI | Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
 
----
-### :two_hearts: You want support me?
 
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-
-![cute tuxi](https://github.com/actionschnitzel/tingsandstuff/blob/main/smal_tuxi.png)
-
-[RedBubble](https://www.redbubble.com/de/i/sticker/Cute-Tux-von-Actionschnitzel/86197079.EJUG5)    
-    
-or:    
-    
-[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    
 ---
 # :floppy_disk: Install
 
@@ -75,3 +64,15 @@ Open the Terminal and type `sudo update-alternatives --config x-terminal-emulato
 
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
+---
+### :two_hearts: You want support me?
+
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
+
+![cute tuxi](https://github.com/actionschnitzel/tingsandstuff/blob/main/smal_tuxi.png)
+
+[RedBubble](https://www.redbubble.com/de/i/sticker/Cute-Tux-von-Actionschnitzel/86197079.EJUG5)    
+    
+or:    
+    
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    
