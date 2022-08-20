@@ -7,7 +7,7 @@
 ![forthebadge for-rpi](https://github.com/actionschnitzel/tingsandstuff/blob/main/4rpi.png)
 ---
 
-## All settings in one place! :key: :mag: :hammer:
+# All settings in one place! :key: :mag: :hammer:
      
 #### :heavy_check_mark: System Monitoring :heavy_check_mark: System Configuration :heavy_check_mark: Autostarts :heavy_check_mark: Process Monitor & Killer      
 #### :heavy_check_mark: Update & Upgrade GUI :heavy_check_mark:Multi Install GUI :heavy_check_mark: Change & Customize DE :heavy_check_mark: Overclocking
@@ -15,8 +15,16 @@
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
-PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.
-
+PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.    
+     
+---
+# :dart: Next Update / To-Do
+    
+- [ ] Restore Default Panel
+- [ ] Restart DE & WM
+- [ ] Update-Alternatives
+- [ ] Dark Theme (Default) / Light Theme (PIXEL Colors)
+- [ ] Code Clean Up
 
 
 ---
