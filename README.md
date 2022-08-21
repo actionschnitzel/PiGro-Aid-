@@ -19,6 +19,10 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
      
 ---
 # :dart: Next Update / To-Do
+
+#### Roadmap for Version 9:
+    
+#### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is.
     
 - [ ] Restore Default Panel
 - [ ] Restart DE & WM
