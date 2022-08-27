@@ -23,12 +23,16 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 #### Roadmap for Version 9:
     
 #### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is.
-    
+     
+#### [DONE!]    
 - [ ] Restore Default Panel
 - [ ] Restart DE & WM
 - [ ] Update-Alternatives
-- [ ] Dark Theme (Default) / Light Theme (PIXEL Colors)
 - [ ] Code Clean Up
+- [X] standardized dark mode + papirus icons
+- [ ] standardized light mode + pixelflat icons
+- [X] much clearer look
+- [X] better organized system tab
 
 
 ---
