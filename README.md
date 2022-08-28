@@ -33,6 +33,7 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 - [ ] standardized light mode + pixelflat icons
 - [X] much clearer look
 - [X] better organized system tab
+- [ ] new install gui
      
 #### [First Look / Not Final] (Click To Enlarge)
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_1.png" width="300">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_2.png" width="300">
