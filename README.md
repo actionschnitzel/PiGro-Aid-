@@ -24,6 +24,11 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
     
 #### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is.
      
+I love YaST and the Cinnamon desktop. It's finally time to bring both together in PiGro    
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/yast.png" width="400">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/cinnamon.png" width="300">
+     
+     
+     
 #### [DONE!]    
 - [ ] Restore Default Panel
 - [ ] Restart DE & WM
@@ -33,7 +38,7 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 - [ ] standardized light mode + pixelflat icons
 - [X] much clearer look
 - [X] better organized system tab
-- [ ] new install gui
+- [x] new install gui
      
 #### [First Look / Not Final] (Click To Enlarge)
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_1.png" width="300">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_2.png" width="300">
