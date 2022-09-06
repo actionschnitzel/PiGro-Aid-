@@ -22,10 +22,8 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 
 #### Roadmap for Version 9:
     
-#### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is.
-     
-I love YaST and the Cinnamon desktop. It's finally time to bring both together in PiGro    
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/yast.png" width="400">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/cinnamon.png" width="300">
+#### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is. I love YaST and the Cinnamon desktop. It's finally time to bring both together in PiGro.    
+
      
      
      
@@ -33,12 +31,22 @@ I love YaST and the Cinnamon desktop. It's finally time to bring both together i
 - [ ] Restore Default Panel
 - [ ] Restart DE & WM
 - [ ] Update-Alternatives
+- [x] Theme Selection
+- [X] Standardized dark mode + papirus icons
+- [ ] Standardized light mode + pixelflat icons
+- [X] Much clearer look
+- [X] More system native looking GUI
+- [X] Better organized system tab
+- [x] New install gui
+- [ ] Improof Fast Installer Code
+- [x] New install gui
+- [ ] Adjust tuning settings
+- [ ] Adjust Ubuntu settings Tab
+- [ ] De-bloat code
+- [ ] De-bloat files
+- [ ] Git & More Tab
 - [ ] Code Clean Up
-- [X] standardized dark mode + papirus icons
-- [ ] standardized light mode + pixelflat icons
-- [X] much clearer look
-- [X] better organized system tab
-- [x] new install gui
+- [ ] Testing Phase
      
 #### [First Look / Not Final] (Click To Enlarge)
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_1.png" width="300">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_2.png" width="300">
