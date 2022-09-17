@@ -1,56 +1,30 @@
-
-
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
-
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![forthebadge made-with-coffee](https://github.com/actionschnitzel/tingsandstuff/blob/main/powered_by_coffee.png)
 ![forthebadge for-rpi](https://github.com/actionschnitzel/tingsandstuff/blob/main/4rpi.png)
+
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/header_SM.png)
+
 ---
 
-# All settings in one place! :key: :mag: :hammer:
-     
-#### :heavy_check_mark: System Monitoring :heavy_check_mark: System Configuration :heavy_check_mark: Autostarts :heavy_check_mark: Process Monitor & Killer      
-#### :heavy_check_mark: Update & Upgrade GUI :heavy_check_mark:Multi Install GUI :heavy_check_mark: Change & Customize DE :heavy_check_mark: Overclocking
-#### :heavy_check_mark: Link Collection :heavy_check_mark: Pi-Camera GUI   
+## All settings in one place! :key: :mag: :hammer:
+
 
 PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
 
-PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.    
-     
+#### System Monitoring | System Configuration | Autostarts | Process Monitor & Killer | Update & Upgrade GUI | Multi Install GUI | Change & Customize DE | Overclocking | Link Collection | Pi-Camera GUI
+
 ---
-# :dart: Next Update / To-Do
+### :two_hearts: You want support me?
 
-#### Roadmap for Version 9:
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
+
+![cute tuxi](https://github.com/actionschnitzel/tingsandstuff/blob/main/smal_tuxi.png)
+
+[RedBubble](https://www.redbubble.com/de/i/sticker/Cute-Tux-von-Actionschnitzel/86197079.EJUG5)    
     
-#### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is. I love YaST and the Cinnamon desktop. It's finally time to bring both together in PiGro.    
-
-     
-     
-     
-#### [DONE!]    
-- [ ] Restore Default Panel
-- [ ] Restart DE & WM
-- [ ] Update-Alternatives
-- [x] Theme Selection
-- [X] Standardized dark mode + papirus icons
-- [ ] Standardized light mode + pixelflat icons
-- [X] Much clearer look
-- [X] More system native looking GUI
-- [X] Better organized system tab
-- [x] New install gui
-- [ ] Improof Fast Installer Code
-- [x] New install gui
-- [ ] Adjust tuning settings
-- [ ] Adjust Ubuntu settings Tab
-- [ ] De-bloat code
-- [ ] De-bloat files
-- [ ] Git & More Tab
-- [ ] Code Clean Up
-- [ ] Testing Phase
-     
-#### [First Look / Not Final] (Click To Enlarge)
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_1.png" width="300">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_2.png" width="300">
-
+or:    
+    
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    
 ---
 # :floppy_disk: Install
 
@@ -100,15 +74,3 @@ Open the Terminal and type `sudo update-alternatives --config x-terminal-emulato
 
 [![Actionschnitzel's GitHub stats](https://github-readme-stats.vercel.app/api?username=actionschnitzel)](https://github.com/actionschnitzel/github-readme-stats)
 
----
-### :two_hearts: You want support me?
-
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me. The easiest way is to buy a sticker or something from RedBubble so you get something and so do I ;-)
-
-![cute tuxi](https://github.com/actionschnitzel/tingsandstuff/blob/main/smal_tuxi.png)
-
-[RedBubble](https://www.redbubble.com/de/i/sticker/Cute-Tux-von-Actionschnitzel/86197079.EJUG5)    
-    
-or:    
-    
-[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)    

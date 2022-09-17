@@ -1,1 +1,0 @@
-echo "Here should be a script"
