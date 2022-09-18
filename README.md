@@ -28,28 +28,18 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
      
      
 #### [DONE!]    
-- [ ] Restore Default Panel
-- [ ] Restart DE & WM
-- [ ] Update-Alternatives
+
+- [x] Restore Default Panel 
+- [x] Restart DE & WM |
 - [x] Theme Selection
-- [X] Standardized dark mode + papirus icons
-- [ ] Standardized light mode + pixelflat icons
-- [X] Much clearer look
+- [X] Standardized dark mode / light mode
 - [X] More system native looking GUI
 - [X] Better organized system tab
-- [x] New install gui
-- [ ] Improof Fast Installer Code
-- [x] New install gui
-- [ ] Adjust tuning settings
-- [ ] Adjust Ubuntu settings Tab
-- [ ] De-bloat code
-- [ ] De-bloat files
-- [ ] Git & More Tab
-- [ ] Code Clean Up
+- [x] Git & More Tab
 - [ ] Testing Phase
      
 #### [First Look / Not Final] (Click To Enlarge)
-<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_1.png" width="300">   <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/first_look_2.png" width="300">
+<img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/1.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/2.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/3.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/4.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/5.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/6.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/7.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/8.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/9.png" width="150">
 
 ---
 # :floppy_disk: Install
