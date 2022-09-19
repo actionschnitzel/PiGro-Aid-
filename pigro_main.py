@@ -34,7 +34,8 @@ from concurrent.futures import thread
 from faulthandler import disable
 from tkinter import filedialog
 from turtle import width
-import re, uuid
+import re
+import uuid
 
 
 # Say Hallo!
@@ -207,6 +208,8 @@ for line in loglist:
         print("[Info]: Transparency 5%")
 
 # [Main Window / Notebook Config]
+
+
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -249,7 +252,8 @@ class MainApplication(tk.Tk):
         self.status_icon = PhotoImage(
             file=r"images/icons//papirus/48x48/com.github.hannesschulze.optimizer.png"
         )
-        self.system_icon = PhotoImage(file=r"images/icons//papirus/48x48/kcontrol.png")
+        self.system_icon = PhotoImage(
+            file=r"images/icons//papirus/48x48/kcontrol.png")
         self.update_icon = PhotoImage(
             file=r"images/icons//papirus/48x48/aptdaemon-upgrade.png"
         )
@@ -268,7 +272,8 @@ class MainApplication(tk.Tk):
         self.support_icon = PhotoImage(
             file=r"images/icons//papirus/48x48/4137_winhlp32.0.png"
         )
-        self.cam_icon = PhotoImage(file=r"images/icons//papirus/48x48/gtkam-camera.png")
+        self.cam_icon = PhotoImage(
+            file=r"images/icons//papirus/48x48/gtkam-camera.png")
         self.ubuntu_icon = PhotoImage(
             file=r"images/icons//papirus/48x48/distributor-logo-ubuntu.png"
         )
@@ -278,7 +283,8 @@ class MainApplication(tk.Tk):
         self.kill_proc = PhotoImage(
             file=r"images/icons//papirus/48x48/appimagekit-gqrx.png"
         )
-        self.git_more = PhotoImage(file=r"images/icons//papirus/48x48/git-dag.png")
+        self.git_more = PhotoImage(
+            file=r"images/icons//papirus/48x48/git-dag.png")
 
         # Tabs
         self.notebook.add(
@@ -396,7 +402,8 @@ class Change_Log(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Changelog")
-        self.update_info_btn = PhotoImage(file=r"images/icons/pigro_icons/128x128.png")
+        self.update_info_btn = PhotoImage(
+            file=r"images/icons/pigro_icons/128x128.png")
         logo_lbl = Label(
             self,
             image=self.update_info_btn,
@@ -536,7 +543,8 @@ class Frame1(ttk.Frame):
         self.sys_frame_right.pack(pady=20)
         self.sys_frame_right["background"] = maincolor
 
-        self.raspi_img = ImageTk.PhotoImage(Image.open("images/icons/pi4b.png"))
+        self.raspi_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pi4b.png"))
         self.pigro_img = ImageTk.PhotoImage(
             Image.open("images/icons/pigro_icons/pigrologo.png")
         )
@@ -877,8 +885,10 @@ class Frame1(ttk.Frame):
             cpu = CPUTemperature()
             # print(cpu)
 
-            self.sysinf8.configure(text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
-            self.sysinf10.configure(text=f"CPU Temp: {cpu.temperature:.1f} °C\n")
+            self.sysinf8.configure(
+                text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
+            self.sysinf10.configure(
+                text=f"CPU Temp: {cpu.temperature:.1f} °C\n")
             self.after(1000, refresh_sys_stats)
 
         refresh_sys_stats()
@@ -931,6 +941,12 @@ class Frame2(ttk.Frame):
         def add_unsi_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
+                % self.wid
+            )
+
+        def dpgk_conf_btn():
+            os.popen(
+                f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
                 % self.wid
             )
 
@@ -1124,6 +1140,23 @@ class Frame2(ttk.Frame):
         )
         self.sv_button.grid(column=2, row=1)
 
+        self.dpkg_button = Button(
+            self.update_btn_frame,
+            text="dpkg --configure -a",
+            width=20,
+            anchor="w",
+            command=dpgk_conf_btn,
+            highlightthickness=0,
+            borderwidth=0,
+            background=ext_btn,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+        )
+        self.dpkg_button.grid(column=2, row=1)
+
         self.reboot_button = Button(
             self.update_btn_frame,
             text="Reboot",
@@ -1246,7 +1279,8 @@ class Frame3(ttk.Frame):
             frame_pop_kernel.pack()
             frame_pop_kernel["background"] = maincolor
 
-            frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
+            frame_pop_kernel_1 = Frame(
+                pop_kernel, borderwidth=0, relief=GROOVE)
             frame_pop_kernel_1.pack()
             frame_pop_kernel_1["background"] = maincolor
 
@@ -1340,7 +1374,8 @@ class Frame3(ttk.Frame):
             frame_pop_u_name.pack()
             frame_pop_u_name["background"] = maincolor
 
-            frame_pop_u_name_1 = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
+            frame_pop_u_name_1 = Frame(
+                pop_u_name, borderwidth=0, relief=GROOVE)
             frame_pop_u_name_1.pack()
             frame_pop_u_name_1["background"] = maincolor
 
@@ -1395,11 +1430,13 @@ class Frame3(ttk.Frame):
         self.edit_config_txt_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/mousepad.png"
         )
-        self.gparted_icon = PhotoImage(file=r"images/icons/papirus/48x48/gparted.png")
+        self.gparted_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/gparted.png")
         self.mouse_keyboard_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
-        self.deskpipro_icon = PhotoImage(file=r"images/icons/pigro_icons/deskpi.png")
+        self.deskpipro_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/deskpi.png")
         self.network_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/blueman-server.png"
         )
@@ -1415,14 +1452,16 @@ class Frame3(ttk.Frame):
         self.screen_settings_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/grandr.png"
         )
-        self.neofetch_icon = PhotoImage(file=r"images/icons/pigro_icons/neofetch.png")
+        self.neofetch_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/neofetch.png")
         self.fm_godmode_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/folder-yellow.png"
         )
         self.kernel_2_latest_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
-        self.boot_log_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.boot_log_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/bash.png")
         self.xfce_autostarts_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
@@ -1432,8 +1471,10 @@ class Frame3(ttk.Frame):
         self.taskmanager_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
-        self.cron_job_icon = PhotoImage(file=r"images/icons/papirus/48x48/mousepad.png")
+        self.bash_history_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/bash.png")
+        self.cron_job_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/mousepad.png")
         self.alacard_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
@@ -2039,11 +2080,13 @@ class Frame12(ttk.Frame):
         self.edit_config_txt_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/mousepad.png"
         )
-        self.gparted_icon = PhotoImage(file=r"images/icons/papirus/48x48/gparted.png")
+        self.gparted_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/gparted.png")
         self.mouse_keyboard_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
-        self.deskpipro_icon = PhotoImage(file=r"images/icons/pigro_icons/deskpi.png")
+        self.deskpipro_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/deskpi.png")
         self.network_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/blueman-server.png"
         )
@@ -2059,14 +2102,16 @@ class Frame12(ttk.Frame):
         self.screen_settings_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/grandr.png"
         )
-        self.neofetch_icon = PhotoImage(file=r"images/icons/pigro_icons/neofetch.png")
+        self.neofetch_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/neofetch.png")
         self.fm_godmode_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/folder-yellow.png"
         )
         self.kernel_2_latest_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
-        self.boot_log_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.boot_log_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/bash.png")
         self.xfce_autostarts_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
@@ -2076,8 +2121,10 @@ class Frame12(ttk.Frame):
         self.taskmanager_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
-        self.cron_job_icon = PhotoImage(file=r"images/icons/papirus/48x48/mousepad.png")
+        self.bash_history_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/bash.png")
+        self.cron_job_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/mousepad.png")
         self.alacard_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
@@ -2395,11 +2442,13 @@ class Frame13(ttk.Frame):
             screen_height = pop_del_entry.winfo_screenheight()
             x = (screen_width / 2) - (app_width / 2)
             y = (screen_height / 2) - (app_height / 2)
-            pop_del_entry.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+            pop_del_entry.geometry(
+                f"{app_width}x{app_height}+{int(x)}+{int(y)}")
             pop_del_entry.resizable(0, 0)
 
             def yes_btn_command():
-                os.remove(f"/home/{user}/.config/autostart/{auto_selected.get()}")
+                os.remove(
+                    f"/home/{user}/.config/autostart/{auto_selected.get()}")
                 auto_list.delete(tk.ACTIVE)
                 pop_del_entry.destroy()
 
@@ -3275,7 +3324,8 @@ class Overclocking_Expert(tk.Toplevel):
                 arm_freq_reset.config(state=DISABLED)
                 arm_f_display.config(text="not configured")
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
                 arm_freq_set.config(state=NORMAL)
                 arm_freq_reset.config(state=DISABLED)
                 arm_f_display.config(text="not configured")
@@ -3304,7 +3354,8 @@ class Overclocking_Expert(tk.Toplevel):
                 gpu_freq_reset.config(state=DISABLED)
                 gpu_f_display.config(text="not configured")
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
                 gpu_freq_set.config(state=NORMAL)
                 gpu_freq_reset.config(state=DISABLED)
                 gpu_f_display.config(text="not configured")
@@ -3333,7 +3384,8 @@ class Overclocking_Expert(tk.Toplevel):
                 gpu_mem_reset.config(state=DISABLED)
                 gpu_m_display.config(text="not configured")
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
                 gpu_mem_set.config(state=NORMAL)
                 gpu_mem_reset.config(state=DISABLED)
                 gpu_m_display.config(text="not configured")
@@ -3365,7 +3417,8 @@ class Overclocking_Expert(tk.Toplevel):
                 over_voltage_reset.config(state=DISABLED)
                 over_v_display.config(text="not configured")
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
                 over_voltage_set.config(state=NORMAL)
                 over_voltage_reset.config(state=DISABLED)
                 over_v_display.config(text="not configured")
@@ -3397,7 +3450,8 @@ class Overclocking_Expert(tk.Toplevel):
                 disable_splash_reset.config(state=DISABLED)
                 force_t_display.config(text="not configured")
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
                 disable_splash_set.config(state=NORMAL)
                 disable_splash_reset.config(state=DISABLED)
                 force_t_display.config(text="not configured")
@@ -3425,7 +3479,8 @@ class Overclocking_Expert(tk.Toplevel):
                 force_turbo_set.config(state=NORMAL)
                 force_turbo_reset.config(state=DISABLED)
             else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
+                os.popen(
+                    f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
                 force_turbo_set.config(state=NORMAL)
                 force_turbo_reset.config(state=DISABLED)
 
@@ -3452,7 +3507,8 @@ class Overclocking_Expert(tk.Toplevel):
         arm_freq_label.grid(row=0, column=0)
 
         global arm_freq_entry
-        arm_freq_entry = Entry(x_mode_frame, borderwidth=0, highlightthickness=2)
+        arm_freq_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=2)
         arm_freq_entry.grid(row=0, column=1)
         arm_freq_entry.insert(0, "Default is 1500/1800")
 
@@ -3807,7 +3863,8 @@ class APT_Installer_Popup(tk.Toplevel):
                 anim.forget()
                 GButton_916.configure(state=NORMAL)
                 self.title(f"Done!")
-                inst_show.configure(text="Done!", font=(("Sans,bold"), "12"))  # äöl
+                inst_show.configure(text="Done!", font=(
+                    ("Sans,bold"), "12"))  # äöl
                 GButton_9161.place_forget()
             else:
                 os.system(
@@ -4090,7 +4147,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install neofetch && exit"
+            pigro_skript = "apt install neofetch -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4098,7 +4155,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install bleachbit && exit"
+            pigro_skript = "apt install bleachbit -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4106,7 +4163,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install bpytop && exit"
+            pigro_skript = "apt install bpytop -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4114,7 +4171,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install neofetch && exit"
+            pigro_skript = "apt install neofetch -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4122,7 +4179,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install compiz && exit"
+            pigro_skript = "apt install compiz -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4130,7 +4187,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install gparted && exit"
+            pigro_skript = "apt install gparted -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4138,7 +4195,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install imager && exit"
+            pigro_skript = "apt install imager -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4154,7 +4211,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install xfce4-screenshooter && exit"
+            pigro_skript = "apt install xfce4-screenshooter -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4488,7 +4545,8 @@ class Frame4(ttk.Frame):
         self.snap_inst_btn.grid(column=1, row=0)
         self.snapstore_btn.grid(column=2, row=1)
 
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.ip03 = PhotoImage(
+            file=r"images/icons/pigro_icons/download_ico.png")
 
         # Separator Line
         self.separator = ttk.Separator(
@@ -4729,7 +4787,8 @@ class Frame10(ttk.Frame):
 
         def desk_pi():
             self.appname_header.config(text="DeskPi Pro Driver")
-            self.app_disc.config(text="Driver & Fan Control for the DeskPi Pro Case")
+            self.app_disc.config(
+                text="Driver & Fan Control for the DeskPi Pro Case")
             self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
             self.app_inst.pack(anchor="w")
             self.app_inst.delete("1.0", END)
@@ -5066,7 +5125,7 @@ class Frame5(ttk.Frame):
 
         def pi_panel_restore():
             popen(
-                "cp /etc/xdg/lxpanel/LXDE-pi/panels/panel /home/pi/.config/lxpanel/LXDE-pi/panels/panel"
+                f"cp /etc/xdg/lxpanel/LXDE-pi/panels/panel {home}/.config/lxpanel/LXDE-pi/panels/panel && lxpanelctl restart"
             )
 
         def pi_panel_restart():
@@ -5167,7 +5226,8 @@ class Frame5(ttk.Frame):
             if select_clicked1.get() == "None":
                 file = open(f"{home}/.pigro/pigro.conf", "rt")
                 data = file.read()
-                data = data.replace("transparency = 0.95", "transparency = 1.00")
+                data = data.replace("transparency = 0.95",
+                                    "transparency = 1.00")
                 file.close()
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
@@ -5178,7 +5238,8 @@ class Frame5(ttk.Frame):
             if select_clicked1.get() == "0.95":
                 file = open(f"{home}/.pigro/pigro.conf", "rt")
                 data = file.read()
-                data = data.replace("transparency = 1.00", "transparency = 0.95")
+                data = data.replace("transparency = 1.00",
+                                    "transparency = 0.95")
                 file.close()
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
@@ -5188,12 +5249,14 @@ class Frame5(ttk.Frame):
 
         # Images/Icons
 
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.bash_history_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/bash.png")
         self.fm_godmode_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/folder-yellow.png"
         )
 
-        self.bp06 = PhotoImage(file=r"images/icons/papirus/48x48/folder-yellow.png")
+        self.bp06 = PhotoImage(
+            file=r"images/icons/papirus/48x48/folder-yellow.png")
         self.ico_m = PhotoImage(
             file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
         )
@@ -5201,10 +5264,12 @@ class Frame5(ttk.Frame):
         self.ico_m2 = PhotoImage(
             file=r"images/icons/papirus/48x48/applications-webapps.png"
         )
-        self.ip01 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.ip01 = PhotoImage(
+            file=r"images/icons/pigro_icons/download_ico.png")
 
         # self.ip02 = PhotoImage(file=r"images/icons/fix1i.png")
-        self.bluetooth = PhotoImage(file=r"images/icons/papirus/48x48/blueman.png")
+        self.bluetooth = PhotoImage(
+            file=r"images/icons/papirus/48x48/blueman.png")
         self.wifi = PhotoImage(
             file=r"images/icons/papirus/48x48/kali-wireless-attacks-trans.png"
         )
@@ -5900,17 +5965,25 @@ class Frame6(ttk.Frame):
             x_mode.grab_set()
 
         # BG + Icons
-        self.rm_ov_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV_rm.png")
-        self.ov1_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV1.png")
-        self.ov2_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV2.png")
-        self.ov3_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV3.png")
-        self.ov4_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV4.png")
-        self.ov5_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV5.png")
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.rm_ov_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV_rm.png")
+        self.ov1_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV1.png")
+        self.ov2_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV2.png")
+        self.ov3_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV3.png")
+        self.ov4_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV4.png")
+        self.ov5_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PiGroOV5.png")
+        self.ip03 = PhotoImage(
+            file=r"images/icons/pigro_icons/download_ico.png")
         self.tu_legend_ico = PhotoImage(
             file=r"images/icons/papirus/48x48/io.otsaloma.nfoview.png"
         )
-        self.zram_icon = PhotoImage(file=r"images/icons/papirus/48x48/device_mem.png")
+        self.zram_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/device_mem.png")
 
         # OV Notifications
 
@@ -6848,7 +6921,8 @@ class ProcessTree(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.tree = ttk.Treeview(self, columns=("PID", "Name", "Memory"), height=30)
+        self.tree = ttk.Treeview(self, columns=(
+            "PID", "Name", "Memory"), height=30)
         self.tree.heading("#0", text="Process")
         self.tree.heading("#1", text="PID")
         self.tree.heading("#2", text="Memory")
@@ -6857,7 +6931,8 @@ class ProcessTree(ttk.Frame):
         self.tree.column("#2", stretch=tk.YES)
         self.tree.grid(row=0, column=0, sticky="nsew")
         self.tree.bind("<Double-1>", self.OnDoubleClick)
-        self.vsb = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
+        self.vsb = ttk.Scrollbar(
+            self, orient="vertical", command=self.tree.yview)
         self.vsb.grid(row=0, column=1, sticky="nsew")
         self.populate_tree()
 
@@ -7033,10 +7108,12 @@ class Frame9(ttk.Frame):
         )
         self.label.pack()
 
-        self.status_icon = PhotoImage(file="images/icons/pigro_icons/Pi-Camera.png")
+        self.status_icon = PhotoImage(
+            file="images/icons/pigro_icons/Pi-Camera.png")
         self.head_frame = Frame(self.rahmen101, bg=maincolor)
         self.head_frame.pack()
-        self.header_label = Label(self.head_frame, image=self.status_icon, bg=maincolor)
+        self.header_label = Label(
+            self.head_frame, image=self.status_icon, bg=maincolor)
         self.header_label.pack(pady=20)
 
         # Clicker_Frame
@@ -7108,7 +7185,8 @@ class Error_Mass(tk.Toplevel):
         def cu_error():
             Error_Mass.destroy(self)
 
-        self.e_m = PhotoImage(file=f"{Application_path}/images/backgrounds/yuno.png")
+        self.e_m = PhotoImage(
+            file=f"{Application_path}/images/backgrounds/yuno.png")
 
         error_frame = Frame(self, bg=maincolor)
         error_frame.pack(pady=10)
