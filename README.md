@@ -18,25 +18,10 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.    
      
 ---
-# :dart: Next Update / To-Do
+# :dart: Next Update
 
-#### Roadmap for Version 9:
-    
-#### Playing around with colors and backgrounds was cool and stuff but after almost three years I want PiGro to feel more like an OS built-in tool. But the base remains as it is. I love YaST and the Cinnamon desktop. It's finally time to bring both together in PiGro.    
-
-     
-     
-     
-#### [DONE!]    
-
-- [x] Restore Default Panel 
-- [x] Restart DE & WM |
-- [x] Theme Selection
-- [X] Standardized dark mode / light mode
-- [X] More system native looking GUI
-- [X] Better organized system tab
-- [x] Git & More Tab
-- [ ] Testing Phase
+#### Pigro 9 is now in testing    
+[Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)
      
 #### [First Look / Not Final] (Click To Enlarge)
 <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/1.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/2.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/3.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/4.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/5.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/6.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/7.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/8.png" width="150"> <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/9.png" width="150">
