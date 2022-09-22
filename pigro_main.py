@@ -191,13 +191,13 @@ for line in loglist:
         info_color = "#0075b7"
         ext_btn = "#b6b6b3"
 
-
+# Transparency Settings
 conf_file = open(f"{home}/.pigro/pigro.conf", "r")
 loglist = conf_file.readlines()
 conf_file.close()
 
 for line in loglist:
-    # Dark Theme Settings
+
     if str("transparency = 1.00") in line:
         print("[Info]: No Transparency")
         global translate_p
@@ -207,9 +207,8 @@ for line in loglist:
         translate_p = "0.95"
         print("[Info]: Transparency 5%")
 
+
 # [Main Window / Notebook Config]
-
-
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -286,7 +285,7 @@ class MainApplication(tk.Tk):
         self.git_more = PhotoImage(
             file=r"images/icons//papirus/48x48/git-dag.png")
 
-        # Tabs
+        # Puts tabs in nav bar
         self.notebook.add(
             self.Frame1, compound=LEFT, text="Dashboard", image=self.status_icon
         )
@@ -350,7 +349,7 @@ class MainApplication(tk.Tk):
             self.notebook.hide(self.Frame5)
             self.notebook.hide(self.Frame9)
 
-        # Notebook Themeing
+        # Notebook Theming
         global noteStyler
         noteStyler = ttk.Style(self)
         noteStyler.configure(
@@ -418,7 +417,7 @@ class Change_Log(tk.Toplevel):
             self,
             justify="left",
             anchor=W,
-            text="#Added:\n-Cancel button on APT Installer\n-linuxommandlibrary to Links\n\n#Fixed:\n-Throbber matches BG",
+            text="#Light/Dark Mode (matches RPiOS Theme & Linux Mint Dark Theme)\n#Moste Icons are taken from Papirus Icon Theme\n#Main Frames are replaced with LabelFrames\n#Welcome Tab is now Dashboard\n#Added: User Name to Dashboard\n#Added: MAC Address to Dashboard\n#Added: Hide Sensitiv Data Button\n#System Settings are now categorized\n#Added: dpkg --configure -a button\n#Look Tab is now Look & Feel\n#Buttons for Backup, Restore & Restart lxpanel\n#Added: Light/Dark Theme option\n#Added: Transparacy option\n#Changed: Moved all apps from shop that are in the\nRepo as instant installer to Software tab\n#Added: New Tab Git & More\n#This tab containes stuff from github ore else where\n#Is now About\n#Backgrounds, Pi-Cam Tab",
         )
         changelog_label.pack()
 
@@ -433,6 +432,7 @@ class Frame1(ttk.Frame):
     ):
         super().__init__()
 
+        # Ram Size
         def get_size(bytes, suffix="B"):
             """
             Scale bytes to its proper format
@@ -446,6 +446,7 @@ class Frame1(ttk.Frame):
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
 
+        # IP Address
         def extract_ip():
             st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             try:
@@ -457,8 +458,8 @@ class Frame1(ttk.Frame):
                 st.close()
             return IP
 
+        # Hide/Show sensetiv data
         def Simpletoggle():
-
             if self.toggle_button.config("text")[-1] == "ON":
                 self.toggle_button.config(text="OFF")
                 self.sysinfn.config(text=f"User Name: {user}")
@@ -472,10 +473,13 @@ class Frame1(ttk.Frame):
                 self.sysinf_ma.config(text=f"MAC Address: XXXXXXXXXXXXX\n")
                 self.toggle_button.config(background="green")
 
+        # MAC Address
         get_mac = ":".join(re.findall("..", "%012x" % uuid.getnode()))
 
+        # HDD usage
         obj_Disk = psutil.disk_usage("/")
 
+        # Hide/Show Butten & Label
         self.sensitiv = Label(
             self,
             text=f"Hide Sensitiv Data:",
@@ -514,6 +518,7 @@ class Frame1(ttk.Frame):
         Pi_Model = open("/proc/device-tree/model", "r")
         total, used, free = shutil.disk_usage("/")
 
+        # Main frame for system stats
         self.sys_info_main_frame = Frame(
             self,
             borderwidth=0,
@@ -523,15 +528,18 @@ class Frame1(ttk.Frame):
             pady=20,
             padx=30,
         )
+
         self.sys_info_main_frame.place(x=90, y=100)
         self.sys_info_main_frame["background"] = maincolor
 
+        # Contains all stats
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_left.pack(side=LEFT)
         self.sys_frame_left["background"] = maincolor
 
+        # Hosts Pigro Logo & Pi image
         self.sys_frame_right = Frame(
             self.sys_info_main_frame,
             borderwidth=0,
@@ -540,7 +548,7 @@ class Frame1(ttk.Frame):
             pady=0,
             padx=20,
         )
-        self.sys_frame_right.pack(pady=20)
+        self.sys_frame_right.pack()
         self.sys_frame_right["background"] = maincolor
 
         self.raspi_img = ImageTk.PhotoImage(
@@ -549,14 +557,15 @@ class Frame1(ttk.Frame):
             Image.open("images/icons/pigro_icons/pigrologo.png")
         )
 
-        self.sysinf_btn = Button(
+        # Sys Info Labels
+        self.sysinf_btn = Label(
             self.sys_frame_right,
             image=self.pigro_img,
-            borderwidth=2,
+            borderwidth=0,
             bg=maincolor,
             highlightthickness=0,
         )
-        self.sysinf_btn.pack(pady=20)
+        self.sysinf_btn.pack()
 
         self.sysinf0 = Label(
             self.sys_frame_right,
@@ -899,21 +908,6 @@ class Frame2(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        def info_update_tab():
-            global pop_changelog
-            pop_changelog = Toplevel()
-            pop_changelog.geometry("700x800")
-            pop_changelog.title("Update Info")
-            scrollbar = Scrollbar(pop_changelog)
-            scrollbar.pack(side=RIGHT, fill=Y)
-            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
-            text_file = open("docs/update_info.txt")
-            stuff = text_file.read()
-            s_list.insert(END, stuff)
-            text_file.close()
-            s_list.config(state=DISABLED)
-            s_list.pack(anchor="w", fill=BOTH, expand=True)
-
         def update_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
@@ -1193,9 +1187,6 @@ class Frame3(ttk.Frame):
         def desk_sett():
             popen("pcmanfm --desktop-pref")
 
-        def desk_sess_sett():
-            popen("lxsession-edit")
-
         def printer_sett():
             popen("system-config-printer")
 
@@ -1330,21 +1321,6 @@ class Frame3(ttk.Frame):
 
         def button_xsett():
             popen("xfce4-settings-manager")
-
-        def info_system_tab():
-            global pop_changelog
-            pop_changelog = Toplevel()
-            pop_changelog.geometry("700x800")
-            pop_changelog.title("System Info")
-            scrollbar = Scrollbar(pop_changelog)
-            scrollbar.pack(side=RIGHT, fill=Y)
-            s_list = Text(pop_changelog, yscrollcommand=scrollbar.set)
-            text_file = open("docs/system_info.txt")
-            stuff = text_file.read()
-            s_list.insert(END, stuff)
-            text_file.close()
-            s_list.config(state=DISABLED)
-            s_list.pack(anchor="w", fill=BOTH, expand=True)
 
         def bash_log():
             popen(f"xdg-open {home}/.bash_history")
@@ -3120,7 +3096,7 @@ class Tuning_Legende(tk.Toplevel):
 
         self.ov_1_text = Label(
             self.tu_main_frame,
-            text="arm_freq = 2300\ngpu_freq = 700\nover_voltage = 14\nforce_turbo = 1",
+            text="arm_freq = 2300\ngpu_freq = 750\nover_voltage = 14\nforce_turbo = 1",
             justify=LEFT,
             bg=maincolor,
             foreground=main_font,
@@ -4293,10 +4269,6 @@ class Frame4(ttk.Frame):
                 inst_pop = APT_Installer_Popup(self)
                 inst_pop.grab_set()
 
-        def uninst_btn1():
-            popen(f"{legit} synaptic")
-
-        # kjh
         global apt_inst_combo_box
         apt_inst_combo_box = ttk.Combobox(self.apt_frame)
         apt_inst_combo_box["values"] = content
@@ -4651,7 +4623,6 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             width=20,
             text="Bleach Bit",
-            # anchor="w",
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
@@ -4663,7 +4634,6 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             width=20,
             text="BPYTop",
-            # anchor="w",
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
@@ -4675,7 +4645,6 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             width=20,
             text="Compiz",
-            # anchor="w",
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
@@ -4687,19 +4656,17 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             width=20,
             text="Gnome-Pie",
-            # anchor="w",
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
             command=gnomepie_installer,
         ).grid(row=1, column=0, pady=5, padx=5)
-        # lll
+
         self.gparted_inst = Button(
             self.repo_main_frame,
             width=20,
             text="GParted",
-            # anchor="w",
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
@@ -4709,7 +4676,6 @@ class Frame4(ttk.Frame):
 
         self.neo_inst = Button(
             self.repo_main_frame,
-            # anchor="w",
             width=20,
             text="Neofetch",
             highlightthickness=0,
@@ -4721,7 +4687,6 @@ class Frame4(ttk.Frame):
 
         self.imager_inst = Button(
             self.repo_main_frame,
-            # anchor="w",
             width=20,
             text="Pi Imager",
             highlightthickness=0,
@@ -4733,7 +4698,6 @@ class Frame4(ttk.Frame):
 
         self.plank_inst = Button(
             self.repo_main_frame,
-            # anchor="w",
             width=20,
             text="Plank",
             highlightthickness=0,
@@ -4745,7 +4709,6 @@ class Frame4(ttk.Frame):
 
         self.xfce_screen_inst = Button(
             self.repo_main_frame,
-            # anchor="w",
             width=20,
             text="Xfce4 Screenshooter",
             highlightthickness=0,
@@ -4759,7 +4722,6 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             text="These applications will \nbe installed directly!",
             foreground=info_color,
-            # width=15,
             font=(("Sans"), "8", "bold"),
         )
         self.warning_msg["background"] = maincolor
@@ -5267,7 +5229,6 @@ class Frame5(ttk.Frame):
         self.ip01 = PhotoImage(
             file=r"images/icons/pigro_icons/download_ico.png")
 
-        # self.ip02 = PhotoImage(file=r"images/icons/fix1i.png")
         self.bluetooth = PhotoImage(
             file=r"images/icons/papirus/48x48/blueman.png")
         self.wifi = PhotoImage(
