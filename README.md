@@ -4,7 +4,7 @@
 
 ---
 
-# All settings in one place! :key: :mag: :hammer:
+# :bento:	 All settings in one place!
      
 #### :heavy_check_mark: System Monitoring :heavy_check_mark: System Configuration :heavy_check_mark: Autostarts :heavy_check_mark: Process Monitor & Killer      
 #### :heavy_check_mark: Update & Upgrade GUI :heavy_check_mark:Multi Install GUI :heavy_check_mark: Change & Customize DE :heavy_check_mark: Overclocking
@@ -17,7 +17,13 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 ---
 
 # :hamburger: Lastest Changes
-#### Pigro 9 is now in testing    
+So what's new? For a long time I made all the backgrounds and icons myself. Since this is very time-consuming, I have mostly switched to using the Papirus icon theme.
+PiGro should feel like a system native application, so I reduced some things visually, such as the backgrounds. You can now choose between dark and light theme in the LOOK & FEEL tab.
+The dark theme is the default. The Light Theme is based on the standard colors of Raspberry Pi OS. The transparency can now also be switched on and off separately. I've also done my best to make everything clearer and better structured.
+
+I've read a lot on forums that people have deleted their taskbar/panel and don't know how to get it back. In LOOK & FEEL there is now a button that resets the taskbar to default.
+
+As always, there are many code improvements. 
 [Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)    
      
 ---    
