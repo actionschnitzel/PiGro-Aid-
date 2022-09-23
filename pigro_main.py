@@ -595,31 +595,31 @@ class Frame1(ttk.Frame):
         # Contains all stats
 
         self.sys_frame_1 = LabelFrame(
-            self.sys_info_main_frame,text="System Info",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+            self.sys_info_main_frame,text="System Info",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
         )
         self.sys_frame_1.pack(pady=5,padx=5)
         self.sys_frame_1["background"] = nav_color
 
         self.sys_frame_2 = LabelFrame(
-        self.sys_info_main_frame,text="CPU",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        self.sys_info_main_frame,text="CPU",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
         )
         self.sys_frame_2.pack(pady=5,padx=5)
         self.sys_frame_2["background"] = nav_color
 
         self.sys_frame_3 = LabelFrame(
-        self.sys_info_main_frame2,text="Memory",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        self.sys_info_main_frame2,text="Memory",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
         )
         self.sys_frame_3.pack(pady=5,padx=5)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
-        self.sys_info_main_frame2,text="Network",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        self.sys_info_main_frame2,text="Network",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
         )
         self.sys_frame_4.pack(pady=5,padx=5)
         self.sys_frame_4["background"] = nav_color
 
         self.sys_frame_5 = LabelFrame(
-        self.sys_info_main_frame2,text="Disk",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        self.sys_info_main_frame2,text="Disk",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
         )
         self.sys_frame_5.pack(pady=5,padx=5)
         self.sys_frame_5["background"] = nav_color
@@ -638,7 +638,7 @@ class Frame1(ttk.Frame):
             text=f"Platform: {my_system.system}",
             font=(
                 "Sans",
-                10,
+                12,
             ),
             justify="left",
             highlightthickness=0,
@@ -660,7 +660,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -676,7 +676,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -690,7 +690,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -704,7 +704,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -718,7 +718,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         )
@@ -733,7 +733,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -747,7 +747,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -760,7 +760,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         )
@@ -775,7 +775,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -789,7 +789,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -803,7 +803,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         )
@@ -818,7 +818,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -832,7 +832,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -846,7 +846,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         )
@@ -861,7 +861,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         )
@@ -876,7 +876,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -890,7 +890,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -904,7 +904,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
@@ -918,7 +918,7 @@ class Frame1(ttk.Frame):
             width=40,
             font=(
                 "Sans",
-                10,
+                12,
             ),
             anchor=W,
         ).pack()
