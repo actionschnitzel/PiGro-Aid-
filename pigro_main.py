@@ -464,13 +464,13 @@ class Frame1(ttk.Frame):
                 self.toggle_button.config(text="OFF")
                 self.sysinfn.config(text=f"User Name: {user}")
                 self.sysinf_ip.config(text=f"IP Address: {IPAddr}")
-                self.sysinf_ma.config(text=f"MAC Address: {get_mac}\n")
+                self.sysinf_ma.config(text=f"MAC Address: {get_mac}")
                 self.toggle_button.config(background=ext_btn)
             else:
                 self.toggle_button.config(text="ON")
                 self.sysinfn.config(text="User Name: XXXXXXXXXXXXX")
                 self.sysinf_ip.config(text=f"IP Address: XXXXXXXXXXXXX")
-                self.sysinf_ma.config(text=f"MAC Address: XXXXXXXXXXXXX\n")
+                self.sysinf_ma.config(text=f"MAC Address: XXXXXXXXXXXXX")
                 self.toggle_button.config(background="green")
 
         # MAC Address
@@ -519,7 +519,8 @@ class Frame1(ttk.Frame):
         total, used, free = shutil.disk_usage("/")
 
         # Main frame for system stats
-        self.sys_info_main_frame = Frame(
+
+        self.sys_logo = Frame(
             self,
             borderwidth=0,
             highlightthickness=0,
@@ -529,27 +530,8 @@ class Frame1(ttk.Frame):
             padx=30,
         )
 
-        self.sys_info_main_frame.place(x=90, y=100)
-        self.sys_info_main_frame["background"] = maincolor
-
-        # Contains all stats
-        self.sys_frame_left = Frame(
-            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.sys_frame_left.pack(side=LEFT)
-        self.sys_frame_left["background"] = maincolor
-
-        # Hosts Pigro Logo & Pi image
-        self.sys_frame_right = Frame(
-            self.sys_info_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            pady=0,
-            padx=20,
-        )
-        self.sys_frame_right.pack()
-        self.sys_frame_right["background"] = maincolor
+        self.sys_logo.pack()
+        self.sys_logo["background"] = maincolor
 
         self.raspi_img = ImageTk.PhotoImage(
             Image.open("images/icons/pi4b.png"))
@@ -559,30 +541,101 @@ class Frame1(ttk.Frame):
 
         # Sys Info Labels
         self.sysinf_btn = Label(
-            self.sys_frame_right,
+            self.sys_logo,
             image=self.pigro_img,
             borderwidth=0,
             bg=maincolor,
             highlightthickness=0,
         )
-        self.sysinf_btn.pack()
+        self.sysinf_btn.pack(pady=20)
 
-        self.sysinf0 = Label(
-            self.sys_frame_right,
-            image=self.raspi_img,
-            highlightthickness=0,
+
+
+        self.info_main_frame = Frame(
+            self,
             borderwidth=0,
-            background=maincolor,
-            foreground="#d4244d",
-            pady=10,
-            padx=20,
-            anchor=E,
+            highlightthickness=0,
+            highlightcolor="#d4244d",
+            relief=GROOVE,
+            pady=20,
+            padx=30,
         )
-        self.sysinf0.pack()
+
+        self.info_main_frame.pack()
+        self.info_main_frame["background"] = maincolor
+
+
+        self.sys_info_main_frame = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="#d4244d",
+            relief=GROOVE,
+            pady=20,
+            padx=30,
+        )
+
+        self.sys_info_main_frame.pack(side=LEFT)
+        self.sys_info_main_frame["background"] = maincolor
+
+        self.sys_info_main_frame2 = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="#d4244d",
+            relief=GROOVE,
+            pady=20,
+            padx=30,
+        )
+
+        self.sys_info_main_frame2.pack(side=LEFT)
+        self.sys_info_main_frame2["background"] = maincolor
+
+
+        # Contains all stats
+
+        self.sys_frame_1 = LabelFrame(
+            self.sys_info_main_frame,text="System Info",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        )
+        self.sys_frame_1.pack(pady=5,padx=5)
+        self.sys_frame_1["background"] = nav_color
+
+        self.sys_frame_2 = LabelFrame(
+        self.sys_info_main_frame,text="CPU",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        )
+        self.sys_frame_2.pack(pady=5,padx=5)
+        self.sys_frame_2["background"] = nav_color
+
+        self.sys_frame_3 = LabelFrame(
+        self.sys_info_main_frame2,text="Memory",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        )
+        self.sys_frame_3.pack(pady=5,padx=5)
+        self.sys_frame_3["background"] = nav_color
+
+        self.sys_frame_4 = LabelFrame(
+        self.sys_info_main_frame2,text="Network",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        )
+        self.sys_frame_4.pack(pady=5,padx=5)
+        self.sys_frame_4["background"] = nav_color
+
+        self.sys_frame_5 = LabelFrame(
+        self.sys_info_main_frame2,text="Disk",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=5,padx=5
+        )
+        self.sys_frame_5.pack(pady=5,padx=5)
+        self.sys_frame_5["background"] = nav_color
+
+        self.sys_frame_left = Frame(
+            self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
+        )
+        self.sys_frame_left.pack()
+        self.sys_frame_left["background"] = maincolor
+
+
+
 
         self.sysinf0 = Label(
-            self.sys_frame_left,
-            text=f"System: {my_system.system}",
+            self.sys_frame_1,
+            text=f"Platform: {my_system.system}",
             font=(
                 "Sans",
                 10,
@@ -590,19 +643,19 @@ class Frame1(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             anchor=W,
         ).pack()
 
         self.sysinfd = Label(
-            self.sys_frame_left,
+            self.sys_frame_1,
             text=f"Distro: {distro}",
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -613,12 +666,40 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_de = Label(
-            self.sys_frame_left,
+            self.sys_frame_1,
             text=f"Desktop: {get_de}",
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            font=(
+                "Sans",
+                10,
+            ),
+            anchor=W,
+        ).pack()
+
+        self.sysinf2 = Label(
+            self.sys_frame_1,
+            text=f"Kernel: {my_system.release}",
+            justify="left",
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            font=(
+                "Sans",
+                10,
+            ),
+            anchor=W,
+        ).pack()
+
+        self.sysinf_a = Label(
+            self.sys_frame_1,
+            text=f"Architecture: {my_system.machine}",
+            justify="left",
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -629,10 +710,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinfn = Label(
-            self.sys_frame_left,
+            self.sys_frame_1,
             text=f"User Name: {user}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -644,10 +725,10 @@ class Frame1(ttk.Frame):
         self.sysinfn.pack()
 
         self.sysinf1 = Label(
-            self.sys_frame_left,
+            self.sys_frame_1,
             text=f"Device Name: {my_system.node}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -658,38 +739,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf9 = Label(
-            self.sys_frame_left,
+            self.sys_frame_1,
             text=f"Board: {Pi_Model.read()}",
             justify="left",
-            background=maincolor,
-            foreground=main_font,
-            width=40,
-            font=(
-                "Sans",
-                10,
-            ),
-            anchor=W,
-        ).pack()
-
-        self.sysinf2 = Label(
-            self.sys_frame_left,
-            text=f"Kernel: {my_system.release}",
-            justify="left",
-            background=maincolor,
-            foreground=main_font,
-            width=40,
-            font=(
-                "Sans",
-                10,
-            ),
-            anchor=W,
-        ).pack()
-
-        self.sysinf_a = Label(
-            self.sys_frame_left,
-            text=f"Architecture: {my_system.machine}\n",
-            justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -700,9 +753,9 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf8 = Label(
-            self.sys_frame_left,
+            self.sys_frame_2,
             text="",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -714,10 +767,10 @@ class Frame1(ttk.Frame):
         self.sysinf8.pack()
 
         self.sysinf6 = Label(
-            self.sys_frame_left,
+            self.sys_frame_2,
             text=f"CPU Max Freq: {cpufreq.max:.0f} Mhz",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -728,10 +781,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf7 = Label(
-            self.sys_frame_left,
+            self.sys_frame_2,
             text=f"CPU Min Freq: {cpufreq.min:.0f} Mhz",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -742,10 +795,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf10 = Label(
-            self.sys_frame_left,
+            self.sys_frame_2,
             text="",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -757,10 +810,10 @@ class Frame1(ttk.Frame):
         self.sysinf10.pack()
 
         self.sysinf3 = Label(
-            self.sys_frame_left,
+            self.sys_frame_3,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -771,10 +824,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_st = Label(
-            self.sys_frame_left,
-            text=f"SWAP Total: {get_size(swap.total)}\n",
+            self.sys_frame_3,
+            text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -785,10 +838,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_ip = Label(
-            self.sys_frame_left,
+            self.sys_frame_4,
             text=f"IP Address: {IPAddr}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -800,10 +853,10 @@ class Frame1(ttk.Frame):
         self.sysinf_ip.pack()
 
         self.sysinf_ma = Label(
-            self.sys_frame_left,
-            text=f"MAC Address: {get_mac}\n",
+            self.sys_frame_4,
+            text=f"MAC Address: {get_mac}",
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -815,10 +868,10 @@ class Frame1(ttk.Frame):
         self.sysinf_ma.pack()
 
         self.sysinf_hdd_t = Label(
-            self.sys_frame_left,
+            self.sys_frame_5,
             text=("Total Disk Space: %d GiB" % (total // (2**30))),
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -829,10 +882,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_hdd_u = Label(
-            self.sys_frame_left,
+            self.sys_frame_5,
             text=("Used Disk Space: %d GiB" % (used // (2**30))),
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -843,10 +896,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_hdd_f = Label(
-            self.sys_frame_left,
+            self.sys_frame_5,
             text=("Free Disk Space: %d GiB" % (free // (2**30))),
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -857,10 +910,10 @@ class Frame1(ttk.Frame):
         ).pack()
 
         self.sysinf_hdd_u_p = Label(
-            self.sys_frame_left,
+            self.sys_frame_5,
             text=(f"Used Disk Space: {obj_Disk.percent} %"),
             justify="left",
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             width=40,
             font=(
@@ -874,10 +927,10 @@ class Frame1(ttk.Frame):
             self.pb1["value"] = obj_Disk.percent
 
         self.pb1 = ttk.Progressbar(
-            self.sys_frame_left,
+            self.sys_frame_5,
             style="red.Horizontal.TProgressbar",
             orient=HORIZONTAL,
-            length=100,
+            length=150,
             mode="determinate",
         )
         self.pb1.pack(expand=True, anchor="w")
@@ -897,7 +950,7 @@ class Frame1(ttk.Frame):
             self.sysinf8.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.sysinf10.configure(
-                text=f"CPU Temp: {cpu.temperature:.1f} °C\n")
+                text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh_sys_stats)
 
         refresh_sys_stats()
@@ -6979,8 +7032,8 @@ class Frame8(ttk.Frame):
 
         self.poke_pig_21 = Label(
             self.rahmen102,
-            justify="left",
-            text="PiGro - Just Click It! 9.0\n(Perche sei cosi serio?)",
+            #justify="left",
+            text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0",
             font=("Sans", 18, "bold"),
             background=maincolor,
             foreground=main_font,
