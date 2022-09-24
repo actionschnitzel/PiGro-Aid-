@@ -627,8 +627,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-        self.sys_frame_left.pack()
-        self.sys_frame_left["background"] = maincolor
+
 
 
 
@@ -930,7 +929,7 @@ class Frame1(ttk.Frame):
             self.sys_frame_5,
             style="red.Horizontal.TProgressbar",
             orient=HORIZONTAL,
-            length=150,
+            length=200,
             mode="determinate",
         )
         self.pb1.pack(expand=True, anchor="w")
@@ -3101,7 +3100,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="Works for rev. 1.4 & Pi400",
             bg=maincolor,
-            foreground="yellow",
+            foreground=info_color,
             font=("Sans", 9),
             justify=LEFT,
         )
@@ -6160,7 +6159,7 @@ class Frame6(ttk.Frame):
             pady=10,
         )
         self.ov_display_frame.pack(anchor="n")
-        self.ov_display_frame["background"] = maincolor
+        self.ov_display_frame["background"] = nav_color
 
         # Additional Infos
 
@@ -6183,7 +6182,7 @@ class Frame6(ttk.Frame):
             text="PiGro Berry: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6201,7 +6200,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground="green",
             font=(
                 "Sans",
@@ -6218,7 +6217,7 @@ class Frame6(ttk.Frame):
             text="Arm Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6236,7 +6235,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6253,7 +6252,7 @@ class Frame6(ttk.Frame):
             text="Gpu Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6271,7 +6270,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6288,7 +6287,7 @@ class Frame6(ttk.Frame):
             text="Gpu Mem: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6306,7 +6305,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6323,7 +6322,7 @@ class Frame6(ttk.Frame):
             text="Over Voltage: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6341,7 +6340,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6358,7 +6357,7 @@ class Frame6(ttk.Frame):
             text="Force Turbo: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6376,7 +6375,7 @@ class Frame6(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=(
                 "Sans",
@@ -6544,7 +6543,7 @@ class Frame6(ttk.Frame):
             font=("Sans", 8),
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             foreground=info_color,
             command=tuning_legende,
             image=self.tu_legend_ico,
@@ -6586,7 +6585,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Need A Fan!",
                             foreground="red",
-                            bg=maincolor,
+                            
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6600,7 +6599,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Take It To The Max!",
                             foreground="pink",
-                            bg=maincolor,
+                            
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6614,7 +6613,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Honey,the fuse blew again!",
                             foreground="purple",
-                            bg=maincolor,
+                            
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6628,7 +6627,6 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text=line[9:-1] + " MHz",
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -6642,7 +6640,6 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text="not configured",
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -6660,7 +6657,6 @@ class Frame6(ttk.Frame):
                     gpu_f_display.config(
                         text=line[9:-1] + " MHz",
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -6678,7 +6674,6 @@ class Frame6(ttk.Frame):
                     force_t_display.config(
                         text=line[12:-1],
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -6696,7 +6691,6 @@ class Frame6(ttk.Frame):
                     over_v_display.config(
                         text=line[13:-1],
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -6714,7 +6708,6 @@ class Frame6(ttk.Frame):
                     gpu_m_display.config(
                         text=line[8:-1] + " MB",
                         foreground=main_font,
-                        bg=maincolor,
                         font=(
                             "Sans",
                             12,
@@ -7002,7 +6995,7 @@ class Frame14(ttk.Frame):
         self.kill_button.pack(side="left", pady=10)
 
 
-# [Support] Tab
+# [About] Tab
 class Frame8(ttk.Frame):
     """this tab contains infos and links to the devs website"""
 
