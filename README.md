@@ -16,7 +16,7 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 
 ---
 
-# :hamburger: Lastest Changes
+# :hamburger: Latest Changes
 
 So what's new? For a long time I made all the backgrounds and icons myself. Since this is very time-consuming, I have mostly switched to using the Papirus icon theme.
 PiGro should feel like a system native application, so I reduced some things visually, such as the backgrounds. You can now choose between dark and light theme in the LOOK & FEEL tab.
