@@ -4223,7 +4223,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install imager -y && exit"
+            pigro_skript = "apt install rpi-imager -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -4231,7 +4231,7 @@ class Frame4(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "Neofetch"
             global pigro_skript
-            pigro_skript = "apt install plank && exit"
+            pigro_skript = "apt install plank -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
@@ -5866,7 +5866,7 @@ class z_ram_pop(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
-        self.ip03 = PhotoImage(file=r"images/icons/download_ico.png")
+        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
 
         def z_ram_install():
 
