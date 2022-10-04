@@ -249,41 +249,41 @@ class MainApplication(tk.Tk):
 
         # Notebook Icons
         self.status_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/com.github.hannesschulze.optimizer.png"
+            file=r"images/icons/papirus/48x48/com.github.hannesschulze.optimizer.png"
         )
         self.system_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/kcontrol.png")
+            file=r"images/icons/papirus/48x48/kcontrol.png")
         self.update_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/aptdaemon-upgrade.png"
+            file=r"images/icons/papirus/48x48/aptdaemon-upgrade.png"
         )
         self.install_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/softwarecenter.png"
+            file=r"images/icons/papirus/48x48/softwarecenter.png"
         )
         self.look_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/com.github.cassidyjames.palette.png"
+            file=r"images/icons/papirus/48x48/com.github.cassidyjames.palette.png"
         )
         self.tuning_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/blackmagicraw-speedtest.png"
+            file=r"images/icons/papirus/48x48/blackmagicraw-speedtest.png"
         )
         self.links_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/applications-webapps.png"
+            file=r"images/icons/papirus/48x48/applications-webapps.png"
         )
         self.support_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/4137_winhlp32.0.png"
+            file=r"images/icons/papirus/48x48/4137_winhlp32.0.png"
         )
         self.cam_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/gtkam-camera.png")
+            file=r"images/icons/papirus/48x48/gtkam-camera.png")
         self.ubuntu_icon = PhotoImage(
-            file=r"images/icons//papirus/48x48/distributor-logo-ubuntu.png"
+            file=r"images/icons/papirus/48x48/distributor-logo-ubuntu.png"
         )
         self.auto_start = PhotoImage(
-            file=r"images/icons//papirus/48x48/cs-startup-programs.png"
+            file=r"images/icons/papirus/48x48/cs-startup-programs.png"
         )
         self.kill_proc = PhotoImage(
-            file=r"images/icons//papirus/48x48/appimagekit-gqrx.png"
+            file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
         self.git_more = PhotoImage(
-            file=r"images/icons//papirus/48x48/git-dag.png")
+            file=r"images/icons/papirus/48x48/git-dag.png")
 
         # Puts tabs in nav bar
         self.notebook.add(
@@ -458,20 +458,33 @@ class Frame1(ttk.Frame):
                 st.close()
             return IP
 
+        global on_btn_icon
+        on_btn_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/on_s_b.png"
+        )
+
+        global off_btn_icon
+        off_btn_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/off_s_b.png"
+        )
+
         # Hide/Show sensetiv data
+
         def Simpletoggle():
             if self.toggle_button.config("text")[-1] == "ON":
                 self.toggle_button.config(text="OFF")
+                self.toggle_button.config(image=off_btn_icon)
                 self.sysinfn.config(text=f"User Name: {user}")
                 self.sysinf_ip.config(text=f"IP Address: {IPAddr}")
                 self.sysinf_ma.config(text=f"MAC Address: {get_mac}")
-                self.toggle_button.config(background=ext_btn)
+                self.sysinf1.config(text=f"Device Name: {my_system.node}")
             else:
                 self.toggle_button.config(text="ON")
+                self.toggle_button.config(image=on_btn_icon)
                 self.sysinfn.config(text="User Name: XXXXXXXXXXXXX")
                 self.sysinf_ip.config(text=f"IP Address: XXXXXXXXXXXXX")
                 self.sysinf_ma.config(text=f"MAC Address: XXXXXXXXXXXXX")
-                self.toggle_button.config(background="green")
+                self.sysinf1.config(text=f"Device Name: XXXXXXXXXXXXX")
 
         # MAC Address
         get_mac = ":".join(re.findall("..", "%012x" % uuid.getnode()))
@@ -492,12 +505,13 @@ class Frame1(ttk.Frame):
 
         self.toggle_button = Button(
             text="OFF",
+            image=off_btn_icon,
             font=("Sans", 10),
             highlightthickness=0,
             borderwidth=0,
-            background=ext_btn,
+            background=maincolor,
             foreground=main_font,
-            width=10,
+            # width=10,
             command=Simpletoggle,
         )
         self.toggle_button.place(x=500, y=760)
@@ -549,8 +563,6 @@ class Frame1(ttk.Frame):
         )
         self.sysinf_btn.pack(pady=20)
 
-
-
         self.info_main_frame = Frame(
             self,
             borderwidth=0,
@@ -563,7 +575,6 @@ class Frame1(ttk.Frame):
 
         self.info_main_frame.pack()
         self.info_main_frame["background"] = maincolor
-
 
         self.sys_info_main_frame = Frame(
             self.info_main_frame,
@@ -591,46 +602,41 @@ class Frame1(ttk.Frame):
         self.sys_info_main_frame2.pack(side=LEFT)
         self.sys_info_main_frame2["background"] = maincolor
 
-
         # Contains all stats
 
         self.sys_frame_1 = LabelFrame(
-            self.sys_info_main_frame,text="System Info",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
+            self.sys_info_main_frame, text="System Info", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_1.pack(pady=5,padx=5)
+        self.sys_frame_1.pack(pady=5, padx=5)
         self.sys_frame_1["background"] = nav_color
 
         self.sys_frame_2 = LabelFrame(
-        self.sys_info_main_frame,text="CPU",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
+            self.sys_info_main_frame, text="CPU", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_2.pack(pady=5,padx=5)
+        self.sys_frame_2.pack(pady=5, padx=5)
         self.sys_frame_2["background"] = nav_color
 
         self.sys_frame_3 = LabelFrame(
-        self.sys_info_main_frame2,text="Memory",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
+            self.sys_info_main_frame2, text="Memory", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_3.pack(pady=5,padx=5)
+        self.sys_frame_3.pack(pady=5, padx=5)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
-        self.sys_info_main_frame2,text="Network",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
+            self.sys_info_main_frame2, text="Network", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_4.pack(pady=5,padx=5)
+        self.sys_frame_4.pack(pady=5, padx=5)
         self.sys_frame_4["background"] = nav_color
 
         self.sys_frame_5 = LabelFrame(
-        self.sys_info_main_frame2,text="Disk",font=("Sans",16,),foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE,pady=10,padx=10
+            self.sys_info_main_frame2, text="Disk", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_5.pack(pady=5,padx=5)
+        self.sys_frame_5.pack(pady=5, padx=5)
         self.sys_frame_5["background"] = nav_color
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-
-
-
-
 
         self.sysinf0 = Label(
             self.sys_frame_1,
@@ -735,7 +741,8 @@ class Frame1(ttk.Frame):
                 12,
             ),
             anchor=W,
-        ).pack()
+        )
+        self.sysinf1.pack()
 
         self.sysinf9 = Label(
             self.sys_frame_1,
@@ -1000,29 +1007,80 @@ class Frame2(ttk.Frame):
             popen(f"{legit} pi-gpk-update-viewer")
 
         def button_list():
-            popen("xdg-open /etc/apt/sources.list.d/")
-
-        def save_list():
-            os.system(f"{legit} chmod 777 -R /etc/apt/sources.list")
-            text_file = open("/etc/apt/sources.list", "w")
-            text_file.write(s_list.get(1.0, END))
-            m_text = "\
-        \n\
-        \n\
-        Sources List has been saved\n\
-        \n\
-        \n\
-        "
-            messagebox.showinfo(message=m_text, title="Infos")
+            if get_de == "XFCE":
+                popen("sudo thunar /etc/apt/sources.list.d/")
+            else:
+                popen("sudo pcmanfm /etc/apt/sources.list.d/")
 
         def reboot_n():
             popen(f"{legit} reboot")
 
         self.background = maincolor
 
-        self.source_list_frame = Frame(self, relief=GROOVE, borderwidth=0)
-        self.source_list_frame.pack(padx=45, pady=40, anchor="w", fill=BOTH)
-        self.source_list_frame["background"] = maincolor
+        self.rep_main_frame = Frame(
+            self, borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10)
+        self.rep_main_frame.pack(pady=5, padx=5)
+        self.rep_main_frame["background"] = maincolor
+
+        self.off_rep_frame = LabelFrame(
+            self.rep_main_frame, text="Official Repository", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        # pack(pady=5,padx=5,side=LEFT)
+        self.off_rep_frame.grid(row=0, column=0)
+        self.off_rep_frame["background"] = maincolor
+
+        self.man_rep_frame = LabelFrame(
+            self.rep_main_frame, text="Manuel Added", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        # pack(pady=5,padx=5)
+        self.man_rep_frame.grid(row=0, column=1, rowspan=10)
+        self.man_rep_frame["background"] = maincolor
+
+        self.man_left = Frame(
+            self.man_rep_frame, borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        self.man_left.pack(side=LEFT)
+        self.man_left["background"] = maincolor
+
+        self.man_right = Frame(
+            self.man_rep_frame, borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        self.man_right.pack(side=LEFT)
+        self.man_right["background"] = maincolor
+
+        def open_ppa(text):
+            os.popen("sudo mousepad /etc/apt/sources.list.d/"+text)
+
+        sources_d = os.listdir('/etc/apt/sources.list.d')
+        sources_d1 = []
+        #print (sources_d)
+
+        for file in sources_d:
+            self.sources_d_label = Button(self.man_right, text=file, justify=LEFT, anchor=W, bg=ext_btn, fg=main_font,
+                                          borderwidth=0, highlightthickness=0, command=lambda text=file: open_ppa(text), width=25)
+            self.sources_d_label.pack(anchor=W, pady=5)
+            sources_d1.append(self.sources_d_label)
+
+        #folder = os.listdir('/etc/apt/sources.list.d')
+        # for file in folder:
+        #    print(file)
+        self.tu_info = Label(
+            self.off_rep_frame,
+            text="Info: Never edit the source lists unless you know exactly what you are doing.\n",
+            font=("Sans", 8, "bold"),
+            highlightthickness=0,
+            borderwidth=0,
+            background=maincolor,
+            foreground=info_color,
+        ).pack()
+
+        a_file1 = open("/etc/apt/sources.list")
+
+        lines = a_file1.readlines()
+        for line in lines:
+            self.repo = Entry(self.off_rep_frame, width=70, bd=0)
+            self.repo.insert(0, line[0:-1])
+            self.repo.pack(anchor=W)
 
         self.termf = Frame(
             self, height=270, width=700, padx=10, highlightthickness=0, borderwidth=0
@@ -1030,17 +1088,11 @@ class Frame2(ttk.Frame):
         self.wid = self.termf.winfo_id()
         self.termf["background"] = maincolor
 
-        s_list = Text(
-            self.source_list_frame, width=1550, height=10, highlightthickness=1
-        )
-        text_file = open("/etc/apt/sources.list", "r")
-        stuff = text_file.read()
-        s_list.insert(END, stuff)
-        text_file.close()
-        s_list.pack(anchor="w")
-
-        self.update_btn_frame = Frame(
+        self.update_btn_frame = LabelFrame(
             self,
+            text="Update Options",
+            font=("Sans", 16,),
+            foreground="#d4244d",
             borderwidth=0,
             relief=GROOVE,
             highlightthickness=0,
@@ -1152,22 +1204,7 @@ class Frame2(ttk.Frame):
         )
         self.rm_button.grid(column=1, row=2)
 
-        self.sv_button = Button(
-            self.update_btn_frame,
-            text="Save Source List",
-            width=20,
-            anchor="w",
-            command=save_list,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
-        )
-        self.sv_button.grid(column=2, row=0, padx=5, pady=5)
+        #self.sv_button.grid(column=2, row=0, padx=5, pady=5)
 
         self.sv_button = Button(
             self.update_btn_frame,
@@ -1184,7 +1221,7 @@ class Frame2(ttk.Frame):
                 12,
             ),
         )
-        self.sv_button.grid(column=2, row=1)
+        self.sv_button.grid(column=2, row=0)
 
         self.dpkg_button = Button(
             self.update_btn_frame,
@@ -5866,7 +5903,8 @@ class z_ram_pop(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.ip03 = PhotoImage(
+            file=r"images/icons/pigro_icons/download_ico.png")
 
         def z_ram_install():
 
@@ -6543,7 +6581,7 @@ class Frame6(ttk.Frame):
             font=("Sans", 8),
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=maincolor,
             foreground=info_color,
             command=tuning_legende,
             image=self.tu_legend_ico,
@@ -6585,7 +6623,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Need A Fan!",
                             foreground="red",
-                            
+
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6599,7 +6637,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Take It To The Max!",
                             foreground="pink",
-                            
+
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6613,7 +6651,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Honey,the fuse blew again!",
                             foreground="purple",
-                            
+
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -7025,7 +7063,7 @@ class Frame8(ttk.Frame):
 
         self.poke_pig_21 = Label(
             self.rahmen102,
-            #justify="left",
+            # justify="left",
             text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0",
             font=("Sans", 18, "bold"),
             background=maincolor,
