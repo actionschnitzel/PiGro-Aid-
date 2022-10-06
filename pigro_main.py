@@ -6766,41 +6766,31 @@ class Frame7(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        def link_mankier():
-            popen("xdg-open https://mankier.com")
-
-        def link_guake():
-            popen("xdg-open https://github.com/Guake/guake")
-
-        def link_onBoard():
-            popen("xdg-open https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
-
-        def link_drac():
-            popen("xdg-open https://draculatheme.com/")
-
-        def link_star():
-            popen("xdg-open https://starship.rs/")
-
-        def rb_tv():
-            popen("xdg-open https://linuxcommandlibrary.com/")
-
-        def l4_e():
-            popen("xdg-open http://www.lcdwiki.com/Main_Page")
-
-        def pi_doc():
-            popen("xdg-open https://www.raspberrypi.com/documentation/")
-
-        def pi_tuto():
-            popen("xdg-open https://tutorials-raspberrypi.com/")
-
-        def vis_tk():
-            popen("xdg-open https://visualtk.com/")
-
-        def papirus_nord():
-            popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
-
-        def wave_share():
-            popen("xdg-open  https://www.waveshare.com/wiki/Main_Page")
+        def link_tab(text):
+            if text == "Mankier.com (Commandline Database)":
+                popen("xdg-open https://mankier.com")
+            if text == "Guake (Drop Down Terminal)":
+                popen("xdg-open https://github.com/Guake/guake")
+            if text == "OnBoard (Onscreen Keyboard)":
+                popen("xdg-open https://wiki.ubuntuusers.de/Barrierefreiheit/onBoard/")
+            if text == "Draculatheme.com":
+                popen("xdg-open https://draculatheme.com/")
+            if text == "Starship (Cross-Shell-Promt)":
+                popen("xdg-open https://starship.rs/")
+            if text == "Linuxcommandlibrary.com":
+                popen("xdg-open https://linuxcommandlibrary.com/")
+            if text == "LCD Wiki":
+                open("xdg-open http://www.lcdwiki.com/Main_Page")
+            if text == "Offical Raspberry Pi Documentation":
+                popen("xdg-open https://www.raspberrypi.com/documentation/")
+            if text == "Raspberry Pi Tutorials":
+                popen("xdg-open https://tutorials-raspberrypi.com/")
+            if text == "Papirus Nord Icon Theme":
+                popen("xdg-open https://github.com/Adapta-Projects/Papirus-Nord")
+            if text == "WaveShare Wiki":
+                popen("xdg-open  https://www.waveshare.com/wiki/Main_Page")
+            if text == "My ZSH Prompt":
+                popen("xdg-open  https://github.com/actionschnitzel/my_zsh_prompt")
 
         self.link_left = Frame(
             self,
@@ -6814,149 +6804,25 @@ class Frame7(ttk.Frame):
         self.link_left.pack(padx=40)
         self.link_left["background"] = maincolor
 
-        self.choice_link1 = Button(
-            self.link_left,
-            anchor="w",
-            width=50,
-            text="Mankier.com (Commandline Database)",
-            command=link_mankier,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
+        sources_d = ["Mankier.com (Commandline Database)", "Guake (Drop Down Terminal)", "OnBoard (Onscreen Keyboard)", "Draculatheme.com", "Starship (Cross-Shell-Promt)",
+                     "Linuxcommandlibrary.com", "LCD Wiki", "Offical Raspberry Pi Documentation", "Raspberry Pi Tutorials", "Papirus Nord Icon Theme", "WaveShare Wiki", "My ZSH Prompt"]
+        #print (sources_d)
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=50,
-            text="Guake (Drop Down Terminal)",
-            command=link_guake,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
+        sources_d1 = []
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=50,
-            text="OnBoard (Onscreen Keyboard)",
-            command=link_onBoard,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=50,
-            text="Draculatheme.com",
-            command=link_drac,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=50,
-            text="Starship (Cross-Shell-Promt)",
-            command=link_star,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link3 = Button(
-            self.link_left,
-            width=50,
-            text="Linuxcommandlibrary.com",
-            anchor="w",
-            command=rb_tv,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="LCD Wiki",
-            anchor="w",
-            command=l4_e,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="Offical Raspberry Pi Documentation",
-            anchor="w",
-            command=pi_doc,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="Raspberry Pi Tutorials",
-            anchor="w",
-            command=pi_tuto,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="VisualTk.com",
-            anchor="w",
-            command=vis_tk,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="Papirus Nord Icon Theme",
-            anchor="w",
-            command=papirus_nord,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            width=50,
-            text="WaveShare Wiki",
-            anchor="w",
-            command=wave_share,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
+        for file in sources_d:
+            self.choice_link1 = Button(
+                self.link_left,
+                anchor="w",
+                width=50,
+                text=file,
+                command=lambda text=file: link_tab(text),
+                highlightthickness=0,
+                borderwidth=0,
+                background=ext_btn,
+                foreground=main_font,
+            ).pack(pady=5)
+            sources_d1.append(self.choice_link1)
 
 
 # [Runing Processes]
