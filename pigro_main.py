@@ -4139,7 +4139,7 @@ class Custom_Installer(tk.Toplevel):
                 cancel_btn.place_forget()
             else:
                 os.system(
-                    f'xterm -into %d -bg Grey11 -geometry 120x25 -e "sudo {pigro_skript} -y; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 120x25 -e "sudo {pigro_skript}; exec bash"'
                     % self.cust_inst_wid
                 )
 
@@ -4218,7 +4218,7 @@ class Frame4(ttk.Frame):
 
         def bleacbit_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "bleachbit"
             global pigro_skript
             pigro_skript = "apt install bleachbit -y && exit"
             custom_pop = Custom_Installer(self)
@@ -4226,7 +4226,7 @@ class Frame4(ttk.Frame):
 
         def bpytop_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "bpytop"
             global pigro_skript
             pigro_skript = "apt install bpytop -y && exit"
             custom_pop = Custom_Installer(self)
@@ -4234,23 +4234,23 @@ class Frame4(ttk.Frame):
 
         def compiz_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
-            global pigro_skript
-            pigro_skript = "apt install neofetch -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def gnomepie_installer():
-            global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "compiz"
             global pigro_skript
             pigro_skript = "apt install compiz -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
+        def gnomepie_installer():
+            global pigro_skript_name
+            pigro_skript_name = "gnome-pie"
+            global pigro_skript
+            pigro_skript = "apt install gnome-pie -y && exit"
+            custom_pop = Custom_Installer(self)
+            custom_pop.grab_set()
+
         def gparted_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "gparted"
             global pigro_skript
             pigro_skript = "apt install gparted -y && exit"
             custom_pop = Custom_Installer(self)
@@ -4258,7 +4258,7 @@ class Frame4(ttk.Frame):
 
         def imager_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "rpi-imager"
             global pigro_skript
             pigro_skript = "apt install rpi-imager -y && exit"
             custom_pop = Custom_Installer(self)
@@ -4266,7 +4266,7 @@ class Frame4(ttk.Frame):
 
         def plank_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "plank"
             global pigro_skript
             pigro_skript = "apt install plank -y && exit"
             custom_pop = Custom_Installer(self)
@@ -4274,7 +4274,7 @@ class Frame4(ttk.Frame):
 
         def xfce4screen_installer():
             global pigro_skript_name
-            pigro_skript_name = "Neofetch"
+            pigro_skript_name = "xfce4-screenshooter"
             global pigro_skript
             pigro_skript = "apt install xfce4-screenshooter -y && exit"
             custom_pop = Custom_Installer(self)
