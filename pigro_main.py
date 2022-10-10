@@ -217,7 +217,7 @@ class MainApplication(tk.Tk):
 
         # Window Basics
         self.title("PiGro - Just Click It! (Perche sei cosi serio?)")
-        self.icon = tk.PhotoImage(file="images/icons/pigro_icons/256x256.png")
+        self.icon = tk.PhotoImage(file="images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = maincolor
         self.resizable(0, 0)
@@ -540,8 +540,8 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            pady=20,
-            padx=30,
+            #pady=20,
+            #padx=30,
         )
 
         self.sys_logo.pack()
@@ -561,7 +561,7 @@ class Frame1(ttk.Frame):
             bg=maincolor,
             highlightthickness=0,
         )
-        self.sysinf_btn.pack(pady=20)
+        self.sysinf_btn.pack()#pady=20
 
         self.info_main_frame = Frame(
             self,
@@ -569,8 +569,8 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            pady=20,
-            padx=30,
+            #pady=20,
+            #padx=30,
         )
 
         self.info_main_frame.pack()
@@ -599,7 +599,7 @@ class Frame1(ttk.Frame):
             padx=30,
         )
 
-        self.sys_info_main_frame2.pack(side=LEFT)
+        self.sys_info_main_frame2.pack(side=LEFT,anchor="n")
         self.sys_info_main_frame2["background"] = maincolor
 
         # Contains all stats
@@ -619,7 +619,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_3 = LabelFrame(
             self.sys_info_main_frame2, text="Memory", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_3.pack(pady=5, padx=5)
+        self.sys_frame_3.pack(pady=5, padx=5,side=TOP)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
@@ -633,6 +633,18 @@ class Frame1(ttk.Frame):
         )
         self.sys_frame_5.pack(pady=5, padx=5)
         self.sys_frame_5["background"] = nav_color
+
+        self.ov_display_frame = LabelFrame(
+            self.sys_info_main_frame, text="My Performance Settings", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        self.ov_display_frame.pack(pady=5, padx=5)
+        self.ov_display_frame["background"] = nav_color
+
+
+            
+
+
+
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
@@ -941,6 +953,201 @@ class Frame1(ttk.Frame):
         )
         self.pb1.pack(expand=True, anchor="w")
         step()
+
+
+
+        # Overclocking Stats
+
+        # Tuning_Button_Frame
+
+
+
+        
+        dash_arm_f_display = Label(
+            self.ov_display_frame,
+            anchor="w",
+            justify=LEFT,
+            text="Arm Freq: not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=nav_color,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+            width=40,
+        )
+        dash_arm_f_display.grid(column=1, row=2)
+
+
+
+        
+        dash_gpu_f_display = Label(
+            self.ov_display_frame,
+            anchor="w",
+            justify=LEFT,
+            text="Gpu Freq: not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=nav_color,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+            width=40,
+        )
+        dash_gpu_f_display.grid(column=1, row=3)
+
+
+
+        
+        dash_gpu_m_display = Label(
+            self.ov_display_frame,
+            anchor="w",
+            justify=LEFT,
+            text="Gpu Mem: not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=nav_color,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+            width=40,
+        )
+        dash_gpu_m_display.grid(column=1, row=4)
+
+
+
+        
+        dash_over_v_display = Label(
+            self.ov_display_frame,
+            anchor="w",
+            justify=LEFT,
+            text="Over Voltage: not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=nav_color,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+            width=40,
+        )
+        dash_over_v_display.grid(column=1, row=5)
+
+        
+        dash_force_t_display = Label(
+            self.ov_display_frame,
+            anchor="w",
+            justify=LEFT,
+            text="Force Turbo: not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=nav_color,
+            foreground=main_font,
+            font=(
+                "Sans",
+                12,
+            ),
+            width=40,
+        )
+        dash_force_t_display.grid(column=1, row=6)
+
+        def lines_that_contain(string, fp):
+            return [line for line in fp if string in line]
+
+        def ov_display():
+            # Overclock Display Functions
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "arm_freq" in line:
+                    dash_arm_f_display.config(
+                        text=f"Arm Freq: {line[9:-1]} MHz",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+                if "#arm_freq=800" in line:
+                    dash_arm_f_display.config(
+                        text="Arm Freq: not configured",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gpu_freq" in line:
+                    dash_gpu_f_display.config(
+                        text=f"Gpu Freq: {line[9:-1]} MHz",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "force_turbo" in line:
+                    dash_force_t_display.config(
+                        text=f"Force Turbo: {line[12:-1]}",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "over_voltage" in line:
+                    dash_over_v_display.config(
+                        text=f"Over Voltage: {line[13:-1]}",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gpu_mem" in line:
+                    dash_gpu_m_display.config(
+                        text=f"Gpu Mem: {line[8:-1]} MB",
+                        foreground=main_font,
+                        font=(
+                            "Sans",
+                            12,
+                        ),
+                    )
+
+        def refresh_OV_stats():
+            ov_display()
+            self.after(3000, refresh_OV_stats)
+
+        refresh_OV_stats()
+
+
 
         def refresh_sys_stats():
 
@@ -4823,131 +5030,126 @@ class Frame10(ttk.Frame):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
-        def xpad_neo():
-            self.appname_header.config(text="Xpad Neo")
-            self.app_disc.config(
-                text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers"
-            )
-            self.web_link.config(text=r"https://github.com/atar-axis/xpadneo")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "sudo apt-get install dkms raspberrypi-kernel-headers\ngit clone https://github.com/atar-axis/xpadneo.git\ncd xpadneo\nsudo ./install.sh",
-            )
-
-        def desk_pi():
-            self.appname_header.config(text="DeskPi Pro Driver")
-            self.app_disc.config(
-                text="Driver & Fan Control for the DeskPi Pro Case")
-            self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "cd ~\ngit clone https://github.com/DeskPi-Team/deskpi.git\ncd ~/deskpi/\nchmod +x install.sh\nsudo ./install.sh\n\n#Pi OS 64 Bit\nchmod +x install-raspios-64bit.sh\nsudo ./install-raspios-64bit.sh",
-            )
-
-        def pi_pa_po_piapps():
-            self.appname_header.config(text="Pi-Apps")
-            self.app_disc.config(
-                text="The go to apps store when it comes to\nprograms that are not in repository."
-            )
-            self.web_link.config(text=r"https://pi-apps.io/")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash",
-            )
-
-        def albert():
-            self.appname_header.config(text="Albert")
-            self.app_disc.config(
-                text="Desktop agnostic launcher\nAccess everything with virtually zero effort.\nRun applications, open files or their paths,\nopen bookmarks in your browser,\nsearch the web, calculate things and a lot more.\n\nDowload-Link:"
-            )
-            self.web_link.config(
-                text=r"https://software.opensuse.org/download.html?project=home:manuelschneid3r&package=albert"
-            )
-            self.app_inst.forget()
-
-        def argon():
-            self.appname_header.config(text="Argon One/M.2 Case Driver")
-            self.app_disc.config(text="Driver for the Argon One Case")
-            self.web_link.config(
-                text=r"https://www.waveshare.com/wiki/PI4-CASE-ARGON-ONE"
-            )
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end", "curl https://download.argon40.com/argon1.sh | bash"
-            )
-
-        def papirus():
-            self.appname_header.config(text="Papirus Icon Theme/Folders")
-            self.app_disc.config(
-                text="The popular icon theme plus the ability to change the order color"
-            )
-            self.web_link.config(
-                text=r"https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
-            )
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "Icon Theme:\nwget -qO- https://git.io/papirus-icon-theme-install | sh\n\nFolder Theme:\nwget -qO- https://git.io/papirus-folders-install | sh\n\nHow To:\nSelect the papirus icon theme then:\npapirus-folders -C brown --theme Papirus-Dark\n\nColors:\nadwaita,black,bluegrey,breeze,brown,carminecyan,darkcyan,\ndeeporange,green,grey,indigo,magenta,nordic,orange,palebrown,\npaleorange,pink,red,teal,violet,white,yaru,yellow",
-            )
-
-        def f_shim():
-            self.appname_header.config(text="Fan Shim Driver")
-            self.app_disc.config(text="Driver for the Pimoroni FanShim")
-            self.web_link.config(
-                text=r"https://learn.pimoroni.com/article/getting-started-with-fan-shim"
-            )
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "git clone https://github.com/pimoroni/fanshim-python\ncd fanshim-python\nsudo ./install.sh",
-            )
-
-        def pi_kiss():
-            self.appname_header.config(text="piKiss")
-            self.app_disc.config(
-                text="System Tweak Tool & Game Installer for ARM/Raspberry Pi"
-            )
-            self.web_link.config(text=r"https://github.com/jmcerrejon/PiKISS")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                "curl -sSL https://git.io/JfAPE | bash",
-            )
-
-        def sub_merge():
-            self.appname_header.config(text="Sublime Merge aarch64")
-            self.app_disc.config(text="Great Git GUI")
-            self.web_link.config(text=r"https://www.sublimemerge.com/")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                """wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -\n\nsudo apt-get install apt-transport-https\n\necho "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list\n\nsudo apt-get update\nsudo apt-get install sublime-merge -y\n""",
-            )
-
-        def sub_text():
-            self.appname_header.config(text="Sublime Text aarch64")
-            self.app_disc.config(text="Very good Text Editor")
-            self.web_link.config(text=r"https://www.sublimetext.com/")
-            self.app_inst.pack(anchor="w")
-            self.app_inst.delete("1.0", END)
-            self.app_inst.insert(
-                "end",
-                """wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -\n\nsudo apt-get install apt-transport-https\n\necho "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list\n\nsudo apt-get update\nsudo apt-get install sublime-text -y\n""",
-            )
 
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
+
+
+        def git_tab(text):
+            if text == "Albert":
+                self.appname_header.config(text="Albert")
+                self.app_disc.config(
+                    text="Desktop agnostic launcher\nAccess everything with virtually zero effort.\nRun applications, open files or their paths,\nopen bookmarks in your browser,\nsearch the web, calculate things and a lot more.\n\nDowload-Link:"
+                )
+                self.web_link.config(
+                    text=r"https://software.opensuse.org/download.html?project=home:manuelschneid3r&package=albert"
+                )
+                self.app_inst.forget()
+            if text == "Argon One Driver":
+                self.appname_header.config(text="Argon One/M.2 Case Driver")
+                self.app_disc.config(text="Driver for the Argon One Case")
+                self.web_link.config(
+                    text=r"https://www.waveshare.com/wiki/PI4-CASE-ARGON-ONE"
+                )
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end", "curl https://download.argon40.com/argon1.sh | bash"
+                )
+            if text == "DeskPi Pro Driver":
+                self.appname_header.config(text="DeskPi Pro Driver")
+                self.app_disc.config(
+                    text="Driver & Fan Control for the DeskPi Pro Case")
+                self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "cd ~\ngit clone https://github.com/DeskPi-Team/deskpi.git\ncd ~/deskpi/\nchmod +x install.sh\nsudo ./install.sh\n\n#Pi OS 64 Bit\nchmod +x install-raspios-64bit.sh\nsudo ./install-raspios-64bit.sh",
+                )
+            if text == "FanShim Driver":
+                self.appname_header.config(text="Fan Shim Driver")
+                self.app_disc.config(text="Driver for the Pimoroni FanShim")
+                self.web_link.config(
+                    text=r"https://learn.pimoroni.com/article/getting-started-with-fan-shim"
+                )
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "git clone https://github.com/pimoroni/fanshim-python\ncd fanshim-python\nsudo ./install.sh",
+                )
+            if text == "Papirus Icon Theme":
+                self.appname_header.config(text="Papirus Icon Theme/Folders")
+                self.app_disc.config(
+                    text="The popular icon theme plus the ability to change the order color"
+                )
+                self.web_link.config(
+                    text=r"https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
+                )
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "Icon Theme:\nwget -qO- https://git.io/papirus-icon-theme-install | sh\n\nFolder Theme:\nwget -qO- https://git.io/papirus-folders-install | sh\n\nHow To:\nSelect the papirus icon theme then:\npapirus-folders -C brown --theme Papirus-Dark\n\nColors:\nadwaita,black,bluegrey,breeze,brown,carminecyan,darkcyan,\ndeeporange,green,grey,indigo,magenta,nordic,orange,palebrown,\npaleorange,pink,red,teal,violet,white,yaru,yellow",
+                )
+            if text == "Pi-Apps":
+                self.appname_header.config(text="Pi-Apps")
+                self.app_disc.config(
+                    text="The go to apps store when it comes to\nprograms that are not in repository."
+                )
+                self.web_link.config(text=r"https://pi-apps.io/")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash",
+                )
+            if text == "PiKiss":
+                self.appname_header.config(text="piKiss")
+                self.app_disc.config(
+                    text="System Tweak Tool & Game Installer for ARM/Raspberry Pi"
+                )
+                self.web_link.config(text=r"https://github.com/jmcerrejon/PiKISS")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "curl -sSL https://git.io/JfAPE | bash",
+                )
+            if text == "Sublime Merge aarch64":
+                self.appname_header.config(text="Sublime Merge aarch64")
+                self.app_disc.config(text="Great Git GUI")
+                self.web_link.config(text=r"https://www.sublimemerge.com/")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    """wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -\n\nsudo apt-get install apt-transport-https\n\necho "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list\n\nsudo apt-get update\nsudo apt-get install sublime-merge -y\n""",
+                )
+            if text == "Sublime Text aarch64":
+                self.appname_header.config(text="Sublime Text aarch64")
+                self.app_disc.config(text="Very good Text Editor")
+                self.web_link.config(text=r"https://www.sublimetext.com/")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    """wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -\n\nsudo apt-get install apt-transport-https\n\necho "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list\n\nsudo apt-get update\nsudo apt-get install sublime-text -y\n""",
+                )
+            if text == "Xpad-Neo":
+                self.appname_header.config(text="Xpad Neo")
+                self.app_disc.config(
+                    text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers"
+                )
+                self.web_link.config(text=r"https://github.com/atar-axis/xpadneo")
+                self.app_inst.pack(anchor="w")
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    "sudo apt-get install dkms raspberrypi-kernel-headers\ngit clone https://github.com/atar-axis/xpadneo.git\ncd xpadneo\nsudo ./install.sh",
+                )
+
 
         self.link_main = Frame(
             self,
@@ -4972,125 +5174,26 @@ class Frame10(ttk.Frame):
         self.link_left.pack(side=LEFT, expand=True, fill=BOTH)
         self.link_left["background"] = maincolor
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Albert",
-            command=albert,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
+        sources_l = ["Albert","Argon One Driver","DeskPi Pro Driver","FanShim Driver","Papirus Icon Theme","Pi-Apps","PiKiss","Sublime Merge aarch64","Sublime Text aarch64","Xpad-Neo",]
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Argon One Driver",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=argon,
-        ).pack(pady=5)
 
-        self.choice_link2 = Button(
-            self.link_left,
-            width=20,
-            text="DeskPi Pro Driver",
-            anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=desk_pi,
-        ).pack(pady=5)
+        sources_l1=[]
 
-        self.choice_link2 = Button(
+        for file in sources_l:
+            self.choice_link2 = Button(
             self.link_left,
-            width=20,
-            text="FanShim Driver",
             anchor="w",
+            width=20,
+            text=file,
+            command=lambda text=file: git_tab(text),
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            command=f_shim,
         ).pack(pady=5)
+            sources_l1.append(self.choice_link2)
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Papirus Icon Theme",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=papirus,
-        ).pack(pady=5)
 
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Pi-Apps",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=pi_pa_po_piapps,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="PiKiss",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=pi_kiss,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Sublime Merge aarch64",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=sub_merge,
-        ).pack(pady=5)
-
-        self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Sublime Text aarch64",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=sub_text,
-        ).pack(pady=5)
-
-        self.choice_link1 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text="Xpad-Neo",
-            command=xpad_neo,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
 
         # Right Frame
         self.link_right = Frame(
@@ -6609,7 +6712,7 @@ class Frame6(ttk.Frame):
                         pigro_t_display.config(
                             text="Crank It Up",
                             foreground="yellow",
-                            bg=maincolor,
+                            bg=nav_color,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -6913,7 +7016,14 @@ class Frame8(ttk.Frame):
             c_log = Change_Log(self)
             c_log.grab_set()
 
+        def paypal_link():
+            popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
+
         self.auto_start = PhotoImage(file=r"images/icons/logo_128x128.png")
+
+        self.paypal_icon = PhotoImage(
+            file=r"images/icons/pigro_icons/PayPal_donation.png"
+        )
 
         self.rahmen102 = Frame(
             self, borderwidth=0, relief=GROOVE, highlightthickness=0, pady=10, padx=10
@@ -6930,7 +7040,7 @@ class Frame8(ttk.Frame):
         self.poke_pig_21 = Label(
             self.rahmen102,
             # justify="left",
-            text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0",
+            text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0.1",
             font=("Sans", 18, "bold"),
             background=maincolor,
             foreground=main_font,
@@ -6975,10 +7085,24 @@ class Frame8(ttk.Frame):
         self.mail.insert(END, "pigroxtrmo@gmail.com")
         self.mail.pack(pady=5)
 
+        self.paypal = Button(
+            self.rahmen102,
+            text="Paypal",
+            font=("Sans", 10),
+            image=self.paypal_icon,
+            highlightthickness=0,
+            borderwidth=0,
+            background=maincolor,
+            foreground=main_font,
+            command=paypal_link,
+        )
+        self.paypal.pack()
+
+
         self.poke_pig_21 = Label(
             self.rahmen102,
             # justify="left",
-            text="\n\n\n\n\n\n\n\nThis program comes with ABSOLUTELY NO WARRANTY!\nIt is licensed under the GNU General Public License v3.0\nIcons have been partially adopted and modified from the\nPapirus Icon Theme licensed under the\nGNU General Public License v3.0\n\n\n2022",
+            text="\n\n\nThis program comes with ABSOLUTELY NO WARRANTY!\nIt is licensed under the GNU General Public License v3.0\nIcons have been partially adopted and modified from the\nPapirus Icon Theme licensed under the\nGNU General Public License v3.0\n\n\n2022",
             font=("Sans", 9, "bold"),
             background=maincolor,
             foreground=main_font,
