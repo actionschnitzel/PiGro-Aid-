@@ -617,7 +617,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_2["background"] = nav_color
 
         self.sys_frame_3 = LabelFrame(
-            self.sys_info_main_frame2, text="Memory", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame, text="Memory", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_3.pack(pady=5, padx=5,side=TOP)
         self.sys_frame_3["background"] = nav_color
@@ -635,7 +635,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_5["background"] = nav_color
 
         self.ov_display_frame = LabelFrame(
-            self.sys_info_main_frame, text="My Performance Settings", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame2, text="My Performance Settings", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.ov_display_frame.pack(pady=5, padx=5)
         self.ov_display_frame["background"] = nav_color
@@ -685,6 +685,54 @@ class Frame1(ttk.Frame):
         self.sysinf_de = Label(
             self.sys_frame_1,
             text=f"Desktop: {get_de}",
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            font=(
+                "Sans",
+                12,
+            ),
+            anchor=W,
+        ).pack()
+
+        self.sysinf_shell = Label(
+            self.sys_frame_1,
+            text=f"Shell: {os.environ['SHELL'][5:]}",
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            font=(
+                "Sans",
+                12,
+            ),
+            anchor=W,
+        ).pack()
+
+        self.sysinf_session = Label(
+            self.sys_frame_1,
+            text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            font=(
+                "Sans",
+                12,
+            ),
+            anchor=W,
+        ).pack()
+
+        self.sysinf_lang = Label(
+            self.sys_frame_1,
+            text=f"Language: {os.environ['LANG']}",
             justify="left",
             highlightthickness=0,
             borderwidth=0,
