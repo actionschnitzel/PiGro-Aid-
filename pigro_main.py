@@ -956,13 +956,7 @@ class Frame1(ttk.Frame):
 
 
 
-        # Overclocking Stats
-
-        # Tuning_Button_Frame
-
-
-
-        
+        global dash_arm_f_display
         dash_arm_f_display = Label(
             self.ov_display_frame,
             anchor="w",
@@ -982,7 +976,7 @@ class Frame1(ttk.Frame):
 
 
 
-        
+        global dash_gpu_f_display
         dash_gpu_f_display = Label(
             self.ov_display_frame,
             anchor="w",
@@ -1002,7 +996,7 @@ class Frame1(ttk.Frame):
 
 
 
-        
+        global dash_gpu_m_display
         dash_gpu_m_display = Label(
             self.ov_display_frame,
             anchor="w",
@@ -1022,7 +1016,7 @@ class Frame1(ttk.Frame):
 
 
 
-        
+        global dash_over_v_display
         dash_over_v_display = Label(
             self.ov_display_frame,
             anchor="w",
@@ -1040,7 +1034,7 @@ class Frame1(ttk.Frame):
         )
         dash_over_v_display.grid(column=1, row=5)
 
-        
+        global dash_force_t_display
         dash_force_t_display = Label(
             self.ov_display_frame,
             anchor="w",
@@ -1061,8 +1055,8 @@ class Frame1(ttk.Frame):
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
 
-        def ov_display():
-            # Overclock Display Functions
+
+        def refresh_OV_stats():
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
@@ -1139,14 +1133,11 @@ class Frame1(ttk.Frame):
                             "Sans",
                             12,
                         ),
-                    )
-
-        def refresh_OV_stats():
-            ov_display()
-            self.after(3000, refresh_OV_stats)
+                    )            
+            self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
-
+        
 
 
         def refresh_sys_stats():
@@ -1164,9 +1155,9 @@ class Frame1(ttk.Frame):
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.sysinf10.configure(
                 text=f"CPU Temp: {cpu.temperature:.1f} °C")
-            self.after(1000, refresh_sys_stats)
-
+            self.after(1000, refresh_sys_stats)                
         refresh_sys_stats()
+
 
 
 # [Update] Tab
@@ -6163,6 +6154,11 @@ class Frame6(ttk.Frame):
             gpu_m_display.config(text="not configured")
             over_v_display.config(text="not configured")
             force_t_display.config(text="not configured")
+            dash_arm_f_display.config(text="Arm Freq: not configured")
+            dash_gpu_f_display.config(text="Gpu Freq: not configured")
+            dash_gpu_m_display.config(text="Gpu Mem: not configured")
+            dash_over_v_display.config(text="Over Voltage: not configured")
+            dash_force_t_display.config(text="Force Turbo: not configured")
 
             Notification(
                 title="PiGro Overclocking\n",
