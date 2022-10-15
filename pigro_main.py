@@ -21,6 +21,7 @@ import shutil
 import psutil
 from collections import namedtuple
 from datetime import datetime
+from time import strftime
 import distro
 import socket
 from gpiozero import CPUTemperature
@@ -135,6 +136,17 @@ if piapps_path == True:
     print("[Info]: Pi-Apps is installed list will be added")
     popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
+deb_count = popen("dpkg --list | wc --lines")
+deb_counted = deb_count.read()
+deb_count.close()
+print(f"[Info]: {deb_counted[:-1]} Packages Installed")
+
+nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
+nice_name = nice_name.read()
+#nice_name.close()
+#print(nice_name[13:-1])
+
+
 
 # Checks if snapd exists
 if os.path.isfile("/bin/snap"):
@@ -190,6 +202,30 @@ for line in loglist:
         main_font = "black"
         info_color = "#0075b7"
         ext_btn = "#b6b6b3"
+
+#Font Definition
+global font_20
+font_20 =("Sans", 20)
+global font_16
+font_16 =("Sans", 16)
+global font_14
+font_14 =("Sans", 14)
+global font_12_b
+font_12_b =("Sans", 12, "bold")
+global font_12
+font_12 =("Sans", 12)
+global font_10
+font_10 =("Sans", 10)
+global font_9_b
+font_9_b =("Sans", 9, "bold")
+global font_9
+font_9 =("Sans", 9)
+global font_8_b
+font_8_b =("Sans", 8, "bold")
+global font_8
+font_8 =("Sans", 8)
+
+
 
 # Transparency Settings
 conf_file = open(f"{home}/.pigro/pigro.conf", "r")
@@ -364,7 +400,7 @@ class MainApplication(tk.Tk):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            font=("Sans", 16),
+            font=font_16,
             width=13,
             highlightthickness=0,
         )
@@ -377,7 +413,7 @@ class MainApplication(tk.Tk):
         noteStyler.configure(
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
-        noteStyler.configure("Line.TSeparator", background="grey")
+        noteStyler.configure("Line.TSeparator", background="grey",rekief="sunken")
 
 
 # [Changelog] Child
@@ -409,8 +445,8 @@ class Change_Log(tk.Toplevel):
             text="Changelog",
             highlightthickness=0,
             borderwidth=0,
-            compound=TOP,
-            font=("Sans", 20, "bold"),
+            compound=LEFT,
+            font=font_20,
         )
         logo_lbl.pack(pady=20)
         changelog_label = Label(
@@ -446,6 +482,12 @@ class Frame1(ttk.Frame):
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
 
+        # Installed .DEBs
+        #def how_many_dabs():
+
+        #    return how_many_dabs
+        #how_many_dabs()
+
         # IP Address
         def extract_ip():
             st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -467,6 +509,9 @@ class Frame1(ttk.Frame):
         off_btn_icon = PhotoImage(
             file=r"images/icons/pigro_icons/off_s_b.png"
         )
+
+
+            
 
         # Hide/Show sensetiv data
 
@@ -499,14 +544,14 @@ class Frame1(ttk.Frame):
             justify="left",
             background=maincolor,
             foreground=main_font,
-            font=("Sans", 10),
+            font=(font_10),
             anchor=W,
         ).place(x=120, y=762)
 
         self.toggle_button = Button(
             text="OFF",
             image=off_btn_icon,
-            font=("Sans", 10),
+            font=(font_10),
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -532,6 +577,8 @@ class Frame1(ttk.Frame):
         Pi_Model = open("/proc/device-tree/model", "r")
         total, used, free = shutil.disk_usage("/")
 
+        current_month = strftime('%B')
+
         # Main frame for system stats
 
         self.sys_logo = Frame(
@@ -547,10 +594,17 @@ class Frame1(ttk.Frame):
         self.sys_logo.pack()
         self.sys_logo["background"] = maincolor
 
-        self.raspi_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pi4b.png"))
+
         self.pigro_img = ImageTk.PhotoImage(
             Image.open("images/icons/pigro_icons/pigrologo.png")
+        )
+
+        self.pigroh_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologoh.png")
+        )
+
+        self.pigrox_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologox.png")
         )
 
         # Sys Info Labels
@@ -562,6 +616,12 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
         )
         self.sysinf_btn.pack()#pady=20
+
+        if current_month == "October":
+            self.sysinf_btn.config(image=self.pigroh_img)
+        if current_month == "December":
+            self.sysinf_btn.config(image=self.pigrox_img)
+
 
         self.info_main_frame = Frame(
             self,
@@ -605,42 +665,46 @@ class Frame1(ttk.Frame):
         # Contains all stats
 
         self.sys_frame_1 = LabelFrame(
-            self.sys_info_main_frame, text="System Info", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame, text="System Info", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_1.pack(pady=5, padx=5)
         self.sys_frame_1["background"] = nav_color
 
         self.sys_frame_2 = LabelFrame(
-            self.sys_info_main_frame, text="CPU", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame, text="CPU", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_2.pack(pady=5, padx=5)
         self.sys_frame_2["background"] = nav_color
 
         self.sys_frame_3 = LabelFrame(
-            self.sys_info_main_frame, text="Memory", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_3.pack(pady=5, padx=5,side=TOP)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
-            self.sys_info_main_frame2, text="Network", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame2, text="Network", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_4.pack(pady=5, padx=5)
         self.sys_frame_4["background"] = nav_color
 
         self.sys_frame_5 = LabelFrame(
-            self.sys_info_main_frame2, text="Disk", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame2, text="Disk", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.sys_frame_5.pack(pady=5, padx=5)
         self.sys_frame_5["background"] = nav_color
 
         self.ov_display_frame = LabelFrame(
-            self.sys_info_main_frame2, text="My Performance Settings", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame2, text="My Performance Settings", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         self.ov_display_frame.pack(pady=5, padx=5)
         self.ov_display_frame["background"] = nav_color
 
-
+        self.sys_frame_6 = LabelFrame(
+            self.sys_info_main_frame2, text="Software", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        self.sys_frame_6.pack(pady=5, padx=5)
+        self.sys_frame_6["background"] = nav_color
             
 
 
@@ -653,10 +717,7 @@ class Frame1(ttk.Frame):
         self.sysinf0 = Label(
             self.sys_frame_1,
             text=f"Platform: {my_system.system}",
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             justify="left",
             highlightthickness=0,
             borderwidth=0,
@@ -668,17 +729,14 @@ class Frame1(ttk.Frame):
 
         self.sysinfd = Label(
             self.sys_frame_1,
-            text=f"Distro: {distro}",
+            text=f"Distro: {nice_name[13:-2]}",
             justify="left",
             highlightthickness=0,
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -691,10 +749,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -707,10 +762,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -723,10 +775,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -739,10 +788,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -753,10 +799,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -767,10 +810,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -781,10 +821,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinfn.pack()
@@ -796,10 +833,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinf1.pack()
@@ -811,10 +845,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -824,10 +855,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinf8.pack()
@@ -839,10 +867,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -853,10 +878,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -867,10 +889,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinf10.pack()
@@ -882,10 +901,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -896,10 +912,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -910,10 +923,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinf_ip.pack()
@@ -925,10 +935,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         )
         self.sysinf_ma.pack()
@@ -940,10 +947,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -954,10 +958,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -968,10 +969,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -982,10 +980,7 @@ class Frame1(ttk.Frame):
             background=nav_color,
             foreground=main_font,
             width=40,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             anchor=W,
         ).pack()
 
@@ -1014,10 +1009,7 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=40,
         )
         dash_arm_f_display.grid(column=1, row=2)
@@ -1034,10 +1026,7 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=40,
         )
         dash_gpu_f_display.grid(column=1, row=3)
@@ -1054,10 +1043,7 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=40,
         )
         dash_gpu_m_display.grid(column=1, row=4)
@@ -1074,10 +1060,7 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=40,
         )
         dash_over_v_display.grid(column=1, row=5)
@@ -1092,13 +1075,24 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=40,
         )
         dash_force_t_display.grid(column=1, row=6)
+
+###ä
+        self.sys_soft = Label(
+            self.sys_frame_6,
+            text=f"Packages Installed: {deb_counted[:-1]}(dpkg)\n",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=40,
+            anchor=W,
+        ).pack()
 
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
@@ -1112,20 +1106,14 @@ class Frame1(ttk.Frame):
                     dash_arm_f_display.config(
                         text=f"Arm Freq: {line[9:-1]} MHz",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
                 if "#arm_freq=800" in line:
                     dash_arm_f_display.config(
                         text="Arm Freq: not configured",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
 
@@ -1136,10 +1124,7 @@ class Frame1(ttk.Frame):
                     dash_gpu_f_display.config(
                         text=f"Gpu Freq: {line[9:-1]} MHz",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
 
@@ -1150,10 +1135,7 @@ class Frame1(ttk.Frame):
                     dash_force_t_display.config(
                         text=f"Force Turbo: {line[12:-1]}",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
 
@@ -1164,10 +1146,7 @@ class Frame1(ttk.Frame):
                     dash_over_v_display.config(
                         text=f"Over Voltage: {line[13:-1]}",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
             with open(f"{config_path}") as pi_conf:
@@ -1177,10 +1156,7 @@ class Frame1(ttk.Frame):
                     dash_gpu_m_display.config(
                         text=f"Gpu Mem: {line[8:-1]} MB",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )            
             self.after(1000, refresh_OV_stats)
 
@@ -1269,14 +1245,14 @@ class Frame2(ttk.Frame):
         self.rep_main_frame["background"] = maincolor
 
         self.off_rep_frame = LabelFrame(
-            self.rep_main_frame, text="Official Repository", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.rep_main_frame, text="Official Repository", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         # pack(pady=5,padx=5,side=LEFT)
         self.off_rep_frame.grid(row=0, column=0)
         self.off_rep_frame["background"] = maincolor
 
         self.man_rep_frame = LabelFrame(
-            self.rep_main_frame, text="Manuel Added", font=("Sans", 16,), foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.rep_main_frame, text="Manuel Added", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
         # pack(pady=5,padx=5)
         self.man_rep_frame.grid(row=0, column=1, rowspan=10)
@@ -1313,7 +1289,7 @@ class Frame2(ttk.Frame):
         self.tu_info = Label(
             self.off_rep_frame,
             text="Info: Never edit the source lists unless you know exactly what you are doing.\n",
-            font=("Sans", 8, "bold"),
+            font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -1337,7 +1313,7 @@ class Frame2(ttk.Frame):
         self.update_btn_frame = LabelFrame(
             self,
             text="Update Options",
-            font=("Sans", 16,),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             relief=GROOVE,
@@ -1358,10 +1334,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.update_button.grid(column=0, row=0, padx=5, pady=5)
 
@@ -1375,10 +1348,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.update_button.grid(column=0, row=1)
 
@@ -1392,10 +1362,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.fupgrade_button.grid(column=0, row=2, padx=5, pady=5)
 
@@ -1409,10 +1376,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.gpk_button.grid(column=1, row=0)
 
@@ -1426,10 +1390,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.auth_button.grid(column=1, row=1, padx=5, pady=5)
 
@@ -1443,10 +1404,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.rm_button.grid(column=1, row=2)
 
@@ -1462,10 +1420,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.sv_button.grid(column=2, row=0)
 
@@ -1479,10 +1434,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.dpkg_button.grid(column=2, row=1)
 
@@ -1496,10 +1448,7 @@ class Frame2(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
         )
         self.reboot_button.grid(column=2, row=2, padx=5, pady=5)
 
@@ -1614,7 +1563,7 @@ class Frame3(ttk.Frame):
                 frame_pop_kernel,
                 anchor="w",
                 text="Do you really want to Upgrade the Kernel?",
-                font=("Sans", 12),
+                font=font_12,
                 highlightthickness=0,
                 borderwidth=2,
                 background=maincolor,
@@ -1694,7 +1643,7 @@ class Frame3(ttk.Frame):
                 frame_pop_u_name,
                 anchor="w",
                 text="Do you really want to change the user name?\nrename-user will run on reboot.",
-                font=("Sans", 12),
+                font=font_12,
                 highlightthickness=0,
                 borderwidth=2,
                 background=maincolor,
@@ -1797,10 +1746,7 @@ class Frame3(ttk.Frame):
         self.pi_set = LabelFrame(
             self,
             text="Raspberry Pi Settings",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -1810,8 +1756,14 @@ class Frame3(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.pi_set.pack(pady=40, padx=40, fill="both")  #
+        self.pi_set.pack(pady=20, padx=40, fill="both")  #
         self.pi_set["background"] = maincolor
+
+        # Separator Line
+        self.separator = tk.Frame(
+            self,bd=10,relief="sunken",height=1
+        )
+        self.separator.pack(fill="x", padx=40, side="top")
 
         sys_rc_cli_btn = Button(
             self.pi_set,
@@ -1825,10 +1777,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_rc_cli_btn.grid(row=0, column=0)
 
@@ -1844,10 +1793,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_rc_gui_btn.grid(row=0, column=1)
 
@@ -1863,10 +1809,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         rename_user_btn.grid(row=0, column=2)
 
@@ -1882,10 +1825,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_conf_btn.grid(row=0, column=3)
 
@@ -1893,10 +1833,7 @@ class Frame3(ttk.Frame):
         self.dev_set = LabelFrame(
             self,
             text="Device Settings",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -1906,8 +1843,14 @@ class Frame3(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.dev_set.pack(pady=0, padx=40, fill="both")  #
+        self.dev_set.pack(pady=20, padx=40, fill="both")  #
         self.dev_set["background"] = maincolor
+
+        # Separator Line
+        self.separator = tk.Frame(
+            self,bd=10,relief="sunken",height=1
+        )
+        self.separator.pack(fill="x", padx=40, side="top")
 
         sys_gparted_btn = Button(
             self.dev_set,
@@ -1921,10 +1864,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_gparted_btn.grid(row=0, column=0)
 
@@ -1947,10 +1887,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         mouse_key_sett_btn.grid(row=0, column=1)
 
@@ -1966,10 +1903,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_dpp_btn.grid(row=0, column=2)
 
@@ -1985,10 +1919,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_netset_btn.grid(row=0, column=3)
 
@@ -2004,10 +1935,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_sd_btn.grid(row=0, column=4)
 
@@ -2023,10 +1951,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_printer_sett_btn.grid(row=1, column=0)
 
@@ -2042,10 +1967,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         desk_sett_btn.grid(row=1, column=1)
 
@@ -2061,10 +1983,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         screen_sett_btn.grid(row=1, column=2)
 
@@ -2080,10 +1999,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_neo_btn.grid(row=1, column=3)
 
@@ -2098,10 +2014,7 @@ class Frame3(ttk.Frame):
         self.os_set = LabelFrame(
             self,
             text="Operating System",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -2111,7 +2024,7 @@ class Frame3(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.os_set.pack(pady=10, padx=40, fill="both")  #
+        self.os_set.pack(pady=20, padx=40, fill="both")  #
         self.os_set["background"] = maincolor
 
         sys_FMGM_btn = Button(
@@ -2126,10 +2039,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_FMGM_btn.grid(row=0, column=0)
         sys_FMGM_btn = CreateToolTip(
@@ -2149,10 +2059,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_kernel_btn.grid(row=0, column=1)
 
@@ -2168,10 +2075,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_b_log_btn.grid(row=0, column=2)
 
@@ -2187,10 +2091,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_xf_auto_btn.grid(row=0, column=3)
         sys_xf_auto_btn.configure(state=DISABLED)
@@ -2209,10 +2110,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_xf_sett_btn.grid(row=0, column=4)
         sys_xf_sett_btn.configure(state=DISABLED)
@@ -2231,10 +2129,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_task_btn.grid(row=1, column=0)
 
@@ -2250,10 +2145,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_bash_btn.grid(row=1, column=1)
 
@@ -2269,10 +2161,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_cron_btn.grid(row=1, column=2)
 
@@ -2288,10 +2177,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         menu_sett_btn.grid(row=1, column=3)
 
@@ -2307,10 +2193,7 @@ class Frame3(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         source_sett_btn.grid(row=1, column=4)
 
@@ -2460,10 +2343,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_rc_cli_btn.grid(row=0, column=0)
 
@@ -2484,10 +2364,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_ubu_pref_btn.grid(row=0, column=1)
 
@@ -2501,10 +2378,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_conf_btn.grid(row=0, column=2)
 
@@ -2518,10 +2392,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_neo_btn.grid(row=0, column=3)
 
@@ -2542,10 +2413,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_dpp_btn.grid(row=0, column=4)
 
@@ -2559,10 +2427,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_bash_btn.grid(row=1, column=1)
 
@@ -2576,10 +2441,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         g_tweaks_btn.grid(row=1, column=2)
 
@@ -2600,10 +2462,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         menu_sett_btn.grid(row=1, column=3)
 
@@ -2624,10 +2483,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_gparted_btn.grid(row=1, column=4)
 
@@ -2648,10 +2504,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_FMGM_btn.grid(row=1, column=0)
         sys_FMGM_btn = CreateToolTip(
@@ -2669,10 +2522,7 @@ class Frame12(ttk.Frame):
             background=maincolor,
             foreground=main_font,
             compound=TOP,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         sys_gX_btn.grid(row=2, column=0)
 
@@ -2768,10 +2618,10 @@ class Frame13(ttk.Frame):
 
             yes_btn = tk.Button(pop_del_entry)
             yes_btn["bg"] = maincolor
-            ft = tkFont.Font(family="Sans", size=10)
+            
             yes_btn["borderwidth"] = 0
             yes_btn["highlightthickness"] = 1
-            yes_btn["font"] = ft
+            yes_btn["font"] = font_10
             yes_btn["fg"] = "white"
             yes_btn["justify"] = "center"
             yes_btn["text"] = "Yes"
@@ -2780,10 +2630,9 @@ class Frame13(ttk.Frame):
 
             no_btn = tk.Button(pop_del_entry)
             no_btn["bg"] = maincolor
-            ft = tkFont.Font(family="Sans", size=10)
             no_btn["borderwidth"] = 0
             no_btn["highlightthickness"] = 1
-            no_btn["font"] = ft
+            no_btn["font"] = font_10
             no_btn["fg"] = "white"
             no_btn["justify"] = "center"
             no_btn["text"] = "No"
@@ -2791,8 +2640,7 @@ class Frame13(ttk.Frame):
             no_btn["command"] = no_btn_command
 
             del_label = tk.Label(pop_del_entry)
-            ft = tkFont.Font(family="Sans", size=10)
-            del_label["font"] = ft
+            del_label["font"] = font_10
             del_label["bg"] = maincolor
             del_label["fg"] = "white"
             del_label["justify"] = "center"
@@ -2886,7 +2734,7 @@ class Frame13(ttk.Frame):
 
         # Create an entry box
         global auto_selected
-        auto_selected = Entry(auto_select_frame, font=("Sans", 12), width=60)
+        auto_selected = Entry(auto_select_frame, font=font_12, width=60)
         auto_selected.pack()
 
         note_lbl = Label(
@@ -2894,7 +2742,7 @@ class Frame13(ttk.Frame):
             text="double click to select",
             background=maincolor,
             foreground=info_color,
-            font=("Sans", 14),
+            font=font_14,
         )
         note_lbl.pack(pady=5)
 
@@ -3291,7 +3139,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Reset Settings",
             bg=maincolor,
             foreground="#d4244d",
-            font=("Sans", 14),
+            font=font_14,
             justify=LEFT,
         )
         self.rm_lbl.grid(row=0, column=0)
@@ -3314,7 +3162,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Crank It Up!",
             bg=maincolor,
             foreground="#d4244d",
-            font=("Sans", 14),
+            font=font_14,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=2, column=0)
@@ -3339,7 +3187,7 @@ class Tuning_Legende(tk.Toplevel):
             text="You Sir, Need A Fan!",
             bg=maincolor,
             foreground="#d4244d",
-            font=("Sans", 14),
+            font=font_14,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=4, column=0)
@@ -3349,7 +3197,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Works for rev. 1.4 & Pi400",
             bg=maincolor,
             foreground=info_color,
-            font=("Sans", 9),
+            font=font_9,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=4, column=1)
@@ -3374,7 +3222,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Take It To The Max!",
             bg=maincolor,
             foreground="#d4244d",
-            font=("Sans", 14),
+            font=font_14,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=6, column=0)
@@ -3384,7 +3232,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Works for rev. 1.4 & Pi400",
             bg=maincolor,
             foreground=info_color,
-            font=("Sans", 9),
+            font=font_9,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=6, column=1)
@@ -3409,7 +3257,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Honey,the fuse blew again!",
             bg=maincolor,
             foreground="#d4244d",
-            font=("Sans", 14),
+            font=font_14,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=8, column=0)
@@ -3419,7 +3267,7 @@ class Tuning_Legende(tk.Toplevel):
             text="Works for rev. 1.4 & Pi400",
             bg=maincolor,
             foreground=info_color,
-            font=("Sans", 9),
+            font=font_9,
             justify=LEFT,
         )
         self.ov1_lbl.grid(row=8, column=1)
@@ -3472,8 +3320,7 @@ class Done_Restart_P(tk.Toplevel):
 
         cont_btn = tk.Button(self)
         cont_btn["bg"] = "#efefef"
-        ft = tkFont.Font(family="Sans", size=10)
-        cont_btn["font"] = ft
+        cont_btn["font"] = font_10
         cont_btn["fg"] = main_font
         cont_btn["bg"] = maincolor
         cont_btn["justify"] = "center"
@@ -3505,8 +3352,8 @@ class Done_(tk.Toplevel):
 
         cont_btn = tk.Button(self)
         cont_btn["bg"] = "#efefef"
-        ft = tkFont.Font(family="Sans", size=10)
-        cont_btn["font"] = ft
+
+        cont_btn["font"] = font_10
         cont_btn["fg"] = main_font
         cont_btn["bg"] = maincolor
         cont_btn["justify"] = "center"
@@ -3518,8 +3365,7 @@ class Done_(tk.Toplevel):
 
         global done_label
         done_label = tk.Label(self)
-        ft = tkFont.Font(family="Sans", size=14)
-        done_label["font"] = ft
+        done_label["font"] = font_14
         done_label["fg"] = main_font
         done_label["bg"] = maincolor
         done_label["justify"] = "center"
@@ -3561,8 +3407,7 @@ class Done_Reboot(tk.Toplevel):
 
         rebt_btn = tk.Button(self)
         rebt_btn["bg"] = "#efefef"
-        ft = tkFont.Font(family="Sans", size=10)
-        rebt_btn["font"] = ft
+        rebt_btn["font"] = font_10
         rebt_btn["fg"] = main_font
         rebt_btn["bg"] = maincolor
         rebt_btn["justify"] = "center"
@@ -3573,8 +3418,7 @@ class Done_Reboot(tk.Toplevel):
         rebt_btn["command"] = self.rebt_btn_command
 
         done_label = tk.Label(self)
-        ft = tkFont.Font(family="Sans", size=14)
-        done_label["font"] = ft
+        done_label["font"] = font_14
         done_label["fg"] = main_font
         done_label["bg"] = maincolor
         done_label["justify"] = "center"
@@ -4105,7 +3949,7 @@ class Overclocking_Expert(tk.Toplevel):
         reboot_e = Button(
             self,
             justify=LEFT,
-            font=("Sans", 12, "bold"),
+            font=(font_12_b),
             text="Reboot",
             bg=maincolor,
             foreground=main_font,
@@ -4197,8 +4041,7 @@ class APT_Installer_Popup(tk.Toplevel):
 
         GButton_916 = tk.Button(self)
         GButton_916["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family="Sans", size=12)
-        GButton_916["font"] = ft
+        GButton_916["font"] = font_12
         GButton_916["fg"] = "white"
         GButton_916["justify"] = "center"
         GButton_916["bg"] = "#333333"
@@ -4209,8 +4052,7 @@ class APT_Installer_Popup(tk.Toplevel):
 
         GButton_9161 = tk.Button(self)
         GButton_9161["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family="Sans", size=12)
-        GButton_9161["font"] = ft
+        GButton_9161["font"] = font_12
         GButton_9161["fg"] = "white"
         GButton_9161["justify"] = "center"
         GButton_9161["bg"] = "#333333"
@@ -4299,8 +4141,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 
         GButton_916 = tk.Button(self)
         GButton_916["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family="Sans", size=12)
-        GButton_916["font"] = ft
+        GButton_916["font"] = font_12
         GButton_916["fg"] = "white"
         GButton_916["justify"] = "center"
         GButton_916["bg"] = "#333333"
@@ -4311,8 +4152,7 @@ class APT_Uninstaller_Popup(tk.Toplevel):
 
         GButton_9161 = tk.Button(self)
         GButton_9161["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family="Sans", size=12)
-        GButton_9161["font"] = ft
+        GButton_9161["font"] = font_12
         GButton_9161["fg"] = "white"
         GButton_9161["justify"] = "center"
         GButton_9161["bg"] = "#333333"
@@ -4415,8 +4255,7 @@ class Custom_Installer(tk.Toplevel):
 
         cancel_btn = tk.Button(self)
         cancel_btn["bg"] = "#e9e9ed"
-        ft = tkFont.Font(family="Sans", size=12)
-        cancel_btn["font"] = ft
+        cancel_btn["font"] = font_12
         cancel_btn["fg"] = "white"
         cancel_btn["justify"] = "center"
         cancel_btn["bg"] = "#333333"
@@ -4530,10 +4369,7 @@ class Frame4(ttk.Frame):
         self.fast_main_frame = LabelFrame(
             self,
             text="Fast Installer",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             relief=GROOVE,
             borderwidth=0,
@@ -4560,10 +4396,10 @@ class Frame4(ttk.Frame):
         self.fast_sec_frame["background"] = maincolor
 
         # Separator Line
-        self.separator = ttk.Separator(
-            self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator"
+        self.separator = tk.Frame(
+            self.fast_sec_frame,bd=10,relief="sunken",height=1
         )
-        self.separator.pack(fill="x", pady=20)
+        self.separator.pack(fill="x", side="top",pady=20)
 
         # apt-get_entry
         self.apt_frame = Frame(
@@ -4711,10 +4547,10 @@ class Frame4(ttk.Frame):
         self.un_apt_inst_btn.grid(column=1, row=0)
 
         # Separator Line
-        self.separator = ttk.Separator(
-            self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator"
+        self.separator = tk.Frame(
+            self.fast_sec_frame,bd=10,relief="sunken",height=1
         )
-        self.separator.pack(fill="x", pady=20)
+        self.separator.pack(fill="x", side="top",pady=20)
 
         # pi-apps_entry
 
@@ -4780,10 +4616,10 @@ class Frame4(ttk.Frame):
         self.pi_apps_inst_btn3.grid(column=2, row=1)
 
         # Separator Line
-        self.separator = ttk.Separator(
-            self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator"
+        self.separator = tk.Frame(
+            self.fast_sec_frame,bd=10,relief="sunken",height=1
         )
-        self.separator.pack(fill="x", pady=20)
+        self.separator.pack(fill="x", side="top",pady=20)
 
         # snap_entry
         self.snap_frame = Frame(
@@ -4856,10 +4692,13 @@ class Frame4(ttk.Frame):
             file=r"images/icons/pigro_icons/download_ico.png")
 
         # Separator Line
-        self.separator = ttk.Separator(
-            self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator"
+        self.separator = tk.Frame(
+            self.fast_sec_frame,bd=10,relief="sunken",height=1
         )
-        self.separator.pack(fill="x", pady=20)
+        self.separator.pack(fill="x", side="top",pady=20)
+
+
+
 
         # flat_entry
         self.flat_frame = Frame(
@@ -4928,19 +4767,18 @@ class Frame4(ttk.Frame):
         self.flatp_inst_btn.grid(column=1, row=0)
         self.flat_btn.grid(column=2, row=1)
 
+
+
         # Separator Line
-        self.separator = ttk.Separator(
-            self.fast_sec_frame, orient=tk.VERTICAL, style="Line.TSeparator"
+        self.separator = tk.Frame(
+            self.fast_sec_frame,bd=10,relief="sunken",height=1
         )
-        self.separator.pack(fill="x", pady=20)
+        self.separator.pack(fill="x", side="top",pady=20)
 
         self.repo_main_frame = LabelFrame(
             self,
             text="From The Repository",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             relief=GROOVE,
             borderwidth=0,
@@ -5057,7 +4895,7 @@ class Frame4(ttk.Frame):
             self.repo_main_frame,
             text="These applications will \nbe installed directly!",
             foreground=info_color,
-            font=(("Sans"), "8", "bold"),
+            font=font_8_b,
         )
         self.warning_msg["background"] = maincolor
         self.warning_msg.grid(row=3, column=1, pady=5, padx=5)
@@ -5254,7 +5092,7 @@ class Frame10(ttk.Frame):
             borderwidth=2,
             background=maincolor,
             foreground=main_font,
-            font=("Sans", 16),
+            font=font_16,
             justify="left",
             anchor="w",
         )
@@ -5269,7 +5107,7 @@ class Frame10(ttk.Frame):
             borderwidth=2,
             background=maincolor,
             foreground=main_font,
-            font=("Sans", 12),
+            font=font_12,
             anchor="w",
         )
         self.app_disc.pack(anchor="w")
@@ -5470,10 +5308,7 @@ class Frame5(ttk.Frame):
         self.rahmen4 = LabelFrame(
             self,
             text="GUI Tweaks",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -5486,14 +5321,17 @@ class Frame5(ttk.Frame):
         self.rahmen4.pack(pady=40, padx=40, fill="both")  #
         self.rahmen4["background"] = maincolor
 
+        # Separator Line
+        self.separator = tk.Frame(
+            self,bd=10,relief="sunken",height=1
+        )
+        self.separator.pack(fill="x", padx=40, side="top")
+
         self.in_btn1 = Button(
             self.rahmen4,
             image=self.bash_history_icon,
             text="Tasksel",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             command=tasksel_button,
             highlightthickness=0,
             borderwidth=0,
@@ -5510,10 +5348,7 @@ class Frame5(ttk.Frame):
             image=self.bash_history_icon,
             text="Change Desktop",
             command=ch_desk,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -5529,10 +5364,7 @@ class Frame5(ttk.Frame):
             image=self.bash_history_icon,
             text="Change Win-Manager",
             command=button_xfwm,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -5547,10 +5379,7 @@ class Frame5(ttk.Frame):
             self.rahmen4,
             image=self.fm_godmode_icon,
             text="Theme Folder",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             command=theme_f,
             highlightthickness=0,
             borderwidth=0,
@@ -5566,10 +5395,7 @@ class Frame5(ttk.Frame):
             self.rahmen4,
             image=self.fm_godmode_icon,
             text="Icon Folder",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             command=icon_f,
             highlightthickness=0,
             borderwidth=0,
@@ -5590,10 +5416,7 @@ class Frame5(ttk.Frame):
             self.rahmen4,
             image=self.ico_m2,
             text="Get Themes",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             command=web_OVC,
             highlightthickness=0,
             borderwidth=0,
@@ -5609,10 +5432,7 @@ class Frame5(ttk.Frame):
         self.rahmen41 = LabelFrame(
             self,
             text="Xfce Tweaks",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -5623,6 +5443,12 @@ class Frame5(ttk.Frame):
         )
         self.rahmen41.pack(padx=40, pady=20, fill="both")
         self.rahmen41["background"] = maincolor
+
+        # Separator Line
+        self.separator = tk.Frame(
+            self,bd=10,relief="sunken",height=1
+        )
+        self.separator.pack(fill="x", padx=40, side="top")
 
         self.in_btn3 = Button(
             self.rahmen41,
@@ -5637,10 +5463,7 @@ class Frame5(ttk.Frame):
             compound=LEFT,
             anchor="w",
             width=160,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn3.grid(column=1, row=0, padx=5)
         self.in_btn3.configure(state=DISABLED)
@@ -5658,10 +5481,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn5.grid(column=3, row=0)
         self.in_btn5.configure(state=DISABLED)
@@ -5679,10 +5499,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             anchor="w",
             width=160,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn51.grid(column=2, row=0)
         self.in_btn51.configure(state=DISABLED)
@@ -5700,10 +5517,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             anchor="w",
             width=160,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn52.grid(column=1, row=1)
         self.in_btn52.configure(state=DISABLED)
@@ -5721,10 +5535,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn7.grid(column=2, row=1)
         self.in_btn7.configure(state=DISABLED)
@@ -5742,10 +5553,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.in_btn8.grid(column=3, row=1)
 
@@ -5760,10 +5568,7 @@ class Frame5(ttk.Frame):
         self.rahmen42 = LabelFrame(
             self,
             text="Pixel Tweaks",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -5774,6 +5579,12 @@ class Frame5(ttk.Frame):
         )
         self.rahmen42.pack(padx=40, pady=20, fill="both")
         self.rahmen42["background"] = maincolor
+
+        # Separator Line
+        self.separator = tk.Frame(
+            self,bd=10,relief="sunken",height=1
+        )
+        self.separator.pack(fill="x", padx=40, side="top")
 
         self.lx_btn0 = Button(
             self.rahmen42,
@@ -5788,10 +5599,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.lx_btn0.grid(column=0, row=0)
 
@@ -5808,10 +5616,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.lxde.grid(column=1, row=0)
 
@@ -5828,10 +5633,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.lxde.grid(column=2, row=0)
 
@@ -5848,10 +5650,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.set_wp_btn.grid(column=3, row=0)
 
@@ -5868,10 +5667,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.set_wp_btn.grid(column=0, row=1)
 
@@ -5888,10 +5684,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.set_wp_btn.grid(column=1, row=1)
 
@@ -5908,10 +5701,7 @@ class Frame5(ttk.Frame):
             foreground=main_font,
             width=160,
             anchor="w",
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
         )
         self.set_wp_btn.grid(column=2, row=1)
 
@@ -5919,10 +5709,7 @@ class Frame5(ttk.Frame):
         self.rahmen43 = LabelFrame(
             self,
             text="Pigro Tweaks",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -5972,10 +5759,7 @@ class Frame5(ttk.Frame):
             borderwidth=0,
             background=maincolor,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             command=color_selected,
         )
         select_theme_btn.grid(column=1, row=0)
@@ -6018,10 +5802,7 @@ class Frame5(ttk.Frame):
             borderwidth=0,
             background=maincolor,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             command=trans_selected,
         )
         select_trasp_btn.grid(column=1, row=0)
@@ -6087,8 +5868,7 @@ class z_ram_pop(tk.Toplevel):
             ).send()
 
         GLabel_804 = tk.Label(self)
-        ft = tkFont.Font(family="Sans", size=10)
-        GLabel_804["font"] = ft
+        GLabel_804["font"] = font_10
         GLabel_804["fg"] = maincolor
         GLabel_804["justify"] = "center"
         GLabel_804["text"] = "Icon"
@@ -6096,16 +5876,14 @@ class z_ram_pop(tk.Toplevel):
         GLabel_804.place(x=20, y=40, width=100, height=100)
 
         GLabel_0 = tk.Label(self)
-        ft = tkFont.Font(family="Sans", size=14)
-        GLabel_0["font"] = ft
+        GLabel_0["font"] = font_14
         GLabel_0["fg"] = maincolor
         GLabel_0["justify"] = "left"
         GLabel_0["text"] = "ZRAM"
         GLabel_0.place(x=160, y=30, width=391, height=33)
 
         GLabel_29 = tk.Label(self)
-        ft = tkFont.Font(family="Sans", size=10)
-        GLabel_29["font"] = ft
+        GLabel_29["font"] = font_10
         GLabel_29["fg"] = maincolor
         GLabel_29["justify"] = "left"
         GLabel_29[
@@ -6115,8 +5893,7 @@ class z_ram_pop(tk.Toplevel):
 
         GButton_883 = tk.Button(self)
         GButton_883["bg"] = "#efefef"
-        ft = tkFont.Font(family="Sans", size=10)
-        GButton_883["font"] = ft
+        GButton_883["font"] = font_10
         GButton_883["fg"] = "#000000"
         GButton_883["justify"] = "center"
         GButton_883["text"] = "Install"
@@ -6125,8 +5902,7 @@ class z_ram_pop(tk.Toplevel):
 
         GButton_585 = tk.Button(self)
         GButton_585["bg"] = "#efefef"
-        ft = tkFont.Font(family="Sans", size=10)
-        GButton_585["font"] = ft
+        GButton_585["font"] = font_10
         GButton_585["fg"] = "#000000"
         GButton_585["justify"] = "center"
         GButton_585["text"] = "Uninstall"
@@ -6300,10 +6076,7 @@ class Frame6(ttk.Frame):
         self.ov_buttons = LabelFrame(
             self,
             text="Tuning Options",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -6332,10 +6105,7 @@ class Frame6(ttk.Frame):
         self.ov_display_frame = LabelFrame(
             self.ov_state_display_frame,
             text="Current Settings",
-            font=(
-                "Sans",
-                16,
-            ),
+            font=font_16,
             foreground="#d4244d",
             borderwidth=0,
             highlightthickness=0,
@@ -6369,10 +6139,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         pigro_t_label.grid(column=0, row=0)
@@ -6387,10 +6154,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground="green",
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         pigro_t_display.grid(column=1, row=0)
@@ -6404,10 +6168,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         arm_f_label.grid(column=0, row=2)
@@ -6422,10 +6183,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         arm_f_display.grid(column=1, row=2)
@@ -6439,10 +6197,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         gpu_f_label.grid(column=0, row=3)
@@ -6457,10 +6212,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         gpu_f_display.grid(column=1, row=3)
@@ -6474,10 +6226,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         gpu_m_label.grid(column=0, row=4)
@@ -6492,10 +6241,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         gpu_m_display.grid(column=1, row=4)
@@ -6509,10 +6255,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         over_v_label.grid(column=0, row=5)
@@ -6527,10 +6270,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         over_v_display.grid(column=1, row=5)
@@ -6544,10 +6284,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=15,
         )
         force_t_label.grid(column=0, row=6)
@@ -6562,10 +6299,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=(
-                "Sans",
-                12,
-            ),
+            font=font_12,
             width=25,
         )
         force_t_display.grid(column=1, row=6)
@@ -6573,7 +6307,7 @@ class Frame6(ttk.Frame):
         self.tu_info = Label(
             self.ov_helps_frame,
             text="\n\n\n\n\n\n\n\nSettings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
-            font=("Sans", 8, "bold"),
+            font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -6594,10 +6328,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         ).grid(column=0, row=2, pady=10)
 
@@ -6614,10 +6345,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         )
         tu_btn1.grid(column=0, row=4, pady=10)
@@ -6635,10 +6363,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         )
         tu_btn2.grid(column=0, row=6, pady=10)
@@ -6656,10 +6381,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         )
         tu_btn3.grid(column=0, row=8, pady=10)
@@ -6677,10 +6399,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         )
         tu_btn4.grid(column=0, row=9, pady=10)
@@ -6697,10 +6416,7 @@ class Frame6(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=(
-                "Sans",
-                10,
-            ),
+            font=font_10,
             width=200,
         )
         tu_btn5.grid(column=0, row=10, pady=10)
@@ -6711,7 +6427,7 @@ class Frame6(ttk.Frame):
             image=self.zram_icon,
             justify="left",
             text="Install ZRAM",
-            font=("Sans", 12),
+            font=font_12,
             anchor="w",
             command=z_ram,
             highlightthickness=0,
@@ -6725,7 +6441,7 @@ class Frame6(ttk.Frame):
         self.tu_legende = Button(
             self.ov_buttons,
             text="Legende",
-            font=("Sans", 8),
+            font=font_8,
             highlightthickness=0,
             borderwidth=0,
             background=maincolor,
@@ -6743,7 +6459,7 @@ class Frame6(ttk.Frame):
             borderwidth=2,
             background=maincolor,
             foreground=info_color,
-            font=("Sans", 8, "bold"),
+            font=font_8_b,
         )
         self.pigro_t_info.grid(column=0, row=14)
 
@@ -6812,10 +6528,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text=line[9:-1] + " MHz",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
                     tu_btn1.config(state=DISABLED)
                     tu_btn2.config(state=DISABLED)
@@ -6825,10 +6538,7 @@ class Frame6(ttk.Frame):
                     arm_f_display.config(
                         text="not configured",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
                     tu_btn1.config(state=DISABLED)
                     tu_btn2.config(state=DISABLED)
@@ -6842,10 +6552,7 @@ class Frame6(ttk.Frame):
                     gpu_f_display.config(
                         text=line[9:-1] + " MHz",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
                     tu_btn1.config(state=DISABLED)
                     tu_btn2.config(state=DISABLED)
@@ -6859,10 +6566,7 @@ class Frame6(ttk.Frame):
                     force_t_display.config(
                         text=line[12:-1],
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
                     tu_btn1.config(state=DISABLED)
                     tu_btn2.config(state=DISABLED)
@@ -6876,10 +6580,7 @@ class Frame6(ttk.Frame):
                     over_v_display.config(
                         text=line[13:-1],
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
                     tu_btn1.config(state=DISABLED)
                     tu_btn2.config(state=DISABLED)
@@ -6893,10 +6594,7 @@ class Frame6(ttk.Frame):
                     gpu_m_display.config(
                         text=line[8:-1] + " MB",
                         foreground=main_font,
-                        font=(
-                            "Sans",
-                            12,
-                        ),
+                        font=font_12,
                     )
 
         def refresh_OV_stats():
@@ -7085,7 +6783,7 @@ class Frame8(ttk.Frame):
             self.rahmen102,
             # justify="left",
             text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0.1",
-            font=("Sans", 18, "bold"),
+            font=font_16,
             background=maincolor,
             foreground=main_font,
             padx=5,
@@ -7095,7 +6793,7 @@ class Frame8(ttk.Frame):
         self.change_log = Button(
             self.rahmen102,
             text="Changelog",
-            font=("Sans", 10),
+            font=(font_10),
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
@@ -7118,7 +6816,7 @@ class Frame8(ttk.Frame):
             self.rahmen102,
             # justify="left",
             text="\n\n\nDeveloped and maintained by:\n\nTimo Westphal\n(Actionschnitzel)\n\n\n\n\nContact:",
-            font=("Sans", 12),
+            font=font_12,
             background=maincolor,
             foreground=main_font,
             padx=5,
@@ -7132,7 +6830,7 @@ class Frame8(ttk.Frame):
         self.paypal = Button(
             self.rahmen102,
             text="Paypal",
-            font=("Sans", 10),
+            font=(font_10),
             image=self.paypal_icon,
             highlightthickness=0,
             borderwidth=0,
@@ -7147,7 +6845,7 @@ class Frame8(ttk.Frame):
             self.rahmen102,
             # justify="left",
             text="\n\n\nThis program comes with ABSOLUTELY NO WARRANTY!\nIt is licensed under the GNU General Public License v3.0\nIcons have been partially adopted and modified from the\nPapirus Icon Theme licensed under the\nGNU General Public License v3.0\n\n\n2022",
-            font=("Sans", 9, "bold"),
+            font=font_9_b,
             background=maincolor,
             foreground=main_font,
             padx=5,
