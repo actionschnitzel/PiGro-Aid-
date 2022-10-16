@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
 import os
@@ -12,10 +16,6 @@ from os import popen
 from os import system as cmd
 from os import listdir
 from os.path import isfile, join
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-from PIL import ImageTk, Image
 import platform
 import shutil
 import psutil
@@ -88,16 +88,14 @@ if pigro_conf_file == True:
 # Checks if pigro bin exists
 popen(f"{Application_path}/scripts/check_bin.sh ")
 
-# Gets list of all pakages avaleble on APT
+# Gets list of all installeble pakages
 os.system(
-    f"xterm > /dev/null 2>&1 -e 'bash -c \"apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list && exit; exec bash\"'"
-)
+    f"> /dev/null 2>&1 apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list")
 print("[Info]: APT-CACHE loaded")
 
 # Gets list of all installed pakages
 os.system(
-    f"xterm > /dev/null 2>&1 -e 'bash -c \"dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list && exit; exec bash\"'"
-)
+    f"> /dev/null 2>&1 dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list")
 print("[Info]: Instaled pakages loaded")
 
 # Get Distro
@@ -136,16 +134,17 @@ if piapps_path == True:
     print("[Info]: Pi-Apps is installed list will be added")
     popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
+# Counts installed .DEBs
 deb_count = popen("dpkg --list | wc --lines")
 deb_counted = deb_count.read()
 deb_count.close()
 print(f"[Info]: {deb_counted[:-1]} Packages Installed")
 
+# Gets nice Distro name
 nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
 nice_name = nice_name.read()
-#nice_name.close()
-#print(nice_name[13:-1])
-
+# nice_name.close()
+# print(nice_name[13:-1])
 
 
 # Checks if snapd exists
@@ -171,7 +170,7 @@ else:
         )
         print("[Info]: pigro.conf was created")
 
-
+# Color Theme Identifier
 conf_file = open(f"{home}/.pigro/pigro.conf", "r")
 loglist = conf_file.readlines()
 conf_file.close()
@@ -203,28 +202,27 @@ for line in loglist:
         info_color = "#0075b7"
         ext_btn = "#b6b6b3"
 
-#Font Definition
+# Font Definition Vars
 global font_20
-font_20 =("Sans", 20)
+font_20 = ("Sans", 20)
 global font_16
-font_16 =("Sans", 16)
+font_16 = ("Sans", 16)
 global font_14
-font_14 =("Sans", 14)
+font_14 = ("Sans", 14)
 global font_12_b
-font_12_b =("Sans", 12, "bold")
+font_12_b = ("Sans", 12, "bold")
 global font_12
-font_12 =("Sans", 12)
+font_12 = ("Sans", 12)
 global font_10
-font_10 =("Sans", 10)
+font_10 = ("Sans", 10)
 global font_9_b
-font_9_b =("Sans", 9, "bold")
+font_9_b = ("Sans", 9, "bold")
 global font_9
-font_9 =("Sans", 9)
+font_9 = ("Sans", 9)
 global font_8_b
-font_8_b =("Sans", 8, "bold")
+font_8_b = ("Sans", 8, "bold")
 global font_8
-font_8 =("Sans", 8)
-
+font_8 = ("Sans", 8)
 
 
 # Transparency Settings
@@ -249,7 +247,7 @@ class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        """defines the look of the app"""
+        """defines the basic look of the app"""
 
         # Window Basics
         self.title("PiGro - Just Click It! (Perche sei cosi serio?)")
@@ -410,10 +408,13 @@ class MainApplication(tk.Tk):
             background=[("selected", nav_color)],
             foreground=[("selected", "#d4244d")],
         )
+        # Progressbar Theme
         noteStyler.configure(
             "red.Horizontal.TProgressbar", foreground="red", background="green"
         )
-        noteStyler.configure("Line.TSeparator", background="grey",rekief="sunken")
+        # Seperator Theme
+        noteStyler.configure(
+            "Line.TSeparator", background="grey", rekief="sunken")
 
 
 # [Changelog] Child
@@ -482,13 +483,8 @@ class Frame1(ttk.Frame):
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
 
-        # Installed .DEBs
-        #def how_many_dabs():
-
-        #    return how_many_dabs
-        #how_many_dabs()
-
         # IP Address
+
         def extract_ip():
             st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             try:
@@ -500,6 +496,7 @@ class Frame1(ttk.Frame):
                 st.close()
             return IP
 
+        # Sensetiv Data Button Images
         global on_btn_icon
         on_btn_icon = PhotoImage(
             file=r"images/icons/pigro_icons/on_s_b.png"
@@ -509,9 +506,6 @@ class Frame1(ttk.Frame):
         off_btn_icon = PhotoImage(
             file=r"images/icons/pigro_icons/off_s_b.png"
         )
-
-
-            
 
         # Hide/Show sensetiv data
 
@@ -564,7 +558,6 @@ class Frame1(ttk.Frame):
         # Parameters for System
         global distro
         distro = distro.id()
-
         pid = os.getpid()
         ps = psutil.Process(pid)
         my_system = platform.uname()
@@ -576,7 +569,6 @@ class Frame1(ttk.Frame):
         cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
         total, used, free = shutil.disk_usage("/")
-
         current_month = strftime('%B')
 
         # Main frame for system stats
@@ -587,13 +579,12 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            #pady=20,
-            #padx=30,
+            # pady=20,
+            # padx=30,
         )
 
         self.sys_logo.pack()
         self.sys_logo["background"] = maincolor
-
 
         self.pigro_img = ImageTk.PhotoImage(
             Image.open("images/icons/pigro_icons/pigrologo.png")
@@ -615,13 +606,13 @@ class Frame1(ttk.Frame):
             bg=maincolor,
             highlightthickness=0,
         )
-        self.sysinf_btn.pack()#pady=20
+        self.sysinf_btn.pack()  # pady=20
 
+        # Changes Header
         if current_month == "October":
             self.sysinf_btn.config(image=self.pigroh_img)
         if current_month == "December":
             self.sysinf_btn.config(image=self.pigrox_img)
-
 
         self.info_main_frame = Frame(
             self,
@@ -629,8 +620,6 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            #pady=20,
-            #padx=30,
         )
 
         self.info_main_frame.pack()
@@ -659,7 +648,7 @@ class Frame1(ttk.Frame):
             padx=30,
         )
 
-        self.sys_info_main_frame2.pack(side=LEFT,anchor="n")
+        self.sys_info_main_frame2.pack(side=LEFT, anchor="n")
         self.sys_info_main_frame2["background"] = maincolor
 
         # Contains all stats
@@ -679,7 +668,7 @@ class Frame1(ttk.Frame):
         self.sys_frame_3 = LabelFrame(
             self.sys_info_main_frame, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_3.pack(pady=5, padx=5,side=TOP)
+        self.sys_frame_3.pack(pady=5, padx=5, side=TOP)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
@@ -705,10 +694,6 @@ class Frame1(ttk.Frame):
         )
         self.sys_frame_6.pack(pady=5, padx=5)
         self.sys_frame_6["background"] = nav_color
-            
-
-
-
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
@@ -997,8 +982,6 @@ class Frame1(ttk.Frame):
         self.pb1.pack(expand=True, anchor="w")
         step()
 
-
-
         global dash_arm_f_display
         dash_arm_f_display = Label(
             self.ov_display_frame,
@@ -1013,8 +996,6 @@ class Frame1(ttk.Frame):
             width=40,
         )
         dash_arm_f_display.grid(column=1, row=2)
-
-
 
         global dash_gpu_f_display
         dash_gpu_f_display = Label(
@@ -1031,8 +1012,6 @@ class Frame1(ttk.Frame):
         )
         dash_gpu_f_display.grid(column=1, row=3)
 
-
-
         global dash_gpu_m_display
         dash_gpu_m_display = Label(
             self.ov_display_frame,
@@ -1047,8 +1026,6 @@ class Frame1(ttk.Frame):
             width=40,
         )
         dash_gpu_m_display.grid(column=1, row=4)
-
-
 
         global dash_over_v_display
         dash_over_v_display = Label(
@@ -1080,7 +1057,7 @@ class Frame1(ttk.Frame):
         )
         dash_force_t_display.grid(column=1, row=6)
 
-###ä
+# ä
         self.sys_soft = Label(
             self.sys_frame_6,
             text=f"Packages Installed: {deb_counted[:-1]}(dpkg)\n",
@@ -1096,7 +1073,6 @@ class Frame1(ttk.Frame):
 
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
-
 
         def refresh_OV_stats():
             with open(f"{config_path}") as pi_conf:
@@ -1116,7 +1092,6 @@ class Frame1(ttk.Frame):
                         font=font_12,
                     )
 
-
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
@@ -1127,7 +1102,6 @@ class Frame1(ttk.Frame):
                         font=font_12,
                     )
 
-
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
@@ -1137,7 +1111,6 @@ class Frame1(ttk.Frame):
                         foreground=main_font,
                         font=font_12,
                     )
-
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
@@ -1157,12 +1130,10 @@ class Frame1(ttk.Frame):
                         text=f"Gpu Mem: {line[8:-1]} MB",
                         foreground=main_font,
                         font=font_12,
-                    )            
+                    )
             self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
-        
-
 
         def refresh_sys_stats():
 
@@ -1179,9 +1150,8 @@ class Frame1(ttk.Frame):
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.sysinf10.configure(
                 text=f"CPU Temp: {cpu.temperature:.1f} °C")
-            self.after(1000, refresh_sys_stats)                
+            self.after(1000, refresh_sys_stats)
         refresh_sys_stats()
-
 
 
 # [Update] Tab
@@ -1247,14 +1217,14 @@ class Frame2(ttk.Frame):
         self.off_rep_frame = LabelFrame(
             self.rep_main_frame, text="Official Repository", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        # pack(pady=5,padx=5,side=LEFT)
+
         self.off_rep_frame.grid(row=0, column=0)
         self.off_rep_frame["background"] = maincolor
 
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame, text="Manuel Added", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        # pack(pady=5,padx=5)
+
         self.man_rep_frame.grid(row=0, column=1, rowspan=10)
         self.man_rep_frame["background"] = maincolor
 
@@ -1275,7 +1245,6 @@ class Frame2(ttk.Frame):
 
         sources_d = os.listdir('/etc/apt/sources.list.d')
         sources_d1 = []
-        #print (sources_d)
 
         for file in sources_d:
             self.sources_d_label = Button(self.man_right, text=file, justify=LEFT, anchor=W, bg=ext_btn, fg=main_font,
@@ -1283,9 +1252,6 @@ class Frame2(ttk.Frame):
             self.sources_d_label.pack(anchor=W, pady=5)
             sources_d1.append(self.sources_d_label)
 
-        #folder = os.listdir('/etc/apt/sources.list.d')
-        # for file in folder:
-        #    print(file)
         self.tu_info = Label(
             self.off_rep_frame,
             text="Info: Never edit the source lists unless you know exactly what you are doing.\n",
@@ -1407,8 +1373,6 @@ class Frame2(ttk.Frame):
             font=font_12,
         )
         self.rm_button.grid(column=1, row=2)
-
-        #self.sv_button.grid(column=2, row=0, padx=5, pady=5)
 
         self.sv_button = Button(
             self.update_btn_frame,
@@ -1761,7 +1725,7 @@ class Frame3(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self,bd=10,relief="sunken",height=1
+            self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
@@ -1848,7 +1812,7 @@ class Frame3(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self,bd=10,relief="sunken",height=1
+            self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
@@ -2215,7 +2179,7 @@ class Frame12(ttk.Frame):
             popen("alacarte")
 
         def button_boot():
-            popen("xterm -e 'bash -c \"{legit} dmesg; exec bash\"'")
+            popen(f"xterm -e 'bash -c \"{legit} dmesg; exec bash\"'")
 
         def pi_configbutton():
             popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
@@ -2618,7 +2582,7 @@ class Frame13(ttk.Frame):
 
             yes_btn = tk.Button(pop_del_entry)
             yes_btn["bg"] = maincolor
-            
+
             yes_btn["borderwidth"] = 0
             yes_btn["highlightthickness"] = 1
             yes_btn["font"] = font_10
@@ -4397,9 +4361,9 @@ class Frame4(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self.fast_sec_frame,bd=10,relief="sunken",height=1
+            self.fast_sec_frame, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", side="top",pady=20)
+        self.separator.pack(fill="x", side="top", pady=20)
 
         # apt-get_entry
         self.apt_frame = Frame(
@@ -4548,9 +4512,9 @@ class Frame4(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self.fast_sec_frame,bd=10,relief="sunken",height=1
+            self.fast_sec_frame, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", side="top",pady=20)
+        self.separator.pack(fill="x", side="top", pady=20)
 
         # pi-apps_entry
 
@@ -4617,9 +4581,9 @@ class Frame4(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self.fast_sec_frame,bd=10,relief="sunken",height=1
+            self.fast_sec_frame, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", side="top",pady=20)
+        self.separator.pack(fill="x", side="top", pady=20)
 
         # snap_entry
         self.snap_frame = Frame(
@@ -4693,12 +4657,9 @@ class Frame4(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self.fast_sec_frame,bd=10,relief="sunken",height=1
+            self.fast_sec_frame, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", side="top",pady=20)
-
-
-
+        self.separator.pack(fill="x", side="top", pady=20)
 
         # flat_entry
         self.flat_frame = Frame(
@@ -4767,13 +4728,11 @@ class Frame4(ttk.Frame):
         self.flatp_inst_btn.grid(column=1, row=0)
         self.flat_btn.grid(column=2, row=1)
 
-
-
         # Separator Line
         self.separator = tk.Frame(
-            self.fast_sec_frame,bd=10,relief="sunken",height=1
+            self.fast_sec_frame, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", side="top",pady=20)
+        self.separator.pack(fill="x", side="top", pady=20)
 
         self.repo_main_frame = LabelFrame(
             self,
@@ -4907,10 +4866,8 @@ class Frame10(ttk.Frame):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
-
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
-
 
         def git_tab(text):
             if text == "Albert":
@@ -4937,7 +4894,8 @@ class Frame10(ttk.Frame):
                 self.appname_header.config(text="DeskPi Pro Driver")
                 self.app_disc.config(
                     text="Driver & Fan Control for the DeskPi Pro Case")
-                self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
+                self.web_link.config(
+                    text=r"https://github.com/DeskPi-Team/deskpi")
                 self.app_inst.pack(anchor="w")
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
@@ -4987,7 +4945,8 @@ class Frame10(ttk.Frame):
                 self.app_disc.config(
                     text="System Tweak Tool & Game Installer for ARM/Raspberry Pi"
                 )
-                self.web_link.config(text=r"https://github.com/jmcerrejon/PiKISS")
+                self.web_link.config(
+                    text=r"https://github.com/jmcerrejon/PiKISS")
                 self.app_inst.pack(anchor="w")
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
@@ -5019,14 +4978,14 @@ class Frame10(ttk.Frame):
                 self.app_disc.config(
                     text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers"
                 )
-                self.web_link.config(text=r"https://github.com/atar-axis/xpadneo")
+                self.web_link.config(
+                    text=r"https://github.com/atar-axis/xpadneo")
                 self.app_inst.pack(anchor="w")
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
                     "sudo apt-get install dkms raspberrypi-kernel-headers\ngit clone https://github.com/atar-axis/xpadneo.git\ncd xpadneo\nsudo ./install.sh",
                 )
-
 
         self.link_main = Frame(
             self,
@@ -5051,26 +5010,24 @@ class Frame10(ttk.Frame):
         self.link_left.pack(side=LEFT, expand=True, fill=BOTH)
         self.link_left["background"] = maincolor
 
-        sources_l = ["Albert","Argon One Driver","DeskPi Pro Driver","FanShim Driver","Papirus Icon Theme","Pi-Apps","PiKiss","Sublime Merge aarch64","Sublime Text aarch64","Xpad-Neo",]
+        sources_l = ["Albert", "Argon One Driver", "DeskPi Pro Driver", "FanShim Driver", "Papirus Icon Theme",
+                     "Pi-Apps", "PiKiss", "Sublime Merge aarch64", "Sublime Text aarch64", "Xpad-Neo", ]
 
-
-        sources_l1=[]
+        sources_l1 = []
 
         for file in sources_l:
             self.choice_link2 = Button(
-            self.link_left,
-            anchor="w",
-            width=20,
-            text=file,
-            command=lambda text=file: git_tab(text),
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-        ).pack(pady=5)
+                self.link_left,
+                anchor="w",
+                width=20,
+                text=file,
+                command=lambda text=file: git_tab(text),
+                highlightthickness=0,
+                borderwidth=0,
+                background=ext_btn,
+                foreground=main_font,
+            ).pack(pady=5)
             sources_l1.append(self.choice_link2)
-
-
 
         # Right Frame
         self.link_right = Frame(
@@ -5323,7 +5280,7 @@ class Frame5(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self,bd=10,relief="sunken",height=1
+            self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
@@ -5446,7 +5403,7 @@ class Frame5(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self,bd=10,relief="sunken",height=1
+            self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
@@ -5582,7 +5539,7 @@ class Frame5(ttk.Frame):
 
         # Separator Line
         self.separator = tk.Frame(
-            self,bd=10,relief="sunken",height=1
+            self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
@@ -6839,7 +6796,6 @@ class Frame8(ttk.Frame):
             command=paypal_link,
         )
         self.paypal.pack()
-
 
         self.poke_pig_21 = Label(
             self.rahmen102,
