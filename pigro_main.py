@@ -39,207 +39,210 @@ import re
 import uuid
 
 
-# Say Hallo!
-global user
-user = os.getlogin()
-print(f"[Info]: Hi,{user} waz uuuuup?!")
+class Get_Sys_Info():
+    """Gathers system stats that are needed to run PiGro"""
+    # Say Hallo!
+    global user
+    user = os.getlogin()
+    print(f"[Info]: Hi,{user} waz uuuuup?!")
 
-# Define Home
-global home
-home = str(Path.home())
-print(f"[Info]: {home} is your home directory!")
+    # Define Home
+    global home
+    home = str(Path.home())
+    print(f"[Info]: {home} is your home directory!")
 
-# Gets path to PiGro
-global Application_path
-Application_path = str(os.getcwd())
-print(f"[Info]: PiGro directory is {Application_path}")
+    # Gets path to PiGro
+    global Application_path
+    Application_path = str(os.getcwd())
+    print(f"[Info]: PiGro directory is {Application_path}")
 
-# Makes all .sh files in /sripts executable if PiGro in $HOME
-if Application_path == f"{home}/PiGro-Aid-":
-    popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
-    print(f"[Info]: All files executable")
+    # Makes all .sh files in /sripts executable if PiGro in $HOME
+    if Application_path == f"{home}/PiGro-Aid-":
+        popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+        print(f"[Info]: All files executable")
 
-# Checks if settings folder exists
-pigro_conf_folder = os.path.isdir(f"{home}/.pigro")  # Need full path
-if pigro_conf_folder == False:
-    print("[Info]: Folder:.pigro not found will created")
-    os.mkdir(f"{home}/.pigro")
-    open(f"{home}/.pigro/apt_cache.list", "a").close()
-    open(f"{home}/.pigro/autostart.list", "a").close()
-    open(f"{home}/.pigro/packages.list", "a").close()
-    open(f"{home}/.pigro/pi-apps_list.list", "a").close()
-if pigro_conf_folder == True:
-    print("[Info]: Folder: .pigro exsists")
+    # Checks if settings folder exists
+    pigro_conf_folder = os.path.isdir(f"{home}/.pigro")  # Need full path
+    if pigro_conf_folder == False:
+        print("[Info]: Folder:.pigro not found will created")
+        os.mkdir(f"{home}/.pigro")
+        open(f"{home}/.pigro/apt_cache.list", "a").close()
+        open(f"{home}/.pigro/autostart.list", "a").close()
+        open(f"{home}/.pigro/packages.list", "a").close()
+        open(f"{home}/.pigro/pi-apps_list.list", "a").close()
+    if pigro_conf_folder == True:
+        print("[Info]: Folder: .pigro exsists")
 
-# Checks if pigro.conf exists
-pigro_conf_file = os.path.exists(f"{home}/.pigro/pigro.conf")  # Need full path
-if pigro_conf_file == False:
-    open(f"{home}/.pigro/pi-apps_list.list", "a")
-    with open(f"{home}/.pigro/pigro.conf", "a") as p_file:
-        p_file.write(
-            "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark\ntransparency = 1.00"
-        )
-        p_file.close()
-    print("[Info]: pigro.conf created")
-if pigro_conf_file == True:
-    print("[Info]: pigro.conf exsists")
+    # Checks if pigro.conf exists
+    pigro_conf_file = os.path.exists(
+        f"{home}/.pigro/pigro.conf")  # Need full path
+    if pigro_conf_file == False:
+        open(f"{home}/.pigro/pi-apps_list.list", "a")
+        with open(f"{home}/.pigro/pigro.conf", "a") as p_file:
+            p_file.write(
+                "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark\ntransparency = 1.00"
+            )
+            p_file.close()
+        print("[Info]: pigro.conf created")
+    if pigro_conf_file == True:
+        print("[Info]: pigro.conf exsists")
 
+    # Checks if pigro bin exists
+    popen(f"{Application_path}/scripts/check_bin.sh ")
 
-# Checks if pigro bin exists
-popen(f"{Application_path}/scripts/check_bin.sh ")
+    # Gets list of all installeble pakages
+    os.system(
+        f"> /dev/null 2>&1 apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list")
+    print("[Info]: APT-CACHE loaded")
 
-# Gets list of all installeble pakages
-os.system(
-    f"> /dev/null 2>&1 apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list")
-print("[Info]: APT-CACHE loaded")
+    # Gets list of all installed pakages
+    os.system(
+        f"> /dev/null 2>&1 dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list")
+    print("[Info]: Instaled pakages loaded")
 
-# Gets list of all installed pakages
-os.system(
-    f"> /dev/null 2>&1 dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list")
-print("[Info]: Instaled pakages loaded")
+    # Get Distro
+    global distro_get
+    distro_get = distro.id()
+    print("[Info]: Your Distro is: " + str(distro_get))
 
-# Get Distro
-distro_get = distro.id()
-print("[Info]: Your Distro is: " + str(distro_get))
-
-# Legitimation Vars // Test for Ubuntu compatiblety
-global config_path
-config_path = "/boot/config.txt"
-global legit
-legit = "sudo"
-
-# Config.txt Path
-if distro_get == "ubuntu":
-    config_path = "/boot/firmware/config.txt"
-else:
+    # Legitimation Vars // Test for Ubuntu compatiblety
+    global config_path
     config_path = "/boot/config.txt"
-
-# Legitimation
-if distro_get == "ubuntu":
-    legit = "pkexec"
-else:
+    global legit
     legit = "sudo"
 
-# Get Desktop Environment
-global get_de
-get_de = os.environ.get("XDG_CURRENT_DESKTOP")
-print("[Info]: Your DE is: " + str(get_de))
+    # Config.txt Path
+    if distro_get == "ubuntu":
+        config_path = "/boot/firmware/config.txt"
+    else:
+        config_path = "/boot/config.txt"
 
-# Checks if pi-apps exists
-global piapps_path
-piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
-if piapps_path == False:
-    print("[Info]: Pi-Apps not found")
-if piapps_path == True:
-    print("[Info]: Pi-Apps is installed list will be added")
-    popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
+    # Legitimation
+    if distro_get == "ubuntu":
+        legit = "pkexec"
+    else:
+        legit = "sudo"
 
-# Counts installed .DEBs
-deb_count = popen("dpkg --list | wc --lines")
-deb_counted = deb_count.read()
-deb_count.close()
-print(f"[Info]: {deb_counted[:-1]} Packages Installed")
+    # Get Desktop Environment
+    global get_de
+    get_de = os.environ.get("XDG_CURRENT_DESKTOP")
+    print("[Info]: Your DE is: " + str(get_de))
 
-# Gets nice Distro name
-nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
-nice_name = nice_name.read()
-# nice_name.close()
-# print(nice_name[13:-1])
+    # Checks if pi-apps exists
+    global piapps_path
+    piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
+    if piapps_path == False:
+        print("[Info]: Pi-Apps not found")
+    if piapps_path == True:
+        print("[Info]: Pi-Apps is installed list will be added")
+        popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
+    # Counts installed .DEBs
+    deb_count = popen("dpkg --list | wc --lines")
+    global deb_counted
+    deb_counted = deb_count.read()
+    deb_count.close()
+    print(f"[Info]: {deb_counted[:-1]} Packages Installed")
 
-# Checks if snapd exists
-if os.path.isfile("/bin/snap"):
-    print("[Info]: Snap is installed")
-else:
-    print("[Info]: Snap is not installed")
+    # Gets nice Distro name
+    global nice_name
+    nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
+    nice_name = nice_name.read()
+    # nice_name.close()
+    # print(nice_name[13:-1])
 
-# Checks if flatpak exists
-if os.path.isfile("/bin/flatpak"):
-    print("[Info]: Flatpak is installed")
-else:
-    print("[Info]: Flatpak is not installed")
+    # Checks if snapd exists
+    if os.path.isfile("/bin/snap"):
+        print("[Info]: Snap is installed")
+    else:
+        print("[Info]: Snap is not installed")
 
-# Checks if pigro.conf exists
-if os.path.isfile(f"{home}/.pigro/pigro.conf"):
-    print("[Info]: pigro.conf exists")
-else:
-    print("[Info]: pigro.conf not found")
-    with open(f"{home}/.pigro/pigro.conf", "a") as myfile:
-        myfile.write(
-            "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark"
-        )
-        print("[Info]: pigro.conf was created")
+    # Checks if flatpak exists
+    if os.path.isfile("/bin/flatpak"):
+        print("[Info]: Flatpak is installed")
+    else:
+        print("[Info]: Flatpak is not installed")
 
-# Color Theme Identifier
-conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-loglist = conf_file.readlines()
-conf_file.close()
+    # Checks if pigro.conf exists
+    if os.path.isfile(f"{home}/.pigro/pigro.conf"):
+        print("[Info]: pigro.conf exists")
+    else:
+        print("[Info]: pigro.conf not found")
+        with open(f"{home}/.pigro/pigro.conf", "a") as myfile:
+            myfile.write(
+                "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark"
+            )
+            print("[Info]: pigro.conf was created")
 
-for line in loglist:
-    # Dark Theme Settings
-    if str("theme = dark") in line:
-        print("[Info]: Dark Theme")
-        global maincolor
-        maincolor = "#404040"
-        global nav_color
-        nav_color = "#353535"
-        global frame_color
-        frame_color = "#404040"
-        global main_font
-        main_font = "white"
-        global info_color
-        info_color = "yellow"
-        global ext_btn
-        ext_btn = "#0075b7"
+    # Color Theme Identifier
+    conf_file = open(f"{home}/.pigro/pigro.conf", "r")
+    loglist = conf_file.readlines()
+    conf_file.close()
 
-    # Dark Theme Settings
-    if str("theme = light") in line:
-        print("[Info]: Light Theme")
-        maincolor = "#ededed"
-        nav_color = "#b6b6b3"
-        frame_color = "#ededed"
-        main_font = "black"
-        info_color = "#0075b7"
-        ext_btn = "#b6b6b3"
+    for line in loglist:
+        # Dark Theme Settings
+        if str("theme = dark") in line:
+            print("[Info]: Dark Theme")
+            global maincolor
+            maincolor = "#404040"
+            global nav_color
+            nav_color = "#353535"
+            global frame_color
+            frame_color = "#404040"
+            global main_font
+            main_font = "white"
+            global info_color
+            info_color = "yellow"
+            global ext_btn
+            ext_btn = "#0075b7"
 
-# Font Definition Vars
-global font_20
-font_20 = ("Sans", 20)
-global font_16
-font_16 = ("Sans", 16)
-global font_14
-font_14 = ("Sans", 14)
-global font_12_b
-font_12_b = ("Sans", 12, "bold")
-global font_12
-font_12 = ("Sans", 12)
-global font_10
-font_10 = ("Sans", 10)
-global font_9_b
-font_9_b = ("Sans", 9, "bold")
-global font_9
-font_9 = ("Sans", 9)
-global font_8_b
-font_8_b = ("Sans", 8, "bold")
-global font_8
-font_8 = ("Sans", 8)
+        # Dark Theme Settings
+        if str("theme = light") in line:
+            print("[Info]: Light Theme")
+            maincolor = "#ededed"
+            nav_color = "#b6b6b3"
+            frame_color = "#ededed"
+            main_font = "black"
+            info_color = "#0075b7"
+            ext_btn = "#b6b6b3"
 
+    # Font Definition Vars
+    global font_20
+    font_20 = ("Sans", 20)
+    global font_16
+    font_16 = ("Sans", 16)
+    global font_14
+    font_14 = ("Sans", 14)
+    global font_12_b
+    font_12_b = ("Sans", 12, "bold")
+    global font_12
+    font_12 = ("Sans", 12)
+    global font_10
+    font_10 = ("Sans", 10)
+    global font_9_b
+    font_9_b = ("Sans", 9, "bold")
+    global font_9
+    font_9 = ("Sans", 9)
+    global font_8_b
+    font_8_b = ("Sans", 8, "bold")
+    global font_8
+    font_8 = ("Sans", 8)
 
-# Transparency Settings
-conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-loglist = conf_file.readlines()
-conf_file.close()
+    # Transparency Settings
+    conf_file = open(f"{home}/.pigro/pigro.conf", "r")
+    loglist = conf_file.readlines()
+    conf_file.close()
 
-for line in loglist:
+    for line in loglist:
 
-    if str("transparency = 1.00") in line:
-        print("[Info]: No Transparency")
-        global translate_p
-        translate_p = "1.00"
+        if str("transparency = 1.00") in line:
+            print("[Info]: No Transparency")
+            global translate_p
+            translate_p = "1.00"
 
-    if str("transparency = 0.95") in line:
-        translate_p = "0.95"
-        print("[Info]: Transparency 5%")
+        if str("transparency = 0.95") in line:
+            translate_p = "0.95"
+            print("[Info]: Transparency 5%")
 
 
 # [Main Window / Notebook Config]
@@ -513,17 +516,17 @@ class Frame1(ttk.Frame):
             if self.toggle_button.config("text")[-1] == "ON":
                 self.toggle_button.config(text="OFF")
                 self.toggle_button.config(image=off_btn_icon)
-                self.sysinfn.config(text=f"User Name: {user}")
-                self.sysinf_ip.config(text=f"IP Address: {IPAddr}")
-                self.sysinf_ma.config(text=f"MAC Address: {get_mac}")
-                self.sysinf1.config(text=f"Device Name: {my_system.node}")
+                self.user_label.config(text=f"User Name: {user}")
+                self.ip_label.config(text=f"IP Address: {IPAddr}")
+                self.mac_add_label.config(text=f"MAC Address: {get_mac}")
+                self.device_label.config(text=f"Device Name: {my_system.node}")
             else:
                 self.toggle_button.config(text="ON")
                 self.toggle_button.config(image=on_btn_icon)
-                self.sysinfn.config(text="User Name: XXXXXXXXXXXXX")
-                self.sysinf_ip.config(text=f"IP Address: XXXXXXXXXXXXX")
-                self.sysinf_ma.config(text=f"MAC Address: XXXXXXXXXXXXX")
-                self.sysinf1.config(text=f"Device Name: XXXXXXXXXXXXX")
+                self.user_label.config(text="User Name: XXXXXXXXXXXXX")
+                self.ip_label.config(text=f"IP Address: XXXXXXXXXXXXX")
+                self.mac_add_label.config(text=f"MAC Address: XXXXXXXXXXXXX")
+                self.device_label.config(text=f"Device Name: XXXXXXXXXXXXX")
 
         # MAC Address
         get_mac = ":".join(re.findall("..", "%012x" % uuid.getnode()))
@@ -699,7 +702,7 @@ class Frame1(ttk.Frame):
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
 
-        self.sysinf0 = Label(
+        self.platform_label = Label(
             self.sys_frame_1,
             text=f"Platform: {my_system.system}",
             font=font_12,
@@ -712,7 +715,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinfd = Label(
+        self.distro_label = Label(
             self.sys_frame_1,
             text=f"Distro: {nice_name[13:-2]}",
             justify="left",
@@ -725,7 +728,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_de = Label(
+        self.desktop_env_label = Label(
             self.sys_frame_1,
             text=f"Desktop: {get_de}",
             justify="left",
@@ -738,7 +741,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_shell = Label(
+        self.shell_label = Label(
             self.sys_frame_1,
             text=f"Shell: {os.environ['SHELL'][5:]}",
             justify="left",
@@ -751,7 +754,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_session = Label(
+        self.session_label = Label(
             self.sys_frame_1,
             text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
             justify="left",
@@ -764,7 +767,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_lang = Label(
+        self.lang_lang = Label(
             self.sys_frame_1,
             text=f"Language: {os.environ['LANG']}",
             justify="left",
@@ -777,7 +780,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf2 = Label(
+        self.kernel_label = Label(
             self.sys_frame_1,
             text=f"Kernel: {my_system.release}",
             justify="left",
@@ -788,7 +791,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_a = Label(
+        self.arch_label = Label(
             self.sys_frame_1,
             text=f"Architecture: {my_system.machine}",
             justify="left",
@@ -799,7 +802,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinfn = Label(
+        self.user_label = Label(
             self.sys_frame_1,
             text=f"User Name: {user}",
             justify="left",
@@ -809,9 +812,9 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinfn.pack()
+        self.user_label.pack()
 
-        self.sysinf1 = Label(
+        self.device_label = Label(
             self.sys_frame_1,
             text=f"Device Name: {my_system.node}",
             justify="left",
@@ -821,9 +824,9 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinf1.pack()
+        self.device_label.pack()
 
-        self.sysinf9 = Label(
+        self.pi_model_label = Label(
             self.sys_frame_1,
             text=f"Board: {Pi_Model.read()}",
             justify="left",
@@ -834,7 +837,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf8 = Label(
+        self.curr_cpu_frq_label = Label(
             self.sys_frame_2,
             text="",
             background=nav_color,
@@ -843,9 +846,9 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinf8.pack()
+        self.curr_cpu_frq_label.pack()
 
-        self.sysinf6 = Label(
+        self.max_cpu_frq_label = Label(
             self.sys_frame_2,
             text=f"CPU Max Freq: {cpufreq.max:.0f} Mhz",
             justify="left",
@@ -856,7 +859,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf7 = Label(
+        self.min_cpu_frq_label = Label(
             self.sys_frame_2,
             text=f"CPU Min Freq: {cpufreq.min:.0f} Mhz",
             justify="left",
@@ -867,7 +870,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf10 = Label(
+        self.cpu_temp_label = Label(
             self.sys_frame_2,
             text="",
             justify="left",
@@ -877,9 +880,9 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinf10.pack()
+        self.cpu_temp_label.pack()
 
-        self.sysinf3 = Label(
+        self.total_ram_label = Label(
             self.sys_frame_3,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
@@ -890,7 +893,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_st = Label(
+        self.total_swap_label = Label(
             self.sys_frame_3,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
@@ -901,7 +904,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_ip = Label(
+        self.ip_label = Label(
             self.sys_frame_4,
             text=f"IP Address: {IPAddr}",
             justify="left",
@@ -911,9 +914,9 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinf_ip.pack()
+        self.ip_label.pack()
 
-        self.sysinf_ma = Label(
+        self.mac_add_label = Label(
             self.sys_frame_4,
             text=f"MAC Address: {get_mac}",
             justify="left",
@@ -923,7 +926,7 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         )
-        self.sysinf_ma.pack()
+        self.mac_add_label.pack()
 
         self.sysinf_hdd_t = Label(
             self.sys_frame_5,
@@ -936,7 +939,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_hdd_u = Label(
+        self.hdd_used_label = Label(
             self.sys_frame_5,
             text=("Used Disk Space: %d GiB" % (used // (2**30))),
             justify="left",
@@ -947,7 +950,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_hdd_f = Label(
+        self.hdd_free_label = Label(
             self.sys_frame_5,
             text=("Free Disk Space: %d GiB" % (free // (2**30))),
             justify="left",
@@ -958,7 +961,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.sysinf_hdd_u_p = Label(
+        self.hdd_used_per_label = Label(
             self.sys_frame_5,
             text=(f"Used Disk Space: {obj_Disk.percent} %"),
             justify="left",
@@ -1146,9 +1149,9 @@ class Frame1(ttk.Frame):
             cpu = CPUTemperature()
             # print(cpu)
 
-            self.sysinf8.configure(
+            self.curr_cpu_frq_label.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
-            self.sysinf10.configure(
+            self.cpu_temp_label.configure(
                 text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh_sys_stats)
         refresh_sys_stats()
@@ -1162,37 +1165,37 @@ class Frame2(ttk.Frame):
         def update_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
-                % self.wid
+                % wid
             )
 
         def upgrade_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
-                % self.wid
+                % wid
             )
 
         def full_upgrade_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
-                % self.wid
+                % wid
             )
 
         def autoremove_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
-                % self.wid
+                % wid
             )
 
         def add_unsi_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
-                % self.wid
+                % wid
             )
 
         def dpgk_conf_btn():
             os.popen(
                 f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
-                % self.wid
+                % wid
             )
 
         def button_gpk():
@@ -1273,7 +1276,8 @@ class Frame2(ttk.Frame):
         self.termf = Frame(
             self, height=270, width=700, padx=10, highlightthickness=0, borderwidth=0
         )
-        self.wid = self.termf.winfo_id()
+        global wid
+        wid = self.termf.winfo_id()
         self.termf["background"] = maincolor
 
         self.update_btn_frame = LabelFrame(
@@ -5920,9 +5924,12 @@ class Frame6(ttk.Frame):
         # overclocking_default/reset
 
         def set_default():
+            # os.system(
+            #    f"xterm -e 'bash -c \"{legit} {Application_path}/scripts/rm_ov.sh && exit; exec bash\"'"
+            # )
+
             os.system(
-                f"xterm -e 'bash -c \"{legit} {Application_path}/scripts/rm_ov.sh && exit; exec bash\"'"
-            )
+                f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{legit} {Application_path}/scripts/rm_ov.sh && exit ; exec bash"' % wid)
             done_msg()
             tu_btn1.config(state=NORMAL)
             tu_btn2.config(state=NORMAL)
@@ -5952,9 +5959,14 @@ class Frame6(ttk.Frame):
         # overclocking_2000
 
         def ov_2000():
+            # os.system(
+            #    f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            # )
+
             os.system(
-                f"""{legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+                f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking1\narm_freq=2000\ngpu_freq=750\nover_voltage=6\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
             )
+
             done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
@@ -5971,9 +5983,14 @@ class Frame6(ttk.Frame):
 
         # overclocking_2147
         def ov_2147():
+            #os.system(
+            #    f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            #)
+
             os.system(
-                f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+                f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
             )
+
             done_msg()
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
@@ -5991,8 +6008,12 @@ class Frame6(ttk.Frame):
         # overclocking_2200
 
         def ov_2200():
+            #os.system(
+            #    f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            #)
+
             os.system(
-                f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+                f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
             )
 
             done_msg()
@@ -6011,9 +6032,14 @@ class Frame6(ttk.Frame):
 
         # overclocking_2300
         def ov_2300():
+            #os.system(
+            #    f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=750\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+            #)
+
             os.system(
-                f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=750\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
+                f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=750\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
             )
+
 
             done_msg()
             tu_btn1.config(state=DISABLED)
@@ -6441,7 +6467,7 @@ class Frame6(ttk.Frame):
                     # print(line)
                     if line:
                         pigro_t_display.config(
-                            text="Need A Fan!",
+                            text="You Sir... Need A Fan!",
                             foreground="red",
 
                         )
@@ -6959,11 +6985,11 @@ class CreateToolTip(object):
     def __init__(self, widget, text="widget info"):
         self.waittime = 500  # miliseconds
         self.wraplength = 180  # pixels
-        self.widget = widget
+        widget = widget
         self.text = text
-        self.widget.bind("<Enter>", self.enter)
-        self.widget.bind("<Leave>", self.leave)
-        self.widget.bind("<ButtonPress>", self.leave)
+        widget.bind("<Enter>", self.enter)
+        widget.bind("<Leave>", self.leave)
+        widget.bind("<ButtonPress>", self.leave)
         self.id = None
         self.tw = None
 
@@ -6976,21 +7002,21 @@ class CreateToolTip(object):
 
     def schedule(self):
         self.unschedule()
-        self.id = self.widget.after(self.waittime, self.showtip)
+        self.id = widget.after(self.waittime, self.showtip)
 
     def unschedule(self):
         id = self.id
         self.id = None
         if id:
-            self.widget.after_cancel(id)
+            widget.after_cancel(id)
 
     def showtip(self, event=None):
         x = y = 0
-        x, y, cx, cy = self.widget.bbox("insert")
-        x += self.widget.winfo_rootx() + 25
-        y += self.widget.winfo_rooty() + 20
+        x, y, cx, cy = widget.bbox("insert")
+        x += widget.winfo_rootx() + 25
+        y += widget.winfo_rooty() + 20
         # creates a toplevel window
-        self.tw = tk.Toplevel(self.widget)
+        self.tw = tk.Toplevel(widget)
         # Leaves only the label and removes the app window
         self.tw.wm_overrideredirect(True)
         self.tw.wm_geometry("+%d+%d" % (x, y))
@@ -7056,5 +7082,6 @@ class Loading_Throbber(Label):
 
 # [End Of The Line]
 if __name__ == "__main__":
+    Get_Sys_Info()
     app = MainApplication()
     app.mainloop()
