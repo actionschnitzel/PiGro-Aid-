@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -622,11 +621,11 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="#d4244d",
-            relief=GROOVE,
+            relief=GROOVE, padx=5, pady=5
         )
 
-        self.info_main_frame.pack()
-        self.info_main_frame["background"] = maincolor
+        self.info_main_frame.pack(pady=20)
+        self.info_main_frame["background"] = nav_color
 
         self.sys_info_main_frame = Frame(
             self.info_main_frame,
@@ -634,12 +633,12 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            pady=20,
-            padx=30,
+            pady=0,
+            padx=0,
         )
 
         self.sys_info_main_frame.pack(side=LEFT)
-        self.sys_info_main_frame["background"] = maincolor
+        self.sys_info_main_frame["background"] = nav_color
 
         self.sys_info_main_frame2 = Frame(
             self.info_main_frame,
@@ -647,56 +646,75 @@ class Frame1(ttk.Frame):
             highlightthickness=0,
             highlightcolor="#d4244d",
             relief=GROOVE,
-            pady=20,
-            padx=30,
+            pady=0,
+            padx=0,
         )
 
         self.sys_info_main_frame2.pack(side=LEFT, anchor="n")
-        self.sys_info_main_frame2["background"] = maincolor
+        self.sys_info_main_frame2["background"] = nav_color
+
+        self.sys_info_main_frame3 = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="#d4244d",
+            relief=GROOVE,
+            pady=0,
+            padx=0,
+        )
+
+        self.sys_info_main_frame3.pack(side=LEFT, anchor="n")
+        self.sys_info_main_frame3["background"] = nav_color
 
         # Contains all stats
 
         self.sys_frame_1 = LabelFrame(
             self.sys_info_main_frame, text="System Info", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_1.pack(pady=5, padx=5)
+        self.sys_frame_1.pack()
         self.sys_frame_1["background"] = nav_color
 
         self.sys_frame_2 = LabelFrame(
             self.sys_info_main_frame, text="CPU", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_2.pack(pady=5, padx=5)
+        self.sys_frame_2.pack()
         self.sys_frame_2["background"] = nav_color
 
         self.sys_frame_3 = LabelFrame(
-            self.sys_info_main_frame, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame2, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_3.pack(pady=5, padx=5, side=TOP)
+        self.sys_frame_3.pack(side=TOP)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
             self.sys_info_main_frame2, text="Network", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_4.pack(pady=5, padx=5)
+        self.sys_frame_4.pack()
         self.sys_frame_4["background"] = nav_color
 
         self.sys_frame_5 = LabelFrame(
             self.sys_info_main_frame2, text="Disk", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_5.pack(pady=5, padx=5)
+        self.sys_frame_5.pack()
         self.sys_frame_5["background"] = nav_color
 
         self.ov_display_frame = LabelFrame(
-            self.sys_info_main_frame2, text="My Performance Settings", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.sys_info_main_frame3, text="Custom Settings", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.ov_display_frame.pack(pady=5, padx=5)
+        self.ov_display_frame.pack()
         self.ov_display_frame["background"] = nav_color
 
         self.sys_frame_6 = LabelFrame(
             self.sys_info_main_frame2, text="Software", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
-        self.sys_frame_6.pack(pady=5, padx=5)
+        self.sys_frame_6.pack()
         self.sys_frame_6["background"] = nav_color
+
+        self.sys_frame_7 = LabelFrame(
+            self.sys_info_main_frame3, text="Theme", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+        )
+        self.sys_frame_7.pack()
+        self.sys_frame_7["background"] = nav_color
 
         self.sys_frame_left = Frame(
             self.sys_info_main_frame, borderwidth=0, highlightthickness=0, relief=GROOVE
@@ -705,13 +723,13 @@ class Frame1(ttk.Frame):
         self.platform_label = Label(
             self.sys_frame_1,
             text=f"Platform: {my_system.system}",
-            font=font_12,
+            font=font_10,
             justify="left",
             highlightthickness=0,
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
+            width=30,
             anchor=W,
         ).pack()
 
@@ -723,8 +741,8 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -736,8 +754,8 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -749,8 +767,8 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -762,8 +780,8 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -775,8 +793,8 @@ class Frame1(ttk.Frame):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -786,8 +804,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -797,8 +815,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -808,8 +826,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.user_label.pack()
@@ -820,8 +838,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.device_label.pack()
@@ -832,8 +850,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -842,8 +860,8 @@ class Frame1(ttk.Frame):
             text="",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.curr_cpu_frq_label.pack()
@@ -854,8 +872,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -865,8 +883,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -876,8 +894,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.cpu_temp_label.pack()
@@ -888,8 +906,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -899,8 +917,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -910,8 +928,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.ip_label.pack()
@@ -922,8 +940,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         )
         self.mac_add_label.pack()
@@ -934,8 +952,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -945,8 +963,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -956,8 +974,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -967,8 +985,8 @@ class Frame1(ttk.Frame):
             justify="left",
             background=nav_color,
             foreground=main_font,
-            width=40,
-            font=font_12,
+            width=30,
+            font=font_10,
             anchor=W,
         ).pack()
 
@@ -995,8 +1013,8 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=font_12,
-            width=40,
+            font=font_10,
+            width=30,
         )
         dash_arm_f_display.grid(column=1, row=2)
 
@@ -1010,8 +1028,8 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=font_12,
-            width=40,
+            font=font_10,
+            width=30,
         )
         dash_gpu_f_display.grid(column=1, row=3)
 
@@ -1025,8 +1043,8 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=font_12,
-            width=40,
+            font=font_10,
+            width=30,
         )
         dash_gpu_m_display.grid(column=1, row=4)
 
@@ -1040,8 +1058,8 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=font_12,
-            width=40,
+            font=font_10,
+            width=30,
         )
         dash_over_v_display.grid(column=1, row=5)
 
@@ -1055,8 +1073,8 @@ class Frame1(ttk.Frame):
             borderwidth=2,
             background=nav_color,
             foreground=main_font,
-            font=font_12,
-            width=40,
+            font=font_10,
+            width=30,
         )
         dash_force_t_display.grid(column=1, row=6)
 
@@ -1064,15 +1082,72 @@ class Frame1(ttk.Frame):
         self.sys_soft = Label(
             self.sys_frame_6,
             text=f"Packages Installed: {deb_counted[:-1]}(dpkg)\n",
-            font=font_12,
+            font=font_10,
             justify="left",
             highlightthickness=0,
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            width=40,
+            width=30,
             anchor=W,
         ).pack()
+
+        # Theme
+        self.theme_name = Label(
+            self.sys_frame_7,
+            text="",
+            font=font_10,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.theme_name.pack()
+
+        self.icon_name = Label(
+            self.sys_frame_7,
+            text="",
+            font=font_10,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.icon_name.pack()
+
+        self.font_name = Label(
+            self.sys_frame_7,
+            text="",
+            font=font_10,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.font_name.pack()
+
+        self.cursor_name = Label(
+            self.sys_frame_7,
+            text="",
+            font=font_10,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.cursor_name.pack()
 
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
@@ -1085,14 +1160,14 @@ class Frame1(ttk.Frame):
                     dash_arm_f_display.config(
                         text=f"Arm Freq: {line[9:-1]} MHz",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
                     )
 
                 if "#arm_freq=800" in line:
                     dash_arm_f_display.config(
                         text="Arm Freq: not configured",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
                     )
 
             with open(f"{config_path}") as pi_conf:
@@ -1102,7 +1177,7 @@ class Frame1(ttk.Frame):
                     dash_gpu_f_display.config(
                         text=f"Gpu Freq: {line[9:-1]} MHz",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
                     )
 
             with open(f"{config_path}") as pi_conf:
@@ -1112,7 +1187,7 @@ class Frame1(ttk.Frame):
                     dash_force_t_display.config(
                         text=f"Force Turbo: {line[12:-1]}",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
                     )
 
             with open(f"{config_path}") as pi_conf:
@@ -1122,7 +1197,7 @@ class Frame1(ttk.Frame):
                     dash_over_v_display.config(
                         text=f"Over Voltage: {line[13:-1]}",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
                     )
 
             with open(f"{config_path}") as pi_conf:
@@ -1132,7 +1207,47 @@ class Frame1(ttk.Frame):
                     dash_gpu_m_display.config(
                         text=f"Gpu Mem: {line[8:-1]} MB",
                         foreground=main_font,
-                        font=font_12,
+                        font=font_10,
+                    )
+
+            with open(f"{home}/.gtkrc-2.0") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gtk-theme-name=" in line:
+                    self.theme_name.config(
+                        text=f"Theme: {line[16:-2]}",
+                        foreground=main_font,
+                        font=font_10,
+                    )
+
+            with open(f"{home}/.gtkrc-2.0") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gtk-icon-theme-name=" in line:
+                    self.icon_name.config(
+                        text=f"Icons: {line[21:-2]}",
+                        foreground=main_font,
+                        font=font_10,
+                    )
+
+            with open(f"{home}/.gtkrc-2.0") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gtk-font-name=" in line:
+                    self.font_name.config(
+                        text=f"Font: {line[15:-2]}",
+                        foreground=main_font,
+                        font=font_10,
+                    )
+
+            with open(f"{home}/.gtkrc-2.0") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gtk-cursor-theme-name=" in line:
+                    self.cursor_name.config(
+                        text=f"Cursor: {line[23:-2]}",
+                        foreground=main_font,
+                        font=font_10,
                     )
             self.after(1000, refresh_OV_stats)
 
@@ -1225,7 +1340,7 @@ class Frame2(ttk.Frame):
         self.off_rep_frame["background"] = maincolor
 
         self.man_rep_frame = LabelFrame(
-            self.rep_main_frame, text="Manuel Added", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self.rep_main_frame, text="Integrated Source", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
         )
 
         self.man_rep_frame.grid(row=0, column=1, rowspan=10)
@@ -1291,7 +1406,7 @@ class Frame2(ttk.Frame):
             padx=5,
             pady=5,
         )
-        self.update_btn_frame.pack(padx=45, anchor="w")
+        self.update_btn_frame.pack(padx=10, anchor="w")
         self.update_btn_frame["background"] = maincolor
 
         self.update_button = Button(
@@ -5983,9 +6098,9 @@ class Frame6(ttk.Frame):
 
         # overclocking_2147
         def ov_2147():
-            #os.system(
+            # os.system(
             #    f"""{legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
-            #)
+            # )
 
             os.system(
                 f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking2\narm_freq=2147\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
@@ -6008,9 +6123,9 @@ class Frame6(ttk.Frame):
         # overclocking_2200
 
         def ov_2200():
-            #os.system(
+            # os.system(
             #    f"""{legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
-            #)
+            # )
 
             os.system(
                 f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking3\narm_freq=2200\ngpu_freq=750\nover_voltage=8\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
@@ -6032,14 +6147,13 @@ class Frame6(ttk.Frame):
 
         # overclocking_2300
         def ov_2300():
-            #os.system(
+            # os.system(
             #    f"""{legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=750\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'"""
-            #)
+            # )
 
             os.system(
                 f"""xterm -into %d -bg Grey11 -geometry 1000x25 -e {legit} sh -c 'echo "#Pigro_Overclocking4\narm_freq=2300\ngpu_freq=750\nover_voltage=14\ndisable_splash=1\nforce_turbo=1" >> {config_path}'""" % wid
             )
-
 
             done_msg()
             tu_btn1.config(state=DISABLED)
