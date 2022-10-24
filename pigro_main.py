@@ -148,8 +148,11 @@ class Get_Sys_Info():
     global nice_name
     nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
     nice_name = nice_name.read()
-    # nice_name.close()
-    # print(nice_name[13:-1])
+
+    global get_wm
+    get_wm = popen("wmctrl -m")
+    get_wm = get_wm.readlines()
+    print("[Info]: X-Window-Manager:" + get_wm[0][5:-1])
 
     # Checks if snapd exists
     if os.path.isfile("/bin/snap"):
@@ -747,6 +750,8 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
+
+
         self.session_label = Label(
             self.sys_frame_1,
             text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
@@ -759,6 +764,19 @@ class Frame1(ttk.Frame):
             font=font_12,
             anchor=W,
         ).pack()
+
+        self.wm_label = Label(
+            self.sys_frame_1,
+            text=f"WM: {get_wm[0][5:-1]}",
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=nav_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        ).pack()        
 
         self.lang_lang = Label(
             self.sys_frame_1,
@@ -1834,8 +1852,6 @@ class Frame3(ttk.Frame):
             if text == "Menu Settings\nAlacart":
                 popen("alacarte")
 
-
-
         self.ops_set = LabelFrame(
             self,
             text="Operating System",
@@ -1902,7 +1918,6 @@ class Frame3(ttk.Frame):
                 self.ops_button_x.config(image=self.cron_job_icon)
             if ops_settings_btn == "Menu Settings\nAlacart":
                 self.ops_button_x.config(image=self.alacard_icon)
-
 
 
 # [System For Ubuntu] Tab
