@@ -1,16 +1,14 @@
 #!/usr/bin/python3
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-from PIL import ImageTk, Image
-from curses.textpad import Textbox
-from distutils.filelist import translate_pattern
+
 import os
 import os.path
+from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 from tkinter.dialog import DIALOG_ICON
 from turtle import left, width
 import tkinter.font as tkFont
+from tkinter import filedialog
 import webbrowser
 from os import popen
 from os import system as cmd
@@ -28,19 +26,24 @@ from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
-from subprocess import check_call, CalledProcessError
 import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
-from tkinter import filedialog
 from turtle import width
 import re
 import uuid
+from http.client import SWITCHING_PROTOCOLS
+from PIL import ImageTk, Image
+from curses.textpad import Textbox
+from distutils.filelist import translate_pattern
 
 
 class Get_Sys_Info():
-    """Gathers system stats that are needed to run PiGro"""
+    """
+    Gathers system stats that are needed to run PiGro
+
+    """
     # Say Hallo!
     global user
     user = os.getlogin()
@@ -128,7 +131,6 @@ class Get_Sys_Info():
     get_de = os.environ.get("XDG_CURRENT_DESKTOP")
     print("[Info]: Your DE is: " + str(get_de))
 
-    # Checks if pi-apps exists
     global piapps_path
     piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
     if piapps_path == False:
@@ -171,18 +173,18 @@ class Get_Sys_Info():
         print("[Info]: pigro.conf exists")
     else:
         print("[Info]: pigro.conf not found")
-        with open(f"{home}/.pigro/pigro.conf", "a") as myfile:
-            myfile.write(
+        with open(f"{home}/.pigro/pigro.conf", "a") as pigro_config_f:
+            pigro_config_f.write(
                 "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark"
             )
             print("[Info]: pigro.conf was created")
 
     # Color Theme Identifier
     conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-    loglist = conf_file.readlines()
+    read_conf = conf_file.readlines()
     conf_file.close()
 
-    for line in loglist:
+    for line in read_conf:
         # Dark Theme Settings
         if str("theme = dark") in line:
             print("[Info]: Dark Theme")
@@ -233,10 +235,10 @@ class Get_Sys_Info():
 
     # Transparency Settings
     conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-    loglist = conf_file.readlines()
+    read_conf = conf_file.readlines()
     conf_file.close()
 
-    for line in loglist:
+    for line in read_conf:
 
         if str("transparency = 1.00") in line:
             print("[Info]: No Transparency")
@@ -248,12 +250,15 @@ class Get_Sys_Info():
             print("[Info]: Transparency 5%")
 
 
-# [Main Window / Notebook Config]
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        """defines the basic look of the app"""
+        """
+
+        defines the basic look of the app
+        
+        """
 
         # Window Basics
         self.title("PiGro - Just Click It! (Perche sei cosi serio?)")
@@ -262,7 +267,7 @@ class MainApplication(tk.Tk):
         self["background"] = maincolor
         self.resizable(0, 0)
         app_width = 1200
-        app_height = 850
+        app_height = 900
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         x = (screen_width / 2) - (app_width / 2)
@@ -273,19 +278,18 @@ class MainApplication(tk.Tk):
 
         # Notebook Definition
         self.notebook = ttk.Notebook(self)
-        self.Frame1 = Frame1(self.notebook)
-        self.Frame2 = Frame2(self.notebook)
-        self.Frame3 = Frame3(self.notebook)
-        self.Frame4 = Frame4(self.notebook)
-        self.Frame5 = Frame5(self.notebook)
-        self.Frame6 = Frame6(self.notebook)
-        self.Frame7 = Frame7(self.notebook)
-        self.Frame9 = Frame9(self.notebook)
-        self.Frame8 = Frame8(self.notebook)
-        self.Frame12 = Frame12(self.notebook)
-        self.Frame13 = Frame13(self.notebook)
-        self.Frame14 = Frame14(self.notebook)
-        self.Frame10 = Frame10(self.notebook)
+        self.Dash_Tab = Dash_Tab(self.notebook)
+        self.Update_Tab = Update_Tab(self.notebook)
+        self.System_Tab = System_Tab(self.notebook)
+        self.Software_Tab = Software_Tab(self.notebook)
+        self.Look_Tab = Look_Tab(self.notebook)
+        self.Tuning_Tab = Tuning_Tab(self.notebook)
+        self.Links_Tab = Links_Tab(self.notebook)
+        self.Aubout_Tab = Aubout_Tab(self.notebook)
+        self.System_Ubuntu_Tab = System_Ubuntu_Tab(self.notebook)
+        self.Autostarts_Tab = Autostarts_Tab(self.notebook)
+        self.Tasks_Tab = Tasks_Tab(self.notebook)
+        self.Git_More_Tab = Git_More_Tab(self.notebook)
 
         # Notebook Icons
         self.status_icon = PhotoImage(
@@ -327,67 +331,60 @@ class MainApplication(tk.Tk):
 
         # Puts tabs in nav bar
         self.notebook.add(
-            self.Frame1, compound=LEFT, text="Dashboard", image=self.status_icon
+            self.Dash_Tab, compound=LEFT, text="Dashboard", image=self.status_icon
         )
 
         self.notebook.add(
-            self.Frame3, compound=LEFT, text="System", image=self.system_icon
+            self.System_Tab, compound=LEFT, text="System", image=self.system_icon
         )
 
         self.notebook.add(
-            self.Frame12, compound=LEFT, text="System", image=self.system_icon
+            self.System_Ubuntu_Tab, compound=LEFT, text="System", image=self.system_icon
         )
 
         self.notebook.add(
-            self.Frame2, compound=LEFT, text="Update", image=self.update_icon
+            self.Update_Tab, compound=LEFT, text="Update", image=self.update_icon
         )
 
         self.notebook.add(
-            self.Frame5, compound=LEFT, text="Look & Feel", image=self.look_icon
+            self.Look_Tab, compound=LEFT, text="Look & Feel", image=self.look_icon
         )
 
         self.notebook.add(
-            self.Frame13, compound=LEFT, text="Autostart", image=self.auto_start
+            self.Autostarts_Tab, compound=LEFT, text="Autostart", image=self.auto_start
         )
 
         self.notebook.add(
-            self.Frame14, compound=LEFT, text="Tasks", image=self.kill_proc
+            self.Tasks_Tab, compound=LEFT, text="Tasks", image=self.kill_proc
         )
 
         self.notebook.add(
-            self.Frame4, compound=LEFT, text="Software", image=self.install_icon
+            self.Software_Tab, compound=LEFT, text="Software", image=self.install_icon
         )
 
         self.notebook.add(
-            self.Frame10, compound=LEFT, text="Git & More", image=self.git_more
+            self.Git_More_Tab, compound=LEFT, text="Git & More", image=self.git_more
         )
 
         self.notebook.add(
-            self.Frame6, compound=LEFT, text="Tuning", image=self.tuning_icon
+            self.Tuning_Tab, compound=LEFT, text="Tuning", image=self.tuning_icon
+        )
+        self.notebook.add(
+            self.Links_Tab, compound=LEFT, text="Links", image=self.links_icon
         )
 
         self.notebook.add(
-            self.Frame9, compound=LEFT, text="Pi Camera", image=self.cam_icon
-        )
-        self.notebook.hide(self.Frame9)
-
-        self.notebook.add(
-            self.Frame7, compound=LEFT, text="Links", image=self.links_icon
-        )
-
-        self.notebook.add(
-            self.Frame8, compound=LEFT, text="About", image=self.support_icon
+            self.Aubout_Tab, compound=LEFT, text="About", image=self.support_icon
         )
 
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
         if distro_get == "debian" or distro_get == "raspbian":
-            self.notebook.hide(self.Frame12)
+            self.notebook.hide(self.System_Ubuntu_Tab)
 
         if distro_get == "ubuntu":
-            self.notebook.hide(self.Frame3)
-            self.notebook.hide(self.Frame5)
-            self.notebook.hide(self.Frame9)
+            self.notebook.hide(self.System_Tab)
+            self.notebook.hide(self.Look_Tab)
 
         # Notebook Theming
         global noteStyler
@@ -423,9 +420,12 @@ class MainApplication(tk.Tk):
             "Line.TSeparator", background="grey", rekief="sunken")
 
 
-# [Dashboard] Tab
-class Frame1(ttk.Frame):
-    """shows system stats, user name, an changelog"""
+class Dash_Tab(ttk.Frame):
+    """
+
+    shows system stats, user name, an changelog
+
+    """
 
     def __init__(
         self,
@@ -540,7 +540,6 @@ class Frame1(ttk.Frame):
         # Sys Info Labels
         self.sysinf_btn = Label(
             self.sys_logo,
-            image=self.pigro_img,
             borderwidth=0,
             bg=nav_color,
             highlightthickness=0,
@@ -551,8 +550,10 @@ class Frame1(ttk.Frame):
         # Changes Header
         if current_month == "October":
             self.sysinf_btn.config(image=self.pigroh_img)
-        if current_month == "December":
+        elif current_month == "December":
             self.sysinf_btn.config(image=self.pigrox_img)
+        else:
+            self.sysinf_btn.config(image=self.pigro_img)
 
         self.info_main_frame = Frame(
             self,
@@ -567,7 +568,7 @@ class Frame1(ttk.Frame):
         self.info_main_frame.pack(pady=20)
         self.info_main_frame["background"] = nav_color
 
-        self.info_main_frame2 = Frame(
+        self.info_main_Update_Tab = Frame(
             self,
             borderwidth=0,
             highlightthickness=0,
@@ -578,12 +579,12 @@ class Frame1(ttk.Frame):
 
         )
 
-        self.info_main_frame2.pack(expand=True, fill="x", padx=35)
-        self.info_main_frame2["background"] = nav_color
+        self.info_main_Update_Tab.pack(expand=True, fill="x", padx=35)
+        self.info_main_Update_Tab["background"] = nav_color
 
         # Hide/Show Butten & Label
         self.sensitiv = Label(
-            self.info_main_frame2,
+            self.info_main_Update_Tab,
             text=f"Hide Sensitiv Data:",
             justify="left",
             background=nav_color,
@@ -592,7 +593,7 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack(side=LEFT)
 
-        self.toggle_button = Button(self.info_main_frame2,
+        self.toggle_button = Button(self.info_main_Update_Tab,
                                     text="OFF",
                                     image=off_btn_icon,
                                     font=(font_10),
@@ -617,7 +618,7 @@ class Frame1(ttk.Frame):
         self.sys_info_main_frame.pack(side=LEFT)
         self.sys_info_main_frame["background"] = nav_color
 
-        self.sys_info_main_frame2 = Frame(
+        self.sys_info_main_Update_Tab = Frame(
             self.info_main_frame,
             borderwidth=0,
             highlightthickness=0,
@@ -627,11 +628,11 @@ class Frame1(ttk.Frame):
             padx=0,
         )
         # Column 1
-        self.sys_info_main_frame2.pack(side=LEFT, anchor="n")
-        self.sys_info_main_frame2["background"] = nav_color
+        self.sys_info_main_Update_Tab.pack(side=LEFT, anchor="n")
+        self.sys_info_main_Update_Tab["background"] = nav_color
 
         # Column 2
-        self.sys_info_main_frame3 = Frame(
+        self.sys_info_main_System_Tab = Frame(
             self.info_main_frame,
             borderwidth=0,
             highlightthickness=0,
@@ -641,8 +642,8 @@ class Frame1(ttk.Frame):
             padx=0,
         )
 
-        self.sys_info_main_frame3.pack(side=LEFT, anchor="n")
-        self.sys_info_main_frame3["background"] = nav_color
+        self.sys_info_main_System_Tab.pack(side=LEFT, anchor="n")
+        self.sys_info_main_System_Tab["background"] = nav_color
 
         # Contains all stats
         # All in Column 0
@@ -660,38 +661,38 @@ class Frame1(ttk.Frame):
 
         # All in Column 2
         self.sys_frame_3 = LabelFrame(
-            self.sys_info_main_frame2, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_Update_Tab, text="Memory", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_3.pack(side=TOP, pady=5)
         self.sys_frame_3["background"] = nav_color
 
         self.sys_frame_4 = LabelFrame(
-            self.sys_info_main_frame2, text="Network", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_Update_Tab, text="Network", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_4.pack(pady=5)
         self.sys_frame_4["background"] = nav_color
 
         self.sys_frame_5 = LabelFrame(
-            self.sys_info_main_frame2, text="Disk", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_Update_Tab, text="Disk", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_5.pack(pady=5)
         self.sys_frame_5["background"] = nav_color
 
         # All in Column 2
         self.ov_display_frame = LabelFrame(
-            self.sys_info_main_frame3, text="Custom Settings", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_System_Tab, text="Custom Settings", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.ov_display_frame.pack(pady=5)
         self.ov_display_frame["background"] = nav_color
 
         self.sys_frame_6 = LabelFrame(
-            self.sys_info_main_frame2, text="Software", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_Update_Tab, text="Software", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_6.pack(pady=5)
         self.sys_frame_6["background"] = nav_color
 
         self.sys_frame_7 = LabelFrame(
-            self.sys_info_main_frame3, text="Theme", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
+            self.sys_info_main_System_Tab, text="Theme", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.sys_frame_7.pack(pady=5)
         self.sys_frame_7["background"] = nav_color
@@ -750,8 +751,6 @@ class Frame1(ttk.Frame):
             anchor=W,
         ).pack()
 
-
-
         self.session_label = Label(
             self.sys_frame_1,
             text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
@@ -776,7 +775,7 @@ class Frame1(ttk.Frame):
             width=35,
             font=font_12,
             anchor=W,
-        ).pack()        
+        ).pack()
 
         self.lang_lang = Label(
             self.sys_frame_1,
@@ -1276,8 +1275,7 @@ class Frame1(ttk.Frame):
         refresh_sys_stats()
 
 
-# [Update] Tab
-class Frame2(ttk.Frame):
+class Update_Tab(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
@@ -1434,9 +1432,12 @@ class Frame2(ttk.Frame):
         self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
 
 
-# [System] Tab
-class Frame3(ttk.Frame):
-    """standard system tab for all rpi os distros"""
+class System_Tab(ttk.Frame):
+    """
+
+    standard system tab for all rpi os distros
+
+    """
 
     def __init__(self, container):
         super().__init__()
@@ -1920,9 +1921,12 @@ class Frame3(ttk.Frame):
                 self.ops_button_x.config(image=self.alacard_icon)
 
 
-# [System For Ubuntu] Tab
-class Frame12(ttk.Frame):
-    """system tab for ubuntu"""
+class System_Ubuntu_Tab(ttk.Frame):
+    """
+
+    system tab for ubuntu
+
+    """
 
     def __init__(self, container):
         super().__init__()
@@ -2229,10 +2233,6 @@ class Frame12(ttk.Frame):
             font=font_10,
         )
         sys_FMGM_btn.grid(row=1, column=0)
-        sys_FMGM_btn = CreateToolTip(
-            sys_FMGM_btn,
-            "This puts the filemanager on SUDO. You could break the system. Warned you!! ;-)",
-        )
 
         sys_gX_btn = Button(
             self.rahmen2,
@@ -2249,9 +2249,12 @@ class Frame12(ttk.Frame):
         sys_gX_btn.grid(row=2, column=0)
 
 
-# [Autostarts] Tab
-class Frame13(ttk.Frame):
-    """displays all files in the autostart folder in a listbox"""
+class Autostarts_Tab(ttk.Frame):
+    """
+
+    displays all files in the autostart folder in a listbox
+
+    """
 
     def __init__(self, container):
         super().__init__()
@@ -2486,9 +2489,12 @@ class Frame13(ttk.Frame):
         auto_selected.bind("<KeyRelease>", check3)
 
 
-# [Autostart Edit Entry Child]
 class Edit_Autostart(tk.Toplevel):
-    """child window for editing a .desktopfile in autostart folder"""
+    """
+
+    child window for editing a .desktopfile in autostart folder
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -2718,9 +2724,12 @@ class Edit_Autostart(tk.Toplevel):
         close_butn.grid(column=0, row=9, padx=5, pady=5, sticky="w")
 
 
-# [Autostart Add Entry Child]
 class Add_Autostart(tk.Toplevel):
-    """child window for creating a .desktopfile in autostart folder"""
+    """
+
+    child window for creating a .desktopfile in autostart folder
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -2826,9 +2835,12 @@ class Add_Autostart(tk.Toplevel):
         cancel_add.grid(row=4, column=0, pady=5)
 
 
-# [Overclocking_Legend Popup] Child
 class Tuning_Legende(tk.Toplevel):
-    """child window that shows tuning options in detail"""
+    """
+
+    child window that shows tuning options in detail
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3008,13 +3020,16 @@ class Tuning_Legende(tk.Toplevel):
         )
         self.ov_1_text.grid(row=9, column=1)
 
-        self.tu_main_frame2 = Frame(self, bg=maincolor)
-        self.tu_main_frame2.pack(pady=20)
+        self.tu_main_Update_Tab = Frame(self, bg=maincolor)
+        self.tu_main_Update_Tab.pack(pady=20)
 
 
-# [Done Popup] Child
 class Done_Restart_P(tk.Toplevel):
-    """custom messagebox"""
+    """
+
+    custom messagebox
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3053,9 +3068,12 @@ class Done_Restart_P(tk.Toplevel):
         cont_btn["command"] = self.destroy
 
 
-# [Done Popup] Child
 class Done_(tk.Toplevel):
-    """custom messagebox"""
+    """
+
+    custom messagebox
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3095,9 +3113,12 @@ class Done_(tk.Toplevel):
         done_label.place(x=110, y=40, width=70, height=25)
 
 
-# [Done_Reboot Popup] Child
 class Done_Reboot(tk.Toplevel):
-    """a custom massagebox"""
+    """
+
+    a custom massagebox
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3151,9 +3172,12 @@ class Done_Reboot(tk.Toplevel):
         popen(f"{legit} reboot")
 
 
-# [Overclocking_Expert Popup] Child
 class Overclocking_Expert(tk.Toplevel):
-    """entry fields to custom configure config.txt"""
+    """
+
+    entry fields to custom configure config.txt
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3682,9 +3706,12 @@ class Overclocking_Expert(tk.Toplevel):
         reboot_e.pack()
 
 
-# [APT Installer Popup] Child
 class APT_Installer_Popup(tk.Toplevel):
-    """child window that makes the the install process graphicle"""
+    """
+
+    child window that makes the the install process graphicle
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3785,9 +3812,12 @@ class APT_Installer_Popup(tk.Toplevel):
         Thread(target=install_parameter).start()
 
 
-# [APT Uninstaller Popup] Child
 class APT_Uninstaller_Popup(tk.Toplevel):
-    """child window that makes the the install process graphicle"""
+    """
+
+    child window that makes the the install process graphicle
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3885,9 +3915,12 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         Thread(target=install_parameter).start()
 
 
-# [Custom_Installer Popup] Child
 class Custom_Installer(tk.Toplevel):
-    """child window that makes the the install process graphicle"""
+    """
+
+    child window that makes the the install process graphicle
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -3988,10 +4021,13 @@ class Custom_Installer(tk.Toplevel):
         Thread(target=install_parameter).start()
 
 
-# [Software] Tab
-class Frame4(ttk.Frame):
+class Software_Tab(ttk.Frame):
     def __init__(self, container):
-        """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
+        """
+
+        lets you install apps via APT, snap, pi-apps and flatpak in one single window
+
+        """
         super().__init__()
 
         def pi_apps_list():
@@ -4179,10 +4215,6 @@ class Frame4(ttk.Frame):
             font=(("Sans,bold"), "12"),
             width=10,
         )
-        self.apt_inst_btn_ttp = CreateToolTip(
-            self.apt_inst_btn,
-            'Just enter the "apt-get-list-name" of the program: E.g. compiz, chomium-browser, gparted, etc.',
-        )
 
         self.apt_ico = Label(
             self.apt_frame,
@@ -4290,8 +4322,7 @@ class Frame4(ttk.Frame):
                 error_mass()
             else:
                 popen(
-                    f"xterm -e 'bash -c \"~/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'"
-                )
+                    f"xterm -e 'bash -c \"~/pi-apps/manage install {self.pi_apps_entry.get()}; exec bash\"'")
 
         self.pi_apps_ico = Label(
             self.pi_apps,
@@ -4382,10 +4413,6 @@ class Frame4(ttk.Frame):
             font=(("Sans,bold"), "12"),
             width=10,
         )
-        self.snap_inst_btn_ttp = CreateToolTip(
-            self.snap_inst_btn,
-            "*to use snap install, you must\napt-get install snapd xD lol",
-        )
 
         self.snapstore_btn = Button(
             self.snap_frame,
@@ -4457,10 +4484,6 @@ class Frame4(ttk.Frame):
             foreground=main_font,
             font=(("Sans,bold"), "12"),
             width=10,
-        )
-        self.flatp_inst_btn_ttp = CreateToolTip(
-            self.flatp_inst_btn,
-            "*past without--->>>flatpak install flathub<<< org.mozilla.firefox",
         )
 
         self.flat_btn = Button(
@@ -4618,10 +4641,13 @@ class Frame4(ttk.Frame):
         self.warning_msg.grid(row=3, column=1, pady=5, padx=5)
 
 
-# [Git & More] Tab
-class Frame10(ttk.Frame):
+class Git_More_Tab(ttk.Frame):
     def __init__(self, container):
-        """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
+        """
+
+        lets you install apps via APT, snap, pi-apps and flatpak in one single window
+
+        """
         super().__init__()
 
         def callback(event):
@@ -4846,9 +4872,12 @@ class Frame10(ttk.Frame):
         )
 
 
-# [Look] Tab
-class Frame5(ttk.Frame):
-    """a tool collection to customize the debian desktop"""
+class Look_Tab(ttk.Frame):
+    """
+
+    a tool collection to customize the debian desktop
+
+    """
 
     def __init__(self, container):
         super().__init__()
@@ -4856,93 +4885,6 @@ class Frame5(ttk.Frame):
         def done_1():
             d_msg1 = Done_Restart_P(self)
             d_msg1.grab_set()
-
-        def xfce_make():
-            popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
-
-        def button_xf4s():
-            popen("xfwm4-settings")
-
-        def pi_appear():
-            popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
-
-        def pi_panel_bak():
-            popen("mv ~/.config/lxpanel lxpanel.bak")
-
-        def pi_panel_restore():
-            popen(
-                f"cp /etc/xdg/lxpanel/LXDE-pi/panels/panel {home}/.config/lxpanel/LXDE-pi/panels/panel && lxpanelctl restart"
-            )
-
-        def pi_panel_restart():
-            popen("lxpanelctl restart")
-
-        def opbox_button():
-            popen(f"{legit} obconf")
-
-        def lxap_button():
-            popen("lxappearance")
-
-        def xfceappear_button():
-            popen("xfce4-appearance-settings")
-
-        def tasksel_button():
-            popen(f"xterm -e 'bash -c \"{legit} tasksel; exec bash\"'")
-
-        def xfcelook_f():
-            popen("xdg-open https://www.xfce-look.org/browse/cat/")
-
-        def ch_desk():
-            popen(
-                f"xterm -e 'bash -c \"{legit} update-alternatives --config x-session-manager; exec bash\"'"
-            )
-
-        def button_xfwm():
-            popen(
-                f"xterm -e 'bash -c \"{legit} update-alternatives --config x-window-manager; exec bash\"'"
-            )
-
-        def theme_f():
-            if get_de == "XFCE":
-                popen("sudo thunar /usr/share/themes/")
-            else:
-                popen("sudo pcmanfm /usr/share/themes/")
-
-        def icon_f():
-            if get_de == "XFCE":
-                popen("sudo thunar /usr/share/images/icons/")
-            else:
-                popen("sudo pcmanfm /usr/share/images/icons/")
-
-        def xfcefix():
-            popen(
-                f"xterm -e 'bash -c \"{legit} apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'"
-            )
-
-        def xfcefix2():
-            popen(
-                f"xterm -e 'bash -c \"{Application_path}/scripts/xfce4fix.sh; exec bash\"'"
-            )
-
-        def xfce_make():
-            popen("xdg-open https://github.com/actionschnitzel/Make-Me-Xfce")
-
-        def web_OVC():
-            popen("xdg-open https://www.xfce-look.org/browse/")
-
-        def set_wp():
-            global my_image
-            self.filename = filedialog.askopenfilename(
-                initialdir="~",
-                title="Select A File",
-                filetypes=(
-                    ("jpeg files", "*.jpeg"),
-                    ("jpg files", "*.jpg"),
-                    ("png files", "*.png"),
-                    ("all files", "*.*"),
-                ),
-            )
-            os.popen(f"pcmanfm --set-wallpaper {self.filename}")
 
         def color_selected():
             if select_clicked.get() == "Light Theme":
@@ -4953,8 +4895,6 @@ class Frame5(ttk.Frame):
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
                 file.close()
-
-                # messagebox.showinfo(title=None, message="Done! Please restart PiGro")
                 done_1()
 
             if select_clicked.get() == "Dark Theme":
@@ -4965,7 +4905,6 @@ class Frame5(ttk.Frame):
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
                 file.close()
-                # messagebox.showinfo(title=None, message="Done! Please restart PiGro")
                 done_1()
 
         def trans_selected():
@@ -4978,7 +4917,6 @@ class Frame5(ttk.Frame):
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
                 file.close()
-                # messagebox.showinfo(title=None, message="Done! Please restart PiGro")
                 done_1()
 
             if select_clicked1.get() == "0.95":
@@ -4990,7 +4928,6 @@ class Frame5(ttk.Frame):
                 file = open(f"{home}/.pigro/pigro.conf", "wt")
                 file.write(data)
                 file.close()
-                # messagebox.showinfo(title=None, message="Done! Please restart PiGro")
                 done_1()
 
         # Images/Icons
@@ -5000,9 +4937,6 @@ class Frame5(ttk.Frame):
         self.fm_godmode_icon = PhotoImage(
             file=r"images/icons/papirus/48x48/folder-yellow.png"
         )
-
-        self.bp06 = PhotoImage(
-            file=r"images/icons/papirus/48x48/folder-yellow.png")
         self.ico_m = PhotoImage(
             file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
         )
@@ -5019,8 +4953,41 @@ class Frame5(ttk.Frame):
             file=r"images/icons/papirus/48x48/kali-wireless-attacks-trans.png"
         )
 
-        # Frame/Button Set
-        self.rahmen4 = LabelFrame(
+        def gui_settings(text):
+            if text == "Tasksel":
+                popen(f"xterm -e 'bash -c \"{legit} tasksel; exec bash\"'")
+            if text == "Change Desktop":
+                popen(
+                    f"xterm -e 'bash -c \"{legit} update-alternatives --config x-session-manager; exec bash\"'"
+                )
+            if text == "Change Win-Manager":
+                popen(
+                    f"xterm -e 'bash -c \"{legit} update-alternatives --config x-window-manager; exec bash\"'"
+                )
+            if text == "Theme Folder":
+                theme_f_ext = os.path.isdir(f"{home}/.themes")
+                if theme_f_ext == True:
+                    print("[Info]: /.themes found")
+                if theme_f_ext == False:
+                    print("[Info]: /.themes not found will created")
+                    os.mkdir(f"{home}/.themes")
+                if get_de == "XFCE":
+                    popen("sudo thunar /usr/share/themes/")
+                else:
+                    popen("sudo pcmanfm /usr/share/themes/")
+            if text == "Icon Folder":
+                icon_f_ext = os.path.isdir(f"{home}/.icons")
+                if icon_f_ext == True:
+                    print("[Info]: /.icons found")
+                if icon_f_ext == False:
+                    print("[Info]: /.icons not found will created")
+                    os.mkdir(f"{home}/.icons")
+                if get_de == "XFCE":
+                    popen(f"sudo thunar {home}/.icons")
+                else:
+                    popen(f"sudo pcmanfm {home}/.icons")
+
+        self.gui_set = LabelFrame(
             self,
             text="GUI Tweaks",
             font=font_16,
@@ -5031,10 +4998,37 @@ class Frame5(ttk.Frame):
             relief=GROOVE,
             pady=10,
             padx=10,
-            width=300,
+            width=300
         )
-        self.rahmen4.pack(pady=40, padx=40, fill="both")  #
-        self.rahmen4["background"] = maincolor
+        self.gui_set.pack(pady=20, padx=40, fill="both")  #
+        self.gui_set["background"] = maincolor
+
+        gui_settings_btn_list = ["Tasksel", "Change Desktop",
+                                 "Change Win-Manager", "Theme Folder", "Icon Folder"]
+
+        gui_settings_btn_list1 = []
+        conf_row = 0
+        conf_column = 0
+        for gui_settings_btn in gui_settings_btn_list:
+            self.gui_button_x = Button(self.gui_set, width=140, height=100, text=gui_settings_btn, command=lambda text=gui_settings_btn: gui_settings(
+                text), highlightthickness=0, borderwidth=0, background=maincolor, foreground=main_font, compound=TOP, activebackground=ext_btn)
+            self.gui_button_x.grid(
+                row=conf_row, column=conf_column, padx=5, pady=5)
+            gui_settings_btn_list1.append(self.gui_button_x)
+            conf_column = conf_column + 1
+            if conf_column == 5:
+                conf_row = conf_row + 1
+                conf_column = 0
+            if gui_settings_btn == "Tasksel":
+                self.gui_button_x.config(image=self.bash_history_icon)
+            if gui_settings_btn == "Change Desktop":
+                self.gui_button_x.config(image=self.bash_history_icon)
+            if gui_settings_btn == "Change Win-Manager":
+                self.gui_button_x.config(image=self.bash_history_icon)
+            if gui_settings_btn == "Theme Folder":
+                self.gui_button_x.config(image=self.fm_godmode_icon)
+            if gui_settings_btn == "Icon Folder":
+                self.gui_button_x.config(image=self.fm_godmode_icon)
 
         # Separator Line
         self.separator = tk.Frame(
@@ -5042,111 +5036,25 @@ class Frame5(ttk.Frame):
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
-        self.in_btn1 = Button(
-            self.rahmen4,
-            image=self.bash_history_icon,
-            text="Tasksel",
-            font=font_10,
-            command=tasksel_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn1.grid(column=0, row=0, padx=5)
-
-        self.in_btn2 = Button(
-            self.rahmen4,
-            image=self.bash_history_icon,
-            text="Change Desktop",
-            command=ch_desk,
-            font=font_10,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn2.grid(column=1, row=0, padx=5)
-
-        self.in_btn3 = Button(
-            self.rahmen4,
-            image=self.bash_history_icon,
-            text="Change Win-Manager",
-            command=button_xfwm,
-            font=font_10,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn3.grid(column=2, row=0, padx=5)
-
-        self.in_btn7 = Button(
-            self.rahmen4,
-            image=self.fm_godmode_icon,
-            text="Theme Folder",
-            font=font_10,
-            command=theme_f,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn7.grid(column=0, row=1, padx=5, pady=5)
-
-        self.in_btn7 = Button(
-            self.rahmen4,
-            image=self.fm_godmode_icon,
-            text="Icon Folder",
-            font=font_10,
-            command=icon_f,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn7.grid(column=1, row=1, padx=5)
-
-        self.xfcelook_ttp = CreateToolTip(
-            self.in_btn7,
-            "*download the themes extract em and throw it into Theme/Icon Folder",
-        )
-
-        self.in_btn7 = Button(
-            self.rahmen4,
-            image=self.ico_m2,
-            text="Get Themes",
-            font=font_10,
-            command=web_OVC,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=220,
-        )
-        self.in_btn7.grid(column=2, row=1, padx=5)
-
         # xfce_tweaks
-        self.rahmen41 = LabelFrame(
+
+        def xfce4_settings(text):
+            if text == "Xfwm4 Settings":
+                popen("xfwm4-settings")
+            if text == "Xfce4 Appearance":
+                popen("xfce4-appearance-settings")
+            if text == "WiFi Fix":
+                popen(
+                    f"xterm -e 'bash -c \"{legit} apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'"
+                )
+            if text == "Bluetooth Fix":
+                popen(
+                    f"xterm -e 'bash -c \"{Application_path}/scripts/xfce4fix.sh; exec bash\"'"
+                )
+
+        self.xfce4_set = LabelFrame(
             self,
-            text="Xfce Tweaks",
+            text="Xfwm4 Settings",
             font=font_16,
             foreground="#d4244d",
             borderwidth=0,
@@ -5154,10 +5062,40 @@ class Frame5(ttk.Frame):
             highlightcolor="white",
             relief=GROOVE,
             pady=10,
-            padx=15,
+            padx=10,
+            width=300
         )
-        self.rahmen41.pack(padx=40, pady=20, fill="both")
-        self.rahmen41["background"] = maincolor
+        self.xfce4_set.pack(pady=20, padx=40, fill="both")  #
+        self.xfce4_set["background"] = maincolor
+
+        xfce4_settings_btn_list = ["Xfwm4 Settings",
+                                   "Xfce4 Appearance", "WiFi Fix", "Bluetooth Fix"]
+
+        xfce4_settings_btn_list1 = []
+        conf_row = 0
+        conf_column = 0
+        for xfce4_settings_btn in xfce4_settings_btn_list:
+            self.xfce4_button_x = Button(self.xfce4_set, width=140, height=100, text=xfce4_settings_btn, command=lambda text=xfce4_settings_btn: xfce4_settings(
+                text), highlightthickness=0, borderwidth=0, background=maincolor, foreground=main_font, compound=TOP, activebackground=ext_btn)
+            self.xfce4_button_x.grid(
+                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.xfce4_button_x.configure(state=DISABLED)
+            xfce4_settings_btn_list1.append(self.xfce4_button_x)
+            conf_column = conf_column + 1
+            if conf_column == 5:
+                conf_row = conf_row + 1
+                conf_column = 0
+            if xfce4_settings_btn == "Xfwm4 Settings":
+                self.xfce4_button_x.config(image=self.ico_m)
+            if xfce4_settings_btn == "Xfce4 Appearance":
+                self.xfce4_button_x.config(image=self.ico_m)
+            if xfce4_settings_btn == "WiFi Fix":
+                self.xfce4_button_x.config(image=self.wifi)
+            if xfce4_settings_btn == "Bluetooth Fix":
+                self.xfce4_button_x.config(image=self.bluetooth)
+
+        if get_de == "XFCE":
+            self.xfce4_button_x.configure(state=NORMAL)
 
         # Separator Line
         self.separator = tk.Frame(
@@ -5165,122 +5103,39 @@ class Frame5(ttk.Frame):
         )
         self.separator.pack(fill="x", padx=40, side="top")
 
-        self.in_btn3 = Button(
-            self.rahmen41,
-            image=self.ico_m,
-            justify="left",
-            text="Xfwm4 Settings",
-            command=button_xf4s,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=LEFT,
-            anchor="w",
-            width=160,
-            font=font_10,
-        )
-        self.in_btn3.grid(column=1, row=0, padx=5)
-        self.in_btn3.configure(state=DISABLED)
+        def pixel_settings(text):
+            if text == "LXAppearace":
+                popen("lxappearance")
+            if text == "OpenBox Conf":
+                popen(f"{legit} obconf")
 
-        self.in_btn5 = Button(
-            self.rahmen41,
-            image=self.wifi,
-            justify="left",
-            text="WiFi Fix",
-            compound=LEFT,
-            command=xfcefix2,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.in_btn5.grid(column=3, row=0)
-        self.in_btn5.configure(state=DISABLED)
+            if text == "Pi Appeariance":
+                popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
+            if text == "Set Wallpaper":
+                global my_image
+                self.filename = filedialog.askopenfilename(
+                    initialdir="~",
+                    title="Select A File",
+                    filetypes=(
+                        ("jpeg files", "*.jpeg"),
+                        ("jpg files", "*.jpg"),
+                        ("png files", "*.png"),
+                        ("all files", "*.*"),
+                    ),
+                )
+            os.popen(f"pcmanfm --set-wallpaper {self.filename}")
 
-        self.in_btn51 = Button(
-            self.rahmen41,
-            image=self.bluetooth,
-            justify="left",
-            text="Bluetooth Fix",
-            compound=LEFT,
-            command=xfcefix,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=160,
-            font=font_10,
-        )
-        self.in_btn51.grid(column=2, row=0)
-        self.in_btn51.configure(state=DISABLED)
+            if text == "Backup Panel\nSettings":
+                popen("mv ~/.config/lxpanel lxpanel.bak")
 
-        self.in_btn52 = Button(
-            self.rahmen41,
-            image=self.ico_m,
-            justify="left",
-            text="Xfce4 Appearance",
-            compound=LEFT,
-            command=xfceappear_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=160,
-            font=font_10,
-        )
-        self.in_btn52.grid(column=1, row=1)
-        self.in_btn52.configure(state=DISABLED)
+            if text == "Restore\nDefault Panel":
+                popen(
+                    f"cp /etc/xdg/lxpanel/LXDE-pi/panels/panel {home}/.config/lxpanel/LXDE-pi/panels/panel && lxpanelctl restart"
+                )
+            if text == "Restart\nPanel":
+                popen("lxpanelctl restart")
 
-        self.in_btn7 = Button(
-            self.rahmen41,
-            image=self.ico_m2,
-            justify="left",
-            text="Xfce_look",
-            compound=LEFT,
-            command=xfcelook_f,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.in_btn7.grid(column=2, row=1)
-        self.in_btn7.configure(state=DISABLED)
-
-        self.in_btn8 = Button(
-            self.rahmen41,
-            image=self.ico_m2,
-            justify="left",
-            text="Make-Me-Xfce",
-            compound=LEFT,
-            command=xfce_make,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.in_btn8.grid(column=3, row=1)
-
-        if get_de == "XFCE":
-            self.in_btn3.configure(state=NORMAL)
-            self.in_btn5.configure(state=NORMAL)
-            self.in_btn51.configure(state=NORMAL)
-            self.in_btn52.configure(state=NORMAL)
-            self.in_btn7.configure(state=NORMAL)
-
-        # gui_tweaks
-        self.rahmen42 = LabelFrame(
+        self.pixel_set = LabelFrame(
             self,
             text="Pixel Tweaks",
             font=font_16,
@@ -5288,137 +5143,50 @@ class Frame5(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            relief=FLAT,
+            relief=GROOVE,
             pady=10,
-            padx=15,
+            padx=10,
+            width=300
         )
-        self.rahmen42.pack(padx=40, pady=20, fill="both")
-        self.rahmen42["background"] = maincolor
+        self.pixel_set.pack(pady=20, padx=40, fill="both")  #
+        self.pixel_set["background"] = maincolor
+
+        pixel_settings_btn_list = ["LXAppearace", "OpenBox Conf", "Pi Appeariance",
+                                   "Set Wallpaper", "Backup Panel\nSettings", "Restore\nDefault Panel", "Restart\nPanel"]
+
+        pixel_settings_btn_list1 = []
+        conf_row = 0
+        conf_column = 0
+        for pixel_settings_btn in pixel_settings_btn_list:
+            self.pixel_button_x = Button(self.pixel_set, width=140, height=100, text=pixel_settings_btn, command=lambda text=pixel_settings_btn: pixel_settings(
+                text), highlightthickness=0, borderwidth=0, background=maincolor, foreground=main_font, compound=TOP, activebackground=ext_btn)
+            self.pixel_button_x.grid(
+                row=conf_row, column=conf_column, padx=5, pady=5)
+            pixel_settings_btn_list1.append(self.pixel_button_x)
+            conf_column = conf_column + 1
+            if conf_column == 5:
+                conf_row = conf_row + 1
+                conf_column = 0
+            if pixel_settings_btn == "LXAppearace":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "OpenBox Conf":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "Pi Appeariance":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "Set Wallpaper":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "Backup Panel\nSettings":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "Restore\nDefault Panel":
+                self.pixel_button_x.config(image=self.ico_m)
+            if pixel_settings_btn == "Restart\nPanel":
+                self.pixel_button_x.config(image=self.ico_m)
 
         # Separator Line
         self.separator = tk.Frame(
             self, bd=10, relief="sunken", height=1
         )
         self.separator.pack(fill="x", padx=40, side="top")
-
-        self.lx_btn0 = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="LXAppearace",
-            compound=LEFT,
-            command=lxap_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.lx_btn0.grid(column=0, row=0)
-
-        self.lxde = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="OpenBox Conf",
-            compound=LEFT,
-            command=opbox_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.lxde.grid(column=1, row=0)
-
-        self.lxde = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="Pi Appeariance",
-            compound=LEFT,
-            command=pi_appear,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.lxde.grid(column=2, row=0)
-
-        self.set_wp_btn = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="Set Wallpaper",
-            compound=LEFT,
-            command=set_wp,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.set_wp_btn.grid(column=3, row=0)
-
-        self.set_wp_btn = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="Backup Panel\nSettings",
-            compound=LEFT,
-            command=pi_panel_bak,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.set_wp_btn.grid(column=0, row=1)
-
-        self.set_wp_btn = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="Restore\nDefault Panel ",
-            compound=LEFT,
-            command=pi_panel_restore,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.set_wp_btn.grid(column=1, row=1)
-
-        self.set_wp_btn = Button(
-            self.rahmen42,
-            image=self.ico_m,
-            justify="left",
-            text="Restart\nPanel",
-            compound=LEFT,
-            command=pi_panel_restart,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            width=160,
-            anchor="w",
-            font=font_10,
-        )
-        self.set_wp_btn.grid(column=2, row=1)
 
         # pigrotweaks
         self.rahmen43 = LabelFrame(
@@ -5523,9 +5291,12 @@ class Frame5(ttk.Frame):
         select_trasp_btn.grid(column=1, row=0)
 
 
-# [ZRAM] Child
 class z_ram_pop(tk.Toplevel):
-    """child window that lets one install zram"""
+    """
+
+    child window that lets one install zram
+
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -5625,8 +5396,7 @@ class z_ram_pop(tk.Toplevel):
         GButton_585["command"] = z_ram_uninstall
 
 
-# [Tuning] Tab
-class Frame6(ttk.Frame):
+class Tuning_Tab(ttk.Frame):
     """tool to edit profomance relevant options in config.txt/displays these settings"""
 
     def __init__(self, container):
@@ -6319,8 +6089,7 @@ class Frame6(ttk.Frame):
         refresh_OV_stats()
 
 
-# [Links] Tab
-class Frame7(ttk.Frame):
+class Links_Tab(ttk.Frame):
     """a tab that display lot of links to cool websites"""
 
     def __init__(self, container):
@@ -6384,7 +6153,6 @@ class Frame7(ttk.Frame):
             sources_d1.append(self.choice_link1)
 
 
-# [Runing Processes]
 class ProcessTree(ttk.Frame):
     """sets up a treeview of all runnning processes"""
 
@@ -6428,8 +6196,7 @@ class ProcessTree(ttk.Frame):
         self.tree.delete(item)
 
 
-# [Processes] Tab
-class Frame14(ttk.Frame):
+class Tasks_Tab(ttk.Frame):
     """shows all running pocesses in a treeview"""
 
     def __init__(self, container, *args, **kwargs):
@@ -6458,8 +6225,7 @@ class Frame14(ttk.Frame):
         self.kill_button.pack(side="left", pady=10)
 
 
-# [About] Tab
-class Frame8(ttk.Frame):
+class Aubout_Tab(ttk.Frame):
     """this tab contains infos and links to the devs website"""
 
     def __init__(self, container):
@@ -6475,7 +6241,7 @@ class Frame8(ttk.Frame):
         def paypal_link():
             popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
 
-        self.auto_start = PhotoImage(file=r"images/icons/logo_128x128.png")
+        self.auto_start = PhotoImage(file=r"images/icons/logo1.png")
 
         self.paypal_icon = PhotoImage(
             file=r"images/icons/pigro_icons/PayPal_donation.png"
@@ -6496,7 +6262,7 @@ class Frame8(ttk.Frame):
         self.poke_pig_21 = Label(
             self.rahmen102,
             # justify="left",
-            text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0.1",
+            text="PiGro - Just Click It!\n(Perche sei cosi serio?)\nVersion: 9.0.2",
             font=font_16,
             background=maincolor,
             foreground=main_font,
@@ -6567,94 +6333,6 @@ class Frame8(ttk.Frame):
         ).pack()
 
 
-# [Cam] Tab
-class Frame9(ttk.Frame):
-    """basic gui for the raspberry pi camera functions"""
-
-    def __init__(self, container):
-        super().__init__()
-
-        def photo1():
-            photo = str(entry.get())
-            popen(f"libcamera-jpeg -o {home}/{photo}.jpg")
-
-        def video1():
-            video = str(entry.get())
-            rec_time = str(sec_entry.get() + "000")
-            popen(f"libcamera-vid -t {rec_time} -o {home}/{video}.h264")
-
-        self.rahmen101 = Frame(
-            self, borderwidth=0, relief=GROOVE, highlightthickness=0, pady=20, padx=10
-        )
-        self.rahmen101.pack(pady=50)
-        self.rahmen101["background"] = maincolor
-
-        self.btn_frame = Frame(self.rahmen101, bg=maincolor)
-        self.btn_frame.pack()
-        self.label = Label(
-            self.btn_frame,
-            text=" ",
-            bg=maincolor,
-            foreground=main_font,
-        )
-        self.label.pack()
-
-        self.status_icon = PhotoImage(
-            file="images/icons/pigro_icons/Pi-Camera.png")
-        self.head_frame = Frame(self.rahmen101, bg=maincolor)
-        self.head_frame.pack()
-        self.header_label = Label(
-            self.head_frame, image=self.status_icon, bg=maincolor)
-        self.header_label.pack(pady=20)
-
-        # Clicker_Frame
-        self.btn_frame = Frame(self.rahmen101, bg=maincolor)
-        self.btn_frame.pack()
-        self.label = Label(
-            self.btn_frame,
-            text=f"Files will be saved in:\n{home}\n\nGive it a Name:",
-            bg=maincolor,
-            foreground=main_font,
-        )
-        self.label.pack()
-
-        entry = Entry(self.btn_frame, bd=5, width=31, borderwidth=1)
-        entry.pack()
-        photo_btn = Button(
-            self.btn_frame,
-            text="Take A Photo",
-            command=photo1,
-            bg=ext_btn,
-            foreground=main_font,
-            highlightthickness=0,
-            borderwidth=0,
-        )
-        photo_btn.pack(pady=10)
-
-        video_btn = Button(
-            self.btn_frame,
-            text="Take A Video",
-            command=video1,
-            bg=ext_btn,
-            foreground=main_font,
-            highlightthickness=0,
-            borderwidth=0,
-        )
-        video_btn.pack()
-
-        sec_ent_label = Label(
-            self.btn_frame,
-            text="REC time in seconds:",
-            bg=maincolor,
-            foreground=main_font,
-        )
-        sec_ent_label.pack()
-
-        sec_entry = Entry(self.btn_frame, bd=5, width=5, borderwidth=1)
-        sec_entry.pack()
-
-
-# [Error Massage] Child
 class Error_Mass(tk.Toplevel):
     """opens a popup when entry field is empty"""
 
@@ -6710,67 +6388,6 @@ class Error_Mass(tk.Toplevel):
         error_btn.grid(row=3, column=1)
 
 
-# [TOOLTIPZ]
-class CreateToolTip(object):
-    """create a tooltip for a given widget"""
-
-    def __init__(self, widget, text="widget info"):
-        self.waittime = 500  # miliseconds
-        self.wraplength = 180  # pixels
-        widget = widget
-        self.text = text
-        widget.bind("<Enter>", self.enter)
-        widget.bind("<Leave>", self.leave)
-        widget.bind("<ButtonPress>", self.leave)
-        self.id = None
-        self.tw = None
-
-    def enter(self, event=None):
-        self.schedule()
-
-    def leave(self, event=None):
-        self.unschedule()
-        self.hidetip()
-
-    def schedule(self):
-        self.unschedule()
-        self.id = widget.after(self.waittime, self.showtip)
-
-    def unschedule(self):
-        id = self.id
-        self.id = None
-        if id:
-            widget.after_cancel(id)
-
-    def showtip(self, event=None):
-        x = y = 0
-        x, y, cx, cy = widget.bbox("insert")
-        x += widget.winfo_rootx() + 25
-        y += widget.winfo_rooty() + 20
-        # creates a toplevel window
-        self.tw = tk.Toplevel(widget)
-        # Leaves only the label and removes the app window
-        self.tw.wm_overrideredirect(True)
-        self.tw.wm_geometry("+%d+%d" % (x, y))
-        label = tk.Label(
-            self.tw,
-            text=self.text,
-            justify="left",
-            background="#ffffff",
-            relief="solid",
-            borderwidth=1,
-            wraplength=self.wraplength,
-        )
-        label.pack(ipadx=1)
-
-    def hidetip(self):
-        tw = self.tw
-        self.tw = None
-        if tw:
-            tw.destroy()
-
-
-# [THROBBER]
 class Loading_Throbber(Label):
     """This class animates the the .GIF in the install window"""
 
