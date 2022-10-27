@@ -51,7 +51,7 @@ OR:
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye): fully supported.
 - [Twister OS](https://twisteros.com/download.html): fully supported.
-- [Ubuntu](https://ubuntu.com/download): fully supported.
+
 
 #### :exclamation: Installation Process & Updates
 
@@ -68,9 +68,13 @@ wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer
 
 # :exclamation: Important
 
+
+
 #### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
 
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
+
+#### :exclamation: For the time being, PiGro no longer has Ubuntu support. With every new Ubuntu release, more and more dependencies are missing and I have to work on work-arounds almost constantly. That's not fun.
 
 ---
 
