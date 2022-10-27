@@ -379,12 +379,13 @@ class MainApplication(tk.Tk):
 
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
-        if distro_get == "debian" or distro_get == "raspbian":
-            self.notebook.hide(self.System_Ubuntu_Tab)
+        # if distro_get == "debian" or distro_get == "raspbian":
+        #    self.notebook.hide(self.System_Ubuntu_Tab)
 
         if distro_get == "ubuntu":
             self.notebook.hide(self.System_Tab)
             self.notebook.hide(self.Look_Tab)
+            self.notebook.hide(self.Update)
 
         # Notebook Theming
         global noteStyler
@@ -691,8 +692,6 @@ class Dash_Tab(ttk.Frame):
         self.sys_frame_6.pack(pady=5)
         self.sys_frame_6["background"] = nav_color
 
-
-
         # System Info
 
         self.platform_label = Label(
@@ -759,8 +758,6 @@ class Dash_Tab(ttk.Frame):
             font=font_12,
             anchor=W,
         ).pack()
-
-
 
         self.lang_lang = Label(
             self.sys_frame_1,
@@ -1080,8 +1077,6 @@ class Dash_Tab(ttk.Frame):
             anchor=W,
         ).pack()
 
-
-
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
 
@@ -1142,7 +1137,7 @@ class Dash_Tab(ttk.Frame):
                         foreground=main_font,
                         font=font_12,
                     )
-        
+
             self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
@@ -1320,8 +1315,8 @@ class Update_Tab(ttk.Frame):
                 conf_row = conf_row + 1
                 conf_column = 0
             if up_button == "Update":
-                up_button_x_ttp = CreateToolTip(self.up_button_x,\
-    "First thing's first, I'm the realest. Drop this and let the whole world ")
+                up_button_x_ttp = CreateToolTip(self.up_button_x,
+                                                "First thing's first, I'm the realest. Drop this and let the whole world ")
         self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
 
 
@@ -1945,201 +1940,129 @@ class System_Ubuntu_Tab(ttk.Frame):
             file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
         )
 
-        # Button Set/Frame1
-        self.rahmen2 = Frame(
-            self, borderwidth=0, highlightthickness=0, relief=GROOVE, padx=60, pady=10
+        self.update_icon = PhotoImage(
+            file=r"images/icons/papirus/48x48/aptdaemon-upgrade.png"
         )
-        self.rahmen2.pack(padx=40, pady=20, fill="both")
-        self.rahmen2["background"] = maincolor
 
-        sys_rc_cli_btn = Button(
-            self.rahmen2,
-            image=self.bp01,
-            text="Raspi-Config CLI",
-            command=pi_configbutton,
-            highlightthickness=0,
+        def pi_ubu_settings(text):
+            if text == "Raspi-Config CLI":
+                popen(
+                    f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
+
+            if text == "Edit Config.txt":
+                popen(
+                    f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_config_txt.sh; exec bash\"'")
+
+            if text == "NeoFetch":
+                popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
+
+            if text == "DeskpiPro Control":
+                popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
+
+            if text == "Bash History":
+                popen(f"xdg-open {home}/.bash_history")
+
+            if text == "Gnome Tweaks":
+                popen("gnome-tweaks")
+
+            if text == "Menu Settings\nAlacart":
+                popen("alacarte")
+
+            if text == "Gparted":
+                popen(f"{legit} gparted")
+
+            if text == "FM God Mode":
+                popen(
+                    f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_FMGM.sh; exec bash\"'"
+                )
+                print("[Info]: With great power comes great responsibility")
+                Notification(
+                    title="Sudo File Manager\n",
+                    description="With great power comes great responsibility\n\n                          - Oncle Ben",
+                    icon_path=f"{Application_path}/images/icons/Logotab.png",
+                    duration=5,
+                    urgency="normal",
+                ).send()
+            if text == "Gnome Extensions":
+                popen("xdg-open https://extensions.gnome.org/")
+
+        self.pi_ubu_set = LabelFrame(
+            self,
+            text="Raspberry Pi Settings",
+            font=font_16,
+            foreground="#d4244d",
             borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_rc_cli_btn.grid(row=0, column=0)
-
-        if os.path.isfile("/bin/raspi-config"):
-            print("[Info]: Raspi-Config is installed")
-            sys_rc_cli_btn.configure(state=NORMAL)
-        else:
-            print("[Info]: Raspi-Config is not installed")
-            sys_rc_cli_btn.configure(state=DISABLED)
-
-        sys_ubu_pref_btn = Button(
-            self.rahmen2,
-            image=self.raspi_config_cli_icon,
-            text="Ubuntu Settings",
-            command=ubu_prefs,
             highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=10,
+            padx=10,
+
         )
-        sys_ubu_pref_btn.grid(row=0, column=1)
+        self.pi_ubu_set.pack(pady=20, padx=40, fill="both")  #
+        self.pi_ubu_set["background"] = maincolor
 
-        sys_conf_btn = Button(
-            self.rahmen2,
-            image=self.raspi_config_cli_icon,
-            text="Config.txt",
-            command=contxt_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_conf_btn.grid(row=0, column=2)
+        pi_ubu_settings_btn_list = ["Raspi-Config CLI", "Edit Config.txt", "NeoFetch", "DeskpiPro Control", "Bash History",
+                                    "Gnome Tweaks", "Menu Settings\nAlacart", "Gparted", "FM God Mode", "Gnome Extensions", "Software\nUpdates", "Update\nSettings"]
 
-        sys_neo_btn = Button(
-            self.rahmen2,
-            image=self.neofetch_icon,
-            text="NeoFetch",
-            command=neofetch_button,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_neo_btn.grid(row=0, column=3)
-
-        if os.path.isfile("/bin/neofetch"):
-            print("[Info]: Neofetch is installed")
-            sys_neo_btn.configure(state=NORMAL)
-        else:
-            print("[Info]: Neofetch is not installed")
-            sys_neo_btn.configure(state=DISABLED)
-
-        sys_dpp_btn = Button(
-            self.rahmen2,
-            image=self.deskpipro_icon,
-            text="DeskpiPro Control",
-            command=button_dpfc,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_dpp_btn.grid(row=0, column=4)
-
-        sys_bash_btn = Button(
-            self.rahmen2,
-            image=self.bash_history_icon,
-            text="Bash History",
-            command=bash_log,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_bash_btn.grid(row=1, column=1)
-
-        g_tweaks_btn = Button(
-            self.rahmen2,
-            image=self.source_settings_icon,
-            text="Gnome Tweaks",
-            command=g_tweaks,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        g_tweaks_btn.grid(row=1, column=2)
-
-        if os.path.isfile("/bin/gnome-tweaks"):
-            print("[Info]: gnome-tweaks is installed")
-            sys_neo_btn.configure(state=NORMAL)
-        else:
-            print("[Info]: gnome-tweaks is not installed")
-            g_tweaks_btn.configure(state=DISABLED)
-
-        menu_sett_btn = Button(
-            self.rahmen2,
-            image=self.alacard_icon,
-            text="Menu Settings\nAlacart",
-            command=menu_sett,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        menu_sett_btn.grid(row=1, column=3)
-
-        if os.path.isfile("/bin/alacarte"):
-            print("[Info]: alacarte is installed")
-            menu_sett_btn.configure(state=NORMAL)
-        else:
-            print("[Info]: Gparted is not installed")
-            menu_sett_btn.configure(state=DISABLED)
-
-        sys_gparted_btn = Button(
-            self.rahmen2,
-            image=self.gparted_icon,
-            text="Gparted",
-            command=gparted_exec,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_gparted_btn.grid(row=1, column=4)
-
-        if os.path.isfile("/usr/sbin/gparted"):
-            print("[Info]: Gparted is installed")
-            sys_gparted_btn.configure(state=NORMAL)
-        else:
-            print("[Info]: Gparted is not installed")
-            sys_gparted_btn.configure(state=DISABLED)
-
-        sys_FMGM_btn = Button(
-            self.rahmen2,
-            image=self.fm_godmode_icon,
-            text="FM God Mode",
-            command=onc_ben,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_FMGM_btn.grid(row=1, column=0)
-
-        sys_gX_btn = Button(
-            self.rahmen2,
-            image=self.source_settings_icon,
-            text="Gnome Extensions",
-            command=gX_web,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=main_font,
-            compound=TOP,
-            font=font_10,
-        )
-        sys_gX_btn.grid(row=2, column=0)
+        pi_ubu_settings_btn_list1 = []
+        conf_row = 0
+        conf_column = 0
+        for pi_ubu_settings_btn in pi_ubu_settings_btn_list:
+            self.pi_ubu_button_x = Button(self.pi_ubu_set,
+                                          width=140, height=100,
+                                          text=pi_ubu_settings_btn,
+                                          command=lambda text=pi_ubu_settings_btn: pi_ubu_settings(
+                                              text),
+                                          highlightthickness=0,
+                                          borderwidth=0,
+                                          background=maincolor,
+                                          foreground=main_font,
+                                          compound=TOP,
+                                          activebackground=ext_btn)
+            self.pi_ubu_button_x.grid(
+                row=conf_row, column=conf_column, padx=5, pady=5)
+            pi_ubu_settings_btn_list1.append(self.pi_ubu_button_x)
+            conf_column = conf_column + 1
+            if conf_column == 5:
+                conf_row = conf_row + 1
+                conf_column = 0
+            if pi_ubu_settings_btn == "Raspi-Config CLI":
+                self.pi_ubu_button_x.config(image=self.raspi_config_cli_icon)
+                if os.path.isfile("/bin/raspi-config"):
+                    print("[Info]: Raspi-Config is installed")
+                    self.pi_ubu_button_x.configure(state=NORMAL)
+                else:
+                    print("[Info]: Raspi-Config is not installed")
+                    self.pi_ubu_button_x.configure(state=DISABLED)
+            if pi_ubu_settings_btn == "Edit Config.txt":
+                self.pi_ubu_button_x.config(image=self.edit_config_txt_icon)
+            if pi_ubu_settings_btn == "NeoFetch":
+                self.pi_ubu_button_x.config(image=self.neofetch_icon)
+                if os.path.isfile("/bin/neofetch"):
+                    print("[Info]: Neofetch is installed")
+                    self.pi_ubu_button_x.configure(state=NORMAL)
+                else:
+                    print("[Info]: Neofetch is not installed")
+                    self.pi_ubu_button_x.configure(state=DISABLED)
+            if pi_ubu_settings_btn == "DeskpiPro Control":
+                self.pi_ubu_button_x.config(image=self.deskpipro_icon)
+            if pi_ubu_settings_btn == "Bash History":
+                self.pi_ubu_button_x.config(image=self.bash_history_icon)
+            if pi_ubu_settings_btn == "Gnome Tweaks":
+                self.pi_ubu_button_x.config(image=self.source_settings_icon)
+            if pi_ubu_settings_btn == "Menu Settings\nAlacart":
+                self.pi_ubu_button_x.config(image=self.alacard_icon)
+            if pi_ubu_settings_btn == "Gparted":
+                self.pi_ubu_button_x.config(image=self.gparted_icon)
+            if pi_ubu_settings_btn == "FM God Mode":
+                self.pi_ubu_button_x.config(image=self.fm_godmode_icon)
+            if pi_ubu_settings_btn == "Gnome Extensions":
+                self.pi_ubu_button_x.config(image=self.source_settings_icon)
+            if pi_ubu_settings_btn == "Software\nUpdates":
+                self.pi_ubu_button_x.config(image=self.update_icon)
+            if pi_ubu_settings_btn == "Update\nSettings":
+                self.pi_ubu_button_x.config(image=self.update_icon)
 
 
 class Autostarts_Tab(ttk.Frame):
@@ -6325,15 +6248,16 @@ class Loading_Throbber(Label):
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
-    
+
     Taken from:
     www.daniweb.com/programming/software-development/code/484591/a-tooltip-class-for-tkinter
     Modified to include a delay time by Victor Zaccardo, 25mar16
-    
+
     """
+
     def __init__(self, widget, text='widget info'):
-        self.waittime = 500     #miliseconds
-        self.wraplength = 180   #pixels
+        self.waittime = 500  # miliseconds
+        self.wraplength = 180  # pixels
         self.widget = widget
         self.text = text
         self.widget.bind("<Enter>", self.enter)
@@ -6370,15 +6294,16 @@ class CreateToolTip(object):
         self.tw.wm_overrideredirect(True)
         self.tw.wm_geometry("+%d+%d" % (x, y))
         label = tk.Label(self.tw, text=self.text, justify='left',
-                       background="#ffffff", relief='solid', borderwidth=1,
-                       wraplength = self.wraplength)
+                         background="#ffffff", relief='solid', borderwidth=1,
+                         wraplength=self.wraplength)
         label.pack(ipadx=1)
 
     def hidetip(self):
         tw = self.tw
-        self.tw= None
+        self.tw = None
         if tw:
             tw.destroy()
+
 
 # [End Of The Line]
 if __name__ == "__main__":
