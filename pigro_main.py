@@ -22,7 +22,7 @@ from datetime import datetime
 from time import strftime
 import distro
 import socket
-from gpiozero import CPUTemperature
+#from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
@@ -507,7 +507,7 @@ class Dash_Tab(ttk.Frame):
         swap = psutil.swap_memory()
         hostname = socket.gethostname()
         IPAddr = extract_ip()
-        cpu = CPUTemperature()
+        #cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
         total, used, free = shutil.disk_usage("/")
         current_month = strftime('%B')
@@ -1150,13 +1150,15 @@ class Dash_Tab(ttk.Frame):
             cpufreq = psutil.cpu_freq()
             svmem = psutil.virtual_memory()
             swap = psutil.swap_memory()
-            cpu = CPUTemperature()
+            #cpu = CPUTemperature()
             # print(cpu)
+            cpu_temp = os.popen("vcgencmd measure_temp").readline()
+            
 
             self.curr_cpu_frq_label.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.cpu_temp_label.configure(
-                text=f"CPU Temp: {cpu.temperature:.1f} °C")
+                text=f"CPU Temp: {cpu_temp[5:]}")
             self.after(1000, refresh_sys_stats)
         refresh_sys_stats()
 
