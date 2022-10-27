@@ -151,10 +151,10 @@ class Get_Sys_Info():
     nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
     nice_name = nice_name.read()
 
-    global get_wm
-    get_wm = popen("wmctrl -m")
-    get_wm = get_wm.readlines()
-    print("[Info]: X-Window-Manager:" + get_wm[0][5:-1])
+    #global get_wm
+    #get_wm = popen("wmctrl -m")
+    #get_wm = get_wm.readlines()
+    #print("[Info]: X-Window-Manager:" + get_wm[0][5:-1])
 
     # Checks if snapd exists
     if os.path.isfile("/bin/snap"):
@@ -691,11 +691,7 @@ class Dash_Tab(ttk.Frame):
         self.sys_frame_6.pack(pady=5)
         self.sys_frame_6["background"] = nav_color
 
-        self.sys_frame_7 = LabelFrame(
-            self.sys_info_main_System_Tab, text="Theme", font=font_16, foreground="#d4244d", borderwidth=0, highlightthickness=0, relief=GROOVE
-        )
-        self.sys_frame_7.pack(pady=5)
-        self.sys_frame_7["background"] = nav_color
+
 
         # System Info
 
@@ -764,18 +760,7 @@ class Dash_Tab(ttk.Frame):
             anchor=W,
         ).pack()
 
-        self.wm_label = Label(
-            self.sys_frame_1,
-            text=f"WM: {get_wm[0][5:-1]}",
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=nav_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        ).pack()
+
 
         self.lang_lang = Label(
             self.sys_frame_1,
@@ -1095,62 +1080,7 @@ class Dash_Tab(ttk.Frame):
             anchor=W,
         ).pack()
 
-        # Theme
-        self.theme_name = Label(
-            self.sys_frame_7,
-            text="",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=nav_color,
-            foreground=main_font,
-            width=20,
-            anchor=W,
-        )
-        self.theme_name.pack()
 
-        self.icon_name = Label(
-            self.sys_frame_7,
-            text="",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=nav_color,
-            foreground=main_font,
-            width=20,
-            anchor=W,
-        )
-        self.icon_name.pack()
-
-        self.font_name = Label(
-            self.sys_frame_7,
-            text="",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=nav_color,
-            foreground=main_font,
-            width=20,
-            anchor=W,
-        )
-        self.font_name.pack()
-
-        self.cursor_name = Label(
-            self.sys_frame_7,
-            text="",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=nav_color,
-            foreground=main_font,
-            width=20,
-            anchor=W,
-        )
-        self.cursor_name.pack()
 
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
@@ -1212,46 +1142,7 @@ class Dash_Tab(ttk.Frame):
                         foreground=main_font,
                         font=font_12,
                     )
-
-            with open(f"{home}/.gtkrc-2.0") as pi_conf:
-                datafile = pi_conf.readlines()
-            for line in datafile:
-                if "gtk-theme-name=" in line:
-                    self.theme_name.config(
-                        text=f"Theme: {line[16:-2]}",
-                        foreground=main_font,
-                        font=font_12,
-                    )
-
-            with open(f"{home}/.gtkrc-2.0") as pi_conf:
-                datafile = pi_conf.readlines()
-            for line in datafile:
-                if "gtk-icon-theme-name=" in line:
-                    self.icon_name.config(
-                        text=f"Icons: {line[21:-2]}",
-                        foreground=main_font,
-                        font=font_12,
-                    )
-
-            with open(f"{home}/.gtkrc-2.0") as pi_conf:
-                datafile = pi_conf.readlines()
-            for line in datafile:
-                if "gtk-font-name=" in line:
-                    self.font_name.config(
-                        text=f"Font: {line[15:-2]}",
-                        foreground=main_font,
-                        font=font_12,
-                    )
-
-            with open(f"{home}/.gtkrc-2.0") as pi_conf:
-                datafile = pi_conf.readlines()
-            for line in datafile:
-                if "gtk-cursor-theme-name=" in line:
-                    self.cursor_name.config(
-                        text=f"Cursor: {line[23:-2]}",
-                        foreground=main_font,
-                        font=font_12,
-                    )
+        
             self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
@@ -1428,7 +1319,9 @@ class Update_Tab(ttk.Frame):
             if conf_column == 3:
                 conf_row = conf_row + 1
                 conf_column = 0
-
+            if up_button == "Update":
+                up_button_x_ttp = CreateToolTip(self.up_button_x,\
+    "First thing's first, I'm the realest. Drop this and let the whole world ")
         self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
 
 
@@ -6428,6 +6321,64 @@ class Loading_Throbber(Label):
             self.idx = 0
         self.cancel = self.after(self.delay, self.play)
 
+
+class CreateToolTip(object):
+    """
+    create a tooltip for a given widget
+    
+    Taken from:
+    www.daniweb.com/programming/software-development/code/484591/a-tooltip-class-for-tkinter
+    Modified to include a delay time by Victor Zaccardo, 25mar16
+    
+    """
+    def __init__(self, widget, text='widget info'):
+        self.waittime = 500     #miliseconds
+        self.wraplength = 180   #pixels
+        self.widget = widget
+        self.text = text
+        self.widget.bind("<Enter>", self.enter)
+        self.widget.bind("<Leave>", self.leave)
+        self.widget.bind("<ButtonPress>", self.leave)
+        self.id = None
+        self.tw = None
+
+    def enter(self, event=None):
+        self.schedule()
+
+    def leave(self, event=None):
+        self.unschedule()
+        self.hidetip()
+
+    def schedule(self):
+        self.unschedule()
+        self.id = self.widget.after(self.waittime, self.showtip)
+
+    def unschedule(self):
+        id = self.id
+        self.id = None
+        if id:
+            self.widget.after_cancel(id)
+
+    def showtip(self, event=None):
+        x = y = 0
+        x, y, cx, cy = self.widget.bbox("insert")
+        x += self.widget.winfo_rootx() + 25
+        y += self.widget.winfo_rooty() + 20
+        # creates a toplevel window
+        self.tw = tk.Toplevel(self.widget)
+        # Leaves only the label and removes the app window
+        self.tw.wm_overrideredirect(True)
+        self.tw.wm_geometry("+%d+%d" % (x, y))
+        label = tk.Label(self.tw, text=self.text, justify='left',
+                       background="#ffffff", relief='solid', borderwidth=1,
+                       wraplength = self.wraplength)
+        label.pack(ipadx=1)
+
+    def hidetip(self):
+        tw = self.tw
+        self.tw= None
+        if tw:
+            tw.destroy()
 
 # [End Of The Line]
 if __name__ == "__main__":
