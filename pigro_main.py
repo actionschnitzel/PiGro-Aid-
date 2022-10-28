@@ -124,7 +124,7 @@ class Get_Sys_Info():
     if distro_get == "ubuntu":
         legit = "pkexec"
     else:
-        legit = "sudo"
+        legit = "pkexec"
 
     # Get Desktop Environment
     global get_de
@@ -1153,7 +1153,6 @@ class Dash_Tab(ttk.Frame):
             #cpu = CPUTemperature()
             # print(cpu)
             cpu_temp = os.popen("vcgencmd measure_temp").readline()
-            
 
             self.curr_cpu_frq_label.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
@@ -1821,54 +1820,6 @@ class System_Ubuntu_Tab(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        def ubu_prefs():
-            popen("gnome-control-center")
-
-        def g_tweaks():
-            popen("gnome-tweaks")
-
-        def menu_sett():
-            popen("alacarte")
-
-        def button_boot():
-            popen(f"xterm -e 'bash -c \"{legit} dmesg; exec bash\"'")
-
-        def pi_configbutton():
-            popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
-
-        def neofetch_button():
-            popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
-
-        def gparted_exec():
-            popen(f"{legit} gparted")
-
-        def contxt_button():
-            popen(
-                f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_config_txt.sh; exec bash\"'"
-            )
-
-        def onc_ben():
-            popen(
-                f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_FMGM.sh; exec bash\"'"
-            )
-            print("[Info]: With great power comes great responsibility")
-            Notification(
-                title="Sudo File Manager\n",
-                description="With great power comes great responsibility\n\n                          - Oncle Ben",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
-
-        def button_dpfc():
-            popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
-
-        def bash_log():
-            popen(f"xdg-open {home}/.bash_history")
-
-        def gX_web():
-            popen("xdg-open https://extensions.gnome.org/")
-
         # Icon Set
         self.bp01 = PhotoImage(
             file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
@@ -1987,6 +1938,10 @@ class System_Ubuntu_Tab(ttk.Frame):
                 ).send()
             if text == "Gnome Extensions":
                 popen("xdg-open https://extensions.gnome.org/")
+            if text == "Software\nUpdates":
+                popen("update-manager")
+            if text == "Update\nSettings":
+                pass
 
         self.pi_ubu_set = LabelFrame(
             self,
@@ -4903,6 +4858,8 @@ class Look_Tab(ttk.Frame):
             if conf_column == 5:
                 conf_row = conf_row + 1
                 conf_column = 0
+            if get_de == "XFCE":
+                self.xfce4_button_x.configure(state=NORMAL)
             if xfce4_settings_btn == "Xfwm4 Settings":
                 self.xfce4_button_x.config(image=self.ico_m)
             if xfce4_settings_btn == "Xfce4 Appearance":
@@ -4912,14 +4869,11 @@ class Look_Tab(ttk.Frame):
             if xfce4_settings_btn == "Bluetooth Fix":
                 self.xfce4_button_x.config(image=self.bluetooth)
 
-        if get_de == "XFCE":
-            self.xfce4_button_x.configure(state=NORMAL)
-
         # Separator Line
-        self.separator = tk.Frame(
+        self.separator_1 = tk.Frame(
             self, bd=10, relief="sunken", height=1
         )
-        self.separator.pack(fill="x", padx=40, side="top")
+        self.separator_1.pack(fill="x", padx=40, side="top")
 
         def pixel_settings(text):
             if text == "LXAppearace":
@@ -4999,6 +4953,10 @@ class Look_Tab(ttk.Frame):
                 self.pixel_button_x.config(image=self.ico_m)
             if pixel_settings_btn == "Restart\nPanel":
                 self.pixel_button_x.config(image=self.ico_m)
+
+        if get_de == "GNOME-ubuntu":
+            self.separator_1.hide()
+            self.pixel_set.hide()
 
         # Separator Line
         self.separator = tk.Frame(
@@ -5109,7 +5067,7 @@ class Look_Tab(ttk.Frame):
         select_trasp_btn.grid(column=1, row=0)
 
 
-class z_ram_pop(tk.Toplevel):
+class Z_Ram_Pop(tk.Toplevel):
     """
 
     child window that lets one install zram
@@ -5229,7 +5187,7 @@ class Tuning_Tab(ttk.Frame):
             tu_le.grab_set()
 
         def z_ram():
-            z_ram = z_ram_pop(self)
+            z_ram = Z_Ram_Pop(self)
             z_ram.grab_set()
 
         def expert_mode():
