@@ -31,7 +31,8 @@ As always, there are many code improvements.
 
 # :dart: Next Update
 
-- [x] Nothin' to do at the moment
+- [x] pkexec will replace sudo in pigro    
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/sudoless.jpeg)
 
 ---
 
