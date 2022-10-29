@@ -22,7 +22,6 @@ from datetime import datetime
 from time import strftime
 import distro
 import socket
-#from gpiozero import CPUTemperature
 from pathlib import Path
 from cgitb import enable
 from pynotifier import Notification
@@ -37,7 +36,7 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-
+#from gpiozero import CPUTemperature
 
 class Get_Sys_Info():
     """
@@ -200,8 +199,17 @@ class Get_Sys_Info():
             info_color = "yellow"
             global ext_btn
             ext_btn = "#0075b7"
+            if distro_get == "ubuntu":
+                maincolor = "#333333"
+                nav_color = "#272727"
+                frame_color = "#333333"
+                main_font = "white"
+                info_color = "yellow"
+                ext_btn = "#333333"
 
-        # Dark Theme Settings
+
+
+        # Light Theme Settings
         if str("theme = light") in line:
             print("[Info]: Light Theme")
             maincolor = "#ededed"
@@ -210,6 +218,13 @@ class Get_Sys_Info():
             main_font = "black"
             info_color = "#0075b7"
             ext_btn = "#b6b6b3"
+            if distro_get == "ubuntu":
+                maincolor = "#fafafa"
+                nav_color = "#ffffff"
+                frame_color = "#fafafa"
+                main_font = "black"
+                info_color = "#0075b7"
+                ext_btn = "#fafafa"
 
     # Font Definition Vars
     global font_20
@@ -379,13 +394,13 @@ class MainApplication(tk.Tk):
 
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
-        # if distro_get == "debian" or distro_get == "raspbian":
-        #    self.notebook.hide(self.System_Ubuntu_Tab)
+        if distro_get == "debian" or distro_get == "raspbian":
+            self.notebook.hide(self.System_Ubuntu_Tab)
 
         if distro_get == "ubuntu":
             self.notebook.hide(self.System_Tab)
-            self.notebook.hide(self.Look_Tab)
-            self.notebook.hide(self.Update)
+            self.notebook.hide(self.Update_Tab)
+            self.notebook.hide(self.Tasks_Tab)
 
         # Notebook Theming
         global noteStyler
@@ -1141,7 +1156,7 @@ class Dash_Tab(ttk.Frame):
             self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
-
+        
         def refresh_sys_stats():
 
             # Parameters for System
@@ -1941,7 +1956,8 @@ class System_Ubuntu_Tab(ttk.Frame):
             if text == "Software\nUpdates":
                 popen("update-manager")
             if text == "Update\nSettings":
-                pass
+                popen("software-properties-gtk")
+
 
         self.pi_ubu_set = LabelFrame(
             self,
@@ -2020,7 +2036,8 @@ class System_Ubuntu_Tab(ttk.Frame):
                 self.pi_ubu_button_x.config(image=self.update_icon)
             if pi_ubu_settings_btn == "Update\nSettings":
                 self.pi_ubu_button_x.config(image=self.update_icon)
-
+            if pi_ubu_settings_btn == "Settings":
+                self.pi_ubu_button_x.config(image=self.source_settings_icon)
 
 class Autostarts_Tab(ttk.Frame):
     """
@@ -4875,6 +4892,8 @@ class Look_Tab(ttk.Frame):
         )
         self.separator_1.pack(fill="x", padx=40, side="top")
 
+        
+
         def pixel_settings(text):
             if text == "LXAppearace":
                 popen("lxappearance")
@@ -4954,9 +4973,10 @@ class Look_Tab(ttk.Frame):
             if pixel_settings_btn == "Restart\nPanel":
                 self.pixel_button_x.config(image=self.ico_m)
 
-        if get_de == "GNOME-ubuntu":
-            self.separator_1.hide()
-            self.pixel_set.hide()
+        if distro_get == "ubuntu":
+            self.separator_1.forget()
+            self.pixel_set.forget()
+            self.xfce4_set.forget()
 
         # Separator Line
         self.separator = tk.Frame(
