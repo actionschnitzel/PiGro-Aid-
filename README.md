@@ -1,4 +1,11 @@
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9.png)
+<p align="center">
+    <a href="https://github.com/actionschnitzel/PiGro-Aid-/tree/main">
+        <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/proglogo.png" alt="PiGro logo">
+    </a>
+</p>
+
+
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9_2.png)
 
 ---
 
