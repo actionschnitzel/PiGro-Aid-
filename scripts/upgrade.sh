@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get upgrade -y |lolcat
+sudo apt-get update -y |lolcat && sudo apt-get upgrade -y|lolcat
 
 echo '                                                                     
     ____  _ ______              ____           __        ____         

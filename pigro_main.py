@@ -36,7 +36,8 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-#from gpiozero import CPUTemperature
+from gpiozero import CPUTemperature
+
 
 class Get_Sys_Info():
     """
@@ -206,8 +207,6 @@ class Get_Sys_Info():
                 main_font = "white"
                 info_color = "yellow"
                 ext_btn = "#333333"
-
-
 
         # Light Theme Settings
         if str("theme = light") in line:
@@ -1156,7 +1155,7 @@ class Dash_Tab(ttk.Frame):
             self.after(1000, refresh_OV_stats)
 
         refresh_OV_stats()
-        
+
         def refresh_sys_stats():
 
             # Parameters for System
@@ -1165,14 +1164,15 @@ class Dash_Tab(ttk.Frame):
             cpufreq = psutil.cpu_freq()
             svmem = psutil.virtual_memory()
             swap = psutil.swap_memory()
-            #cpu = CPUTemperature()
+            cpu = CPUTemperature()
             # print(cpu)
-            cpu_temp = os.popen("vcgencmd measure_temp").readline()
+            #cpu_temp = os.popen("vcgencmd measure_temp").readline()
+            # cpu_temp[5:]
 
             self.curr_cpu_frq_label.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.cpu_temp_label.configure(
-                text=f"CPU Temp: {cpu_temp[5:]}")
+                text=f"CPU Temp: {cpu.temperature:.1f} °C")
             self.after(1000, refresh_sys_stats)
         refresh_sys_stats()
 
@@ -1332,7 +1332,22 @@ class Update_Tab(ttk.Frame):
                 conf_column = 0
             if up_button == "Update":
                 up_button_x_ttp = CreateToolTip(self.up_button_x,
-                                                "First thing's first, I'm the realest. Drop this and let the whole world ")
+                                                "sudo apt-get update -y |lolcat")
+            if up_button == "Update & Upgrade":
+                up_button_x_ttp = CreateToolTip(self.up_button_x,
+                                                "sudo apt-get update -y |lolcat && sudo apt-get upgrade -y|lolcat")
+
+            if up_button == "Full Upgrade":
+                up_button_x_ttp = CreateToolTip(self.up_button_x,
+                                                "sudo apt update -y && sudo apt full-upgrade -y && sudo apt dist-upgrade -y |lolcat")
+
+            if up_button == "Allow Sources":
+                up_button_x_ttp = CreateToolTip(self.up_button_x,
+                                                """sudo apt update 2>&1 1>/dev/null | sed -ne 's/.*NO_PUBKEY //p' | while read key; do if ! [[ ${keys[*]} =~ "$key" ]]; then sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key"; keys+=("$key"); fi; done""")
+            if up_button == "Remove Config Files":
+                up_button_x_ttp = CreateToolTip(self.up_button_x,
+                                                "sudo apt autoremove|lolcat")
+
         self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
 
 
@@ -1958,7 +1973,6 @@ class System_Ubuntu_Tab(ttk.Frame):
             if text == "Update\nSettings":
                 popen("software-properties-gtk")
 
-
         self.pi_ubu_set = LabelFrame(
             self,
             text="Raspberry Pi Settings",
@@ -2038,6 +2052,7 @@ class System_Ubuntu_Tab(ttk.Frame):
                 self.pi_ubu_button_x.config(image=self.update_icon)
             if pi_ubu_settings_btn == "Settings":
                 self.pi_ubu_button_x.config(image=self.source_settings_icon)
+
 
 class Autostarts_Tab(ttk.Frame):
     """
@@ -4892,13 +4907,11 @@ class Look_Tab(ttk.Frame):
         )
         self.separator_1.pack(fill="x", padx=40, side="top")
 
-        
-
         def pixel_settings(text):
             if text == "LXAppearace":
                 popen("lxappearance")
             if text == "OpenBox Conf":
-                popen(f"{legit} obconf")
+                popen("obconf")
 
             if text == "Pi Appeariance":
                 popen("env SUDO_ASKPASS=/usr/lib/pipanel/pwdpip.sh pipanel")
@@ -4914,7 +4927,7 @@ class Look_Tab(ttk.Frame):
                         ("all files", "*.*"),
                     ),
                 )
-            os.popen(f"pcmanfm --set-wallpaper {self.filename}")
+                os.popen(f"pcmanfm --set-wallpaper {self.filename}")
 
             if text == "Backup Panel\nSettings":
                 popen("mv ~/.config/lxpanel lxpanel.bak")
@@ -5916,6 +5929,10 @@ class Links_Tab(ttk.Frame):
                 popen("xdg-open  https://www.waveshare.com/wiki/Main_Page")
             if text == "My ZSH Prompt":
                 popen("xdg-open  https://github.com/actionschnitzel/my_zsh_prompt")
+            if text == "xfce-look.org":
+                popen("xdg-open  https://www.xfce-look.org/s/XFCE/browse/")
+            if text == "Brave Browser Nighly arm64":
+                popen("xdg-open  https://github.com/brave/brave-browser/releases")
 
         self.link_left = Frame(
             self,
@@ -5929,8 +5946,20 @@ class Links_Tab(ttk.Frame):
         self.link_left.pack(padx=40)
         self.link_left["background"] = maincolor
 
-        sources_d = ["Mankier.com (Commandline Database)", "Guake (Drop Down Terminal)", "OnBoard (Onscreen Keyboard)", "Draculatheme.com", "Starship (Cross-Shell-Promt)",
-                     "Linuxcommandlibrary.com", "LCD Wiki", "Offical Raspberry Pi Documentation", "Raspberry Pi Tutorials", "Papirus Nord Icon Theme", "WaveShare Wiki", "My ZSH Prompt"]
+        sources_d = ["Brave Browser Nighly arm64",
+                     "Draculatheme.com",
+                     "Guake (Drop Down Terminal)",
+                     "LCD Wiki",
+                     "Linuxcommandlibrary.com",
+                     "Mankier.com (Commandline Database)",
+                     "My ZSH Prompt",
+                     "Offical Raspberry Pi Documentation",
+                     "OnBoard (Onscreen Keyboard)",
+                     "Papirus Nord Icon Theme",
+                     "Raspberry Pi Tutorials",
+                     "Starship (Cross-Shell-Promt)",
+                     "WaveShare Wiki",
+                     "xfce-look.org"]
 
         sources_d1 = []
 
