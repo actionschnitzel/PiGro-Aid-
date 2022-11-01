@@ -3995,9 +3995,12 @@ class Software_Tab(ttk.Frame):
         def error_mass():
             e_mass = Error_Mass(self)
             e_mass.grab_set()
+            error_y2.config(text="Not in the list! Check for misspell.")
 
         def inst_btn1():
             if apt_inst_combo_box.get() == "":
+                error_mass()
+            elif apt_inst_combo_box.get() not in content:
                 error_mass()
             else:
                 inst_pop = APT_Installer_Popup(self)
@@ -4065,6 +4068,8 @@ class Software_Tab(ttk.Frame):
 
         def un_inst_btn1():
             if apt_un_combo_box.get() == "":
+                error_mass()
+            elif apt_un_combo_box.get() not in un_content:
                 error_mass()
             else:
                 uninst_pop = APT_Uninstaller_Popup(self)
@@ -6192,7 +6197,7 @@ class Error_Mass(tk.Toplevel):
             error_frame, text="Y U MAKE ERROR?", foreground=main_font, bg=maincolor
         )
         error_y.grid(row=0, column=1)
-
+        global error_y2
         error_y2 = Label(
             error_frame,
             text="You did not enter a value",
@@ -6203,7 +6208,7 @@ class Error_Mass(tk.Toplevel):
 
         error_btn = Button(
             error_frame,
-            text="...got IT!",
+            text="...got It!",
             foreground=main_font,
             borderwidth=0,
             highlightthickness=0,
