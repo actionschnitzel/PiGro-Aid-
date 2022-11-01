@@ -38,7 +38,7 @@ OR:
 #### Supported systems:
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
-- [Twister OS](https://twisteros.com/download.html)
+- Debian based distros in general
 
 
 #### :exclamation: Installation Process & Updates
