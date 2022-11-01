@@ -1,4 +1,11 @@
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9.png)
+<p align="center">
+    <a href="https://github.com/actionschnitzel/PiGro-Aid-/tree/main">
+        <img src="https://github.com/actionschnitzel/tingsandstuff/blob/main/9/proglogo.png" alt="PiGro logo">
+    </a>
+</p>
+
+
+![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9_2.png)
 
 ---
 
@@ -16,26 +23,6 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 
 ---
 
-# :hamburger: Latest Changes
-
-So what's new? For a long time I made all the backgrounds and icons myself. Since this is very time-consuming, I have mostly switched to using the Papirus icon theme.
-PiGro should feel like a system native application, so I reduced some things visually, such as the backgrounds. You can now choose between dark and light theme in the LOOK & FEEL tab.
-The dark theme is the default. The Light Theme is based on the standard colors of Raspberry Pi OS. The transparency can now also be switched on and off separately. I've also done my best to make everything clearer and better structured.
-
-I've read a lot on forums that people have deleted their taskbar/panel and don't know how to get it back. In LOOK & FEEL there is now a button that resets the taskbar to default.
-
-As always, there are many code improvements.
-[Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)
-
----
-
-# :dart: Next Update
-
-- [x] pkexec will replace sudo in pigro    
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/sudoless.jpeg)
-
----
-
 # :floppy_disk: Install
 
 Open a terminal and run this command:
@@ -50,8 +37,8 @@ OR:
 
 #### Supported systems:
 
-- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye): fully supported.
-- [Twister OS](https://twisteros.com/download.html): fully supported.
+- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
+- Debian based distros in general
 
 
 #### :exclamation: Installation Process & Updates
@@ -63,9 +50,14 @@ If you install PiGro using the script, you can simply use:
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
 ```
 
-#### For more infos visit: [Behavior in the different distributors](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Behavior-in-the-different-distributors)
+---
+
+# :hamburger: Latest Changes
+
+[Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)
 
 ---
+
 
 # :exclamation: Important
 
@@ -75,7 +67,7 @@ wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer
 
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
 
-#### :exclamation: For the time being, PiGro no longer has Ubuntu support. With every new Ubuntu release, more and more dependencies are missing and I have to work on work-arounds almost constantly. That's not fun.
+
 
 ---
 
