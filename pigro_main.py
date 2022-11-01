@@ -36,7 +36,7 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-from gpiozero import CPUTemperature
+
 
 
 class Get_Sys_Info():
@@ -108,17 +108,27 @@ class Get_Sys_Info():
     distro_get = distro.id()
     print("[Info]: Your Distro is: " + str(distro_get))
 
-    # Legitimation Vars // Test for Ubuntu compatiblety
+    # Location of config.txt
     global config_path
-    config_path = "/boot/config.txt"
-    global legit
-    legit = "sudo"
-
-    # Config.txt Path
-    if distro_get == "ubuntu":
+    if os.path.exists("/boot/config.txt"):
+        config_path = "/boot/config.txt"
+    elif os.path.exists("/boot/firmware/usercfg.txt"):
+        config_path = "/boot/firmware/usercfg.txt"
+    elif os.path.exists("/boot/firmware/config.txt"):
         config_path = "/boot/firmware/config.txt"
     else:
-        config_path = "/boot/config.txt"
+        print("[Info]: Can't find config.txt")
+
+
+    #Super User confirmation
+    global legit
+    legit = "pkexec"
+
+    # Config.txt Path
+    #if distro_get == "ubuntu":
+    #    config_path = "/boot/firmware/config.txt"
+    #else:
+    #    config_path = "/boot/config.txt"
 
     # Legitimation
     if distro_get == "ubuntu":
@@ -1164,15 +1174,14 @@ class Dash_Tab(ttk.Frame):
             cpufreq = psutil.cpu_freq()
             svmem = psutil.virtual_memory()
             swap = psutil.swap_memory()
-            cpu = CPUTemperature()
-            # print(cpu)
-            #cpu_temp = os.popen("vcgencmd measure_temp").readline()
-            # cpu_temp[5:]
+            cpu_temp = psutil.sensors_temperatures()
+            cpu_temp = round(cpu_temp['cpu_thermal'][0][1])
+        
 
             self.curr_cpu_frq_label.configure(
                 text=f"Current CPU Freq: {cpufreq.current:.0f} Mhz")
             self.cpu_temp_label.configure(
-                text=f"CPU Temp: {cpu.temperature:.1f} °C")
+                text=f"CPU Temp: {str(cpu_temp)}°C")
             self.after(1000, refresh_sys_stats)
         refresh_sys_stats()
 
@@ -1503,9 +1512,9 @@ class System_Tab(ttk.Frame):
                     compound=LEFT,
                 )
                 pop_btn_shut.pack(padx=5, pady=20)
-
+#hhh
             if text == "Edit Config.txt":
-                popen(f"{legit} mousepad /boot/config.txt")
+                popen(f"{legit} mousepad {config_path}")
 
         self.pi_set = LabelFrame(
             self,
