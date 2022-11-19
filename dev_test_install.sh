@@ -13,9 +13,9 @@ NC='\033[0m' # No Color
 
 printf "${GREEN}I now install dependencies${NC}\n\n"
 
-sudo apt-get install -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat
+sudo apt-get install -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin mpg123 lolcat
 
-pip3 install playsound psutil distro py-notifier
+
 
 clear
 
