@@ -25,7 +25,7 @@ ${NC}\n\n"
 
 
 sudo apt update
-sudo apt -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin lolcat
+sudo apt xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin lolcat -y
 
 pip3 install py-notifier
 
