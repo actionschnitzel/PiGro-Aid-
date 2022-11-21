@@ -25,7 +25,7 @@ ${NC}\n\n"
 
 
 sudo apt-get update
-sudo apt-get install -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat
+sudo apt-get install python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat xterm -y 
 
 pip3 install playsound psutil distro py-notifier
 
