@@ -3,24 +3,31 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-printf "${YELLOW}██████╗ ██╗ ██████╗ ██████╗  █████╗  
+printf "${YELLOW}
+██████╗ ██╗ ██████╗ ██████╗  █████╗  
 ██╔══██╗██║██╔════╝ ██╔══██╗██╔══██╗ 
 ██████╔╝██║██║  ██╗ ██████╔╝██║  ██║ 
 ██╔═══╝ ██║██║  ╚██╗██╔══██╗██║  ██║ 
 ██║     ██║╚██████╔╝██║  ██║╚█████╔╝ 
 ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚════╝  
 ${NC}"
-printf "${RED}         🅹🆄🆂🆃 🅲🅻🅸🅲🅺 🅸🆃${NC}\n\n"
-printf "Many tanks for using PiGro - Just Click I!\nHave Fun :-)"
-
-printf "${GREEN}\n\n🅸 🅽🅾🆆 🅸🅽🆂🆃🅰🅻🅻 🅳🅴🅿🅴🅽🅳🅴🅽🅲🅸🅴🆂.🅷🅰🅽🅶 🅾🅽...${NC}\n\n"
-
-printf "${YELLOW}xterm\npython3-pil\npython3-pil.imagetk\npython3-pip${NC}\n"
-printf "${YELLOW}python3-dev\npython3-distro\npython3-psutil\nlibnotify-bin\nlolcat${NC}\n\n"
+printf "${RED}
+░░█ █░█ █▀ ▀█▀   █▀▀ █░░ █ █▀▀ █▄▀   █ ▀█▀ █
+█▄█ █▄█ ▄█ ░█░   █▄▄ █▄▄ █ █▄▄ █░█   █ ░█░ ▄
+${NC}\n\n"
 sleep 2
-printf "${RED}🅶🅾!${NC}\n\n"
+clear
+sleep 2
+printf "${RED}
+█▀▄ █▀▀ █▀█ █▀▀ █▄░█ █▀▄ █▀▀ █▄░█ █▀▀ █ █▀▀ █▀
+█▄▀ ██▄ █▀▀ ██▄ █░▀█ █▄▀ ██▄ █░▀█ █▄▄ █ ██▄ ▄█
+${NC}\n\n"
 
-sudo apt-get install -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin mpg123 lolcat
+
+sudo apt update
+sudo apt -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin lolcat
+
+pip3 install py-notifier
 
 
 
@@ -31,12 +38,18 @@ cd
 
 if [ -d "$HOME/PiGro-Aid-" ] 
 then
-    printf "${YELLOW}[🆄🅿🅳🅰🆃🅴]${NC}I will install the newest version.\n\n" 
+    printf "${YELLOW}
+█░█ █▀█ █▀▄ ▄▀█ ▀█▀ █▀▀
+█▄█ █▀▀ █▄▀ █▀█ ░█░ ██▄
+${GREEN}I will install the newest version.\n\n" 
     rm -rf $HOME/PiGro-Aid-
     git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 else
-    printf "${YELLOW}[🅽🅴🆆 🅸🅽🆂🆃🅰🅻🅻]${NC}I will now install PiGro\n\n"
+    printf "${YELLOW}
+█▄░█ █▀▀ █░█░█   █ █▄░█ █▀ ▀█▀ ▄▀█ █░░ █░░
+█░▀█ ██▄ ▀▄▀▄▀   █ █░▀█ ▄█ ░█░ █▀█ █▄▄ █▄▄
+${GREEN}I will now install PiGro\n\n"
     git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
     cd PiGro-Aid-
 fi
@@ -80,14 +93,16 @@ Path=${DIRECTORY}/" > ~/.local/share/applications/pigro.desktop
 cd
 clear
 
-echo "
-
-printf "${NC}██████╗ ██╗ ██████╗ ██████╗  █████╗  
+printf "${YELLOW}
+██████╗ ██╗ ██████╗ ██████╗  █████╗  
 ██╔══██╗██║██╔════╝ ██╔══██╗██╔══██╗ 
 ██████╔╝██║██║  ██╗ ██████╔╝██║  ██║ 
 ██╔═══╝ ██║██║  ╚██╗██╔══██╗██║  ██║ 
 ██║     ██║╚██████╔╝██║  ██║╚█████╔╝ 
 ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚════╝  
 ${NC}"
-printf "${RED}         🆃🅷🅴 🆃🅰🆂🅺 🅸🆂 🅲🅾🅼🅿🅻🅴🆃🅴${NC}\n\n"
+printf "${RED}
+█ █▄░█ █▀ ▀█▀ ▄▀█ █░░ █░░ ▄▀█ ▀█▀ █ █▀█ █▄░█   █ █▀   █▀▄ █▀█ █▄░█ █▀▀
+█ █░▀█ ▄█ ░█░ █▀█ █▄▄ █▄▄ █▀█ ░█░ █ █▄█ █░▀█   █ ▄█   █▄▀ █▄█ █░▀█ ██▄
+${NC}"
 printf "${GREEN}You can close this window now\n${NC}"
