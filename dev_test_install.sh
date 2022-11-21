@@ -24,10 +24,10 @@ printf "${RED}
 ${NC}\n\n"
 
 
-sudo apt update
-sudo apt xterm python3-pil python3-pil.imagetk python3-pip python3-dev python3-distro python3-psutil libnotify-bin lolcat -y
+sudo apt-get update
+sudo apt-get install -y xterm python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat
 
-pip3 install py-notifier
+pip3 install playsound psutil distro py-notifier
 
 
 
