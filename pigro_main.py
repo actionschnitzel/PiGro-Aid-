@@ -36,7 +36,7 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-
+import subprocess
 
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
@@ -482,26 +482,17 @@ class Dash_Tab(ttk.Frame):
             git_up = Update_Pop(self)
             git_up.grab_set()
 
-        git_check_skript = """#!/bin/sh
         
-        UPSTREAM=${1:-'@{u}'}
-        LOCAL=$(git rev-parse @)
-        REMOTE=$(git rev-parse "$UPSTREAM")
-        BASE=$(git merge-base @ "$UPSTREAM")
+        git_check_skript = f"{Application_path}/scripts/git_check_skript.sh"
 
-        if [ $LOCAL = $REMOTE ]; then
-            echo "Up-to-date"
-        else
-            echo "Diverged"
-        fi"""
-        ...
-        git_check = os.popen(str(git_check_skript))
+        
 
-        git_check = git_check.readlines()
-        if git_check == "Up-to-date\n":
-            print(f"[Info]: PiGro is {git_check[0][:-1]}")
+        result = subprocess.run([git_check_skript], stdout=subprocess.PIPE)
+        result.stdout
+        if result.stdout == "Up-to-date":
+            print(f"[Info]: PiGro is Up To Date")
         else:
-            print("[Info]: An Update for PiGro is avalible")
+            print(f"[Info]: {result.stdout}")
             git_up()
 
         # Ram Size
