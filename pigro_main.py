@@ -36,10 +36,15 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-import subprocess
+import requests
+
 
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
+
+    # MUST BE UPDATED WITH EVER NEW RELEASE!
+    global current_version
+    current_version = float(23.01)
 
     # Say Hallo!
     global user
@@ -186,7 +191,7 @@ class Get_Sys_Info:
         flat_count = popen("flatpak list | wc --lines")
         flat_counted = flat_count.read()
         flat_count.close()
-        print(f"[Info]: {flat_counted[:-1]} Flatpaks")
+        print(f"[Info]: {flat_counted[:-1]} Flatpaks are installed")
     else:
         print("[Info]: Flatpak is not installed")
 
@@ -291,6 +296,16 @@ class Get_Sys_Info:
         if str("transparency = 0.95") in line:
             translate_p = "0.95"
             print("[Info]: Transparency 5%")
+
+    # Gets latest github release
+    url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
+    r = requests.get(url)
+
+    global github_release
+    github_release = r.url.split("/")[-1][
+        1:-2
+    ]  # [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
+    github_release = float(github_release)
 
 
 class MainApplication(tk.Tk):
@@ -439,13 +454,13 @@ class MainApplication(tk.Tk):
             background=nav_color,
             foreground=main_font,
             font=font_14,
-            width=12,
+            width=10,
             highlightthickness=0,
         )
         noteStyler.configure("TFrame", background=maincolor)
         noteStyler.map(
             "TNotebook.Tab",
-            background=[("selected", maincolor)],
+            background=[("selected", nav_color)],
             foreground=[("selected", "#d4244d")],
         )
 
@@ -478,23 +493,22 @@ class Dash_Tab(ttk.Frame):
     ):
         super().__init__()
 
-        def git_up():
-            git_up = Update_Pop(self)
-            git_up.grab_set()
+        # Checks if Update Window pops up
 
-        
-        git_check_skript = f"{Application_path}/scripts/git_check_skript.sh"
+        def update_checker():
+            up_chk = Update_Pop(self)
+            up_chk.grab_set()
 
-        
-
-        result = subprocess.run([git_check_skript], stdout=subprocess.PIPE)
-        result.stdout
-        if result.stdout == "Up-to-date":
-            print(f"[Info]: PiGro is Up To Date")
-        else:
-            print(f"[Info]: {result.stdout}")
-            git_up()
-
+        try:
+            if github_release > current_version:
+                print("[Info]: An Update is avalible !!!")
+                update_checker()
+            elif github_release < current_version:
+                print("WTF HAPPEND HERE?!! You must be Actionschnitzel !!!")
+            elif github_release == current_version:
+                print("[Info]: PiGro is Up To Date !!!")
+        except:
+            print("[Info]: Version Check not Possible")
         # Ram Size
         def get_size(bytes, suffix="B"):
             """
@@ -1105,7 +1119,7 @@ class Dash_Tab(ttk.Frame):
             self.ov_display_frame,
             anchor="w",
             justify=LEFT,
-            text="Arm Freq: not configured",
+            text="Arm Freq: N/A",
             highlightthickness=0,
             borderwidth=2,
             background=nav_color,
@@ -1120,7 +1134,7 @@ class Dash_Tab(ttk.Frame):
             self.ov_display_frame,
             anchor="w",
             justify=LEFT,
-            text="Gpu Freq: not configured",
+            text="Gpu Freq: N/A",
             highlightthickness=0,
             borderwidth=2,
             background=nav_color,
@@ -1135,7 +1149,7 @@ class Dash_Tab(ttk.Frame):
             self.ov_display_frame,
             anchor="w",
             justify=LEFT,
-            text="Gpu Mem: not configured",
+            text="Gpu Mem: N/A",
             highlightthickness=0,
             borderwidth=2,
             background=nav_color,
@@ -1150,7 +1164,7 @@ class Dash_Tab(ttk.Frame):
             self.ov_display_frame,
             anchor="w",
             justify=LEFT,
-            text="Over Voltage: not configured",
+            text="Over Voltage: N/A",
             highlightthickness=0,
             borderwidth=2,
             background=nav_color,
@@ -1165,7 +1179,7 @@ class Dash_Tab(ttk.Frame):
             self.ov_display_frame,
             anchor="w",
             justify=LEFT,
-            text="Force Turbo: not configured",
+            text="Force Turbo: N/A",
             highlightthickness=0,
             borderwidth=2,
             background=nav_color,
@@ -1224,7 +1238,7 @@ class Dash_Tab(ttk.Frame):
 
                 if "#arm_freq=800" in line:
                     dash_arm_f_display.config(
-                        text="Arm Freq: not configured",
+                        text="Arm Freq: N/A",
                         foreground=main_font,
                         font=font_12,
                     )
@@ -1445,7 +1459,7 @@ class Update_Tab(ttk.Frame):
                     filetypes=((".deb files", "*.deb"),),
                 )
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "sudo dpkg -i {self.filename} && sleep 5 && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "sudo dpkg -i {self.filename} && exit ; exec bash"'
                     % wid
                 )
 
@@ -4237,8 +4251,8 @@ class Software_Tab(ttk.Frame):
         apt_un_combo_box.grid(column=2, row=0)
         self.un_apt_inst_btn.grid(column=1, row=0)
 
-        apt_inst_combo_box.set("Select/Search A Pakage -->")
-        apt_un_combo_box.set("Select/Search A Pakage -->")
+        apt_inst_combo_box.set("Select/Search a pakage -->")
+        apt_un_combo_box.set("Select/Search a pakage -->")
 
         def apt_un_combo_box_pop_kontext_menu(event):
             un_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -4302,7 +4316,6 @@ class Software_Tab(ttk.Frame):
                         f"xterm -e 'bash -c \"~/pi-apps/manage install {piapps_inst_combo_box.get()}; exec bash\"'"
                     )
 
-        # jjjjj
         global piapps_inst_combo_box
         piapps_inst_combo_box = ttk.Combobox(self.piapps_frame)
         piapps_inst_combo_box["values"] = content_pa
@@ -4434,8 +4447,8 @@ class Software_Tab(ttk.Frame):
         piapps_un_combo_box.grid(column=2, row=0)
         un_piapps_inst_btn.grid(column=1, row=0)
         if piapps_path == True:
-            piapps_inst_combo_box.set("Select/Search A Pakage -->")
-            piapps_un_combo_box.set("Select/Search A Pakage -->")
+            piapps_inst_combo_box.set("Select/Search a pakage -->")
+            piapps_un_combo_box.set("Select/Search a pakage -->")
 
         if piapps_path == False:
             piapps_inst_btn.config(state=DISABLED)
@@ -4854,6 +4867,24 @@ class Git_More_Tab(ttk.Frame):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
+        self.app_albert = PhotoImage(file=r"images/apps/app_albert.png")
+        self.app_argon = PhotoImage(file=r"images/apps/app_argon.png")
+        self.app_deskpi = PhotoImage(file=r"images/apps/app_deskpi.png")
+        self.app_doom = PhotoImage(file=r"images/apps/app_doom.png")
+        self.app_duke = PhotoImage(file=r"images/apps/app_duke.png")
+        self.app_fan_s = PhotoImage(file=r"images/apps/app_fan_s.png")
+        self.app_ferdium = PhotoImage(file=r"images/apps/app_ferdium.png")
+        self.app_gnome_s = PhotoImage(file=r"images/apps/app_gnome_s.png")
+        self.app_papirus = PhotoImage(file=r"images/apps/app_papirus.png")
+        self.app_pi_apps = PhotoImage(file=r"images/apps/app_pi_apps.png")
+        self.app_pi_kiss = PhotoImage(file=r"images/apps/app_pi_kiss.png")
+        self.app_space_c = PhotoImage(file=r"images/apps/app_space_c.png")
+        self.app_sub_m = PhotoImage(file=r"images/apps/app_sub_m.png")
+        self.app_sub_t = PhotoImage(file=r"images/apps/app_sub_t.png")
+        self.app_warpinator = PhotoImage(file=r"images/apps/app_warpinator.png")
+        self.app_xpad = PhotoImage(file=r"images/apps/app_xpad.png")
+        self.place_holder = PhotoImage(file=r"images/apps/git_more_placeholder.png")
+
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
@@ -4861,30 +4892,34 @@ class Git_More_Tab(ttk.Frame):
             if text == "Albert":
                 self.appname_header.config(text="Albert")
                 self.app_disc.config(
-                    text="Desktop agnostic launcher\nAccess everything with virtually zero effort.\nRun applications, open files or their paths,\nopen bookmarks in your browser,\nsearch the web, calculate things and a lot more.\n\nDowload-Link:"
+                    text="Desktop agnostic launcher\nAccess everything with virtually zero effort.\nRun applications, open files or their paths,\nopen bookmarks in your browser,\nsearch the web, calculate things and a lot more.\nDowload-Link:"
                 )
                 self.web_link.config(
                     text=r"https://software.opensuse.org/download.html?project=home:manuelschneid3r&package=albert"
                 )
+                self.app_pic.config(image=self.app_albert)
                 self.app_inst.forget()
             if text == "Argon One Driver":
                 self.appname_header.config(text="Argon One/M.2 Case Driver")
-                self.app_disc.config(text="Driver for the Argon One Case")
+                self.app_disc.config(text="Driver for the Argon One Case\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://www.waveshare.com/wiki/PI4-CASE-ARGON-ONE"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_argon)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end", "curl https://download.argon40.com/argon1.sh | bash"
                 )
+                self.app_pic.config(text="Argon")
             if text == "DeskPi Pro Driver":
                 self.appname_header.config(text="DeskPi Pro Driver")
                 self.app_disc.config(
-                    text="Driver & Fan Control for the DeskPi Pro Case"
+                    text="Driver & Fan Control for the DeskPi Pro Case\n\n\n\n\n"
                 )
                 self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_deskpi)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4892,11 +4927,12 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "FanShim Driver":
                 self.appname_header.config(text="Fan Shim Driver")
-                self.app_disc.config(text="Driver for the Pimoroni FanShim")
+                self.app_disc.config(text="Driver for the Pimoroni FanShim\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://learn.pimoroni.com/article/getting-started-with-fan-shim"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_fan_s)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4905,24 +4941,27 @@ class Git_More_Tab(ttk.Frame):
             if text == "Papirus Icon Theme":
                 self.appname_header.config(text="Papirus Icon Theme/Folders")
                 self.app_disc.config(
-                    text="The popular icon theme plus the ability to change the order color"
+                    text="The popular icon theme plus the ability to change the order color\n\n\n\n\n"
                 )
                 self.web_link.config(
                     text=r"https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_papirus)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
                     "Icon Theme:\nwget -qO- https://git.io/papirus-icon-theme-install | sh\n\nFolder Theme:\nwget -qO- https://git.io/papirus-folders-install | sh\n\nHow To:\nSelect the papirus icon theme then:\npapirus-folders -C brown --theme Papirus-Dark\n\nColors:\nadwaita,black,bluegrey,breeze,brown,carminecyan,darkcyan,\ndeeporange,green,grey,indigo,magenta,nordic,orange,palebrown,\npaleorange,pink,red,teal,violet,white,yaru,yellow",
                 )
+                self.app_pic.config(image=self.app_papirus)
             if text == "Pi-Apps":
                 self.appname_header.config(text="Pi-Apps")
                 self.app_disc.config(
-                    text="The go to apps store when it comes to\nprograms that are not in repository."
+                    text="The go to apps store when it comes to\nprograms that are not in repository.\n\n\n\n"
                 )
                 self.web_link.config(text=r"https://pi-apps.io/")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_pi_apps)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4931,10 +4970,11 @@ class Git_More_Tab(ttk.Frame):
             if text == "PiKiss":
                 self.appname_header.config(text="piKiss")
                 self.app_disc.config(
-                    text="System Tweak Tool & Game Installer for ARM/Raspberry Pi"
+                    text="System Tweak Tool & Game Installer for ARM/Raspberry Pi\n\n\n\n\n"
                 )
                 self.web_link.config(text=r"https://github.com/jmcerrejon/PiKISS")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_pi_kiss)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4942,9 +4982,10 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "Sublime Merge aarch64":
                 self.appname_header.config(text="Sublime Merge aarch64")
-                self.app_disc.config(text="Great Git GUI")
+                self.app_disc.config(text="Great Git GUI\n\n\n\n\n")
                 self.web_link.config(text=r"https://www.sublimemerge.com/")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_sub_m)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4952,9 +4993,10 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "Sublime Text aarch64":
                 self.appname_header.config(text="Sublime Text aarch64")
-                self.app_disc.config(text="Very good Text Editor")
+                self.app_disc.config(text="Very good Text Editor\n\n\n\n\n")
                 self.web_link.config(text=r"https://www.sublimetext.com/")
-                self.app_inst.pack(anchor="w")
+                self.app_inst.pack(anchor="w", pady=10)
+                self.app_pic.config(image=self.app_sub_t)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4963,10 +5005,11 @@ class Git_More_Tab(ttk.Frame):
             if text == "Xpad-Neo":
                 self.appname_header.config(text="Xpad Neo")
                 self.app_disc.config(
-                    text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers"
+                    text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers\n\n\n"
                 )
                 self.web_link.config(text=r"https://github.com/atar-axis/xpadneo")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_xpad)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4975,10 +5018,11 @@ class Git_More_Tab(ttk.Frame):
             if text == "Ferdium":
                 self.appname_header.config(text="Ferdium arm64/armv7l")
                 self.app_disc.config(
-                    text="All your services in one place\nbuilt by the community"
+                    text="All your services in one place\nbuilt by the community\n\n\n\n"
                 )
                 self.web_link.config(text=r"https://ferdium.org/")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_ferdium)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4986,11 +5030,12 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "eDuke32":
                 self.appname_header.config(text="eDuke32 Flathub")
-                self.app_disc.config(text="A Duke Nukem 3D Source Port")
+                self.app_disc.config(text="A Duke Nukem 3D Source Port\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://flathub.org/apps/details/com.eduke32.EDuke32"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_duke)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -4999,9 +5044,10 @@ class Git_More_Tab(ttk.Frame):
 
             if text == "GZDoom":
                 self.appname_header.config(text="GZDoom 3.4.1_armhf")
-                self.app_disc.config(text="A Doom Source Port")
+                self.app_disc.config(text="A Doom Source Port\n\n\n\n\n")
                 self.web_link.config(text=r"https://zdoom.org/index")
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_doom)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -5011,12 +5057,14 @@ class Git_More_Tab(ttk.Frame):
             if text == "Space Cadet Pinball":
                 self.appname_header.config(text="Space Cadet Pinball (WinXP)")
                 self.app_disc.config(
-                    text="Reverse engineering of 3D Pinball\nfor Windows - Space Cadet,\na game bundled with Windows."
+                    text="Reverse engineering of 3D Pinball\nfor Windows - Space Cadet,\na game bundled with Windows.\n\n\n"
                 )
+                self.app_pic.config(image=self.app_space_c)
                 self.web_link.config(
                     text=r"https://github.com/k4zmu2a/SpaceCadetPinball"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_space_c)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -5026,12 +5074,13 @@ class Git_More_Tab(ttk.Frame):
             if text == "Gnome-Software + Flatpak":
                 self.appname_header.config(text="Gnome-Software + Flatpak Support")
                 self.app_disc.config(
-                    text="The popular pakage manager GUI + Flatpak Plugin"
+                    text="The popular pakage manager GUI + Flatpak Plugin\n\n\n\n\n"
                 )
                 self.web_link.config(
                     text=r"https://gitlab.gnome.org/GNOME/gnome-software"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_pic.config(image=self.app_gnome_s)
+                self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -5040,11 +5089,14 @@ class Git_More_Tab(ttk.Frame):
 
             if text == "Warpinator":
                 self.appname_header.config(text="Warpinator (Flathub)")
-                self.app_disc.config(text="Linux Mints awesome data transfer tool")
+                self.app_disc.config(
+                    text="Linux Mints awesome data transfer tool\n\n\n\n\n"
+                )
                 self.web_link.config(
                     text=r"https://flathub.org/apps/details/org.x.Warpinator"
                 )
-                self.app_inst.pack(anchor="w")
+                self.app_inst.pack(anchor="w", pady=10)
+                self.app_pic.config(image=self.app_warpinator)
                 self.app_inst.delete("1.0", END)
                 self.app_inst.insert(
                     "end",
@@ -5160,6 +5212,20 @@ class Git_More_Tab(ttk.Frame):
         )
         self.web_link.pack(anchor="w", pady=10)
         self.web_link.bind("<Button-1>", callback)
+
+        self.app_pic = Label(
+            self.link_right,
+            justify="left",
+            text=" ",
+            image=self.place_holder,
+            highlightthickness=0,
+            borderwidth=2,
+            background=maincolor,
+            foreground=main_font,
+            font=font_12,
+            anchor="w",
+        )
+        self.app_pic.pack(anchor="w")
 
         self.app_inst = Text(
             self.link_right,
@@ -5380,11 +5446,11 @@ class Look_Tab(ttk.Frame):
                 popen("xfwm4-settings")
             if text == "Xfce4 Appearance":
                 popen("xfce4-appearance-settings")
-            if text == "WiFi Fix":
+            if text == "Bluetooth Fix":
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"{legit} apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware; exec bash\"'"
                 )
-            if text == "Bluetooth Fix":
+            if text == "WiFi Fix":
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"{Application_path}/scripts/xfce4fix.sh; exec bash\"'"
                 )
@@ -5715,7 +5781,7 @@ class Look_Tab(ttk.Frame):
 
 
 class Update_Pop(tk.Toplevel):
-    """child window that lets one install zram"""
+    """NOT IMPLEMENTED YET!"""
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -5732,15 +5798,13 @@ class Update_Pop(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.config(bg=maincolor)
 
-        # self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
-
-        def z_ram_install():
+        def pigro_github_update():
             popen(
                 f"x-terminal-emulator -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash; exec bash\"'"
             )
             app.quit()
 
-        def z_ram_uninstall():
+        def pigro_piapps_update():
             popen(
                 f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage update PiGro; exec bash\"'"
             )
@@ -5758,7 +5822,7 @@ class Update_Pop(tk.Toplevel):
         GLabel_0["font"] = font_14
         GLabel_0["bg"] = maincolor
         GLabel_0["fg"] = main_font
-        GLabel_0["text"] = "An Update For PiGro - Just Click It!\nIs Avaleble."
+        GLabel_0["text"] = "An Update For PiGro - Just Click It!\nIs Available."
         GLabel_0.pack(pady=20)
 
         GButton_883 = tk.Button(self)
@@ -5771,7 +5835,7 @@ class Update_Pop(tk.Toplevel):
         GButton_883["justify"] = "center"
         GButton_883["text"] = "Github Update"
         GButton_883.pack(pady=10)
-        GButton_883["command"] = z_ram_install
+        GButton_883["command"] = pigro_github_update
 
         GButton_585 = tk.Button(self)
         GButton_585["bg"] = ext_btn
@@ -5783,12 +5847,19 @@ class Update_Pop(tk.Toplevel):
         GButton_585["justify"] = "center"
         GButton_585["text"] = "Pi-Apps Update"
         GButton_585.pack()
-        GButton_585["command"] = z_ram_uninstall
+        GButton_585["command"] = pigro_piapps_update
 
-        if piapps_path == False:
+        PATH = f"/home/{user}/pi-apps/data/status/PiGro"
+
+        if os.path.isfile(PATH) is True:
+            pigro_via_pi_apps = open(f"/home/{user}/pi-apps/data/status/PiGro", "r")
+            install_status = pigro_via_pi_apps.read()
+            pigro_via_pi_apps.close()
+            if install_status.strip() == "installed":
+                GButton_883.forget()
+
+        else:
             GButton_585.forget()
-        if piapps_path == True:
-            GButton_883.forget()
 
 
 class Z_Ram_Pop(tk.Toplevel):
