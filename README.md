@@ -22,7 +22,7 @@ PiGro does many commands that have to be entered via the terminal with one or tw
 PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.
     
 ---
-# :fried_shrimp: 23.01 Update Preview > [![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/youtube.png?raw=true)](https://www.youtube.com/watch?v=Wp6U14VW4G8)
+[![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/youtube.png?raw=true)](https://www.youtube.com/watch?v=Wp6U14VW4G8)
 
 
 ---
