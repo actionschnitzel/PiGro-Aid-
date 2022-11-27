@@ -592,7 +592,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
 
-        self.sys_logo.pack()
+        self.sys_logo.place(x=65,y=20, width=885)#
         self.sys_logo["background"] = maincolor
 
         self.pigro_img = ImageTk.PhotoImage(
@@ -634,7 +634,7 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_frame.pack(pady=20)
+        self.info_main_frame.place(x=65,y=240)#pack(pady=20)
         self.info_main_frame["background"] = nav_color
 
         self.info_main_Update_Tab = Frame(
@@ -645,9 +645,10 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
             pady=20,
             padx=10,
+
         )
 
-        self.info_main_Update_Tab.pack(expand=True, fill="x", padx=55)
+        self.info_main_Update_Tab.place(x=65,y=750, width=885)#pack(padx=67, anchor="n", fill="x", expand=True,)
         self.info_main_Update_Tab["background"] = nav_color
 
         # Hide/Show Butten & Label
@@ -1321,10 +1322,10 @@ class Update_Tab(ttk.Frame):
         self.background = maincolor
 
         self.rep_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=0, relief=GROOVE, pady=10, padx=10
+            self, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-        self.rep_main_frame.pack(pady=5, padx=5)
-        self.rep_main_frame["background"] = maincolor
+        self.rep_main_frame.pack(pady=20, padx=5)
+        self.rep_main_frame["background"] = nav_color
 
         self.off_rep_frame = LabelFrame(
             self.rep_main_frame,
@@ -1334,12 +1335,12 @@ class Update_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            pady=10,
-            padx=10,
+            padx=20,
+            pady=20,
         )
 
         self.off_rep_frame.grid(row=0, column=0)
-        self.off_rep_frame["background"] = maincolor
+        self.off_rep_frame["background"] = nav_color
 
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame,
@@ -1354,7 +1355,7 @@ class Update_Tab(ttk.Frame):
         )
 
         self.man_rep_frame.grid(row=0, column=1, rowspan=10)
-        self.man_rep_frame["background"] = maincolor
+        self.man_rep_frame["background"] = nav_color
 
         self.man_left = Frame(
             self.man_rep_frame,
@@ -1365,7 +1366,7 @@ class Update_Tab(ttk.Frame):
             padx=10,
         )
         self.man_left.pack(side=LEFT)
-        self.man_left["background"] = maincolor
+        self.man_left["background"] = nav_color
 
         self.man_right = Frame(
             self.man_rep_frame,
@@ -1376,7 +1377,7 @@ class Update_Tab(ttk.Frame):
             padx=10,
         )
         self.man_right.pack(side=LEFT)
-        self.man_right["background"] = maincolor
+        self.man_right["background"] = nav_color
 
         def open_ppa(text):
             os.popen("sudo mousepad /etc/apt/sources.list.d/" + text)
@@ -1406,7 +1407,7 @@ class Update_Tab(ttk.Frame):
             font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             foreground=info_color,
         ).pack()
 
@@ -1418,12 +1419,7 @@ class Update_Tab(ttk.Frame):
             self.repo.insert(0, line[0:-1])
             self.repo.pack(anchor=W)
 
-        self.termf = Frame(
-            self, height=270, width=700, padx=10, highlightthickness=0, borderwidth=0
-        )
-        global wid
-        wid = self.termf.winfo_id()
-        self.termf["background"] = maincolor
+
 
         def up_action(text):
             """Passes commands du auto generated buttons"""
@@ -1485,11 +1481,28 @@ class Update_Tab(ttk.Frame):
             borderwidth=0,
             relief=GROOVE,
             highlightthickness=0,
-            padx=5,
-            pady=5,
+            padx=20,
+            pady=20,
         )
-        self.update_btn_frame.pack(padx=30, anchor="w")
-        self.update_btn_frame["background"] = maincolor
+        self.update_btn_frame.pack(padx=28,pady=10, anchor="n",expand=True,fill="x")
+        self.update_btn_frame["background"] = nav_color
+
+        self.btn_frame = Frame(
+            self.update_btn_frame,
+            borderwidth=0,
+            relief=GROOVE,
+            highlightthickness=0,
+            background=nav_color
+        )
+        self.btn_frame.pack(anchor="w")
+
+        self.termf = Frame(
+            self.update_btn_frame, height=300, width=960, padx=20, highlightthickness=0, borderwidth=0
+        )
+        global wid
+        wid = self.termf.winfo_id()
+        self.termf["background"] = nav_color
+
 
         # Button list
         up_button_list = [
@@ -1510,7 +1523,7 @@ class Update_Tab(ttk.Frame):
         for up_button in up_button_list:
             # Generates buttons from list with grid
             self.up_button_x = Button(
-                self.update_btn_frame,
+                self.btn_frame,
                 width=20,
                 anchor="w",
                 text=up_button,
@@ -1559,7 +1572,7 @@ class Update_Tab(ttk.Frame):
                     "--configure package...|-a|--pending\nReconfigure an unpacked package. If -a  or  --pending  is  given\ninstead  of  package, all unpacked but unconfigured packages are\nconfigured.",
                 )
 
-        self.termf.pack(padx=45, pady=20, anchor=W, fill=BOTH)
+        self.termf.pack(anchor="w")
 
 
 class System_Tab(ttk.Frame):
@@ -1720,7 +1733,7 @@ class System_Tab(ttk.Frame):
             padx=10,
         )
         self.pi_set.pack(pady=20, padx=40, fill="both")  #
-        self.pi_set["background"] = maincolor
+        self.pi_set["background"] = nav_color
 
         pi_settings_btn_list = [
             "Raspi-Config CLI",
@@ -1741,7 +1754,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=pi_settings_btn: pi_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -1762,8 +1775,8 @@ class System_Tab(ttk.Frame):
                 self.pi_button_x.config(image=self.edit_config_txt_icon)
 
         # Separator Line
-        self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        self.separator.pack(fill="x", padx=40, side="top")
+        #self.separator = tk.Frame(self, bd=0, relief="sunken", height=1)
+        #self.separator.pack(fill="x", padx=40, side="top")
 
         # Raspberry Pi Settings
         def device_settings(text):
@@ -1800,7 +1813,7 @@ class System_Tab(ttk.Frame):
             width=300,
         )
         self.device_set.pack(pady=20, padx=40, fill="both")  #
-        self.device_set["background"] = maincolor
+        self.device_set["background"] = nav_color
 
         device_settings_btn_list = [
             "Gparted",
@@ -1825,7 +1838,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=device_settings_btn: device_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -1867,8 +1880,8 @@ class System_Tab(ttk.Frame):
                     self.device_button_x.configure(state=DISABLED)
 
         # Separator Line
-        self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        self.separator.pack(fill="x", padx=40, side="top")
+        #self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
+        #self.separator.pack(fill="x", padx=40, side="top")
 
         def ops_settings(text):
             if text == "FM God Mode":
@@ -1904,7 +1917,7 @@ class System_Tab(ttk.Frame):
 
                 def do_it():
                     popen(
-                        f"xterm -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'"
+                        f"x-terminal-emulator -e 'bash -c \"{legit} BRANCH=next rpi-update; exec bash\"'"
                     )
                     print("[Info]: Kernel Upgrade GO!")
                     pop_kernel.destroy()
@@ -1990,7 +2003,7 @@ class System_Tab(ttk.Frame):
             width=300,
         )
         self.ops_set.pack(pady=20, padx=40, fill="both")
-        self.ops_set["background"] = maincolor
+        self.ops_set["background"] = nav_color
 
         ops_settings_btn_list = [
             "FM God Mode",
@@ -2016,7 +2029,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=ops_settings_btn: ops_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2141,7 +2154,7 @@ class System_Ubuntu_Tab(ttk.Frame):
 
         def pi_ubu_settings(text):
             if text == "Raspi-Config CLI":
-                popen(f"xterm -e 'bash -c \"{legit} raspi-config; exec bash\"'")
+                popen(f"x-terminal-emulator -e 'bash -c \"{legit} raspi-config; exec bash\"'")
 
             if text == "Edit Config.txt":
                 popen(
@@ -2149,10 +2162,10 @@ class System_Ubuntu_Tab(ttk.Frame):
                 )
 
             if text == "NeoFetch":
-                popen("xterm -e 'bash -c \"neofetch; exec bash\"'")
+                popen("x-terminal-emulator -e 'bash -c \"neofetch; exec bash\"'")
 
             if text == "DeskpiPro Control":
-                popen("xterm -e 'bash -c \"deskpi-config; exec bash\"'")
+                popen("x-terminal-emulator -e 'bash -c \"deskpi-config; exec bash\"'")
 
             if text == "Bash History":
                 popen(f"xdg-open {home}/.bash_history")
@@ -2316,7 +2329,7 @@ class Autostarts_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            background=maincolor,
+            background=nav_color,
             pady=20,
             padx=20,
         )
@@ -2325,7 +2338,7 @@ class Autostarts_Tab(ttk.Frame):
         auto_button_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             highlightthickness=0,
             pady=10,
         )
@@ -2334,7 +2347,7 @@ class Autostarts_Tab(ttk.Frame):
         auto_select_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             highlightthickness=0,
             pady=10,
         )
@@ -2434,7 +2447,7 @@ class Autostarts_Tab(ttk.Frame):
             text="Selected: \n",
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=nav_color,
             foreground="#d4244d",
             font=font_14,
         )
@@ -4309,11 +4322,11 @@ class Software_Tab(ttk.Frame):
                 if substring in fullstring:
                     replace_space = fullstring.replace(" ", "\ ")
                     popen(
-                        f"xterm -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
+                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
                     )
                 else:
                     popen(
-                        f"xterm -e 'bash -c \"~/pi-apps/manage install {piapps_inst_combo_box.get()}; exec bash\"'"
+                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {piapps_inst_combo_box.get()}; exec bash\"'"
                     )
 
         global piapps_inst_combo_box
@@ -4405,11 +4418,11 @@ class Software_Tab(ttk.Frame):
                 if substring in fullstring:
                     replace_space = fullstring.replace(" ", "\ ")
                     popen(
-                        f"xterm -e 'bash -c \"~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
+                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
                     )
                 else:
                     popen(
-                        f"xterm -e 'bash -c \"~/pi-apps/manage uninstall {piapps_un_combo_box.get()}; exec bash\"'"
+                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {piapps_un_combo_box.get()}; exec bash\"'"
                     )
 
         self.un_piapps_ico = Label(
@@ -4491,7 +4504,7 @@ class Software_Tab(ttk.Frame):
                 error_mass_0()
             else:
                 popen(
-                    f"xterm -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
+                    f"x-terminal-emulator -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
                 )
 
         self.snap_ico = Label(
@@ -4574,7 +4587,7 @@ class Software_Tab(ttk.Frame):
                 error_mass_0()
             else:
                 popen(
-                    f" xterm -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
+                    f" x-terminal-emulator -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
                 )
 
         self.flatp_ico = Label(
@@ -4889,6 +4902,7 @@ class Git_More_Tab(ttk.Frame):
             webbrowser.open_new(event.widget.cget("text"))
 
         def git_tab(text):
+            
             if text == "Albert":
                 self.appname_header.config(text="Albert")
                 self.app_disc.config(
@@ -5169,9 +5183,10 @@ class Git_More_Tab(ttk.Frame):
             highlightcolor="white",
             relief=GROOVE,
             pady=20,
+            padx=10
         )
-        self.link_right.pack(side=LEFT, expand=True, fill=BOTH)
-        self.link_right["background"] = maincolor
+        self.link_right.pack(side=LEFT, expand=True, fill=BOTH,padx=20)
+        self.link_right["background"] = nav_color
 
         self.appname_header = Label(
             self.link_right,
@@ -5179,7 +5194,7 @@ class Git_More_Tab(ttk.Frame):
             width=50,
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=font_16,
             justify="left",
@@ -5194,7 +5209,7 @@ class Git_More_Tab(ttk.Frame):
             width=50,
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=font_12,
             anchor="w",
@@ -5205,7 +5220,7 @@ class Git_More_Tab(ttk.Frame):
             self.link_right,
             text=r" ",
             width=50,
-            background=maincolor,
+            background=nav_color,
             foreground="blue",
             cursor="hand2",
             anchor="w",
@@ -5220,7 +5235,7 @@ class Git_More_Tab(ttk.Frame):
             image=self.place_holder,
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=font_12,
             anchor="w",
@@ -5391,7 +5406,7 @@ class Look_Tab(ttk.Frame):
             width=300,
         )
         self.gui_set.pack(pady=20, padx=40, fill="both")  #
-        self.gui_set["background"] = maincolor
+        self.gui_set["background"] = nav_color
 
         gui_settings_btn_list = [
             "Tasksel",
@@ -5413,7 +5428,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=gui_settings_btn: gui_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5436,8 +5451,8 @@ class Look_Tab(ttk.Frame):
                 self.gui_button_x.config(image=self.fm_godmode_icon)
 
         # Separator Line
-        self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        self.separator.pack(fill="x", padx=40, side="top")
+        #self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
+        #self.separator.pack(fill="x", padx=40, side="top")
 
         # xfce_tweaks
 
@@ -5469,7 +5484,7 @@ class Look_Tab(ttk.Frame):
             width=300,
         )
         self.xfce4_set.pack(pady=20, padx=40, fill="both")  #
-        self.xfce4_set["background"] = maincolor
+        self.xfce4_set["background"] = nav_color
 
         xfce4_settings_btn_list = [
             "Xfwm4 Settings",
@@ -5490,7 +5505,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=xfce4_settings_btn: xfce4_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5514,11 +5529,11 @@ class Look_Tab(ttk.Frame):
                 self.xfce4_button_x.config(image=self.bluetooth)
 
         # Separator Line
-        self.separator_1 = tk.Frame(self, bd=10, relief="sunken", height=1)
-        self.separator_1.pack(fill="x", padx=40, side="top")
+        #self.separator_1 = tk.Frame(self, bd=10, relief="sunken", height=1)
+        #self.separator_1.pack(fill="x", padx=40, side="top")
 
         def pixel_settings(text):
-            if text == "LXAppearace":
+            if text == "LXAppearance":
                 popen("lxappearance")
             if text == "OpenBox Conf":
                 popen("obconf")
@@ -5563,10 +5578,10 @@ class Look_Tab(ttk.Frame):
             width=300,
         )
         self.pixel_set.pack(pady=20, padx=40, fill="both")  #
-        self.pixel_set["background"] = maincolor
+        self.pixel_set["background"] = nav_color
 
         pixel_settings_btn_list = [
-            "LXAppearace",
+            "LXAppearance",
             "OpenBox Conf",
             "Pi Appeariance",
             "Set Wallpaper",
@@ -5587,7 +5602,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=pixel_settings_btn: pixel_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=nav_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5598,7 +5613,7 @@ class Look_Tab(ttk.Frame):
             if conf_column == 5:
                 conf_row = conf_row + 1
                 conf_column = 0
-            if pixel_settings_btn == "LXAppearace":
+            if pixel_settings_btn == "LXAppearance":
                 self.pixel_button_x.config(image=self.ico_m)
             if pixel_settings_btn == "OpenBox Conf":
                 self.pixel_button_x.config(image=self.ico_m)
@@ -5614,13 +5629,13 @@ class Look_Tab(ttk.Frame):
                 self.pixel_button_x.config(image=self.ico_m)
 
         if distro_get == "ubuntu":
-            self.separator_1.forget()
+            #self.separator_1.forget()
             self.pixel_set.forget()
             self.xfce4_set.forget()
 
         # Separator Line
-        self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        self.separator.pack(fill="x", padx=40, side="top")
+        #self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
+        #self.separator.pack(fill="x", padx=40, side="top")
 
         # pigrotweaks
         self.rahmen43 = LabelFrame(
@@ -5636,7 +5651,7 @@ class Look_Tab(ttk.Frame):
             padx=15,
         )
         self.rahmen43.pack(padx=40, pady=20, fill="both")
-        self.rahmen43["background"] = maincolor
+        self.rahmen43["background"] = nav_color
 
         # Theme Selction Dropdown Menu
         theme_select_frame = Frame(
@@ -5657,7 +5672,7 @@ class Look_Tab(ttk.Frame):
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=maincolor,
+            bg=nav_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -5666,7 +5681,7 @@ class Look_Tab(ttk.Frame):
         drop["menu"].config(
             bg=maincolor,
             fg=main_font,
-            activebackground=maincolor,
+            activebackground=nav_color,
             activeforeground=main_font,
         )
 
@@ -5687,7 +5702,7 @@ class Look_Tab(ttk.Frame):
 
         # Transparency Selction Dropdown Menu
         trasp_select_frame = Frame(
-            self.rahmen43, highlightthickness=0, borderwidth=0, background=maincolor
+            self.rahmen43, highlightthickness=0, borderwidth=0, background=nav_color
         )
         trasp_select_frame.grid(row=0, column=1, padx=10)
         options = [
@@ -5704,14 +5719,14 @@ class Look_Tab(ttk.Frame):
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=maincolor,
+            bg=nav_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
             width=15,
         )
         drop["menu"].config(
-            bg=maincolor,
+            bg=nav_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -5751,7 +5766,7 @@ class Look_Tab(ttk.Frame):
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=maincolor,
+            bg=nav_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -5904,11 +5919,11 @@ class Z_Ram_Pop(tk.Toplevel):
 
             if distro_get == "ubuntu":
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'"
+                    f"x-terminal-emulator -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'"
                 )
             else:
                 popen(
-                    f"xterm -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'"
+                    f"x-terminal-emulator -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'"
                 )
 
             Notification(
@@ -6167,6 +6182,8 @@ class Tuning_Tab(ttk.Frame):
         self.ov_display_frame["background"] = nav_color
 
         # Additional Infos
+        #+üpp
+
 
         self.ov_helps_frame = Frame(
             self.ov_state_display_frame,
@@ -6354,15 +6371,7 @@ class Tuning_Tab(ttk.Frame):
         )
         force_t_display.grid(column=1, row=6)
 
-        self.tu_info = Label(
-            self.ov_helps_frame,
-            text="\n\n\n\n\n\n\n\nSettings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
-            font=font_8_b,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
-            foreground=info_color,
-        ).pack()
+
 
         # Tuning_Button_Frame
 
@@ -6512,6 +6521,107 @@ class Tuning_Tab(ttk.Frame):
             font=font_8_b,
         )
         self.pigro_t_info.grid(column=0, row=14)
+
+
+        def chromium_drm_cmd():
+            if select_clicked1.get() == "Chromium 32":
+                print("Chromium 32")
+                global pigro_skript_name
+                pigro_skript_name = "Chromium 32"
+                global pigro_skript
+                pigro_skript = "apt install chromium-browser:armhf libwidevinecdm0 -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()                
+
+
+            if select_clicked1.get() == "Chromium 64":
+                print("Chromium 64")
+                pigro_skript_name = "Chromium 64"
+                pigro_skript = "apt install chromium-browser:arm64 libwidevinecdm0- -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set() 
+
+
+        self.chromium_drm = LabelFrame(
+            self.ov_state_display_frame,
+            text="Widevine on 64 Bit",
+            font=font_16,
+            foreground="#d4244d",
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=FLAT,
+            pady=10,
+            padx=82,
+
+        )
+        self.chromium_drm.pack(padx=40,pady=20)
+        self.chromium_drm["background"] = nav_color
+        #
+        options = [
+            "Chromium 32",
+            "Chromium 64",
+        ]
+
+        add_path_lbl = Label(
+            self.chromium_drm,
+            text="Chromium 64Bit has not but 32Bit has",
+            justify="left",
+            anchor="w",
+            background=nav_color,
+            foreground=main_font,
+        )
+        add_path_lbl.grid(column=0,columnspan=3, row=0,pady=10)
+
+
+        global select_clicked1
+        select_clicked1 = StringVar()
+        select_clicked1.set("Switch to:")
+        drop = OptionMenu(
+            self.chromium_drm,
+            select_clicked1,
+            *options,
+        )
+        drop.grid(column=0, row=1)
+        drop.config(
+            bg=nav_color,
+            fg=main_font,
+            activebackground=nav_color,
+            activeforeground=main_font,
+            width=15,
+        )
+        drop["menu"].config(
+            bg=maincolor,
+            fg=main_font,
+            activebackground=nav_color,
+            activeforeground=main_font,
+        )
+
+        drop["highlightbackground"] = maincolor
+        drop["relief"] = "flat"
+
+        select_trasp_btn = Button(
+            self.chromium_drm,
+            text="Select",
+            highlightthickness=0,
+            borderwidth=0,
+            background=ext_btn,
+            foreground=main_font,
+            font=font_12,
+            command=chromium_drm_cmd,
+        )
+        select_trasp_btn.grid(column=1, row=1)
+
+        self.tu_info = Label(
+            self.ov_state_display_frame,
+            text="\n\n\n\n\n\n\n\nSettings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
+            font=font_8_b,
+            highlightthickness=0,
+            borderwidth=0,
+            background=maincolor,
+            foreground=info_color,
+        ).pack()
+
 
         def ov_display():
             # Overclock Display Functions
@@ -6780,41 +6890,47 @@ class Tasks_Tab(ttk.Frame):
     def __init__(self, container, *args, **kwargs):
         super().__init__()
 
-        self.proc_frame = Frame(
+        self.proc_frame = LabelFrame(
             self,
-            bg=maincolor,
+            text="Process Killer",
+            font=font_16,
+            foreground="#d4244d",
+            borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            pady=10,
-            padx=10,
+            relief=GROOVE,
+            pady=20,
+            padx=40,
+            background=nav_color,
         )
+
         self.proc_frame.pack(pady=40)
         self.tree = ProcessTree(self.proc_frame)
         self.tree.pack(fill="both", expand=True)
 
         self.kill_button = Label(
             self.proc_frame,
-            text="Double Click To Kill Process",
-            bg=maincolor,
+            text="Double Click On The Process To End It",
+            background=nav_color,
             foreground=info_color,
             borderwidth=0,
             highlightthickness=0,
         )
-        self.kill_button.pack(side="left", pady=10)
+        self.kill_button.pack(pady=10)
 
         def kill_pid_num():
             popen(f"pkexec kill {self.kill_pid_entry.get()}")
 
         self.kill_pid = Frame(
-            self,
+            self.proc_frame,
             # side=LEFT,
-            bg=maincolor,
             highlightthickness=0,
             highlightcolor="white",
             pady=10,
-            padx=80,
+
+            background=nav_color,
         )
-        self.kill_pid.pack(fill="both", expand=True)
+        self.kill_pid.pack(side=LEFT)
 
         self.kill_pid_label = Label(
             self.kill_pid,
@@ -6823,7 +6939,7 @@ class Tasks_Tab(ttk.Frame):
             text="Kill by PID number: ",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=nav_color,
             foreground=main_font,
             font=font_12,
             width=15,
