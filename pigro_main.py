@@ -38,7 +38,7 @@ from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
 import requests
 
-
+# Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
 
@@ -259,7 +259,7 @@ fi"""
             global nav_color
             nav_color = "#353535"
             global frame_color
-            frame_color = "#404040"
+            frame_color = "#383838"
             global main_font
             main_font = "white"
             global info_color
@@ -338,7 +338,7 @@ fi"""
     global github_release
     github_release = r.url.split("/")[-1][
         1:-2
-    ]  # [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
+    ]  # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
     github_release = float(github_release)
 
 
@@ -480,7 +480,7 @@ class MainApplication(tk.Tk):
         # Notebook Theming
         global noteStyler
         noteStyler = ttk.Style(self)
-        #noteStyler.theme_use('alt')
+        # noteStyler.theme_use('alt')
         noteStyler.configure(
             "TNotebook",
             borderwidth=0,
@@ -526,7 +526,7 @@ class MainApplication(tk.Tk):
             fieldbackground="white",
             arrowcolor="black",
             arrowsize=15,
-            bordercolor=nav_color
+            bordercolor=nav_color,
         )
         noteStyler.map(
             "TCombobox",
@@ -619,16 +619,11 @@ class Dash_Tab(ttk.Frame):
         # Parameters for System
         global distro
         distro = distro.id()
-        pid = os.getpid()
-        ps = psutil.Process(pid)
         my_system = platform.uname()
         cpufreq = psutil.cpu_freq()
-        cpu_perc = psutil.virtual_memory().percent
         svmem = psutil.virtual_memory()
         swap = psutil.swap_memory()
-        hostname = socket.gethostname()
         IPAddr = extract_ip()
-        # cpu = CPUTemperature()
         Pi_Model = open("/proc/device-tree/model", "r")
         total, used, free = shutil.disk_usage("/")
         current_month = strftime("%B")
@@ -662,7 +657,7 @@ class Dash_Tab(ttk.Frame):
         self.sysinf_btn = Label(
             self.sys_logo,
             borderwidth=0,
-            bg=nav_color,
+            bg=frame_color,
             highlightthickness=0,
         )
         self.sysinf_btn.pack(pady=20)
@@ -686,7 +681,7 @@ class Dash_Tab(ttk.Frame):
         )
 
         self.info_main_frame.place(x=65, y=240)  # pack(pady=20)
-        self.info_main_frame["background"] = nav_color
+        self.info_main_frame["background"] = frame_color
 
         # Main Frame
         self.sys_info_main_frame = Frame(
@@ -698,7 +693,7 @@ class Dash_Tab(ttk.Frame):
         )
         # Column 0
         self.sys_info_main_frame.pack(side=LEFT)
-        self.sys_info_main_frame["background"] = nav_color
+        self.sys_info_main_frame["background"] = frame_color
 
         self.sys_info_main_Update_Tab = Frame(
             self.info_main_frame,
@@ -711,7 +706,7 @@ class Dash_Tab(ttk.Frame):
         )
         # Column 1
         self.sys_info_main_Update_Tab.pack(side=LEFT, anchor="n")
-        self.sys_info_main_Update_Tab["background"] = nav_color
+        self.sys_info_main_Update_Tab["background"] = frame_color
 
         # Column 2
         self.sys_info_main_System_Tab = Frame(
@@ -725,7 +720,7 @@ class Dash_Tab(ttk.Frame):
         )
 
         self.sys_info_main_System_Tab.pack(side=LEFT, anchor="n")
-        self.sys_info_main_System_Tab["background"] = nav_color
+        self.sys_info_main_System_Tab["background"] = frame_color
 
         # System Frame
         self.sys_frame_1 = LabelFrame(
@@ -738,7 +733,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_1.pack(anchor="n", pady=5)
-        self.sys_frame_1["background"] = nav_color
+        self.sys_frame_1["background"] = frame_color
 
         sys_label_list = [
             "Platform:",
@@ -763,7 +758,7 @@ class Dash_Tab(ttk.Frame):
                 justify="left",
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 width=35,
                 anchor=W,
@@ -798,7 +793,7 @@ class Dash_Tab(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             anchor=W,
@@ -813,7 +808,7 @@ class Dash_Tab(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             anchor=W,
@@ -832,12 +827,12 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_2.pack(pady=5)
-        self.sys_frame_2["background"] = nav_color
+        self.sys_frame_2["background"] = frame_color
 
         self.curr_cpu_perc_label = Label(
             self.sys_frame_2,
             text="",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             font=font_12,
@@ -849,7 +844,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_2,
             text=f"Max Freq: {cpufreq.max:.0f} Mhz",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             font=font_12,
@@ -859,7 +854,7 @@ class Dash_Tab(ttk.Frame):
         self.curr_cpu_frq_label = Label(
             self.sys_frame_2,
             text="",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             font=font_12,
@@ -871,7 +866,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_2,
             text=f"Min Freq: {cpufreq.min:.0f} Mhz",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             font=font_12,
@@ -882,7 +877,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_2,
             text="",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=35,
             font=font_12,
@@ -901,13 +896,13 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_3.pack(side=TOP, pady=5)
-        self.sys_frame_3["background"] = nav_color
+        self.sys_frame_3["background"] = frame_color
 
         self.ut_ram_label = Label(
             self.sys_frame_3,
             text="",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -919,7 +914,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_3,
             text=f"RAM Total: {get_size(svmem.total)}",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -930,7 +925,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_3,
             text=f"SWAP Total: {get_size(swap.total)}",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -948,13 +943,13 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_4.pack(pady=5)
-        self.sys_frame_4["background"] = nav_color
+        self.sys_frame_4["background"] = frame_color
 
         self.ip_label = Label(
             self.sys_frame_4,
             text=f"IP Address: {IPAddr}",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -966,7 +961,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_4,
             text=f"MAC Address: {get_mac}",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -985,13 +980,13 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_5.pack(pady=5)
-        self.sys_frame_5["background"] = nav_color
+        self.sys_frame_5["background"] = frame_color
 
         self.sysinf_hdd_t = Label(
             self.sys_frame_5,
             text=("Total Disk Space: %d GiB" % (total // (2**30))),
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -1002,7 +997,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_5,
             text=("Used Disk Space: %d GiB" % (used // (2**30))),
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -1013,7 +1008,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_5,
             text=("Free Disk Space: %d GiB" % (free // (2**30))),
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -1024,7 +1019,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_frame_5,
             text=(f"Used Disk Space: {obj_Disk.percent} %"),
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             font=font_12,
@@ -1055,7 +1050,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.ov_display_frame.pack(pady=5)
-        self.ov_display_frame["background"] = nav_color
+        self.ov_display_frame["background"] = frame_color
 
         global dash_arm_f_display
         dash_arm_f_display = Label(
@@ -1065,7 +1060,7 @@ class Dash_Tab(ttk.Frame):
             text="Arm Freq: N/A",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=20,
@@ -1080,7 +1075,7 @@ class Dash_Tab(ttk.Frame):
             text="Gpu Freq: N/A",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=20,
@@ -1095,7 +1090,7 @@ class Dash_Tab(ttk.Frame):
             text="Gpu Mem: N/A",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=20,
@@ -1110,7 +1105,7 @@ class Dash_Tab(ttk.Frame):
             text="Over Voltage: N/A",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=20,
@@ -1125,7 +1120,7 @@ class Dash_Tab(ttk.Frame):
             text="Force Turbo: N/A",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=20,
@@ -1142,7 +1137,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.sys_frame_6.pack(pady=5)
-        self.sys_frame_6["background"] = nav_color
+        self.sys_frame_6["background"] = frame_color
 
         self.sys_soft = Label(
             self.sys_frame_6,
@@ -1151,7 +1146,7 @@ class Dash_Tab(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             anchor=W,
@@ -1164,7 +1159,7 @@ class Dash_Tab(ttk.Frame):
             justify="left",
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             width=30,
             anchor=W,
@@ -1245,11 +1240,7 @@ class Dash_Tab(ttk.Frame):
         def refresh_sys_stats():
             """Refresches the system stats every second"""
             # Parameters for System
-            pid = os.getpid()
-            ps = psutil.Process(pid)
             cpufreq = psutil.cpu_freq()
-            svmem = psutil.virtual_memory()
-            swap = psutil.swap_memory()
             cpu_temp = psutil.sensors_temperatures()
             cpu_temp = round(cpu_temp["cpu_thermal"][0][1])
             cpu_perc = psutil.cpu_percent()
@@ -1275,7 +1266,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.usage_frame.pack(pady=5)
-        self.usage_frame["background"] = nav_color
+        self.usage_frame["background"] = frame_color
 
         self.info_main_Update_Tab = Frame(
             self,
@@ -1287,17 +1278,15 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_Update_Tab.place(
-            x=65, y=750, width=885
-        )  # pack(padx=67, anchor="n", fill="x", expand=True,)
-        self.info_main_Update_Tab["background"] = nav_color
+        self.info_main_Update_Tab.place(x=65, y=750, width=885)
+        self.info_main_Update_Tab["background"] = frame_color
 
         # Hide/Show Butten & Label
         self.sensitiv = Label(
             self.info_main_Update_Tab,
             text=f"Hide Sensitiv Data:",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10),
             anchor=W,
@@ -1343,7 +1332,7 @@ class Update_Tab(ttk.Frame):
             self, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
         self.rep_main_frame.pack(pady=20, padx=5)
-        self.rep_main_frame["background"] = nav_color
+        self.rep_main_frame["background"] = frame_color
 
         self.off_rep_frame = LabelFrame(
             self.rep_main_frame,
@@ -1358,7 +1347,7 @@ class Update_Tab(ttk.Frame):
         )
 
         self.off_rep_frame.grid(row=0, column=0)
-        self.off_rep_frame["background"] = nav_color
+        self.off_rep_frame["background"] = frame_color
 
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame,
@@ -1373,7 +1362,7 @@ class Update_Tab(ttk.Frame):
         )
 
         self.man_rep_frame.grid(row=0, column=1, rowspan=10)
-        self.man_rep_frame["background"] = nav_color
+        self.man_rep_frame["background"] = frame_color
 
         self.man_left = Frame(
             self.man_rep_frame,
@@ -1384,7 +1373,7 @@ class Update_Tab(ttk.Frame):
             padx=10,
         )
         self.man_left.pack(side=LEFT)
-        self.man_left["background"] = nav_color
+        self.man_left["background"] = frame_color
 
         self.man_right = Frame(
             self.man_rep_frame,
@@ -1395,7 +1384,7 @@ class Update_Tab(ttk.Frame):
             padx=10,
         )
         self.man_right.pack(side=LEFT)
-        self.man_right["background"] = nav_color
+        self.man_right["background"] = frame_color
 
         def open_ppa(text):
             os.popen("sudo mousepad /etc/apt/sources.list.d/" + text)
@@ -1425,7 +1414,7 @@ class Update_Tab(ttk.Frame):
             font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=info_color,
         ).pack()
 
@@ -1503,14 +1492,14 @@ class Update_Tab(ttk.Frame):
             pady=20,
         )
         self.update_btn_frame.pack(padx=28, pady=10, anchor="n", expand=True, fill="x")
-        self.update_btn_frame["background"] = nav_color
+        self.update_btn_frame["background"] = frame_color
 
         self.btn_frame = Frame(
             self.update_btn_frame,
             borderwidth=0,
             relief=GROOVE,
             highlightthickness=0,
-            background=nav_color,
+            background=frame_color,
         )
         self.btn_frame.pack(anchor="w")
 
@@ -1524,7 +1513,7 @@ class Update_Tab(ttk.Frame):
         )
         global wid
         wid = self.termf.winfo_id()
-        self.termf["background"] = nav_color
+        self.termf["background"] = frame_color
 
         # Button list
         up_button_list = [
@@ -1705,7 +1694,9 @@ class System_Tab(ttk.Frame):
                     pop_u_name.destroy()
 
                 def do_it():
-                    popen(f"{legit} rename-user")
+                    popen(
+                        f"x-terminal-emulator -e 'bash -c \"{legit} rename-user; exec bash\"'"
+                    )
                     print("[Info]: Name will be changed")
                     pop_u_name.destroy()
 
@@ -1771,7 +1762,7 @@ class System_Tab(ttk.Frame):
             padx=10,
         )
         self.pi_set.pack(pady=20, padx=40, fill="both")  #
-        self.pi_set["background"] = nav_color
+        self.pi_set["background"] = frame_color
 
         pi_settings_btn_list = [
             "Raspi-Config CLI",
@@ -1792,7 +1783,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=pi_settings_btn: pi_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -1811,10 +1802,6 @@ class System_Tab(ttk.Frame):
                 self.pi_button_x.config(image=self.raspi_config_cli_icon)
             if pi_settings_btn == "Edit Config.txt":
                 self.pi_button_x.config(image=self.edit_config_txt_icon)
-
-        # Separator Line
-        # self.separator = tk.Frame(self, bd=0, relief="sunken", height=1)
-        # self.separator.pack(fill="x", padx=40, side="top")
 
         # Raspberry Pi Settings
         def device_settings(text):
@@ -1851,7 +1838,7 @@ class System_Tab(ttk.Frame):
             width=300,
         )
         self.device_set.pack(pady=20, padx=40, fill="both")  #
-        self.device_set["background"] = nav_color
+        self.device_set["background"] = frame_color
 
         device_settings_btn_list = [
             "Gparted",
@@ -1876,7 +1863,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=device_settings_btn: device_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -1916,10 +1903,6 @@ class System_Tab(ttk.Frame):
                 else:
                     print("[Info]: Neofetch is not installed")
                     self.device_button_x.configure(state=DISABLED)
-
-        # Separator Line
-        # self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        # self.separator.pack(fill="x", padx=40, side="top")
 
         def ops_settings(text):
             if text == "FM God Mode":
@@ -2027,6 +2010,10 @@ class System_Tab(ttk.Frame):
             if text == "Menu Settings\nAlacart":
                 popen("alacarte")
 
+            if text == "Update-Alternatives":
+                add_auto = Update_Alternatives(self)
+                add_auto.grab_set()
+
         self.ops_set = LabelFrame(
             self,
             text="Operating System",
@@ -2041,7 +2028,7 @@ class System_Tab(ttk.Frame):
             width=300,
         )
         self.ops_set.pack(pady=20, padx=40, fill="both")
-        self.ops_set["background"] = nav_color
+        self.ops_set["background"] = frame_color
 
         ops_settings_btn_list = [
             "FM God Mode",
@@ -2053,6 +2040,7 @@ class System_Tab(ttk.Frame):
             "Bash History",
             "Cron Job",
             "Menu Settings\nAlacart",
+            "Update-Alternatives",
         ]
 
         ops_settings_btn_list1 = []
@@ -2067,7 +2055,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=ops_settings_btn: ops_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2111,6 +2099,8 @@ class System_Tab(ttk.Frame):
                 self.ops_button_x.config(image=self.cron_job_icon)
             if ops_settings_btn == "Menu Settings\nAlacart":
                 self.ops_button_x.config(image=self.alacard_icon)
+            if ops_settings_btn == "Update-Alternatives":
+                self.ops_button_x.config(image=self.bash_history_icon)
 
 
 class System_Ubuntu_Tab(ttk.Frame):
@@ -2374,8 +2364,6 @@ class Autostarts_Tab(ttk.Frame):
             for item in auto_files:
                 f.write("%s\n" % item)
 
-
-
         def del_enrty():
             global pop_del_entry
             pop_del_entry = Toplevel()
@@ -2471,7 +2459,7 @@ class Autostarts_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            background=nav_color,
+            background=frame_color,
             pady=20,
             padx=20,
         )
@@ -2480,7 +2468,7 @@ class Autostarts_Tab(ttk.Frame):
         auto_button_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             highlightthickness=0,
             pady=10,
         )
@@ -2489,7 +2477,7 @@ class Autostarts_Tab(ttk.Frame):
         auto_select_frame = Frame(
             auto_main_frame,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             highlightthickness=0,
             pady=10,
         )
@@ -2498,7 +2486,7 @@ class Autostarts_Tab(ttk.Frame):
         auto_header_frame = Frame(
             auto_select_frame,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             highlightthickness=0,
             pady=10,
         )
@@ -2508,12 +2496,11 @@ class Autostarts_Tab(ttk.Frame):
             text="Selected: \n",
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_10,
         )
         inst_btn3.pack(side=LEFT)
-
 
         # Create an entry box
         global auto_selected
@@ -2522,7 +2509,7 @@ class Autostarts_Tab(ttk.Frame):
             font=font_12,
             highlightthickness=0,
             borderwidth=0,
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
         )
         auto_selected.pack()
@@ -2535,8 +2522,8 @@ class Autostarts_Tab(ttk.Frame):
             highlightthickness=2,
             highlightcolor="grey",
             borderwidth=0,
-            background=nav_color,
-            foreground=main_font
+            background=frame_color,
+            foreground=main_font,
         )
         auto_list.pack()
 
@@ -2555,26 +2542,23 @@ class Autostarts_Tab(ttk.Frame):
         note_lbl = Label(
             auto_select_frame,
             text="double click to select",
-            background=nav_color,
+            background=frame_color,
             foreground=info_color,
             font=font_14,
         )
-        #note_lbl.pack(pady=5)
+        # note_lbl.pack(pady=5)
 
         auto_bottom_frame = Frame(
             auto_select_frame,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             highlightthickness=0,
             pady=10,
         )
         auto_bottom_frame.pack()
 
-
         fo3 = open(f"/home/{user}/.pigro/autostart.list", "r")
         content3 = fo3.readlines()
-
-
 
         inst_btn3 = Button(
             auto_bottom_frame,
@@ -2629,6 +2613,60 @@ class Autostarts_Tab(ttk.Frame):
         uninst_btn3.pack(side=LEFT, padx=10)
 
 
+class Update_Alternatives(tk.Toplevel):
+    """child window for editing update-alternatives"""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        self.resizable(0, 0)
+        app_width = 400
+        app_height = 150
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+        self.title("Update-Alternatives")
+        self["background"] = maincolor
+
+        def choose_up():
+            popen(
+                f"x-terminal-emulator -e 'bash -c \"sudo update-alternatives --config {self.choosen.get()}; exec bash\"'"
+            )
+
+        self.up_al_frame = Frame(self, background=maincolor)
+        self.up_al_frame.pack(padx=20, pady=20)
+
+        n1 = tk.StringVar()
+        self.choosen = ttk.Combobox(self.up_al_frame, width=30, textvariable=n1)
+        # Adding combobox drop down list
+        self.choosen["values"] = (
+            "editor",
+            "start-here.svg",
+            "x-cursor-theme",
+            "x-session-manager",
+            "x-terminal-emulator",
+            "x-window-manager",
+            "x-www-browser",
+        )
+
+        self.choosen.grid(column=0, row=0, pady=50)
+
+        self.choosen_btn3 = Button(
+            self.up_al_frame,
+            text="Config",
+            highlightthickness=0,
+            borderwidth=0,
+            background=ext_btn,
+            foreground=main_font,
+            font=font_10,
+            command=choose_up,
+        )
+        self.choosen_btn3.grid(column=1, row=0)
+
+
 class Edit_Autostart(tk.Toplevel):
     """child window for editing a .desktopfile in autostart folder"""
 
@@ -2653,15 +2691,6 @@ class Edit_Autostart(tk.Toplevel):
 
         def edit_entries():
             popen(f"xdg-open /home/{user}/.config/autostart/{auto_selected.get()}")
-            # open file
-
-            #f = open(f"/home/{user}/.config/autostart/{auto_selected.get()}", "w")
-            #f.write(
-            #    f"[Desktop Entry]\nName={name_entry.get()}\nExec={exec_entry.get()}\nTerminal={terminal_entry.get()}\nType=Application\nHidden={hidden_entry.get()}\nNoDisplay={no_display_entry.get()}\nX-GNOME-Autostart-enabled={x_g_entry.get()}\nX-GNOME-Autostart-Delay={x_gd_entry.get()}"
-            #)
-            #f.close()
-
-            #done_edit()
 
         # App Name
         name_label = Label(
@@ -2676,7 +2705,7 @@ class Edit_Autostart(tk.Toplevel):
         name_label.grid(column=0, row=0, padx=5, pady=5, sticky="w")
 
         name_entry = Entry(self, width=50)
-        #name_entry.config(state= "disabled")
+
         name_entry.grid(column=1, row=0, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2699,7 +2728,6 @@ class Edit_Autostart(tk.Toplevel):
 
         exec_entry = Entry(self, width=50)
         exec_entry.grid(column=1, row=1, padx=5, pady=5, sticky="w")
-        #exec_entry.config(state= "disabled")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
             datafile = pi_conf.readlines()
@@ -2720,7 +2748,7 @@ class Edit_Autostart(tk.Toplevel):
         terminal_label.grid(column=0, row=3, padx=5, pady=5, sticky="w")
 
         terminal_entry = Entry(self, width=50)
-        #terminal_entry.config(state= "disabled")
+
         terminal_entry.grid(column=1, row=3, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2742,7 +2770,7 @@ class Edit_Autostart(tk.Toplevel):
         type_label.grid(column=0, row=4, padx=5, pady=5, sticky="w")
 
         type_entry = Entry(self, width=50)
-        #type_entry.config(state= "disabled")
+
         type_entry.grid(column=1, row=4, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2764,7 +2792,7 @@ class Edit_Autostart(tk.Toplevel):
         x_g_label.grid(column=0, row=5, padx=5, pady=5, sticky="w")
 
         x_g_entry = Entry(self, width=50)
-        #x_g_entry.config(state= "disabled")
+
         x_g_entry.grid(column=1, row=5, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2786,7 +2814,7 @@ class Edit_Autostart(tk.Toplevel):
         x_gd_label.grid(column=0, row=6, padx=5, pady=5, sticky="w")
 
         x_gd_entry = Entry(self, width=50)
-        #x_gd_entry.config(state= "disabled")
+
         x_gd_entry.grid(column=1, row=6, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2808,7 +2836,7 @@ class Edit_Autostart(tk.Toplevel):
         hidden_label.grid(column=0, row=7, padx=5, pady=5, sticky="w")
 
         hidden_entry = Entry(self, width=50)
-        #hidden_entry.config(state= "disabled")
+
         hidden_entry.grid(column=1, row=7, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2830,7 +2858,7 @@ class Edit_Autostart(tk.Toplevel):
         no_display_label.grid(column=0, row=8, padx=5, pady=5, sticky="w")
 
         no_display_entry = Entry(self, width=50)
-        #no_display_entry.config(state= "disabled")
+
         no_display_entry.grid(column=1, row=8, padx=5, pady=5, sticky="w")
 
         with open(f"/home/{user}/.config/autostart/{auto_selected.get()}") as pi_conf:
@@ -2847,7 +2875,6 @@ class Edit_Autostart(tk.Toplevel):
             foreground=main_font,
             command=edit_entries,
         )
-        #set_btn.grid(column=0, row=9, padx=5, pady=5, sticky="w")
 
         close_butn = Button(
             self,
@@ -2995,7 +3022,7 @@ class Add_App_Autostart(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Search & Add Entry")
-        self["background"] = nav_color
+        self["background"] = frame_color
 
         def error_mass():
             e_mass = Error_Mass(self)
@@ -3004,11 +3031,9 @@ class Add_App_Autostart(tk.Toplevel):
         def add_enrty():
             pass
 
-
-
-
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
+
         # apt-get_entry
         self.apt_frame = Frame(
             self,
@@ -3017,8 +3042,7 @@ class Add_App_Autostart(tk.Toplevel):
             highlightthickness=0,
         )
         self.apt_frame.pack()
-        self.apt_frame["background"] = nav_color
-
+        self.apt_frame["background"] = frame_color
 
         fo = open(f"/home/{user}/.pigro/auto_plus.list", "r")
         content = fo.readlines()
@@ -3054,8 +3078,10 @@ class Add_App_Autostart(tk.Toplevel):
                 error_mass_0()
             elif apt_inst_combo_box.get() not in content:
                 error_mass_1()
-            else:            
-                with open(f'/usr/share/applications/{apt_inst_combo_box.get()}.desktop', "r") as fp:
+            else:
+                with open(
+                    f"/usr/share/applications/{apt_inst_combo_box.get()}.desktop", "r"
+                ) as fp:
                     for line in lines_that_contain("Exec=", fp):
                         # print(line)
                         if line:
@@ -3067,10 +3093,7 @@ class Add_App_Autostart(tk.Toplevel):
                             f.close()
                     auto_list.insert("end", f"{apt_inst_combo_box.get()}.desktop")
 
-
-
-
-        #global apt_inst_combo_box
+        # global apt_inst_combo_box
         apt_inst_combo_box = ttk.Combobox(self.apt_frame)
         apt_inst_combo_box["values"] = content
         apt_inst_combo_box.bind("<KeyRelease>", check_input_apt_in)
@@ -3090,8 +3113,6 @@ class Add_App_Autostart(tk.Toplevel):
         # Make the in_kontext_menu pop up
         apt_inst_combo_box.bind("<Button - 3>", apt_inst_combo_box_pop_in_kontext_menu)
 
-
-
         self.apt_ico = Label(
             self.apt_frame,
             text="Select:",
@@ -3099,13 +3120,12 @@ class Add_App_Autostart(tk.Toplevel):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.apt_ico["background"] = nav_color
+        self.apt_ico["background"] = frame_color
         self.apt_ico.grid(
             column=0,
             row=0,
         )
         apt_inst_combo_box.grid(column=2, row=0)
-        
 
         set_auto = Button(
             self.apt_frame,
@@ -3116,7 +3136,7 @@ class Add_App_Autostart(tk.Toplevel):
             highlightthickness=0,
             borderwidth=0,
             highlightcolor="white",
-            command=inst_btn1
+            command=inst_btn1,
         )
         set_auto.grid(row=3, column=0, pady=5)
 
@@ -4084,7 +4104,6 @@ class APT_Uninstaller_Popup(tk.Toplevel):
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        # self.overrideredirect(True)
 
         # progressbar
         global inst_show
@@ -4172,7 +4191,6 @@ class Custom_Installer(tk.Toplevel):
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        # self.overrideredirect(True)
 
         # progressbar
         global inst_show
@@ -4350,7 +4368,7 @@ class Software_Tab(ttk.Frame):
             pady=20,
             padx=20,
         )
-        self.fast_main_frame["background"] = nav_color
+        self.fast_main_frame["background"] = frame_color
         self.fast_main_frame.pack(
             pady=20,
         )
@@ -4365,7 +4383,7 @@ class Software_Tab(ttk.Frame):
             pady=0,
         )
         self.fast_sec_frame.pack()
-        self.fast_sec_frame["background"] = nav_color
+        self.fast_sec_frame["background"] = frame_color
 
         # Separator Line
         self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
@@ -4379,7 +4397,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.apt_frame.pack()
-        self.apt_frame["background"] = nav_color
+        self.apt_frame["background"] = frame_color
 
         fo = open(f"/home/{user}/.pigro/apt_cache.list", "r")
         content = fo.readlines()
@@ -4445,7 +4463,7 @@ class Software_Tab(ttk.Frame):
             command=inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4458,7 +4476,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.apt_ico["background"] = nav_color
+        self.apt_ico["background"] = frame_color
         self.apt_ico.grid(
             column=0,
             row=0,
@@ -4474,7 +4492,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.un_apt_frame.pack()
-        self.un_apt_frame["background"] = nav_color
+        self.un_apt_frame["background"] = frame_color
 
         ua_fo = open(f"/home/{user}/.pigro/packages.list", "r")
         un_content = ua_fo.readlines()
@@ -4509,7 +4527,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.un_apt_ico["background"] = nav_color
+        self.un_apt_ico["background"] = frame_color
         self.un_apt_ico.grid(
             column=0,
             row=0,
@@ -4527,7 +4545,7 @@ class Software_Tab(ttk.Frame):
             command=un_inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground="red",
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4566,7 +4584,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.piapps_frame.pack()
-        self.piapps_frame["background"] = nav_color
+        self.piapps_frame["background"] = frame_color
 
         fo_pa = open(f"/home/{user}/.pigro/pi-apps_list.list", "r")
         content_pa = fo_pa.readlines()
@@ -4634,7 +4652,7 @@ class Software_Tab(ttk.Frame):
             command=inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4647,7 +4665,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.piapps_ico["background"] = nav_color
+        self.piapps_ico["background"] = frame_color
         self.piapps_ico.grid(
             column=0,
             row=0,
@@ -4663,7 +4681,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.un_piapps_frame.pack()
-        self.un_piapps_frame["background"] = nav_color
+        self.un_piapps_frame["background"] = frame_color
 
         ua_fo_pa = open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
         un_content_pa = ua_fo_pa.readlines()
@@ -4705,7 +4723,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.un_piapps_ico["background"] = nav_color
+        self.un_piapps_ico["background"] = frame_color
         self.un_piapps_ico.grid(
             column=0,
             row=0,
@@ -4723,7 +4741,7 @@ class Software_Tab(ttk.Frame):
             command=un_inst_btn1,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground="red",
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4770,7 +4788,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.snap_frame.pack()
-        self.snap_frame["background"] = nav_color
+        self.snap_frame["background"] = frame_color
 
         def inst_btn2():
             if self.snap_entry.get() == "":
@@ -4787,7 +4805,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.snap_ico["background"] = nav_color
+        self.snap_ico["background"] = frame_color
 
         self.snap_entry = Entry(
             self.snap_frame,
@@ -4802,7 +4820,7 @@ class Software_Tab(ttk.Frame):
             command=inst_btn2,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4859,7 +4877,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
         )
         self.flat_frame.pack()
-        self.flat_frame["background"] = nav_color
+        self.flat_frame["background"] = frame_color
 
         def inst_btn4():
             if self.flat_entry.get() == "":
@@ -4876,7 +4894,7 @@ class Software_Tab(ttk.Frame):
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.flatp_ico["background"] = nav_color
+        self.flatp_ico["background"] = frame_color
 
         self.flat_entry = Entry(
             self.flat_frame,
@@ -4891,7 +4909,7 @@ class Software_Tab(ttk.Frame):
             command=inst_btn4,
             highlightthickness=0,
             borderwidth=0,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(("Sans,bold"), "12"),
             width=10,
@@ -4950,7 +4968,7 @@ class Software_Tab(ttk.Frame):
             padx=40,
             pady=10,
         )
-        self.repo_sec_frame["background"] = nav_color
+        self.repo_sec_frame["background"] = frame_color
         self.repo_sec_frame.pack()
 
         self.bleach_inst = Button(
@@ -5058,7 +5076,7 @@ class Software_Tab(ttk.Frame):
             foreground=info_color,
             font=font_8_b,
         )
-        self.warning_msg["background"] = nav_color
+        self.warning_msg["background"] = frame_color
         self.warning_msg.grid(row=3, column=1, pady=5, padx=5)
 
         self.tu_legende = Button(
@@ -5096,7 +5114,7 @@ class Software_Tab(ttk.Frame):
             padx=37,
             pady=10,
         )
-        self.more_frame["background"] = nav_color
+        self.more_frame["background"] = frame_color
         self.more_frame.pack()
 
         self.add_remove_software = Button(
@@ -5118,7 +5136,7 @@ class Software_Tab(ttk.Frame):
         else:
             print("[Info]: rp-prefapps is not installed")
 
-        self.more_frame["background"] = nav_color
+        self.more_frame["background"] = frame_color
         self.more_frame.pack(pady=20)
 
         self.synaptic_btn = Button(
@@ -5183,6 +5201,7 @@ class Git_More_Tab(ttk.Frame):
         self.app_xpad = PhotoImage(file=r"images/apps/app_xpad.png")
         self.app_wine64 = PhotoImage(file=r"images/apps/app_wine64.png")
         self.place_holder = PhotoImage(file=r"images/apps/git_more_placeholder.png")
+        self.app_icon = PhotoImage(file=r"images/icons/pigro_icons/terminal_s.png")
 
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
@@ -5418,7 +5437,6 @@ class Git_More_Tab(ttk.Frame):
                     """~/pi-apps/manage install Box64\n\n~/pi-apps/manage install Box86\n\ncd ~\n\nmkdir wine64\n\ncd wine64\n\nwget https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-3.0.3-upstream-linux-amd64.tar.gz\n\ntar -xf PlayOnLinux-wine-3.0.3-upstream-linux-amd64.tar.gz\nrm PlayOnLinux-wine-3.0.3-upstream-linux-amd64.tar.gz\n\nsudo ln -s /home/USER/wine64/bin/wine64 /usr/local/bin/wine64\n\nTest: wine64 winecfg""",
                 )
 
-
         self.link_main = Frame(
             self,
             borderwidth=0,
@@ -5467,9 +5485,12 @@ class Git_More_Tab(ttk.Frame):
         for file in sources_l:
             self.choice_link2 = Button(
                 self.link_left,
-                anchor="w",
-                width=20,
+                image=self.app_icon,
+                justify=LEFT,
+                anchor=W,
+                width=220,
                 text=file,
+                compound=LEFT,
                 command=lambda text=file: git_tab(text),
                 highlightthickness=0,
                 borderwidth=0,
@@ -5489,7 +5510,7 @@ class Git_More_Tab(ttk.Frame):
             padx=10,
         )
         self.link_right.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
-        self.link_right["background"] = nav_color
+        self.link_right["background"] = frame_color
 
         self.appname_header = Label(
             self.link_right,
@@ -5497,7 +5518,7 @@ class Git_More_Tab(ttk.Frame):
             width=50,
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_16,
             justify="left",
@@ -5512,7 +5533,7 @@ class Git_More_Tab(ttk.Frame):
             width=50,
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             anchor="w",
@@ -5523,7 +5544,7 @@ class Git_More_Tab(ttk.Frame):
             self.link_right,
             text=r" ",
             width=50,
-            background=nav_color,
+            background=frame_color,
             foreground="blue",
             cursor="hand2",
             anchor="w",
@@ -5538,19 +5559,14 @@ class Git_More_Tab(ttk.Frame):
             image=self.place_holder,
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             anchor="w",
         )
         self.app_pic.pack(anchor="w")
 
-        self.app_inst = Text(
-            self.link_right,
-            width=90,
-            height=20,
-            borderwidth=0
-        )
+        self.app_inst = Text(self.link_right, width=90, height=20, borderwidth=0)
 
         def app_inst_pop_in_kontext_menu(event):
             in_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -5710,7 +5726,7 @@ class Look_Tab(ttk.Frame):
             width=300,
         )
         self.gui_set.pack(pady=20, padx=40, fill="both")  #
-        self.gui_set["background"] = nav_color
+        self.gui_set["background"] = frame_color
 
         gui_settings_btn_list = [
             "Tasksel",
@@ -5732,7 +5748,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=gui_settings_btn: gui_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5798,7 +5814,7 @@ exit
             width=300,
         )
         self.xfce4_set.pack(pady=20, padx=40, fill="both")  #
-        self.xfce4_set["background"] = nav_color
+        self.xfce4_set["background"] = frame_color
 
         xfce4_settings_btn_list = [
             "Xfwm4 Settings",
@@ -5819,7 +5835,7 @@ exit
                 command=lambda text=xfce4_settings_btn: xfce4_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5841,10 +5857,6 @@ exit
                 self.xfce4_button_x.config(image=self.wifi)
             if xfce4_settings_btn == "Bluetooth Fix":
                 self.xfce4_button_x.config(image=self.bluetooth)
-
-        # Separator Line
-        # self.separator_1 = tk.Frame(self, bd=10, relief="sunken", height=1)
-        # self.separator_1.pack(fill="x", padx=40, side="top")
 
         def pixel_settings(text):
             if text == "LXAppearance":
@@ -5892,7 +5904,7 @@ exit
             width=300,
         )
         self.pixel_set.pack(pady=20, padx=40, fill="both")  #
-        self.pixel_set["background"] = nav_color
+        self.pixel_set["background"] = frame_color
 
         pixel_settings_btn_list = [
             "LXAppearance",
@@ -5916,7 +5928,7 @@ exit
                 command=lambda text=pixel_settings_btn: pixel_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=nav_color,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5945,13 +5957,9 @@ exit
             if get_de == "LXDE":
                 self.gui_button_x.config(state=NORMAL)
         if distro_get == "ubuntu":
-            # self.separator_1.forget()
+
             self.pixel_set.forget()
             self.xfce4_set.forget()
-
-        # Separator Line
-        # self.separator = tk.Frame(self, bd=10, relief="sunken", height=1)
-        # self.separator.pack(fill="x", padx=40, side="top")
 
         # pigrotweaks
         self.rahmen43 = LabelFrame(
@@ -5967,7 +5975,7 @@ exit
             padx=15,
         )
         self.rahmen43.pack(padx=40, pady=20, fill="both")
-        self.rahmen43["background"] = nav_color
+        self.rahmen43["background"] = frame_color
 
         # Theme Selction Dropdown Menu
         theme_select_frame = Frame(
@@ -5988,7 +5996,7 @@ exit
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -5997,7 +6005,7 @@ exit
         drop["menu"].config(
             bg=maincolor,
             fg=main_font,
-            activebackground=nav_color,
+            activebackground=frame_color,
             activeforeground=main_font,
         )
 
@@ -6018,7 +6026,7 @@ exit
 
         # Transparency Selction Dropdown Menu
         trasp_select_frame = Frame(
-            self.rahmen43, highlightthickness=0, borderwidth=0, background=nav_color
+            self.rahmen43, highlightthickness=0, borderwidth=0, background=frame_color
         )
         trasp_select_frame.grid(row=0, column=1, padx=10)
         options = [
@@ -6035,14 +6043,14 @@ exit
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
             width=15,
         )
         drop["menu"].config(
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -6082,7 +6090,7 @@ exit
         )
         drop.grid(column=0, row=0)
         drop.config(
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
@@ -6495,7 +6503,7 @@ class Tuning_Tab(ttk.Frame):
             pady=10,
         )
         self.ov_display_frame.pack(anchor="n")
-        self.ov_display_frame["background"] = nav_color
+        self.ov_display_frame["background"] = frame_color
 
         # Additional Infos
         # +üpp
@@ -6519,7 +6527,7 @@ class Tuning_Tab(ttk.Frame):
             text="PiGro Berry: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6534,7 +6542,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground="green",
             font=font_12,
             width=25,
@@ -6548,7 +6556,7 @@ class Tuning_Tab(ttk.Frame):
             text="Arm Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6563,7 +6571,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=25,
@@ -6577,7 +6585,7 @@ class Tuning_Tab(ttk.Frame):
             text="Gpu Freq: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6592,7 +6600,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=25,
@@ -6606,7 +6614,7 @@ class Tuning_Tab(ttk.Frame):
             text="Gpu Mem: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6621,7 +6629,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=25,
@@ -6635,7 +6643,7 @@ class Tuning_Tab(ttk.Frame):
             text="Over Voltage: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6650,7 +6658,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=25,
@@ -6664,7 +6672,7 @@ class Tuning_Tab(ttk.Frame):
             text="Force Turbo: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
@@ -6679,7 +6687,7 @@ class Tuning_Tab(ttk.Frame):
             text="not configured",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=25,
@@ -6781,7 +6789,7 @@ class Tuning_Tab(ttk.Frame):
             self.ov_buttons,
             justify="left",
             image=self.ov5_icon,
-            text="I really like typing\nin random numbers and\nsee what happens!",
+            text="I really like typing\nin random numbers\nand see what happens!",
             command=expert_mode,
             highlightthickness=0,
             borderwidth=0,
@@ -6825,7 +6833,7 @@ class Tuning_Tab(ttk.Frame):
         self.pigro_t_info = Label(
             self.ov_buttons,
             anchor="w",
-            justify=LEFT,
+            # justify=LEFT,
             text="To unlock the overclocking options\non 'first use' click on:\nReset Overclocking",
             highlightthickness=0,
             borderwidth=2,
@@ -6869,7 +6877,7 @@ class Tuning_Tab(ttk.Frame):
             padx=82,
         )
         self.chromium_drm.pack(padx=40, pady=20)
-        self.chromium_drm["background"] = nav_color
+        self.chromium_drm["background"] = frame_color
         #
         options = [
             "Chromium 32",
@@ -6881,7 +6889,7 @@ class Tuning_Tab(ttk.Frame):
             text="Chromium 64Bit has not but 32Bit has",
             justify="left",
             anchor="w",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
         )
         add_path_lbl.grid(column=0, columnspan=3, row=0, pady=10)
@@ -6896,16 +6904,16 @@ class Tuning_Tab(ttk.Frame):
         )
         drop.grid(column=0, row=1)
         drop.config(
-            bg=nav_color,
+            bg=frame_color,
             fg=main_font,
-            activebackground=nav_color,
+            activebackground=frame_color,
             activeforeground=main_font,
             width=15,
         )
         drop["menu"].config(
             bg=maincolor,
             fg=main_font,
-            activebackground=nav_color,
+            activebackground=frame_color,
             activeforeground=main_font,
         )
 
@@ -6943,7 +6951,7 @@ class Tuning_Tab(ttk.Frame):
                         pigro_t_display.config(
                             text="Crank It Up",
                             foreground="yellow",
-                            bg=nav_color,
+                            bg=frame_color,
                         )
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -7217,7 +7225,7 @@ class Tasks_Tab(ttk.Frame):
             relief=GROOVE,
             pady=20,
             padx=40,
-            background=nav_color,
+            background=frame_color,
         )
 
         self.proc_frame.pack(pady=40)
@@ -7227,7 +7235,7 @@ class Tasks_Tab(ttk.Frame):
         self.kill_button = Label(
             self.proc_frame,
             text="Double Click On The Process To End It",
-            background=nav_color,
+            background=frame_color,
             foreground=info_color,
             borderwidth=0,
             highlightthickness=0,
@@ -7239,11 +7247,10 @@ class Tasks_Tab(ttk.Frame):
 
         self.kill_pid = Frame(
             self.proc_frame,
-            # side=LEFT,
             highlightthickness=0,
             highlightcolor="white",
             pady=10,
-            background=nav_color,
+            background=frame_color,
         )
         self.kill_pid.pack(side=LEFT)
 
@@ -7254,14 +7261,14 @@ class Tasks_Tab(ttk.Frame):
             text="Kill by PID number: ",
             highlightthickness=0,
             borderwidth=2,
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=font_12,
             width=15,
         )
         self.kill_pid_label.grid(column=0, row=0)
 
-        self.kill_pid_entry = Entry(self.kill_pid, width=15,borderwidth=0)
+        self.kill_pid_entry = Entry(self.kill_pid, width=15, borderwidth=0)
         self.kill_pid_entry.grid(column=1, row=0, padx=5)
 
         self.kill_pid_btn = Button(
@@ -7453,13 +7460,13 @@ printf 'Done!'"""
         )
 
         self.backup_main_frame.pack(pady=20, padx=20, fill=BOTH)
-        self.backup_main_frame["background"] = nav_color
+        self.backup_main_frame["background"] = frame_color
 
         self.backup_discription = Label(
             self.backup_main_frame,
             text="This option creates a file named packages.list. It containes a list of all debian packages installed on this system.\n\n",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_12),
             anchor=W,
@@ -7476,13 +7483,13 @@ printf 'Done!'"""
             pady=5,
         )
         self.backup_frame1.pack(pady=5, padx=20, fill="x")
-        self.backup_frame1["background"] = nav_color
+        self.backup_frame1["background"] = frame_color
 
         self.step_1 = Label(
             self.backup_frame1,
             text="Step 1: Click on 'Select Directory' to select a place where the file should be deployed.\nFor example a usb dongle.",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10_b),
             width=75,
@@ -7514,13 +7521,13 @@ printf 'Done!'"""
             pady=5,
         )
         self.backup_frame2.pack(pady=5, padx=20, fill="x")
-        self.backup_frame2["background"] = nav_color
+        self.backup_frame2["background"] = frame_color
 
         self.step2 = Label(
             self.backup_frame2,
             text="Step 2: Click on 'Backup' to start the prosses.After 1 sec the it should be done.",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10_b),
             width=75,
@@ -7557,13 +7564,13 @@ printf 'Done!'"""
         )
 
         self.recover_main_frame.pack(pady=20, padx=20, fill=BOTH, expand=True)
-        self.recover_main_frame["background"] = nav_color
+        self.recover_main_frame["background"] = frame_color
 
         self.recover_discription = Label(
             self.recover_main_frame,
             text="The recovery requires the tool 'dselect'. Please note that you should never use recovery cross distro or architecture.\nPackages from PPAs will be not installed if the PPA is not integrated.\n\n",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_12),
             anchor=W,
@@ -7579,13 +7586,13 @@ printf 'Done!'"""
             pady=5,
         )
         self.recover_frame1.pack(pady=5, padx=20, fill="x")
-        self.recover_frame1["background"] = nav_color
+        self.recover_frame1["background"] = frame_color
 
         self.step3 = Label(
             self.recover_frame1,
             text="Step 3: Click on 'Install dselect' ( or sudo apt install dselect ).",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10_b),
             width=75,
@@ -7622,13 +7629,13 @@ printf 'Done!'"""
             pady=5,
         )
         self.recover_frame2.pack(pady=5, padx=20, fill="x")
-        self.recover_frame2["background"] = nav_color
+        self.recover_frame2["background"] = frame_color
 
         self.step_4 = Label(
             self.recover_frame2,
             text="Step 4: Click on 'Select Backup' and choose the packages.list file",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10_b),
             width=75,
@@ -7660,13 +7667,13 @@ printf 'Done!'"""
             pady=5,
         )
         self.recover_frame3.pack(pady=5, padx=20, fill="x")
-        self.recover_frame3["background"] = nav_color
+        self.recover_frame3["background"] = frame_color
 
         self.step5 = Label(
             self.recover_frame3,
             text="Step 5: Click on 'Recovery' to start the prosses.",
             justify="left",
-            background=nav_color,
+            background=frame_color,
             foreground=main_font,
             font=(font_10_b),
             width=75,
