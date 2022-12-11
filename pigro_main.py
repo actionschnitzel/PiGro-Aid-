@@ -2,6 +2,7 @@
 
 import os
 import os.path
+from os import chmod
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -61,7 +62,7 @@ class Get_Sys_Info:
     Application_path = str(os.getcwd())
     print(f"[Info]: PiGro directory is {Application_path}")
 
-    # Makes all .sh files in /sripts executable if PiGro in $HOME
+    # Makes all .sh files in /scripts executable if PiGro in $HOME
     if Application_path == f"{home}/PiGro-Aid-":
         popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
         print(f"[Info]: All files executable")
@@ -2522,8 +2523,8 @@ class Autostarts_Tab(ttk.Frame):
             highlightthickness=2,
             highlightcolor="grey",
             borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         auto_list.pack()
 
@@ -5932,7 +5933,6 @@ exit
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
-                state=DISABLED,
             )
             self.pixel_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pixel_settings_btn_list1.append(self.pixel_button_x)
@@ -5954,8 +5954,7 @@ exit
                 self.pixel_button_x.config(image=self.ico_m)
             if pixel_settings_btn == "Restart\nPanel":
                 self.pixel_button_x.config(image=self.ico_m)
-            if get_de == "LXDE":
-                self.gui_button_x.config(state=NORMAL)
+
         if distro_get == "ubuntu":
 
             self.pixel_set.forget()
