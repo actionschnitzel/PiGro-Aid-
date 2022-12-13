@@ -38,6 +38,7 @@ from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
 import requests
+import csv
 
 # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
 class Get_Sys_Info:
@@ -68,20 +69,18 @@ class Get_Sys_Info:
         print(f"[Info]: All files executable")
 
     # Checks if settings folder exists
-    pigro_conf_folder = os.path.isdir(f"{home}/.pigro")  # Need full path
+    pigro_conf_folder = os.path.isdir(f"{home}/.pigro")
     if pigro_conf_folder == False:
         print("[Info]: Folder:.pigro not found will created")
         os.mkdir(f"{home}/.pigro")
-        open(f"{home}/.pigro/apt_cache.list", "a").close()
         open(f"{home}/.pigro/autostart.list", "a").close()
-        open(f"{home}/.pigro/packages.list", "a").close()
         open(f"{home}/.pigro/pi-apps_list.list", "a").close()
         open(f"{home}/.pigro/pi-apps_installed.list", "a").close()
     if pigro_conf_folder == True:
         print("[Info]: Folder: .pigro exsists")
 
     # Checks if pigro.conf exists
-    pigro_conf_file = os.path.exists(f"{home}/.pigro/pigro.conf")  # Need full path
+    pigro_conf_file = os.path.exists(f"{home}/.pigro/pigro.conf")
     if pigro_conf_file == False:
         open(f"{home}/.pigro/pi-apps_list.list", "a")
         with open(f"{home}/.pigro/pigro.conf", "a") as p_file:
@@ -134,18 +133,6 @@ class Get_Sys_Info:
 
     # Checks if pigro bin exists
     popen(f"{Application_path}/scripts/check_bin.sh ")
-
-    # Gets list of all installeble packages
-    os.system(
-        f"> /dev/null 2>&1 apt-cache pkgnames > /home/{user}/.pigro/apt_cache.list"
-    )
-    print("[Info]: APT-CACHE loaded")
-
-    # Gets list of all installed packages
-    os.system(
-        f"> /dev/null 2>&1 dpkg --get-selections > /home/{user}/.pigro/packages.list && sed -e s/install//g -i /home/{user}/.pigro/packages.list"
-    )
-    print("[Info]: Instaled packages loaded")
 
     # Get Distro
     global distro_get
@@ -224,9 +211,13 @@ fi"""
         flat_count = popen("flatpak list | wc --lines")
         flat_counted = flat_count.read()
         flat_count.close()
+        global flatpak_path
+        flatpak_path = True
         print(f"[Info]: {flat_counted[:-1]} Flatpaks are installed")
+
     else:
         print("[Info]: Flatpak is not installed")
+        flatpak_path = False
 
     # Checks if pigro.conf exists
     if os.path.isfile(f"{home}/.pigro/pigro.conf"):
@@ -3999,189 +3990,13 @@ class Overclocking_Expert(tk.Toplevel):
         reboot_e.pack()
 
 
-class APT_Installer_Popup(tk.Toplevel):
-    """child window that makes the the install process graphicle"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-        self.title(f"Installing ... {apt_inst_combo_box.get()}")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 700
-        app_height = 500
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        # self.overrideredirect(True)
-
-        # progressbar
-        global inst_show
-        inst_show = Label(
-            self,
-            text="",
-            bg="#333333",
-            foreground=main_font,
-        )
-        inst_show.pack(pady=20)
-
-        anim = Loading_Throbber(self, "images/icons/loading.gif")
-        anim["borderwidth"] = "0"
-        anim.pack()
-
-        def stop_it():
-            anim.after_cancel(anim.cancel)
-
-        self.apt_inst_termf = Frame(
-            self, height=300, width=600, highlightthickness=0, borderwidth=0
-        )
-
-        self.apt_inst_wid = self.apt_inst_termf.winfo_id()
-
-        self.apt_inst_termf["background"] = "#333333"
-        self.apt_inst_termf.pack(padx=45, pady=20)
-
-        def install_parameter():
-            os.system(
-                f'xterm -into %d -bg Grey11 -geometry 120x25 -e "{legit} apt install -y {apt_inst_combo_box.get()} && exit ; exec bash"'
-                % self.apt_inst_wid
-            )
-
-            stop_it()
-            anim.forget()
-            GButton_916.configure(state=NORMAL)
-            self.title(f"Done!")
-            inst_show.configure(text="Done!")
-            GButton_9161.place_forget()
-
-        # place the progressbar
-
-        def GButton_916_command():
-            APT_Installer_Popup.destroy(self)
-
-        GButton_916 = tk.Button(self)
-        GButton_916["font"] = font_12
-        GButton_916["justify"] = "center"
-        GButton_916["highlightthickness"] = 0
-        GButton_916["borderwidth"] = 0
-        GButton_916["background"] = ext_btn
-        GButton_916["foreground"] = main_font
-        GButton_916["text"] = "Close"
-        GButton_916.place(x=580, y=450, width=70, height=25)
-        GButton_916["command"] = GButton_916_command
-        GButton_916.configure(state=DISABLED)
-
-        GButton_9161 = tk.Button(self)
-        GButton_9161["highlightthickness"] = 0
-        GButton_9161["borderwidth"] = 0
-        GButton_9161["background"] = ext_btn
-        GButton_9161["foreground"] = main_font
-        GButton_9161["font"] = font_12
-        GButton_9161["justify"] = "center"
-        GButton_9161["text"] = "Cancel"
-        GButton_9161.place(x=500, y=450, width=70, height=25)
-        GButton_9161["command"] = GButton_916_command
-
-        Thread(target=install_parameter).start()
-
-
-class APT_Uninstaller_Popup(tk.Toplevel):
-    """child window that makes the the install process graphicle"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = "#333333"
-        self.title(f"Removing ... {apt_un_combo_box.get()}")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 700
-        app_height = 500
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-
-        # progressbar
-        global inst_show
-        inst_show = Label(
-            self,
-            text="",
-            bg="#333333",
-            foreground=main_font,
-        )
-        inst_show.pack(pady=20)
-
-        anim = Loading_Throbber(self, "images/icons/loading.gif")
-        anim["borderwidth"] = "0"
-        anim.pack()
-
-        def stop_it():
-            anim.after_cancel(anim.cancel)
-
-        self.apt_inst_termf = Frame(
-            self, height=300, width=600, highlightthickness=0, borderwidth=0
-        )
-
-        self.apt_inst_wid = self.apt_inst_termf.winfo_id()
-
-        self.apt_inst_termf["background"] = "#333333"
-        self.apt_inst_termf.pack(padx=45, pady=20)
-
-        def install_parameter():
-            os.system(
-                f'xterm -into %d -bg Grey11 -geometry 120x25 -e "{legit} apt remove -y {apt_un_combo_box.get()} && exit ; exec bash"'
-                % self.apt_inst_wid
-            )
-            stop_it()
-            anim.forget()
-            GButton_916.configure(state=NORMAL)
-            self.title(f"Done!")
-            inst_show.configure(text="Done!")
-            GButton_9161.place_forget()
-
-        # place the progressbar
-
-        def GButton_916_command():
-            APT_Installer_Popup.destroy(self)
-
-        GButton_916 = tk.Button(self)
-        GButton_916["font"] = font_12
-        GButton_916["justify"] = "center"
-        GButton_916["highlightthickness"] = 0
-        GButton_916["borderwidth"] = 0
-        GButton_916["background"] = ext_btn
-        GButton_916["foreground"] = main_font
-        GButton_916["text"] = "Close"
-        GButton_916.place(x=580, y=450, width=70, height=25)
-        GButton_916["command"] = GButton_916_command
-        GButton_916.configure(state=DISABLED)
-
-        GButton_9161 = tk.Button(self)
-        GButton_9161["font"] = font_12
-        GButton_9161["highlightthickness"] = 0
-        GButton_9161["borderwidth"] = 0
-        GButton_9161["background"] = ext_btn
-        GButton_9161["foreground"] = main_font
-        GButton_9161["justify"] = "center"
-        GButton_9161["text"] = "Cancel"
-        GButton_9161.place(x=500, y=450, width=70, height=25)
-        GButton_9161["command"] = GButton_916_command
-
-        Thread(target=install_parameter).start()
-
-
 class Custom_Installer(tk.Toplevel):
     """child window that makes the the install process graphicle"""
 
     def __init__(self, parent):
         super().__init__(parent)
         self["background"] = "#333333"
-        self.title(f"Installing ... {pigro_skript_name}")
+        self.title(f"{pigro_skript_name}")
         self.icon = tk.PhotoImage(file="images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
@@ -4221,7 +4036,7 @@ class Custom_Installer(tk.Toplevel):
 
         def install_parameter():
             os.system(
-                f'xterm -into %d -bg Grey11 -geometry 120x25 -e "{legit} {pigro_skript}; exec bash"'
+                f'xterm -into %d -bg Grey11 -geometry 120x25 -e "{pigro_skript}; exec bash"'
                 % self.cust_inst_wid
             )
 
@@ -4229,7 +4044,7 @@ class Custom_Installer(tk.Toplevel):
             anim.forget()
             close_btn.configure(state=NORMAL)
             self.title(f"Done!")
-            inst_show.configure(text="Done!")
+            inst_show.configure(text=" ")
             cancel_btn.place_forget()
 
         # place the progressbar
@@ -4281,81 +4096,6 @@ class Software_Tab(ttk.Frame):
         def snapcraft():
             popen("xdg-open https://snapcraft.io/store")
 
-        def flatflat():
-            popen("xdg-open https://flathub.org/")
-
-        def neofetch_installer():
-            global pigro_skript_name
-            pigro_skript_name = "Neofetch"
-            global pigro_skript
-            pigro_skript = "apt install neofetch -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def bleacbit_installer():
-            global pigro_skript_name
-            pigro_skript_name = "bleachbit"
-            global pigro_skript
-            pigro_skript = "apt install bleachbit -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def bpytop_installer():
-            global pigro_skript_name
-            pigro_skript_name = "bpytop"
-            global pigro_skript
-            pigro_skript = "apt install bpytop -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def compiz_installer():
-            global pigro_skript_name
-            pigro_skript_name = "compiz"
-            global pigro_skript
-            pigro_skript = "apt install compiz -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def gnomepie_installer():
-            global pigro_skript_name
-            pigro_skript_name = "gnome-pie"
-            global pigro_skript
-            pigro_skript = "apt install gnome-pie -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def gparted_installer():
-            global pigro_skript_name
-            pigro_skript_name = "gparted"
-            global pigro_skript
-            pigro_skript = "apt install gparted -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def imager_installer():
-            global pigro_skript_name
-            pigro_skript_name = "rpi-imager"
-            global pigro_skript
-            pigro_skript = "apt install rpi-imager -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def plank_installer():
-            global pigro_skript_name
-            pigro_skript_name = "plank"
-            global pigro_skript
-            pigro_skript = "apt install plank -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
-        def xfce4screen_installer():
-            global pigro_skript_name
-            pigro_skript_name = "xfce4-screenshooter"
-            global pigro_skript
-            pigro_skript = "apt install xfce4-screenshooter -y && exit"
-            custom_pop = Custom_Installer(self)
-            custom_pop.grab_set()
-
         # Fast_Installer Main_Frame
         self.fast_main_frame = LabelFrame(
             self,
@@ -4400,7 +4140,7 @@ class Software_Tab(ttk.Frame):
         self.apt_frame.pack()
         self.apt_frame["background"] = frame_color
 
-        fo = open(f"/home/{user}/.pigro/apt_cache.list", "r")
+        fo = os.popen("apt-cache pkgnames")
         content = fo.readlines()
         for i, s in enumerate(content):
             content[i] = s.strip()
@@ -4428,15 +4168,21 @@ class Software_Tab(ttk.Frame):
             e_mass.grab_set()
             error_y2.config(text="Not in the list! Check for misspell.")
 
-        def inst_btn1():
+        def apt_install():
             if apt_inst_combo_box.get() == "":
 
                 error_mass_0()
             elif apt_inst_combo_box.get() not in content:
                 error_mass_1()
             else:
-                inst_pop = APT_Installer_Popup(self)
-                inst_pop.grab_set()
+                global pigro_skript_name
+                pigro_skript_name = f"Installing... {apt_inst_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = (
+                    f"{legit} apt install {apt_inst_combo_box.get()} -y && exit"
+                )
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
         global apt_inst_combo_box
         apt_inst_combo_box = ttk.Combobox(self.apt_frame)
@@ -4461,7 +4207,7 @@ class Software_Tab(ttk.Frame):
         self.apt_inst_btn = Button(
             self.apt_frame,
             text="install",
-            command=inst_btn1,
+            command=apt_install,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
@@ -4495,7 +4241,7 @@ class Software_Tab(ttk.Frame):
         self.un_apt_frame.pack()
         self.un_apt_frame["background"] = frame_color
 
-        ua_fo = open(f"/home/{user}/.pigro/packages.list", "r")
+        ua_fo = os.popen("dpkg --get-selections |sed -e s/install//g")
         un_content = ua_fo.readlines()
         for i, s in enumerate(un_content):
             un_content[i] = s.strip()
@@ -4512,14 +4258,20 @@ class Software_Tab(ttk.Frame):
                         data.append(item)
                 apt_un_combo_box["values"] = data
 
-        def un_inst_btn1():
+        def apt_uninstall():
             if apt_un_combo_box.get() == "":
                 error_mass_0()
             elif apt_un_combo_box.get() not in un_content:
                 error_mass_1()
             else:
-                uninst_pop = APT_Uninstaller_Popup(self)
-                uninst_pop.grab_set()
+                global pigro_skript_name
+                pigro_skript_name = f"Uninstalling... {apt_un_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = (
+                    f"{legit} apt install {apt_un_combo_box.get()} -y && exit"
+                )
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
         self.un_apt_ico = Label(
             self.un_apt_frame,
@@ -4543,7 +4295,7 @@ class Software_Tab(ttk.Frame):
         self.un_apt_inst_btn = Button(
             self.un_apt_frame,
             text="remove",
-            command=un_inst_btn1,
+            command=apt_uninstall,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
@@ -4605,7 +4357,7 @@ class Software_Tab(ttk.Frame):
                         data_pa.append(item)
                 piapps_inst_combo_box["values"] = data_pa
 
-        def inst_btn1():
+        def piapps_install():
             if piapps_inst_combo_box.get() == "":
                 error_mass_0()
             else:
@@ -4650,7 +4402,7 @@ class Software_Tab(ttk.Frame):
         piapps_inst_btn = Button(
             self.piapps_frame,
             text="install",
-            command=inst_btn1,
+            command=piapps_install,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
@@ -4701,7 +4453,7 @@ class Software_Tab(ttk.Frame):
                         data_un_pa.append(item)
                 piapps_un_combo_box["values"] = data_un_pa
 
-        def un_inst_btn1():
+        def piapps_uninstall():
             if piapps_un_combo_box.get() == "":
                 error_mass_0()
             else:
@@ -4739,7 +4491,7 @@ class Software_Tab(ttk.Frame):
         un_piapps_inst_btn = Button(
             self.un_piapps_frame,
             text="remove",
-            command=un_inst_btn1,
+            command=piapps_uninstall,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
@@ -4777,6 +4529,223 @@ class Software_Tab(ttk.Frame):
         # Make the kontext_menu pop up
         piapps_un_combo_box.bind("<Button - 3>", piapps_un_combo_box_pop_kontext_menu)
 
+        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+
+        # Separator Line
+        self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
+        self.separator.pack(fill="x", side="top", pady=20)
+
+        # flatpak-get_entry
+        self.flatpak_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.flatpak_frame.pack()
+        self.flatpak_frame["background"] = frame_color
+
+        var_material = tk.StringVar()
+        flat_dic = {}
+        with open(
+            f"{Application_path}/scripts/flatpak_installed.csv",
+            encoding="utf-8",
+            mode="r",
+        ) as f:
+            data = csv.reader(f)
+            flat_dic = {rows[0]: rows[1] for rows in data}
+
+        def check_input_flatpak_in(event):
+            value = event.widget.get()
+
+            if value == "":
+                flatpak_inst_combo_box["values"] = flat_dic.keys()
+            else:
+                data_flatpak = []
+                for item in flat_dic.keys():
+                    if value.lower() in item.lower():
+                        data_flatpak.append(item)
+                flatpak_inst_combo_box["values"] = data_flatpak
+
+        def flat_install():
+            if flatpak_inst_combo_box.get() == "":
+
+                error_mass_0()
+            elif flatpak_inst_combo_box.get() not in flat_dic.keys():
+                error_mass_1()
+            else:
+                global pigro_skript_name
+                pigro_skript_name = f"Installing... {flatpak_inst_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = (
+                    f"flatpak install flathub {flat_dic[var_material.get()]} -y && exit"
+                )
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
+
+        global flatpak_inst_combo_box
+        flatpak_inst_combo_box = ttk.Combobox(
+            self.flatpak_frame,
+            values=list(flat_dic.keys()),
+            justify="left",
+            textvariable=var_material,
+        )
+        flatpak_inst_combo_box.bind("<KeyRelease>", check_input_flatpak_in)
+        flatpak_inst_combo_box.config(width=30)
+
+        def flatpak_inst_combo_box_pop_in_kontext_menu(event):
+            pa_in_kontext_menu.tk_popup(event.x_root, event.y_root)
+
+        def flatpak_inst_combo_box_paste():
+            flatpak_inst_combo_box.event_generate("<<Paste>>")
+
+        # Right Click in_kontext_menu
+        pa_in_kontext_menu = Menu(
+            flatpak_inst_combo_box, tearoff=0, bg="white", fg="black"
+        )
+        # options
+        pa_in_kontext_menu.add_command(
+            label="Paste", command=flatpak_inst_combo_box_paste
+        )
+
+        # Make the in_kontext_menu pop up
+        flatpak_inst_combo_box.bind(
+            "<Button - 3>", flatpak_inst_combo_box_pop_in_kontext_menu
+        )
+        global flatpak_inst_btn
+        flatpak_inst_btn = Button(
+            self.flatpak_frame,
+            text="install",
+            command=flat_install,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            font=(("Sans,bold"), "12"),
+            width=10,
+        )
+
+        self.flatpak_ico = Label(
+            self.flatpak_frame,
+            text="Flatpak",
+            foreground="#d4244d",
+            width=15,
+            font=(("Sans,bold"), "14"),
+        )
+        self.flatpak_ico["background"] = frame_color
+        self.flatpak_ico.grid(
+            column=0,
+            row=0,
+        )
+        flatpak_inst_combo_box.grid(column=2, row=0)
+        flatpak_inst_btn.grid(column=1, row=0)
+
+        # flatpak- remove
+        self.un_flatpak_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+
+        if flatpak_path == True:
+            flatpak_inst_combo_box.set("Select/Search a package -->")
+
+        if flatpak_path == False:
+            flatpak_inst_btn.config(state=DISABLED)
+            flatpak_inst_combo_box.set("Pi-Apps is not installed")
+
+        self.un_flat_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        self.un_flat_frame.pack()
+        self.un_flat_frame["background"] = frame_color
+
+        un_flat_fo = os.popen("flatpak list --columns=application")
+        un_flat_un_content = un_flat_fo.readlines()
+        for i, s in enumerate(un_flat_un_content):
+            un_flat_un_content[i] = s.strip()
+
+        def check_input_flat_un(event):
+            value = event.widget.get()
+
+            if value == "":
+                flat_un_combo_box["values"] = un_flat_un_content
+            else:
+                data = []
+                for item in un_flat_un_content:
+                    if value.lower() in item.lower():
+                        data.append(item)
+                flat_un_combo_box["values"] = data
+
+        def flatpak_uninstall():
+            if flat_un_combo_box.get() == "":
+                error_mass_0()
+            elif flat_un_combo_box.get() not in un_flat_un_content:
+                error_mass_1()
+            else:
+                global pigro_skript_name
+                pigro_skript_name = f"Uninstalling... {flat_un_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = f"flatpak uninstall {flat_un_combo_box.get()} -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
+
+        self.un_flat_ico = Label(
+            self.un_flat_frame,
+            text=" ",
+            foreground="#d4244d",
+            width=15,
+            font=(("Sans,bold"), "14"),
+        )
+        self.un_flat_ico["background"] = frame_color
+        self.un_flat_ico.grid(
+            column=0,
+            row=0,
+        )
+
+        global flat_un_combo_box
+        flat_un_combo_box = ttk.Combobox(self.un_flat_frame)
+        flat_un_combo_box["values"] = un_flat_un_content
+        flat_un_combo_box.bind("<KeyRelease>", check_input_flat_un)
+        flat_un_combo_box.config(width=30)
+
+        self.un_flat_inst_btn = Button(
+            self.un_flat_frame,
+            text="remove",
+            command=flatpak_uninstall,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground="red",
+            font=(("Sans,bold"), "12"),
+            width=10,
+        )
+
+        self.un_flat_ico.grid(column=0, row=0, rowspan=2)
+        flat_un_combo_box.grid(column=2, row=0)
+        self.un_flat_inst_btn.grid(column=1, row=0)
+
+        apt_inst_combo_box.set("Select/Search a package -->")
+        flat_un_combo_box.set("Select/Search a package -->")
+
+        def flat_un_combo_box_pop_kontext_menu(event):
+            un_kontext_menu.tk_popup(event.x_root, event.y_root)
+
+        def flat_un_combo_box_paste():
+            flat_un_combo_box.event_generate("<<Paste>>")
+
+        # Right Click kontext_menu
+        un_kontext_menu = Menu(flat_un_combo_box, tearoff=0, bg="white", fg="black")
+        # options
+        un_kontext_menu.add_command(label="Paste", command=flat_un_combo_box_paste)
+
+        # Make the kontext_menu pop up
+        flat_un_combo_box.bind("<Button - 3>", flat_un_combo_box_pop_kontext_menu)
+
         # Separator Line
         self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
         self.separator.pack(fill="x", side="top", pady=20)
@@ -4791,13 +4760,60 @@ class Software_Tab(ttk.Frame):
         self.snap_frame.pack()
         self.snap_frame["background"] = frame_color
 
-        def inst_btn2():
-            if self.snap_entry.get() == "":
+        def error_mass_0():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
+
+        def error_mass_1():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
+            error_y2.config(text="Not in the list! Check for misspell.")
+
+        def snap_install():
+            if snap_inst_combo_box.get() == "":
+
                 error_mass_0()
+            elif snap_inst_combo_box.get() not in content:
+                error_mass_1()
             else:
-                popen(
-                    f"x-terminal-emulator -e 'bash -c \"{legit} snap install {self.snap_entry.get()}; exec bash\"'"
-                )
+                global pigro_skript_name
+                pigro_skript_name = f"Installing... {snap_inst_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = f"snap install {snap_inst_combo_box.get()} -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
+
+        global snap_inst_combo_box
+        snap_inst_combo_box = Entry(self.snap_frame)
+        snap_inst_combo_box.config(width=31)
+
+        def snap_inst_combo_box_pop_in_kontext_menu(event):
+            in_kontext_menu.tk_popup(event.x_root, event.y_root)
+
+        def snap_inst_combo_box_paste():
+            snap_inst_combo_box.event_generate("<<Paste>>")
+
+        # Right Click in_kontext_menu
+        in_kontext_menu = Menu(snap_inst_combo_box, tearoff=0, bg="white", fg="black")
+        # options
+        in_kontext_menu.add_command(label="Paste", command=snap_inst_combo_box_paste)
+
+        # Make the in_kontext_menu pop up
+        snap_inst_combo_box.bind(
+            "<Button - 3>", snap_inst_combo_box_pop_in_kontext_menu
+        )
+
+        self.snap_inst_btn = Button(
+            self.snap_frame,
+            text="install",
+            command=snap_install,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            font=(("Sans,bold"), "12"),
+            width=10,
+        )
 
         self.snap_ico = Label(
             self.snap_frame,
@@ -4807,151 +4823,85 @@ class Software_Tab(ttk.Frame):
             font=(("Sans,bold"), "14"),
         )
         self.snap_ico["background"] = frame_color
-
-        self.snap_entry = Entry(
-            self.snap_frame,
-            bd=5,
-            width=32,
-            highlightthickness=0,
-            borderwidth=0,
+        self.snap_ico.grid(
+            column=0,
+            row=0,
         )
-        self.snap_inst_btn = Button(
-            self.snap_frame,
-            text="install",
-            command=inst_btn2,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            font=(("Sans,bold"), "12"),
-            width=10,
-        )
-
-        self.snapstore_btn = Button(
-            self.snap_frame,
-            text="Search Snaps",
-            command=snapcraft,
-            highlightthickness=0,
-            borderwidth=0,
-            width=33,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "9"),
-        )
-
-        if os.path.isfile("/bin/snap"):
-            self.snap_inst_btn.configure(state=NORMAL)
-        else:
-            self.snap_inst_btn.configure(state=DISABLED)
-            self.snap_entry.insert(0, "Snap is not installed")
-
-        self.snap_ico.grid(column=0, row=0, rowspan=2)
-        self.snap_entry.grid(column=2, row=0)
+        snap_inst_combo_box.grid(column=2, row=0)
         self.snap_inst_btn.grid(column=1, row=0)
-        self.snapstore_btn.grid(column=2, row=1)
 
-        def snap_entry_pop_sin_kontext_menu(event):
-            sin_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def snap_entry_paste():
-            self.snap_entry.event_generate("<<Paste>>")
-
-        # Right Click sin_kontext_menu
-        sin_kontext_menu = Menu(self.snap_entry, tearoff=0, bg="white", fg="black")
-        # options
-        sin_kontext_menu.add_command(label="Paste", command=snap_entry_paste)
-
-        # Make the sin_kontext_menu pop up
-        self.snap_entry.bind("<Button - 3>", snap_entry_pop_sin_kontext_menu)
-
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
-
-        # Separator Line
-        self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
-        self.separator.pack(fill="x", side="top", pady=20)
-
-        # flat_entry
-        self.flat_frame = Frame(
+        # snap- remove
+        self.un_snap_frame = Frame(
             self.fast_sec_frame,
             relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
         )
-        self.flat_frame.pack()
-        self.flat_frame["background"] = frame_color
+        self.un_snap_frame.pack()
+        self.un_snap_frame["background"] = frame_color
 
-        def inst_btn4():
-            if self.flat_entry.get() == "":
+        def un_snap_install():
+            if snap_un_combo_box.get() == "":
                 error_mass_0()
+            elif snap_un_combo_box.get() not in un_content:
+                error_mass_1()
             else:
-                popen(
-                    f" x-terminal-emulator -e 'bash -c \"{legit} flatpak install flathub {self.flat_entry.get()}; exec bash\"'"
-                )
+                global pigro_skript_name
+                pigro_skript_name = f"Uninstalling... {snap_un_combo_box.get()}"
+                global pigro_skript
+                pigro_skript = f"snap install {snap_un_combo_box.get()} -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.flatp_ico = Label(
-            self.flat_frame,
-            text="Flatpak",
+        self.un_snap_ico = Label(
+            self.un_snap_frame,
+            text=" ",
             foreground="#d4244d",
             width=15,
             font=(("Sans,bold"), "14"),
         )
-        self.flatp_ico["background"] = frame_color
-
-        self.flat_entry = Entry(
-            self.flat_frame,
-            bd=5,
-            width=32,
-            highlightthickness=0,
-            borderwidth=0,
+        self.un_snap_ico["background"] = frame_color
+        self.un_snap_ico.grid(
+            column=0,
+            row=0,
         )
-        self.flatp_inst_btn = Button(
-            self.flat_frame,
-            text="install",
-            command=inst_btn4,
+
+        global snap_un_combo_box
+        snap_un_combo_box = Entry(self.un_snap_frame)
+        snap_un_combo_box.config(width=31)
+
+        self.un_snap_inst_btn = Button(
+            self.un_snap_frame,
+            text="remove",
+            command=un_snap_install,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
-            foreground=main_font,
+            foreground="red",
             font=(("Sans,bold"), "12"),
             width=10,
         )
 
-        self.flat_btn = Button(
-            self.flat_frame,
-            text="Search Flathub",
-            command=flatflat,
-            highlightthickness=0,
-            width=33,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "9"),
-        )
+        self.un_snap_ico.grid(column=0, row=0, rowspan=2)
+        snap_un_combo_box.grid(column=2, row=0)
+        self.un_snap_inst_btn.grid(column=1, row=0)
 
-        if os.path.isfile("/bin/flatpak"):
-            self.flatp_inst_btn.configure(state=NORMAL)
-        else:
-            self.flatp_inst_btn.configure(state=DISABLED)
-            self.flat_entry.insert(0, "Flatpak is not installed")
+        # snap_inst_combo_box.set("Select/Search a package -->")
+        # snap_un_combo_box.set("Select/Search a package -->")
 
-        self.flatp_ico.grid(column=0, row=0, rowspan=2)
-        self.flat_entry.grid(column=2, row=0)
-        self.flatp_inst_btn.grid(column=1, row=0)
-        self.flat_btn.grid(column=2, row=1)
+        def snap_un_combo_box_pop_kontext_menu(event):
+            un_kontext_menu.tk_popup(event.x_root, event.y_root)
 
-        def flat_entry_pop_fin_kontext_menu(event):
-            fin_kontext_menu.tk_popup(event.x_root, event.y_root)
+        def snap_un_combo_box_paste():
+            snap_un_combo_box.event_generate("<<Paste>>")
 
-        def flat_entry_paste():
-            self.flat_entry.event_generate("<<Paste>>")
-
-        # Right Click fin_kontext_menu
-        fin_kontext_menu = Menu(self.flat_entry, tearoff=0, bg="white", fg="black")
+        # Right Click kontext_menu
+        un_kontext_menu = Menu(snap_un_combo_box, tearoff=0, bg="white", fg="black")
         # options
-        fin_kontext_menu.add_command(label="Paste", command=flat_entry_paste)
+        un_kontext_menu.add_command(label="Paste", command=snap_un_combo_box_paste)
 
-        # Make the fin_kontext_menu pop up
-        self.flat_entry.bind("<Button - 3>", flat_entry_pop_fin_kontext_menu)
+        # Make the kontext_menu pop up
+        snap_un_combo_box.bind("<Button - 3>", snap_un_combo_box_pop_kontext_menu)
 
         # Separator Line
         self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
@@ -4970,106 +4920,118 @@ class Software_Tab(ttk.Frame):
             pady=10,
         )
         self.repo_sec_frame["background"] = frame_color
-        self.repo_sec_frame.pack()
+        self.repo_sec_frame.pack(
+            pady=20,
+        )
 
-        self.bleach_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Bleach Bit",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=bleacbit_installer,
-        ).grid(row=0, column=0, pady=5, padx=5)
+        def instant_install(text):
+            if text == "Neofetch":
+                global pigro_skript_name
+                pigro_skript_name = "Installing... Neofetch"
+                global pigro_skript
+                pigro_skript = f"{legit} apt install neofetch -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.bpytop_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="BPYTop",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=bpytop_installer,
-        ).grid(row=0, column=1, pady=5, padx=5)
+            if text == "Bleach Bit":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... bleachbit"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install bleachbit -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.compiz_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Compiz",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=compiz_installer,
-        ).grid(row=0, column=2, pady=5, padx=5)
+            if text == "BPYTop":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... bpytop"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install bpytop -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.gnomepi_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Gnome-Pie",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=gnomepie_installer,
-        ).grid(row=1, column=0, pady=5, padx=5)
+            if text == "Compiz":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... compiz"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install compiz -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.gparted_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="GParted",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=gparted_installer,
-        ).grid(row=1, column=1, pady=5, padx=5)
+            if text == "Gnome-Pie":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... gnome-pie"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install gnome-pie -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.neo_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Neofetch",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=neofetch_installer,
-        ).grid(row=1, column=2, pady=5, padx=5)
+            if text == "GParted":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... gparted"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install gparted -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.imager_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Pi Imager",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=imager_installer,
-        ).grid(row=2, column=0, pady=5, padx=5)
+            if text == "Pi Imager":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... rpi-imager"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install rpi-imager -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.plank_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Plank",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=plank_installer,
-        ).grid(row=2, column=1, pady=5, padx=5)
+            if text == "Plank":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... plank"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install plank -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
 
-        self.xfce_screen_inst = Button(
-            self.repo_sec_frame,
-            width=20,
-            text="Xfce4 Screenshooter",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=xfce4screen_installer,
-        ).grid(row=2, column=2, pady=5, padx=5)
+            if text == "Xfce4 Screenshooter":
+                # global pigro_skript_name
+                pigro_skript_name = "Installing... xfce4-screenshooter"
+                # global pigro_skript
+                pigro_skript = f"{legit} apt install xfce4-screenshooter -y && exit"
+                custom_pop = Custom_Installer(self)
+                custom_pop.grab_set()
+
+        instant_install_btn_list = [
+            "Bleach Bit",
+            "BPYTop",
+            "Compiz",
+            "Gnome-Pie",
+            "GParted",
+            "Neofetch",
+            "Pi Imager",
+            "Plank",
+            "Xfce4 Screenshooter",
+        ]
+
+        instant_install_btn_list1 = []
+        conf_row = 0
+        conf_column = 0
+        for instant_install_btn in instant_install_btn_list:
+            self.instant_install_button_x = Button(
+                self.repo_sec_frame,
+                width=20,
+                text=instant_install_btn,
+                highlightthickness=0,
+                borderwidth=0,
+                background=ext_btn,
+                foreground=main_font,
+                command=lambda text=instant_install_btn: instant_install(text),
+            )
+
+            self.instant_install_button_x.grid(
+                row=conf_row, column=conf_column, padx=5, pady=5
+            )
+            instant_install_btn_list1.append(self.instant_install_button_x)
+            conf_column = conf_column + 1
+            if conf_column == 3:
+                conf_row = conf_row + 1
+                conf_column = 0
 
         self.warning_msg = Label(
             self.repo_sec_frame,
@@ -7524,7 +7486,7 @@ printf 'Done!'"""
 
         self.step2 = Label(
             self.backup_frame2,
-            text="Step 2: Click on 'Backup' to start the prosses.After 1 sec the it should be done.",
+            text="Step 2: Click on 'Backup' to start the prosses.After 1 sec it should be done.",
             justify="left",
             background=frame_color,
             foreground=main_font,
