@@ -38,11 +38,13 @@ from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
 import requests
-import csv
+
 
 # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
+
+
 
     # MUST BE UPDATED WITH EVER NEW RELEASE!
     global current_version
@@ -50,12 +52,12 @@ class Get_Sys_Info:
 
     # Say Hallo!
     global user
-    user = os.getlogin()
+    user = os.environ["USER"]  # os.getlogin()
     print(f"[Info]: Hi,{user} waz uuuuup?!")
 
     # Define Home
     global home
-    home = str(Path.home())
+    home = os.environ["HOME"]  # str(Path.home())
     print(f"[Info]: {home} is your home directory!")
 
     # Gets path to PiGro
@@ -65,7 +67,9 @@ class Get_Sys_Info:
 
     # Makes all .sh files in /scripts executable if PiGro in $HOME
     if Application_path == f"{home}/PiGro-Aid-":
-        popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
+        popen(
+            'find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;'
+        )
         print(f"[Info]: All files executable")
 
     # Checks if settings folder exists
@@ -164,7 +168,7 @@ class Get_Sys_Info:
         print("[Info]: Pi-Apps not found")
     if piapps_path == True:
         print("[Info]: Pi-Apps is installed list will be added")
-        popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
+        # popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
         for installed_pi_apps in os.listdir(f"{home}/pi-apps/data/status"):
             pi_apps_status = open(
@@ -184,13 +188,13 @@ class Get_Sys_Info:
 
     arch_bash = """#determine if host system is 64 bit arm64 or 32 bit armhf
 if [ "$(od -An -t x1 -j 4 -N 1 "$(readlink -f /sbin/init)")" = ' 02' ];then
-  arch=64
-  printf "arm64"
+arch=64
+printf "arm64"
 elif [ "$(od -An -t x1 -j 4 -N 1 "$(readlink -f /sbin/init)")" = ' 01' ];then
-  arch=32
-  printf "armhf"
+arch=32
+printf "armhf"
 else
-  error "Failed to detect OS CPU architecture! Something is very wrong."
+error "Failed to detect OS CPU architecture! Something is very wrong."
 fi"""
 
     global os_arch_output
@@ -199,7 +203,10 @@ fi"""
     # print(os_arch_output)
 
     # Checks if snapd exists
-    if os.path.isfile("/bin/snap"):
+    global snap_deamon_check
+    snap_deamon_check = os.path.isfile("/bin/snap")
+
+    if snap_deamon_check == True:
         print("[Info]: Snap is installed")
     else:
         print("[Info]: Snap is not installed")
@@ -249,7 +256,7 @@ fi"""
             global maincolor
             maincolor = "#404040"
             global nav_color
-            nav_color = "#353535"
+            nav_color = "#2b2b2b"
             global frame_color
             frame_color = "#383838"
             global main_font
@@ -258,6 +265,8 @@ fi"""
             info_color = "yellow"
             global ext_btn
             ext_btn = "#007acc"
+            global label_frame_color
+            label_frame_color = "#d4244d"
             if distro_get == "ubuntu":
                 maincolor = "#333333"
                 nav_color = "#272727"
@@ -266,15 +275,17 @@ fi"""
                 info_color = "yellow"
                 ext_btn = "#333333"
 
+
         # Light Theme Settings
         if str("theme = light") in line:
             print("[Info]: Light Theme")
-            maincolor = "#ededed"
-            nav_color = "#b6b6b3"
-            frame_color = "#ededed"
+            maincolor = "#f5f5f5"
+            nav_color = "#e8e8e8"
+            frame_color = "#f5f5f5"
             main_font = "black"
             info_color = "#0075b7"
-            ext_btn = "#6c6c6c"
+            ext_btn = "#c5c5c5"
+            label_frame_color = "#0075b7"
             if distro_get == "ubuntu":
                 maincolor = "#fafafa"
                 nav_color = "#ffffff"
@@ -282,6 +293,7 @@ fi"""
                 main_font = "black"
                 info_color = "#0075b7"
                 ext_btn = "#fafafa"
+
 
     # Font Definition Vars
     global font_20
@@ -307,21 +319,6 @@ fi"""
     global font_8
     font_8 = ("Sans", 8)
 
-    # Transparency Settings
-    conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-    read_conf = conf_file.readlines()
-    conf_file.close()
-
-    for line in read_conf:
-
-        if str("transparency = 1.00") in line:
-            print("[Info]: No Transparency")
-            global translate_p
-            translate_p = "1.00"
-
-        if str("transparency = 0.95") in line:
-            translate_p = "0.95"
-            print("[Info]: Transparency 5%")
 
     # Gets latest github release
     url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
@@ -352,7 +349,7 @@ class MainApplication(tk.Tk):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.wait_visibility(self)
-        self.wm_attributes("-alpha", translate_p)
+        #self.wm_attributes("-alpha", translate_p)
 
         # Notebook Definition
         self.notebook = ttk.Notebook(self)
@@ -493,7 +490,7 @@ class MainApplication(tk.Tk):
         noteStyler.map(
             "TNotebook.Tab",
             background=[("selected", nav_color)],
-            foreground=[("selected", "#d4244d")],
+            foreground=[("selected", label_frame_color)],
         )
 
         TROUGH_COLOR = nav_color
@@ -626,7 +623,7 @@ class Dash_Tab(ttk.Frame):
             self,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
         )
 
@@ -666,7 +663,7 @@ class Dash_Tab(ttk.Frame):
             self,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
             pady=20,
             padx=10,
@@ -680,7 +677,7 @@ class Dash_Tab(ttk.Frame):
             self.info_main_frame,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
         )
         # Column 0
@@ -691,7 +688,7 @@ class Dash_Tab(ttk.Frame):
             self.info_main_frame,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
             pady=0,
             padx=0,
@@ -705,7 +702,7 @@ class Dash_Tab(ttk.Frame):
             self.info_main_frame,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
             pady=0,
             padx=0,
@@ -719,7 +716,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_frame,
             text="System Info",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -813,7 +810,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_frame,
             text="CPU",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -882,7 +879,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_Update_Tab,
             text="Memory",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -929,7 +926,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_Update_Tab,
             text="Network",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -966,7 +963,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_Update_Tab,
             text="Disk",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1036,7 +1033,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_System_Tab,
             text="Custom Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1123,7 +1120,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_Update_Tab,
             text="Installed Packages",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1252,7 +1249,7 @@ class Dash_Tab(ttk.Frame):
             self.sys_info_main_System_Tab,
             text="Usage",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1264,7 +1261,7 @@ class Dash_Tab(ttk.Frame):
             self,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="#d4244d",
+            highlightcolor=label_frame_color,
             relief=GROOVE,
             pady=20,
             padx=10,
@@ -1330,7 +1327,7 @@ class Update_Tab(ttk.Frame):
             self.rep_main_frame,
             text="Official Repository",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1345,7 +1342,7 @@ class Update_Tab(ttk.Frame):
             self.rep_main_frame,
             text="Integrated Source",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -1414,8 +1411,16 @@ class Update_Tab(ttk.Frame):
 
         lines = a_file1.readlines()
         for line in lines:
-            self.repo = Entry(self.off_rep_frame, width=70, bd=0)
-            self.repo.insert(0, line[0:-1])
+            self.repo = Label(
+                self.off_rep_frame,
+                width=70,
+                justify=LEFT,
+                anchor="w",
+                text=line[0:-1],
+                fg=main_font,
+                bg=frame_color,
+            )
+
             self.repo.pack(anchor=W)
 
         def up_action(text):
@@ -1476,7 +1481,7 @@ class Update_Tab(ttk.Frame):
             self,
             text="Update Options",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             relief=GROOVE,
             highlightthickness=0,
@@ -1745,7 +1750,7 @@ class System_Tab(ttk.Frame):
             self,
             text="Raspberry Pi Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -1820,7 +1825,7 @@ class System_Tab(ttk.Frame):
             self,
             text="Device Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -2010,7 +2015,7 @@ class System_Tab(ttk.Frame):
             self,
             text="Operating System",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -2224,7 +2229,7 @@ class System_Ubuntu_Tab(ttk.Frame):
             self,
             text="Raspberry Pi Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -2447,7 +2452,7 @@ class Autostarts_Tab(ttk.Frame):
             self,
             text="Autostart Config",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -3108,7 +3113,7 @@ class Add_App_Autostart(tk.Toplevel):
         self.apt_ico = Label(
             self.apt_frame,
             text="Select:",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -3179,7 +3184,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="Reset Settings",
             bg=maincolor,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             font=font_14,
             justify=LEFT,
         )
@@ -3202,7 +3207,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="Crank It Up!",
             bg=maincolor,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             font=font_14,
             justify=LEFT,
         )
@@ -3227,7 +3232,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="You Sir, Need A Fan!",
             bg=maincolor,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             font=font_14,
             justify=LEFT,
         )
@@ -3262,7 +3267,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="Take It To The Max!",
             bg=maincolor,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             font=font_14,
             justify=LEFT,
         )
@@ -3297,7 +3302,7 @@ class Tuning_Legende(tk.Toplevel):
             self.tu_main_frame,
             text="Honey,the fuse blew again!",
             bg=maincolor,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             font=font_14,
             justify=LEFT,
         )
@@ -4079,6 +4084,26 @@ class Custom_Installer(tk.Toplevel):
         Thread(target=install_parameter).start()
 
 
+class Pkg_info_frame(tk.Toplevel):
+    """custom messagebox"""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self["background"] = maincolor
+        self.title(pkg_skript_name)
+        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+
+        global done_label
+        done_label = tk.Label(self)
+        done_label["font"] = font_10
+        done_label["fg"] = main_font
+        done_label["bg"] = maincolor
+        done_label["justify"] = "left"
+        done_label["text"] = read_pkg_infos
+        done_label.pack()
+
+
 class Software_Tab(ttk.Frame):
     def __init__(self, container):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
@@ -4093,15 +4118,12 @@ class Software_Tab(ttk.Frame):
                 "xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki/Software"
             )
 
-        def snapcraft():
-            popen("xdg-open https://snapcraft.io/store")
-
         # Fast_Installer Main_Frame
         self.fast_main_frame = LabelFrame(
             self,
             text="Fast Installer",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
@@ -4204,6 +4226,24 @@ class Software_Tab(ttk.Frame):
         # Make the in_kontext_menu pop up
         apt_inst_combo_box.bind("<Button - 3>", apt_inst_combo_box_pop_in_kontext_menu)
 
+        def apt_info():
+            if apt_inst_combo_box.get() == "":
+
+                error_mass_0()
+            elif apt_inst_combo_box.get() not in content:
+                error_mass_1()
+            else:
+                global pkg_skript_name
+                pkg_skript_name = f"Info: {apt_inst_combo_box.get()}"
+                global read_pkg_infos
+                pkg_infos = popen(
+                    f"apt show -a {apt_inst_combo_box.get()} |grep 'Package:\|Homepage:\|Version:\|Maintainer:\|Section:\|Download-Size:\|Installed-Size:\|Description:'"
+                )
+                read_pkg_infos = pkg_infos.read()
+
+                pkg_i = Pkg_info_frame(self)
+                pkg_i.grab_set()
+
         self.apt_inst_btn = Button(
             self.apt_frame,
             text="install",
@@ -4215,11 +4255,21 @@ class Software_Tab(ttk.Frame):
             font=(("Sans,bold"), "12"),
             width=10,
         )
-
+        self.apt_inst_info_btn = Button(
+            self.apt_frame,
+            text="Info",
+            command=apt_info,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            font=(("Sans,bold"), "12"),
+            width=10,
+        )
         self.apt_ico = Label(
             self.apt_frame,
             text="Apt-Get",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4230,6 +4280,7 @@ class Software_Tab(ttk.Frame):
         )
         apt_inst_combo_box.grid(column=2, row=0)
         self.apt_inst_btn.grid(column=1, row=0)
+        self.apt_inst_info_btn.grid(column=1, row=1)
 
         # APT- remove
         self.un_apt_frame = Frame(
@@ -4276,7 +4327,7 @@ class Software_Tab(ttk.Frame):
         self.un_apt_ico = Label(
             self.un_apt_frame,
             text=" ",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4339,7 +4390,9 @@ class Software_Tab(ttk.Frame):
         self.piapps_frame.pack()
         self.piapps_frame["background"] = frame_color
 
-        fo_pa = open(f"/home/{user}/.pigro/pi-apps_list.list", "r")
+        fo_pa = popen(
+            f"ls ~/pi-apps/apps/ "
+        )  # open(f"/home/{user}/.pigro/pi-apps_list.list", "r")
         content_pa = fo_pa.readlines()
         for i, s in enumerate(content_pa):
             content_pa[i] = s.strip()
@@ -4398,6 +4451,24 @@ class Software_Tab(ttk.Frame):
         piapps_inst_combo_box.bind(
             "<Button - 3>", piapps_inst_combo_box_pop_in_kontext_menu
         )
+
+        def pi_apps_info():
+            if piapps_inst_combo_box.get() == "":
+                error_mass_0()
+            else:
+                global pkg_skript_name
+                pkg_skript_name = f"Info: {piapps_inst_combo_box.get()}"
+
+                pkg_infos = open(
+                    f"{home}/pi-apps/apps/{piapps_inst_combo_box.get()}/description",
+                    "r",
+                )
+                global read_pkg_infos
+                read_pkg_infos = pkg_infos.read()
+                pkg_infos.close()
+                pkg_i = Pkg_info_frame(self)
+                pkg_i.grab_set()
+
         global piapps_inst_btn
         piapps_inst_btn = Button(
             self.piapps_frame,
@@ -4411,10 +4482,22 @@ class Software_Tab(ttk.Frame):
             width=10,
         )
 
+        piapps_inst_info_btn = Button(
+            self.piapps_frame,
+            text="Info",
+            command=pi_apps_info,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            font=(("Sans,bold"), "12"),
+            width=10,
+        )
+
         self.piapps_ico = Label(
             self.piapps_frame,
             text="Pi-Apps",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4425,6 +4508,7 @@ class Software_Tab(ttk.Frame):
         )
         piapps_inst_combo_box.grid(column=2, row=0)
         piapps_inst_btn.grid(column=1, row=0)
+        piapps_inst_info_btn.grid(column=1, row=1)
 
         # piapps- remove
         self.un_piapps_frame = Frame(
@@ -4472,7 +4556,7 @@ class Software_Tab(ttk.Frame):
         self.un_piapps_ico = Label(
             self.un_piapps_frame,
             text=" ",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4545,24 +4629,40 @@ class Software_Tab(ttk.Frame):
         self.flatpak_frame.pack()
         self.flatpak_frame["background"] = frame_color
 
+        # VARs for Flatpak remote list
+        f1 = "flatpak remote-ls --columns=name"
+        f2 = "flatpak remote-ls --columns=application"
+
+        # Get Name Key
+        flat_name_content = os.popen(f1)
+        flat_name_list = flat_name_content.readlines()
+        for i1, s1 in enumerate(flat_name_list):
+            flat_name_list[i1] = s1.strip()
+
+        # Get App Key
+        flat_app_content = os.popen(f2)
+        flat_app_list = flat_app_content.readlines()
+        for i2, s2 in enumerate(flat_app_list):
+            flat_app_list[i2] = s2.strip()
+
+        # Zips NAME & APP
+        zip_name_app = zip(flat_name_list, flat_app_list)
+
+        # Puts zip_name_app in dict
+        Flat_remote_dict = dict(zip_name_app)
+
+        # print(Flat_remote_dict)
+
         var_material = tk.StringVar()
-        flat_dic = {}
-        with open(
-            f"{Application_path}/scripts/flatpak_installed.csv",
-            encoding="utf-8",
-            mode="r",
-        ) as f:
-            data = csv.reader(f)
-            flat_dic = {rows[0]: rows[1] for rows in data}
 
         def check_input_flatpak_in(event):
             value = event.widget.get()
 
             if value == "":
-                flatpak_inst_combo_box["values"] = flat_dic.keys()
+                flatpak_inst_combo_box["values"] = Flat_remote_dict.keys()
             else:
                 data_flatpak = []
-                for item in flat_dic.keys():
+                for item in Flat_remote_dict.keys():
                     if value.lower() in item.lower():
                         data_flatpak.append(item)
                 flatpak_inst_combo_box["values"] = data_flatpak
@@ -4571,22 +4671,21 @@ class Software_Tab(ttk.Frame):
             if flatpak_inst_combo_box.get() == "":
 
                 error_mass_0()
-            elif flatpak_inst_combo_box.get() not in flat_dic.keys():
+            elif flatpak_inst_combo_box.get() not in Flat_remote_dict.keys():
                 error_mass_1()
             else:
                 global pigro_skript_name
                 pigro_skript_name = f"Installing... {flatpak_inst_combo_box.get()}"
                 global pigro_skript
-                pigro_skript = (
-                    f"flatpak install flathub {flat_dic[var_material.get()]} -y && exit"
-                )
+                pigro_skript = f"flatpak install flathub {Flat_remote_dict[var_material.get()]} -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
+                print(Flat_remote_dict[var_material.get()])
 
         global flatpak_inst_combo_box
         flatpak_inst_combo_box = ttk.Combobox(
             self.flatpak_frame,
-            values=list(flat_dic.keys()),
+            values=list(Flat_remote_dict.keys()),
             justify="left",
             textvariable=var_material,
         )
@@ -4594,17 +4693,17 @@ class Software_Tab(ttk.Frame):
         flatpak_inst_combo_box.config(width=30)
 
         def flatpak_inst_combo_box_pop_in_kontext_menu(event):
-            pa_in_kontext_menu.tk_popup(event.x_root, event.y_root)
+            flatpak_install_kontext_menu.tk_popup(event.x_root, event.y_root)
 
         def flatpak_inst_combo_box_paste():
             flatpak_inst_combo_box.event_generate("<<Paste>>")
 
         # Right Click in_kontext_menu
-        pa_in_kontext_menu = Menu(
+        flatpak_install_kontext_menu = Menu(
             flatpak_inst_combo_box, tearoff=0, bg="white", fg="black"
         )
         # options
-        pa_in_kontext_menu.add_command(
+        flatpak_install_kontext_menu.add_command(
             label="Paste", command=flatpak_inst_combo_box_paste
         )
 
@@ -4628,7 +4727,7 @@ class Software_Tab(ttk.Frame):
         self.flatpak_ico = Label(
             self.flatpak_frame,
             text="Flatpak",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4653,70 +4752,103 @@ class Software_Tab(ttk.Frame):
 
         if flatpak_path == False:
             flatpak_inst_btn.config(state=DISABLED)
-            flatpak_inst_combo_box.set("Pi-Apps is not installed")
+            flatpak_inst_combo_box.set("Flatpak is not installed")
 
-        self.un_flat_frame = Frame(
+        # flatpak uninstall_entry
+        self.un_flatpak_frame = Frame(
             self.fast_sec_frame,
             relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
         )
-        self.un_flat_frame.pack()
-        self.un_flat_frame["background"] = frame_color
+        self.un_flatpak_frame.pack()
+        self.un_flatpak_frame["background"] = frame_color
 
-        un_flat_fo = os.popen("flatpak list --columns=application")
-        un_flat_un_content = un_flat_fo.readlines()
-        for i, s in enumerate(un_flat_un_content):
-            un_flat_un_content[i] = s.strip()
+        # VARs for Flatpak installed list
+        fu1 = "flatpak list --columns=name"
+        fu2 = "flatpak list --columns=application"
 
-        def check_input_flat_un(event):
+        # Get Name Key
+        flat_un_name_content = os.popen(fu1)
+        flat_un_name_list = flat_un_name_content.readlines()
+        for i3, s3 in enumerate(flat_un_name_list):
+            flat_un_name_list[i3] = s3.strip()
+
+        # Get App Key
+        flat_un_app_content = os.popen(fu2)
+        flat_un_app_list = flat_un_app_content.readlines()
+        for i4, s4 in enumerate(flat_un_app_list):
+            flat_un_app_list[i4] = s4.strip()
+
+        # Zips NAME & APP
+        zip_un_name_app = zip(flat_un_name_list, flat_un_app_list)
+
+        # Puts zip_un_name_app in dict
+        flat_uninstalled_dict = dict(zip_un_name_app)
+
+        # print(flat_uninstalled_dict)
+
+        un_var_material = tk.StringVar()
+
+        def check_input_flatpak_un(event):
             value = event.widget.get()
 
             if value == "":
-                flat_un_combo_box["values"] = un_flat_un_content
+                flatpak_uninst_combo_box["values"] = flat_uninstalled_dict.keys()
             else:
-                data = []
-                for item in un_flat_un_content:
+                un_data_flatpak = []
+                for item in flat_uninstalled_dict.keys():
                     if value.lower() in item.lower():
-                        data.append(item)
-                flat_un_combo_box["values"] = data
+                        un_data_flatpak.append(item)
+                flatpak_uninst_combo_box["un_values"] = un_data_flatpak
 
-        def flatpak_uninstall():
-            if flat_un_combo_box.get() == "":
+        def flat_uninstall():
+            if flatpak_uninst_combo_box.get() == "":
+
                 error_mass_0()
-            elif flat_un_combo_box.get() not in un_flat_un_content:
+            elif flatpak_uninst_combo_box.get() not in flat_uninstalled_dict.keys():
                 error_mass_1()
             else:
                 global pigro_skript_name
-                pigro_skript_name = f"Uninstalling... {flat_un_combo_box.get()}"
+                pigro_skript_name = f"Uinstalling... {flatpak_uninst_combo_box.get()}"
                 global pigro_skript
-                pigro_skript = f"flatpak uninstall {flat_un_combo_box.get()} -y && exit"
+                pigro_skript = f"flatpak uninstall flathub {flat_uninstalled_dict[un_var_material.get()]} -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-        self.un_flat_ico = Label(
-            self.un_flat_frame,
-            text=" ",
-            foreground="#d4244d",
-            width=15,
-            font=(("Sans,bold"), "14"),
+        flatpak_uninst_combo_box = ttk.Combobox(
+            self.un_flatpak_frame,
+            values=list(flat_uninstalled_dict.keys()),
+            justify="left",
+            textvariable=un_var_material,
         )
-        self.un_flat_ico["background"] = frame_color
-        self.un_flat_ico.grid(
-            column=0,
-            row=0,
+        flatpak_uninst_combo_box.bind("<KeyRelease>", check_input_flatpak_un)
+        flatpak_uninst_combo_box.config(width=30)
+
+        def flatpak_uninst_combo_box_pop_in_kontext_menu(event):
+            flatpak_un_kontext_menu.tk_popup(event.x_root, event.y_root)
+
+        def flatpak_uninst_combo_box_paste():
+            flatpak_uninst_combo_box.event_generate("<<Paste>>")
+
+        # Right Click in_kontext_menu
+        flatpak_un_kontext_menu = Menu(
+            flatpak_uninst_combo_box, tearoff=0, bg="white", fg="black"
+        )
+        # options
+        flatpak_un_kontext_menu.add_command(
+            label="Paste", command=flatpak_uninst_combo_box_paste
         )
 
-        global flat_un_combo_box
-        flat_un_combo_box = ttk.Combobox(self.un_flat_frame)
-        flat_un_combo_box["values"] = un_flat_un_content
-        flat_un_combo_box.bind("<KeyRelease>", check_input_flat_un)
-        flat_un_combo_box.config(width=30)
+        # Make the in_kontext_menu pop up
+        flatpak_uninst_combo_box.bind(
+            "<Button - 3>", flatpak_uninst_combo_box_pop_in_kontext_menu
+        )
 
-        self.un_flat_inst_btn = Button(
-            self.un_flat_frame,
+        flatpak_inst_btn = Button(
+            self.un_flatpak_frame,
             text="remove",
-            command=flatpak_uninstall,
+            command=flat_uninstall,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
@@ -4725,26 +4857,35 @@ class Software_Tab(ttk.Frame):
             width=10,
         )
 
-        self.un_flat_ico.grid(column=0, row=0, rowspan=2)
-        flat_un_combo_box.grid(column=2, row=0)
-        self.un_flat_inst_btn.grid(column=1, row=0)
+        self.flatpak_ico = Label(
+            self.un_flatpak_frame,
+            text=" ",
+            foreground=label_frame_color,
+            width=15,
+            font=(("Sans,bold"), "14"),
+        )
+        self.flatpak_ico["background"] = frame_color
+        self.flatpak_ico.grid(
+            column=0,
+            row=0,
+        )
+        flatpak_uninst_combo_box.grid(column=2, row=0)
+        flatpak_inst_btn.grid(column=1, row=0)
 
-        apt_inst_combo_box.set("Select/Search a package -->")
-        flat_un_combo_box.set("Select/Search a package -->")
+        # flatpak- remove
+        self.un_flatpak_frame = Frame(
+            self.fast_sec_frame,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+        )
 
-        def flat_un_combo_box_pop_kontext_menu(event):
-            un_kontext_menu.tk_popup(event.x_root, event.y_root)
+        if flatpak_path == True:
+            flatpak_uninst_combo_box.set("Select/Search a package -->")
 
-        def flat_un_combo_box_paste():
-            flat_un_combo_box.event_generate("<<Paste>>")
-
-        # Right Click kontext_menu
-        un_kontext_menu = Menu(flat_un_combo_box, tearoff=0, bg="white", fg="black")
-        # options
-        un_kontext_menu.add_command(label="Paste", command=flat_un_combo_box_paste)
-
-        # Make the kontext_menu pop up
-        flat_un_combo_box.bind("<Button - 3>", flat_un_combo_box_pop_kontext_menu)
+        if flatpak_path == False:
+            flatpak_inst_btn.config(state=DISABLED)
+            flatpak_uninst_combo_box.set("Flatpak is not installed")
 
         # Separator Line
         self.separator = tk.Frame(self.fast_sec_frame, bd=10, relief="sunken", height=1)
@@ -4788,15 +4929,15 @@ class Software_Tab(ttk.Frame):
         snap_inst_combo_box.config(width=31)
 
         def snap_inst_combo_box_pop_in_kontext_menu(event):
-            in_kontext_menu.tk_popup(event.x_root, event.y_root)
+            snap_in_kontext_menu.tk_popup(event.x_root, event.y_root)
 
         def snap_inst_combo_box_paste():
             snap_inst_combo_box.event_generate("<<Paste>>")
 
         # Right Click in_kontext_menu
-        in_kontext_menu = Menu(snap_inst_combo_box, tearoff=0, bg="white", fg="black")
+        snap_in_kontext_menu = Menu(snap_inst_combo_box, tearoff=0, bg="white", fg="black")
         # options
-        in_kontext_menu.add_command(label="Paste", command=snap_inst_combo_box_paste)
+        snap_in_kontext_menu.add_command(label="Paste", command=snap_inst_combo_box_paste)
 
         # Make the in_kontext_menu pop up
         snap_inst_combo_box.bind(
@@ -4818,7 +4959,7 @@ class Software_Tab(ttk.Frame):
         self.snap_ico = Label(
             self.snap_frame,
             text="Snap",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4856,7 +4997,7 @@ class Software_Tab(ttk.Frame):
         self.un_snap_ico = Label(
             self.un_snap_frame,
             text=" ",
-            foreground="#d4244d",
+            foreground=label_frame_color,
             width=15,
             font=(("Sans,bold"), "14"),
         )
@@ -4886,19 +5027,29 @@ class Software_Tab(ttk.Frame):
         snap_un_combo_box.grid(column=2, row=0)
         self.un_snap_inst_btn.grid(column=1, row=0)
 
-        # snap_inst_combo_box.set("Select/Search a package -->")
-        # snap_un_combo_box.set("Select/Search a package -->")
+        if snap_deamon_check is True:
+            snap_inst_combo_box.insert(0, "Enter a package -->")
+            snap_un_combo_box.insert(0, "Enter a package -->")
+            self.un_snap_inst_btn.config(state=NORMAL)
+            self.snap_inst_btn.config(state=NORMAL)
+        else:
+            snap_inst_combo_box.insert(0, "Snap is not installed")
+            snap_un_combo_box.insert(0, "Snap is not installed")
+            self.un_snap_inst_btn.config(state=DISABLED)
+            self.snap_inst_btn.config(state=DISABLED)
 
         def snap_un_combo_box_pop_kontext_menu(event):
-            un_kontext_menu.tk_popup(event.x_root, event.y_root)
+            snap_un_kontext_menu.tk_popup(event.x_root, event.y_root)
 
         def snap_un_combo_box_paste():
             snap_un_combo_box.event_generate("<<Paste>>")
 
         # Right Click kontext_menu
-        un_kontext_menu = Menu(snap_un_combo_box, tearoff=0, bg="white", fg="black")
+        snap_un_kontext_menu = Menu(
+            snap_un_combo_box, tearoff=0, bg="white", fg="black"
+        )
         # options
-        un_kontext_menu.add_command(label="Paste", command=snap_un_combo_box_paste)
+        snap_un_kontext_menu.add_command(label="Paste", command=snap_un_combo_box_paste)
 
         # Make the kontext_menu pop up
         snap_un_combo_box.bind("<Button - 3>", snap_un_combo_box_pop_kontext_menu)
@@ -4911,7 +5062,7 @@ class Software_Tab(ttk.Frame):
             self,
             text="From The Repository",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
@@ -4997,6 +5148,8 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
+        self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
+
         instant_install_btn_list = [
             "Bleach Bit",
             "BPYTop",
@@ -5015,7 +5168,11 @@ class Software_Tab(ttk.Frame):
         for instant_install_btn in instant_install_btn_list:
             self.instant_install_button_x = Button(
                 self.repo_sec_frame,
-                width=20,
+                width=180,
+                justify="left",
+                anchor="w",
+                compound="left",
+                image=self.deb_icon,
                 text=instant_install_btn,
                 highlightthickness=0,
                 borderwidth=0,
@@ -5053,92 +5210,6 @@ class Software_Tab(ttk.Frame):
             command=tuning_legende,
             image=self.tu_legend_ico,
         ).place(x=900, y=810)
-
-        def open_synaptic():
-            popen("synaptic-pkexec")
-
-        def open_recom_soft():
-            popen(
-                "env SUDO_ASKPASS=/usr/lib/rp-prefapps/pwdrpp.sh sudo -AE rp-prefapps"
-            )
-
-        def open_gnome_software():
-            popen("gnome-software")
-
-        self.more_frame = LabelFrame(
-            self,
-            text="More",
-            font=font_16,
-            foreground="#d4244d",
-            relief=GROOVE,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            padx=37,
-            pady=10,
-        )
-        self.more_frame["background"] = frame_color
-        self.more_frame.pack()
-
-        self.add_remove_software = Button(
-            self.more_frame,
-            width=20,
-            text="Recommended Software",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=open_recom_soft,
-            state=DISABLED,
-        )
-        self.add_remove_software.grid(row=0, column=0, pady=5, padx=5)
-
-        if os.path.isfile("/bin/rp-prefapps"):
-            self.add_remove_software.config(state=NORMAL)
-            print("[Info]: rp-prefapps is installed")
-        else:
-            print("[Info]: rp-prefapps is not installed")
-
-        self.more_frame["background"] = frame_color
-        self.more_frame.pack(pady=20)
-
-        self.synaptic_btn = Button(
-            self.more_frame,
-            width=20,
-            text="Synaptic",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=open_synaptic,
-            state=DISABLED,
-        )
-        self.synaptic_btn.grid(row=0, column=1, pady=5, padx=5)
-
-        if os.path.isfile("/bin/synaptic-pkexec"):
-            print("[Info]: Synaptic is installed")
-            self.synaptic_btn.config(state=NORMAL)
-        else:
-            print("[Info]: Synaptic is not installed")
-
-        self.gs_btn = Button(
-            self.more_frame,
-            width=20,
-            text="Gnome Software",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            command=open_gnome_software,
-            state=DISABLED,
-        )
-        self.gs_btn.grid(row=0, column=2, pady=5, padx=5)
-
-        if os.path.isfile("/bin/gnome-software"):
-            print("[Info]: gnome-software is installed")
-            self.gs_btn.config(state=NORMAL)
-        else:
-            print("[Info]: gnome-software is not installed")
 
 
 class Git_More_Tab(ttk.Frame):
@@ -5598,6 +5669,7 @@ class Look_Tab(ttk.Frame):
                 file.close()
                 done_1()
 
+
         def trans_selected():
             if select_clicked1.get() == "None":
                 file = open(f"{home}/.pigro/pigro.conf", "rt")
@@ -5618,6 +5690,11 @@ class Look_Tab(ttk.Frame):
                 file.write(data)
                 file.close()
                 done_1()
+
+
+
+            #if select_clicked1.get() == "0.95":
+
 
         # Images/Icons
 
@@ -5679,7 +5756,7 @@ class Look_Tab(ttk.Frame):
             self,
             text="GUI Tweaks",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -5765,9 +5842,9 @@ exit
 
         self.xfce4_set = LabelFrame(
             self,
-            text="Xfwm4 Settings",
+            text="Xfce Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -5857,7 +5934,7 @@ exit
             self,
             text="Pixel Tweaks",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -5927,7 +6004,7 @@ exit
             self,
             text="Pigro Tweaks",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -5950,28 +6027,28 @@ exit
         global select_clicked
         select_clicked = StringVar()
         select_clicked.set("Select Theme")
-        drop = OptionMenu(
+        drop_th = OptionMenu(
             theme_select_frame,
             select_clicked,
             *options,
         )
-        drop.grid(column=0, row=0)
-        drop.config(
+        drop_th.grid(column=0, row=0)
+        drop_th.config(
             bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
             width=15,
         )
-        drop["menu"].config(
+        drop_th["menu"].config(
             bg=maincolor,
             fg=main_font,
             activebackground=frame_color,
             activeforeground=main_font,
         )
 
-        drop["highlightbackground"] = maincolor
-        drop["relief"] = "flat"
+        drop_th["highlightbackground"] = maincolor
+        drop_th["relief"] = "flat"
 
         select_theme_btn = Button(
             theme_select_frame,
@@ -5985,52 +6062,7 @@ exit
         )
         select_theme_btn.grid(column=1, row=0)
 
-        # Transparency Selction Dropdown Menu
-        trasp_select_frame = Frame(
-            self.rahmen43, highlightthickness=0, borderwidth=0, background=frame_color
-        )
-        trasp_select_frame.grid(row=0, column=1, padx=10)
-        options = [
-            "None",
-            "0.95",
-        ]
-        global select_clicked1
-        select_clicked1 = StringVar()
-        select_clicked1.set("Select transparency")
-        drop = OptionMenu(
-            trasp_select_frame,
-            select_clicked1,
-            *options,
-        )
-        drop.grid(column=0, row=0)
-        drop.config(
-            bg=frame_color,
-            fg=main_font,
-            activebackground=maincolor,
-            activeforeground=main_font,
-            width=15,
-        )
-        drop["menu"].config(
-            bg=frame_color,
-            fg=main_font,
-            activebackground=maincolor,
-            activeforeground=main_font,
-        )
 
-        drop["highlightbackground"] = maincolor
-        drop["relief"] = "flat"
-
-        select_trasp_btn = Button(
-            trasp_select_frame,
-            text="Select",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=font_12,
-            command=trans_selected,
-        )
-        select_trasp_btn.grid(column=1, row=0)
 
         # Permission Selction Dropdown Menu
         permission_select_frame = Frame(
@@ -6044,28 +6076,28 @@ exit
         global perm_select_clicked
         perm_select_clicked = StringVar()
         perm_select_clicked.set("Select permission")
-        drop = OptionMenu(
+        drop_p = OptionMenu(
             permission_select_frame,
             perm_select_clicked,
             *options,
         )
-        drop.grid(column=0, row=0)
-        drop.config(
+        drop_p.grid(column=0, row=0)
+        drop_p.config(
             bg=frame_color,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
             width=20,
         )
-        drop["menu"].config(
+        drop_p["menu"].config(
             bg=maincolor,
             fg=main_font,
             activebackground=maincolor,
             activeforeground=main_font,
         )
 
-        drop["highlightbackground"] = maincolor
-        drop["relief"] = "flat"
+        drop_p["highlightbackground"] = maincolor
+        drop_p["relief"] = "flat"
 
         perm_select_permission_btn = Button(
             permission_select_frame,
@@ -6427,7 +6459,7 @@ class Tuning_Tab(ttk.Frame):
             self,
             text="Tuning Options",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -6456,7 +6488,7 @@ class Tuning_Tab(ttk.Frame):
             self.ov_state_display_frame,
             text="Current Settings",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -6829,7 +6861,7 @@ class Tuning_Tab(ttk.Frame):
             self.ov_state_display_frame,
             text="Widevine on 64 Bit",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -7179,7 +7211,7 @@ class Tasks_Tab(ttk.Frame):
             self,
             text="Process Killer",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -7412,7 +7444,7 @@ printf 'Done!'"""
             self,
             text="Debian Package Backup",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -7516,7 +7548,7 @@ printf 'Done!'"""
             self,
             text="Debian Package Recovery",
             font=font_16,
-            foreground="#d4244d",
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
@@ -7712,47 +7744,6 @@ class Error_Mass(tk.Toplevel):
         error_btn.grid(row=3, column=1)
 
 
-class Loading_Throbber(Label):
-    """This class animates the the .GIF in the install window"""
-
-    def __init__(self, master, filename):
-        im = Image.open(filename)
-        seq = []
-        try:
-            while 1:
-                seq.append(im.copy())
-                im.seek(len(seq))
-        except EOFError:
-            pass
-
-        try:
-            self.delay = im.info["duration"]
-        except KeyError:
-            self.delay = 100
-
-        first = seq[0].convert("RGBA")
-        self.frames = [ImageTk.PhotoImage(first)]
-
-        Label.__init__(self, master, image=self.frames[0])
-
-        temp = seq[0]
-        for image in seq[1:]:
-            temp.paste(image)
-            frame = temp.convert("RGBA")
-            self.frames.append(ImageTk.PhotoImage(frame))
-
-        self.idx = 0
-
-        self.cancel = self.after(self.delay, self.play)
-
-    def play(self):
-        self.config(image=self.frames[self.idx])
-        self.idx += 1
-        if self.idx == len(self.frames):
-            self.idx = 0
-        self.cancel = self.after(self.delay, self.play)
-
-
 class CreateToolTip(object):
     """create a tooltip for a given widget"""
 
@@ -7810,6 +7801,47 @@ class CreateToolTip(object):
         self.tw = None
         if tw:
             tw.destroy()
+
+
+class Loading_Throbber(Label):
+    """This class animates the the .GIF in the install window"""
+
+    def __init__(self, master, filename):
+        im = Image.open(filename)
+        seq = []
+        try:
+            while 1:
+                seq.append(im.copy())
+                im.seek(len(seq))
+        except EOFError:
+            pass
+
+        try:
+            self.delay = im.info["duration"]
+        except KeyError:
+            self.delay = 100
+
+        first = seq[0].convert("RGBA")
+        self.frames = [ImageTk.PhotoImage(first)]
+
+        Label.__init__(self, master, image=self.frames[0])
+
+        temp = seq[0]
+        for image in seq[1:]:
+            temp.paste(image)
+            frame = temp.convert("RGBA")
+            self.frames.append(ImageTk.PhotoImage(frame))
+
+        self.idx = 0
+
+        self.cancel = self.after(self.delay, self.play)
+
+    def play(self):
+        self.config(image=self.frames[self.idx])
+        self.idx += 1
+        if self.idx == len(self.frames):
+            self.idx = 0
+        self.cancel = self.after(self.delay, self.play)
 
 
 # [End Of The Line]
