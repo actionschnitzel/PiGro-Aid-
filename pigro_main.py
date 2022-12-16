@@ -44,8 +44,6 @@ import requests
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
 
-
-
     # MUST BE UPDATED WITH EVER NEW RELEASE!
     global current_version
     current_version = float(23.01)
@@ -67,9 +65,7 @@ class Get_Sys_Info:
 
     # Makes all .sh files in /scripts executable if PiGro in $HOME
     if Application_path == f"{home}/PiGro-Aid-":
-        popen(
-            'find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;'
-        )
+        popen('find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;')
         print(f"[Info]: All files executable")
 
     # Checks if settings folder exists
@@ -275,7 +271,6 @@ fi"""
                 info_color = "yellow"
                 ext_btn = "#333333"
 
-
         # Light Theme Settings
         if str("theme = light") in line:
             print("[Info]: Light Theme")
@@ -293,7 +288,6 @@ fi"""
                 main_font = "black"
                 info_color = "#0075b7"
                 ext_btn = "#fafafa"
-
 
     # Font Definition Vars
     global font_20
@@ -318,7 +312,6 @@ fi"""
     font_8_b = ("Sans", 8, "bold")
     global font_8
     font_8 = ("Sans", 8)
-
 
     # Gets latest github release
     url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
@@ -349,7 +342,7 @@ class MainApplication(tk.Tk):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.wait_visibility(self)
-        #self.wm_attributes("-alpha", translate_p)
+        # self.wm_attributes("-alpha", translate_p)
 
         # Notebook Definition
         self.notebook = ttk.Notebook(self)
@@ -642,12 +635,15 @@ class Dash_Tab(ttk.Frame):
             Image.open("images/icons/pigro_icons/pigrologox.png")
         )
 
+        def pigro_sound():
+             popen(f"mpg123 {home}/PiGro-Aid-/scripts/PiGro-just_click_it.mp3")
         # Sys Info Labels
-        self.sysinf_btn = Label(
+        self.sysinf_btn = Button(
             self.sys_logo,
             borderwidth=0,
             bg=frame_color,
             highlightthickness=0,
+            command=pigro_sound
         )
         self.sysinf_btn.pack(pady=20)
 
@@ -4935,9 +4931,13 @@ class Software_Tab(ttk.Frame):
             snap_inst_combo_box.event_generate("<<Paste>>")
 
         # Right Click in_kontext_menu
-        snap_in_kontext_menu = Menu(snap_inst_combo_box, tearoff=0, bg="white", fg="black")
+        snap_in_kontext_menu = Menu(
+            snap_inst_combo_box, tearoff=0, bg="white", fg="black"
+        )
         # options
-        snap_in_kontext_menu.add_command(label="Paste", command=snap_inst_combo_box_paste)
+        snap_in_kontext_menu.add_command(
+            label="Paste", command=snap_inst_combo_box_paste
+        )
 
         # Make the in_kontext_menu pop up
         snap_inst_combo_box.bind(
@@ -5669,33 +5669,6 @@ class Look_Tab(ttk.Frame):
                 file.close()
                 done_1()
 
-
-        def trans_selected():
-            if select_clicked1.get() == "None":
-                file = open(f"{home}/.pigro/pigro.conf", "rt")
-                data = file.read()
-                data = data.replace("transparency = 0.95", "transparency = 1.00")
-                file.close()
-                file = open(f"{home}/.pigro/pigro.conf", "wt")
-                file.write(data)
-                file.close()
-                done_1()
-
-            if select_clicked1.get() == "0.95":
-                file = open(f"{home}/.pigro/pigro.conf", "rt")
-                data = file.read()
-                data = data.replace("transparency = 1.00", "transparency = 0.95")
-                file.close()
-                file = open(f"{home}/.pigro/pigro.conf", "wt")
-                file.write(data)
-                file.close()
-                done_1()
-
-
-
-            #if select_clicked1.get() == "0.95":
-
-
         # Images/Icons
 
         self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
@@ -6061,8 +6034,6 @@ exit
             command=color_selected,
         )
         select_theme_btn.grid(column=1, row=0)
-
-
 
         # Permission Selction Dropdown Menu
         permission_select_frame = Frame(
@@ -6842,18 +6813,14 @@ class Tuning_Tab(ttk.Frame):
                 global pigro_skript_name
                 pigro_skript_name = "Chromium 32"
                 global pigro_skript
-                pigro_skript = (
-                    "apt install chromium-browser:armhf libwidevinecdm0 -y && exit"
-                )
+                pigro_skript = f"{legit} apt install chromium-browser:armhf libwidevinecdm0 -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if select_clicked1.get() == "Chromium 64":
                 print("Chromium 64")
                 pigro_skript_name = "Chromium 64"
-                pigro_skript = (
-                    "apt install chromium-browser:arm64 libwidevinecdm0- -y && exit"
-                )
+                pigro_skript = f"{legit} apt install chromium-browser:arm64 libwidevinecdm0- -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
@@ -7419,7 +7386,7 @@ class Deb_Recover(ttk.Frame):
             global pigro_skript_name
             pigro_skript_name = "dselect"
             global pigro_skript
-            pigro_skript = "apt install dselect -y && exit"
+            pigro_skript = f"{legit} apt install dselect -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
 
