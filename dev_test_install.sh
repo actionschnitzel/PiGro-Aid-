@@ -22,12 +22,12 @@ printf "${RED}
 █▀▄ █▀▀ █▀█ █▀▀ █▄░█ █▀▄ █▀▀ █▄░█ █▀▀ █ █▀▀ █▀
 █▄▀ ██▄ █▀▀ ██▄ █░▀█ █▄▀ ██▄ █░▀█ █▄▄ █ ██▄ ▄█
 ${NC}\n\n"
+echo  -e "\033[33;5mInstalling...\033[0m"
+echo "\npython3-pil python3-pil.imagetk python3-pip python3-dev\nmpg123 lolcat xterm playsound psutil distro py-notifier"
+> /dev/null 2>&1 sudo apt-get update
+> /dev/null 2>&1 sudo apt-get install python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat xterm -y 
 
-
-sudo apt-get update
-sudo apt-get install python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat xterm -y 
-
-pip3 install playsound psutil distro py-notifier
+> /dev/null 2>&1 pip3 install playsound psutil distro py-notifier
 
 
 
@@ -41,17 +41,19 @@ then
     printf "${YELLOW}
 █░█ █▀█ █▀▄ ▄▀█ ▀█▀ █▀▀
 █▄█ █▀▀ █▄▀ █▀█ ░█░ ██▄
-${GREEN}I will install the newest version.\n\n" 
-    rm -rf $HOME/PiGro-Aid-
-    git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
-    cd PiGro-Aid-
+${GREEN}I will install the newest version.\n\n${NC}"
+    echo  -e "\033[33;5mInstalling...\033[0m" 
+    > /dev/null 2>&1 rm -rf $HOME/PiGro-Aid-
+    > /dev/null 2>&1 git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
+    > /dev/null 2>&1 cd PiGro-Aid-
 else
     printf "${YELLOW}
 █▄░█ █▀▀ █░█░█   █ █▄░█ █▀ ▀█▀ ▄▀█ █░░ █░░
 █░▀█ ██▄ ▀▄▀▄▀   █ █░▀█ ▄█ ░█░ █▀█ █▄▄ █▄▄
-${GREEN}I will now install PiGro\n\n"
-    git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
-    cd PiGro-Aid-
+${GREEN}I will now install PiGro\n\n${NC}"
+    echo  -e "\033[33;5mInstalling...\033[0m"
+    > /dev/null 2>&1 git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
+    > /dev/null 2>&1 cd PiGro-Aid-
 fi
 
 clear
@@ -105,4 +107,4 @@ printf "${RED}
 █ █▄░█ █▀ ▀█▀ ▄▀█ █░░ █░░ ▄▀█ ▀█▀ █ █▀█ █▄░█   █ █▀   █▀▄ █▀█ █▄░█ █▀▀
 █ █░▀█ ▄█ ░█░ █▀█ █▄▄ █▄▄ █▀█ ░█░ █ █▄█ █░▀█   █ ▄█   █▄▀ █▄█ █░▀█ ██▄
 ${NC}"
-printf "${GREEN}You can close this window now\n${NC}"
+echo  -e "\033[33;5mYou can close this window now\n\033[0m"
