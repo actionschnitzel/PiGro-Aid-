@@ -3824,15 +3824,17 @@ class Software_Tab(ttk.Frame):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
-        notebook = ttk.Notebook(self)
-        notebook.pack(fill=BOTH, expand=True)
+        self.inst_notebook = ttk.Notebook(self)
+        self.inst_notebook.pack(fill=BOTH, expand=True)
+
+        self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
 
         # create frames
-        apt_frame = ttk.Frame(notebook)
-        piapp_frame = ttk.Frame(notebook)
-        flat_frame = ttk.Frame(notebook)
-        snap_frame = ttk.Frame(notebook)
-        repo_frame = ttk.Frame(notebook)
+        apt_frame = ttk.Frame(self.inst_notebook)
+        piapp_frame = ttk.Frame(self.inst_notebook)
+        flat_frame = ttk.Frame(self.inst_notebook)
+        snap_frame = ttk.Frame(self.inst_notebook)
+        repo_frame = ttk.Frame(self.inst_notebook)
 
         apt_frame.pack(fill="both", expand=True)
         piapp_frame.pack(fill="both", expand=True)
@@ -3842,11 +3844,11 @@ class Software_Tab(ttk.Frame):
 
         # add frames to notebook
 
-        notebook.add(apt_frame, text="APT")
-        notebook.add(piapp_frame, text="Pi Apps")
-        notebook.add(flat_frame, text="Flatpak")
-        notebook.add(snap_frame, text="Snap")
-        notebook.add(repo_frame, text="\nInstant\nInstall")
+        self.inst_notebook.add(apt_frame, text="APT")
+        self.inst_notebook.add(piapp_frame, text="Pi Apps")
+        self.inst_notebook.add(flat_frame, text="Flatpak")
+        self.inst_notebook.add(snap_frame, text="Snap")
+        self.inst_notebook.add(repo_frame,image=self.deb_icon, compound=BOTTOM)
 
         # apt-get_entry
         self.apt_inst_frame = LabelFrame(
@@ -4259,7 +4261,7 @@ class Software_Tab(ttk.Frame):
             piapps_inst_combo_box.set("Pi-Apps is not installed")
             un_piapps_inst_btn.config(state=DISABLED)
             piapps_un_combo_box.set("Pi-Apps is not installed")
-            notebook.tab(2,state=DISABLED)
+            
 
         def piapps_un_combo_box_pop_kontext_menu(event):
             pa_un_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -4537,7 +4539,7 @@ class Software_Tab(ttk.Frame):
         if flatpak_path == False:
             flatpak_inst_btn.config(state=DISABLED)
             flatpak_uninst_combo_box.set("Flatpak is not installed")
-            notebook.tab(2,state=DISABLED)
+            
         info_frame_flat = LabelFrame(
             flat_frame,
             text="Package Information",
@@ -4700,7 +4702,7 @@ class Software_Tab(ttk.Frame):
             snap_un_combo_box.insert(0, "Snap is not installed")
             self.un_snap_inst_btn.config(state=DISABLED)
             self.snap_inst_btn.config(state=DISABLED)
-            notebook.tab(3,state=DISABLED)
+            
 
         def snap_un_combo_box_pop_kontext_menu(event):
             snap_un_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -4756,7 +4758,7 @@ class Software_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            padx=40,
+            padx=70,
             pady=10,
         )
         self.repo_sec_frame["background"] = frame_color
@@ -4929,7 +4931,7 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-        self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
+        
 
         instant_install_btn_list = [
             "Audacity",
@@ -4987,7 +4989,33 @@ class Software_Tab(ttk.Frame):
                 conf_row = conf_row + 1
                 conf_column = 0
 
+        info_frame_repo = LabelFrame(
+            repo_frame,
+            text="Info",
+            font=font_16,
+            foreground=label_frame_color,
+            relief=GROOVE,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            pady=20,
+            padx=20,
+        )
+        info_frame_repo["background"] = frame_color
+        info_frame_repo.pack(fill=BOTH, expand=True, padx=55, pady=20)
 
+        r_flatpak = Text(
+            info_frame_repo,
+            borderwidth=0,
+            highlightthickness=0,
+            background=frame_color,
+            foreground=main_font,
+        )
+        r_flatpak.pack(fill=BOTH, expand=True)
+
+        quote_repo = "Clicking on the buttons instantly initiates a installation process"
+        r_flatpak.delete("1.0", "end")
+        r_flatpak.insert(END, quote_repo)
 
 
 class Git_More_Tab(ttk.Frame):
