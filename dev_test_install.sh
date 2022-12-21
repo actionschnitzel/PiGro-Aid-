@@ -23,7 +23,7 @@ printf "${RED}
 █▄▀ ██▄ █▀▀ ██▄ █░▀█ █▄▀ ██▄ █░▀█ █▄▄ █ ██▄ ▄█
 ${NC}\n\n"
 echo  -e "\033[33;5mInstalling...\033[0m"
-echo "\npython3-pil python3-pil.imagetk python3-pip python3-dev\nmpg123 lolcat xterm playsound psutil distro py-notifier"
+echo "python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat xterm playsound psutil distro py-notifier"
 > /dev/null 2>&1 sudo apt-get update
 > /dev/null 2>&1 sudo apt-get install python3-pil python3-pil.imagetk python3-pip python3-dev mpg123 lolcat xterm -y 
 
