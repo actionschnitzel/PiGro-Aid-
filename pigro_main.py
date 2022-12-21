@@ -49,9 +49,10 @@ class Get_Sys_Info:
         global user
         user = os.environ["USER"]  # os.getlogin()
         print(f"[Info]: Hi,{user} waz uuuuup?!")
-        #return user
+        # return user
+
     get_user_name()
-    
+
     def get_home_path():
         # Define Home
         global home
@@ -634,15 +635,15 @@ class Dash_Tab(ttk.Frame):
                 self.toggle_button.config(image=off_btn_icon)
                 self.ip_label.config(text=f"IP Address: {IPAddr}")
                 self.mac_add_label.config(text=f"MAC Address: {get_mac}")
-                sys_label_d.config(text=f"Device Name: {my_system.node}")
-                sys_label_u.config(text=f"User Name: {user}")
+                system_host_label.config(text=f"Device Name: {my_system.node}")
+                system_user_label.config(text=f"User Name: {user}")
             else:
                 self.toggle_button.config(text="ON")
                 self.toggle_button.config(image=on_btn_icon)
                 self.ip_label.config(text=f"IP Address: XXXXXXXXXXXXX")
                 self.mac_add_label.config(text=f"MAC Address: XXXXXXXXXXXXX")
-                sys_label_d.config(text=f"Device Name: XXXXXXXXXXXXX")
-                sys_label_u.config(text="User Name: XXXXXXXXXXXXX")
+                system_host_label.config(text=f"Device Name: XXXXXXXXXXXXX")
+                system_user_label.config(text="User Name: XXXXXXXXXXXXX")
 
         # MAC Address
         get_mac = ":".join(re.findall("..", "%012x" % uuid.getnode()))
@@ -651,8 +652,6 @@ class Dash_Tab(ttk.Frame):
         obj_Disk = psutil.disk_usage("/")
 
         # Parameters for System
-        global distro
-        distro = distro.id()
         my_system = platform.uname()
         cpufreq = psutil.cpu_freq()
         svmem = psutil.virtual_memory()
@@ -701,6 +700,7 @@ class Dash_Tab(ttk.Frame):
             bg=frame_color,
             highlightthickness=0,
             command=pigro_sound,
+            activebackground=frame_color,
         )
         self.sysinf_btn.pack(pady=20)
 
@@ -710,7 +710,7 @@ class Dash_Tab(ttk.Frame):
         elif current_month == "December":
             self.sysinf_btn.config(image=self.pigrox_img)
         elif current_month == "February":
-            self.sysinf_btn.config(image=self.pigro_feb_img)            
+            self.sysinf_btn.config(image=self.pigro_feb_img)
         else:
             self.sysinf_btn.config(image=self.pigro_img)
 
@@ -779,64 +779,9 @@ class Dash_Tab(ttk.Frame):
         self.sys_frame_1.pack(anchor="n", pady=5)
         self.sys_frame_1["background"] = frame_color
 
-        sys_label_list = [
-            "Platform:",
-            "Distro:",
-            "Desktop:",
-            "Resolution:",
-            "Shell:",
-            "Session:",
-            "Language:",
-            "Kernel:",
-            "Architecture:",
-            "Board:",
-        ]
-
-        sys_label_list1 = []
-
-        for sys_label in sys_label_list:
-
-            sys_label_x = Label(
-                self.sys_frame_1,
-                text=" ",
-                font=font_12,
-                justify="left",
-                highlightthickness=0,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
-                width=35,
-                anchor=W,
-            )
-
-            sys_label_x.pack()
-            sys_label_list1.append(sys_label_x)
-
-            if sys_label == "Platform:":
-                sys_label_x.config(text=f"Platform: {my_system.system}")
-            if sys_label == "Distro:":
-                sys_label_x.config(text=f"Distro: {nice_name[13:-2]}")
-            if sys_label == "Desktop:":
-                sys_label_x.config(text=f"Desktop: {get_de}")
-            if sys_label == "Shell:":
-                sys_label_x.config(text=f"Shell: {os.environ['SHELL'][5:]}")
-            if sys_label == "Session:":
-                sys_label_x.config(text=f"Session: {os.environ['XDG_SESSION_TYPE']}")
-            if sys_label == "Language:":
-                sys_label_x.config(text=f"Language: {os.environ['LANG']}")
-            if sys_label == "Kernel:":
-                sys_label_x.config(text=f"Kernel: {my_system.release}")
-            if sys_label == "Architecture:":
-                sys_label_x.config(text=f"Architecture: {os_arch_output}")
-            if sys_label == "Board:":
-                sys_label_x.config(text=f"Board: {Pi_Model.read()}")
-            if sys_label =="Resolution:":
-                sys_label_x.config(text=f"Resolution: {screen_width}x{screen_height}")
-
-
-        sys_label_u = Label(
+        system_os_label = Label(
             self.sys_frame_1,
-            text=f"User Name: {user}",
+            text=f"OS: {nice_name[13:-2]}",
             font=font_12,
             justify="left",
             highlightthickness=0,
@@ -847,11 +792,11 @@ class Dash_Tab(ttk.Frame):
             anchor=W,
         )
 
-        sys_label_u.pack()
+        system_os_label.pack()
 
-        sys_label_d = Label(
+        system_achitecture_label = Label(
             self.sys_frame_1,
-            text=f"Device Name: {my_system.node}",
+            text=f"Architecture: {os_arch_output}",
             font=font_12,
             justify="left",
             highlightthickness=0,
@@ -862,7 +807,142 @@ class Dash_Tab(ttk.Frame):
             anchor=W,
         )
 
-        sys_label_d.pack()
+        system_achitecture_label.pack()
+
+        system_host_label = Label(
+            self.sys_frame_1,
+            text=f"Host: {my_system.node}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_host_label.pack()
+
+        system_user_label = Label(
+            self.sys_frame_1,
+            text=f"User: {user}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_user_label.pack()
+
+        system_kernel_label = Label(
+            self.sys_frame_1,
+            text=f"Kernel: {my_system.release}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_kernel_label.pack()
+
+        system_shell_label = Label(
+            self.sys_frame_1,
+            text=f"Shell: {os.environ['SHELL'][5:]}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_shell_label.pack()
+
+        system_resolution_label = Label(
+            self.sys_frame_1,
+            text=f"Resolution: {screen_width}x{screen_height}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_resolution_label.pack()
+
+        system_lang_label = Label(
+            self.sys_frame_1,
+            text=f"Language: {os.environ['LANG']}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_lang_label.pack()
+
+        system_de_label = Label(
+            self.sys_frame_1,
+            text=f"Desktop: {get_de}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_de_label.pack()
+
+        system_session_label = Label(
+            self.sys_frame_1,
+            text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_session_label.pack()
+
+        system_board_label = Label(
+            self.sys_frame_1,
+            text=f"Board: {Pi_Model.read()}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        system_board_label.pack()
 
         # CPU Frame
         self.sys_frame_2 = LabelFrame(
@@ -1293,10 +1373,9 @@ class Dash_Tab(ttk.Frame):
             cpu_temp = round(cpu_temp["cpu_thermal"][0][1])
             cpu_perc = psutil.cpu_percent()
             total_ram_load = psutil.virtual_memory().percent
-
             self.curr_cpu_perc_label.configure(text=f"Utilization: {cpu_perc} %")
             self.curr_cpu_frq_label.configure(
-                text=f"Current Freq: {cpufreq.current:.0f} Mhz"
+                text=f"Curr Freq: {cpufreq.current:.0f} Mhz"
             )
             self.cpu_temp_label.configure(text=f"Temp: {str(cpu_temp)}°C")
             self.ut_ram_label.configure(text=f"Utilization: {total_ram_load} %")
@@ -1437,7 +1516,6 @@ class Update_Tab(ttk.Frame):
         def open_ppa(text):
             os.popen("sudo mousepad /etc/apt/sources.list.d/" + text)
 
-
         sources_d = os.listdir("/etc/apt/sources.list.d")
         sources_d1 = []
 
@@ -1532,6 +1610,12 @@ class Update_Tab(ttk.Frame):
                     f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
                     % wid
                 )
+            if text == "Flatpak Update":
+                os.popen(
+                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
+                    % wid
+                )
+
             if text == "Reboot":
                 popen(f"{legit} reboot")
             if text == "Gimme a Terminal":
@@ -1577,6 +1661,7 @@ class Update_Tab(ttk.Frame):
             "Update",
             "Update & Upgrade",
             "Full Upgrade",
+            "Flatpak Update",
             "Allow Sources",
             "Autoremove",
             "Open Sources.list.d",
@@ -1621,6 +1706,11 @@ class Update_Tab(ttk.Frame):
                     self.up_button_x,
                     "sudo apt-get update -y |lolcat && sudo apt-get upgrade -y|lolcat",
                 )
+
+            if up_button == "Flatpak Update":
+                self.up_button_x.config(image=self.gup_icon)
+                if flatpak_path == False:
+                    self.up_button_x.config(state=DISABLED)
 
             if up_button == "Full Upgrade":
                 self.up_button_x.config(image=self.fup_icon)
@@ -1734,74 +1824,6 @@ class System_Tab(ttk.Frame):
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"sudo raspi-config; exec bash\"'"
                 )
-            if text == "Rename User":
-                global pop_u_name
-                pop_u_name = Toplevel(self)
-                pop_u_name.config(bg=maincolor)
-                app_width = 500
-                app_height = 150
-                screen_width = pop_u_name.winfo_screenwidth()
-                screen_height = pop_u_name.winfo_screenheight()
-                x = (screen_width / 2) - (app_width / 2)
-                y = (screen_height / 2) - (app_height / 2)
-                pop_u_name.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-                pop_u_name.resizable(0, 0)
-
-                def pop_u_name_dest():
-                    pop_u_name.destroy()
-
-                def do_it():
-                    popen(
-                        f"x-terminal-emulator -e 'bash -c \"{legit} rename-user; exec bash\"'"
-                    )
-                    print("[Info]: Name will be changed")
-                    pop_u_name.destroy()
-
-                frame_pop_u_name = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
-                frame_pop_u_name.pack()
-                frame_pop_u_name["background"] = maincolor
-
-                frame_pop_u_name_1 = Frame(pop_u_name, borderwidth=0, relief=GROOVE)
-                frame_pop_u_name_1.pack()
-                frame_pop_u_name_1["background"] = maincolor
-
-                pop_lbl_2000 = Label(
-                    frame_pop_u_name,
-                    anchor="w",
-                    text="Do you really want to change the user name?\nrename-user will run on reboot.",
-                    font=font_12,
-                    highlightthickness=0,
-                    borderwidth=2,
-                    background=maincolor,
-                    foreground=main_font,
-                    compound=LEFT,
-                )
-                pop_lbl_2000.pack(pady=20)
-
-                pop_btn_2000 = Button(
-                    frame_pop_u_name_1,
-                    text="No",
-                    anchor="w",
-                    command=pop_u_name_dest,
-                    highlightthickness=0,
-                    borderwidth=0,
-                    background=ext_btn,
-                    foreground=main_font,
-                    compound=LEFT,
-                )
-                pop_btn_2000.pack(padx=5, pady=20, side=LEFT)
-                pop_btn_shut = Button(
-                    frame_pop_u_name_1,
-                    text="Do It!",
-                    anchor="w",
-                    command=do_it,
-                    highlightthickness=0,
-                    borderwidth=0,
-                    background="#f03838",
-                    foreground=main_font,
-                    compound=LEFT,
-                )
-                pop_btn_shut.pack(padx=5, pady=20)
 
             if text == "Edit Config.txt":
                 popen(f"{legit} mousepad {config_path}")
@@ -1824,7 +1846,6 @@ class System_Tab(ttk.Frame):
         pi_settings_btn_list = [
             "Raspi-Config CLI",
             "Raspi-Config GUI",
-            "Rename User",
             "Edit Config.txt",
         ]
 
@@ -4193,15 +4214,13 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.add(piapp_frame, text="Pi Apps")
         self.inst_notebook.add(flat_frame, text="Flatpak")
         self.inst_notebook.add(snap_frame, text="Snap")
-        self.inst_notebook.add(repo_frame,image=self.deb_icon, compound=BOTTOM)
-
-
+        self.inst_notebook.add(repo_frame, image=self.deb_icon, compound=BOTTOM)
 
         fo = os.popen("apt-cache pkgnames")
         content = fo.readlines()
         for i, s in enumerate(content):
             content[i] = s.strip()
-        #print(type(content))
+        # print(type(content))
 
         def check_input_apt_in(event):
             value = event.widget.get()
@@ -4257,8 +4276,6 @@ class Software_Tab(ttk.Frame):
         self.apt_inst_frame.pack(pady=20)
         self.apt_inst_frame["background"] = frame_color
 
-
-        
         apt_inst_combo_box = ttk.Combobox(self.apt_inst_frame)
         apt_inst_combo_box["values"] = content
         apt_inst_combo_box.bind("<KeyRelease>", check_input_apt_in)
@@ -4288,11 +4305,8 @@ class Software_Tab(ttk.Frame):
                 global pkg_skript_name
                 pkg_skript_name = f"Info: {apt_inst_combo_box.get()}"
                 global read_pkg_infos
-                pkg_infos = popen(
-                    f"apt show -a {apt_inst_combo_box.get()}"
-                )
+                pkg_infos = popen(f"apt show -a {apt_inst_combo_box.get()}")
                 read_pkg_infos = pkg_infos.read()
-
 
                 quote = read_pkg_infos
                 T.delete("1.0", "end")
@@ -4325,7 +4339,6 @@ class Software_Tab(ttk.Frame):
         self.apt_inst_btn.grid(column=0, row=0)
         self.apt_inst_info_btn.grid(column=0, row=1, pady=10)
 
-
         ua_fo = os.popen("dpkg --get-selections |sed -e s/install//g")
         un_content = ua_fo.readlines()
         for i, s in enumerate(un_content):
@@ -4352,14 +4365,11 @@ class Software_Tab(ttk.Frame):
                 global pigro_skript_name
                 pigro_skript_name = f"Uninstalling... {apt_un_combo_box.get()}"
                 global pigro_skript
-                pigro_skript = (
-                    f"{legit} apt remove {apt_un_combo_box.get()} -y && exit"
-                )
+                pigro_skript = f"{legit} apt remove {apt_un_combo_box.get()} -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
                 un_content.remove(apt_un_combo_box.get())
 
-        
         apt_un_combo_box = ttk.Combobox(self.apt_inst_frame)
         apt_un_combo_box["values"] = un_content
         apt_un_combo_box.bind("<KeyRelease>", check_input_apt_un)
@@ -4585,7 +4595,7 @@ class Software_Tab(ttk.Frame):
                     )
                     un_content_pa.remove(piapps_un_combo_box.get())
 
-        #global piapps_un_combo_box
+        # global piapps_un_combo_box
         piapps_un_combo_box = ttk.Combobox(self.piapps_inst_frame)
         piapps_un_combo_box["values"] = un_content_pa
         piapps_un_combo_box.bind("<KeyRelease>", check_input_pa_un)
@@ -4614,7 +4624,6 @@ class Software_Tab(ttk.Frame):
             piapps_inst_combo_box.set("Pi-Apps is not installed")
             un_piapps_inst_btn.config(state=DISABLED)
             piapps_un_combo_box.set("Pi-Apps is not installed")
-            
 
         def piapps_un_combo_box_pop_kontext_menu(event):
             pa_un_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -4724,7 +4733,7 @@ class Software_Tab(ttk.Frame):
                 custom_pop.grab_set()
                 print(Flat_remote_dict[var_material.get()])
 
-        #global flatpak_inst_combo_box
+        # global flatpak_inst_combo_box
         flatpak_inst_combo_box = ttk.Combobox(
             self.flatpak_inst_frame,
             values=list(Flat_remote_dict.keys()),
@@ -4892,7 +4901,7 @@ class Software_Tab(ttk.Frame):
         if flatpak_path == False:
             flatpak_inst_btn.config(state=DISABLED)
             flatpak_uninst_combo_box.set("Flatpak is not installed")
-            
+
         info_frame_flat = LabelFrame(
             flat_frame,
             text="Package Information",
@@ -4920,7 +4929,6 @@ class Software_Tab(ttk.Frame):
         quote_flat = "Infos currently disabled"
         T_flatpak.delete("1.0", "end")
         T_flatpak.insert(END, quote_flat)
-        
 
         # snap_entry
         self.snap_inst_frame = LabelFrame(
@@ -4960,7 +4968,7 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-        #global snap_inst_combo_box
+        # global snap_inst_combo_box
         snap_inst_combo_box = Entry(self.snap_inst_frame)
         snap_inst_combo_box.config(width=26)
 
@@ -5026,7 +5034,7 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-        #global snap_un_combo_box
+        # global snap_un_combo_box
         snap_un_combo_box = Entry(self.snap_inst_frame)
         snap_un_combo_box.config(width=26)
 
@@ -5055,7 +5063,6 @@ class Software_Tab(ttk.Frame):
             snap_un_combo_box.insert(0, "Snap is not installed")
             self.un_snap_inst_btn.config(state=DISABLED)
             self.snap_inst_btn.config(state=DISABLED)
-            
 
         def snap_un_combo_box_pop_kontext_menu(event):
             snap_un_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -5101,7 +5108,6 @@ class Software_Tab(ttk.Frame):
         T_snap.delete("1.0", "end")
         T_snap.insert(END, quote_snap)
 
-        
         self.repo_sec_frame = LabelFrame(
             repo_frame,
             text="From The Repository",
@@ -5218,8 +5224,6 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-
-
             if text == "Bleach Bit":
                 # global pigro_skript_name
                 pigro_skript_name = "Installing... bleachbit"
@@ -5284,8 +5288,6 @@ class Software_Tab(ttk.Frame):
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
-        
-
         instant_install_btn_list = [
             "Audacity",
             "Bleach Bit",
@@ -5311,7 +5313,6 @@ class Software_Tab(ttk.Frame):
             "Visual Studio Code",
             "Xfce4 Screenshooter",
             "Gnome Software",
-            
         ]
 
         instant_install_btn_list1 = []
@@ -5366,7 +5367,9 @@ class Software_Tab(ttk.Frame):
         )
         r_flatpak.pack(fill=BOTH, expand=True)
 
-        quote_repo = "Clicking on the buttons instantly initiates a installation process"
+        quote_repo = (
+            "Clicking on the buttons instantly initiates a installation process"
+        )
         r_flatpak.delete("1.0", "end")
         r_flatpak.insert(END, quote_repo)
 
