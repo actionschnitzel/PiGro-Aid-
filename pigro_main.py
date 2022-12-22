@@ -384,7 +384,7 @@ class MainApplication(tk.Tk):
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = maincolor
         self.resizable(0, 0)
-        app_width = 1200
+        app_width = 1300
         app_height = 900
         global screen_width
         screen_width = self.winfo_screenwidth()
@@ -671,7 +671,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
 
-        self.sys_logo.place(x=65, y=20, width=885)  #
+        self.sys_logo.place(x=120, y=20, width=885)  #
         self.sys_logo["background"] = maincolor
 
         self.pigro_img = ImageTk.PhotoImage(
@@ -724,7 +724,7 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_frame.place(x=65, y=240)  # pack(pady=20)
+        self.info_main_frame.place(x=120, y=240)  # pack(pady=20)
         self.info_main_frame["background"] = frame_color
 
         # Main Frame
@@ -1405,7 +1405,7 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_Update_Tab.place(x=65, y=750, width=885)
+        self.info_main_Update_Tab.place(x=120, y=750, width=885)
         self.info_main_Update_Tab["background"] = frame_color
 
         # Hide/Show Butten & Label
@@ -1458,7 +1458,7 @@ class Update_Tab(ttk.Frame):
         self.rep_main_frame = Frame(
             self, borderwidth=0, highlightthickness=0, relief=GROOVE
         )
-        self.rep_main_frame.pack(pady=20, padx=5)
+        self.rep_main_frame.pack(fill="x", pady=20, padx=30)
         self.rep_main_frame["background"] = frame_color
 
         self.off_rep_frame = LabelFrame(
@@ -4165,26 +4165,6 @@ class Custom_Installer(tk.Toplevel):
         Thread(target=install_parameter).start()
 
 
-class Pkg_info_frame(tk.Toplevel):
-    """custom messagebox"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = maincolor
-        self.title(pkg_skript_name)
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-
-        global done_label
-        done_label = tk.Label(self)
-        done_label["font"] = font_10
-        done_label["fg"] = main_font
-        done_label["bg"] = maincolor
-        done_label["justify"] = "left"
-        done_label["text"] = read_pkg_infos
-        done_label.pack()
-
-
 class Software_Tab(ttk.Frame):
     def __init__(self, container):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
@@ -4197,13 +4177,13 @@ class Software_Tab(ttk.Frame):
 
         # create frames
         apt_frame = ttk.Frame(self.inst_notebook)
-        piapp_frame = ttk.Frame(self.inst_notebook)
+        piapps_frame = ttk.Frame(self.inst_notebook)
         flat_frame = ttk.Frame(self.inst_notebook)
         snap_frame = ttk.Frame(self.inst_notebook)
         repo_frame = ttk.Frame(self.inst_notebook)
 
         apt_frame.pack(fill="both", expand=True)
-        piapp_frame.pack(fill="both", expand=True)
+        piapps_frame.pack(fill="both", expand=True)
         flat_frame.pack(fill="both", expand=True)
         snap_frame.pack(fill="both", expand=True)
         repo_frame.pack(fill="both", expand=True)
@@ -4211,28 +4191,10 @@ class Software_Tab(ttk.Frame):
         # add frames to notebook
 
         self.inst_notebook.add(apt_frame, text="APT")
-        self.inst_notebook.add(piapp_frame, text="Pi Apps")
+        self.inst_notebook.add(piapps_frame, text="Pi Apps")
         self.inst_notebook.add(flat_frame, text="Flatpak")
         self.inst_notebook.add(snap_frame, text="Snap")
         self.inst_notebook.add(repo_frame, image=self.deb_icon, compound=BOTTOM)
-
-        fo = os.popen("apt-cache pkgnames")
-        content = fo.readlines()
-        for i, s in enumerate(content):
-            content[i] = s.strip()
-        # print(type(content))
-
-        def check_input_apt_in(event):
-            value = event.widget.get()
-
-            if value == "":
-                apt_inst_combo_box["values"] = content
-            else:
-                data = []
-                for item in content:
-                    if value.lower() in item.lower():
-                        data.append(item)
-                apt_inst_combo_box["values"] = data
 
         def error_mass_0():
 
@@ -4245,440 +4207,548 @@ class Software_Tab(ttk.Frame):
             error_y2.config(text="Not in the list! Check for misspell.")
 
         def apt_install():
-            if apt_inst_combo_box.get() == "":
 
-                error_mass_0()
-            elif apt_inst_combo_box.get() not in content:
-                error_mass_1()
-            else:
-                global pigro_skript_name
-                pigro_skript_name = f"Installing... {apt_inst_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = (
-                    f"{legit} apt install {apt_inst_combo_box.get()} -y && exit"
-                )
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-                un_content.append(apt_inst_combo_box.get())
-
-        # apt-get_entry
-        self.apt_inst_frame = LabelFrame(
-            apt_frame,
-            text="Advanced Packaging Tool",
-            font=font_16,
-            foreground=label_frame_color,
-            relief=GROOVE,
-            borderwidth=0,
-            highlightthickness=0,
-            padx=20,
-            pady=20,
-        )
-        self.apt_inst_frame.pack(pady=20)
-        self.apt_inst_frame["background"] = frame_color
-
-        apt_inst_combo_box = ttk.Combobox(self.apt_inst_frame)
-        apt_inst_combo_box["values"] = content
-        apt_inst_combo_box.bind("<KeyRelease>", check_input_apt_in)
-        apt_inst_combo_box.config(width=25)
-
-        def apt_inst_combo_box_pop_in_kontext_menu(event):
-            in_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def apt_inst_combo_box_paste():
-            apt_inst_combo_box.event_generate("<<Paste>>")
-
-        # Right Click in_kontext_menu
-        in_kontext_menu = Menu(apt_inst_combo_box, tearoff=0, bg="white", fg="black")
-        # options
-        in_kontext_menu.add_command(label="Paste", command=apt_inst_combo_box_paste)
-
-        # Make the in_kontext_menu pop up
-        apt_inst_combo_box.bind("<Button - 3>", apt_inst_combo_box_pop_in_kontext_menu)
-
-        def apt_info():
-            if apt_inst_combo_box.get() == "":
-
-                error_mass_0()
-            elif apt_inst_combo_box.get() not in content:
-                error_mass_1()
-            else:
-                global pkg_skript_name
-                pkg_skript_name = f"Info: {apt_inst_combo_box.get()}"
-                global read_pkg_infos
-                pkg_infos = popen(f"apt show -a {apt_inst_combo_box.get()}")
-                read_pkg_infos = pkg_infos.read()
-
-                quote = read_pkg_infos
-                T.delete("1.0", "end")
-                T.insert(END, quote)
-
-        self.apt_inst_btn = Button(
-            self.apt_inst_frame,
-            text="install",
-            command=apt_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-        self.apt_inst_info_btn = Button(
-            self.apt_inst_frame,
-            text="Info",
-            command=apt_info,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-
-        apt_inst_combo_box.grid(column=1, row=0, padx=5)
-        self.apt_inst_btn.grid(column=0, row=0)
-        self.apt_inst_info_btn.grid(column=0, row=1, pady=10)
-
-        ua_fo = os.popen("dpkg --get-selections |sed -e s/install//g")
-        un_content = ua_fo.readlines()
-        for i, s in enumerate(un_content):
-            un_content[i] = s.strip()
-
-        def check_input_apt_un(event):
-            value = event.widget.get()
-
-            if value == "":
-                apt_un_combo_box["values"] = un_content
-            else:
-                data = []
-                for item in un_content:
-                    if value.lower() in item.lower():
-                        data.append(item)
-                apt_un_combo_box["values"] = data
+            global pigro_skript_name
+            pigro_skript_name = f"Installing... {apt_entry.get()}"
+            global pigro_skript
+            pigro_skript = f"{legit} apt install {apt_entry.get()} -y && exit"
+            custom_pop = Custom_Installer(self)
+            custom_pop.grab_set()
+            # un_content.append(apt_entry.get())
 
         def apt_uninstall():
-            if apt_un_combo_box.get() == "":
-                error_mass_0()
-            elif apt_un_combo_box.get() not in un_content:
-                error_mass_1()
+            global pigro_skript_name
+            pigro_skript_name = f"Uninstalling... {apt_entry.get()}"
+            global pigro_skript
+            pigro_skript = f"{legit} apt remove {apt_entry.get()} -y && exit"
+            custom_pop = Custom_Installer(self)
+            custom_pop.grab_set()
+            apt_installed_content.remove(apt_entry.get())
+
+        def update_apt(apt_data):
+            apt_list_box.delete(0, END)
+            for item in apt_data:
+                apt_list_box.insert(END, item)
+
+        def apt_fillout(e):
+            apt_entry.delete(0, END)
+            apt_entry.insert(0, apt_list_box.get(ACTIVE))
+
+        def apt_search_check(e):
+            typed = apt_entry.get()
+            if typed == "":
+                apt_data = apt_cache_content
             else:
-                global pigro_skript_name
-                pigro_skript_name = f"Uninstalling... {apt_un_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = f"{legit} apt remove {apt_un_combo_box.get()} -y && exit"
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-                un_content.remove(apt_un_combo_box.get())
+                apt_data = []
+                for item in apt_cache_content:
+                    if typed.lower() in item.lower():
+                        apt_data.append(item)
+            update_apt(apt_data)
 
-        apt_un_combo_box = ttk.Combobox(self.apt_inst_frame)
-        apt_un_combo_box["values"] = un_content
-        apt_un_combo_box.bind("<KeyRelease>", check_input_apt_un)
-        apt_un_combo_box.config(width=25)
+        def apt_search():
+            if apt_entry.get() == "":
+                # print("Nop")
+                error_mass_0()
+            elif apt_entry.get() not in apt_cache_content:
+                error_mass_1()
+                # print("Nop")
+            else:
+                apt_pkg_name.config(text=f"Name: {apt_entry.get()}")
+                if apt_entry.get() in apt_installed_content:
+                    apt_pkg_status.config(text="Status: Installed")
+                    apt_pkg_inst.config(state=DISABLED)
+                    apt_pkg_uninst.config(state=NORMAL)
+                else:
+                    apt_pkg_status.config(text="Status: Not Installed")
+                    apt_pkg_inst.config(state=NORMAL)
+                    apt_pkg_uninst.config(state=DISABLED)
 
-        self.un_apt_inst_btn = Button(
-            self.apt_inst_frame,
-            text="remove",
-            command=apt_uninstall,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
+                pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
+                read_pkg_infos = pkg_infos.read()
 
-        apt_un_combo_box.grid(column=3, row=0)
-        self.un_apt_inst_btn.grid(column=2, row=0, padx=5)
+                insert_discription = read_pkg_infos
+                discription_text.delete("1.0", "end")
+                discription_text.insert(END, insert_discription)
 
-        apt_inst_combo_box.set("Select/Search a package -->")
-        apt_un_combo_box.set("Select/Search a package -->")
-
-        def apt_un_combo_box_pop_kontext_menu(event):
-            un_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def apt_un_combo_box_paste():
-            apt_un_combo_box.event_generate("<<Paste>>")
-
-        # Right Click kontext_menu
-        un_kontext_menu = Menu(apt_un_combo_box, tearoff=0, bg="white", fg="black")
-        # options
-        un_kontext_menu.add_command(label="Paste", command=apt_un_combo_box_paste)
-
-        # Make the kontext_menu pop up
-        apt_un_combo_box.bind("<Button - 3>", apt_un_combo_box_pop_kontext_menu)
-
-        info_frame = LabelFrame(
+        apt_search_frame = LabelFrame(
             apt_frame,
+            text="Search",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        apt_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
+
+        apt_search_btn = Button(
+            apt_search_frame,
+            text="Select",
+            bg=ext_btn,
+            fg=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+            command=apt_search,
+        )
+        apt_search_btn.pack(fill="x")
+
+        apt_entry = Entry(
+            apt_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
+        )
+        apt_entry.pack(pady=5)
+
+        apt_list_box = Listbox(
+            apt_search_frame, height=50, borderwidth=0, highlightthickness=0
+        )
+        apt_list_box.pack(fill=BOTH)
+
+        apt_cache = os.popen("apt-cache pkgnames")
+        apt_cache_content = apt_cache.readlines()
+        for i, s in enumerate(apt_cache_content):
+            apt_cache_content[i] = s.strip()
+
+        update_apt(apt_cache_content)
+
+        apt_installed = os.popen("dpkg --get-selections |sed -e s/install//g")
+        apt_installed_content = apt_installed.readlines()
+        for i, s in enumerate(apt_installed_content):
+            apt_installed_content[i] = s.strip()
+
+        apt_list_box.bind("<<ListboxSelect>>", apt_fillout)
+
+        apt_entry.bind("<KeyRelease>", apt_search_check)
+
+        apt_info_frame = Frame(apt_frame, background=frame_color)
+        apt_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
+
+        apt_pkg_info_frame = LabelFrame(
+            apt_info_frame,
             text="Package Information",
             font=font_16,
             foreground=label_frame_color,
-            relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="white",
+            relief=GROOVE,
             pady=20,
             padx=20,
+            background=frame_color,
         )
-        info_frame["background"] = frame_color
-        info_frame.pack(fill=BOTH, expand=True, padx=55, pady=20)
+        apt_pkg_info_frame.pack(anchor="n", fill="x")
 
-        T = Text(
-            info_frame,
+        apt_pkg_name = Label(
+            apt_pkg_info_frame,
+            text="Name:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        apt_pkg_name.grid(row=0, column=0)
+
+        apt_pkg_status = Label(
+            apt_pkg_info_frame,
+            text="Status:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        apt_pkg_status.grid(row=1, column=0)
+
+        apt_pkg_inst = Button(
+            apt_pkg_info_frame,
+            text="Install",
+            justify="left",
+            width=10,
+            background="#6abd43",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=apt_install,
+            state=DISABLED,
+        )
+        apt_pkg_inst.grid(row=0, column=1)
+
+        apt_pkg_uninst = Button(
+            apt_pkg_info_frame,
+            text="Uninstall",
+            justify="left",
+            width=10,
+            background="#ee1e25",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=apt_uninstall,
+            state=DISABLED,
+        )
+        apt_pkg_uninst.grid(row=1, column=1, pady=5)
+
+        apt_pkg_info_frame = LabelFrame(
+            apt_info_frame,
+            text="Discription",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        apt_pkg_info_frame.pack(anchor="n", fill=BOTH, expand=True)
+
+        discription_text = Text(
+            apt_pkg_info_frame,
             borderwidth=0,
             highlightthickness=0,
             background=frame_color,
             foreground=main_font,
+            font=("Sans", 9)
         )
-        T.pack(fill=BOTH, expand=True)
+        discription_text.pack(fill=BOTH, expand=True)
 
         # pi apps_entry
-        self.piapps_inst_frame = LabelFrame(
-            piapp_frame,
-            text="Pi Apps",
-            font=font_16,
-            foreground=label_frame_color,
-            relief=GROOVE,
-            borderwidth=0,
-            highlightthickness=0,
-            padx=20,
-            pady=20,
-        )
-        self.piapps_inst_frame.pack(pady=20)
-        self.piapps_inst_frame["background"] = frame_color
-
-        fo_pa = popen(
-            f"ls ~/pi-apps/apps/ "
-        )  # open(f"/home/{user}/.pigro/pi-apps_list.list", "r")
-        content_pa = fo_pa.readlines()
-        for i, s in enumerate(content_pa):
-            content_pa[i] = s.strip()
-        # print(content)
-
-        def check_input_pa_in(event):
-            value = event.widget.get()
-
-            if value == "":
-                piapps_inst_combo_box["values"] = content_pa
-            else:
-                data_pa = []
-                for item in content_pa:
-                    if value.lower() in item.lower():
-                        data_pa.append(item)
-                piapps_inst_combo_box["values"] = data_pa
-
         def piapps_install():
-            if piapps_inst_combo_box.get() == "":
-                error_mass_0()
-            else:
-                fullstring = piapps_inst_combo_box.get()
-                substring = " "
-                if substring in fullstring:
-                    replace_space = fullstring.replace(" ", "\ ")
-                    popen(
-                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
-                    )
-                    un_content_pa.append(piapps_inst_combo_box.get())
-                else:
-                    popen(
-                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {piapps_inst_combo_box.get()}; exec bash\"'"
-                    )
-                    un_content_pa.append(piapps_inst_combo_box.get())
 
-        global piapps_inst_combo_box
-        piapps_inst_combo_box = ttk.Combobox(self.piapps_inst_frame)
-        piapps_inst_combo_box["values"] = content_pa
-        piapps_inst_combo_box.bind("<KeyRelease>", check_input_pa_in)
-        piapps_inst_combo_box.config(width=25)
-
-        def piapps_inst_combo_box_pop_in_kontext_menu(event):
-            pa_in_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def piapps_inst_combo_box_paste():
-            piapps_inst_combo_box.event_generate("<<Paste>>")
-
-        # Right Click in_kontext_menu
-        pa_in_kontext_menu = Menu(
-            piapps_inst_combo_box, tearoff=0, bg="white", fg="black"
-        )
-        # options
-        pa_in_kontext_menu.add_command(
-            label="Paste", command=piapps_inst_combo_box_paste
-        )
-
-        # Make the in_kontext_menu pop up
-        piapps_inst_combo_box.bind(
-            "<Button - 3>", piapps_inst_combo_box_pop_in_kontext_menu
-        )
-
-        def pi_apps_info():
-            if piapps_inst_combo_box.get() == "":
-                error_mass_0()
-            else:
-                global pkg_skript_name
-                pkg_skript_name = f"Info: {piapps_inst_combo_box.get()}"
-
-                pkg_infos = open(
-                    f"{home}/pi-apps/apps/{piapps_inst_combo_box.get()}/description",
-                    "r",
+            fullstring = piapps_entry.get()
+            substring = " "
+            if substring in fullstring:
+                replace_space = fullstring.replace(" ", "\ ")
+                popen(
+                    f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
-                global read_pkg_infos
-                read_pkg_infos = pkg_infos.read()
-                pkg_infos.close()
-                # pkg_i = Pkg_info_frame(self)
-                # pkg_i.grab_set()
-
-                quote_pi_aps = read_pkg_infos
-                T_piapps.delete("1.0", "end")
-                T_piapps.insert(END, quote_pi_aps)
-
-        global piapps_inst_btn
-        piapps_inst_btn = Button(
-            self.piapps_inst_frame,
-            text="install",
-            command=piapps_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-
-        piapps_inst_info_btn = Button(
-            self.piapps_inst_frame,
-            text="Info",
-            command=pi_apps_info,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-
-        piapps_inst_combo_box.grid(column=1, row=0, padx=5)
-        piapps_inst_btn.grid(column=0, row=0)
-        piapps_inst_info_btn.grid(column=0, row=1, pady=10)
-
-        ua_fo_pa = open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
-        un_content_pa = ua_fo_pa.readlines()
-        for i, s in enumerate(un_content_pa):
-            un_content_pa[i] = s.strip()
-
-        def check_input_pa_un(event):
-            value = event.widget.get()
-
-            if value == "":
-                piapps_un_combo_box["values"] = un_content_pa
+                piapps_installed_content.append(piapps_entry.get())
             else:
-                data_un_pa = []
-                for item in un_content_pa:
-                    if value.lower() in item.lower():
-                        data_un_pa.append(item)
-                piapps_un_combo_box["values"] = data_un_pa
+                popen(
+                    f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {piapps_entry.get()}; exec bash\"'"
+                )
+                piapps_installed_content.append(piapps_entry.get())
 
         def piapps_uninstall():
-            if piapps_un_combo_box.get() == "":
-                error_mass_0()
+            fullstring = piapps_entry.get()
+            substring = " "
+            if substring in fullstring:
+                replace_space = fullstring.replace(" ", "\ ")
+                popen(
+                    f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
+                )
+                piapps_installed_content.remove(piapps_entry.get())
             else:
-                fullstring = piapps_un_combo_box.get()
-                substring = " "
-                if substring in fullstring:
-                    replace_space = fullstring.replace(" ", "\ ")
-                    popen(
-                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
-                    )
-                    un_content_pa.remove(piapps_un_combo_box.get())
+                popen(
+                    f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {piapps_entry.get()}; exec bash\"'"
+                )
+                piapps_installed_content.remove(piapps_entry.get())
+
+        def update_piapps(piapps_data):
+            piapps_list_box.delete(0, END)
+            for item in piapps_data:
+                piapps_list_box.insert(END, item)
+
+        def piapps_fillout(e):
+            piapps_entry.delete(0, END)
+            piapps_entry.insert(0, piapps_list_box.get(ACTIVE))
+
+        def piapps_search_check(e):
+            typed = piapps_entry.get()
+            if typed == "":
+                piapps_data = piapps_cache_content
+            else:
+                piapps_data = []
+                for item in piapps_cache_content:
+                    if typed.lower() in item.lower():
+                        piapps_data.append(item)
+            update_piapps(piapps_data)
+
+        def piapps_search():
+            if piapps_entry.get() == "":
+                # print("Nop")
+                error_mass_0()
+            elif piapps_entry.get() not in piapps_cache_content:
+                error_mass_1()
+                # print("Nop")
+            else:
+                piapps_pkg_name.config(text=f"Name: {piapps_entry.get()}")
+                if piapps_entry.get() in piapps_installed_content:
+                    piapps_pkg_status.config(text="Status: Installed")
+                    piapps_pkg_inst.config(state=DISABLED)
+                    piapps_pkg_uninst.config(state=NORMAL)
                 else:
-                    popen(
-                        f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {piapps_un_combo_box.get()}; exec bash\"'"
-                    )
-                    un_content_pa.remove(piapps_un_combo_box.get())
+                    piapps_pkg_status.config(text="Status: Not Installed")
+                    piapps_pkg_inst.config(state=NORMAL)
+                    piapps_pkg_uninst.config(state=DISABLED)
 
-        # global piapps_un_combo_box
-        piapps_un_combo_box = ttk.Combobox(self.piapps_inst_frame)
-        piapps_un_combo_box["values"] = un_content_pa
-        piapps_un_combo_box.bind("<KeyRelease>", check_input_pa_un)
-        piapps_un_combo_box.config(width=25)
+                # pkg_infos = os.popen(f"piapps show -a {piapps_entry.get()}")
+                # read_pkg_infos = pkg_infos.read()
 
-        un_piapps_inst_btn = Button(
-            self.piapps_inst_frame,
-            text="remove",
-            command=piapps_uninstall,
-            highlightthickness=0,
+                piapps_pkg_infos = open(
+                    f"{home}/pi-apps/apps/{piapps_entry.get()}/description",
+                    "r",
+                )
+                read_piapps_pkg_infos = piapps_pkg_infos.read()
+
+                insert_piapps_discription = read_piapps_pkg_infos
+                piapps_discription_text.delete("1.0", "end")
+                piapps_discription_text.insert(END, insert_piapps_discription)
+
+        piapps_search_frame = LabelFrame(
+            piapps_frame,
+            text="Search",
+            font=font_16,
+            foreground=label_frame_color,
             borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
         )
+        piapps_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
 
-        piapps_un_combo_box.grid(column=3, row=0)
-        un_piapps_inst_btn.grid(column=2, row=0, padx=5)
-        if piapps_path == True:
-            piapps_inst_combo_box.set("Select/Search a package -->")
-            piapps_un_combo_box.set("Select/Search a package -->")
+        piapps_search_btn = Button(
+            piapps_search_frame,
+            text="Select",
+            bg=ext_btn,
+            fg=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+            command=piapps_search,
+        )
+        piapps_search_btn.pack(fill="x")
 
         if piapps_path == False:
-            piapps_inst_btn.config(state=DISABLED)
-            piapps_inst_combo_box.set("Pi-Apps is not installed")
-            un_piapps_inst_btn.config(state=DISABLED)
-            piapps_un_combo_box.set("Pi-Apps is not installed")
+            piapps_search_btn.config(state=DISABLED)
 
-        def piapps_un_combo_box_pop_kontext_menu(event):
-            pa_un_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def piapps_un_combo_box_paste():
-            piapps_un_combo_box.event_generate("<<Paste>>")
-
-        # Right Click kontext_menu
-        pa_un_kontext_menu = Menu(
-            piapps_un_combo_box, tearoff=0, bg="white", fg="black"
+        piapps_entry = Entry(
+            piapps_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
-        # options
-        pa_un_kontext_menu.add_command(label="Paste", command=piapps_un_combo_box_paste)
+        piapps_entry.pack(pady=5)
 
-        # Make the kontext_menu pop up
-        piapps_un_combo_box.bind("<Button - 3>", piapps_un_combo_box_pop_kontext_menu)
+        piapps_list_box = Listbox(
+            piapps_search_frame, height=50, borderwidth=0, highlightthickness=0
+        )
+        piapps_list_box.pack(fill=BOTH)
 
-        info_frame = LabelFrame(
-            piapp_frame,
+        piapps_cache = os.popen(f"ls ~/pi-apps/apps/ ")
+        piapps_cache_content = piapps_cache.readlines()
+        for i, s in enumerate(piapps_cache_content):
+            piapps_cache_content[i] = s.strip()
+
+        update_piapps(piapps_cache_content)
+
+        piapps_installed = open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
+        piapps_installed_content = piapps_installed.readlines()
+        for i, s in enumerate(piapps_installed_content):
+            piapps_installed_content[i] = s.strip()
+
+        piapps_list_box.bind("<<ListboxSelect>>", piapps_fillout)
+
+        piapps_entry.bind("<KeyRelease>", piapps_search_check)
+
+        piapps_info_frame = Frame(piapps_frame, background=frame_color)
+        piapps_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
+
+        piapps_pkg_info_frame = LabelFrame(
+            piapps_info_frame,
             text="Package Information",
             font=font_16,
             foreground=label_frame_color,
-            relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="white",
+            relief=GROOVE,
             pady=20,
             padx=20,
+            background=frame_color,
         )
-        info_frame["background"] = frame_color
-        info_frame.pack(fill=BOTH, expand=True, padx=55, pady=20)
+        piapps_pkg_info_frame.pack(anchor="n", fill="x")
 
-        T_piapps = Text(
-            info_frame,
+        piapps_pkg_name = Label(
+            piapps_pkg_info_frame,
+            text="Name:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        piapps_pkg_name.grid(row=0, column=0)
+
+        piapps_pkg_status = Label(
+            piapps_pkg_info_frame,
+            text="Status:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        piapps_pkg_status.grid(row=1, column=0)
+
+        piapps_pkg_inst = Button(
+            piapps_pkg_info_frame,
+            text="Install",
+            justify="left",
+            width=10,
+            background="#6abd43",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=piapps_install,
+            state=DISABLED,
+        )
+        piapps_pkg_inst.grid(row=0, column=1)
+
+        piapps_pkg_uninst = Button(
+            piapps_pkg_info_frame,
+            text="Uninstall",
+            justify="left",
+            width=10,
+            background="#ee1e25",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=piapps_uninstall,
+            state=DISABLED,
+        )
+        piapps_pkg_uninst.grid(row=1, column=1, pady=5)
+
+        piapps_pkg_info_frame = LabelFrame(
+            piapps_info_frame,
+            text="Discription",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        piapps_pkg_info_frame.pack(anchor="n", fill=BOTH, expand=True)
+
+        piapps_discription_text = Text(
+            piapps_pkg_info_frame,
             borderwidth=0,
             highlightthickness=0,
             background=frame_color,
             foreground=main_font,
+            font=("Sans", 9)
         )
-        T_piapps.pack(fill=BOTH, expand=True)
+        piapps_discription_text.pack(fill=BOTH, expand=True)
 
-        # flatpak apps_entry
-        self.flatpak_inst_frame = LabelFrame(
+        # flatpak_entry
+
+        def flatpak_install():
+            global pigro_skript_name
+            pigro_skript_name = f"Installing... {flatpak_entry.get()}"
+            global pigro_skript
+            pigro_skript = f"flatpak install flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
+            custom_pop = Custom_Installer(self)
+            custom_pop.grab_set()
+            print(Flat_remote_dict[flatpak_entry.get()])
+
+        def flatpak_uninstall():
+            global pigro_skript_name
+            pigro_skript_name = f"Uninstalling... {flatpak_entry.get()}"
+            global pigro_skript
+            pigro_skript = f"flatpak uninstall flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
+            custom_pop = Custom_Installer(self)
+            custom_pop.grab_set()
+            print(Flat_remote_dict[flatpak_entry.get()])
+
+        def update_flatpak(flatpak_data):
+            flatpak_list_box.delete(0, END)
+            for item in flatpak_data:
+                flatpak_list_box.insert(END, item)
+
+        def flatpak_fillout(e):
+            flatpak_entry.delete(0, END)
+            flatpak_entry.insert(0, flatpak_list_box.get(ACTIVE))
+
+        def flatpak_search_check(e):
+            typed = flatpak_entry.get()
+            if typed == "":
+                flatpak_data = Flat_remote_dict.keys()
+            else:
+                flatpak_data = []
+                for item in Flat_remote_dict.keys():
+                    if typed.lower() in item.lower():
+                        flatpak_data.append(item)
+            update_flatpak(flatpak_data)
+
+        def flatpak_search():
+            if flatpak_entry.get() == "":
+                # print("Nop")
+                error_mass_0()
+            elif flatpak_entry.get() not in Flat_remote_dict.keys():
+                error_mass_1()
+                # print("Nop")
+            else:
+                flatpak_pkg_name.config(text=f"Name: {flatpak_entry.get()}")
+                if flatpak_entry.get() in flat_uninstalled_dict.keys():
+                    flatpak_pkg_status.config(text="Status: Installed")
+                    flatpak_pkg_inst.config(state=DISABLED)
+                    flatpak_pkg_uninst.config(state=NORMAL)
+                else:
+                    flatpak_pkg_status.config(text="Status: Not Installed")
+                    flatpak_pkg_inst.config(state=NORMAL)
+                    flatpak_pkg_uninst.config(state=DISABLED)
+
+                # pkg_infos = os.popen(f"flatpak show -a {flatpak_entry.get()}")
+                # read_pkg_infos = pkg_infos.read()
+
+                # flatpak_pkg_infos = open(f"{home}/pi-apps/apps/{flatpak_entry.get()}/description","r",)
+                # read_flatpak_pkg_infos =  flatpak_pkg_infos.read()
+
+                # insert_flatpak_discription =  read_flatpak_pkg_infos
+                # flatpak_discription_text.delete("1.0", "end")
+                # flatpak_discription_text.insert(END, insert_flatpak_discription)
+
+        flatpak_search_frame = LabelFrame(
             flat_frame,
-            text="Flatpak",
+            text="Search",
             font=font_16,
             foreground=label_frame_color,
-            relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
-            padx=20,
+            relief=GROOVE,
             pady=20,
+            padx=20,
+            background=frame_color,
         )
-        self.flatpak_inst_frame.pack(pady=20)
-        self.flatpak_inst_frame["background"] = frame_color
+        flatpak_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
+
+        flatpak_search_btn = Button(
+            flatpak_search_frame,
+            text="Select",
+            bg=ext_btn,
+            fg=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+            command=flatpak_search,
+        )
+        flatpak_search_btn.pack(fill="x")
+
+        if flatpak_path == False:
+            flatpak_search_btn.config(state=DISABLED)
+
+        flatpak_entry = Entry(
+            flatpak_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
+        )
+        flatpak_entry.pack(pady=5)
+
+        flatpak_list_box = Listbox(
+            flatpak_search_frame, height=50, borderwidth=0, highlightthickness=0
+        )
+        flatpak_list_box.pack(fill=BOTH)
 
         # VARs for Flatpak remote list
         f1 = "flatpak remote-ls --columns=name"
@@ -4704,102 +4774,10 @@ class Software_Tab(ttk.Frame):
 
         # print(Flat_remote_dict)
 
-        var_material = tk.StringVar()
+        # var_material = tk.StringVar()
 
-        def check_input_flatpak_in(event):
-            value = event.widget.get()
+        update_flatpak(Flat_remote_dict.keys())
 
-            if value == "":
-                flatpak_inst_combo_box["values"] = Flat_remote_dict.keys()
-            else:
-                data_flatpak = []
-                for item in Flat_remote_dict.keys():
-                    if value.lower() in item.lower():
-                        data_flatpak.append(item)
-                flatpak_inst_combo_box["values"] = data_flatpak
-
-        def flat_install():
-            if flatpak_inst_combo_box.get() == "":
-
-                error_mass_0()
-            elif flatpak_inst_combo_box.get() not in Flat_remote_dict.keys():
-                error_mass_1()
-            else:
-                global pigro_skript_name
-                pigro_skript_name = f"Installing... {flatpak_inst_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = f"flatpak install flathub {Flat_remote_dict[var_material.get()]} -y && exit"
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-                print(Flat_remote_dict[var_material.get()])
-
-        # global flatpak_inst_combo_box
-        flatpak_inst_combo_box = ttk.Combobox(
-            self.flatpak_inst_frame,
-            values=list(Flat_remote_dict.keys()),
-            justify="left",
-            textvariable=var_material,
-        )
-        flatpak_inst_combo_box.bind("<KeyRelease>", check_input_flatpak_in)
-        flatpak_inst_combo_box.config(width=25)
-
-        def flatpak_inst_combo_box_pop_in_kontext_menu(event):
-            flatpak_install_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def flatpak_inst_combo_box_paste():
-            flatpak_inst_combo_box.event_generate("<<Paste>>")
-
-        # Right Click in_kontext_menu
-        flatpak_install_kontext_menu = Menu(
-            flatpak_inst_combo_box, tearoff=0, bg="white", fg="black"
-        )
-        # options
-        flatpak_install_kontext_menu.add_command(
-            label="Paste", command=flatpak_inst_combo_box_paste
-        )
-
-        # Make the in_kontext_menu pop up
-        flatpak_inst_combo_box.bind(
-            "<Button - 3>", flatpak_inst_combo_box_pop_in_kontext_menu
-        )
-        global flatpak_inst_btn
-        flatpak_inst_btn = Button(
-            self.flatpak_inst_frame,
-            text="install",
-            command=flat_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-
-        flatpak_info_btn = Button(
-            self.flatpak_inst_frame,
-            text="Info",
-            command=flat_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-            state=DISABLED,
-        )
-
-        flatpak_inst_combo_box.grid(column=1, row=0, padx=5)
-        flatpak_inst_btn.grid(column=0, row=0)
-        flatpak_info_btn.grid(column=0, row=1, pady=10)
-
-        if flatpak_path == True:
-            flatpak_inst_combo_box.set("Select/Search a package -->")
-
-        if flatpak_path == False:
-            flatpak_inst_btn.config(state=DISABLED)
-            flatpak_inst_combo_box.set("Flatpak is not installed")
-
-        # VARs for Flatpak installed list
         fu1 = "flatpak list --columns=name"
         fu2 = "flatpak list --columns=application"
 
@@ -4823,112 +4801,107 @@ class Software_Tab(ttk.Frame):
 
         # print(flat_uninstalled_dict)
 
-        un_var_material = tk.StringVar()
+        # un_var_material = tk.StringVar()
 
-        def check_input_flatpak_un(event):
-            value = event.widget.get()
+        flatpak_list_box.bind("<<ListboxSelect>>", flatpak_fillout)
 
-            if value == "":
-                flatpak_uninst_combo_box["values"] = flat_uninstalled_dict.keys()
-            else:
-                un_data_flatpak = []
-                for item in flat_uninstalled_dict.keys():
-                    if value.lower() in item.lower():
-                        un_data_flatpak.append(item)
-                flatpak_uninst_combo_box["un_values"] = un_data_flatpak
+        flatpak_entry.bind("<KeyRelease>", flatpak_search_check)
 
-        def flat_uninstall():
-            if flatpak_uninst_combo_box.get() == "":
+        flatpak_info_frame = Frame(flat_frame, background=frame_color)
+        flatpak_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
-                error_mass_0()
-            elif flatpak_uninst_combo_box.get() not in flat_uninstalled_dict.keys():
-                error_mass_1()
-            else:
-                global pigro_skript_name
-                pigro_skript_name = f"Uinstalling... {flatpak_uninst_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = f"flatpak uninstall flathub {flat_uninstalled_dict[un_var_material.get()]} -y && exit"
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-
-        flatpak_uninst_combo_box = ttk.Combobox(
-            self.flatpak_inst_frame,
-            values=list(flat_uninstalled_dict.keys()),
-            justify="left",
-            textvariable=un_var_material,
-        )
-        flatpak_uninst_combo_box.bind("<KeyRelease>", check_input_flatpak_un)
-        flatpak_uninst_combo_box.config(width=25)
-
-        def flatpak_uninst_combo_box_pop_in_kontext_menu(event):
-            flatpak_un_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def flatpak_uninst_combo_box_paste():
-            flatpak_uninst_combo_box.event_generate("<<Paste>>")
-
-        # Right Click in_kontext_menu
-        flatpak_un_kontext_menu = Menu(
-            flatpak_uninst_combo_box, tearoff=0, bg="white", fg="black"
-        )
-        # options
-        flatpak_un_kontext_menu.add_command(
-            label="Paste", command=flatpak_uninst_combo_box_paste
-        )
-
-        # Make the in_kontext_menu pop up
-        flatpak_uninst_combo_box.bind(
-            "<Button - 3>", flatpak_uninst_combo_box_pop_in_kontext_menu
-        )
-
-        flatpak_inst_btn = Button(
-            self.flatpak_inst_frame,
-            text="remove",
-            command=flat_uninstall,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            font=(("Sans,bold"), "10"),
-            width=10,
-        )
-
-        flatpak_uninst_combo_box.grid(column=3, row=0)
-        flatpak_inst_btn.grid(column=2, row=0, padx=5)
-
-        if flatpak_path == True:
-            flatpak_uninst_combo_box.set("Select/Search a package -->")
-
-        if flatpak_path == False:
-            flatpak_inst_btn.config(state=DISABLED)
-            flatpak_uninst_combo_box.set("Flatpak is not installed")
-
-        info_frame_flat = LabelFrame(
-            flat_frame,
+        flatpak_pkg_info_frame = LabelFrame(
+            flatpak_info_frame,
             text="Package Information",
             font=font_16,
             foreground=label_frame_color,
-            relief=GROOVE,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="white",
+            relief=GROOVE,
             pady=20,
             padx=20,
+            background=frame_color,
         )
-        info_frame_flat["background"] = frame_color
-        info_frame_flat.pack(fill=BOTH, expand=True, padx=55, pady=20)
+        flatpak_pkg_info_frame.pack(anchor="n", fill="x")
 
-        T_flatpak = Text(
-            info_frame_flat,
+        flatpak_pkg_name = Label(
+            flatpak_pkg_info_frame,
+            text="Name:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        flatpak_pkg_name.grid(row=0, column=0)
+
+        flatpak_pkg_status = Label(
+            flatpak_pkg_info_frame,
+            text="Status:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            anchor="w",
+            width=55,
+        )
+        flatpak_pkg_status.grid(row=1, column=0)
+
+        flatpak_pkg_inst = Button(
+            flatpak_pkg_info_frame,
+            text="Install",
+            justify="left",
+            width=10,
+            background="#6abd43",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=flatpak_install,
+            state=DISABLED,
+        )
+        flatpak_pkg_inst.grid(row=0, column=1)
+
+        flatpak_pkg_uninst = Button(
+            flatpak_pkg_info_frame,
+            text="Uninstall",
+            justify="left",
+            width=10,
+            background="#ee1e25",
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=flatpak_uninstall,
+            state=DISABLED,
+        )
+        flatpak_pkg_uninst.grid(row=1, column=1, pady=5)
+
+        flatpak_pkg_info_frame = LabelFrame(
+            flatpak_info_frame,
+            text="Discription",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        flatpak_pkg_info_frame.pack(anchor="n", fill=BOTH, expand=True)
+
+        flatpak_discription_text = Text(
+            flatpak_pkg_info_frame,
             borderwidth=0,
             highlightthickness=0,
             background=frame_color,
             foreground=main_font,
         )
-        T_flatpak.pack(fill=BOTH, expand=True)
-
-        quote_flat = "Infos currently disabled"
-        T_flatpak.delete("1.0", "end")
-        T_flatpak.insert(END, quote_flat)
+        flatpak_discription_text.pack(fill=BOTH, expand=True)
+        flatpak_discription_text.insert(
+            END,
+            "Install Flatpak:\nsudo apt install flatpak\nflatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo\nreboot",
+        )
 
         # snap_entry
         self.snap_inst_frame = LabelFrame(
@@ -4942,7 +4915,7 @@ class Software_Tab(ttk.Frame):
             padx=25,
             pady=20,
         )
-        self.snap_inst_frame.pack(pady=20)
+        self.snap_inst_frame.pack(pady=20,padx=55, fill="x")
         self.snap_inst_frame["background"] = frame_color
 
         def error_mass_0():
@@ -4998,9 +4971,9 @@ class Software_Tab(ttk.Frame):
             command=snap_install,
             highlightthickness=0,
             borderwidth=0,
-            background=ext_btn,
+            background="#6abd43",
             foreground=main_font,
-            font=(("Sans,bold"), "10"),
+            font=font_10_b,
             width=10,
         )
 
@@ -5011,8 +4984,8 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
             borderwidth=0,
             background=ext_btn,
+            font=font_10_b,
             foreground=main_font,
-            font=(("Sans,bold"), "10"),
             width=10,
             state=DISABLED,
         )
@@ -5044,9 +5017,9 @@ class Software_Tab(ttk.Frame):
             command=un_snap_install,
             highlightthickness=0,
             borderwidth=0,
-            background=ext_btn,
+            background="#ee1e25",
             foreground=main_font,
-            font=(("Sans,bold"), "10"),
+            font=font_10_b,
             width=10,
         )
 
@@ -5104,7 +5077,7 @@ class Software_Tab(ttk.Frame):
         )
         T_snap.pack(fill=BOTH, expand=True)
 
-        quote_snap = "Infos currently disabled"
+        quote_snap = "Infos currently disabled\n\nInstall Snap:\nsudo apt update\nsudo apt install snapd\nsudo reboot\nsudo snap install core"
         T_snap.delete("1.0", "end")
         T_snap.insert(END, quote_snap)
 
@@ -5117,12 +5090,12 @@ class Software_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
-            padx=70,
+            padx=10,
             pady=10,
         )
         self.repo_sec_frame["background"] = frame_color
-        self.repo_sec_frame.pack(
-            pady=20,
+        self.repo_sec_frame.pack(fill="x",
+            pady=20, padx=55
         )
 
         def instant_install(text):
@@ -5339,7 +5312,7 @@ class Software_Tab(ttk.Frame):
             )
             instant_install_btn_list1.append(self.instant_install_button_x)
             conf_column = conf_column + 1
-            if conf_column == 3:
+            if conf_column == 4:
                 conf_row = conf_row + 1
                 conf_column = 0
 
@@ -5644,17 +5617,18 @@ class Git_More_Tab(ttk.Frame):
         self.link_main.pack(expand=True, fill=BOTH)
         self.link_main["background"] = maincolor
 
-        self.link_left = Frame(
+        self.link_left = LabelFrame(
             self.link_main,
+            text="System Info",
+            font=font_16,
+            foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor="white",
             relief=GROOVE,
-            padx=20,
-            pady=20,
-        )
-        self.link_left.pack(side=LEFT, expand=True, fill=BOTH)
-        self.link_left["background"] = maincolor
+            pady=20)
+
+        self.link_left.pack(side=LEFT, expand=True, fill=BOTH,padx=20)
+        self.link_left["background"] = frame_color
 
         sources_l = [
             "Albert",
@@ -6601,7 +6575,7 @@ class Tuning_Tab(ttk.Frame):
             padx=40,
         )
         self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH)
-        self.ov_buttons["background"] = maincolor
+        self.ov_buttons["background"] = frame_color
 
         # Overclocking State Main Frame
         self.ov_state_display_frame = Frame(
@@ -6628,7 +6602,7 @@ class Tuning_Tab(ttk.Frame):
             padx=10,
             pady=10,
         )
-        self.ov_display_frame.pack(anchor="n")
+        self.ov_display_frame.pack(anchor="n",)
         self.ov_display_frame["background"] = frame_color
 
         # Additional Infos
@@ -6641,7 +6615,7 @@ class Tuning_Tab(ttk.Frame):
             relief=GROOVE,
         )
         self.ov_helps_frame.pack(padx=20)
-        self.ov_helps_frame["background"] = maincolor
+        self.ov_helps_frame["background"] = frame_color
 
         # Overclocking Stats
 
@@ -6950,7 +6924,7 @@ class Tuning_Tab(ttk.Frame):
             font=font_8,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=frame_color,
             foreground=info_color,
             command=tuning_legende,
             image=self.tu_legend_ico,
@@ -6963,7 +6937,7 @@ class Tuning_Tab(ttk.Frame):
             text="To unlock the overclocking options\non 'first use' click on:\nReset Overclocking",
             highlightthickness=0,
             borderwidth=2,
-            background=maincolor,
+            background=frame_color,
             foreground=info_color,
             font=font_8_b,
         )
@@ -6996,7 +6970,7 @@ class Tuning_Tab(ttk.Frame):
             highlightcolor="white",
             relief=FLAT,
             pady=10,
-            padx=82,
+            padx=87,
         )
         self.chromium_drm.pack(padx=40, pady=20)
         self.chromium_drm["background"] = frame_color
@@ -7056,12 +7030,14 @@ class Tuning_Tab(ttk.Frame):
 
         self.tu_info = Label(
             self.ov_state_display_frame,
-            text="\n\n\n\n\n\n\n\nSettings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
+            text="Settings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
             font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
-            background=maincolor,
+            background=frame_color,
             foreground=info_color,
+            padx=122,
+            pady=20
         ).pack()
 
         def ov_display():
