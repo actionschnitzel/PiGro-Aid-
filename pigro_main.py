@@ -1,25 +1,27 @@
 #!/usr/bin/python3
 
 import os
-import os.path
 from os import chmod
+from os import popen
+from os import system
+from os import listdir
+import os.path
+from os.path import isfile, join
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from tkinter.dialog import DIALOG_ICON
-from turtle import left, width
+
+# from turtle import left, width
 import tkinter.font as tkFont
 from tkinter import filedialog
 import webbrowser
-from os import popen
-from os import system as cmd
-from os import listdir
-from os.path import isfile, join
 import platform
 import shutil
 import psutil
 from collections import namedtuple
-from datetime import datetime
+
+# from datetime import datetime
 from time import strftime
 import distro
 import socket
@@ -30,7 +32,8 @@ import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
-from turtle import width
+
+# from turtle import width
 import re
 import uuid
 from http.client import SWITCHING_PROTOCOLS
@@ -40,37 +43,36 @@ from distutils.filelist import translate_pattern
 import requests
 
 
-# Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
 class Get_Sys_Info:
     """Gathers system stats that are needed to run PiGro"""
 
+    ### Get User Name
     def get_user_name():
-        # Say Hallo!
         global user
-        user = os.environ["USER"]  # os.getlogin()
+        user = os.environ["USER"]
         print(f"[Info]: Hi,{user} waz uuuuup?!")
-        # return user
 
     get_user_name()
 
+    ### Get Home Path
     def get_home_path():
-        # Define Home
         global home
         home = os.environ["HOME"]  # str(Path.home())
         print(f"[Info]: {home} is your home directory!")
 
     get_home_path()
 
+    ### Gets path to PiGro
     def get_pigro_path():
-        # Gets path to PiGro
         global Application_path
         Application_path = str(os.getcwd())
         print(f"[Info]: PiGro directory is {Application_path}")
 
     get_pigro_path()
 
+    ### Makes all .sh files in /scripts executable if PiGro in $HOME
     def chmod_x_scripts():
-        # Makes all .sh files in /scripts executable if PiGro in $HOME
+
         if Application_path == f"{home}/PiGro-Aid-":
             popen(
                 'find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;'
@@ -79,14 +81,14 @@ class Get_Sys_Info:
 
     chmod_x_scripts()
 
+    ### Checks if settings folder exists
     def check_if_pigro_settings_exsists():
-        # Checks if settings folder exists
         pigro_conf_folder = os.path.isdir(f"{home}/.pigro")
         if pigro_conf_folder == False:
             print("[Info]: Folder:.pigro not found will created")
             os.mkdir(f"{home}/.pigro")
             open(f"{home}/.pigro/autostart.list", "a").close()
-            open(f"{home}/.pigro/pi-apps_list.list", "a").close()
+            # open(f"{home}/.pigro/pi-apps_list.list", "a").close()
             open(f"{home}/.pigro/pi-apps_installed.list", "a").close()
         if pigro_conf_folder == True:
             print("[Info]: Folder: .pigro exsists")
@@ -112,8 +114,6 @@ class Get_Sys_Info:
             if isfile(join("/usr/share/applications/", df))
         ]
         desktop_files.sort()
-
-        # print(desktop_files.sort())
 
         for fn in desktop_files:
             add_app = open(f"{home}/.pigro/auto_plus.list", "a")
@@ -145,14 +145,16 @@ class Get_Sys_Info:
 
     check_if_pigro_settings_exsists()
 
+    ### Checks if pigro bin exists
     def check_if_pigro_is_in_bin():
-        # Checks if pigro bin exists
+
         popen(f"{Application_path}/scripts/check_bin.sh ")
 
-    check_if_pigro_is_in_bin()
+    # check_if_pigro_is_in_bin()
 
+    ### Get Distro
     def get_distro_name():
-        # Get Distro
+
         global distro_get
         distro_get = distro.id()
         print("[Info]: Your Distro is: " + str(distro_get))
@@ -163,8 +165,8 @@ class Get_Sys_Info:
 
     get_distro_name()
 
+    ### Location of config.txt
     def get_position_of_config_txt():
-        # Location of config.txt
         global config_path
         if os.path.exists("/boot/config.txt"):
             config_path = "/boot/config.txt"
@@ -177,25 +179,23 @@ class Get_Sys_Info:
 
     get_position_of_config_txt()
 
+    ### Get Desktop Environment
     def get_desktop_env():
-        # Get Desktop Environment
         global get_de
         get_de = os.environ.get("XDG_CURRENT_DESKTOP")
         print("[Info]: Your DE is: " + str(get_de))
 
     get_desktop_env()
 
+    ### Checks if pi-apps is installed an imports the app list
     def check_if_piapps_is_installed():
-        # Checks if pi-apps is installed an imports the app list
         open(f"{home}/.pigro/pi-apps_installed.list", "w").close()
-        open(f"{home}/.pigro/pi-apps_list.list", "w").close()
         global piapps_path
-        piapps_path = os.path.isdir(f"{home}/pi-apps")  # Need full path
+        piapps_path = os.path.exists(f"{home}/pi-apps")
         if piapps_path == False:
             print("[Info]: Pi-Apps not found")
         if piapps_path == True:
             print("[Info]: Pi-Apps is installed list will be added")
-            # popen(f"ls ~/pi-apps/apps/ > /home/{user}/.pigro/pi-apps_list.list")
 
             for installed_pi_apps in os.listdir(f"{home}/pi-apps/data/status"):
                 pi_apps_status = open(
@@ -210,6 +210,7 @@ class Get_Sys_Info:
 
     check_if_piapps_is_installed()
 
+    ### Get Achitecture Of OS
     def get_arch():
         arch_bash = """#determine if host system is 64 bit arm64 or 32 bit armhf
     if [ "$(od -An -t x1 -j 4 -N 1 "$(readlink -f /sbin/init)")" = ' 02' ];then
@@ -228,8 +229,8 @@ class Get_Sys_Info:
 
     get_arch()
 
+    ### Checks if snapd exists
     def check_if_snapd_is_installed():
-        # Checks if snapd exists
         global snap_deamon_check
         snap_deamon_check = os.path.isfile("/bin/snap")
 
@@ -240,16 +241,16 @@ class Get_Sys_Info:
 
     check_if_snapd_is_installed()
 
+    ### Checks if flatpak exists
     def check_if_flatpak_is_installed():
-        # Checks if flatpak exists
-        if os.path.isfile("/bin/flatpak"):
+        global flatpak_path
+        flatpak_path = os.path.exists("/bin/flatpak")
+        if flatpak_path == True:
             print("[Info]: Flatpak is installed")
             global flat_counted
             flat_count = popen("flatpak list | wc --lines")
             flat_counted = flat_count.read()
             flat_count.close()
-            global flatpak_path
-            flatpak_path = True
             print(f"[Info]: {flat_counted[:-1]} Flatpaks are installed")
         else:
             print("[Info]: Flatpak is not installed")
@@ -257,8 +258,8 @@ class Get_Sys_Info:
 
     check_if_flatpak_is_installed()
 
+    ### Checks if pigro.conf exists
     def check_if_conf_file_exsists():
-        # Checks if pigro.conf exists
         if os.path.isfile(f"{home}/.pigro/pigro.conf"):
             print("[Info]: pigro.conf exists")
         else:
@@ -271,8 +272,8 @@ class Get_Sys_Info:
 
     check_if_conf_file_exsists()
 
+    ### Counts installed .DEBs
     def get_installed_deb_num():
-        # Counts installed .DEBs
         deb_count = popen("dpkg --list | wc --lines")
         global deb_counted
         deb_counted = deb_count.read()
@@ -281,8 +282,8 @@ class Get_Sys_Info:
 
     get_installed_deb_num()
 
+    ### Color Theme Identifier
     def set_theme():
-        # Color Theme Identifier
         conf_file = open(f"{home}/.pigro/pigro.conf", "r")
         read_conf = conf_file.readlines()
         conf_file.close()
@@ -356,22 +357,6 @@ class Get_Sys_Info:
         font_8 = ("Sans", 8)
 
     set_theme()
-
-    def get_info_version():
-        # MUST BE UPDATED WITH EVER NEW RELEASE!
-        global current_version
-        current_version = float(23.01)
-        # Gets latest github release
-        url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
-        r = requests.get(url)
-
-        global github_release
-        github_release = r.url.split("/")[-1][
-            1:-2
-        ]  # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
-        github_release = float(github_release)
-
-    get_info_version()
 
 
 class MainApplication(tk.Tk):
@@ -579,23 +564,129 @@ class Dash_Tab(ttk.Frame):
     ):
         super().__init__()
 
-        # Checks if Update Window pops up
+        def Simpletoggle():
+            if self.toggle_button.config("text")[-1] == "ON":
+                self.toggle_button.config(text="OFF")
+                self.toggle_button.config(image=off_btn_icon)
+                self.system_host_label.config(text=f"Host: {my_system.node}")
+                self.system_user_label.config(text=f"User: {user}")
+            else:
+                self.toggle_button.config(text="ON")
+                self.toggle_button.config(image=on_btn_icon)
+                self.system_host_label.config(text=f"Host: XXXXXXXXXXXXX")
+                self.system_user_label.config(text="User: XXXXXXXXXXXXX")
 
-        def update_checker():
-            up_chk = Update_Pop(self)
-            up_chk.grab_set()
 
-        try:
-            if github_release > current_version:
-                print("[Info]: An Update is avalible !!!")
-                update_checker()
-            elif github_release < current_version:
-                print("WTF HAPPEND HERE?!! You must be Actionschnitzel !!!")
-            elif github_release == current_version:
-                print("[Info]: PiGro is Up To Date !!!")
-        except:
-            print("[Info]: Version Check not Possible")
-        # Ram Size
+        def refresh_sys_stats():
+            """Refresches the system stats every second"""
+            # Parameters for System
+            obj_Disk = psutil.disk_usage("/")
+            cpufreq = psutil.cpu_freq()
+            cpu_temp = psutil.sensors_temperatures()
+            cpu_temp = round(cpu_temp["cpu_thermal"][0][1])
+            cpu_perc = psutil.cpu_percent()
+            network_stats = psutil.net_if_addrs()
+            total_ram_load = psutil.virtual_memory().percent
+
+            ethernet_ipv4 = network_stats["eth0"][0][1]
+            ethernet_mac_address = network_stats["eth0"][0][2]
+            try:
+                ethernet_mac_address = network_stats["eth0"][2][1][0:-5]
+            except IndexError:
+                ethernet_ipv4 = "Not Connected"
+                ethernet_mac_address = network_stats["eth0"][0][1]
+
+            wifi_ipv4 = network_stats["wlan0"][0][1]
+            try:
+                wifi_mac_address = network_stats["wlan0"][2][1][0:-6]
+            except IndexError:
+                wifi_ipv4 = "Not Connected"
+                wifi_mac_address = network_stats["wlan0"][0][1]
+
+            try:
+                self.sys_soft.config(text=f"Debian: {deb_counted[:-1]}")
+                self.sys_flat.config(text=f"Flatpak: {flat_counted[:-1]}")
+            except IndexError:
+                self.sys_soft.config(text=f"Debian: ERROR")
+                self.sys_flat.config(text=f"Flatpak: 0")
+
+
+            self.eth_ip_label.config(text=f"Ethernet IP: {ethernet_ipv4}")
+            self.wifi_ip_label.config(text=f"WiFi IP: {wifi_ipv4}")
+
+            self.sysinf_hdd_t.config(text=f"Total: {obj_Disk.total / (2**30):.2f} Gb")
+            self.hdd_used_label.config(text=f"Used: {obj_Disk.used / (2**30):.2f} Gb")
+            self.hdd_free_label.config(text=f"Free: {obj_Disk.free / (2**30):.2f} Gb")
+            self.hdd_used_per_label.configure(text=f"Used: {obj_Disk.percent} %")
+
+            self.curr_cpu_perc_label.configure(text=f"Utilization: {cpu_perc} %")
+            self.curr_cpu_frq_label.configure(text=f"Curr.: {cpufreq.current:.0f} Mhz")
+            self.cpu_temp_label.configure(text=f"Temp: {str(cpu_temp)}°C")
+            self.util_ram_label.configure(text=f"Utilization: {total_ram_load} %")
+
+            self.pb1["value"] = obj_Disk.percent
+
+            """Refreshes thuning settings every secon"""
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "arm_freq" in line:
+                    dash_arm_f_display.config(
+                        text=f"Arm Freq: {line[9:-1]} MHz",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+                if "#arm_freq=800" in line:
+                    dash_arm_f_display.config(
+                        text="Arm Freq: N/A",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gpu_freq" in line:
+                    dash_gpu_f_display.config(
+                        text=f"Gpu Freq: {line[9:-1]} MHz",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "force_turbo" in line:
+                    dash_force_t_display.config(
+                        text=f"Force Turbo: {line[12:-1]}",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "over_voltage" in line:
+                    dash_over_v_display.config(
+                        text=f"Over Voltage: {line[13:-1]}",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+            with open(f"{config_path}") as pi_conf:
+                datafile = pi_conf.readlines()
+            for line in datafile:
+                if "gpu_mem" in line:
+                    dash_gpu_m_display.config(
+                        text=f"Gpu Mem: {line[8:-1]} MB",
+                        foreground=main_font,
+                        font=font_12,
+                    )
+
+            self.after(1000, refresh_sys_stats)
+
+        ### Ram Size
         def get_size(bytes, suffix="B"):
             """
             Scale bytes to its proper format
@@ -609,698 +700,38 @@ class Dash_Tab(ttk.Frame):
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
 
-        # IP Address
-        def extract_ip():
-            st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            try:
-                st.connect(("10.255.255.255", 1))
-                IP = st.getsockname()[0]
-            except Exception:
-                IP = "127.0.0.1"
-            finally:
-                st.close()
-            return IP
+        network_stats = psutil.net_if_addrs()
 
-        # Sensetiv Data Button Images
-        global on_btn_icon
-        on_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/on_s_b.png")
+        ethernet_ipv4 = network_stats["eth0"][0][1]
+        ethernet_mac_address = network_stats["eth0"][0][2]
+        try:
+            ethernet_mac_address = network_stats["eth0"][2][1][0:-5]
+        except IndexError:
+            ethernet_ipv4 = "Not Connected"
+            ethernet_mac_address = network_stats["eth0"][0][1]
 
-        global off_btn_icon
-        off_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/off_s_b.png")
+        wifi_ipv4 = network_stats["wlan0"][0][1]
+        try:
+            wifi_mac_address = network_stats["wlan0"][2][1][0:-6]
+        except IndexError:
+            wifi_ipv4 = "Not Connected"
+            wifi_mac_address = network_stats["wlan0"][0][1]
 
-        # Hide/Show sensetiv data definition
-        def Simpletoggle():
-            if self.toggle_button.config("text")[-1] == "ON":
-                self.toggle_button.config(text="OFF")
-                self.toggle_button.config(image=off_btn_icon)
-                self.ip_label.config(text=f"IP Address: {IPAddr}")
-                self.mac_add_label.config(text=f"MAC Address: {get_mac}")
-                system_host_label.config(text=f"Device Name: {my_system.node}")
-                system_user_label.config(text=f"User Name: {user}")
-            else:
-                self.toggle_button.config(text="ON")
-                self.toggle_button.config(image=on_btn_icon)
-                self.ip_label.config(text=f"IP Address: XXXXXXXXXXXXX")
-                self.mac_add_label.config(text=f"MAC Address: XXXXXXXXXXXXX")
-                system_host_label.config(text=f"Device Name: XXXXXXXXXXXXX")
-                system_user_label.config(text="User Name: XXXXXXXXXXXXX")
-
-        # MAC Address
-        get_mac = ":".join(re.findall("..", "%012x" % uuid.getnode()))
-
-        # HDD usage
-        obj_Disk = psutil.disk_usage("/")
 
         # Parameters for System
         my_system = platform.uname()
         cpufreq = psutil.cpu_freq()
         svmem = psutil.virtual_memory()
         swap = psutil.swap_memory()
-        IPAddr = extract_ip()
         Pi_Model = open("/proc/device-tree/model", "r")
-        total, used, free = shutil.disk_usage("/")
         current_month = strftime("%B")
-
-        # Main frame for system stats
-
-        self.sys_logo = Frame(
-            self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-        )
-
-        self.sys_logo.place(x=120, y=20, width=885)  #
-        self.sys_logo["background"] = maincolor
-
-        self.pigro_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologo.png")
-        )
-
-        self.pigroh_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologoh.png")
-        )
-
-        self.pigrox_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologox.png")
-        )
-
-        self.pigro_feb_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologo_feb.png")
-        )
+        eth0_data = f"Ethernet IP: {ethernet_ipv4}"
+        wlan0_data = f"WiFi IP: {wifi_ipv4}"
+        cpu_temp = psutil.sensors_temperatures()
+        cpu_temp = round(cpu_temp["cpu_thermal"][0][1])
 
         def pigro_sound():
             popen(f"mpg123 {home}/PiGro-Aid-/scripts/PiGro-just_click_it.mp3")
-
-        # Sys Info Labels
-        self.sysinf_btn = Button(
-            self.sys_logo,
-            borderwidth=0,
-            bg=frame_color,
-            highlightthickness=0,
-            command=pigro_sound,
-            activebackground=frame_color,
-        )
-        self.sysinf_btn.pack(pady=20)
-
-        # Changes Header
-        if current_month == "October":
-            self.sysinf_btn.config(image=self.pigroh_img)
-        elif current_month == "December":
-            self.sysinf_btn.config(image=self.pigrox_img)
-        elif current_month == "February":
-            self.sysinf_btn.config(image=self.pigro_feb_img)
-        else:
-            self.sysinf_btn.config(image=self.pigro_img)
-
-        self.info_main_frame = Frame(
-            self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-            pady=20,
-            padx=10,
-        )
-
-        self.info_main_frame.place(x=120, y=240)  # pack(pady=20)
-        self.info_main_frame["background"] = frame_color
-
-        # Main Frame
-        self.sys_info_main_frame = Frame(
-            self.info_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-        )
-        # Column 0
-        self.sys_info_main_frame.pack(side=LEFT)
-        self.sys_info_main_frame["background"] = frame_color
-
-        self.sys_info_main_Update_Tab = Frame(
-            self.info_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-            pady=0,
-            padx=0,
-        )
-        # Column 1
-        self.sys_info_main_Update_Tab.pack(side=LEFT, anchor="n")
-        self.sys_info_main_Update_Tab["background"] = frame_color
-
-        # Column 2
-        self.sys_info_main_System_Tab = Frame(
-            self.info_main_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-            pady=0,
-            padx=0,
-        )
-
-        self.sys_info_main_System_Tab.pack(side=LEFT, anchor="n")
-        self.sys_info_main_System_Tab["background"] = frame_color
-
-        # System Frame
-        self.sys_frame_1 = LabelFrame(
-            self.sys_info_main_frame,
-            text="System Info",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_1.pack(anchor="n", pady=5)
-        self.sys_frame_1["background"] = frame_color
-
-        system_os_label = Label(
-            self.sys_frame_1,
-            text=f"OS: {nice_name[13:-2]}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_os_label.pack()
-
-        system_achitecture_label = Label(
-            self.sys_frame_1,
-            text=f"Architecture: {os_arch_output}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_achitecture_label.pack()
-
-        system_host_label = Label(
-            self.sys_frame_1,
-            text=f"Host: {my_system.node}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_host_label.pack()
-
-        system_user_label = Label(
-            self.sys_frame_1,
-            text=f"User: {user}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_user_label.pack()
-
-        system_kernel_label = Label(
-            self.sys_frame_1,
-            text=f"Kernel: {my_system.release}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_kernel_label.pack()
-
-        system_shell_label = Label(
-            self.sys_frame_1,
-            text=f"Shell: {os.environ['SHELL'][5:]}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_shell_label.pack()
-
-        system_resolution_label = Label(
-            self.sys_frame_1,
-            text=f"Resolution: {screen_width}x{screen_height}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_resolution_label.pack()
-
-        system_lang_label = Label(
-            self.sys_frame_1,
-            text=f"Language: {os.environ['LANG']}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_lang_label.pack()
-
-        system_de_label = Label(
-            self.sys_frame_1,
-            text=f"Desktop: {get_de}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_de_label.pack()
-
-        system_session_label = Label(
-            self.sys_frame_1,
-            text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_session_label.pack()
-
-        system_board_label = Label(
-            self.sys_frame_1,
-            text=f"Board: {Pi_Model.read()}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            anchor=W,
-        )
-
-        system_board_label.pack()
-
-        # CPU Frame
-        self.sys_frame_2 = LabelFrame(
-            self.sys_info_main_frame,
-            text="CPU",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_2.pack(pady=5)
-        self.sys_frame_2["background"] = frame_color
-
-        self.curr_cpu_perc_label = Label(
-            self.sys_frame_2,
-            text="",
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        )
-        self.curr_cpu_perc_label.pack()
-
-        self.max_cpu_frq_label = Label(
-            self.sys_frame_2,
-            text=f"Max Freq: {cpufreq.max:.0f} Mhz",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.curr_cpu_frq_label = Label(
-            self.sys_frame_2,
-            text="",
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        )
-        self.curr_cpu_frq_label.pack()
-
-        self.min_cpu_frq_label = Label(
-            self.sys_frame_2,
-            text=f"Min Freq: {cpufreq.min:.0f} Mhz",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.cpu_temp_label = Label(
-            self.sys_frame_2,
-            text="",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=35,
-            font=font_12,
-            anchor=W,
-        )
-        self.cpu_temp_label.pack()
-
-        # Mamory Frame
-        self.sys_frame_3 = LabelFrame(
-            self.sys_info_main_Update_Tab,
-            text="Memory",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_3.pack(side=TOP, pady=5)
-        self.sys_frame_3["background"] = frame_color
-
-        self.ut_ram_label = Label(
-            self.sys_frame_3,
-            text="",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        )
-        self.ut_ram_label.pack()
-
-        self.total_ram_label = Label(
-            self.sys_frame_3,
-            text=f"RAM Total: {get_size(svmem.total)}",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.total_swap_label = Label(
-            self.sys_frame_3,
-            text=f"SWAP Total: {get_size(swap.total)}",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        # Network Frame
-        self.sys_frame_4 = LabelFrame(
-            self.sys_info_main_Update_Tab,
-            text="Network",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_4.pack(pady=5)
-        self.sys_frame_4["background"] = frame_color
-
-        self.ip_label = Label(
-            self.sys_frame_4,
-            text=f"IP Address: {IPAddr}",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        )
-        self.ip_label.pack()
-
-        self.mac_add_label = Label(
-            self.sys_frame_4,
-            text=f"MAC Address: {get_mac}",
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        )
-        self.mac_add_label.pack()
-
-        # Disk
-        self.sys_frame_5 = LabelFrame(
-            self.sys_info_main_Update_Tab,
-            text="Disk",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_5.pack(pady=5)
-        self.sys_frame_5["background"] = frame_color
-
-        self.sysinf_hdd_t = Label(
-            self.sys_frame_5,
-            text=("Total Disk Space: %d GiB" % (total // (2**30))),
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.hdd_used_label = Label(
-            self.sys_frame_5,
-            text=("Used Disk Space: %d GiB" % (used // (2**30))),
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.hdd_free_label = Label(
-            self.sys_frame_5,
-            text=("Free Disk Space: %d GiB" % (free // (2**30))),
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        self.hdd_used_per_label = Label(
-            self.sys_frame_5,
-            text=(f"Used Disk Space: {obj_Disk.percent} %"),
-            justify="left",
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            font=font_12,
-            anchor=W,
-        ).pack()
-
-        def disc_step():
-            self.pb1["value"] = obj_Disk.percent
-
-        self.pb1 = ttk.Progressbar(
-            self.sys_frame_5,
-            style="bar.Horizontal.TProgressbar",
-            orient=HORIZONTAL,
-            length=200,
-            mode="determinate",
-        )
-        self.pb1.pack(expand=True, anchor="w")
-        disc_step()
-
-        # Custom Settings
-        self.ov_display_frame = LabelFrame(
-            self.sys_info_main_System_Tab,
-            text="Custom Settings",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.ov_display_frame.pack(pady=5)
-        self.ov_display_frame["background"] = frame_color
-
-        global dash_arm_f_display
-        dash_arm_f_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="Arm Freq: N/A",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=20,
-        )
-        dash_arm_f_display.grid(column=1, row=2)
-
-        global dash_gpu_f_display
-        dash_gpu_f_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="Gpu Freq: N/A",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=20,
-        )
-        dash_gpu_f_display.grid(column=1, row=3)
-
-        global dash_gpu_m_display
-        dash_gpu_m_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="Gpu Mem: N/A",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=20,
-        )
-        dash_gpu_m_display.grid(column=1, row=4)
-
-        global dash_over_v_display
-        dash_over_v_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="Over Voltage: N/A",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=20,
-        )
-        dash_over_v_display.grid(column=1, row=5)
-
-        global dash_force_t_display
-        dash_force_t_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="Force Turbo: N/A",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=20,
-        )
-        dash_force_t_display.grid(column=1, row=6)
-
-        self.sys_frame_6 = LabelFrame(
-            self.sys_info_main_Update_Tab,
-            text="Installed Packages",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.sys_frame_6.pack(pady=5)
-        self.sys_frame_6["background"] = frame_color
-
-        self.sys_soft = Label(
-            self.sys_frame_6,
-            text=f"Debian: {deb_counted[:-1]}",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            anchor=W,
-        ).pack()
-
-        self.sys_flat = Label(
-            self.sys_frame_6,
-            text=f"Flatpak: 0",
-            font=font_12,
-            justify="left",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            width=30,
-            anchor=W,
-        )
-        self.sys_flat.pack()
-
-        # Flatpak counter
-        if os.path.isfile("/bin/flatpak"):
-            self.sys_flat.config(text=f"Flatpaks: {flat_counted[:-1]}")
-
-        # Needs to be removed
-        def lines_that_contain(string, fp):
-            return [line for line in fp if string in line]
 
         def refresh_OV_stats():
             """Refreshes thuning settings every secon"""
@@ -1363,37 +794,731 @@ class Dash_Tab(ttk.Frame):
 
             self.after(1000, refresh_OV_stats)
 
-        refresh_OV_stats()
 
-        def refresh_sys_stats():
-            """Refresches the system stats every second"""
-            # Parameters for System
-            cpufreq = psutil.cpu_freq()
-            cpu_temp = psutil.sensors_temperatures()
-            cpu_temp = round(cpu_temp["cpu_thermal"][0][1])
-            cpu_perc = psutil.cpu_percent()
-            total_ram_load = psutil.virtual_memory().percent
-            self.curr_cpu_perc_label.configure(text=f"Utilization: {cpu_perc} %")
-            self.curr_cpu_frq_label.configure(
-                text=f"Curr Freq: {cpufreq.current:.0f} Mhz"
-            )
-            self.cpu_temp_label.configure(text=f"Temp: {str(cpu_temp)}°C")
-            self.ut_ram_label.configure(text=f"Utilization: {total_ram_load} %")
 
-            self.after(1000, refresh_sys_stats)
+        global on_btn_icon
+        on_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/on_s_b.png")
 
-        # Custom Settings
-        self.usage_frame = LabelFrame(
-            self.sys_info_main_System_Tab,
-            text="Usage",
-            font=font_16,
-            foreground=label_frame_color,
+        global off_btn_icon
+        off_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/off_s_b.png")
+
+        self.pigro_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologo.png")
+        )
+        self.pigroh_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologoh.png")
+        )
+        self.pigrox_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologox.png")
+        )
+        self.pigro_feb_img = ImageTk.PhotoImage(
+            Image.open("images/icons/pigro_icons/pigrologo_feb.png")
+        )
+
+        self.dash_pigro_logo_frame = Frame(
+            self,
             borderwidth=0,
             highlightthickness=0,
+            highlightcolor=label_frame_color,
             relief=GROOVE,
         )
-        self.usage_frame.pack(pady=5)
-        self.usage_frame["background"] = frame_color
+
+        self.dash_pigro_logo_frame.place(x=120, y=20, width=885)  
+        self.dash_pigro_logo_frame["background"] = maincolor
+
+        # Sys Info Labels
+        self.logo_btn = Button(
+            self.dash_pigro_logo_frame,
+            borderwidth=0,
+            bg=frame_color,
+            highlightthickness=0,
+            command=pigro_sound,
+            activebackground=frame_color,
+        )
+        self.logo_btn.pack(pady=20)
+
+        # Changes Header
+        if current_month == "October":
+            self.logo_btn.config(image=self.pigroh_img)
+        elif current_month == "December":
+            self.logo_btn.config(image=self.pigrox_img)
+        elif current_month == "February":
+            self.logo_btn.config(image=self.pigro_feb_img)
+        else:
+            self.logo_btn.config(image=self.pigro_img)
+
+
+        self.info_main_frame = Frame(
+            self,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="#d4244d",
+            relief=GROOVE,
+            pady=20,
+            padx=10,
+        )
+
+        self.info_main_frame.place(x=120, y=240, width=885)
+        self.info_main_frame["background"] = frame_color
+
+        ### LEFT INFO FRAME AND ALL BELOW ###
+        self.info_content_left = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+
+        self.info_content_left.pack(anchor="n", side=LEFT)
+        self.info_content_left["background"] = frame_color
+
+        ### System Info Section ###
+        self.system_info_label = Label(
+            self.info_content_left,
+            text="System",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=25,
+            anchor=W,
+        )
+
+        self.system_info_label.pack()
+
+        self.system_os_label = Label(
+            self.info_content_left,
+            text=f"OS: {nice_name[13:-2]}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_os_label.pack()
+
+        self.system_achitecture_label = Label(
+            self.info_content_left,
+            text=f"Architecture: {os_arch_output}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_achitecture_label.pack()
+
+        self.system_host_label = Label(
+            self.info_content_left,
+            text=f"Host: {my_system.node}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_host_label.pack()
+
+        self.system_user_label = Label(
+            self.info_content_left,
+            text=f"User: {user}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_user_label.pack()
+
+        self.system_kernel_label = Label(
+            self.info_content_left,
+            text=f"Kernel: {my_system.release}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_kernel_label.pack()
+
+        self.system_shell_label = Label(
+            self.info_content_left,
+            text=f"Shell: {os.environ['SHELL'][5:]}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_shell_label.pack()
+
+        self.system_resolution_label = Label(
+            self.info_content_left,
+            text=f"Resolution: {screen_width}x{screen_height}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_resolution_label.pack()
+
+        self.system_lang_label = Label(
+            self.info_content_left,
+            text=f"Language: {os.environ['LANG']}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_lang_label.pack()
+
+        self.system_de_label = Label(
+            self.info_content_left,
+            text=f"Desktop: {get_de}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_de_label.pack()
+
+        self.system_session_label = Label(
+            self.info_content_left,
+            text=f"Session: {os.environ['XDG_SESSION_TYPE']}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_session_label.pack()
+
+        self.system_board_label = Label(
+            self.info_content_left,
+            text=f"Board: {Pi_Model.read()}",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_board_label.pack()
+
+        self.system_place_holder_label = Label(
+            self.info_content_left,
+            text=" ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            anchor=W,
+        )
+
+        self.system_place_holder_label.pack()
+
+        ### CPU Info Section ###
+        self.cpu_info_label = Label(
+            self.info_content_left,
+            text="CPU",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=25,
+            anchor=W,
+        )
+
+        self.cpu_info_label.pack()
+
+        self.curr_cpu_perc_label = Label(
+            self.info_content_left,
+            text="",
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        )
+        self.curr_cpu_perc_label.pack()
+
+        self.max_cpu_frq_label = Label(
+            self.info_content_left,
+            text=f"Max.: {cpufreq.max:.0f} Mhz",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        ).pack()
+
+        self.curr_cpu_frq_label = Label(
+            self.info_content_left,
+            text="",
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        )
+        self.curr_cpu_frq_label.pack()
+
+        self.min_cpu_frq_label = Label(
+            self.info_content_left,
+            text=f"Min.: {cpufreq.min:.0f} Mhz",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        ).pack()
+
+        self.cpu_temp_label = Label(
+            self.info_content_left,
+            text="",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=35,
+            font=font_12,
+            anchor=W,
+        )
+        self.cpu_temp_label.pack()
+
+        ### MIDDLE INFO FRAME AND ALL BELOW ###
+        self.info_content_middle = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+
+        self.info_content_middle.pack(side=LEFT, anchor="n")
+        self.info_content_middle["background"] = frame_color
+
+        ### Memory Info Section ###
+        self.memory_info_label = Label(
+            self.info_content_middle,
+            text="Memory",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            anchor=W,
+        )
+
+        self.memory_info_label.pack(anchor=W)
+
+        self.util_ram_label = Label(
+            self.info_content_middle,
+            text="Utilaisation:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.util_ram_label.pack(anchor=W)
+
+        self.total_ram_label = Label(
+            self.info_content_middle,
+            text=f"Ram Total: {get_size(svmem.total)}",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        ).pack(anchor=W)
+
+        self.total_swap_label = Label(
+            self.info_content_middle,
+            text=f"Swap Total: {get_size(swap.total)}",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        ).pack(anchor=W)
+
+        system_place_holder_label = Label(
+            self.info_content_middle,
+            text=" ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        system_place_holder_label.pack(anchor=W)
+
+        ### Network Info Section ###
+        self.net_info_label = Label(
+            self.info_content_middle,
+            text="Network",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=20,
+            anchor=W,
+        )
+
+        self.net_info_label.pack(anchor=W)
+
+        self.eth_ip_label = Label(
+            self.info_content_middle,
+            text=f"Ethernet IP:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.eth_ip_label.pack(anchor=W)
+
+        self.wifi_ip_label = Label(
+            self.info_content_middle,
+            text=f"WiFi IP:",
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.wifi_ip_label.pack(anchor=W)
+
+        self.system_place_holder_label = Label(
+            self.info_content_middle,
+            text=" ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.system_place_holder_label.pack(anchor=W)
+
+        ### Disk Info Section ###
+        self.disk_info_label = Label(
+            self.info_content_middle,
+            text="Disk",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            anchor=W,
+        )
+
+        self.disk_info_label.pack(anchor=W)
+
+        self.sysinf_hdd_t = Label(
+            self.info_content_middle,
+            text=("Total Disk Space:"),
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.sysinf_hdd_t.pack(anchor=W)
+
+        self.hdd_used_label = Label(
+            self.info_content_middle,
+            text=("Used Disk Space:"),
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.hdd_used_label.pack(anchor=W)
+
+        self.hdd_free_label = Label(
+            self.info_content_middle,
+            text=("Free Disk Space:"),
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.hdd_free_label.pack(anchor=W)
+
+        self.hdd_used_per_label = Label(
+            self.info_content_middle,
+            text=(f"Used Disk Space"),
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            font=font_12,
+            anchor=W,
+        )
+        self.hdd_used_per_label.pack(anchor=W)
+
+
+        self.pb1 = ttk.Progressbar(
+            self.info_content_middle,
+            style="bar.Horizontal.TProgressbar",
+            orient=HORIZONTAL,
+            length=200,
+            mode="determinate",
+        )
+        self.pb1.pack(anchor=W)
+        
+
+        system_place_holder_label = Label(
+            self.info_content_middle,
+            text=" ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        system_place_holder_label.pack(anchor=W)
+
+        ### RIGHT INFO FRAME AND ALL BELOW ###
+        self.info_content_right = Frame(
+            self.info_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+
+        self.info_content_right.pack(side=LEFT, anchor="n")
+        self.info_content_right["background"] = frame_color
+
+        ### Disk Info Section ###
+        self.pkg_info_label = Label(
+            self.info_content_right,
+            text="Packages",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            # width=15,
+            anchor=W,
+        )
+
+        self.pkg_info_label.pack(anchor=W)
+
+        self.sys_soft = Label(
+            self.info_content_right,
+            text=f"Debian:",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            # width=30,
+            anchor=W,
+        )
+        self.sys_soft.pack(anchor=W)
+
+        self.sys_flat = Label(
+            self.info_content_right,
+            text=f"Flatpak: 0",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            # width=30,
+            anchor=W,
+        )
+        self.sys_flat.pack(anchor=W)
+        # Flatpak counter
+        if os.path.isfile("/bin/flatpak"):
+            self.sys_flat.config(text=f"Flatpaks: 0")
+
+        system_place_holder_label = Label(
+            self.info_content_right,
+            text=" ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            # width=35,
+            anchor=W,
+        )
+        system_place_holder_label.pack(anchor=W)
+
+        ### Disk Info Section ###
+        system_info_label = Label(
+            self.info_content_right,
+            text="Config.txt",
+            font=font_16,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            anchor=W,
+        )
+
+        system_info_label.pack(anchor=W)
+
+        # Displays current arm_freq setting in config.txt
+        global dash_arm_f_display
+        dash_arm_f_display = Label(
+            self.info_content_right,
+            anchor="w",
+            justify=LEFT,
+            text="Arm Freq: N/A",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=20,
+        )
+        dash_arm_f_display.pack(anchor=W)
+
+        # Displays current gpu_freq setting in config.txt
+        global dash_gpu_f_display
+        dash_gpu_f_display = Label(
+            self.info_content_right,
+            anchor="w",
+            justify=LEFT,
+            text="Gpu Freq: N/A",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=20,
+        )
+        dash_gpu_f_display.pack(anchor=W)
+
+        # Displays current gpu_mem setting in config.txt
+        global dash_gpu_m_display
+        dash_gpu_m_display = Label(
+            self.info_content_right,
+            anchor="w",
+            justify=LEFT,
+            text="Gpu Mem: N/A",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=20,
+        )
+        dash_gpu_m_display.pack(anchor=W)
+
+        # Displays current over_voltage setting in config.txt
+        global dash_over_v_display
+        dash_over_v_display = Label(
+            self.info_content_right,
+            anchor="w",
+            justify=LEFT,
+            text="Over Voltage: N/A",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=20,
+        )
+        dash_over_v_display.pack(anchor=W)
+
+        # Displays current force_turbo setting in config.txt
+        global dash_force_t_display
+        dash_force_t_display = Label(
+            self.info_content_right,
+            anchor="w",
+            justify=LEFT,
+            text="Force Turbo: N/A",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=20,
+        )
+        dash_force_t_display.pack(anchor=W)
 
         self.info_main_Update_Tab = Frame(
             self,
@@ -1861,7 +1986,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=pi_settings_btn: pi_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -1941,7 +2066,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=device_settings_btn: device_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2102,7 +2227,7 @@ class System_Tab(ttk.Frame):
             highlightcolor="white",
             relief=GROOVE,
             pady=10,
-            padx=0,
+            padx=10,
             width=300,
         )
         self.ops_set.pack(pady=20, padx=40, fill="both")
@@ -2133,7 +2258,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=ops_settings_btn: ops_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -3553,529 +3678,6 @@ class Done_Reboot(tk.Toplevel):
         popen(f"{legit} reboot")
 
 
-class Overclocking_Expert(tk.Toplevel):
-    """entry fields to custom configure config.txt"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self["background"] = maincolor
-        self.title("Expert Mode")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 500
-        app_height = 600
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-
-        def error_mass():
-            e_mass = Error_Mass(self)
-            e_mass.grab_set()
-
-        # arm_freq
-        def set_arm_freq():
-            if (
-                arm_freq_entry.get() == "Default is 1500/1800"
-                or arm_freq_entry.get() == ""
-            ):
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                arm_freq_set.config(state=DISABLED)
-                arm_freq_reset.config(state=NORMAL)
-
-        def reset_arm_freq():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/arm_freq/d' config.txt"
-                )
-                arm_freq_set.config(state=NORMAL)
-                arm_freq_reset.config(state=DISABLED)
-                arm_f_display.config(text="not configured")
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
-                arm_freq_set.config(state=NORMAL)
-                arm_freq_reset.config(state=DISABLED)
-                arm_f_display.config(text="not configured")
-
-        # gpu_freq
-        def set_gpu_freq():
-            if gpu_freq_entry.get() == "Default is 500" or gpu_freq_entry.get() == "":
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                gpu_freq_set.config(state=DISABLED)
-                gpu_freq_reset.config(state=NORMAL)
-
-        def reset_gpu_freq():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_freq/d' config.txt"
-                )
-                gpu_freq_set.config(state=NORMAL)
-                gpu_freq_reset.config(state=DISABLED)
-                gpu_f_display.config(text="not configured")
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
-                gpu_freq_set.config(state=NORMAL)
-                gpu_freq_reset.config(state=DISABLED)
-                gpu_f_display.config(text="not configured")
-
-        # set_gpu_mem
-        def set_gpu_mem():
-            if gpu_mem_entry.get() == "Minimum 16" or gpu_mem_entry.get() == "":
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                gpu_mem_set.config(state=DISABLED)
-                gpu_mem_reset.config(state=NORMAL)
-
-        def reset_gpu_mem():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_mem/d' config.txt"
-                )
-                gpu_mem_set.config(state=NORMAL)
-                gpu_mem_reset.config(state=DISABLED)
-                gpu_m_display.config(text="not configured")
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
-                gpu_mem_set.config(state=NORMAL)
-                gpu_mem_reset.config(state=DISABLED)
-                gpu_m_display.config(text="not configured")
-
-        # set_over_voltage
-        def set_over_voltage():
-            if (
-                over_voltage_entry.get() == "Default 0"
-                or over_voltage_entry.get() == ""
-            ):
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                over_voltage_set.config(state=DISABLED)
-                over_voltage_reset.config(state=NORMAL)
-
-        def reset_over_voltage():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/over_voltage/d' config.txt"
-                )
-                over_voltage_set.config(state=NORMAL)
-                over_voltage_reset.config(state=DISABLED)
-                over_v_display.config(text="not configured")
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
-                over_voltage_set.config(state=NORMAL)
-                over_voltage_reset.config(state=DISABLED)
-                over_v_display.config(text="not configured")
-
-        # set_disable_splash
-        def set_disable_splash():
-            if (
-                disable_splash_entry.get() == "Default 0"
-                or disable_splash_entry.get() == ""
-            ):
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                disable_splash_set.config(state=DISABLED)
-                disable_splash_reset.config(state=NORMAL)
-
-        def reset_disable_splash():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/disable_splash/d' config.txt"
-                )
-                disable_splash_set.config(state=NORMAL)
-                disable_splash_reset.config(state=DISABLED)
-                force_t_display.config(text="not configured")
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
-                disable_splash_set.config(state=NORMAL)
-                disable_splash_reset.config(state=DISABLED)
-                force_t_display.config(text="not configured")
-
-        # set_force_turbo
-        def set_force_turbo():
-            if force_turbo_entry.get() == "Default 0" or force_turbo_entry.get() == "":
-                error_mass()
-            else:
-                os.system(
-                    f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-                force_turbo_set.config(state=DISABLED)
-                force_turbo_reset.config(state=NORMAL)
-
-        def reset_force_turbo():
-            if distro_get == "ubuntu":
-                os.popen(
-                    f" cd /boot/firmware/ && {legit} sed -i '/force_turbo/d' config.txt"
-                )
-                force_turbo_set.config(state=NORMAL)
-                force_turbo_reset.config(state=DISABLED)
-            else:
-                os.popen(f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
-                force_turbo_set.config(state=NORMAL)
-                force_turbo_reset.config(state=DISABLED)
-
-        def lines_that_contain(string, fp):
-            return [line for line in fp if string in line]
-
-        def reboot_n():
-            popen(f"{legit} reboot")
-
-        # Expert Frame
-        x_mode_frame = Frame(self, bg=maincolor)
-        x_mode_frame.pack(pady=20)
-
-        # arm_freq
-        arm_freq_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="arm_freq = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        arm_freq_label.grid(row=0, column=0)
-
-        global arm_freq_entry
-        arm_freq_entry = Entry(x_mode_frame, borderwidth=0, highlightthickness=2)
-        arm_freq_entry.grid(row=0, column=1)
-        arm_freq_entry.insert(0, "Default is 1500/1800")
-
-        global arm_freq_set
-        arm_freq_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_arm_freq,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
-
-        global arm_freq_reset
-        arm_freq_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_arm_freq,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_a_f in lines_that_contain("arm_freq", fp):
-                # print(line3)
-                if line_a_f:
-                    arm_freq_set.config(state=DISABLED)
-                    arm_freq_reset.config(state=NORMAL)
-        # gpu_freq
-        gpu_freq_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="gpu_freq = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        gpu_freq_label.grid(row=1, column=0)
-
-        global gpu_freq_entry
-        gpu_freq_entry = Entry(
-            x_mode_frame,
-        )
-        gpu_freq_entry.grid(row=1, column=1)
-        gpu_freq_entry.insert(0, "Default is 500")
-
-        global gpu_freq_set
-        gpu_freq_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_gpu_freq,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        gpu_freq_set.grid(row=1, column=2)
-
-        global gpu_freq_reset
-        gpu_freq_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_gpu_freq,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        gpu_freq_reset.grid(row=1, column=3)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_g_f in lines_that_contain("gpu_freq", fp):
-                # print(line3)
-                if line_g_f:
-                    gpu_freq_set.config(state=DISABLED)
-                    gpu_freq_reset.config(state=NORMAL)
-        # gpu_mem
-        gpu_mem_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="gpu_mem = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        gpu_mem_label.grid(row=2, column=0)
-
-        global gpu_mem_entry
-        gpu_mem_entry = Entry(
-            x_mode_frame,
-        )
-        gpu_mem_entry.grid(row=2, column=1)
-        gpu_mem_entry.insert(0, "Minimum 16/Not Set")
-
-        global gpu_mem_set
-        gpu_mem_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_gpu_mem,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        gpu_mem_set.grid(row=2, column=2, padx=10, pady=10)
-
-        global gpu_mem_reset
-        gpu_mem_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_gpu_mem,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_g_m in lines_that_contain("gpu_mem", fp):
-                # print(line3)
-                if line_g_m:
-                    gpu_mem_set.config(state=DISABLED)
-                    gpu_mem_reset.config(state=NORMAL)
-
-        # over_voltage
-        over_voltage_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="over_voltage = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        over_voltage_label.grid(row=3, column=0)
-
-        global over_voltage_entry
-        over_voltage_entry = Entry(
-            x_mode_frame,
-        )
-        over_voltage_entry.grid(row=3, column=1)
-        over_voltage_entry.insert(0, "Default is 0/Not Set")
-
-        global over_voltage_set
-        over_voltage_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_over_voltage,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        over_voltage_set.grid(row=3, column=2)
-
-        global over_voltage_reset
-        over_voltage_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_over_voltage,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        over_voltage_reset.grid(row=3, column=3)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_o_v in lines_that_contain("over_voltage", fp):
-                # print(line3)
-                if line_o_v:
-                    over_voltage_set.config(state=DISABLED)
-                    over_voltage_reset.config(state=NORMAL)
-
-        # disable_splash
-        disable_splash_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="disable_splash = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        disable_splash_label.grid(row=4, column=0)
-
-        global disable_splash_entry
-        disable_splash_entry = Entry(
-            x_mode_frame,
-        )
-        disable_splash_entry.grid(row=4, column=1)
-        disable_splash_entry.insert(0, "Default is 0/Not Set")
-
-        global disable_splash_set
-        disable_splash_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_disable_splash,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        disable_splash_set.grid(row=4, column=2, padx=10, pady=10)
-
-        global disable_splash_reset
-        disable_splash_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_disable_splash,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_d_s in lines_that_contain("disable_splash", fp):
-                # print(line3)
-                if line_d_s:
-                    disable_splash_set.config(state=DISABLED)
-                    disable_splash_reset.config(state=NORMAL)
-
-        # force_turbo
-        force_turbo_label = Label(
-            x_mode_frame,
-            justify=LEFT,
-            text="force_turbo = ",
-            bg=maincolor,
-            foreground=main_font,
-            anchor="w",
-            width=15,
-        )
-        force_turbo_label.grid(row=5, column=0)
-
-        global force_turbo_entry
-        force_turbo_entry = Entry(
-            x_mode_frame,
-        )
-        force_turbo_entry.grid(row=5, column=1)
-        force_turbo_entry.insert(0, "Default is 0/Not Set")
-
-        global force_turbo_set
-        force_turbo_set = Button(
-            x_mode_frame,
-            text="Set",
-            command=set_force_turbo,
-            bg=ext_btn,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        force_turbo_set.grid(row=5, column=2)
-
-        global force_turbo_reset
-        force_turbo_reset = Button(
-            x_mode_frame,
-            text="Reset",
-            command=reset_force_turbo,
-            bg="red",
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=0,
-        )
-        force_turbo_reset.grid(row=5, column=3)
-
-        with open(f"{config_path}", "r") as fp:
-            for line_f_t in lines_that_contain("force_turbo", fp):
-                # print(line3)
-                if line_f_t:
-                    force_turbo_set.config(state=DISABLED)
-                    force_turbo_reset.config(state=NORMAL)
-
-        reboot_e = Button(
-            self,
-            justify=LEFT,
-            font=(font_12_b),
-            text="Reboot",
-            bg=maincolor,
-            foreground=main_font,
-            borderwidth=0,
-            highlightthickness=2,
-            command=reboot_n,
-        )
-        reboot_e.pack()
-
-
 class Custom_Installer(tk.Toplevel):
     """child window that makes the the install process graphicle"""
 
@@ -4207,14 +3809,17 @@ class Software_Tab(ttk.Frame):
             error_y2.config(text="Not in the list! Check for misspell.")
 
         def apt_install():
-
             global pigro_skript_name
             pigro_skript_name = f"Installing... {apt_entry.get()}"
             global pigro_skript
             pigro_skript = f"{legit} apt install {apt_entry.get()} -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
-            # un_content.append(apt_entry.get())
+            apt_installed_content.append(apt_entry.get())
+            for item in apt_installed_content:
+                if item == apt_entry.get():
+                    apt_pkg_uninst.config(state=NORMAL)
+                    apt_pkg_inst.config(state=DISABLED)
 
         def apt_uninstall():
             global pigro_skript_name
@@ -4224,6 +3829,13 @@ class Software_Tab(ttk.Frame):
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
             apt_installed_content.remove(apt_entry.get())
+            for item in apt_installed_content:
+                if item == apt_entry.get():
+                    apt_pkg_uninst.config(state=NORMAL)
+                    apt_pkg_inst.config(state=DISABLED)
+                else:
+                    apt_pkg_uninst.config(state=DISABLED)
+                    apt_pkg_inst.config(state=NORMAL)
 
         def update_apt(apt_data):
             apt_list_box.delete(0, END)
@@ -4341,6 +3953,7 @@ class Software_Tab(ttk.Frame):
         apt_pkg_name = Label(
             apt_pkg_info_frame,
             text="Name:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4352,6 +3965,7 @@ class Software_Tab(ttk.Frame):
         apt_pkg_status = Label(
             apt_pkg_info_frame,
             text="Status:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4410,7 +4024,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
             background=frame_color,
             foreground=main_font,
-            font=("Sans", 9)
+            font=("Sans", 9),
         )
         discription_text.pack(fill=BOTH, expand=True)
 
@@ -4430,6 +4044,10 @@ class Software_Tab(ttk.Frame):
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {piapps_entry.get()}; exec bash\"'"
                 )
                 piapps_installed_content.append(piapps_entry.get())
+                for item in piapps_installed_content:
+                    if item == piapps_entry.get():
+                        piapps_pkg_uninst.config(state=NORMAL)
+                        piapps_pkg_inst.config(state=DISABLED)
 
         def piapps_uninstall():
             fullstring = piapps_entry.get()
@@ -4445,6 +4063,13 @@ class Software_Tab(ttk.Frame):
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {piapps_entry.get()}; exec bash\"'"
                 )
                 piapps_installed_content.remove(piapps_entry.get())
+                for item in piapps_installed_content:
+                    if item == piapps_entry.get():
+                        piapps_pkg_uninst.config(state=NORMAL)
+                        piapps_pkg_inst.config(state=DISABLED)
+                    else:
+                        piapps_pkg_uninst.config(state=DISABLED)
+                        piapps_pkg_inst.config(state=NORMAL)
 
         def update_piapps(piapps_data):
             piapps_list_box.delete(0, END)
@@ -4522,9 +4147,6 @@ class Software_Tab(ttk.Frame):
         )
         piapps_search_btn.pack(fill="x")
 
-        if piapps_path == False:
-            piapps_search_btn.config(state=DISABLED)
-
         piapps_entry = Entry(
             piapps_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
@@ -4535,17 +4157,22 @@ class Software_Tab(ttk.Frame):
         )
         piapps_list_box.pack(fill=BOTH)
 
-        piapps_cache = os.popen(f"ls ~/pi-apps/apps/ ")
-        piapps_cache_content = piapps_cache.readlines()
-        for i, s in enumerate(piapps_cache_content):
-            piapps_cache_content[i] = s.strip()
+        if piapps_path == True:
+            piapps_cache = os.popen(f"ls ~/pi-apps/apps/ ")
+            piapps_cache_content = piapps_cache.readlines()
+            for i, s in enumerate(piapps_cache_content):
+                piapps_cache_content[i] = s.strip()
+
+            piapps_installed = open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
+            piapps_installed_content = piapps_installed.readlines()
+            for i, s in enumerate(piapps_installed_content):
+                piapps_installed_content[i] = s.strip()
+
+        else:
+            piapps_search_btn.config(state=DISABLED)
+            piapps_entry.insert(0, "Pi Apps is not installed")
 
         update_piapps(piapps_cache_content)
-
-        piapps_installed = open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
-        piapps_installed_content = piapps_installed.readlines()
-        for i, s in enumerate(piapps_installed_content):
-            piapps_installed_content[i] = s.strip()
 
         piapps_list_box.bind("<<ListboxSelect>>", piapps_fillout)
 
@@ -4571,6 +4198,7 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_name = Label(
             piapps_pkg_info_frame,
             text="Name:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4582,6 +4210,7 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_status = Label(
             piapps_pkg_info_frame,
             text="Status:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4640,7 +4269,7 @@ class Software_Tab(ttk.Frame):
             highlightthickness=0,
             background=frame_color,
             foreground=main_font,
-            font=("Sans", 9)
+            font=("Sans", 9),
         )
         piapps_discription_text.pack(fill=BOTH, expand=True)
 
@@ -4653,7 +4282,13 @@ class Software_Tab(ttk.Frame):
             pigro_skript = f"flatpak install flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
-            print(Flat_remote_dict[flatpak_entry.get()])
+            # print(Flat_remote_dict[flatpak_entry.get()])
+            for key, value in Flat_remote_dict.items():
+                if key == flatpak_entry.get():
+                    # print(key + value)
+                    flat_uninstalled_dict[key] = value
+                    flatpak_pkg_uninst.config(state=NORMAL)
+                    flatpak_pkg_inst.config(state=DISABLED)
 
         def flatpak_uninstall():
             global pigro_skript_name
@@ -4662,7 +4297,13 @@ class Software_Tab(ttk.Frame):
             pigro_skript = f"flatpak uninstall flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
-            print(Flat_remote_dict[flatpak_entry.get()])
+            # print(Flat_remote_dict[flatpak_entry.get()])
+            for key, value in Flat_remote_dict.items():
+                if key == flatpak_entry.get():
+                    # print(key + value)
+                    del flat_uninstalled_dict[key]
+                    flatpak_pkg_uninst.config(state=DISABLED)
+                    flatpak_pkg_inst.config(state=NORMAL)
 
         def update_flatpak(flatpak_data):
             flatpak_list_box.delete(0, END)
@@ -4737,9 +4378,6 @@ class Software_Tab(ttk.Frame):
         )
         flatpak_search_btn.pack(fill="x")
 
-        if flatpak_path == False:
-            flatpak_search_btn.config(state=DISABLED)
-
         flatpak_entry = Entry(
             flatpak_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
@@ -4750,58 +4388,61 @@ class Software_Tab(ttk.Frame):
         )
         flatpak_list_box.pack(fill=BOTH)
 
-        # VARs for Flatpak remote list
-        f1 = "flatpak remote-ls --columns=name"
-        f2 = "flatpak remote-ls --columns=application"
+        if flatpak_path == True:
+            # VARs for Flatpak remote list
+            f1 = "flatpak remote-ls --columns=name"
+            f2 = "flatpak remote-ls --columns=application"
 
-        # Get Name Key
-        flat_name_content = os.popen(f1)
-        flat_name_list = flat_name_content.readlines()
-        for i1, s1 in enumerate(flat_name_list):
-            flat_name_list[i1] = s1.strip()
+            # Get Name Key
+            flat_name_content = os.popen(f1)
+            flat_name_list = flat_name_content.readlines()
+            for i1, s1 in enumerate(flat_name_list):
+                flat_name_list[i1] = s1.strip()
 
-        # Get App Key
-        flat_app_content = os.popen(f2)
-        flat_app_list = flat_app_content.readlines()
-        for i2, s2 in enumerate(flat_app_list):
-            flat_app_list[i2] = s2.strip()
+            # Get App Key
+            flat_app_content = os.popen(f2)
+            flat_app_list = flat_app_content.readlines()
+            for i2, s2 in enumerate(flat_app_list):
+                flat_app_list[i2] = s2.strip()
 
-        # Zips NAME & APP
-        zip_name_app = zip(flat_name_list, flat_app_list)
+            # Zips NAME & APP
+            zip_name_app = zip(flat_name_list, flat_app_list)
 
-        # Puts zip_name_app in dict
-        Flat_remote_dict = dict(zip_name_app)
+            # Puts zip_name_app in dict
+            Flat_remote_dict = dict(zip_name_app)
 
-        # print(Flat_remote_dict)
+            # print(Flat_remote_dict)
 
-        # var_material = tk.StringVar()
+            # var_material = tk.StringVar()
 
-        update_flatpak(Flat_remote_dict.keys())
+            fu1 = "flatpak list --columns=name"
+            fu2 = "flatpak list --columns=application"
 
-        fu1 = "flatpak list --columns=name"
-        fu2 = "flatpak list --columns=application"
+            # Get Name Key
+            flat_un_name_content = os.popen(fu1)
+            flat_un_name_list = flat_un_name_content.readlines()
+            for i3, s3 in enumerate(flat_un_name_list):
+                flat_un_name_list[i3] = s3.strip()
 
-        # Get Name Key
-        flat_un_name_content = os.popen(fu1)
-        flat_un_name_list = flat_un_name_content.readlines()
-        for i3, s3 in enumerate(flat_un_name_list):
-            flat_un_name_list[i3] = s3.strip()
+            # Get App Key
+            flat_un_app_content = os.popen(fu2)
+            flat_un_app_list = flat_un_app_content.readlines()
+            for i4, s4 in enumerate(flat_un_app_list):
+                flat_un_app_list[i4] = s4.strip()
 
-        # Get App Key
-        flat_un_app_content = os.popen(fu2)
-        flat_un_app_list = flat_un_app_content.readlines()
-        for i4, s4 in enumerate(flat_un_app_list):
-            flat_un_app_list[i4] = s4.strip()
+            # Zips NAME & APP
+            zip_un_name_app = zip(flat_un_name_list, flat_un_app_list)
 
-        # Zips NAME & APP
-        zip_un_name_app = zip(flat_un_name_list, flat_un_app_list)
+            # Puts zip_un_name_app in dict
+            flat_uninstalled_dict = dict(zip_un_name_app)
 
-        # Puts zip_un_name_app in dict
-        flat_uninstalled_dict = dict(zip_un_name_app)
+            update_flatpak(Flat_remote_dict.keys())
+            # print(flat_uninstalled_dict)
 
-        # print(flat_uninstalled_dict)
-
-        # un_var_material = tk.StringVar()
+            # un_var_material = tk.StringVar()
+        else:
+            flatpak_search_btn.config(state=DISABLED)
+            flatpak_entry.insert(0, "Flatpak is not installed")
 
         flatpak_list_box.bind("<<ListboxSelect>>", flatpak_fillout)
 
@@ -4827,6 +4468,7 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_name = Label(
             flatpak_pkg_info_frame,
             text="Name:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4838,6 +4480,7 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_status = Label(
             flatpak_pkg_info_frame,
             text="Status:",
+            font=font_10_b,
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -4915,7 +4558,7 @@ class Software_Tab(ttk.Frame):
             padx=25,
             pady=20,
         )
-        self.snap_inst_frame.pack(pady=20,padx=55, fill="x")
+        self.snap_inst_frame.pack(pady=20, padx=55, fill="x")
         self.snap_inst_frame["background"] = frame_color
 
         def error_mass_0():
@@ -5094,9 +4737,7 @@ class Software_Tab(ttk.Frame):
             pady=10,
         )
         self.repo_sec_frame["background"] = frame_color
-        self.repo_sec_frame.pack(fill="x",
-            pady=20, padx=55
-        )
+        self.repo_sec_frame.pack(fill="x", pady=20, padx=55)
 
         def instant_install(text):
             if text == "Neofetch":
@@ -5625,9 +5266,10 @@ class Git_More_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            pady=20)
+            pady=20,
+        )
 
-        self.link_left.pack(side=LEFT, expand=True, fill=BOTH,padx=20)
+        self.link_left.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
         self.link_left["background"] = frame_color
 
         sources_l = [
@@ -5897,7 +5539,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=gui_settings_btn: gui_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5984,7 +5626,7 @@ exit
                 command=lambda text=xfce4_settings_btn: xfce4_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -6077,7 +5719,7 @@ exit
                 command=lambda text=pixel_settings_btn: pixel_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                background=ext_btn,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -6237,6 +5879,23 @@ class Update_Pop(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.config(bg=maincolor)
 
+        def get_info_version():
+            # MUST BE UPDATED WITH EVER NEW RELEASE!
+            current_version = "23.01"
+            url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
+            r = requests.get(url)
+
+            github_release = r.url.split("/")[-1]
+            # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
+            github_release = str(github_release)
+            # return github_release
+            # print(current_version)
+            # print(github_release)
+
+            GLabel_0.config(
+                text=f"Latest Version: {github_release}\nYour Version: {current_version}"
+            )
+
         def pigro_github_update():
             popen(
                 f"x-terminal-emulator -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash; exec bash\"'"
@@ -6257,11 +5916,8 @@ class Update_Pop(tk.Toplevel):
             background=maincolor,
         ).pack(pady=20)
 
-        GLabel_0 = tk.Label(self)
-        GLabel_0["font"] = font_14
-        GLabel_0["bg"] = maincolor
-        GLabel_0["fg"] = main_font
-        GLabel_0["text"] = "An Update For PiGro - Just Click It!\nIs Available."
+        global GLabel_0
+        GLabel_0 = Label(self, font=font_14, bg=maincolor, fg=main_font, text=" ")
         GLabel_0.pack(pady=20)
 
         GButton_883 = tk.Button(self)
@@ -6289,7 +5945,6 @@ class Update_Pop(tk.Toplevel):
         GButton_585["command"] = pigro_piapps_update
 
         PATH = f"/home/{user}/pi-apps/data/status/PiGro"
-
         if os.path.isfile(PATH) is True:
             pigro_via_pi_apps = open(f"/home/{user}/pi-apps/data/status/PiGro", "r")
             install_status = pigro_via_pi_apps.read()
@@ -6299,6 +5954,8 @@ class Update_Pop(tk.Toplevel):
 
         else:
             GButton_585.forget()
+
+        get_info_version()
 
 
 class Z_Ram_Pop(tk.Toplevel):
@@ -6419,9 +6076,9 @@ class Tuning_Tab(ttk.Frame):
             z_ram = Z_Ram_Pop(self)
             z_ram.grab_set()
 
-        def expert_mode():
-            x_mode = Overclocking_Expert(self)
-            x_mode.grab_set()
+        def error_mass():
+            e_mass = Error_Mass(self)
+            e_mass.grab_set()
 
         # BG + Icons
         self.rm_ov_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV_rm.png")
@@ -6461,11 +6118,11 @@ class Tuning_Tab(ttk.Frame):
             gpu_m_display.config(text="not configured")
             over_v_display.config(text="not configured")
             force_t_display.config(text="not configured")
-            dash_arm_f_display.config(text="Arm Freq: not configured")
-            dash_gpu_f_display.config(text="Gpu Freq: not configured")
-            dash_gpu_m_display.config(text="Gpu Mem: not configured")
-            dash_over_v_display.config(text="Over Voltage: not configured")
-            dash_force_t_display.config(text="Force Turbo: not configured")
+            dash_arm_f_display.config(text="Arm Freq: N/A")
+            dash_gpu_f_display.config(text="Gpu Freq: N/A")
+            dash_gpu_m_display.config(text="Gpu Mem: N/A")
+            dash_over_v_display.config(text="Over Voltage: N/A")
+            dash_force_t_display.config(text="Force Turbo: N/A")
 
             Notification(
                 title="PiGro Overclocking\n",
@@ -6572,227 +6229,10 @@ class Tuning_Tab(ttk.Frame):
             highlightcolor="white",
             relief=GROOVE,
             pady=20,
-            padx=40,
+            padx=20,
         )
         self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH)
         self.ov_buttons["background"] = frame_color
-
-        # Overclocking State Main Frame
-        self.ov_state_display_frame = Frame(
-            self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-        )
-        self.ov_state_display_frame.pack(
-            anchor="n", padx=10, pady=20, fill=BOTH, expand=True
-        )
-        self.ov_state_display_frame["background"] = maincolor
-
-        # Overclocking Values Frame
-        self.ov_display_frame = LabelFrame(
-            self.ov_state_display_frame,
-            text="Current Settings",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            padx=10,
-            pady=10,
-        )
-        self.ov_display_frame.pack(anchor="n",)
-        self.ov_display_frame["background"] = frame_color
-
-        # Additional Infos
-        # +üpp
-
-        self.ov_helps_frame = Frame(
-            self.ov_state_display_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-        )
-        self.ov_helps_frame.pack(padx=20)
-        self.ov_helps_frame["background"] = frame_color
-
-        # Overclocking Stats
-
-        # Tuning_Button_Frame
-        pigro_t_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="PiGro Berry: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        pigro_t_label.grid(column=0, row=0)
-
-        global pigro_t_display
-        pigro_t_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground="green",
-            font=font_12,
-            width=25,
-        )
-        pigro_t_display.grid(column=1, row=0)
-
-        arm_f_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="Arm Freq: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        arm_f_label.grid(column=0, row=2)
-
-        global arm_f_display
-        arm_f_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=25,
-        )
-        arm_f_display.grid(column=1, row=2)
-
-        gpu_f_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="Gpu Freq: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        gpu_f_label.grid(column=0, row=3)
-
-        global gpu_f_display
-        gpu_f_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=25,
-        )
-        gpu_f_display.grid(column=1, row=3)
-
-        gpu_m_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="Gpu Mem: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        gpu_m_label.grid(column=0, row=4)
-
-        global gpu_m_display
-        gpu_m_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=25,
-        )
-        gpu_m_display.grid(column=1, row=4)
-
-        over_v_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="Over Voltage: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        over_v_label.grid(column=0, row=5)
-
-        global over_v_display
-        over_v_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=25,
-        )
-        over_v_display.grid(column=1, row=5)
-
-        force_t_label = Label(
-            self.ov_display_frame,
-            anchor="e",
-            justify=RIGHT,
-            text="Force Turbo: ",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=15,
-        )
-        force_t_label.grid(column=0, row=6)
-
-        global force_t_display
-        force_t_display = Label(
-            self.ov_display_frame,
-            anchor="w",
-            justify=LEFT,
-            text="not configured",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_12,
-            width=25,
-        )
-        force_t_display.grid(column=1, row=6)
 
         # Tuning_Button_Frame
 
@@ -6801,6 +6241,7 @@ class Tuning_Tab(ttk.Frame):
             justify="left",
             image=self.rm_ov_icon,
             text="Reset Overclocking",
+            font=font_12,
             anchor="w",
             command=set_default,
             highlightthickness=0,
@@ -6808,8 +6249,7 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=font_10,
-            width=200,
+            width=250,
         ).grid(column=0, row=2, pady=10)
 
         global tu_btn1
@@ -6818,6 +6258,7 @@ class Tuning_Tab(ttk.Frame):
             justify="left",
             image=self.ov1_icon,
             text="Crank It Up",
+            font=font_12,
             anchor="w",
             command=ov_2000,
             highlightthickness=0,
@@ -6825,8 +6266,7 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=font_10,
-            width=200,
+            width=250,
         )
         tu_btn1.grid(column=0, row=4, pady=10)
 
@@ -6836,6 +6276,7 @@ class Tuning_Tab(ttk.Frame):
             justify="left",
             image=self.ov2_icon,
             text="You Sir... Need A Fan!",
+            font=font_12,
             anchor="w",
             command=ov_2147,
             highlightthickness=0,
@@ -6843,8 +6284,7 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=font_10,
-            width=200,
+            width=250,
         )
         tu_btn2.grid(column=0, row=6, pady=10)
 
@@ -6854,6 +6294,7 @@ class Tuning_Tab(ttk.Frame):
             justify="left",
             image=self.ov3_icon,
             text="Take It To The Max!",
+            font=font_12,
             anchor="w",
             command=ov_2200,
             highlightthickness=0,
@@ -6861,8 +6302,7 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=font_10,
-            width=200,
+            width=250,
         )
         tu_btn3.grid(column=0, row=8, pady=10)
 
@@ -6872,6 +6312,7 @@ class Tuning_Tab(ttk.Frame):
             justify="left",
             image=self.ov4_icon,
             text="Honey,\nthe fuse blew again!",
+            font=font_12,
             anchor="w",
             command=ov_2300,
             highlightthickness=0,
@@ -6879,27 +6320,9 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             compound=LEFT,
-            font=font_10,
-            width=200,
+            width=250,
         )
         tu_btn4.grid(column=0, row=9, pady=10)
-
-        global tu_btn5
-        tu_btn5 = Button(
-            self.ov_buttons,
-            justify="left",
-            image=self.ov5_icon,
-            text="I really like typing\nin random numbers\nand see what happens!",
-            command=expert_mode,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=main_font,
-            compound=LEFT,
-            font=font_10,
-            width=200,
-        )
-        tu_btn5.grid(column=0, row=10, pady=10)
 
         # ZRAM Button
         self.tu_zbtn = Button(
@@ -6915,7 +6338,7 @@ class Tuning_Tab(ttk.Frame):
             background=ext_btn,
             compound=LEFT,
             foreground=main_font,
-            width=200,
+            width=250,
         ).grid(column=0, row=12, pady=20)
 
         self.tu_legende = Button(
@@ -6942,6 +6365,751 @@ class Tuning_Tab(ttk.Frame):
             font=font_8_b,
         )
         self.pigro_t_info.grid(column=0, row=14)
+
+        # Overclocking State Main Frame
+        self.ov_state_display_frame = Frame(
+            self,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=GROOVE,
+        )
+        self.ov_state_display_frame.pack(
+            anchor="n", padx=10, pady=20, fill=BOTH, expand=True
+        )
+        self.ov_state_display_frame["background"] = maincolor
+
+        # Custom Settings
+        self.custom_settings = LabelFrame(
+            self.ov_state_display_frame,
+            text="Custom Settings",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=20,
+            padx=40,
+        )
+        self.custom_settings.pack(anchor="n", padx=10, fill=BOTH, expand=True)
+        self.custom_settings["background"] = frame_color
+
+        # arm_freq
+        def set_arm_freq():
+            if (
+                arm_freq_entry.get() == "Default is 1500/1800"
+                or arm_freq_entry.get() == ""
+            ):
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "arm_freq={arm_freq_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                arm_freq_set.config(state=DISABLED)
+                arm_freq_reset.config(state=NORMAL)
+
+        def reset_arm_freq():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/arm_freq/d' config.txt"
+                )
+                arm_freq_set.config(state=NORMAL)
+                arm_freq_reset.config(state=DISABLED)
+                arm_f_display.config(text="not configured")
+
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
+                arm_freq_set.config(state=NORMAL)
+                arm_freq_reset.config(state=DISABLED)
+                arm_f_display.config(text="not configured")
+
+        # gpu_freq
+        def set_gpu_freq():
+            if gpu_freq_entry.get() == "Default is 500" or gpu_freq_entry.get() == "":
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "gpu_freq={gpu_freq_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                gpu_freq_set.config(state=DISABLED)
+                gpu_freq_reset.config(state=NORMAL)
+
+        def reset_gpu_freq():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_freq/d' config.txt"
+                )
+                gpu_freq_set.config(state=NORMAL)
+                gpu_freq_reset.config(state=DISABLED)
+                gpu_f_display.config(text="not configured")
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                gpu_freq_set.config(state=NORMAL)
+                gpu_freq_reset.config(state=DISABLED)
+                gpu_f_display.config(text="not configured")
+
+        # set_gpu_mem
+        def set_gpu_mem():
+            if gpu_mem_entry.get() == "Minimum 16" or gpu_mem_entry.get() == "":
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "gpu_mem={gpu_mem_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                gpu_mem_set.config(state=DISABLED)
+                gpu_mem_reset.config(state=NORMAL)
+
+        def reset_gpu_mem():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/gpu_mem/d' config.txt"
+                )
+                gpu_mem_set.config(state=NORMAL)
+                gpu_mem_reset.config(state=DISABLED)
+                gpu_m_display.config(text="not configured")
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                gpu_mem_set.config(state=NORMAL)
+                gpu_mem_reset.config(state=DISABLED)
+                gpu_m_display.config(text="not configured")
+
+        # set_over_voltage
+        def set_over_voltage():
+            if (
+                over_voltage_entry.get() == "Default 0"
+                or over_voltage_entry.get() == ""
+            ):
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "over_voltage={over_voltage_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                over_voltage_set.config(state=DISABLED)
+                over_voltage_reset.config(state=NORMAL)
+
+        def reset_over_voltage():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/over_voltage/d' config.txt"
+                )
+                over_voltage_set.config(state=NORMAL)
+                over_voltage_reset.config(state=DISABLED)
+                over_v_display.config(text="not configured")
+            elif type(arm_freq_entry.get()) == str:
+                error_mass()
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
+                over_voltage_set.config(state=NORMAL)
+                over_voltage_reset.config(state=DISABLED)
+                over_v_display.config(text="not configured")
+
+        # set_disable_splash
+        def set_disable_splash():
+            if (
+                disable_splash_entry.get() == "Default 0"
+                or disable_splash_entry.get() == ""
+            ):
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "disable_splash={disable_splash_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                disable_splash_set.config(state=DISABLED)
+                disable_splash_reset.config(state=NORMAL)
+
+        def reset_disable_splash():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/disable_splash/d' config.txt"
+                )
+                disable_splash_set.config(state=NORMAL)
+                disable_splash_reset.config(state=DISABLED)
+                force_t_display.config(text="not configured")
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
+                disable_splash_set.config(state=NORMAL)
+                disable_splash_reset.config(state=DISABLED)
+                force_t_display.config(text="not configured")
+
+        # set_force_turbo
+        def set_force_turbo():
+            if force_turbo_entry.get() == "Default 0" or force_turbo_entry.get() == "":
+                error_mass()
+            else:
+                os.system(
+                    f"""{legit} sh -c 'echo "force_turbo={force_turbo_entry.get()}" >> {config_path}'"""
+                )
+                tu_btn1.config(state=DISABLED)
+                tu_btn2.config(state=DISABLED)
+                tu_btn3.config(state=DISABLED)
+                tu_btn4.config(state=DISABLED)
+                force_turbo_set.config(state=DISABLED)
+                force_turbo_reset.config(state=NORMAL)
+
+        def reset_force_turbo():
+            if distro_get == "ubuntu":
+                os.popen(
+                    f" cd /boot/firmware/ && {legit} sed -i '/force_turbo/d' config.txt"
+                )
+                force_turbo_set.config(state=NORMAL)
+                force_turbo_reset.config(state=DISABLED)
+            else:
+                os.popen(f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
+                force_turbo_set.config(state=NORMAL)
+                force_turbo_reset.config(state=DISABLED)
+
+        def lines_that_contain(string, fp):
+            return [line for line in fp if string in line]
+
+        def reboot_n():
+            popen(f"{legit} reboot")
+
+        # Expert Frame
+        x_mode_frame = Frame(self.custom_settings, bg=frame_color)
+        x_mode_frame.pack(pady=20)
+
+        # arm_freq
+        arm_freq_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="arm_freq = ",
+            bg=frame_color,
+            foreground=main_font,
+            font=font_12,
+            anchor="e",
+            width=15,
+        )
+        arm_freq_label.grid(row=0, column=0)
+
+        global arm_freq_entry
+        arm_freq_entry = Entry(
+            x_mode_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            font=font_12,
+        )
+        arm_freq_entry.grid(row=0, column=1)
+        arm_freq_entry.insert(0, "Default is 1500/1800")
+
+        global arm_freq_set
+        arm_freq_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_arm_freq,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        arm_freq_set.grid(row=0, column=2, padx=10, pady=10)
+
+        global arm_freq_reset
+        arm_freq_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_arm_freq,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        arm_freq_reset.grid(row=0, column=3, padx=10, pady=10)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_a_f in lines_that_contain("arm_freq", fp):
+                # print(line3)
+                if line_a_f:
+                    arm_freq_set.config(state=DISABLED)
+                    arm_freq_reset.config(state=NORMAL)
+        # gpu_freq
+        gpu_freq_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="gpu_freq = ",
+            bg=frame_color,
+            foreground=main_font,
+            font=font_12,
+            anchor="e",
+            width=15,
+        )
+        gpu_freq_label.grid(row=1, column=0)
+
+        global gpu_freq_entry
+        gpu_freq_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=0, font=font_12
+        )
+        gpu_freq_entry.grid(row=1, column=1)
+        gpu_freq_entry.insert(0, "Default is 500")
+
+        global gpu_freq_set
+        gpu_freq_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_gpu_freq,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        gpu_freq_set.grid(row=1, column=2)
+
+        global gpu_freq_reset
+        gpu_freq_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_gpu_freq,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        gpu_freq_reset.grid(row=1, column=3)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_g_f in lines_that_contain("gpu_freq", fp):
+                # print(line3)
+                if line_g_f:
+                    gpu_freq_set.config(state=DISABLED)
+                    gpu_freq_reset.config(state=NORMAL)
+        # gpu_mem
+        gpu_mem_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="gpu_mem = ",
+            bg=frame_color,
+            foreground=main_font,
+            font=font_12,
+            anchor="e",
+            width=15,
+        )
+        gpu_mem_label.grid(row=2, column=0)
+
+        global gpu_mem_entry
+        gpu_mem_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=0, font=font_12
+        )
+        gpu_mem_entry.grid(row=2, column=1)
+        gpu_mem_entry.insert(0, "Minimum 16/Not Set")
+
+        global gpu_mem_set
+        gpu_mem_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_gpu_mem,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        gpu_mem_set.grid(row=2, column=2, padx=10, pady=10)
+
+        global gpu_mem_reset
+        gpu_mem_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_gpu_mem,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        gpu_mem_reset.grid(row=2, column=3, padx=10, pady=10)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_g_m in lines_that_contain("gpu_mem", fp):
+                # print(line3)
+                if line_g_m:
+                    gpu_mem_set.config(state=DISABLED)
+                    gpu_mem_reset.config(state=NORMAL)
+
+        # over_voltage
+        over_voltage_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="over_voltage = ",
+            bg=frame_color,
+            foreground=main_font,
+            font=font_12,
+            anchor="e",
+            width=15,
+        )
+        over_voltage_label.grid(row=3, column=0)
+
+        global over_voltage_entry
+        over_voltage_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=0, font=font_12
+        )
+        over_voltage_entry.grid(row=3, column=1)
+        over_voltage_entry.insert(0, "Default is 0/Not Set")
+
+        global over_voltage_set
+        over_voltage_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_over_voltage,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        over_voltage_set.grid(row=3, column=2)
+
+        global over_voltage_reset
+        over_voltage_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_over_voltage,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        over_voltage_reset.grid(row=3, column=3)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_o_v in lines_that_contain("over_voltage", fp):
+                # print(line3)
+                if line_o_v:
+                    over_voltage_set.config(state=DISABLED)
+                    over_voltage_reset.config(state=NORMAL)
+
+        # disable_splash
+        disable_splash_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="disable_splash = ",
+            bg=frame_color,
+            foreground=main_font,
+            font=font_12,
+            anchor="e",
+            width=15,
+        )
+        disable_splash_label.grid(row=4, column=0)
+
+        global disable_splash_entry
+        disable_splash_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=0, font=font_12
+        )
+        disable_splash_entry.grid(row=4, column=1)
+        disable_splash_entry.insert(0, "Default is 0/Not Set")
+
+        global disable_splash_set
+        disable_splash_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_disable_splash,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        disable_splash_set.grid(row=4, column=2, padx=10, pady=10)
+
+        global disable_splash_reset
+        disable_splash_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_disable_splash,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        disable_splash_reset.grid(row=4, column=3, padx=10, pady=10)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_d_s in lines_that_contain("disable_splash", fp):
+                # print(line3)
+                if line_d_s:
+                    disable_splash_set.config(state=DISABLED)
+                    disable_splash_reset.config(state=NORMAL)
+
+        # force_turbo
+        force_turbo_label = Label(
+            x_mode_frame,
+            justify=LEFT,
+            text="force_turbo = ",
+            bg=frame_color,
+            foreground=main_font,
+            anchor="e",
+            width=15,
+        )
+        force_turbo_label.grid(row=5, column=0)
+
+        global force_turbo_entry
+        force_turbo_entry = Entry(
+            x_mode_frame, borderwidth=0, highlightthickness=0, font=font_12
+        )
+        force_turbo_entry.grid(row=5, column=1)
+        force_turbo_entry.insert(0, "Default is 0/Not Set")
+
+        global force_turbo_set
+        force_turbo_set = Button(
+            x_mode_frame,
+            text="Set",
+            command=set_force_turbo,
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        force_turbo_set.grid(row=5, column=2)
+
+        global force_turbo_reset
+        force_turbo_reset = Button(
+            x_mode_frame,
+            text="Reset",
+            command=reset_force_turbo,
+            bg="#ee1e25",
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        force_turbo_reset.grid(row=5, column=3)
+
+        with open(f"{config_path}", "r") as fp:
+            for line_f_t in lines_that_contain("force_turbo", fp):
+                # print(line3)
+                if line_f_t:
+                    force_turbo_set.config(state=DISABLED)
+                    force_turbo_reset.config(state=NORMAL)
+
+        reboot_e = Button(
+            x_mode_frame,
+            justify=LEFT,
+            text="Reboot",
+            bg=ext_btn,
+            foreground=main_font,
+            borderwidth=0,
+            highlightthickness=0,
+            command=reboot_n,
+        )
+        reboot_e.grid(row=6, column=1, pady=10)
+
+        # Overclocking Values Frame
+        self.custom_settings_frame = LabelFrame(
+            self.ov_state_display_frame,
+            text="Current Settings",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            padx=200,
+            pady=10,
+        )
+        self.custom_settings_frame.pack(anchor="n", pady=20, padx=10, fill=BOTH)
+        self.custom_settings_frame["background"] = frame_color
+
+        # Additional Infos
+        # +üpp
+
+        self.ov_helps_frame = Frame(
+            self.ov_state_display_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+        )
+        self.ov_helps_frame.pack()
+        self.ov_helps_frame["background"] = frame_color
+
+        # Overclocking Stats
+
+        # Tuning_Button_Frame
+        pigro_t_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="PiGro Berry: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        pigro_t_label.grid(column=0, row=0)
+
+        global pigro_t_display
+        pigro_t_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground="green",
+            font=font_12,
+            width=25,
+        )
+        pigro_t_display.grid(column=1, row=0)
+
+        arm_f_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="Arm Freq: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        arm_f_label.grid(column=0, row=2)
+
+        global arm_f_display
+        arm_f_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=25,
+        )
+        arm_f_display.grid(column=1, row=2)
+
+        gpu_f_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="Gpu Freq: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        gpu_f_label.grid(column=0, row=3)
+
+        global gpu_f_display
+        gpu_f_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=25,
+        )
+        gpu_f_display.grid(column=1, row=3)
+
+        gpu_m_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="Gpu Mem: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        gpu_m_label.grid(column=0, row=4)
+
+        global gpu_m_display
+        gpu_m_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=25,
+        )
+        gpu_m_display.grid(column=1, row=4)
+
+        over_v_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="Over Voltage: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        over_v_label.grid(column=0, row=5)
+
+        global over_v_display
+        over_v_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=25,
+        )
+        over_v_display.grid(column=1, row=5)
+
+        force_t_label = Label(
+            self.custom_settings_frame,
+            anchor="e",
+            justify=RIGHT,
+            text="Force Turbo: ",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=15,
+        )
+        force_t_label.grid(column=0, row=6)
+
+        global force_t_display
+        force_t_display = Label(
+            self.custom_settings_frame,
+            anchor="w",
+            justify=LEFT,
+            text="not configured",
+            highlightthickness=0,
+            borderwidth=2,
+            background=frame_color,
+            foreground=main_font,
+            font=font_12,
+            width=25,
+        )
+        force_t_display.grid(column=1, row=6)
 
         def chromium_drm_cmd():
             if select_clicked1.get() == "Chromium 32":
@@ -6972,7 +7140,7 @@ class Tuning_Tab(ttk.Frame):
             pady=10,
             padx=87,
         )
-        self.chromium_drm.pack(padx=40, pady=20)
+        self.chromium_drm.pack(anchor="n", padx=10, fill=BOTH)
         self.chromium_drm["background"] = frame_color
         #
         options = [
@@ -7030,15 +7198,13 @@ class Tuning_Tab(ttk.Frame):
 
         self.tu_info = Label(
             self.ov_state_display_frame,
-            text="Settings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1\n+ Ice Tower Cooler & Pi400.\nI take no responsibility if\nyour Pi is damaged.\nPlease click on the Info Button\nto learn more",
+            text="\nSettings tested with:\nRaspberry Pi 4B 8 GB Rev.1.4\nRaspberry Pi 4B 4 GB Rev.1.1 + Ice Tower Cooler & Pi400.\nI take no responsibility if your Pi is damaged.\nPlease click on the Info Button\nto learn more\n",
             font=font_8_b,
             highlightthickness=0,
             borderwidth=0,
             background=frame_color,
             foreground=info_color,
-            padx=122,
-            pady=20
-        ).pack()
+        ).pack(pady=20, padx=10, fill=BOTH, expand=True)
 
         def ov_display():
             # Overclock Display Functions
@@ -7397,6 +7563,10 @@ class About_Tab(ttk.Frame):
                 "xdg-open https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log"
             )
 
+        def update_checker():
+            up_chk = Update_Pop(self)
+            up_chk.grab_set()
+
         def paypal_link():
             popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
 
@@ -7439,6 +7609,18 @@ class About_Tab(ttk.Frame):
             command=ch_log,
         )
         self.change_log.pack()
+
+        self.check_for_update = Button(
+            self.rahmen102,
+            text="Check for Update",
+            font=(font_10),
+            highlightthickness=0,
+            borderwidth=0,
+            background=ext_btn,
+            foreground=main_font,
+            command=update_checker,
+        )
+        self.check_for_update.pack(pady=10)
 
         self.gihub_link = tk.Label(
             self.rahmen102,
@@ -7716,7 +7898,7 @@ printf 'Done!'"""
 
         dselect_check = os.path.exists("/bin/dselect")
         if dselect_check == True:
-            self.select_path1.config(state=DISABLED, text="dselect is\ninstalled")
+            self.select_path1.config(state=DISABLED, text="dselect is installed")
 
         self.recover_frame2 = Frame(
             self.recover_main_frame,
