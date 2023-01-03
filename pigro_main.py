@@ -603,20 +603,21 @@ class Dash_Tab(ttk.Frame):
                 wifi_ipv4 = "Not Connected"
                 wifi_mac_address = network_stats["wlan0"][0][1]
 
-            try:
-                self.sys_soft.config(text=f"Debian: {deb_counted[:-1]}")
+
+            self.sys_soft.config(text=f"Debian: {deb_counted[:-1]}")
+
+            if flatpak_path is True:
                 self.sys_flat.config(text=f"Flatpak: {flat_counted[:-1]}")
-            except IndexError:
-                self.sys_soft.config(text=f"Debian: ERROR")
-                self.sys_flat.config(text=f"Flatpak: 0")
+            else:
+                self.sys_flat.config(text=f"Flatpak: -")
 
 
             self.eth_ip_label.config(text=f"Ethernet IP: {ethernet_ipv4}")
             self.wifi_ip_label.config(text=f"WiFi IP: {wifi_ipv4}")
 
-            self.sysinf_hdd_t.config(text=f"Total: {obj_Disk.total / (2**30):.2f} Gb")
-            self.hdd_used_label.config(text=f"Used: {obj_Disk.used / (2**30):.2f} Gb")
-            self.hdd_free_label.config(text=f"Free: {obj_Disk.free / (2**30):.2f} Gb")
+            self.sysinf_hdd_t.config(text=f"Total: {obj_Disk.total / (2**30):.2f} GB")
+            self.hdd_used_label.config(text=f"Used: {obj_Disk.used / (2**30):.2f} GB")
+            self.hdd_free_label.config(text=f"Free: {obj_Disk.free / (2**30):.2f} GB")
             self.hdd_used_per_label.configure(text=f"Used: {obj_Disk.percent} %")
 
             self.curr_cpu_perc_label.configure(text=f"Utilization: {cpu_perc} %")
