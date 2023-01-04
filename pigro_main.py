@@ -4168,12 +4168,13 @@ class Software_Tab(ttk.Frame):
             piapps_installed_content = piapps_installed.readlines()
             for i, s in enumerate(piapps_installed_content):
                 piapps_installed_content[i] = s.strip()
+            update_piapps(piapps_cache_content)
 
         else:
             piapps_search_btn.config(state=DISABLED)
             piapps_entry.insert(0, "Pi Apps is not installed")
 
-        update_piapps(piapps_cache_content)
+        
 
         piapps_list_box.bind("<<ListboxSelect>>", piapps_fillout)
 
