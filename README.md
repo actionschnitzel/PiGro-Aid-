@@ -13,5 +13,3 @@ wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/dev_test_install.sh |bash
 ```
-
-[![GitHub clones](https://img.shields.io/github/clones/actionschnitzel/PiGro-Aid-.svg?style=flat-square)](https://github.com/actionschnitzel/PiGro-Aid-)
