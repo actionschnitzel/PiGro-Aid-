@@ -11,8 +11,6 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from tkinter.dialog import DIALOG_ICON
-
-# from turtle import left, width
 import tkinter.font as tkFont
 from tkinter import filedialog
 import webbrowser
@@ -20,8 +18,6 @@ import platform
 import shutil
 import psutil
 from collections import namedtuple
-
-# from datetime import datetime
 from time import strftime
 import distro
 import socket
@@ -32,8 +28,6 @@ import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
-
-# from turtle import width
 import re
 import uuid
 from http.client import SWITCHING_PROTOCOLS
@@ -576,7 +570,6 @@ class Dash_Tab(ttk.Frame):
                 self.system_host_label.config(text=f"Host: XXXXXXXXXXXXX")
                 self.system_user_label.config(text="User: XXXXXXXXXXXXX")
 
-
         def refresh_sys_stats():
             """Refresches the system stats every second"""
             # Parameters for System
@@ -603,14 +596,12 @@ class Dash_Tab(ttk.Frame):
                 wifi_ipv4 = "Not Connected"
                 wifi_mac_address = network_stats["wlan0"][0][1]
 
-
             self.sys_soft.config(text=f"Debian: {deb_counted[:-1]}")
 
             if flatpak_path is True:
                 self.sys_flat.config(text=f"Flatpak: {flat_counted[:-1]}")
             else:
                 self.sys_flat.config(text=f"Flatpak: -")
-
 
             self.eth_ip_label.config(text=f"Ethernet IP: {ethernet_ipv4}")
             self.wifi_ip_label.config(text=f"WiFi IP: {wifi_ipv4}")
@@ -718,7 +709,6 @@ class Dash_Tab(ttk.Frame):
             wifi_ipv4 = "Not Connected"
             wifi_mac_address = network_stats["wlan0"][0][1]
 
-
         # Parameters for System
         my_system = platform.uname()
         cpufreq = psutil.cpu_freq()
@@ -795,8 +785,6 @@ class Dash_Tab(ttk.Frame):
 
             self.after(1000, refresh_OV_stats)
 
-
-
         global on_btn_icon
         on_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/on_s_b.png")
 
@@ -824,7 +812,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
 
-        self.dash_pigro_logo_frame.place(x=120, y=20, width=885)  
+        self.dash_pigro_logo_frame.place(x=120, y=20, width=885)
         self.dash_pigro_logo_frame["background"] = maincolor
 
         # Sys Info Labels
@@ -847,7 +835,6 @@ class Dash_Tab(ttk.Frame):
             self.logo_btn.config(image=self.pigro_feb_img)
         else:
             self.logo_btn.config(image=self.pigro_img)
-
 
         self.info_main_frame = Frame(
             self,
@@ -1330,7 +1317,6 @@ class Dash_Tab(ttk.Frame):
         )
         self.hdd_used_per_label.pack(anchor=W)
 
-
         self.pb1 = ttk.Progressbar(
             self.info_content_middle,
             style="bar.Horizontal.TProgressbar",
@@ -1339,7 +1325,6 @@ class Dash_Tab(ttk.Frame):
             mode="determinate",
         )
         self.pb1.pack(anchor=W)
-        
 
         system_place_holder_label = Label(
             self.info_content_middle,
@@ -1691,27 +1676,27 @@ class Update_Tab(ttk.Frame):
             """Passes commands du auto generated buttons"""
             if text == "Update":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
                     % wid
                 )
             if text == "Update & Upgrade":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Full Upgrade":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Allow Sources":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Autoremove":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
                     % wid
                 )
             if text == "dpkg -i (File Picker)":
@@ -1721,7 +1706,7 @@ class Update_Tab(ttk.Frame):
                     filetypes=((".deb files", "*.deb"),),
                 )
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "sudo dpkg -i {self.filename} && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "sudo dpkg -i {self.filename} && exit ; exec bash"'
                     % wid
                 )
 
@@ -1733,12 +1718,12 @@ class Update_Tab(ttk.Frame):
 
             if text == "dpkg --configure -a":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Flatpak Update":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x25 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
                     % wid
                 )
 
@@ -1772,9 +1757,9 @@ class Update_Tab(ttk.Frame):
 
         self.termf = Frame(
             self.update_btn_frame,
-            height=300,
-            width=960,
-            padx=20,
+            height=600,
+            # width=960,
+            # padx=20,
             highlightthickness=0,
             borderwidth=0,
         )
@@ -1872,7 +1857,7 @@ class Update_Tab(ttk.Frame):
             if up_button == "Gimme a Terminal":
                 self.up_button_x.config(image=self.term_icon)
 
-        self.termf.pack(anchor="w")
+        self.termf.pack(fill=BOTH, expand=True, padx=5)
 
 
 class System_Tab(ttk.Frame):
@@ -1987,7 +1972,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=pi_settings_btn: pi_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2067,7 +2052,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=device_settings_btn: device_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2259,7 +2244,7 @@ class System_Tab(ttk.Frame):
                 command=lambda text=ops_settings_btn: ops_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -4174,8 +4159,6 @@ class Software_Tab(ttk.Frame):
             piapps_search_btn.config(state=DISABLED)
             piapps_entry.insert(0, "Pi Apps is not installed")
 
-        
-
         piapps_list_box.bind("<<ListboxSelect>>", piapps_fillout)
 
         piapps_entry.bind("<KeyRelease>", piapps_search_check)
@@ -5541,7 +5524,7 @@ class Look_Tab(ttk.Frame):
                 command=lambda text=gui_settings_btn: gui_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5628,7 +5611,7 @@ exit
                 command=lambda text=xfce4_settings_btn: xfce4_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -5721,7 +5704,7 @@ exit
                 command=lambda text=pixel_settings_btn: pixel_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=ext_btn,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
