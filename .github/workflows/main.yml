@@ -1,0 +1,15 @@
+name: Count code clones
+
+on:
+  repository_dispatch:
+
+jobs:
+  count_clones:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Count code clones
+      run: |
+        CLONE_COUNT=$(git rev-list --count HEAD)
+        echo "Code has been cloned $CLONE_COUNT times"
+        echo "::set-output name=clone_count::$CLONE_COUNT"
