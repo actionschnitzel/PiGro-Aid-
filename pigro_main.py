@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
 import os
-from os import chmod
 from os import popen
-from os import system
 from os import listdir
 import os.path
 from os.path import isfile, join
@@ -15,16 +13,12 @@ import tkinter.font as tkFont
 from tkinter import filedialog
 import webbrowser
 import platform
-import shutil
 import psutil
 from collections import namedtuple
 from time import strftime
 import distro
-import socket
 from pathlib import Path
 from cgitb import enable
-from pynotifier import Notification
-import threading
 from threading import Thread
 from concurrent.futures import thread
 from faulthandler import disable
@@ -34,7 +28,10 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
+from urllib.request import urlopen
 import requests
+from bs4 import BeautifulSoup
+
 
 
 class Get_Sys_Info:
@@ -2101,13 +2098,7 @@ class System_Tab(ttk.Frame):
                     popen("sudo pcmanfm /")
 
                 print("[Info]: With great power comes great responsibility")
-                Notification(
-                    title="Sudo File Manager\n",
-                    description="With great power comes great responsibility\n\n                          - Oncle Ben",
-                    icon_path=f"{Application_path}/images/icons/Logotab.png",
-                    duration=5,
-                    urgency="normal",
-                ).send()
+
 
             if text == "Upgrade Linux Kernel":
                 global pop_kernel
@@ -2403,13 +2394,7 @@ class System_Ubuntu_Tab(ttk.Frame):
                     f"gnome-terminal -e 'bash -c \"{Application_path}/scripts/ubu_FMGM.sh; exec bash\"'"
                 )
                 print("[Info]: With great power comes great responsibility")
-                Notification(
-                    title="Sudo File Manager\n",
-                    description="With great power comes great responsibility\n\n                          - Oncle Ben",
-                    icon_path=f"{Application_path}/images/icons/Logotab.png",
-                    duration=5,
-                    urgency="normal",
-                ).send()
+
             if text == "Gnome Extensions":
                 popen("xdg-open https://extensions.gnome.org/")
             if text == "Software\nUpdates":
@@ -3784,6 +3769,9 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.add(snap_frame, text="Snap")
         self.inst_notebook.add(repo_frame, image=self.deb_icon, compound=BOTTOM)
 
+
+
+
         def error_mass_0():
 
             e_mass = Error_Mass(self)
@@ -3843,6 +3831,17 @@ class Software_Tab(ttk.Frame):
                         apt_data.append(item)
             update_apt(apt_data)
 
+
+
+
+
+        def resize(img):
+            basewidth = 500
+            wpercent = (basewidth / float(img.size[0]))
+            hsize = int((float(img.size[1]) * float(wpercent)))
+            return img.resize((basewidth, hsize), Image.ANTIALIAS)
+
+            
         def apt_search():
             if apt_entry.get() == "":
                 # print("Nop")
@@ -3860,13 +3859,49 @@ class Software_Tab(ttk.Frame):
                     apt_pkg_status.config(text="Status: Not Installed")
                     apt_pkg_inst.config(state=NORMAL)
                     apt_pkg_uninst.config(state=DISABLED)
-
+                
+                
+                panel.config(image = self.deb_icon)
                 pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
                 read_pkg_infos = pkg_infos.read()
 
                 insert_discription = read_pkg_infos
                 discription_text.delete("1.0", "end")
                 discription_text.insert(END, insert_discription)
+
+
+
+
+
+                try:
+                    apt_app = str(apt_entry.get())
+                    url = f'https://screenshots.debian.net/package/{apt_app}#gallery-1'
+                    # Make an HTTP GET request to the webpage
+                    response = requests.get(url)
+                    # Use BeautifulSoup to parse the HTML
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    # Find all links with .png extension
+                    links = [link.get('href') for link in soup.find_all('a') if link.get('href').endswith('.png')]
+                    # Print the links
+                    print(f"https://screenshots.debian.net{str(links[1])}")
+
+                    url_output = f"https://screenshots.debian.net{str(links[1])}"
+                    with urlopen(url_output) as url_output:
+                        self.app_img = Image.open(url_output)
+                    self.app_img = resize(self.app_img)
+
+                    self.app_img = ImageTk.PhotoImage(self.app_img)
+                    panel.config(image = self.app_img)
+                except IndexError as e:
+                    print(f"{e}")
+                    panel.config(image = None)            
+
+
+
+
+
+
+
 
         apt_search_frame = LabelFrame(
             apt_frame,
@@ -3919,7 +3954,7 @@ class Software_Tab(ttk.Frame):
 
         apt_entry.bind("<KeyRelease>", apt_search_check)
 
-        apt_info_frame = Frame(apt_frame, background=frame_color)
+        apt_info_frame = Frame(apt_frame, background=maincolor)
         apt_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
         apt_pkg_info_frame = LabelFrame(
@@ -3989,6 +4024,25 @@ class Software_Tab(ttk.Frame):
             state=DISABLED,
         )
         apt_pkg_uninst.grid(row=1, column=1, pady=5)
+
+ 
+
+        apt_pkg_img_frame = LabelFrame(
+            apt_info_frame,
+            text="Discription",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        apt_pkg_img_frame.pack(anchor="n", fill=BOTH, expand=True,pady=20)
+
+        panel = Label(apt_pkg_img_frame, bg=frame_color)
+        panel.pack(fill = "both", expand = "yes")  
 
         apt_pkg_info_frame = LabelFrame(
             apt_info_frame,
@@ -5973,13 +6027,7 @@ class Z_Ram_Pop(tk.Toplevel):
                     f"x-terminal-emulator -e 'bash -c \"{legit} apt install zram-tools; exec bash\"'"
                 )
 
-            Notification(
-                title="ZRAMr\n",
-                description="ZRAM has been installed",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         def z_ram_uninstall():
 
@@ -5992,13 +6040,7 @@ class Z_Ram_Pop(tk.Toplevel):
                     f"x-terminal-emulator -e 'bash -c \"{legit} apt remove zram-tools; exec bash\"'"
                 )
 
-            Notification(
-                title="ZRAMr\n",
-                description="ZRAM has been uninstalled",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         GLabel_804 = tk.Label(self)
         GLabel_804["font"] = font_10
@@ -6109,13 +6151,7 @@ class Tuning_Tab(ttk.Frame):
             dash_over_v_display.config(text="Over Voltage: N/A")
             dash_force_t_display.config(text="Force Turbo: N/A")
 
-            Notification(
-                title="PiGro Overclocking\n",
-                description="All Settings Restored\n\n",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         # overclocking_2000
 
@@ -6131,13 +6167,7 @@ class Tuning_Tab(ttk.Frame):
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
 
-            Notification(
-                title="PiGro Overclocking\n",
-                description="arm_freq = 2000\ngpu_fequ = 750\nover_voltage = 6\nforce_turbo = 1",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         # overclocking_2147
         def ov_2147():
@@ -6152,13 +6182,7 @@ class Tuning_Tab(ttk.Frame):
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
 
-            Notification(
-                title="PiGro Overclocking\n",
-                description="arm_freq = 2147\ngpu_fequ = 750\nover_voltage = 8\nforce_turbo = 1",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         # overclocking_2200
 
@@ -6169,13 +6193,7 @@ class Tuning_Tab(ttk.Frame):
             )
 
             done_msg()
-            Notification(
-                title="PiGro Overclocking\n",
-                description="arm_freq = 2200\ngpu_fequ = 750\nover_voltage = 8\force_turbo = 1",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
             tu_btn1.config(state=DISABLED)
             tu_btn2.config(state=DISABLED)
@@ -6195,13 +6213,7 @@ class Tuning_Tab(ttk.Frame):
             tu_btn3.config(state=DISABLED)
             tu_btn4.config(state=DISABLED)
 
-            Notification(
-                title="PiGro Overclocking\n",
-                description="arm_freq = 2300\ngpu_fequ = 750\nover_voltage = 14\nforce_turbo = 1",
-                icon_path=f"{Application_path}/images/icons/Logotab.png",
-                duration=5,
-                urgency="normal",
-            ).send()
+
 
         # OV_Button_Frame
         self.ov_buttons = LabelFrame(
