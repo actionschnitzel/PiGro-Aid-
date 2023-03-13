@@ -31,323 +31,9 @@ from distutils.filelist import translate_pattern
 from urllib.request import urlopen
 import requests
 from bs4 import BeautifulSoup
-
-
-
-class Get_Sys_Info:
-    """Gathers system stats that are needed to run PiGro"""
-
-    ### Get User Name
-    def get_user_name():
-        global user
-        user = os.environ["USER"]
-        print(f"[Info]: Hi,{user} waz uuuuup?!")
-
-    get_user_name()
-
-    ### Get Home Path
-    def get_home_path():
-        global home
-        home = os.environ["HOME"]  # str(Path.home())
-        print(f"[Info]: {home} is your home directory!")
-
-    get_home_path()
-
-    ### Gets path to PiGro
-    def get_pigro_path():
-        global Application_path
-        Application_path = str(os.getcwd())
-        print(f"[Info]: PiGro directory is {Application_path}")
-
-    get_pigro_path()
-
-    ### Makes all .sh files in /scripts executable if PiGro in $HOME
-    def chmod_x_scripts():
-
-        if Application_path == f"{home}/PiGro-Aid-":
-            popen(
-                'find ~/PiGro-Aid-/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;'
-            )
-            print(f"[Info]: All files executable")
-
-    chmod_x_scripts()
-
-    ### Checks if settings folder exists
-    def check_if_pigro_settings_exsists():
-        pigro_conf_folder = os.path.isdir(f"{home}/.pigro")
-        if pigro_conf_folder == False:
-            print("[Info]: Folder:.pigro not found will created")
-            os.mkdir(f"{home}/.pigro")
-            open(f"{home}/.pigro/autostart.list", "a").close()
-            # open(f"{home}/.pigro/pi-apps_list.list", "a").close()
-            open(f"{home}/.pigro/pi-apps_installed.list", "a").close()
-        if pigro_conf_folder == True:
-            print("[Info]: Folder: .pigro exsists")
-
-        # Checks if pigro.conf exists
-        pigro_conf_file = os.path.exists(f"{home}/.pigro/pigro.conf")
-        if pigro_conf_file == False:
-            open(f"{home}/.pigro/pi-apps_list.list", "a")
-            with open(f"{home}/.pigro/pigro.conf", "a") as p_file:
-                p_file.write(
-                    "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark\ntransparency = 1.00\nperm = true"
-                )
-                p_file.close()
-            print("[Info]: pigro.conf created")
-        if pigro_conf_file == True:
-            print("[Info]: pigro.conf exsists")
-
-        # Autostarteble Apps
-        popen(f"rm {home}/.pigro/auto_plus.list")
-        desktop_files = [
-            df
-            for df in listdir("/usr/share/applications/")
-            if isfile(join("/usr/share/applications/", df))
-        ]
-        desktop_files.sort()
-
-        for fn in desktop_files:
-            add_app = open(f"{home}/.pigro/auto_plus.list", "a")
-            add_app.write(str(fn[:-8] + "\n"))
-            add_app.close()
-
-        sudo_perm = open(f"{home}/.pigro/pigro.conf", "r")
-        read_sudo = sudo_perm.readlines()
-        sudo_perm.close()
-        found = False
-        for line in read_sudo:
-            if str("perm = ") in line:
-                found = True
-
-        if not found:
-            sudo_perm = open(f"{home}/.pigro/pigro.conf", "a")
-            sudo_perm.write(str("perm = true"))
-            sudo_perm.close()
-
-        legit_check = open(f"{home}/.pigro/pigro.conf", "r")
-        read_check = legit_check.readlines()
-        legit_check.close()
-        for line in read_check:
-            if str("perm = true") in line:
-                global legit
-                legit = "pkexec"
-            else:
-                legit = "sudo"
-
-    check_if_pigro_settings_exsists()
-
-    ### Checks if pigro bin exists
-    def check_if_pigro_is_in_bin():
-
-        popen(f"{Application_path}/scripts/check_bin.sh ")
-
-    # check_if_pigro_is_in_bin()
-
-    ### Get Distro
-    def get_distro_name():
-
-        global distro_get
-        distro_get = distro.id()
-        print("[Info]: Your Distro is: " + str(distro_get))
-        # Gets nice Distro name
-        global nice_name
-        nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
-        nice_name = nice_name.read()
-
-    get_distro_name()
-
-    ### Location of config.txt
-    def get_position_of_config_txt():
-        global config_path
-        if os.path.exists("/boot/config.txt"):
-            config_path = "/boot/config.txt"
-        elif os.path.exists("/boot/firmware/usercfg.txt"):
-            config_path = "/boot/firmware/usercfg.txt"
-        elif os.path.exists("/boot/firmware/config.txt"):
-            config_path = "/boot/firmware/config.txt"
-        else:
-            print("[Info]: Can't find config.txt")
-
-    get_position_of_config_txt()
-
-    ### Get Desktop Environment
-    def get_desktop_env():
-        global get_de
-        get_de = os.environ.get("XDG_CURRENT_DESKTOP")
-        print("[Info]: Your DE is: " + str(get_de))
-
-    get_desktop_env()
-
-    ### Checks if pi-apps is installed an imports the app list
-    def check_if_piapps_is_installed():
-        open(f"{home}/.pigro/pi-apps_installed.list", "w").close()
-        global piapps_path
-        piapps_path = os.path.exists(f"{home}/pi-apps")
-        if piapps_path == False:
-            print("[Info]: Pi-Apps not found")
-        if piapps_path == True:
-            print("[Info]: Pi-Apps is installed list will be added")
-
-            for installed_pi_apps in os.listdir(f"{home}/pi-apps/data/status"):
-                pi_apps_status = open(
-                    f"/home/{user}/pi-apps/data/status/{installed_pi_apps}", "r"
-                )
-                status = pi_apps_status.read()
-                pi_apps_status.close()
-                if status.strip() == "installed":
-                    with open(f"{home}/.pigro/pi-apps_installed.list", "a") as pa_file:
-                        pa_file.write(f"{installed_pi_apps}\n")
-                        pa_file.close()
-
-    check_if_piapps_is_installed()
-
-    ### Get Achitecture Of OS
-    def get_arch():
-        arch_bash = """#determine if host system is 64 bit arm64 or 32 bit armhf
-    if [ "$(od -An -t x1 -j 4 -N 1 "$(readlink -f /sbin/init)")" = ' 02' ];then
-    arch=64
-    printf "arm64"
-    elif [ "$(od -An -t x1 -j 4 -N 1 "$(readlink -f /sbin/init)")" = ' 01' ];then
-    arch=32
-    printf "armhf"
-    else
-    error "Failed to detect OS CPU architecture! Something is very wrong."
-    fi"""
-
-        global os_arch_output
-        os_arch = popen(arch_bash)
-        os_arch_output = os_arch.read()
-
-    get_arch()
-
-    ### Checks if snapd exists
-    def check_if_snapd_is_installed():
-        global snap_deamon_check
-        snap_deamon_check = os.path.isfile("/bin/snap")
-
-        if snap_deamon_check == True:
-            print("[Info]: Snap is installed")
-        else:
-            print("[Info]: Snap is not installed")
-
-    check_if_snapd_is_installed()
-
-    ### Checks if flatpak exists
-    def check_if_flatpak_is_installed():
-        global flatpak_path
-        flatpak_path = os.path.exists("/bin/flatpak")
-        if flatpak_path == True:
-            print("[Info]: Flatpak is installed")
-            global flat_counted
-            flat_count = popen("flatpak list | wc --lines")
-            flat_counted = flat_count.read()
-            flat_count.close()
-            print(f"[Info]: {flat_counted[:-1]} Flatpaks are installed")
-        else:
-            print("[Info]: Flatpak is not installed")
-            flatpak_path = False
-
-    check_if_flatpak_is_installed()
-
-    ### Checks if pigro.conf exists
-    def check_if_conf_file_exsists():
-        if os.path.isfile(f"{home}/.pigro/pigro.conf"):
-            print("[Info]: pigro.conf exists")
-        else:
-            print("[Info]: pigro.conf not found")
-            with open(f"{home}/.pigro/pigro.conf", "a") as pigro_config_f:
-                pigro_config_f.write(
-                    "[PiGro - Just Click It! Configs]\n\nfirst_run = true\ntheme = dark"
-                )
-                print("[Info]: pigro.conf was created")
-
-    check_if_conf_file_exsists()
-
-    ### Counts installed .DEBs
-    def get_installed_deb_num():
-        deb_count = popen("dpkg --list | wc --lines")
-        global deb_counted
-        deb_counted = deb_count.read()
-        deb_count.close()
-        print(f"[Info]: {deb_counted[:-1]} .deb Packages Installed")
-
-    get_installed_deb_num()
-
-    ### Color Theme Identifier
-    def set_theme():
-        conf_file = open(f"{home}/.pigro/pigro.conf", "r")
-        read_conf = conf_file.readlines()
-        conf_file.close()
-
-        for line in read_conf:
-            # Dark Theme Settings
-            if str("theme = dark") in line:
-                print("[Info]: Dark Theme")
-                global maincolor
-                maincolor = "#404040"
-                global nav_color
-                nav_color = "#2b2b2b"
-                global frame_color
-                frame_color = "#383838"
-                global main_font
-                main_font = "white"
-                global info_color
-                info_color = "yellow"
-                global ext_btn
-                ext_btn = "#007acc"
-                global label_frame_color
-                label_frame_color = "#d4244d"
-                if distro_get == "ubuntu":
-                    maincolor = "#333333"
-                    nav_color = "#272727"
-                    frame_color = "#333333"
-                    main_font = "white"
-                    info_color = "yellow"
-                    ext_btn = "#333333"
-
-            # Light Theme Settings
-            if str("theme = light") in line:
-                print("[Info]: Light Theme")
-                maincolor = "#f5f5f5"
-                nav_color = "#e8e8e8"
-                frame_color = "#f5f5f5"
-                main_font = "black"
-                info_color = "#0075b7"
-                ext_btn = "#c5c5c5"
-                label_frame_color = "#0075b7"
-                if distro_get == "ubuntu":
-                    maincolor = "#fafafa"
-                    nav_color = "#ffffff"
-                    frame_color = "#fafafa"
-                    main_font = "black"
-                    info_color = "#0075b7"
-                    ext_btn = "#fafafa"
-
-        # Font Definition Vars
-        global font_20
-        font_20 = ("Sans", 20)
-        global font_16
-        font_16 = ("Sans", 16)
-        global font_14
-        font_14 = ("Sans", 14)
-        global font_12_b
-        font_12_b = ("Sans", 12, "bold")
-        global font_12
-        font_12 = ("Sans", 12)
-        global font_10
-        font_10 = ("Sans", 10)
-        global font_10_b
-        font_10_b = ("Sans", 10, "bold")
-        global font_9_b
-        font_9_b = ("Sans", 9, "bold")
-        global font_9
-        font_9 = ("Sans", 9)
-        global font_8_b
-        font_8_b = ("Sans", 8, "bold")
-        global font_8
-        font_8 = ("Sans", 8)
-
-    set_theme()
+from resorcess import *
+import subprocess
+from flatpak_alias_list import * 
 
 
 class MainApplication(tk.Tk):
@@ -369,7 +55,8 @@ class MainApplication(tk.Tk):
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.wait_visibility(self)
+        self.attributes('-zoomed', True)
+        #self.wait_visibility(self)
         # self.wm_attributes("-alpha", translate_p)
 
         # Notebook Definition
@@ -740,7 +427,7 @@ class Dash_Tab(ttk.Frame):
                         font=font_12,
                     )
 
-            with open(f"{config_path}") as pi_conf:
+            #with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "gpu_freq" in line:
@@ -750,7 +437,7 @@ class Dash_Tab(ttk.Frame):
                         font=font_12,
                     )
 
-            with open(f"{config_path}") as pi_conf:
+            #with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "force_turbo" in line:
@@ -760,7 +447,7 @@ class Dash_Tab(ttk.Frame):
                         font=font_12,
                     )
 
-            with open(f"{config_path}") as pi_conf:
+            #with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "over_voltage" in line:
@@ -770,7 +457,7 @@ class Dash_Tab(ttk.Frame):
                         font=font_12,
                     )
 
-            with open(f"{config_path}") as pi_conf:
+            #with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "gpu_mem" in line:
@@ -809,7 +496,7 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
 
-        self.dash_pigro_logo_frame.place(x=120, y=20, width=885)
+        self.dash_pigro_logo_frame.pack()#place(x=120, y=20, width=885)
         self.dash_pigro_logo_frame["background"] = maincolor
 
         # Sys Info Labels
@@ -843,7 +530,7 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_frame.place(x=120, y=240, width=885)
+        self.info_main_frame.pack()#.place(x=120, y=240, width=885)
         self.info_main_frame["background"] = frame_color
 
         ### LEFT INFO FRAME AND ALL BELOW ###
@@ -1503,7 +1190,7 @@ class Dash_Tab(ttk.Frame):
         )
         dash_force_t_display.pack(anchor=W)
 
-        self.info_main_Update_Tab = Frame(
+        self.info_main_Update_Tab = tk.Frame(
             self,
             borderwidth=0,
             highlightthickness=0,
@@ -1511,9 +1198,12 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
             pady=20,
             padx=10,
+            width=885,
+            height=80
         )
 
-        self.info_main_Update_Tab.place(x=120, y=750, width=885)
+        self.info_main_Update_Tab.pack(pady=20)#.place(x=120, y=750, width=885)
+        self.info_main_Update_Tab.pack_propagate(0)
         self.info_main_Update_Tab["background"] = frame_color
 
         # Hide/Show Butten & Label
@@ -1596,7 +1286,7 @@ class Update_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.man_rep_frame.grid(row=0, column=1, rowspan=10)
+        self.man_rep_frame.grid(row=0, column=1, rowspan=10,sticky="ne")
         self.man_rep_frame["background"] = frame_color
 
         self.man_left = Frame(
@@ -1673,27 +1363,27 @@ class Update_Tab(ttk.Frame):
             """Passes commands du auto generated buttons"""
             if text == "Update":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/update.sh && exit ; exec bash"'
                     % wid
                 )
             if text == "Update & Upgrade":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/upgrade.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Full Upgrade":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/full_upgrade.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Allow Sources":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Autoremove":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/auto_remove.sh && exit ; exec bash"'
                     % wid
                 )
             if text == "dpkg -i (File Picker)":
@@ -1703,7 +1393,7 @@ class Update_Tab(ttk.Frame):
                     filetypes=((".deb files", "*.deb"),),
                 )
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "sudo dpkg -i {self.filename} && exit ; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "sudo dpkg -i {self.filename} && exit ; exec bash"'
                     % wid
                 )
 
@@ -1715,12 +1405,12 @@ class Update_Tab(ttk.Frame):
 
             if text == "dpkg --configure -a":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "{Application_path}/scripts/config_a.sh && exit; exec bash"'
                     % wid
                 )
             if text == "Flatpak Update":
                 os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry 1000x30 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
+                    f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
                     % wid
                 )
 
@@ -1800,7 +1490,7 @@ class Update_Tab(ttk.Frame):
             self.up_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             up_button_list1.append(self.up_button_x)
             conf_column = conf_column + 1
-            if conf_column == 4:
+            if conf_column == 6:
                 conf_row = conf_row + 1
                 conf_column = 0
             if up_button == "Update":
@@ -1977,7 +1667,7 @@ class System_Tab(ttk.Frame):
             self.pi_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pi_settings_btn_list1.append(self.pi_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if pi_settings_btn == "Raspi-Config CLI":
@@ -2057,7 +1747,7 @@ class System_Tab(ttk.Frame):
             self.device_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             device_settings_btn_list1.append(self.device_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if device_settings_btn == "Gparted":
@@ -2243,7 +1933,7 @@ class System_Tab(ttk.Frame):
             self.ops_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             ops_settings_btn_list1.append(self.ops_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if ops_settings_btn == "Gparted":
@@ -3747,18 +3437,20 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.pack(fill=BOTH, expand=True)
 
         self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
+        self.debinstall_icon = PhotoImage(file=r"images/icons/papirus/64x64/debian-logo.png")
+        self.pi_appsinstall_icon = PhotoImage(file=r"images/icons/pigro_icons/pi-apps64x64.png")
+        self.flatpak_appsinstall_icon = PhotoImage(file=r"images/icons/pigro_icons/flathub64x64.png")
+        self.no_img = PhotoImage(file=r"images/apps/no_image.png")
 
         # create frames
         apt_frame = ttk.Frame(self.inst_notebook)
         piapps_frame = ttk.Frame(self.inst_notebook)
         flat_frame = ttk.Frame(self.inst_notebook)
-        snap_frame = ttk.Frame(self.inst_notebook)
         repo_frame = ttk.Frame(self.inst_notebook)
 
         apt_frame.pack(fill="both", expand=True)
         piapps_frame.pack(fill="both", expand=True)
         flat_frame.pack(fill="both", expand=True)
-        snap_frame.pack(fill="both", expand=True)
         repo_frame.pack(fill="both", expand=True)
 
         # add frames to notebook
@@ -3766,7 +3458,6 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.add(apt_frame, text="APT")
         self.inst_notebook.add(piapps_frame, text="Pi Apps")
         self.inst_notebook.add(flat_frame, text="Flatpak")
-        self.inst_notebook.add(snap_frame, text="Snap")
         self.inst_notebook.add(repo_frame, image=self.deb_icon, compound=BOTTOM)
 
 
@@ -3816,9 +3507,13 @@ class Software_Tab(ttk.Frame):
             for item in apt_data:
                 apt_list_box.insert(END, item)
 
+
+        
+
         def apt_fillout(e):
             apt_entry.delete(0, END)
             apt_entry.insert(0, apt_list_box.get(ACTIVE))
+
 
         def apt_search_check(e):
             typed = apt_entry.get()
@@ -3861,16 +3556,13 @@ class Software_Tab(ttk.Frame):
                     apt_pkg_uninst.config(state=DISABLED)
                 
                 
-                panel.config(image = self.deb_icon)
+                panel.config(image = self.no_img)
                 pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
                 read_pkg_infos = pkg_infos.read()
 
                 insert_discription = read_pkg_infos
                 discription_text.delete("1.0", "end")
                 discription_text.insert(END, insert_discription)
-
-
-
 
 
                 try:
@@ -3894,12 +3586,7 @@ class Software_Tab(ttk.Frame):
                     panel.config(image = self.app_img)
                 except IndexError as e:
                     print(f"{e}")
-                    panel.config(image = None)            
-
-
-
-
-
+                    panel.config(image = self.no_img)            
 
 
 
@@ -3931,28 +3618,43 @@ class Software_Tab(ttk.Frame):
         apt_entry = Entry(
             apt_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
-        apt_entry.pack(pady=5)
+        apt_entry.pack(pady=5,fill="x")
 
         apt_list_box = Listbox(
-            apt_search_frame, height=50, borderwidth=0, highlightthickness=0
+            apt_search_frame, height=50,width=40,borderwidth=0, highlightthickness=0
         )
         apt_list_box.pack(fill=BOTH)
 
-        apt_cache = os.popen("apt-cache pkgnames")
-        apt_cache_content = apt_cache.readlines()
+        # List all packages from apt-cache
+        apt_cache_cmd = "apt-cache pkgnames"
+        apt_cache_output = subprocess.check_output(apt_cache_cmd, shell=True)
+        apt_cache_packages = apt_cache_output.decode().split("\n")
+
+
+        #apt_cache = os.popen("apt-cache pkgnames")
+
+        apt_cache_content = apt_cache_packages#.readlines()
         for i, s in enumerate(apt_cache_content):
             apt_cache_content[i] = s.strip()
 
         update_apt(apt_cache_content)
 
+         # List all packages from apt list --installed
         apt_installed = os.popen("dpkg --get-selections |sed -e s/install//g")
+
         apt_installed_content = apt_installed.readlines()
         for i, s in enumerate(apt_installed_content):
             apt_installed_content[i] = s.strip()
 
+
+
+
         apt_list_box.bind("<<ListboxSelect>>", apt_fillout)
 
         apt_entry.bind("<KeyRelease>", apt_search_check)
+
+
+
 
         apt_info_frame = Frame(apt_frame, background=maincolor)
         apt_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
@@ -3971,8 +3673,40 @@ class Software_Tab(ttk.Frame):
         )
         apt_pkg_info_frame.pack(anchor="n", fill="x")
 
-        apt_pkg_name = Label(
+        apt_pkg_icon_container = Frame(
             apt_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        apt_pkg_icon_container.pack(side="left",expand=True,fill="x")
+
+        apt_pkg_icon = Label(
+            apt_pkg_icon_container,
+            image=self.debinstall_icon,
+            font=font_10_b,
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+        )
+        apt_pkg_icon.pack()
+
+
+        apt_pkg_info_container = Frame(
+            apt_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        apt_pkg_info_container.pack()
+
+
+        apt_pkg_name = Label(
+            apt_pkg_info_container,
             text="Name:",
             font=font_10_b,
             justify="left",
@@ -3984,7 +3718,7 @@ class Software_Tab(ttk.Frame):
         apt_pkg_name.grid(row=0, column=0)
 
         apt_pkg_status = Label(
-            apt_pkg_info_frame,
+            apt_pkg_info_container,
             text="Status:",
             font=font_10_b,
             justify="left",
@@ -3996,7 +3730,7 @@ class Software_Tab(ttk.Frame):
         apt_pkg_status.grid(row=1, column=0)
 
         apt_pkg_inst = Button(
-            apt_pkg_info_frame,
+            apt_pkg_info_container,
             text="Install",
             justify="left",
             width=10,
@@ -4011,7 +3745,7 @@ class Software_Tab(ttk.Frame):
         apt_pkg_inst.grid(row=0, column=1)
 
         apt_pkg_uninst = Button(
-            apt_pkg_info_frame,
+            apt_pkg_info_container,
             text="Uninstall",
             justify="left",
             width=10,
@@ -4029,7 +3763,7 @@ class Software_Tab(ttk.Frame):
 
         apt_pkg_img_frame = LabelFrame(
             apt_info_frame,
-            text="Discription",
+            text="Screenshot",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
@@ -4132,6 +3866,7 @@ class Software_Tab(ttk.Frame):
             update_piapps(piapps_data)
 
         def piapps_search():
+            piapps_panel.config(image = self.no_img)
             if piapps_entry.get() == "":
                 # print("Nop")
                 error_mass_0()
@@ -4148,6 +3883,27 @@ class Software_Tab(ttk.Frame):
                     piapps_pkg_status.config(text="Status: Not Installed")
                     piapps_pkg_inst.config(state=NORMAL)
                     piapps_pkg_uninst.config(state=DISABLED)
+
+                app_string = f"{piapps_entry.get()}"
+                app_string_web = app_string.replace(" ", "%20")
+                #print(app_string_web)
+                self.piapps_selecht_icon = PhotoImage(file=f"~/pi-apps/apps/{piapps_entry.get()}/icon-64.png")
+                piapps_icon.config(image=self.piapps_selecht_icon)
+                try:
+                    #app = "AbiWord"
+                    url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/pi-apps/{app_string_web}.png?raw=true"
+                    with urlopen(url_output) as url_output:
+                        self.img = Image.open(url_output)
+                    self.img = resize(self.img)
+
+                    self.img = ImageTk.PhotoImage(self.img)
+                    piapps_panel.config( image = self.img)
+                except IndexError as e:
+                    print(f"{e}")
+                    piapps_panel.config(image = self.no_img)
+
+
+
 
                 # pkg_infos = os.popen(f"piapps show -a {piapps_entry.get()}")
                 # read_pkg_infos = pkg_infos.read()
@@ -4190,10 +3946,10 @@ class Software_Tab(ttk.Frame):
         piapps_entry = Entry(
             piapps_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
-        piapps_entry.pack(pady=5)
+        piapps_entry.pack(pady=5,fill="x")
 
         piapps_list_box = Listbox(
-            piapps_search_frame, height=50, borderwidth=0, highlightthickness=0
+            piapps_search_frame, height=50,width=40, borderwidth=0, highlightthickness=0
         )
         piapps_list_box.pack(fill=BOTH)
 
@@ -4217,7 +3973,7 @@ class Software_Tab(ttk.Frame):
 
         piapps_entry.bind("<KeyRelease>", piapps_search_check)
 
-        piapps_info_frame = Frame(piapps_frame, background=frame_color)
+        piapps_info_frame = Frame(piapps_frame, background=maincolor)
         piapps_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
         piapps_pkg_info_frame = LabelFrame(
@@ -4234,8 +3990,39 @@ class Software_Tab(ttk.Frame):
         )
         piapps_pkg_info_frame.pack(anchor="n", fill="x")
 
-        piapps_pkg_name = Label(
+        piapps_icon_container = Frame(
             piapps_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        piapps_icon_container.pack(side="left",expand=True,fill="x")
+
+        piapps_icon = Label(
+            piapps_icon_container,
+            image=self.pi_appsinstall_icon,
+            font=font_10_b,
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+        )
+        piapps_icon.pack()
+
+
+        piapps_info_container = Frame(
+            piapps_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        piapps_info_container.pack()
+
+        piapps_pkg_name = Label(
+            piapps_info_container,
             text="Name:",
             font=font_10_b,
             justify="left",
@@ -4247,7 +4034,7 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_name.grid(row=0, column=0)
 
         piapps_pkg_status = Label(
-            piapps_pkg_info_frame,
+            piapps_info_container,
             text="Status:",
             font=font_10_b,
             justify="left",
@@ -4259,7 +4046,7 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_status.grid(row=1, column=0)
 
         piapps_pkg_inst = Button(
-            piapps_pkg_info_frame,
+            piapps_info_container,
             text="Install",
             justify="left",
             width=10,
@@ -4274,7 +4061,7 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_inst.grid(row=0, column=1)
 
         piapps_pkg_uninst = Button(
-            piapps_pkg_info_frame,
+            piapps_info_container,
             text="Uninstall",
             justify="left",
             width=10,
@@ -4287,6 +4074,24 @@ class Software_Tab(ttk.Frame):
             state=DISABLED,
         )
         piapps_pkg_uninst.grid(row=1, column=1, pady=5)
+
+        piapps_pkg_img_frame = LabelFrame(
+            piapps_info_frame,
+            text="Screenshot",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        piapps_pkg_img_frame.pack(anchor="n", fill=BOTH, expand=True,pady=20)
+
+        piapps_panel = Label(piapps_pkg_img_frame, bg=frame_color)
+        piapps_panel.pack(fill = "both", expand = "yes")  
+
 
         piapps_pkg_info_frame = LabelFrame(
             piapps_info_frame,
@@ -4313,6 +4118,22 @@ class Software_Tab(ttk.Frame):
         piapps_discription_text.pack(fill=BOTH, expand=True)
 
         # flatpak_entry
+
+        # Define a function that searches for the key based on the value
+        def get_key(val):
+            # If the entered value is a key in Flat_remote_dict, check if its value matches a key in flat_apt_alias
+            if val in Flat_remote_dict:
+                remote_value = Flat_remote_dict[val]
+                for key, value in flat_apt_alias.items():
+                    if remote_value == value:
+                        return key
+            # If the entered value is not a key in Flat_remote_dict, check if it's a value in flat_apt_alias
+            else:
+                for key, value in flat_apt_alias.items():
+                    if val == value:
+                        return key
+            return "Value not found in dictionaries"
+
 
         def flatpak_install():
             global pigro_skript_name
@@ -4365,6 +4186,7 @@ class Software_Tab(ttk.Frame):
             update_flatpak(flatpak_data)
 
         def flatpak_search():
+            flatpak_panel.config(image = self.no_img)
             if flatpak_entry.get() == "":
                 # print("Nop")
                 error_mass_0()
@@ -4381,6 +4203,29 @@ class Software_Tab(ttk.Frame):
                     flatpak_pkg_status.config(text="Status: Not Installed")
                     flatpak_pkg_inst.config(state=NORMAL)
                     flatpak_pkg_uninst.config(state=DISABLED)
+
+                try:
+                    flat_app = get_key(flatpak_entry.get())
+                    url = f'https://screenshots.debian.net/package/{flat_app}#gallery-1'
+                    # Make an HTTP GET request to the webpage
+                    response = requests.get(url)
+                    # Use BeautifulSoup to parse the HTML
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    # Find all links with .png extension
+                    links = [link.get('href') for link in soup.find_all('a') if link.get('href').endswith('.png')]
+                    # Print the links
+                    #print(f"https://screenshots.debian.net{str(links[1])}")
+
+                    url_output = f"https://screenshots.debian.net{str(links[1])}"
+                    with urlopen(url_output) as url_output:
+                        self.img = Image.open(url_output)
+                    self.img = resize(self.img)
+
+                    self.img = ImageTk.PhotoImage(self.img)
+                    flatpak_panel.config( image = self.img)
+                except IndexError as e:
+                    print(f"{e}")
+                    flatpak_panel.config(self.no_img)
 
                 # pkg_infos = os.popen(f"flatpak show -a {flatpak_entry.get()}")
                 # read_pkg_infos = pkg_infos.read()
@@ -4420,10 +4265,10 @@ class Software_Tab(ttk.Frame):
         flatpak_entry = Entry(
             flatpak_search_frame, font=("Sans", 14), borderwidth=0, highlightthickness=0
         )
-        flatpak_entry.pack(pady=5)
+        flatpak_entry.pack(pady=5,fill="x")
 
         flatpak_list_box = Listbox(
-            flatpak_search_frame, height=50, borderwidth=0, highlightthickness=0
+            flatpak_search_frame, height=50,width=40, borderwidth=0, highlightthickness=0
         )
         flatpak_list_box.pack(fill=BOTH)
 
@@ -4487,7 +4332,7 @@ class Software_Tab(ttk.Frame):
 
         flatpak_entry.bind("<KeyRelease>", flatpak_search_check)
 
-        flatpak_info_frame = Frame(flat_frame, background=frame_color)
+        flatpak_info_frame = Frame(flat_frame, background=maincolor)
         flatpak_info_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
         flatpak_pkg_info_frame = LabelFrame(
@@ -4504,8 +4349,41 @@ class Software_Tab(ttk.Frame):
         )
         flatpak_pkg_info_frame.pack(anchor="n", fill="x")
 
-        flatpak_pkg_name = Label(
+        flatpak_pkg_icon_container = Frame(
             flatpak_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        flatpak_pkg_icon_container.pack(side="left",expand=True,fill="x")
+
+        flatpak_pkg_icon = Label(
+            flatpak_pkg_icon_container,
+            image=self.flatpak_appsinstall_icon,
+            font=font_10_b,
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+        )
+        flatpak_pkg_icon.pack()
+
+
+        flatpak_pkg_info_container = Frame(
+            flatpak_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        flatpak_pkg_info_container.pack()
+
+
+
+        flatpak_pkg_name = Label(
+            flatpak_pkg_info_container,
             text="Name:",
             font=font_10_b,
             justify="left",
@@ -4517,7 +4395,7 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_name.grid(row=0, column=0)
 
         flatpak_pkg_status = Label(
-            flatpak_pkg_info_frame,
+            flatpak_pkg_info_container,
             text="Status:",
             font=font_10_b,
             justify="left",
@@ -4529,7 +4407,7 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_status.grid(row=1, column=0)
 
         flatpak_pkg_inst = Button(
-            flatpak_pkg_info_frame,
+            flatpak_pkg_info_container,
             text="Install",
             justify="left",
             width=10,
@@ -4544,7 +4422,7 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_inst.grid(row=0, column=1)
 
         flatpak_pkg_uninst = Button(
-            flatpak_pkg_info_frame,
+            flatpak_pkg_info_container,
             text="Uninstall",
             justify="left",
             width=10,
@@ -4557,6 +4435,24 @@ class Software_Tab(ttk.Frame):
             state=DISABLED,
         )
         flatpak_pkg_uninst.grid(row=1, column=1, pady=5)
+
+        flatpak_pkg_img_frame = LabelFrame(
+            flatpak_info_frame,
+            text="Screenshot",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            pady=20,
+            padx=20,
+            background=frame_color,
+        )
+        flatpak_pkg_img_frame.pack(anchor="n", fill=BOTH, expand=True,pady=20)
+
+        flatpak_panel = Label(flatpak_pkg_img_frame, bg=frame_color)
+        flatpak_panel.pack(fill = "both", expand = "yes")  
+ 
 
         flatpak_pkg_info_frame = LabelFrame(
             flatpak_info_frame,
@@ -4585,183 +4481,6 @@ class Software_Tab(ttk.Frame):
             "Install Flatpak:\nsudo apt install flatpak\nflatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo\nreboot",
         )
 
-        # snap_entry
-        self.snap_inst_frame = LabelFrame(
-            snap_frame,
-            text="Snap",
-            font=font_16,
-            foreground=label_frame_color,
-            relief=GROOVE,
-            borderwidth=0,
-            highlightthickness=0,
-            padx=25,
-            pady=20,
-        )
-        self.snap_inst_frame.pack(pady=20, padx=55, fill="x")
-        self.snap_inst_frame["background"] = frame_color
-
-        def error_mass_0():
-            e_mass = Error_Mass(self)
-            e_mass.grab_set()
-
-        def error_mass_1():
-            e_mass = Error_Mass(self)
-            e_mass.grab_set()
-            error_y2.config(text="Not in the list! Check for misspell.")
-
-        def snap_install():
-            if snap_inst_combo_box.get() == "":
-
-                error_mass_0()
-            elif snap_inst_combo_box.get() not in content:
-                error_mass_1()
-            else:
-                global pigro_skript_name
-                pigro_skript_name = f"Installing... {snap_inst_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = f"snap install {snap_inst_combo_box.get()} -y && exit"
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-
-        # global snap_inst_combo_box
-        snap_inst_combo_box = Entry(self.snap_inst_frame)
-        snap_inst_combo_box.config(width=26)
-
-        def snap_inst_combo_box_pop_in_kontext_menu(event):
-            snap_in_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def snap_inst_combo_box_paste():
-            snap_inst_combo_box.event_generate("<<Paste>>")
-
-        # Right Click in_kontext_menu
-        snap_in_kontext_menu = Menu(
-            snap_inst_combo_box, tearoff=0, bg="white", fg="black"
-        )
-        # options
-        snap_in_kontext_menu.add_command(
-            label="Paste", command=snap_inst_combo_box_paste
-        )
-
-        # Make the in_kontext_menu pop up
-        snap_inst_combo_box.bind(
-            "<Button - 3>", snap_inst_combo_box_pop_in_kontext_menu
-        )
-
-        self.snap_inst_btn = Button(
-            self.snap_inst_frame,
-            text="install",
-            command=snap_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#6abd43",
-            foreground=main_font,
-            font=font_10_b,
-            width=10,
-        )
-
-        self.snap_info_btn = Button(
-            self.snap_inst_frame,
-            text="Info",
-            command=snap_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            font=font_10_b,
-            foreground=main_font,
-            width=10,
-            state=DISABLED,
-        )
-
-        snap_inst_combo_box.grid(column=1, row=0)
-        self.snap_inst_btn.grid(column=0, row=0, pady=10, padx=5)
-        self.snap_info_btn.grid(column=0, row=1, padx=5)
-
-        def un_snap_install():
-            if snap_un_combo_box.get() == "":
-                error_mass_0()
-            elif snap_un_combo_box.get() not in un_content:
-                error_mass_1()
-            else:
-                global pigro_skript_name
-                pigro_skript_name = f"Uninstalling... {snap_un_combo_box.get()}"
-                global pigro_skript
-                pigro_skript = f"snap install {snap_un_combo_box.get()} -y && exit"
-                custom_pop = Custom_Installer(self)
-                custom_pop.grab_set()
-
-        # global snap_un_combo_box
-        snap_un_combo_box = Entry(self.snap_inst_frame)
-        snap_un_combo_box.config(width=26)
-
-        self.un_snap_inst_btn = Button(
-            self.snap_inst_frame,
-            text="remove",
-            command=un_snap_install,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#ee1e25",
-            foreground=main_font,
-            font=font_10_b,
-            width=10,
-        )
-
-        snap_un_combo_box.grid(column=3, row=0)
-        self.un_snap_inst_btn.grid(column=2, row=0, padx=5)
-
-        if snap_deamon_check is True:
-            snap_inst_combo_box.insert(0, "Enter a package -->")
-            snap_un_combo_box.insert(0, "Enter a package -->")
-            self.un_snap_inst_btn.config(state=NORMAL)
-            self.snap_inst_btn.config(state=NORMAL)
-        else:
-            snap_inst_combo_box.insert(0, "Snap is not installed")
-            snap_un_combo_box.insert(0, "Snap is not installed")
-            self.un_snap_inst_btn.config(state=DISABLED)
-            self.snap_inst_btn.config(state=DISABLED)
-
-        def snap_un_combo_box_pop_kontext_menu(event):
-            snap_un_kontext_menu.tk_popup(event.x_root, event.y_root)
-
-        def snap_un_combo_box_paste():
-            snap_un_combo_box.event_generate("<<Paste>>")
-
-        # Right Click kontext_menu
-        snap_un_kontext_menu = Menu(
-            snap_un_combo_box, tearoff=0, bg="white", fg="black"
-        )
-        # options
-        snap_un_kontext_menu.add_command(label="Paste", command=snap_un_combo_box_paste)
-
-        # Make the kontext_menu pop up
-        snap_un_combo_box.bind("<Button - 3>", snap_un_combo_box_pop_kontext_menu)
-
-        info_frame_snap = LabelFrame(
-            snap_frame,
-            text="Package Information",
-            font=font_16,
-            foreground=label_frame_color,
-            relief=GROOVE,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            pady=20,
-            padx=20,
-        )
-        info_frame_snap["background"] = frame_color
-        info_frame_snap.pack(fill=BOTH, expand=True, padx=55, pady=20)
-
-        T_snap = Text(
-            info_frame_snap,
-            borderwidth=0,
-            highlightthickness=0,
-            background=frame_color,
-            foreground=main_font,
-        )
-        T_snap.pack(fill=BOTH, expand=True)
-
-        quote_snap = "Infos currently disabled\n\nInstall Snap:\nsudo apt update\nsudo apt install snapd\nsudo reboot\nsudo snap install core"
-        T_snap.delete("1.0", "end")
-        T_snap.insert(END, quote_snap)
 
         self.repo_sec_frame = LabelFrame(
             repo_frame,
@@ -5299,16 +5018,17 @@ class Git_More_Tab(ttk.Frame):
 
         self.link_left = LabelFrame(
             self.link_main,
-            text="System Info",
+            text="Tutorials",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
             pady=20,
+            padx=20
         )
 
-        self.link_left.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
+        self.link_left.pack(side=LEFT, fill="y", padx=20)
         self.link_left["background"] = frame_color
 
         sources_l = [
@@ -5358,9 +5078,9 @@ class Git_More_Tab(ttk.Frame):
             highlightcolor="white",
             relief=GROOVE,
             pady=20,
-            padx=10,
+            padx=20,
         )
-        self.link_right.pack(side=LEFT, expand=True, fill=BOTH, padx=20)
+        self.link_right.pack(expand=True, fill=BOTH, padx=20)
         self.link_right["background"] = frame_color
 
         self.appname_header = Label(
@@ -5417,7 +5137,7 @@ class Git_More_Tab(ttk.Frame):
         )
         self.app_pic.pack(anchor="w")
 
-        self.app_inst = Text(self.link_right, width=90, height=20, borderwidth=0)
+        self.app_inst = Text(self.link_right, width=150, height=50, borderwidth=0,bg=frame_color,fg=main_font)
 
         def app_inst_pop_in_kontext_menu(event):
             in_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -5587,7 +5307,7 @@ class Look_Tab(ttk.Frame):
 
             gui_settings_btn_list1.append(self.gui_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if gui_settings_btn == "Tasksel":
@@ -5674,7 +5394,7 @@ exit
             self.xfce4_button_x.configure(state=DISABLED)
             xfce4_settings_btn_list1.append(self.xfce4_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if get_de == "XFCE":
@@ -5766,7 +5486,7 @@ exit
             self.pixel_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pixel_settings_btn_list1.append(self.pixel_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 9:
                 conf_row = conf_row + 1
                 conf_column = 0
             if pixel_settings_btn == "LXAppearance":
@@ -6905,7 +6625,7 @@ class Tuning_Tab(ttk.Frame):
         reboot_e.grid(row=6, column=1, pady=10)
 
         # Overclocking Values Frame
-        self.custom_settings_frame = LabelFrame(
+        self.custom_main_frame = LabelFrame(
             self.ov_state_display_frame,
             text="Current Settings",
             font=font_16,
@@ -6913,10 +6633,25 @@ class Tuning_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            padx=200,
+            #padx=200,
             pady=10,
         )
-        self.custom_settings_frame.pack(anchor="n", pady=20, padx=10, fill=BOTH)
+        self.custom_main_frame.pack(anchor="n", pady=20, padx=10, fill=BOTH)
+        self.custom_main_frame["background"] = frame_color
+
+
+
+
+        # Overclocking Values Frame
+        self.custom_settings_frame = Frame(
+            self.custom_main_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            relief=GROOVE,
+            #padx=200,
+            pady=10,
+        )
+        self.custom_settings_frame.pack()
         self.custom_settings_frame["background"] = frame_color
 
         # Additional Infos
@@ -7377,6 +7112,25 @@ class Links_Tab(ttk.Frame):
                 popen("xdg-open  https://www.xfce-look.org/s/XFCE/browse/")
             if text == "Brave Browser Nighly arm64":
                 popen("xdg-open  https://github.com/brave/brave-browser/releases")
+            if text == "Ubuntuusers.de":
+                popen("xdg-open https://wiki.ubuntuusers.de/")
+            if text == "Explainingcomputers":
+                popen("xdg-open https://www.explainingcomputers.com/")
+            if text == "Chat GPT":
+                popen("xdg-open https://chat.openai.com/")                
+            if text == "Linux Mint Community":
+                popen("xdg-open https://community.linuxmint.com/")
+            if text == "GNU/Linux.ch":
+                popen("xdg-open https://gnulinux.ch/")    
+            if text == "OMG Ubuntu":
+                popen("xdg-open https://www.omgubuntu.co.uk/")
+            if text == "Lutris":
+                popen("xdg-open https://lutris.net/games")
+            if text == "Duino Coin":
+                popen("xdg-open https://duinocoin.com/")
+            if text == "JeffGeerling.com":
+                popen("xdg-open https://www.jeffgeerling.com/")
+
 
         self.link_left = Frame(
             self,
@@ -7392,17 +7146,26 @@ class Links_Tab(ttk.Frame):
 
         sources_d = [
             "Brave Browser Nighly arm64",
+            "Chat GPT",
             "Draculatheme.com",
+            "Duino Coin",
+            "Explainingcomputers",
+            "GNU/Linux.ch",
             "Guake (Drop Down Terminal)",
+            "JeffGeerling.com",
             "LCD Wiki",
+            "Linux Mint Community",
             "Linuxcommandlibrary.com",
+            "Lutris",
             "Mankier.com (Commandline Database)",
             "My ZSH Prompt",
             "Offical Raspberry Pi Documentation",
+            "OMG Ubuntu",
             "OnBoard (Onscreen Keyboard)",
             "Papirus Nord Icon Theme",
             "Raspberry Pi Tutorials",
             "Starship (Cross-Shell-Promt)",
+            "Ubuntuusers.de",
             "WaveShare Wiki",
             "xfce-look.org",
         ]
@@ -7745,7 +7508,7 @@ printf 'Done!'"""
             justify="left",
             background=frame_color,
             foreground=main_font,
-            font=(font_12),
+            font=(font_14),
             anchor=W,
             pady=5,
         ).pack()
@@ -7759,7 +7522,7 @@ printf 'Done!'"""
             padx=20,
             pady=5,
         )
-        self.backup_frame1.pack(pady=5, padx=20, fill="x")
+        self.backup_frame1.pack(pady=5, padx=20)
         self.backup_frame1["background"] = frame_color
 
         self.step_1 = Label(
@@ -7797,7 +7560,7 @@ printf 'Done!'"""
             padx=20,
             pady=5,
         )
-        self.backup_frame2.pack(pady=5, padx=20, fill="x")
+        self.backup_frame2.pack(pady=5, padx=20)
         self.backup_frame2["background"] = frame_color
 
         self.step2 = Label(
@@ -7849,7 +7612,7 @@ printf 'Done!'"""
             justify="left",
             background=frame_color,
             foreground=main_font,
-            font=(font_12),
+            font=(font_14),
             anchor=W,
             pady=5,
         ).pack()
@@ -7862,7 +7625,7 @@ printf 'Done!'"""
             padx=20,
             pady=5,
         )
-        self.recover_frame1.pack(pady=5, padx=20, fill="x")
+        self.recover_frame1.pack(pady=5, padx=20)
         self.recover_frame1["background"] = frame_color
 
         self.step3 = Label(
@@ -7905,7 +7668,7 @@ printf 'Done!'"""
             padx=20,
             pady=5,
         )
-        self.recover_frame2.pack(pady=5, padx=20, fill="x")
+        self.recover_frame2.pack(pady=5, padx=20)
         self.recover_frame2["background"] = frame_color
 
         self.step_4 = Label(
@@ -7943,7 +7706,7 @@ printf 'Done!'"""
             padx=20,
             pady=5,
         )
-        self.recover_frame3.pack(pady=5, padx=20, fill="x")
+        self.recover_frame3.pack(pady=5, padx=20)
         self.recover_frame3["background"] = frame_color
 
         self.step5 = Label(
@@ -8130,6 +7893,6 @@ class Loading_Throbber(Label):
 
 # [End Of The Line]
 if __name__ == "__main__":
-    Get_Sys_Info()
+    #Get_Sys_Info()
     app = MainApplication()
     app.mainloop()
