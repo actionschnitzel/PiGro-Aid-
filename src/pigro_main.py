@@ -28,7 +28,8 @@ from http.client import SWITCHING_PROTOCOLS
 from PIL import ImageTk, Image
 from curses.textpad import Textbox
 from distutils.filelist import translate_pattern
-from urllib.request import urlopen
+from urllib.request import urlopen 
+import urllib.error
 import requests
 from bs4 import BeautifulSoup
 from resorcess import *
@@ -42,10 +43,10 @@ class MainApplication(tk.Tk):
         """defines the basic look of the app"""
         # Window Basics
         self.title("PiGro - Just Click It! (A più di novemila, accipicchia!)")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = maincolor
-        self.resizable(0, 0)
+        #self.resizable(0, 0)
         app_width = 1300
         app_height = 900
         global screen_width
@@ -77,40 +78,40 @@ class MainApplication(tk.Tk):
 
         # Notebook Icons
         self.status_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/com.github.hannesschulze.optimizer.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/com.github.hannesschulze.optimizer.png"
         )
-        self.system_icon = PhotoImage(file=r"images/icons/papirus/48x48/kcontrol.png")
+        self.system_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/kcontrol.png")
         self.update_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/aptdaemon-upgrade.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/aptdaemon-upgrade.png"
         )
         self.install_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/softwarecenter.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/softwarecenter.png"
         )
         self.look_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/com.github.cassidyjames.palette.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/com.github.cassidyjames.palette.png"
         )
         self.tuning_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/blackmagicraw-speedtest.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/blackmagicraw-speedtest.png"
         )
         self.links_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/applications-webapps.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/applications-webapps.png"
         )
         self.support_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/4137_winhlp32.0.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/4137_winhlp32.0.png"
         )
-        self.cam_icon = PhotoImage(file=r"images/icons/papirus/48x48/gtkam-camera.png")
+        self.cam_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png")
         self.ubuntu_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-ubuntu.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
         )
         self.auto_start = PhotoImage(
-            file=r"images/icons/papirus/48x48/cs-startup-programs.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/cs-startup-programs.png"
         )
         self.kill_proc = PhotoImage(
-            file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
-        self.git_more = PhotoImage(file=r"images/icons/papirus/48x48/git-dag.png")
+        self.git_more = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/git-dag.png")
 
-        self.deb_pack = PhotoImage(file=r"images/icons/papirus/48x48/debian-logo.png")
+        self.deb_pack = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/debian-logo.png")
 
         # Puts tabs in nav bar
         self.notebook.add(
@@ -470,22 +471,22 @@ class Dash_Tab(ttk.Frame):
             self.after(1000, refresh_OV_stats)
 
         global on_btn_icon
-        on_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/on_s_b.png")
+        on_btn_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/on_s_b.png")
 
         global off_btn_icon
-        off_btn_icon = PhotoImage(file=r"images/icons/pigro_icons/off_s_b.png")
+        off_btn_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/off_s_b.png")
 
         self.pigro_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologo.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologo.png")
         )
         self.pigroh_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologoh.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologoh.png")
         )
         self.pigrox_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologox.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologox.png")
         )
         self.pigro_feb_img = ImageTk.PhotoImage(
-            Image.open("images/icons/pigro_icons/pigrologo_feb.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologo_feb.png")
         )
 
         self.dash_pigro_logo_frame = Frame(
@@ -1239,17 +1240,17 @@ class Update_Tab(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.folder_icon = PhotoImage(file=r"images/icons/pigro_icons/folder_s.png")
-        self.up_icon = PhotoImage(file=r"images/icons/pigro_icons/pack_up_s.png")
-        self.gup_icon = PhotoImage(file=r"images/icons/pigro_icons/pack_upg_s.png")
-        self.recover_icon = PhotoImage(file=r"images/icons/pigro_icons/recover_s.png")
-        self.fup_icon = PhotoImage(file=r"images/icons/pigro_icons/pack_fupg_s.png")
-        self.allow_icon = PhotoImage(file=r"images/icons/pigro_icons/allow_s.png")
-        self.arm_icon = PhotoImage(file=r"images/icons/pigro_icons/del_s.png")
-        self.confa_icon = PhotoImage(file=r"images/icons/pigro_icons/confa_s.png")
-        self.re_icon = PhotoImage(file=r"images/icons/pigro_icons/re_s.png")
-        self.inst_icon = PhotoImage(file=r"images/icons/pigro_icons/debinst_s.png")
-        self.term_icon = PhotoImage(file=r"images/icons/pigro_icons/terminal_s.png")
+        self.folder_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/folder_s.png")
+        self.up_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/pack_up_s.png")
+        self.gup_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/pack_upg_s.png")
+        self.recover_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/recover_s.png")
+        self.fup_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/pack_fupg_s.png")
+        self.allow_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/allow_s.png")
+        self.arm_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/del_s.png")
+        self.confa_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/confa_s.png")
+        self.re_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/re_s.png")
+        self.inst_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/debinst_s.png")
+        self.term_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png")
 
         self.background = maincolor
 
@@ -1555,61 +1556,61 @@ class System_Tab(ttk.Frame):
 
         """System Tab Icons"""
         self.raspi_config_cli_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.raspi_config_gui_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.rename_user_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.edit_config_txt_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/mousepad.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
         )
-        self.gparted_icon = PhotoImage(file=r"images/icons/papirus/48x48/gparted.png")
+        self.gparted_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/gparted.png")
         self.mouse_keyboard_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/gnome-settings-keybinding.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
-        self.deskpipro_icon = PhotoImage(file=r"images/icons/pigro_icons/deskpi.png")
+        self.deskpipro_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/deskpi.png")
         self.network_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/blueman-server.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/blueman-server.png"
         )
         self.sd_card_copier_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/media-flash-sd-mmc.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/media-flash-sd-mmc.png"
         )
         self.printer_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/boomaga.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/boomaga.png"
         )
         self.desktop_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/com.github.bluesabre.darkbar.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/com.github.bluesabre.darkbar.png"
         )
         self.screen_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/grandr.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/grandr.png"
         )
-        self.neofetch_icon = PhotoImage(file=r"images/icons/pigro_icons/neofetch.png")
+        self.neofetch_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/neofetch.png")
         self.fm_godmode_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/folder-yellow.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
         self.kernel_2_latest_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-madlinux.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
-        self.boot_log_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.boot_log_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
         self.xfce_autostarts_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
         self.xfce_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
         self.taskmanager_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
-        self.cron_job_icon = PhotoImage(file=r"images/icons/papirus/48x48/mousepad.png")
+        self.bash_history_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+        self.cron_job_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png")
         self.alacard_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/classicmenu-indicator-light.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
         self.source_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/applications-interfacedesign.png"
         )
 
         # Raspberry Pi Settings
@@ -1981,73 +1982,73 @@ class System_Ubuntu_Tab(ttk.Frame):
 
         # Icon Set
         self.bp01 = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.bp02 = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
 
         """System Tab Icons"""
         self.raspi_config_cli_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.raspi_config_gui_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.rename_user_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-raspbian.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-raspbian.png"
         )
         self.edit_config_txt_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/mousepad.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
         )
-        self.gparted_icon = PhotoImage(file=r"images/icons/papirus/48x48/gparted.png")
+        self.gparted_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/gparted.png")
         self.mouse_keyboard_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/gnome-settings-keybinding.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
-        self.deskpipro_icon = PhotoImage(file=r"images/icons/pigro_icons/deskpi.png")
+        self.deskpipro_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/deskpi.png")
         self.network_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/blueman-server.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/blueman-server.png"
         )
         self.sd_card_copier_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/media-flash-sd-mmc.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/media-flash-sd-mmc.png"
         )
         self.printer_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/boomaga.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/boomaga.png"
         )
         self.desktop_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/com.github.bluesabre.darkbar.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/com.github.bluesabre.darkbar.png"
         )
         self.screen_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/grandr.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/grandr.png"
         )
-        self.neofetch_icon = PhotoImage(file=r"images/icons/pigro_icons/neofetch.png")
+        self.neofetch_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/neofetch.png")
         self.fm_godmode_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/folder-yellow.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
         self.kernel_2_latest_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/distributor-logo-madlinux.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
-        self.boot_log_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.boot_log_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
         self.xfce_autostarts_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
         self.xfce_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/desktop-environment-xfce.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
         self.taskmanager_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/appimagekit-gqrx.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
-        self.cron_job_icon = PhotoImage(file=r"images/icons/papirus/48x48/mousepad.png")
+        self.bash_history_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+        self.cron_job_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png")
         self.alacard_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/classicmenu-indicator-light.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
         self.source_settings_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/applications-interfacedesign.png"
         )
 
         self.update_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/aptdaemon-upgrade.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/aptdaemon-upgrade.png"
         )
 
         def pi_ubu_settings(text):
@@ -2191,11 +2192,11 @@ class Autostarts_Tab(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.plus_icon = PhotoImage(file=r"images/icons/pigro_icons/plus_s.png")
-        self.minus_icon = PhotoImage(file=r"images/icons/pigro_icons/minus_s.png")
-        self.add_app_icon = PhotoImage(file=r"images/icons/pigro_icons/add_app1_s.png")
-        self.help_icon = PhotoImage(file=r"images/icons/pigro_icons/help_s.png")
-        self.edit_icon = PhotoImage(file=r"images/icons/pigro_icons/edit_app_s.png")
+        self.plus_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/plus_s.png")
+        self.minus_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/minus_s.png")
+        self.add_app_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/add_app1_s.png")
+        self.help_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/help_s.png")
+        self.edit_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/edit_app_s.png")
 
         def add_auto():
             add_child = Add_Autostart(self)
@@ -2482,7 +2483,7 @@ class Update_Alternatives(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 400
@@ -2536,7 +2537,7 @@ class Edit_Autostart(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 630
@@ -2758,7 +2759,7 @@ class Add_Autostart(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 500
@@ -2875,7 +2876,7 @@ class Add_App_Autostart(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 500
@@ -3025,7 +3026,7 @@ class Tuning_Legende(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Overclocking Legend")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 500
@@ -3036,11 +3037,11 @@ class Tuning_Legende(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
-        self.tu_1 = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV_rm.png")
-        self.tu_2 = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV1.png")
-        self.tu_3 = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV2.png")
-        self.tu_4 = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV3.png")
-        self.tu_5 = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV4.png")
+        self.tu_1 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png")
+        self.tu_2 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png")
+        self.tu_3 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png")
+        self.tu_4 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png")
+        self.tu_5 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png")
 
         # Main Frame
         self.tu_main_frame = Frame(self, bg=maincolor)
@@ -3210,7 +3211,7 @@ class Done_Restart_P(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done!")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -3250,7 +3251,7 @@ class Done_(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done!")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -3291,7 +3292,7 @@ class Done_Reboot(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done! Reboot?")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -3346,7 +3347,7 @@ class Custom_Installer(tk.Toplevel):
         super().__init__(parent)
         self["background"] = "#333333"
         self.title(f"{pigro_skript_name}")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 700
@@ -3367,7 +3368,7 @@ class Custom_Installer(tk.Toplevel):
         )
         inst_show.pack(pady=20)
 
-        anim = Loading_Throbber(self, "images/icons/loading.gif")
+        anim = Loading_Throbber(self, f"{Application_path}/images/icons/loading.gif")
         anim["borderwidth"] = "0"
         anim.pack()
 
@@ -3436,10 +3437,10 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook = ttk.Notebook(self)
         self.inst_notebook.pack(fill=BOTH, expand=True)
 
-        self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
-        self.debinstall_icon = PhotoImage(file=r"images/icons/papirus/64x64/debian-logo.png")
-        self.pi_appsinstall_icon = PhotoImage(file=r"images/icons/pigro_icons/pi-apps64x64.png")
-        self.flatpak_appsinstall_icon = PhotoImage(file=r"images/icons/pigro_icons/flathub64x64.png")
+        self.deb_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/deb_s.png")
+        self.debinstall_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/64x64/debian-logo.png")
+        self.pi_appsinstall_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/pi-apps64x64.png")
+        self.flatpak_appsinstall_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/flathub64x64.png")
         self.no_img = PhotoImage(file=r"images/apps/no_image.png")
 
         # create frames
@@ -3458,7 +3459,7 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.add(apt_frame, text="APT")
         self.inst_notebook.add(piapps_frame, text="Pi Apps")
         self.inst_notebook.add(flat_frame, text="Flatpak")
-        self.inst_notebook.add(repo_frame, image=self.deb_icon, compound=BOTTOM)
+        self.inst_notebook.add(repo_frame, text="1 Click", compound=BOTTOM)
 
 
 
@@ -3532,6 +3533,12 @@ class Software_Tab(ttk.Frame):
 
         def resize(img):
             basewidth = 500
+            wpercent = (basewidth / float(img.size[0]))
+            hsize = int((float(img.size[1]) * float(wpercent)))
+            return img.resize((basewidth, hsize), Image.ANTIALIAS)
+
+        def resize2(img):
+            basewidth = 64
             wpercent = (basewidth / float(img.size[0]))
             hsize = int((float(img.size[1]) * float(wpercent)))
             return img.resize((basewidth, hsize), Image.ANTIALIAS)
@@ -3889,24 +3896,6 @@ class Software_Tab(ttk.Frame):
                 #print(app_string_web)
                 self.piapps_selecht_icon = PhotoImage(file=f"~/pi-apps/apps/{piapps_entry.get()}/icon-64.png")
                 piapps_icon.config(image=self.piapps_selecht_icon)
-                try:
-                    #app = "AbiWord"
-                    url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/pi-apps/{app_string_web}.png?raw=true"
-                    with urlopen(url_output) as url_output:
-                        self.img = Image.open(url_output)
-                    self.img = resize(self.img)
-
-                    self.img = ImageTk.PhotoImage(self.img)
-                    piapps_panel.config( image = self.img)
-                except IndexError as e:
-                    print(f"{e}")
-                    piapps_panel.config(image = self.no_img)
-
-
-
-
-                # pkg_infos = os.popen(f"piapps show -a {piapps_entry.get()}")
-                # read_pkg_infos = pkg_infos.read()
 
                 piapps_pkg_infos = open(
                     f"{home}/pi-apps/apps/{piapps_entry.get()}/description",
@@ -3917,6 +3906,28 @@ class Software_Tab(ttk.Frame):
                 insert_piapps_discription = read_piapps_pkg_infos
                 piapps_discription_text.delete("1.0", "end")
                 piapps_discription_text.insert(END, insert_piapps_discription)
+
+
+                try:
+                    #app = "AbiWord"
+                    url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/pi-apps/{app_string_web}.png?raw=true"
+                    with urlopen(url_output) as url_output:
+                        self.img = Image.open(url_output)
+                    self.img = resize(self.img)
+
+                    self.img = ImageTk.PhotoImage(self.img)
+                    piapps_panel.config( image = self.img)
+                except urllib.error.HTTPError as e:
+                    print(f"{e}")
+                    piapps_panel.config(image = self.no_img)
+
+
+
+
+                # pkg_infos = os.popen(f"piapps show -a {piapps_entry.get()}")
+                # read_pkg_infos = pkg_infos.read()
+
+
 
         piapps_search_frame = LabelFrame(
             piapps_frame,
@@ -4186,6 +4197,7 @@ class Software_Tab(ttk.Frame):
             update_flatpak(flatpak_data)
 
         def flatpak_search():
+            flatpak_pkg_icon.config(image = self.flatpak_appsinstall_icon)
             flatpak_panel.config(image = self.no_img)
             if flatpak_entry.get() == "":
                 # print("Nop")
@@ -4204,9 +4216,26 @@ class Software_Tab(ttk.Frame):
                     flatpak_pkg_inst.config(state=NORMAL)
                     flatpak_pkg_uninst.config(state=DISABLED)
 
+
                 try:
-                    flat_app = get_key(flatpak_entry.get())
-                    url = f'https://screenshots.debian.net/package/{flat_app}#gallery-1'
+                    #{Flat_remote_dict[flatpak_entry.get()]}
+                    url_output = f"https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/{Flat_remote_dict[flatpak_entry.get()]}.png"
+                    #url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/icon_db/64x64/{flat_app}.png?raw=true"
+                    with urlopen(url_output) as url_output:
+                        self.flat_icon = Image.open(url_output)
+                    self.flat_icon = resize2(self.flat_icon)
+
+                    self.flat_icon = ImageTk.PhotoImage(self.flat_icon)
+                    flatpak_pkg_icon.config( image = self.flat_icon)
+                except urllib.error.HTTPError as e:
+                    print(f"{e}")
+                    flatpak_pkg_icon.config(image = self.flatpak_appsinstall_icon)
+
+
+                try:
+                    flat_app = flatpak_entry.get()#get_key(flatpak_entry.get())
+                    flat_app.replace(" ","")
+                    url = f'https://screenshots.debian.net/package/{flat_app.lower()}#gallery-1'
                     # Make an HTTP GET request to the webpage
                     response = requests.get(url)
                     # Use BeautifulSoup to parse the HTML
@@ -4216,26 +4245,31 @@ class Software_Tab(ttk.Frame):
                     # Print the links
                     #print(f"https://screenshots.debian.net{str(links[1])}")
 
-                    url_output = f"https://screenshots.debian.net{str(links[1])}"
-                    with urlopen(url_output) as url_output:
-                        self.img = Image.open(url_output)
-                    self.img = resize(self.img)
+                    try:
+                        url_output = f"https://screenshots.debian.net{str(links[1])}"
+                        response = requests.get(url_output)
+                        if response.status_code == 200:
+                            print('Web site exists')
+                            with urlopen(url_output) as url_output:
+                                self.img = Image.open(url_output)
+                                self.img = resize(self.img)
 
-                    self.img = ImageTk.PhotoImage(self.img)
-                    flatpak_panel.config( image = self.img)
-                except IndexError as e:
+                                self.img = ImageTk.PhotoImage(self.img)
+                                flatpak_panel.config( image = self.img)
+                        else:
+                            print('Web site does not exist') 
+                    except IndexError as e:
+                        print(f"{e}")
+                        url_output = 'null'
+                        flatpak_panel.config(self.no_img)
+                except TypeError as e:
                     print(f"{e}")
-                    flatpak_panel.config(self.no_img)
+                    flatpak_panel.config(self.no_img)        
+                except urllib.error.HTTPError as e:
+                    print(f"{e}")
+                    flatpak_panel.config(self.no_img)  
 
-                # pkg_infos = os.popen(f"flatpak show -a {flatpak_entry.get()}")
-                # read_pkg_infos = pkg_infos.read()
 
-                # flatpak_pkg_infos = open(f"{home}/pi-apps/apps/{flatpak_entry.get()}/description","r",)
-                # read_flatpak_pkg_infos =  flatpak_pkg_infos.read()
-
-                # insert_flatpak_discription =  read_flatpak_pkg_infos
-                # flatpak_discription_text.delete("1.0", "end")
-                # flatpak_discription_text.insert(END, insert_flatpak_discription)
 
         flatpak_search_frame = LabelFrame(
             flat_frame,
@@ -4327,6 +4361,8 @@ class Software_Tab(ttk.Frame):
         else:
             flatpak_search_btn.config(state=DISABLED)
             flatpak_entry.insert(0, "Flatpak is not installed")
+
+
 
         flatpak_list_box.bind("<<ListboxSelect>>", flatpak_fillout)
 
@@ -4484,7 +4520,7 @@ class Software_Tab(ttk.Frame):
 
         self.repo_sec_frame = LabelFrame(
             repo_frame,
-            text="From The Repository",
+            text="From The APT Repository",
             font=font_16,
             foreground=label_frame_color,
             relief=GROOVE,
@@ -4711,7 +4747,7 @@ class Software_Tab(ttk.Frame):
             )
             instant_install_btn_list1.append(self.instant_install_button_x)
             conf_column = conf_column + 1
-            if conf_column == 4:
+            if conf_column == 6:
                 conf_row = conf_row + 1
                 conf_column = 0
 
@@ -4769,7 +4805,7 @@ class Git_More_Tab(ttk.Frame):
         self.app_xpad = PhotoImage(file=r"images/apps/app_xpad.png")
         self.app_wine64 = PhotoImage(file=r"images/apps/app_wine64.png")
         self.place_holder = PhotoImage(file=r"images/apps/git_more_placeholder.png")
-        self.app_icon = PhotoImage(file=r"images/icons/pigro_icons/terminal_s.png")
+        self.app_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png")
 
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
@@ -5208,22 +5244,22 @@ class Look_Tab(ttk.Frame):
 
         # Images/Icons
 
-        self.bash_history_icon = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.bash_history_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
         self.fm_godmode_icon = PhotoImage(
-            file=r"images/icons/papirus/48x48/folder-yellow.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
         self.ico_m = PhotoImage(
-            file=r"images/icons/papirus/48x48/applications-interfacedesign.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/applications-interfacedesign.png"
         )
-        self.bp03 = PhotoImage(file=r"images/icons/papirus/48x48/bash.png")
+        self.bp03 = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
         self.ico_m2 = PhotoImage(
-            file=r"images/icons/papirus/48x48/applications-webapps.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/applications-webapps.png"
         )
-        self.ip01 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.ip01 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
 
-        self.bluetooth = PhotoImage(file=r"images/icons/papirus/48x48/blueman.png")
+        self.bluetooth = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/blueman.png")
         self.wifi = PhotoImage(
-            file=r"images/icons/papirus/48x48/kali-wireless-attacks-trans.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/kali-wireless-attacks-trans.png"
         )
 
         def gui_settings(text):
@@ -5626,7 +5662,7 @@ class Update_Pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("PiGro Updater")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 552
@@ -5667,7 +5703,7 @@ class Update_Pop(tk.Toplevel):
             )
             app.quit()
 
-        self.auto_start = PhotoImage(file=r"images/icons/logo1.png")
+        self.auto_start = PhotoImage(file=f"{Application_path}/images/icons/logo1.png")
 
         self.actn_shn = Label(
             self,
@@ -5723,7 +5759,7 @@ class Z_Ram_Pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 552
@@ -5734,7 +5770,7 @@ class Z_Ram_Pop(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.ip03 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
 
         def z_ram_install():
 
@@ -5828,17 +5864,17 @@ class Tuning_Tab(ttk.Frame):
             e_mass.grab_set()
 
         # BG + Icons
-        self.rm_ov_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV_rm.png")
-        self.ov1_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV1.png")
-        self.ov2_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV2.png")
-        self.ov3_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV3.png")
-        self.ov4_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV4.png")
-        self.ov5_icon = PhotoImage(file=r"images/icons/pigro_icons/PiGroOV5.png")
-        self.ip03 = PhotoImage(file=r"images/icons/pigro_icons/download_ico.png")
+        self.rm_ov_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png")
+        self.ov1_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png")
+        self.ov2_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png")
+        self.ov3_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png")
+        self.ov4_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png")
+        self.ov5_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/PiGroOV5.png")
+        self.ip03 = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
         self.tu_legend_ico = PhotoImage(
-            file=r"images/icons/papirus/48x48/io.otsaloma.nfoview.png"
+            file=f"{Application_path}/images/icons/papirus/48x48/io.otsaloma.nfoview.png"
         )
-        self.zram_icon = PhotoImage(file=r"images/icons/papirus/48x48/device_mem.png")
+        self.zram_icon = PhotoImage(file=f"{Application_path}/images/icons/papirus/48x48/device_mem.png")
 
         # OV Notifications
 
@@ -7081,7 +7117,7 @@ class Links_Tab(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.link = PhotoImage(file=r"images/icons/pigro_icons/web.png")
+        self.link = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/web.png")
 
         def link_tab(text):
             if text == "Mankier.com (Commandline Database)":
@@ -7330,10 +7366,10 @@ class About_Tab(ttk.Frame):
         def paypal_link():
             popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
 
-        self.auto_start = PhotoImage(file=r"images/icons/logo1.png")
+        self.auto_start = PhotoImage(file=f"{Application_path}/images/icons/logo1.png")
 
         self.paypal_icon = PhotoImage(
-            file=r"images/icons/pigro_icons/PayPal_donation.png"
+            file=f"{Application_path}/images/icons/pigro_icons/PayPal_donation.png"
         )
 
         self.rahmen102 = Frame(
@@ -7447,10 +7483,10 @@ class Deb_Recover(ttk.Frame):
     def __init__(self, container):
         super().__init__()
 
-        self.folder_icon = PhotoImage(file=r"images/icons/pigro_icons/folder_s.png")
-        self.backup_icon = PhotoImage(file=r"images/icons/pigro_icons/backup_s.png")
-        self.deb_icon = PhotoImage(file=r"images/icons/pigro_icons/deb_s.png")
-        self.recover_icon = PhotoImage(file=r"images/icons/pigro_icons/recover_s.png")
+        self.folder_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/folder_s.png")
+        self.backup_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/backup_s.png")
+        self.deb_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/deb_s.png")
+        self.recover_icon = PhotoImage(file=f"{Application_path}/images/icons/pigro_icons/recover_s.png")
 
         def get_dir():
             self.filename = filedialog.askdirectory(
@@ -7744,7 +7780,7 @@ class Error_Mass(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Info")
-        self.icon = tk.PhotoImage(file="images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 400
