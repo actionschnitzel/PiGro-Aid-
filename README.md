@@ -24,7 +24,7 @@ PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly
 ---
 # :fire: Preview for PiGro 23.02
 
-[What's New?](https://github.com/actionschnitzel/PiGro-Aid-/wiki/What's-New%3F)
+[What's New?](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Road-To-PiGro-23.02-(Release:-June-'23))
 
 
 ---
