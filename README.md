@@ -26,9 +26,9 @@ You can quickly and easily update your software with PiGro, ensuring you're alwa
 In addition to these features, PiGro includes tools for configuring autostarts, overclocking your system, monitoring system resources, and backing up your applications. You can also use PiGro to install desktop environments and theme your OS, giving you complete control over the look and feel of your Raspberry Pi.
     
 ---
-# :fire: Preview for PiGro 23.02
+# :fire: Preview for PiGro 23.02_BETA1
 
-[What's New?](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Road-To-PiGro-23.02-(Release:-June-'23))
+[Test ME!](https://github.com/actionschnitzel/PiGro-Aid-/releases/tag/23.02)
 
 
 ---
