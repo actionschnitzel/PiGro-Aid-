@@ -36,7 +36,9 @@ from bs4 import BeautifulSoup
 from resorcess import *
 import subprocess
 from subprocess import run
-# from flatpak_alias_list import *
+from flatpak_alias_list import *
+
+# print(apt_flatpak_matches)
 
 
 class MainApplication(tk.Tk):
@@ -335,6 +337,15 @@ class Dash_Tab(ttk.Frame):
             self.hdd_used_label['text'] = f"Used: {obj_Disk.used / (2**30):.2f} GB"
             self.hdd_free_label['text'] = f"Free: {obj_Disk.free / (2**30):.2f} GB"
             self.curr_cpu_frq_label['text'] = f"Curr.: {cpufreq.current:.0f} Mhz"
+
+            net_io_counters = psutil.net_io_counters()
+            down_rate = round(net_io_counters.bytes_recv / 1024 / 1024, 2)
+            up_rate = round(net_io_counters.bytes_sent / 1024 / 1024, 2)
+
+            # Update the labels with the new network rates
+            self.downstream_label.config(
+                text=f"Downstream: {down_rate} MB/s")
+            self.upstream_label.config(text=f"Upstream: {up_rate} MB/s")
 
             """Refreshes tuning settings"""
             with open(f"{config_path}") as pi_conf:
@@ -920,9 +931,9 @@ class Dash_Tab(ttk.Frame):
         )
         self.wifi_ip_label.pack(anchor=W)
 
-        self.system_place_holder_label = Label(
+        self.downstream_label = Label(
             self.info_content_middle,
-            text=" ",
+            text="Downstream: ",
             font=font_12,
             justify="left",
             highlightthickness=0,
@@ -932,7 +943,21 @@ class Dash_Tab(ttk.Frame):
             width=30,
             anchor=W,
         )
-        self.system_place_holder_label.pack(anchor=W)
+        self.downstream_label.pack(anchor=W)
+
+        self.upstream_label = Label(
+            self.info_content_middle,
+            text="Upstream: ",
+            font=font_12,
+            justify="left",
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+            width=30,
+            anchor=W,
+        )
+        self.upstream_label.pack(anchor=W)
 
         ### Disk Info Section ###
         self.disk_info_label = Label(
@@ -1422,6 +1447,37 @@ class Update_Tab(ttk.Frame):
                     f'xterm -into %d -bg Grey11 -geometry 1000x50 -e "flatpak update -y | lolcat && sleep 5 && exit; exec bash"'
                     % wid
                 )
+            if text == "Show Upgradeble":
+                cmd = subprocess.run(
+                    ['apt', 'list', '--upgradable'], stdout=subprocess.PIPE)
+                output = cmd.stdout.decode('utf-8')
+
+                # Extract only the package names from the output
+                package_names = [line.split(
+                    '/')[0] for line in output.split('\n') if line.startswith('')]
+                package_names = [
+                    name for name in package_names if name != 'Listing...']
+
+                # Create a new frame to display the package names
+                frame = tk.Frame(
+                    self.termf, background=frame_color, padx=10, pady=10)
+                frame.pack(fill="both", expand=True)
+
+                # Create a label to display the package names
+                label = tk.Label(frame, background=frame_color,
+                                 foreground=main_font, text='\n'.join(package_names))
+                label.pack()
+
+                # Create a button to destroy the frame when clicked
+                button = tk.Button(
+                    frame,
+                    text='Close',
+                    highlightthickness=0,
+                    borderwidth=0,
+                    background=ext_btn,
+                    foreground=main_font,
+                    command=frame.destroy)
+                button.pack(pady=30)
 
         self.update_btn_frame = LabelFrame(
             self,
@@ -1450,8 +1506,8 @@ class Update_Tab(ttk.Frame):
         self.termf = Frame(
             self.update_btn_frame,
             height=600,
-            # width=960,
-            # padx=20,
+            width=960,
+            padx=20,
             highlightthickness=0,
             borderwidth=0,
         )
@@ -1482,7 +1538,7 @@ class Update_Tab(ttk.Frame):
                 self.btn_frame,
                 justify="left",
                 compound="left",
-                width=200,
+                width=210,
                 anchor="w",
                 text=up_button,
                 command=lambda text=up_button: up_action(text),
@@ -1553,6 +1609,7 @@ class Update_Tab(ttk.Frame):
                 self.up_button_x.config(image=self.term_icon)
 
         self.termf.pack(fill=BOTH, expand=True, padx=5)
+        self.termf.pack_propagate(0)
 
 
 class System_Tab(ttk.Frame):
@@ -2267,8 +2324,11 @@ class Autostarts_Tab(ttk.Frame):
         self.treeview.pack(fill='both', expand=True)
         self.populate_treeview()
         self.create_buttons()
+        self.create_autostart_frame()
 
     def populate_treeview(self):
+        for i in self.treeview.get_children():
+            self.treeview.delete(i)
         autostart_dir = os.path.expanduser(f'{home}/.config/autostart/')
         for filename in os.listdir(autostart_dir):
             if filename.endswith('.desktop'):
@@ -2290,21 +2350,13 @@ class Autostarts_Tab(ttk.Frame):
         button_frame = tk.Frame(self.auto_set, bg=frame_color)
         button_frame.pack(side='bottom', fill='x', padx=5, pady=5)
 
-        add_button = tk.Button(button_frame, text='Add',
-                               bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.add_auto)
-        add_button.pack(side='left', padx=5)
-
         disable_button = tk.Button(button_frame, text='Remove',
                                    bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.delete_selected)
         disable_button.pack(side='left', padx=5)
 
         folder_button = tk.Button(button_frame, text='Open Autostart Folder',
-                                  bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, )
+                                  bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.open_autostart_folder)
         folder_button.pack(side='left', padx=5)
-
-    def add_auto(self):
-        add_child = Add_Autostart(self)
-        add_child.grab_set()
 
     def delete_selected(self):
         selected_item = self.treeview.selection()[0]
@@ -2325,6 +2377,66 @@ class Autostarts_Tab(ttk.Frame):
             with open(app_path, 'w') as f:
                 f.write(contents)
             self.treeview.set(item, 'enabled', True)
+
+    def open_autostart_folder(self):
+        popen(f"xdg-open {home}/.config/autostart")
+
+    def create_autostart_frame(self):
+        self.auto_add = LabelFrame(
+            self,
+            text="Add Autostart",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=10,
+            padx=10,
+        )
+        self.auto_add.pack(pady=20, padx=40, fill="both")  #
+        self.auto_add["background"] = frame_color
+
+       # Create label and entry for autostart file name
+        tk.Label(self.auto_add, bg=frame_color, fg=main_font, highlightthickness=0, borderwidth=0, text="Enter Autostart File Name: (conky)").pack(
+            padx=10, pady=10)
+        self.filename_entry = tk.Entry(
+            self.auto_add, highlightthickness=0, borderwidth=0, width=50)
+        self.filename_entry.pack(padx=10)
+
+        # Create label and entry for autostart command
+        tk.Label(self.auto_add, bg=frame_color, fg=main_font, highlightthickness=0, borderwidth=0, text="Enter Autostart Command: (killall -SIGUSR1 conky)").pack(
+            padx=10, pady=10)
+        self.command_entry = tk.Entry(
+            self.auto_add, highlightthickness=0, borderwidth=0, width=50)
+        self.command_entry.pack(padx=10)
+
+        # Create button to create autostart file
+        create_file_btn = tk.Button(
+            self.auto_add, text="Create File", bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.create_autostart_file)
+        create_file_btn.pack(pady=10)
+
+    def create_autostart_file(self):
+        # Get filename and command from entries
+        filename = self.filename_entry.get()
+        command = self.command_entry.get()
+        if not filename or not command:
+            return
+
+        # Create autostart file with given name and command
+        autostart_path = os.path.expanduser(f"{home}/.config/autostart/")
+        os.makedirs(autostart_path, exist_ok=True)
+        # new_deskfile = open(f"~/.config/autostart/{filename}.desktop", "w")
+        filepath = os.path.join(autostart_path, f"{filename}.desktop")
+        with open(filepath, "w") as f:
+            f.write("[Desktop Entry]\n")
+            f.write("Type=Application\n")
+            f.write(f"Name={filename}\n")
+            f.write(f"Exec={command}\n")
+            f.write("X-GNOME-Autostart-enabled=true\n")
+        # new_deskfile.close()
+        # Close Toplevel
+        self.populate_treeview()
 
 
 class Update_Alternatives(tk.Toplevel):
@@ -2381,64 +2493,6 @@ class Update_Alternatives(tk.Toplevel):
             command=choose_up,
         )
         self.choosen_btn3.grid(column=1, row=0)
-
-
-class Add_Autostart(tk.Toplevel):
-    """child window for creating a .desktopfile in autostart folder"""
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
-        self.tk.call("wm", "iconphoto", self._w, self.icon)
-        self.resizable(0, 0)
-        app_width = 500
-        app_height = 180
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        x = (screen_width / 2) - (app_width / 2)
-        y = (screen_height / 2) - (app_height / 2)
-        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.title("Add Entry")
-        self["background"] = maincolor
-
-       # Create label and entry for autostart file name
-        tk.Label(self, text="Enter Autostart File Name:").pack(
-            padx=10, pady=10)
-        self.filename_entry = tk.Entry(self)
-        self.filename_entry.pack(padx=10)
-
-        # Create label and entry for autostart command
-        tk.Label(self, text="Enter Autostart Command:").pack(padx=10, pady=10)
-        self.command_entry = tk.Entry(self)
-        self.command_entry.pack(padx=10)
-
-        # Create button to create autostart file
-        create_file_btn = tk.Button(
-            self, text="Create File", command=self.create_autostart_file)
-        create_file_btn.pack(pady=10)
-
-    def create_autostart_file(self):
-        # Get filename and command from entries
-        filename = self.filename_entry.get()
-        command = self.command_entry.get()
-        if not filename or not command:
-            return
-
-        # Create autostart file with given name and command
-        autostart_path = os.path.expanduser(f"{home}/.config/autostart/")
-        os.makedirs(autostart_path, exist_ok=True)
-        # new_deskfile = open(f"~/.config/autostart/{filename}.desktop", "w")
-        filepath = os.path.join(autostart_path, f"{filename}.desktop")
-        with open(filepath, "w") as f:
-            f.write("[Desktop Entry]\n")
-            f.write("Type=Application\n")
-            f.write(f"Name={filename}\n")
-            f.write(f"Exec={command}\n")
-            f.write("X-GNOME-Autostart-enabled=true\n")
-        # new_deskfile.close()
-        # Close Toplevel
-        self.destroy()
 
 
 class Tuning_Legende(tk.Toplevel):
@@ -2973,6 +3027,22 @@ class Software_Tab(ttk.Frame):
             hsize = int((float(img.size[1]) * float(wpercent)))
             return img.resize((basewidth, hsize), Image.ANTIALIAS)
 
+        def get_debian_icon():
+            if apt_entry.get() in apt_flatpak_matches:
+                try:
+                    url_output = f"https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/{apt_flatpak_matches[apt_entry.get()]}.png"
+                    with urlopen(url_output) as url_output:
+                        self.deb_icon = Image.open(url_output)
+                    self.deb_icon = resize2(self.deb_icon)
+
+                    self.deb_icon = ImageTk.PhotoImage(self.deb_icon)
+                    apt_pkg_icon.config(image=self.deb_icon)
+                except urllib.error.HTTPError as e:
+                    print(f"{e}")
+                    apt_pkg_icon.config(image=self.debinstall_icon)
+            else:
+                apt_pkg_icon.config(image=self.debinstall_icon)
+
         def apt_screenshot():
             try:
                 apt_app = str(apt_entry.get())
@@ -3024,6 +3094,7 @@ class Software_Tab(ttk.Frame):
                 discription_text.delete("1.0", "end")
                 discription_text.insert(END, insert_discription)
 
+                get_debian_icon()
                 apt_screenshot()
 
         apt_search_frame = LabelFrame(
@@ -3230,7 +3301,12 @@ class Software_Tab(ttk.Frame):
             foreground=main_font,
             font=("Sans", 9),
         )
-        discription_text.pack(fill=BOTH, expand=True)
+        discription_text.pack(side=LEFT, fill=BOTH, expand=True)
+
+        discription_scrollbar = ttk.Scrollbar(
+            apt_pkg_info_frame, orient=VERTICAL, command=discription_text.yview)
+        discription_text.configure(yscrollcommand=discription_scrollbar.set)
+        discription_scrollbar.pack(side=LEFT, fill=Y)
 
         # pi apps_entry
         def piapps_install():
@@ -3331,7 +3407,6 @@ class Software_Tab(ttk.Frame):
                 piapps_discription_text.insert(END, insert_piapps_discription)
 
                 try:
-                    # app = "AbiWord"
                     url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/pi-apps/{app_string_web}.png?raw=true"
                     with urlopen(url_output) as url_output:
                         self.img = Image.open(url_output)
@@ -3391,7 +3466,6 @@ class Software_Tab(ttk.Frame):
             for i, s in enumerate(piapps_cache_content):
                 piapps_cache_content[i] = s.strip()
 
-            # open(f"/home/{user}/.pigro/pi-apps_installed.list", "r")
             piapps_installed = pi_apps_installed_list
             piapps_installed_content = piapps_installed  # .readlines()
             for i, s in enumerate(piapps_installed_content):
@@ -3507,6 +3581,25 @@ class Software_Tab(ttk.Frame):
         )
         piapps_pkg_uninst.grid(row=1, column=1, pady=5)
 
+        def install_piapps_apt():
+            popen(f"x-terminal-emulator -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'")
+
+        if piapps_path == False:
+            piapps_app_inst = Button(
+                piapps_info_container,
+                text="Install Pi-Apps",
+                justify="left",
+                width=20,
+                background=ext_btn,
+                foreground=main_font,
+                font=font_10_b,
+                borderwidth=0,
+                highlightthickness=0,
+                command=install_piapps_apt,
+
+            )
+            piapps_app_inst.grid(row=2, column=0, columnspan=2)
+
         piapps_pkg_img_frame = LabelFrame(
             piapps_info_frame,
             text="Screenshot",
@@ -3546,24 +3639,15 @@ class Software_Tab(ttk.Frame):
             foreground=main_font,
             font=("Sans", 9),
         )
-        piapps_discription_text.pack(fill=BOTH, expand=True)
+        piapps_discription_text.pack(side=LEFT, fill=BOTH, expand=True)
+
+        piapps_discription_scrollbar = ttk.Scrollbar(
+            piapps_pkg_info_frame, orient=VERTICAL, command=piapps_discription_text.yview)
+        piapps_discription_text.configure(
+            yscrollcommand=piapps_discription_scrollbar.set)
+        piapps_discription_scrollbar.pack(side=LEFT, fill=Y)
 
         # flatpak_entry
-
-        # Define a function that searches for the key based on the value
-        def get_key(val):
-            # If the entered value is a key in Flat_remote_dict, check if its value matches a key in flat_apt_alias
-            if val in Flat_remote_dict:
-                remote_value = Flat_remote_dict[val]
-                for key, value in flat_apt_alias.items():
-                    if remote_value == value:
-                        return key
-            # If the entered value is not a key in Flat_remote_dict, check if it's a value in flat_apt_alias
-            else:
-                for key, value in flat_apt_alias.items():
-                    if val == value:
-                        return key
-            return "Value not found in dictionaries"
 
         def flatpak_install():
             global pigro_skript_name
@@ -3572,7 +3656,7 @@ class Software_Tab(ttk.Frame):
             pigro_skript = f"flatpak install flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
-            # print(Flat_remote_dict[flatpak_entry.get()])
+
             for key, value in Flat_remote_dict.items():
                 if key == flatpak_entry.get():
                     # print(key + value)
@@ -3587,7 +3671,7 @@ class Software_Tab(ttk.Frame):
             pigro_skript = f"flatpak uninstall flathub {Flat_remote_dict[flatpak_entry.get()]} -y && exit"
             custom_pop = Custom_Installer(self)
             custom_pop.grab_set()
-            # print(Flat_remote_dict[flatpak_entry.get()])
+
             for key, value in Flat_remote_dict.items():
                 if key == flatpak_entry.get():
                     # print(key + value)
@@ -3627,9 +3711,7 @@ class Software_Tab(ttk.Frame):
 
         def get_flatpak_icon():
             try:
-                # {Flat_remote_dict[flatpak_entry.get()]}
                 url_output = f"https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/{Flat_remote_dict[flatpak_entry.get()]}.png"
-                # url_output = f"https://github.com/actionschnitzel/PiGro-Aid-/blob/data/screenshots/icon_db/64x64/{flat_app}.png?raw=true"
                 with urlopen(url_output) as url_output:
                     self.flat_icon = Image.open(url_output)
                 self.flat_icon = resize2(self.flat_icon)
@@ -3895,6 +3977,24 @@ class Software_Tab(ttk.Frame):
         )
         flatpak_pkg_uninst.grid(row=1, column=1, pady=5)
 
+        def install_flatpak_apt():
+            popen(f"x-terminal-emulator -e 'bash -c \"sudo apt install flatpak -y && flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo; exec bash\"'")
+        if flatpak_path == False:
+            flatpak_app_inst = Button(
+                flatpak_pkg_info_container,
+                text="Install Flatpak",
+                justify="left",
+                width=20,
+                background=ext_btn,
+                foreground=main_font,
+                font=font_10_b,
+                borderwidth=0,
+                highlightthickness=0,
+                command=install_flatpak_apt,
+
+            )
+            flatpak_app_inst.grid(row=2, column=0, columnspan=2)
+
         flatpak_pkg_img_frame = LabelFrame(
             flatpak_info_frame,
             text="Screenshot",
@@ -3933,11 +4033,17 @@ class Software_Tab(ttk.Frame):
             background=frame_color,
             foreground=main_font,
         )
-        flatpak_discription_text.pack(fill=BOTH, expand=True)
+        flatpak_discription_text.pack(side=LEFT, fill=BOTH, expand=True)
         flatpak_discription_text.insert(
             END,
             "Install Flatpak:\nsudo apt install flatpak\nflatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo\nreboot",
         )
+
+        flatpak_flatpak_discription_text = ttk.Scrollbar(
+            flatpak_pkg_info_frame, orient=VERTICAL, command=flatpak_discription_text.yview)
+        flatpak_discription_text.configure(
+            yscrollcommand=flatpak_flatpak_discription_text.set)
+        flatpak_flatpak_discription_text.pack(side=LEFT, fill=Y)
 
         self.repo_sec_frame = LabelFrame(
             repo_frame,
@@ -4062,57 +4168,43 @@ class Software_Tab(ttk.Frame):
                 custom_pop.grab_set()
 
             if text == "BPYTop":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... bpytop"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install bpytop -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "Compiz":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... compiz"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install compiz -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "Gnome-Pie":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... gnome-pie"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install gnome-pie -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "GParted":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... gparted"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install gparted -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "Pi Imager":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... rpi-imager"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install rpi-imager -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "Plank":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... plank"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install plank -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
 
             if text == "Xfce4 Screenshooter":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... xfce4-screenshooter"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install xfce4-screenshooter -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
@@ -4150,7 +4242,7 @@ class Software_Tab(ttk.Frame):
         for instant_install_btn in instant_install_btn_list:
             self.instant_install_button_x = Button(
                 self.repo_sec_frame,
-                width=180,
+                width=200,
                 justify="left",
                 anchor="w",
                 compound="left",
@@ -6691,8 +6783,7 @@ class Tasks_Tab(ttk.Frame):
             background=frame_color,
         )
 
-        self.proc_frame.pack(pady=40,padx=40,fill="both",expand=True)
-
+        self.proc_frame.pack(pady=40, padx=40, fill="both", expand=True)
 
         # create the treeview
         self.tree = ttk.Treeview(self.proc_frame, columns=('pid', 'memory'))
@@ -6700,7 +6791,8 @@ class Tasks_Tab(ttk.Frame):
         self.tree.heading('pid', text='PID')
         self.tree.heading('memory', text='Memory Usage (MB)')
         # create a scrollbar for the treeview
-        scrollbar = ttk.Scrollbar(self.proc_frame, orient='vertical', command=self.tree.yview)
+        scrollbar = ttk.Scrollbar(
+            self.proc_frame, orient='vertical', command=self.tree.yview)
         self.tree.configure(yscrollcommand=scrollbar.set)
 
         # pack the treeview and scrollbar widgets
@@ -6717,8 +6809,8 @@ class Tasks_Tab(ttk.Frame):
             borderwidth=0,
             background=ext_btn,
             foreground=main_font,
-            font=font_10, 
-            text='Terminate Process', 
+            font=font_10,
+            text='Terminate Process',
             command=self.terminate_process)
         self.terminate_button.pack(pady=20)
 
@@ -6739,7 +6831,8 @@ class Tasks_Tab(ttk.Frame):
                 memory_mb = round(memory / (1024 * 1024), 2)
                 if name not in self.processes:
                     # add the process to the treeview
-                    item = self.tree.insert('', 'end', text=name, values=(pid, memory_mb))
+                    item = self.tree.insert(
+                        '', 'end', text=name, values=(pid, memory_mb))
                     # store the process ID and treeview item for later use
                     self.processes[name] = (pid, item)
                 else:
@@ -6765,10 +6858,6 @@ class Tasks_Tab(ttk.Frame):
             proc.terminate()
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-
-
-
-
 
 
 class About_Tab(ttk.Frame):
