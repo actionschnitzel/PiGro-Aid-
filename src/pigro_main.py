@@ -38,8 +38,6 @@ import subprocess
 from subprocess import run
 from flatpak_alias_list import *
 
-# print(apt_flatpak_matches)
-
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -47,8 +45,7 @@ class MainApplication(tk.Tk):
         """defines the basic look of the app"""
         # Window Basics
         self.title("PiGro - Just Click It! (Eseguire l'ordine 66!)")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self["background"] = maincolor
         self.resizable(0, 0)
@@ -86,7 +83,8 @@ class MainApplication(tk.Tk):
             file=f"{Application_path}/images/icons/papirus/48x48/com.github.hannesschulze.optimizer.png"
         )
         self.system_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/kcontrol.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/kcontrol.png"
+        )
         self.update_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/aptdaemon-upgrade.png"
         )
@@ -106,7 +104,8 @@ class MainApplication(tk.Tk):
             file=f"{Application_path}/images/icons/papirus/48x48/4137_winhlp32.0.png"
         )
         self.cam_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png"
+        )
         self.ubuntu_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
         )
@@ -117,10 +116,12 @@ class MainApplication(tk.Tk):
             file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
         self.git_more = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/git-dag.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/desktop-effects.png"
+        )
 
         self.deb_pack = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/debian-logo.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/debian-logo.png"
+        )
 
         # Puts tabs in nav bar
         self.notebook.add(
@@ -154,17 +155,18 @@ class MainApplication(tk.Tk):
         self.notebook.add(
             self.Software_Tab, compound=LEFT, text="Software", image=self.install_icon
         )
-
         self.notebook.add(
-            self.Deb_Recover_Tab, compound=LEFT, text="Backup", image=self.deb_pack
-        )
-        self.notebook.add(
-            self.Git_More_Tab, compound=LEFT, text="Git & More", image=self.git_more
+            self.Git_More_Tab, compound=LEFT, text="Nice 2 Have", image=self.git_more
         )
 
         self.notebook.add(
             self.Tuning_Tab, compound=LEFT, text="Tuning", image=self.tuning_icon
         )
+
+        self.notebook.add(
+            self.Deb_Recover_Tab, compound=LEFT, text="Backup", image=self.deb_pack
+        )
+
         self.notebook.add(
             self.Links_Tab, compound=LEFT, text="Links", image=self.links_icon
         )
@@ -201,8 +203,8 @@ class MainApplication(tk.Tk):
             borderwidth=0,
             background=nav_color,
             foreground=main_font,
-            font=font_14,
-            width=10,
+            font=font_12,
+            width=12,
             highlightthickness=0,
         )
         noteStyler.configure("TFrame", background=maincolor)
@@ -212,8 +214,9 @@ class MainApplication(tk.Tk):
             foreground=[("selected", label_frame_color)],
         )
 
-        noteStyler.configure("Vertical.TScrollbar",
-                             background=ext_btn, troughcolor=frame_color)
+        noteStyler.configure(
+            "Vertical.TScrollbar", background=ext_btn, troughcolor=frame_color
+        )
 
         TROUGH_COLOR = nav_color
         BAR_COLOR = "#007acc"
@@ -245,12 +248,15 @@ class MainApplication(tk.Tk):
             darkcolor=BAR_COLOR,
         )
 
-        noteStyler.configure("Treeview.Heading", font=(
-            "TkDefaultFont", 12), foreground=main_font, background=frame_color)
+        noteStyler.configure(
+            "Treeview.Heading",
+            font=("TkDefaultFont", 12),
+            foreground=main_font,
+            background=frame_color,
+        )
 
         # Seperator Theme
-        noteStyler.configure(
-            "Line.TSeparator", background="grey", rekief="sunken")
+        noteStyler.configure("Line.TSeparator", background="grey", rekief="sunken")
         # Compbox Theme
 
         noteStyler.configure(
@@ -299,14 +305,14 @@ class Dash_Tab(ttk.Frame):
             network_stats = psutil.net_if_addrs()
             cpu_usage = psutil.cpu_percent()
             ram_usage = psutil.virtual_memory().percent
-            hdd_usage = psutil.disk_usage('/').percent
+            hdd_usage = psutil.disk_usage("/").percent
 
             # Update the progress bars and percentage labels
 
-            self.cpu_percent['text'] = f"{cpu_usage}%"
-            self.cpu_temp_percent['text'] = f"{cpu_temp}°C"
-            self.ram_percent['text'] = f"{ram_usage}%"
-            self.hdd_percent['text'] = f"{hdd_usage}%"
+            self.cpu_percent["text"] = f"{cpu_usage}%"
+            self.cpu_temp_percent["text"] = f"{cpu_temp}°C"
+            self.ram_percent["text"] = f"{ram_usage}%"
+            self.hdd_percent["text"] = f"{hdd_usage}%"
 
             ethernet_ipv4 = network_stats["eth0"][0][1]
             ethernet_mac_address = network_stats["eth0"][0][2]
@@ -333,18 +339,17 @@ class Dash_Tab(ttk.Frame):
             self.eth_ip_label.config(text=f"Ethernet IP: {ethernet_ipv4}")
             self.wifi_ip_label.config(text=f"WiFi IP: {wifi_ipv4}")
 
-            self.sysinf_hdd_t['text'] = f"Total: {obj_Disk.total / (2**30):.2f} GB"
-            self.hdd_used_label['text'] = f"Used: {obj_Disk.used / (2**30):.2f} GB"
-            self.hdd_free_label['text'] = f"Free: {obj_Disk.free / (2**30):.2f} GB"
-            self.curr_cpu_frq_label['text'] = f"Curr.: {cpufreq.current:.0f} Mhz"
+            self.sysinf_hdd_t["text"] = f"Total: {obj_Disk.total / (2**30):.2f} GB"
+            self.hdd_used_label["text"] = f"Used: {obj_Disk.used / (2**30):.2f} GB"
+            self.hdd_free_label["text"] = f"Free: {obj_Disk.free / (2**30):.2f} GB"
+            self.curr_cpu_frq_label["text"] = f"Curr.: {cpufreq.current:.0f} Mhz"
 
             net_io_counters = psutil.net_io_counters()
             down_rate = round(net_io_counters.bytes_recv / 1024 / 1024, 2)
             up_rate = round(net_io_counters.bytes_sent / 1024 / 1024, 2)
 
             # Update the labels with the new network rates
-            self.downstream_label.config(
-                text=f"Downstream: {down_rate} MB/s")
+            self.downstream_label.config(text=f"Downstream: {down_rate} MB/s")
             self.upstream_label.config(text=f"Upstream: {up_rate} MB/s")
 
             """Refreshes tuning settings"""
@@ -352,34 +357,34 @@ class Dash_Tab(ttk.Frame):
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "arm_freq" in line:
-                    dash_arm_f_display['text'] = f"Arm Freq: {line[9:-1]} MHz"
+                    dash_arm_f_display["text"] = f"Arm Freq: {line[9:-1]} MHz"
 
                 if "#arm_freq=800" in line:
-                    dash_arm_f_display['text'] = "Arm Freq: N/A"
+                    dash_arm_f_display["text"] = "Arm Freq: N/A"
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "gpu_freq" in line:
-                    dash_gpu_f_display['text'] = f"Gpu Freq: {line[9:-1]} MHz"
+                    dash_gpu_f_display["text"] = f"Gpu Freq: {line[9:-1]} MHz"
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "force_turbo" in line:
-                    dash_force_t_display['text'] = f"Force Turbo: {line[12:-1]}"
+                    dash_force_t_display["text"] = f"Force Turbo: {line[12:-1]}"
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "over_voltage" in line:
-                    dash_over_v_display['text'] = f"Over Voltage: {line[13:-1]}"
+                    dash_over_v_display["text"] = f"Over Voltage: {line[13:-1]}"
 
             with open(f"{config_path}") as pi_conf:
                 datafile = pi_conf.readlines()
             for line in datafile:
                 if "gpu_mem" in line:
-                    dash_gpu_m_display['text'] = f"Gpu Mem: {line[8:-1]} MB"
+                    dash_gpu_m_display["text"] = f"Gpu Mem: {line[8:-1]} MB"
 
             self.after(1000, refresh_sys_stats)
 
@@ -441,27 +446,25 @@ class Dash_Tab(ttk.Frame):
 
         global on_btn_icon
         on_btn_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/on_s_b.png")
+            file=f"{Application_path}/images/icons/pigro_icons/on_s_b.png"
+        )
 
         global off_btn_icon
         off_btn_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/off_s_b.png")
+            file=f"{Application_path}/images/icons/pigro_icons/off_s_b.png"
+        )
 
         self.pigro_img = ImageTk.PhotoImage(
-            Image.open(
-                f"{Application_path}/images/icons/pigro_icons/pigrologo.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologo.png")
         )
         self.pigroh_img = ImageTk.PhotoImage(
-            Image.open(
-                f"{Application_path}/images/icons/pigro_icons/pigrologoh.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologoh.png")
         )
         self.pigrox_img = ImageTk.PhotoImage(
-            Image.open(
-                f"{Application_path}/images/icons/pigro_icons/pigrologox.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologox.png")
         )
         self.pigro_feb_img = ImageTk.PhotoImage(
-            Image.open(
-                f"{Application_path}/images/icons/pigro_icons/pigrologo_feb.png")
+            Image.open(f"{Application_path}/images/icons/pigro_icons/pigrologo_feb.png")
         )
 
         self.dash_pigro_logo_frame = Frame(
@@ -506,7 +509,8 @@ class Dash_Tab(ttk.Frame):
             pady=20,
             padx=10,
             width=885,
-            height=100)
+            height=100,
+        )
 
         # .place(x=120, y=750, width=885)
         self.usage_frame.pack(pady=20)
@@ -527,39 +531,99 @@ class Dash_Tab(ttk.Frame):
         self.useage_container["background"] = frame_color
 
         # Create a label and progress bar for CPU usage
-        cpu_label = Label(self.useage_container, text="CPU", font=font_12, highlightthickness=0,
-                          borderwidth=0, background=frame_color, foreground=label_frame_color, width=20)
+        cpu_label = Label(
+            self.useage_container,
+            text="CPU",
+            font=font_12,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=20,
+        )
         cpu_label.grid(row=1, column=0)
 
-        self.cpu_percent = Label(self.useage_container, text="0%", font=font_20, highlightthickness=0,
-                                 borderwidth=0, background=frame_color, foreground=main_font)
+        self.cpu_percent = Label(
+            self.useage_container,
+            text="0%",
+            font=font_20,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+        )
         self.cpu_percent.grid(row=0, column=0)
 
         # Create a label and progress bar for CPU usage
-        cpu_temp_label = Label(self.useage_container, text="CPU Temp", font=font_12, highlightthickness=0,
-                               borderwidth=0, background=frame_color, foreground=label_frame_color, width=20)
+        cpu_temp_label = Label(
+            self.useage_container,
+            text="CPU Temp",
+            font=font_12,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=20,
+        )
         cpu_temp_label.grid(row=1, column=1)
 
-        self.cpu_temp_percent = Label(self.useage_container, text="0%", font=font_20, highlightthickness=0,
-                                      borderwidth=0, background=frame_color, foreground=main_font)
+        self.cpu_temp_percent = Label(
+            self.useage_container,
+            text="0%",
+            font=font_20,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+        )
         self.cpu_temp_percent.grid(row=0, column=1)
 
         # Create a label and progress bar for RAM usage
-        ram_label = Label(self.useage_container, text="RAM", font=font_12, highlightthickness=0,
-                          borderwidth=0, background=frame_color, foreground=label_frame_color, width=20)
+        ram_label = Label(
+            self.useage_container,
+            text="RAM",
+            font=font_12,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=20,
+        )
         ram_label.grid(row=1, column=2)
 
-        self.ram_percent = Label(self.useage_container, text="0%", font=font_20, highlightthickness=0,
-                                 borderwidth=0, background=frame_color, foreground=main_font)
+        self.ram_percent = Label(
+            self.useage_container,
+            text="0%",
+            font=font_20,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+        )
         self.ram_percent.grid(row=0, column=2)
 
         # Create a label and progress bar for HDD usage
-        hdd_label = Label(self.useage_container, text="HDD", font=font_12, highlightthickness=0,
-                          borderwidth=0, background=frame_color, foreground=label_frame_color, width=20)
+        hdd_label = Label(
+            self.useage_container,
+            text="HDD",
+            font=font_12,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=label_frame_color,
+            width=20,
+        )
         hdd_label.grid(row=1, column=3)
 
-        self.hdd_percent = Label(self.useage_container, text="0%", font=font_20, highlightthickness=0,
-                                 borderwidth=0, background=frame_color, foreground=main_font)
+        self.hdd_percent = Label(
+            self.useage_container,
+            text="0%",
+            font=font_20,
+            highlightthickness=0,
+            borderwidth=0,
+            background=frame_color,
+            foreground=main_font,
+        )
         self.hdd_percent.grid(row=0, column=3)
 
         self.info_main_frame = Frame(
@@ -1199,7 +1263,7 @@ class Dash_Tab(ttk.Frame):
             pady=20,
             padx=10,
             width=885,
-            height=80
+            height=80,
         )
 
         # .place(x=120, y=750, width=885)
@@ -1254,27 +1318,38 @@ class Update_Tab(ttk.Frame):
         super().__init__()
 
         self.folder_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/folder_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/folder_s.png"
+        )
         self.up_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/pack_up_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/pack_up_s.png"
+        )
         self.gup_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/pack_upg_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/pack_upg_s.png"
+        )
         self.recover_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/recover_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/recover_s.png"
+        )
         self.fup_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/pack_fupg_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/pack_fupg_s.png"
+        )
         self.allow_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/allow_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/allow_s.png"
+        )
         self.arm_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/del_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/del_s.png"
+        )
         self.confa_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/confa_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/confa_s.png"
+        )
         self.re_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/re_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/re_s.png"
+        )
         self.inst_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/debinst_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/debinst_s.png"
+        )
         self.term_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png"
+        )
 
         self.background = maincolor
 
@@ -1296,8 +1371,9 @@ class Update_Tab(ttk.Frame):
             pady=20,
         )
 
-        self.off_rep_frame.pack(side="left", fill=BOTH,
-                                expand=True)  # .grid(row=0, column=0)
+        self.off_rep_frame.pack(
+            side="left", fill=BOTH, expand=True
+        )  # .grid(row=0, column=0)
         self.off_rep_frame["background"] = frame_color
 
         self.tu_info = Label(
@@ -1327,7 +1403,7 @@ class Update_Tab(ttk.Frame):
         self.tree.heading("three", text="Source Parameters", anchor=tk.W)
 
         # read the contents of the sources.list file
-        with open('/etc/apt/sources.list', 'r') as f:
+        with open("/etc/apt/sources.list", "r") as f:
             sources = f.readlines()
 
         # add each line of the file as an item in the treeview
@@ -1335,8 +1411,13 @@ class Update_Tab(ttk.Frame):
             # split the line into three columns based on the space character
             source_cols = source.strip().split(" ", 2)
             # add the columns as values to the treeview item
-            self.tree.insert(parent="", index=i, iid=i, text=str(
-                i+1), values=(source_cols[0], source_cols[1], source_cols[2]))
+            self.tree.insert(
+                parent="",
+                index=i,
+                iid=i,
+                text=str(i + 1),
+                values=(source_cols[0], source_cols[1], source_cols[2]),
+            )
 
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame,
@@ -1449,34 +1530,41 @@ class Update_Tab(ttk.Frame):
                 )
             if text == "Show Upgradeble":
                 cmd = subprocess.run(
-                    ['apt', 'list', '--upgradable'], stdout=subprocess.PIPE)
-                output = cmd.stdout.decode('utf-8')
+                    ["apt", "list", "--upgradable"], stdout=subprocess.PIPE
+                )
+                output = cmd.stdout.decode("utf-8")
 
                 # Extract only the package names from the output
-                package_names = [line.split(
-                    '/')[0] for line in output.split('\n') if line.startswith('')]
                 package_names = [
-                    name for name in package_names if name != 'Listing...']
+                    line.split("/")[0]
+                    for line in output.split("\n")
+                    if line.startswith("")
+                ]
+                package_names = [name for name in package_names if name != "Listing..."]
 
                 # Create a new frame to display the package names
-                frame = tk.Frame(
-                    self.termf, background=frame_color, padx=10, pady=10)
+                frame = tk.Frame(self.termf, background=frame_color, padx=10, pady=10)
                 frame.pack(fill="both", expand=True)
 
                 # Create a label to display the package names
-                label = tk.Label(frame, background=frame_color,
-                                 foreground=main_font, text='\n'.join(package_names))
+                label = tk.Label(
+                    frame,
+                    background=frame_color,
+                    foreground=main_font,
+                    text="\n".join(package_names),
+                )
                 label.pack()
 
                 # Create a button to destroy the frame when clicked
                 button = tk.Button(
                     frame,
-                    text='Close',
+                    text="Close",
                     highlightthickness=0,
                     borderwidth=0,
                     background=ext_btn,
                     foreground=main_font,
-                    command=frame.destroy)
+                    command=frame.destroy,
+                )
                 button.pack(pady=30)
 
         self.update_btn_frame = LabelFrame(
@@ -1490,8 +1578,7 @@ class Update_Tab(ttk.Frame):
             padx=20,
             pady=20,
         )
-        self.update_btn_frame.pack(
-            padx=28, pady=10, anchor="n", expand=True, fill="x")
+        self.update_btn_frame.pack(padx=28, pady=10, anchor="n", expand=True, fill="x")
         self.update_btn_frame["background"] = frame_color
 
         self.btn_frame = Frame(
@@ -1547,8 +1634,7 @@ class Update_Tab(ttk.Frame):
                 background=ext_btn,
                 foreground=main_font,
             )
-            self.up_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.up_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             up_button_list1.append(self.up_button_x)
             conf_column = conf_column + 1
             if conf_column == 5:
@@ -1593,8 +1679,7 @@ class Update_Tab(ttk.Frame):
                 )
             if up_button == "dpkg -i (File Picker)":
                 self.up_button_x.config(image=self.inst_icon)
-                up_button_x_ttp = CreateToolTip(
-                    self.up_button_x, "Install a .DEB file")
+                up_button_x_ttp = CreateToolTip(self.up_button_x, "Install a .DEB file")
             if up_button == "dpkg --configure -a":
                 self.up_button_x.config(image=self.confa_icon)
                 up_button_x_ttp = CreateToolTip(
@@ -1632,12 +1717,14 @@ class System_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
         )
         self.gparted_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/gparted.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/gparted.png"
+        )
         self.mouse_keyboard_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
         self.deskpipro_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/deskpi.png")
+            file=f"{Application_path}/images/icons/pigro_icons/deskpi.png"
+        )
         self.network_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/blueman-server.png"
         )
@@ -1654,7 +1741,8 @@ class System_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/grandr.png"
         )
         self.neofetch_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/neofetch.png")
+            file=f"{Application_path}/images/icons/pigro_icons/neofetch.png"
+        )
         self.fm_godmode_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
@@ -1662,7 +1750,8 @@ class System_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
         self.boot_log_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.xfce_autostarts_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
@@ -1673,9 +1762,11 @@ class System_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
         self.bash_history_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.cron_job_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
+        )
         self.alacard_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
@@ -1702,7 +1793,8 @@ class System_Tab(ttk.Frame):
 
             if text == "Recommended Software":
                 popen(
-                    "env SUDO_ASKPASS=/usr/lib/rp-prefapps/pwdrpp.sh sudo -AE rp-prefapps")
+                    "env SUDO_ASKPASS=/usr/lib/rp-prefapps/pwdrpp.sh sudo -AE rp-prefapps"
+                )
 
         self.pi_set = LabelFrame(
             self,
@@ -1724,7 +1816,7 @@ class System_Tab(ttk.Frame):
             "Edit Config.txt",
             "Raspi-Config CLI",
             "Raspi-Config GUI",
-            "Recommended Software"
+            "Recommended Software",
         ]
 
         pi_settings_btn_list1 = []
@@ -1744,8 +1836,7 @@ class System_Tab(ttk.Frame):
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.pi_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.pi_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pi_settings_btn_list1.append(self.pi_button_x)
             conf_column = conf_column + 1
             if conf_column == 7:
@@ -1830,8 +1921,7 @@ class System_Tab(ttk.Frame):
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.device_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.device_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             device_settings_btn_list1.append(self.device_button_x)
             conf_column = conf_column + 1
             if conf_column == 7:
@@ -1886,8 +1976,7 @@ class System_Tab(ttk.Frame):
                 screen_height = pop_kernel.winfo_screenheight()
                 x = (screen_width / 2) - (app_width / 2)
                 y = (screen_height / 2) - (app_height / 2)
-                pop_kernel.geometry(
-                    f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+                pop_kernel.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
                 pop_kernel.resizable(0, 0)
 
                 def pop_kernel_dest():
@@ -1900,13 +1989,11 @@ class System_Tab(ttk.Frame):
                     print("[Info]: Kernel Upgrade GO!")
                     pop_kernel.destroy()
 
-                frame_pop_kernel = Frame(
-                    pop_kernel, borderwidth=0, relief=GROOVE)
+                frame_pop_kernel = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
                 frame_pop_kernel.pack()
                 frame_pop_kernel["background"] = maincolor
 
-                frame_pop_kernel_1 = Frame(
-                    pop_kernel, borderwidth=0, relief=GROOVE)
+                frame_pop_kernel_1 = Frame(pop_kernel, borderwidth=0, relief=GROOVE)
                 frame_pop_kernel_1.pack()
                 frame_pop_kernel_1["background"] = maincolor
 
@@ -2019,8 +2106,7 @@ class System_Tab(ttk.Frame):
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.ops_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.ops_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             ops_settings_btn_list1.append(self.ops_button_x)
             conf_column = conf_column + 1
             if conf_column == 7:
@@ -2091,12 +2177,14 @@ class System_Ubuntu_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
         )
         self.gparted_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/gparted.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/gparted.png"
+        )
         self.mouse_keyboard_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/gnome-settings-keybinding.png"
         )
         self.deskpipro_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/deskpi.png")
+            file=f"{Application_path}/images/icons/pigro_icons/deskpi.png"
+        )
         self.network_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/blueman-server.png"
         )
@@ -2113,7 +2201,8 @@ class System_Ubuntu_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/grandr.png"
         )
         self.neofetch_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/neofetch.png")
+            file=f"{Application_path}/images/icons/pigro_icons/neofetch.png"
+        )
         self.fm_godmode_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
@@ -2121,7 +2210,8 @@ class System_Ubuntu_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-madlinux.png"
         )
         self.boot_log_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.xfce_autostarts_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/desktop-environment-xfce.png"
         )
@@ -2132,9 +2222,11 @@ class System_Ubuntu_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
         )
         self.bash_history_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.cron_job_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/mousepad.png"
+        )
         self.alacard_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/classicmenu-indicator-light.png"
         )
@@ -2235,8 +2327,7 @@ class System_Ubuntu_Tab(ttk.Frame):
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.pi_ubu_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.pi_ubu_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pi_ubu_settings_btn_list1.append(self.pi_ubu_button_x)
             conf_column = conf_column + 1
             if conf_column == 5:
@@ -2289,15 +2380,20 @@ class Autostarts_Tab(ttk.Frame):
         super().__init__()
 
         self.plus_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/plus_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/plus_s.png"
+        )
         self.minus_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/minus_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/minus_s.png"
+        )
         self.add_app_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/add_app1_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/add_app1_s.png"
+        )
         self.help_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/help_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/help_s.png"
+        )
         self.edit_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/edit_app_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/edit_app_s.png"
+        )
 
         self.auto_set = LabelFrame(
             self,
@@ -2315,13 +2411,13 @@ class Autostarts_Tab(ttk.Frame):
         self.auto_set["background"] = frame_color
 
         self.treeview = ttk.Treeview(self.auto_set)
-        self.treeview['columns'] = ('path', 'enabled')
-        self.treeview.heading('#0', text='Autostart Applications')
-        self.treeview.heading('path', text='Path')
-        self.treeview.heading('enabled', text='Enabled')
-        self.treeview.column('path', stretch=True)
-        self.treeview.column('enabled', stretch=False, width=70)
-        self.treeview.pack(fill='both', expand=True)
+        self.treeview["columns"] = ("path", "enabled")
+        self.treeview.heading("#0", text="Autostart Applications")
+        self.treeview.heading("path", text="Path")
+        self.treeview.heading("enabled", text="Enabled")
+        self.treeview.column("path", stretch=True)
+        self.treeview.column("enabled", stretch=False, width=70)
+        self.treeview.pack(fill="both", expand=True)
         self.populate_treeview()
         self.create_buttons()
         self.create_autostart_frame()
@@ -2329,34 +2425,48 @@ class Autostarts_Tab(ttk.Frame):
     def populate_treeview(self):
         for i in self.treeview.get_children():
             self.treeview.delete(i)
-        autostart_dir = os.path.expanduser(f'{home}/.config/autostart/')
+        autostart_dir = os.path.expanduser(f"{home}/.config/autostart/")
         for filename in os.listdir(autostart_dir):
-            if filename.endswith('.desktop'):
-                app_name = filename.replace('.desktop', '')
+            if filename.endswith(".desktop"):
+                app_name = filename.replace(".desktop", "")
                 app_path = os.path.join(autostart_dir, filename)
                 enabled = self.is_autostart_enabled(app_name)
-                self.treeview.insert('', 'end', text=app_name, values=[
-                                     app_path, enabled])
+                self.treeview.insert(
+                    "", "end", text=app_name, values=[app_path, enabled]
+                )
 
     def is_autostart_enabled(self, app_name):
-        autostart_dir = os.path.expanduser(f'{home}/.config/autostart/')
-        autostart_file_path = os.path.join(
-            autostart_dir, f'{app_name}.desktop')
-        with open(autostart_file_path, 'r') as f:
+        autostart_dir = os.path.expanduser(f"{home}/.config/autostart/")
+        autostart_file_path = os.path.join(autostart_dir, f"{app_name}.desktop")
+        with open(autostart_file_path, "r") as f:
             contents = f.read()
-        return 'X-GNOME-Autostart-enabled=true\n' in contents
+        return "X-GNOME-Autostart-enabled=true\n" in contents
 
     def create_buttons(self):
         button_frame = tk.Frame(self.auto_set, bg=frame_color)
-        button_frame.pack(side='bottom', fill='x', padx=5, pady=5)
+        button_frame.pack(side="bottom", fill="x", padx=5, pady=5)
 
-        disable_button = tk.Button(button_frame, text='Remove',
-                                   bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.delete_selected)
-        disable_button.pack(side='left', padx=5)
+        disable_button = tk.Button(
+            button_frame,
+            text="Remove",
+            bg=ext_btn,
+            fg=main_font,
+            highlightthickness=0,
+            borderwidth=0,
+            command=self.delete_selected,
+        )
+        disable_button.pack(side="left", padx=5)
 
-        folder_button = tk.Button(button_frame, text='Open Autostart Folder',
-                                  bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.open_autostart_folder)
-        folder_button.pack(side='left', padx=5)
+        folder_button = tk.Button(
+            button_frame,
+            text="Open Autostart Folder",
+            bg=ext_btn,
+            fg=main_font,
+            highlightthickness=0,
+            borderwidth=0,
+            command=self.open_autostart_folder,
+        )
+        folder_button.pack(side="left", padx=5)
 
     def delete_selected(self):
         selected_item = self.treeview.selection()[0]
@@ -2368,15 +2478,16 @@ class Autostarts_Tab(ttk.Frame):
     def enable_selected(self):
         selected_items = self.treeview.selection()
         for item in selected_items:
-            values = self.treeview.item(item)['values']
+            values = self.treeview.item(item)["values"]
             app_path = values[0]
-            with open(app_path, 'r') as f:
+            with open(app_path, "r") as f:
                 contents = f.read()
             contents = contents.replace(
-                'X-GNOME-Autostart-enabled=false', 'X-GNOME-Autostart-enabled=true')
-            with open(app_path, 'w') as f:
+                "X-GNOME-Autostart-enabled=false", "X-GNOME-Autostart-enabled=true"
+            )
+            with open(app_path, "w") as f:
                 f.write(contents)
-            self.treeview.set(item, 'enabled', True)
+            self.treeview.set(item, "enabled", True)
 
     def open_autostart_folder(self):
         popen(f"xdg-open {home}/.config/autostart")
@@ -2397,23 +2508,44 @@ class Autostarts_Tab(ttk.Frame):
         self.auto_add.pack(pady=20, padx=40, fill="both")  #
         self.auto_add["background"] = frame_color
 
-       # Create label and entry for autostart file name
-        tk.Label(self.auto_add, bg=frame_color, fg=main_font, highlightthickness=0, borderwidth=0, text="Enter Autostart File Name: (conky)").pack(
-            padx=10, pady=10)
+        # Create label and entry for autostart file name
+        tk.Label(
+            self.auto_add,
+            bg=frame_color,
+            fg=main_font,
+            highlightthickness=0,
+            borderwidth=0,
+            text="Enter Autostart File Name: (conky)",
+        ).pack(padx=10, pady=10)
         self.filename_entry = tk.Entry(
-            self.auto_add, highlightthickness=0, borderwidth=0, width=50)
+            self.auto_add, highlightthickness=0, borderwidth=0, width=50
+        )
         self.filename_entry.pack(padx=10)
 
         # Create label and entry for autostart command
-        tk.Label(self.auto_add, bg=frame_color, fg=main_font, highlightthickness=0, borderwidth=0, text="Enter Autostart Command: (killall -SIGUSR1 conky)").pack(
-            padx=10, pady=10)
+        tk.Label(
+            self.auto_add,
+            bg=frame_color,
+            fg=main_font,
+            highlightthickness=0,
+            borderwidth=0,
+            text="Enter Autostart Command: (killall -SIGUSR1 conky)",
+        ).pack(padx=10, pady=10)
         self.command_entry = tk.Entry(
-            self.auto_add, highlightthickness=0, borderwidth=0, width=50)
+            self.auto_add, highlightthickness=0, borderwidth=0, width=50
+        )
         self.command_entry.pack(padx=10)
 
         # Create button to create autostart file
         create_file_btn = tk.Button(
-            self.auto_add, text="Create File", bg=ext_btn, fg=main_font, highlightthickness=0, borderwidth=0, command=self.create_autostart_file)
+            self.auto_add,
+            text="Create File",
+            bg=ext_btn,
+            fg=main_font,
+            highlightthickness=0,
+            borderwidth=0,
+            command=self.create_autostart_file,
+        )
         create_file_btn.pack(pady=10)
 
     def create_autostart_file(self):
@@ -2444,8 +2576,7 @@ class Update_Alternatives(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 400
@@ -2467,8 +2598,7 @@ class Update_Alternatives(tk.Toplevel):
         self.up_al_frame.pack(padx=20, pady=20)
 
         n1 = tk.StringVar()
-        self.choosen = ttk.Combobox(
-            self.up_al_frame, width=30, textvariable=n1)
+        self.choosen = ttk.Combobox(self.up_al_frame, width=30, textvariable=n1)
         # Adding combobox drop down list
         self.choosen["values"] = (
             "editor",
@@ -2502,8 +2632,7 @@ class Tuning_Legende(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Overclocking Legend")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 500
@@ -2515,15 +2644,20 @@ class Tuning_Legende(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
         self.tu_1 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png"
+        )
         self.tu_2 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png"
+        )
         self.tu_3 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png"
+        )
         self.tu_4 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png"
+        )
         self.tu_5 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png"
+        )
 
         # Main Frame
         self.tu_main_frame = Frame(self, bg=maincolor)
@@ -2693,8 +2827,7 @@ class Done_Restart_P(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done!")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -2734,8 +2867,7 @@ class Done_(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done!")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -2776,8 +2908,7 @@ class Done_Reboot(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Done! Reboot?")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 292
@@ -2832,8 +2963,7 @@ class Custom_Installer(tk.Toplevel):
         super().__init__(parent)
         self["background"] = "#333333"
         self.title(f"{pigro_skript_name}")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         cust_app_width = 700
@@ -2844,7 +2974,8 @@ class Custom_Installer(tk.Toplevel):
         y = (screen_height / 2) - (cust_app_height / 2)
         self.geometry(f"{cust_app_width}x{cust_app_height}+{int(x)}+{int(y)}")
         self.ok_done = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/ok_128x128.png")
+            file=f"{Application_path}/images/icons/pigro_icons/ok_128x128.png"
+        )
         # progressbar
         global inst_show
         inst_show = Label(
@@ -2855,8 +2986,7 @@ class Custom_Installer(tk.Toplevel):
         )
         inst_show.pack(pady=20)
 
-        anim = Loading_Throbber(
-            self, f"{Application_path}/images/icons/loading.gif")
+        anim = Loading_Throbber(self, f"{Application_path}/images/icons/loading.gif")
         anim["borderwidth"] = "0"
         anim.pack()
 
@@ -2888,6 +3018,7 @@ class Custom_Installer(tk.Toplevel):
             self.ok_done_label = Label(self, image=self.ok_done, bg="#333333")
             self.ok_done_label.place(x=286, y=20)
             close_btn.place(x=580, y=150, width=70, height=25)
+
         # place the progressbar
 
         def close_btn_command():
@@ -2929,15 +3060,32 @@ class Software_Tab(ttk.Frame):
         self.inst_notebook.pack(fill=BOTH, expand=True)
 
         self.deb_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/deb_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/deb_s.png"
+        )
         self.debinstall_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/64x64/debian-logo.png")
+            file=f"{Application_path}/images/icons/papirus/64x64/debian-logo.png"
+        )
         self.pi_appsinstall_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/pi-apps64x64.png")
+            file=f"{Application_path}/images/icons/pigro_icons/pi-apps64x64.png"
+        )
+        self.pi_appsopen_icon = PhotoImage(
+            file=f"{Application_path}/images/icons/pigro_icons/piapps_logo_24x24.png"
+        )
+        self.pi_appssett_icon = PhotoImage(
+            file=f"{Application_path}/images/icons/pigro_icons/piapps_settings_24x24.png"
+        )
         self.flatpak_appsinstall_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/flathub64x64.png")
-        self.no_img = PhotoImage(
-            file=f"{Application_path}/images/apps/no_image.png")
+            file=f"{Application_path}/images/icons/pigro_icons/flathub64x64.png"
+        )
+        self.no_img = PhotoImage(file=f"{Application_path}/images/apps/no_image.png")
+
+        self.ok_installed = PhotoImage(
+            file=f"{Application_path}/images/icons/pigro_icons/ok_16x16.png"
+        )
+
+        self.not_ok_installed = PhotoImage(
+            file=f"{Application_path}/images/icons/pigro_icons/not_ok_16x16.png"
+        )
 
         # create frames
         apt_frame = ttk.Frame(self.inst_notebook)
@@ -2996,6 +3144,7 @@ class Software_Tab(ttk.Frame):
                     apt_pkg_inst.config(state=NORMAL)
 
         def update_apt(apt_data):
+            apt_data = sorted(apt_data)
             apt_list_box.delete(0, END)
             for item in apt_data:
                 apt_list_box.insert(END, item)
@@ -3017,13 +3166,13 @@ class Software_Tab(ttk.Frame):
 
         def resize(img):
             basewidth = 500
-            wpercent = (basewidth / float(img.size[0]))
+            wpercent = basewidth / float(img.size[0])
             hsize = int((float(img.size[1]) * float(wpercent)))
             return img.resize((basewidth, hsize), Image.ANTIALIAS)
 
         def resize2(img):
             basewidth = 64
-            wpercent = (basewidth / float(img.size[0]))
+            wpercent = basewidth / float(img.size[0])
             hsize = int((float(img.size[1]) * float(wpercent)))
             return img.resize((basewidth, hsize), Image.ANTIALIAS)
 
@@ -3046,14 +3195,17 @@ class Software_Tab(ttk.Frame):
         def apt_screenshot():
             try:
                 apt_app = str(apt_entry.get())
-                url = f'https://screenshots.debian.net/package/{apt_app}#gallery-1'
+                url = f"https://screenshots.debian.net/package/{apt_app}#gallery-1"
                 # Make an HTTP GET request to the webpage
                 response = requests.get(url)
                 # Use BeautifulSoup to parse the HTML
-                soup = BeautifulSoup(response.text, 'html.parser')
+                soup = BeautifulSoup(response.text, "html.parser")
                 # Find all links with .png extension
-                links = [link.get('href') for link in soup.find_all(
-                    'a') if link.get('href').endswith('.png')]
+                links = [
+                    link.get("href")
+                    for link in soup.find_all("a")
+                    if link.get("href").endswith(".png")
+                ]
                 # Print the links
                 # print(f"https://screenshots.debian.net{str(links[1])}")
 
@@ -3078,11 +3230,25 @@ class Software_Tab(ttk.Frame):
             else:
                 apt_pkg_name.config(text=f"Name: {apt_entry.get()}")
                 if apt_entry.get() in apt_installed_content:
-                    apt_pkg_status.config(text="Status: Installed")
+                    apt_pkg_status.config(
+                        text="Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     apt_pkg_inst.config(state=DISABLED)
                     apt_pkg_uninst.config(state=NORMAL)
                 else:
-                    apt_pkg_status.config(text="Status: Not Installed")
+                    apt_pkg_status.config(
+                        text="Not Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.not_ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     apt_pkg_inst.config(state=NORMAL)
                     apt_pkg_uninst.config(state=DISABLED)
 
@@ -3130,8 +3296,7 @@ class Software_Tab(ttk.Frame):
         apt_list_box = Listbox(
             apt_search_frame, height=50, width=40, borderwidth=0, highlightthickness=0
         )
-        apt_list_box_scrollbar = ttk.Scrollbar(
-            apt_search_frame)
+        apt_list_box_scrollbar = ttk.Scrollbar(apt_search_frame)
         apt_list_box_scrollbar.pack(side=RIGHT, fill=Y)
         apt_list_box.config(yscrollcommand=apt_list_box_scrollbar.set)
         apt_list_box_scrollbar.config(command=apt_list_box.yview)
@@ -3148,14 +3313,14 @@ class Software_Tab(ttk.Frame):
         for i, s in enumerate(apt_cache_content):
             apt_cache_content[i] = s.strip()
 
-        update_apt(apt_cache_content)
-
         # List all packages from apt list --installed
         apt_installed = os.popen("dpkg --get-selections |sed -e s/install//g")
 
         apt_installed_content = apt_installed.readlines()
         for i, s in enumerate(apt_installed_content):
             apt_installed_content[i] = s.strip()
+
+        update_apt(apt_cache_content)
 
         apt_list_box.bind("<<ListboxSelect>>", apt_fillout)
 
@@ -3230,7 +3395,7 @@ class Software_Tab(ttk.Frame):
             anchor="w",
             width=45,
         )
-        apt_pkg_status.grid(row=1, column=0)
+        apt_pkg_status.grid(row=1, column=0, sticky="w")
 
         apt_pkg_inst = Button(
             apt_pkg_info_container,
@@ -3304,7 +3469,8 @@ class Software_Tab(ttk.Frame):
         discription_text.pack(side=LEFT, fill=BOTH, expand=True)
 
         discription_scrollbar = ttk.Scrollbar(
-            apt_pkg_info_frame, orient=VERTICAL, command=discription_text.yview)
+            apt_pkg_info_frame, orient=VERTICAL, command=discription_text.yview
+        )
         discription_text.configure(yscrollcommand=discription_scrollbar.set)
         discription_scrollbar.pack(side=LEFT, fill=Y)
 
@@ -3381,11 +3547,25 @@ class Software_Tab(ttk.Frame):
             else:
                 piapps_pkg_name.config(text=f"Name: {piapps_entry.get()}")
                 if piapps_entry.get() in piapps_installed_content:
-                    piapps_pkg_status.config(text="Status: Installed")
+                    piapps_pkg_status.config(
+                        text="Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     piapps_pkg_inst.config(state=DISABLED)
                     piapps_pkg_uninst.config(state=NORMAL)
                 else:
-                    piapps_pkg_status.config(text="Status: Not Installed")
+                    piapps_pkg_status.config(
+                        text="Not Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.not_ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     piapps_pkg_inst.config(state=NORMAL)
                     piapps_pkg_uninst.config(state=DISABLED)
 
@@ -3393,7 +3573,8 @@ class Software_Tab(ttk.Frame):
                 app_string_web = app_string.replace(" ", "%20")
                 # print(app_string_web)
                 self.piapps_select_icon = PhotoImage(
-                    file=f"~/pi-apps/apps/{piapps_entry.get()}/icon-64.png")
+                    file=f"~/pi-apps/apps/{piapps_entry.get()}/icon-64.png"
+                )
                 piapps_icon.config(image=self.piapps_select_icon)
 
                 piapps_pkg_infos = open(
@@ -3449,11 +3630,14 @@ class Software_Tab(ttk.Frame):
         piapps_entry.pack(pady=5, fill="x")
 
         piapps_list_box = Listbox(
-            piapps_search_frame, height=50, width=40, borderwidth=0, highlightthickness=0
+            piapps_search_frame,
+            height=50,
+            width=40,
+            borderwidth=0,
+            highlightthickness=0,
         )
 
-        piapps_list_box_scrollbar = ttk.Scrollbar(
-            piapps_search_frame)
+        piapps_list_box_scrollbar = ttk.Scrollbar(piapps_search_frame)
         piapps_list_box_scrollbar.pack(side=RIGHT, fill=Y)
         piapps_list_box.config(yscrollcommand=piapps_list_box_scrollbar.set)
         piapps_list_box_scrollbar.config(command=piapps_list_box.yview)
@@ -3549,7 +3733,7 @@ class Software_Tab(ttk.Frame):
             anchor="w",
             width=45,
         )
-        piapps_pkg_status.grid(row=1, column=0)
+        piapps_pkg_status.grid(row=1, column=0, sticky="w")
 
         piapps_pkg_inst = Button(
             piapps_info_container,
@@ -3582,7 +3766,9 @@ class Software_Tab(ttk.Frame):
         piapps_pkg_uninst.grid(row=1, column=1, pady=5)
 
         def install_piapps_apt():
-            popen(f"x-terminal-emulator -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'")
+            popen(
+                f"x-terminal-emulator -e 'bash -c \"wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash; exec bash\"'"
+            )
 
         if piapps_path == False:
             piapps_app_inst = Button(
@@ -3596,9 +3782,48 @@ class Software_Tab(ttk.Frame):
                 borderwidth=0,
                 highlightthickness=0,
                 command=install_piapps_apt,
-
             )
             piapps_app_inst.grid(row=2, column=0, columnspan=2)
+
+        def open_pi_apps():
+            os.system(f"{home}/pi-apps/gui")
+
+        def open_pi_apps_settings():
+            popen(f"{home}/pi-apps/settings")
+
+        piapps_configs_frame = Frame(piapps_info_container, background=frame_color)
+        piapps_configs_frame.grid(row=2, column=1, pady=5)
+
+        piapps_app_open = Button(
+            piapps_configs_frame,
+            # text="1",
+            justify="left",
+            imag=self.pi_appsopen_icon,
+            background=frame_color,
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=open_pi_apps,
+        )
+        piapps_app_open.grid(row=0, column=0, pady=5, padx=5)
+
+        piapps_setting_open = Button(
+            piapps_configs_frame,
+            image=self.pi_appssett_icon,
+            justify="left",
+            background=frame_color,
+            foreground=main_font,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=open_pi_apps_settings,
+        )
+        piapps_setting_open.grid(row=0, column=1, pady=5, padx=5)
+
+        if piapps_path == False:
+            piapps_app_open.config(state=DISABLED)
+            piapps_setting_open.config(state=DISABLED)
 
         piapps_pkg_img_frame = LabelFrame(
             piapps_info_frame,
@@ -3642,9 +3867,13 @@ class Software_Tab(ttk.Frame):
         piapps_discription_text.pack(side=LEFT, fill=BOTH, expand=True)
 
         piapps_discription_scrollbar = ttk.Scrollbar(
-            piapps_pkg_info_frame, orient=VERTICAL, command=piapps_discription_text.yview)
+            piapps_pkg_info_frame,
+            orient=VERTICAL,
+            command=piapps_discription_text.yview,
+        )
         piapps_discription_text.configure(
-            yscrollcommand=piapps_discription_scrollbar.set)
+            yscrollcommand=piapps_discription_scrollbar.set
+        )
         piapps_discription_scrollbar.pack(side=LEFT, fill=Y)
 
         # flatpak_entry
@@ -3680,6 +3909,7 @@ class Software_Tab(ttk.Frame):
                     flatpak_pkg_inst.config(state=NORMAL)
 
         def update_flatpak(flatpak_data):
+            flatpak_data = sorted(flatpak_data)
             flatpak_list_box.delete(0, END)
             for item in flatpak_data:
                 flatpak_list_box.insert(END, item)
@@ -3723,33 +3953,76 @@ class Software_Tab(ttk.Frame):
                 flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
 
         def get_flatpak_screenshot():
-            url = f'https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}'
-            if url_exists(url):
-                response = requests.get(url)
-                soup = BeautifulSoup(response.text, 'html.parser')
-                url_output = soup.find('img', alt='Bildschirmfoto')
-                print(url_output['src'])
-                with urlopen(url_output['src']) as url_output:
-                    self.img = Image.open(url_output)
-                self.img = resize(self.img)
-                self.img = ImageTk.PhotoImage(self.img)
-                flatpak_panel.config(image=self.img)
+            flathub_url = "https://beta.flathub.org/en-GB"
+
+            response = requests.head(flathub_url)
+
+            if response.status_code == 200:
+                print(f"{flathub_url} exists!")
+                url = f"https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+                if url_exists(url):
+                    response = requests.get(url)
+                    soup = BeautifulSoup(response.text, "html.parser")
+                    url_output = soup.find("img", alt="Bildschirmfoto")
+                    print(url_output["src"])
+                    with urlopen(url_output["src"]) as url_output:
+                        self.img = Image.open(url_output)
+                    self.img = resize(self.img)
+                    self.img = ImageTk.PhotoImage(self.img)
+                    flatpak_panel.config(image=self.img)
+                else:
+                    flatpak_panel.config(self.no_img)
+
             else:
-                flatpak_panel.config(self.no_img)
+                url = f"https://flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+                if url_exists(url):
+                    response = requests.get(url)
+                    soup = BeautifulSoup(response.text, "html.parser")
+                    url_output = soup.find("img", alt="Bildschirmfoto")
+                    print(url_output["src"])
+                    with urlopen(url_output["src"]) as url_output:
+                        self.img = Image.open(url_output)
+                    self.img = resize(self.img)
+                    self.img = ImageTk.PhotoImage(self.img)
+                    flatpak_panel.config(image=self.img)
+                else:
+                    flatpak_panel.config(self.no_img)
 
         def get_flatpak_discription():
-            url = f'https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}'
-            # Send a GET request to the URL
-            response = requests.get(url)
-            # Use BeautifulSoup to parse the HTML content of the response
-            soup = BeautifulSoup(response.content, 'html.parser')
-            # Find the HTML element with the specified class
-            prose_element = soup.find(
-                'div', {'class': 'prose dark:prose-invert xl:max-w-[75%]'})
-            # Print the contents of the element
-            # print(prose_element.text)
-            flatpak_discription_text.delete("1.0", "end")
-            flatpak_discription_text.insert(tk.END, prose_element.text)
+            flathub_url = "https://beta.flathub.org/en-GB"
+
+            response = requests.head(flathub_url)
+
+            if response.status_code == 200:
+                print(f"{flathub_url} exists!")
+                url = f"https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+                # Send a GET request to the URL
+                response = requests.get(url)
+                # Use BeautifulSoup to parse the HTML content of the response
+                soup = BeautifulSoup(response.content, "html.parser")
+                # Find the HTML element with the specified class
+                prose_element = soup.find(
+                    "div", {"class": "prose dark:prose-invert xl:max-w-[75%]"}
+                )
+                # Print the contents of the element
+                # print(prose_element.text)
+                flatpak_discription_text.delete("1.0", "end")
+                flatpak_discription_text.insert(tk.END, prose_element.text)
+            else:
+                print(f"{flathub_url} exists!")
+                url = f"https://flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+                # Send a GET request to the URL
+                response = requests.get(url)
+                # Use BeautifulSoup to parse the HTML content of the response
+                soup = BeautifulSoup(response.content, "html.parser")
+                # Find the HTML element with the specified class
+                prose_element = soup.find(
+                    "div", {"class": "prose dark:prose-invert xl:max-w-[75%]"}
+                )
+                # Print the contents of the element
+                # print(prose_element.text)
+                flatpak_discription_text.delete("1.0", "end")
+                flatpak_discription_text.insert(tk.END, prose_element.text)
 
         def flatpak_search():
             flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
@@ -3763,11 +4036,25 @@ class Software_Tab(ttk.Frame):
             else:
                 flatpak_pkg_name.config(text=f"Name: {flatpak_entry.get()}")
                 if flatpak_entry.get() in flat_uninstalled_dict.keys():
-                    flatpak_pkg_status.config(text="Status: Installed")
+                    flatpak_pkg_status.config(
+                        text="Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     flatpak_pkg_inst.config(state=DISABLED)
                     flatpak_pkg_uninst.config(state=NORMAL)
                 else:
-                    flatpak_pkg_status.config(text="Status: Not Installed")
+                    flatpak_pkg_status.config(
+                        text="Not Installed",
+                        compound="left",
+                        justify="left",
+                        image=self.not_ok_installed,
+                        anchor="w",
+                        width=150,
+                    )
                     flatpak_pkg_inst.config(state=NORMAL)
                     flatpak_pkg_uninst.config(state=DISABLED)
 
@@ -3806,11 +4093,14 @@ class Software_Tab(ttk.Frame):
         flatpak_entry.pack(pady=5, fill="x")
 
         flatpak_list_box = Listbox(
-            flatpak_search_frame, height=50, width=40, borderwidth=0, highlightthickness=0
+            flatpak_search_frame,
+            height=50,
+            width=40,
+            borderwidth=0,
+            highlightthickness=0,
         )
 
-        flatpak_list_scrollbar = ttk.Scrollbar(
-            flatpak_search_frame)
+        flatpak_list_scrollbar = ttk.Scrollbar(flatpak_search_frame)
         flatpak_list_scrollbar.pack(side=RIGHT, fill=Y)
         flatpak_list_box.config(yscrollcommand=flatpak_list_scrollbar.set)
         flatpak_list_scrollbar.config(command=flatpak_list_box.yview)
@@ -3945,7 +4235,7 @@ class Software_Tab(ttk.Frame):
             anchor="w",
             width=45,
         )
-        flatpak_pkg_status.grid(row=1, column=0)
+        flatpak_pkg_status.grid(row=1, column=0, sticky="w")
 
         flatpak_pkg_inst = Button(
             flatpak_pkg_info_container,
@@ -3978,7 +4268,10 @@ class Software_Tab(ttk.Frame):
         flatpak_pkg_uninst.grid(row=1, column=1, pady=5)
 
         def install_flatpak_apt():
-            popen(f"x-terminal-emulator -e 'bash -c \"sudo apt install flatpak -y && flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo; exec bash\"'")
+            popen(
+                f"x-terminal-emulator -e 'bash -c \"sudo apt install flatpak -y && flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo; exec bash\"'"
+            )
+
         if flatpak_path == False:
             flatpak_app_inst = Button(
                 flatpak_pkg_info_container,
@@ -3991,7 +4284,6 @@ class Software_Tab(ttk.Frame):
                 borderwidth=0,
                 highlightthickness=0,
                 command=install_flatpak_apt,
-
             )
             flatpak_app_inst.grid(row=2, column=0, columnspan=2)
 
@@ -4040,9 +4332,13 @@ class Software_Tab(ttk.Frame):
         )
 
         flatpak_flatpak_discription_text = ttk.Scrollbar(
-            flatpak_pkg_info_frame, orient=VERTICAL, command=flatpak_discription_text.yview)
+            flatpak_pkg_info_frame,
+            orient=VERTICAL,
+            command=flatpak_discription_text.yview,
+        )
         flatpak_discription_text.configure(
-            yscrollcommand=flatpak_flatpak_discription_text.set)
+            yscrollcommand=flatpak_flatpak_discription_text.set
+        )
         flatpak_flatpak_discription_text.pack(side=LEFT, fill=Y)
 
         self.repo_sec_frame = LabelFrame(
@@ -4300,34 +4596,65 @@ class Git_More_Tab(ttk.Frame):
         """lets you install apps via APT, snap, pi-apps and flatpak in one single window"""
         super().__init__()
 
-        self.app_albert = PhotoImage(file=r"images/apps/app_albert.png")
-        self.app_argon = PhotoImage(file=r"images/apps/app_argon.png")
-        self.app_deskpi = PhotoImage(file=r"images/apps/app_deskpi.png")
-        self.app_doom = PhotoImage(file=r"images/apps/app_doom.png")
-        self.app_duke = PhotoImage(file=r"images/apps/app_duke.png")
-        self.app_fan_s = PhotoImage(file=r"images/apps/app_fan_s.png")
-        self.app_ferdium = PhotoImage(file=r"images/apps/app_ferdium.png")
-        self.app_gnome_s = PhotoImage(file=r"images/apps/app_gnome_s.png")
-        self.app_papirus = PhotoImage(file=r"images/apps/app_papirus.png")
-        self.app_pi_apps = PhotoImage(file=r"images/apps/app_pi_apps.png")
-        self.app_pi_kiss = PhotoImage(file=r"images/apps/app_pi_kiss.png")
-        self.app_space_c = PhotoImage(file=r"images/apps/app_space_c.png")
-        self.app_sub_m = PhotoImage(file=r"images/apps/app_sub_m.png")
-        self.app_sub_t = PhotoImage(file=r"images/apps/app_sub_t.png")
+        self.app_albert = PhotoImage(
+            file=f"{Application_path}/images/apps/app_albert.png"
+        )
+        self.app_argon = PhotoImage(
+            file=f"{Application_path}/images/apps/app_argon.png"
+        )
+        self.app_brave = PhotoImage(
+            file=f"{Application_path}/images/apps/app_brave.png"
+        )
+        self.app_deskpi = PhotoImage(
+            file=f"{Application_path}/images/apps/app_deskpi.png"
+        )
+        self.app_doom = PhotoImage(file=f"{Application_path}/images/apps/app_doom.png")
+        self.app_duke = PhotoImage(file=f"{Application_path}/images/apps/app_duke.png")
+        self.app_fan_s = PhotoImage(
+            file=f"{Application_path}/images/apps/app_fan_s.png"
+        )
+        self.app_ferdium = PhotoImage(
+            file=f"{Application_path}/images/apps/app_ferdium.png"
+        )
+        self.app_gnome_s = PhotoImage(
+            file=f"{Application_path}/images/apps/app_gnome_s.png"
+        )
+        self.app_papirus = PhotoImage(
+            file=f"{Application_path}/images/apps/app_papirus.png"
+        )
+        self.app_pi_apps = PhotoImage(
+            file=f"{Application_path}/images/apps/app_pi_apps.png"
+        )
+        self.app_pi_kiss = PhotoImage(
+            file=f"{Application_path}/images/apps/app_pi_kiss.png"
+        )
+        self.app_space_c = PhotoImage(
+            file=f"{Application_path}/images/apps/app_space_c.png"
+        )
+        self.app_sub_m = PhotoImage(
+            file=f"{Application_path}/images/apps/app_sub_m.png"
+        )
+        self.app_sub_t = PhotoImage(
+            file=f"{Application_path}/images/apps/app_sub_t.png"
+        )
         self.app_warpinator = PhotoImage(
-            file=r"images/apps/app_warpinator.png")
-        self.app_xpad = PhotoImage(file=r"images/apps/app_xpad.png")
-        self.app_wine64 = PhotoImage(file=r"images/apps/app_wine64.png")
+            file=f"{Application_path}/images/apps/app_warpinator.png"
+        )
+        self.app_xpad = PhotoImage(file=f"{Application_path}/images/apps/app_xpad.png")
+        self.app_wine64 = PhotoImage(
+            file=f"{Application_path}/images/apps/app_wine64.png"
+        )
         self.place_holder = PhotoImage(
-            file=r"images/apps/git_more_placeholder.png")
+            file=f"{Application_path}/images/apps/git_more_placeholder.png"
+        )
         self.app_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/terminal_s.png"
+        )
 
         def callback(event):
             webbrowser.open_new(event.widget.cget("text"))
 
         def git_tab(text):
-
             if text == "Albert":
                 self.appname_header.config(text="Albert")
                 self.app_disc.config(
@@ -4340,8 +4667,7 @@ class Git_More_Tab(ttk.Frame):
                 self.app_inst.forget()
             if text == "Argon One Driver":
                 self.appname_header.config(text="Argon One/M.2 Case Driver")
-                self.app_disc.config(
-                    text="Driver for the Argon One Case\n\n\n\n\n")
+                self.app_disc.config(text="Driver for the Argon One Case\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://www.waveshare.com/wiki/PI4-CASE-ARGON-ONE"
                 )
@@ -4357,8 +4683,7 @@ class Git_More_Tab(ttk.Frame):
                 self.app_disc.config(
                     text="Driver & Fan Control for the DeskPi Pro Case\n\n\n\n\n"
                 )
-                self.web_link.config(
-                    text=r"https://github.com/DeskPi-Team/deskpi")
+                self.web_link.config(text=r"https://github.com/DeskPi-Team/deskpi")
                 self.app_pic.config(image=self.app_deskpi)
                 self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
@@ -4368,8 +4693,7 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "FanShim Driver":
                 self.appname_header.config(text="Fan Shim Driver")
-                self.app_disc.config(
-                    text="Driver for the Pimoroni FanShim\n\n\n\n\n")
+                self.app_disc.config(text="Driver for the Pimoroni FanShim\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://learn.pimoroni.com/article/getting-started-with-fan-shim"
                 )
@@ -4414,8 +4738,7 @@ class Git_More_Tab(ttk.Frame):
                 self.app_disc.config(
                     text="System Tweak Tool & Game Installer for ARM/Raspberry Pi\n\n\n\n\n"
                 )
-                self.web_link.config(
-                    text=r"https://github.com/jmcerrejon/PiKISS")
+                self.web_link.config(text=r"https://github.com/jmcerrejon/PiKISS")
                 self.app_pic.config(image=self.app_pi_kiss)
                 self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
@@ -4450,8 +4773,7 @@ class Git_More_Tab(ttk.Frame):
                 self.app_disc.config(
                     text="Advanced Linux Driver for\nXbox Wireless Gamepad\nAdds FULL support for all Xbox controlers\n\n\n"
                 )
-                self.web_link.config(
-                    text=r"https://github.com/atar-axis/xpadneo")
+                self.web_link.config(text=r"https://github.com/atar-axis/xpadneo")
                 self.app_pic.config(image=self.app_xpad)
                 self.app_inst.pack(anchor="w", pady=10)
                 self.app_inst.delete("1.0", END)
@@ -4474,8 +4796,7 @@ class Git_More_Tab(ttk.Frame):
                 )
             if text == "eDuke32":
                 self.appname_header.config(text="eDuke32 Flathub")
-                self.app_disc.config(
-                    text="A Duke Nukem 3D Source Port\n\n\n\n\n")
+                self.app_disc.config(text="A Duke Nukem 3D Source Port\n\n\n\n\n")
                 self.web_link.config(
                     text=r"https://flathub.org/apps/details/com.eduke32.EDuke32"
                 )
@@ -4516,9 +4837,22 @@ class Git_More_Tab(ttk.Frame):
                     """# Flatpak support needed!\n\nflatpak install flathub com.github.k4zmu2a.spacecadetpinball""",
                 )
 
+            if text == "Brave Browser":
+                self.appname_header.config(text="Brave Browser arm64")
+                self.app_disc.config(
+                    text="Chrome based browser with focus on privacy\n\n\n\n\n"
+                )
+                self.web_link.config(text=r"https://brave.com/")
+                self.app_pic.config(image=self.app_brave)
+                self.app_inst.pack(anchor="w", pady=10)
+                self.app_inst.delete("1.0", END)
+                self.app_inst.insert(
+                    "end",
+                    """sudo apt install curl\n\nsudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg\n\necho "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list\n\nsudo apt update\n\nsudo apt install brave-browser\n\nOr:\nflatpak install flathub com.brave.Browser""",
+                )
+
             if text == "Gnome-Software + Flatpak":
-                self.appname_header.config(
-                    text="Gnome-Software + Flatpak Support")
+                self.appname_header.config(text="Gnome-Software + Flatpak Support")
                 self.app_disc.config(
                     text="The popular package manager GUI + Flatpak Plugin\n\n\n\n\n"
                 )
@@ -4577,22 +4911,48 @@ class Git_More_Tab(ttk.Frame):
 
         self.link_left = LabelFrame(
             self.link_main,
-            text="Tutorials",
+            text="Applications",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
             pady=20,
-            padx=20
+            padx=20,
         )
 
         self.link_left.pack(side=LEFT, fill="y", padx=20)
         self.link_left["background"] = frame_color
 
+        # Create a canvas and attach a scrollbar to it
+        canvas = Canvas(
+            self.link_left,
+            background=frame_color,
+            width=250,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar = ttk.Scrollbar(
+            self.link_left, orient=tk.VERTICAL, command=canvas.yview
+        )
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        canvas.config(yscrollcommand=scrollbar.set)
+
+        # Create a frame inside the canvas
+        app_frame = Frame(canvas, background=frame_color)
+        canvas.create_window((0, 0), window=app_frame, anchor="nw")
+
+        # Bind the canvas to the scrollbar
+        def _on_canvas_configure(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        canvas.bind("<Configure>", _on_canvas_configure)
+
         sources_l = [
             "Albert",
             "Argon One Driver",
+            "Brave Browser",
             "DeskPi Pro Driver",
             "eDuke32",
             "FanShim Driver",
@@ -4614,7 +4974,7 @@ class Git_More_Tab(ttk.Frame):
 
         for file in sources_l:
             self.choice_link2 = Button(
-                self.link_left,
+                app_frame,
                 image=self.app_icon,
                 justify=LEFT,
                 anchor=W,
@@ -4696,8 +5056,15 @@ class Git_More_Tab(ttk.Frame):
         )
         self.app_pic.pack(anchor="w")
 
-        self.app_inst = Text(self.link_right, wrap="word", width=150, height=50,
-                             borderwidth=0, bg=frame_color, fg=main_font)
+        self.app_inst = Text(
+            self.link_right,
+            wrap="word",
+            width=150,
+            height=50,
+            borderwidth=0,
+            bg=frame_color,
+            fg=main_font,
+        )
 
         def app_inst_pop_in_kontext_menu(event):
             in_kontext_menu.tk_popup(event.x_root, event.y_root)
@@ -4706,8 +5073,7 @@ class Git_More_Tab(ttk.Frame):
             self.app_inst.event_generate("<<Copy>>")
 
         # Right Click in_kontext_menu
-        in_kontext_menu = Menu(self.app_inst, tearoff=0,
-                               bg="white", fg="black")
+        in_kontext_menu = Menu(self.app_inst, tearoff=0, bg="white", fg="black")
         # options
         in_kontext_menu.add_command(label="Copy", command=app_inst_copy)
 
@@ -4770,7 +5136,8 @@ class Look_Tab(ttk.Frame):
         # Images/Icons
 
         self.bash_history_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.fm_godmode_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/folder-yellow.png"
         )
@@ -4778,15 +5145,18 @@ class Look_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/papirus/48x48/applications-interfacedesign.png"
         )
         self.bp03 = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/bash.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/bash.png"
+        )
         self.ico_m2 = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/applications-webapps.png"
         )
         self.ip01 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
+            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png"
+        )
 
         self.bluetooth = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/blueman.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/blueman.png"
+        )
         self.wifi = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/kali-wireless-attacks-trans.png"
         )
@@ -4868,8 +5238,7 @@ class Look_Tab(ttk.Frame):
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.gui_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.gui_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
 
             gui_settings_btn_list1.append(self.gui_button_x)
             conf_column = conf_column + 1
@@ -4896,7 +5265,7 @@ sudo /etc/init.d/dhcpcd stop
 exit
 """
 
-        x_blue_fix = """apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware -y && exit"""
+        x_blue_fix = """sudo apt install bluetooth pulseaudio-module-bluetooth blueman bluez-firmware -y && exit"""
 
         def xfce4_settings(text):
             if text == "Xfwm4 Settings":
@@ -4956,8 +5325,7 @@ exit
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.xfce4_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.xfce4_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             self.xfce4_button_x.configure(state=DISABLED)
             xfce4_settings_btn_list1.append(self.xfce4_button_x)
             conf_column = conf_column + 1
@@ -5050,8 +5418,7 @@ exit
                 compound=TOP,
                 activebackground=ext_btn,
             )
-            self.pixel_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5)
+            self.pixel_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pixel_settings_btn_list1.append(self.pixel_button_x)
             conf_column = conf_column + 1
             if conf_column == 7:
@@ -5073,7 +5440,6 @@ exit
                 self.pixel_button_x.config(image=self.ico_m)
 
         if distro_get == "ubuntu":
-
             self.pixel_set.forget()
             self.xfce4_set.forget()
 
@@ -5194,8 +5560,7 @@ class Update_Pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("PiGro Updater")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 552
@@ -5236,8 +5601,7 @@ class Update_Pop(tk.Toplevel):
             )
             app.quit()
 
-        self.auto_start = PhotoImage(
-            file=f"{Application_path}/images/icons/logo1.png")
+        self.auto_start = PhotoImage(file=f"{Application_path}/images/icons/logo1.png")
 
         self.actn_shn = Label(
             self,
@@ -5246,8 +5610,7 @@ class Update_Pop(tk.Toplevel):
         ).pack(pady=20)
 
         global GLabel_0
-        GLabel_0 = Label(self, font=font_14, bg=maincolor,
-                         fg=main_font, text=" ")
+        GLabel_0 = Label(self, font=font_14, bg=maincolor, fg=main_font, text=" ")
         GLabel_0.pack(pady=20)
 
         GButton_883 = tk.Button(self)
@@ -5276,8 +5639,7 @@ class Update_Pop(tk.Toplevel):
 
         PATH = f"/home/{user}/pi-apps/data/status/PiGro"
         if os.path.isfile(PATH) is True:
-            pigro_via_pi_apps = open(
-                f"/home/{user}/pi-apps/data/status/PiGro", "r")
+            pigro_via_pi_apps = open(f"/home/{user}/pi-apps/data/status/PiGro", "r")
             install_status = pigro_via_pi_apps.read()
             pigro_via_pi_apps.close()
             if install_status.strip() == "installed":
@@ -5295,8 +5657,7 @@ class Z_Ram_Pop(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 552
@@ -5308,10 +5669,10 @@ class Z_Ram_Pop(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
 
         self.ip03 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
+            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png"
+        )
 
         def z_ram_install():
-
             if distro_get == "ubuntu":
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"{legit} apt install zram-config ; exec bash\"'"
@@ -5322,7 +5683,6 @@ class Z_Ram_Pop(tk.Toplevel):
                 )
 
         def z_ram_uninstall():
-
             if distro_get == "ubuntu":
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"{legit} apt remove zram-config ; exec bash\"'"
@@ -5399,24 +5759,32 @@ class Tuning_Tab(ttk.Frame):
 
         # BG + Icons
         self.rm_ov_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV_rm.png"
+        )
         self.ov1_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV1.png"
+        )
         self.ov2_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV2.png"
+        )
         self.ov3_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV3.png"
+        )
         self.ov4_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV4.png"
+        )
         self.ov5_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV5.png")
+            file=f"{Application_path}/images/icons/pigro_icons/PiGroOV5.png"
+        )
         self.ip03 = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png")
+            file=f"{Application_path}/images/icons/pigro_icons/download_ico.png"
+        )
         self.tu_legend_ico = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/io.otsaloma.nfoview.png"
         )
         self.zram_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/device_mem.png")
+            file=f"{Application_path}/images/icons/papirus/48x48/device_mem.png"
+        )
 
         # OV Notifications
 
@@ -5710,8 +6078,7 @@ class Tuning_Tab(ttk.Frame):
                 arm_f_display.config(text="not configured")
 
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/arm_freq/d' config.txt")
                 arm_freq_set.config(state=NORMAL)
                 arm_freq_reset.config(state=DISABLED)
                 arm_f_display.config(text="not configured")
@@ -5740,8 +6107,7 @@ class Tuning_Tab(ttk.Frame):
                 gpu_freq_reset.config(state=DISABLED)
                 gpu_f_display.config(text="not configured")
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_freq/d' config.txt")
                 gpu_freq_set.config(state=NORMAL)
                 gpu_freq_reset.config(state=DISABLED)
                 gpu_f_display.config(text="not configured")
@@ -5770,8 +6136,7 @@ class Tuning_Tab(ttk.Frame):
                 gpu_mem_reset.config(state=DISABLED)
                 gpu_m_display.config(text="not configured")
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/gpu_mem/d' config.txt")
                 gpu_mem_set.config(state=NORMAL)
                 gpu_mem_reset.config(state=DISABLED)
                 gpu_m_display.config(text="not configured")
@@ -5805,8 +6170,7 @@ class Tuning_Tab(ttk.Frame):
             elif type(arm_freq_entry.get()) == str:
                 error_mass()
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/over_voltage/d' config.txt")
                 over_voltage_set.config(state=NORMAL)
                 over_voltage_reset.config(state=DISABLED)
                 over_v_display.config(text="not configured")
@@ -5838,8 +6202,7 @@ class Tuning_Tab(ttk.Frame):
                 disable_splash_reset.config(state=DISABLED)
                 force_t_display.config(text="not configured")
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/disable_splash/d' config.txt")
                 disable_splash_set.config(state=NORMAL)
                 disable_splash_reset.config(state=DISABLED)
                 force_t_display.config(text="not configured")
@@ -5867,8 +6230,7 @@ class Tuning_Tab(ttk.Frame):
                 force_turbo_set.config(state=NORMAL)
                 force_turbo_reset.config(state=DISABLED)
             else:
-                os.popen(
-                    f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
+                os.popen(f" cd /boot/ && {legit} sed -i '/force_turbo/d' config.txt")
                 force_turbo_set.config(state=NORMAL)
                 force_turbo_reset.config(state=DISABLED)
 
@@ -6655,7 +7017,8 @@ class Links_Tab(ttk.Frame):
         super().__init__()
 
         self.link = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/web.png")
+            file=f"{Application_path}/images/icons/pigro_icons/web.png"
+        )
 
         def link_tab(text):
             if text == "Mankier.com (Commandline Database)":
@@ -6786,18 +7149,19 @@ class Tasks_Tab(ttk.Frame):
         self.proc_frame.pack(pady=40, padx=40, fill="both", expand=True)
 
         # create the treeview
-        self.tree = ttk.Treeview(self.proc_frame, columns=('pid', 'memory'))
-        self.tree.heading('#0', text='Process Name')
-        self.tree.heading('pid', text='PID')
-        self.tree.heading('memory', text='Memory Usage (MB)')
+        self.tree = ttk.Treeview(self.proc_frame, columns=("pid", "memory"))
+        self.tree.heading("#0", text="Process Name")
+        self.tree.heading("pid", text="PID")
+        self.tree.heading("memory", text="Memory Usage (MB)")
         # create a scrollbar for the treeview
         scrollbar = ttk.Scrollbar(
-            self.proc_frame, orient='vertical', command=self.tree.yview)
+            self.proc_frame, orient="vertical", command=self.tree.yview
+        )
         self.tree.configure(yscrollcommand=scrollbar.set)
 
         # pack the treeview and scrollbar widgets
-        self.tree.pack(side='left', fill='both', expand=True)
-        scrollbar.pack(side='right', fill='y')
+        self.tree.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
         # create a dictionary to store the running processes and their IDs in the treeview
         self.processes = {}
@@ -6810,8 +7174,9 @@ class Tasks_Tab(ttk.Frame):
             background=ext_btn,
             foreground=main_font,
             font=font_10,
-            text='Terminate Process',
-            command=self.terminate_process)
+            text="Terminate Process",
+            command=self.terminate_process,
+        )
         self.terminate_button.pack(pady=20)
 
         # schedule the update_processes method to run every second
@@ -6832,12 +7197,13 @@ class Tasks_Tab(ttk.Frame):
                 if name not in self.processes:
                     # add the process to the treeview
                     item = self.tree.insert(
-                        '', 'end', text=name, values=(pid, memory_mb))
+                        "", "end", text=name, values=(pid, memory_mb)
+                    )
                     # store the process ID and treeview item for later use
                     self.processes[name] = (pid, item)
                 else:
                     # update the existing process's memory usage in the treeview
-                    self.tree.set(self.processes[name][1], 'memory', memory_mb)
+                    self.tree.set(self.processes[name][1], "memory", memory_mb)
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 # ignore any processes we can't access
                 pass
@@ -6850,7 +7216,7 @@ class Tasks_Tab(ttk.Frame):
         selected_item = self.tree.selection()
         if not selected_item:
             return
-        name = self.tree.item(selected_item)['text']
+        name = self.tree.item(selected_item)["text"]
         pid = self.processes[name][0]
         # terminate the process
         try:
@@ -6881,8 +7247,7 @@ class About_Tab(ttk.Frame):
         def paypal_link():
             popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
 
-        self.auto_start = PhotoImage(
-            file=f"{Application_path}/images/icons/logo1.png")
+        self.auto_start = PhotoImage(file=f"{Application_path}/images/icons/logo1.png")
 
         self.paypal_icon = PhotoImage(
             file=f"{Application_path}/images/icons/pigro_icons/PayPal_donation.png"
@@ -6902,7 +7267,7 @@ class About_Tab(ttk.Frame):
 
         self.poke_pig_21 = Label(
             self.rahmen102,
-            text=f"PiGro - Just Click It!\n(A più di novemila, accipicchia!)\nVersion: {current_version}",
+            text=f"PiGro - Just Click It!\nVersion: {current_version}",
             font=font_16,
             background=maincolor,
             foreground=main_font,
@@ -7000,13 +7365,17 @@ class Deb_Recover(ttk.Frame):
         super().__init__()
 
         self.folder_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/folder_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/folder_s.png"
+        )
         self.backup_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/backup_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/backup_s.png"
+        )
         self.deb_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/deb_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/deb_s.png"
+        )
         self.recover_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/pigro_icons/recover_s.png")
+            file=f"{Application_path}/images/icons/pigro_icons/recover_s.png"
+        )
 
         def get_dir():
             self.filename = filedialog.askdirectory(
@@ -7040,8 +7409,7 @@ sudo dpkg --set-selections < {self.p_list}
 sudo apt-get dselect-upgrade
 printf 'Done!'"""
 
-            popen(
-                f"x-terminal-emulator -e 'bash -c \"{dselect_r}; exec bash\"'")
+            popen(f"x-terminal-emulator -e 'bash -c \"{dselect_r}; exec bash\"'")
 
         # Main Frame
         self.backup_main_frame = LabelFrame(
@@ -7122,7 +7490,7 @@ printf 'Done!'"""
 
         self.step2 = Label(
             self.backup_frame2,
-            text="Step 2: Click on 'Backup' to start the prosses.After 1 sec it should be done.",
+            text="Step 2: Click on 'Backup' to start the prosses. After 1 sec it should be done.",
             justify="left",
             background=frame_color,
             foreground=main_font,
@@ -7215,8 +7583,7 @@ printf 'Done!'"""
 
         dselect_check = os.path.exists("/bin/dselect")
         if dselect_check == True:
-            self.select_path1.config(
-                state=DISABLED, text="dselect is installed")
+            self.select_path1.config(state=DISABLED, text="dselect is installed")
 
         self.recover_frame2 = Frame(
             self.recover_main_frame,
@@ -7302,8 +7669,7 @@ class Error_Mass(tk.Toplevel):
         super().__init__(parent)
         self["background"] = maincolor
         self.title("Info")
-        self.icon = tk.PhotoImage(
-            file=f"{Application_path}/images/icons/logo.png")
+        self.icon = tk.PhotoImage(file=f"{Application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
         app_width = 400
@@ -7317,8 +7683,7 @@ class Error_Mass(tk.Toplevel):
         def cu_error():
             Error_Mass.destroy(self)
 
-        self.e_m = PhotoImage(
-            file=f"{Application_path}/images/backgrounds/yuno.png")
+        self.e_m = PhotoImage(file=f"{Application_path}/images/backgrounds/yuno.png")
 
         error_frame = Frame(self, bg=maincolor)
         error_frame.pack(pady=10)

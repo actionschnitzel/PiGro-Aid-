@@ -17,11 +17,14 @@
 
 #### :heavy_check_mark: Link Collection
 
-PiGro does many commands that have to be entered via the terminal with one or two clicks of a button.
+PiGro - Just Click It! is a powerful all-in-one configuration tool for Raspberry Pi written in Python and Tkinter. With PiGro, you can easily improve your desktop experience by adding full desktop features and monitoring your CPU usage, temperature, RAM, and disk space.
 
-PiGro – Just Click It! Is based on Python's Tkinter module. Due to its greatly reduced LXDE/PIXEL desktop, Raspberry Pi OS lacks some setting options. Pigro centralizes all important settings for the Raspberry Pi desktop and adds a GUI for overclocking to the desktop.
+PiGro provides access to all native Raspberry Pi programs, and allows you to easily install new desktop environments, window managers, and themes. You can create or configure autostart settings, view and terminate running processes, and manage all installed programs from APT, Pi-Apps, and Flathub in one convenient GUI.
+
+PiGro also allows you to overclock your Pi with just one click of a button or enter custom settings, and install ZRAM to optimize your Pi's performance. Plus, with PiGro's backup and restore feature, you can easily backup and restore your programs from APT.
+
+With a release cycle of two major updates per year, PiGro is the ultimate tool for managing your Raspberry Pi desktop environment.
     
----
 
 
 

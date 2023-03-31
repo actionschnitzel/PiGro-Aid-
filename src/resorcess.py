@@ -33,9 +33,13 @@ if not os.path.exists(autostart_dir_path):
 else:
     print(f"{autostart_dir_path} already exists.")
 
+
 # Gets path to PiGro
 # global Application_path
-Application_path = str(os.getcwd())
+if not os.path.exists(f"/home/{user}/PiGro-Aid-"):
+    Application_path = "/opt/PiGro-Aid-"
+else:
+    Application_path = str(os.getcwd())
 print(f"[Info]: PiGro directory is {Application_path}")
 
 
@@ -49,7 +53,7 @@ if not os.path.exists(pigro_config_dir):
     os.mkdir(pigro_config_dir)
 
     # Create pigro.conf file
-    with open(pigro_config_file, 'w') as f:
+    with open(pigro_config_file, "w") as f:
         f.write("[PiGro - Just Click It! Configs]\n\n")
         f.write("first_run = true\n")
         f.write("theme = dark\n")
