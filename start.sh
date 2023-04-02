@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python3 ~/PiGro-Aid-/src/pigro_main.py
+python3 /opt/PiGro-Aid-/src/pigro_main.py
 
 
 #Needs to be implemented

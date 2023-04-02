@@ -178,8 +178,8 @@ class MainApplication(tk.Tk):
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
         # Hides Ubuntu settings when distro is debian
-        if distro_get == "debian" or distro_get == "raspbian":
-            self.notebook.hide(self.System_Ubuntu_Tab)
+        #if distro_get == "debian" or distro_get == "raspbian":
+        #    self.notebook.hide(self.System_Ubuntu_Tab)
 
         # Hides RPi OS settings when distro is Ubuntu
         if distro_get == "ubuntu":
@@ -1402,23 +1402,26 @@ class Update_Tab(ttk.Frame):
         self.tree.heading("two", text="Source URL", anchor=tk.W)
         self.tree.heading("three", text="Source Parameters", anchor=tk.W)
 
-        # read the contents of the sources.list file
-        with open("/etc/apt/sources.list", "r") as f:
-            sources = f.readlines()
+        try:
+            # read the contents of the sources.list file
+            with open("/etc/apt/sources.list", "r") as f:
+                sources = f.readlines()
 
-        # add each line of the file as an item in the treeview
-        for i, source in enumerate(sources):
-            # split the line into three columns based on the space character
-            source_cols = source.strip().split(" ", 2)
-            # add the columns as values to the treeview item
-            self.tree.insert(
-                parent="",
-                index=i,
-                iid=i,
-                text=str(i + 1),
-                values=(source_cols[0], source_cols[1], source_cols[2]),
-            )
-
+            # add each line of the file as an item in the treeview
+            for i, source in enumerate(sources):
+                # split the line into three columns based on the space character
+                source_cols = source.strip().split(" ", 2)
+                # add the columns as values to the treeview item
+                self.tree.insert(
+                    parent="",
+                    index=i,
+                    iid=i,
+                    text=str(i + 1),
+                    values=(source_cols[0], source_cols[1], source_cols[2]),
+                )
+        except:
+            pass
+        
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame,
             text="Integrated Source",
@@ -2279,6 +2282,8 @@ class System_Ubuntu_Tab(ttk.Frame):
                 popen("update-manager")
             if text == "Update\nSettings":
                 popen("software-properties-gtk")
+            if text == "Settings":
+                popen("gnome-control-center")
 
         self.pi_ubu_set = LabelFrame(
             self,
@@ -2293,7 +2298,7 @@ class System_Ubuntu_Tab(ttk.Frame):
             padx=10,
         )
         self.pi_ubu_set.pack(pady=20, padx=40, fill="both")
-        self.pi_ubu_set["background"] = maincolor
+        self.pi_ubu_set["background"] = frame_color
 
         pi_ubu_settings_btn_list = [
             "Raspi-Config CLI",
@@ -2308,6 +2313,7 @@ class System_Ubuntu_Tab(ttk.Frame):
             "Gnome Extensions",
             "Software\nUpdates",
             "Update\nSettings",
+            "Settings"
         ]
 
         pi_ubu_settings_btn_list1 = []
@@ -2322,7 +2328,7 @@ class System_Ubuntu_Tab(ttk.Frame):
                 command=lambda text=pi_ubu_settings_btn: pi_ubu_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=maincolor,
+                background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,
@@ -2330,7 +2336,7 @@ class System_Ubuntu_Tab(ttk.Frame):
             self.pi_ubu_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
             pi_ubu_settings_btn_list1.append(self.pi_ubu_button_x)
             conf_column = conf_column + 1
-            if conf_column == 5:
+            if conf_column == 7:
                 conf_row = conf_row + 1
                 conf_column = 0
             if pi_ubu_settings_btn == "Raspi-Config CLI":
@@ -3126,7 +3132,14 @@ class Software_Tab(ttk.Frame):
                 if item == apt_entry.get():
                     apt_pkg_uninst.config(state=NORMAL)
                     apt_pkg_inst.config(state=DISABLED)
-
+            apt_pkg_status.config(
+                text="Installed",
+                compound="left",
+                justify="left",
+                image=self.ok_installed,
+                anchor="w",
+                width=150,
+            )
         def apt_uninstall():
             global pigro_skript_name
             pigro_skript_name = f"Uninstalling... {apt_entry.get()}"
@@ -3142,6 +3155,15 @@ class Software_Tab(ttk.Frame):
                 else:
                     apt_pkg_uninst.config(state=DISABLED)
                     apt_pkg_inst.config(state=NORMAL)
+
+            apt_pkg_status.config(
+                text="Not Installed",
+                compound="left",
+                justify="left",
+                image=self.not_ok_installed,
+                anchor="w",
+                width=150,
+            )
 
         def update_apt(apt_data):
             apt_data = sorted(apt_data)
@@ -3484,6 +3506,8 @@ class Software_Tab(ttk.Frame):
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
                 piapps_installed_content.append(piapps_entry.get())
+                piapps_pkg_uninst.config(state=NORMAL)
+                piapps_pkg_inst.config(state=DISABLED)
             else:
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {piapps_entry.get()}; exec bash\"'"
@@ -3494,6 +3518,15 @@ class Software_Tab(ttk.Frame):
                         piapps_pkg_uninst.config(state=NORMAL)
                         piapps_pkg_inst.config(state=DISABLED)
 
+            piapps_pkg_status.config(
+                text="Installed",
+                compound="left",
+                justify="left",
+                image=self.ok_installed,
+                anchor="w",
+                width=150,
+            )
+
         def piapps_uninstall():
             fullstring = piapps_entry.get()
             substring = " "
@@ -3503,6 +3536,8 @@ class Software_Tab(ttk.Frame):
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
                 )
                 piapps_installed_content.remove(piapps_entry.get())
+                piapps_pkg_uninst.config(state=DISABLED)
+                piapps_pkg_inst.config(state=NORMAL)
             else:
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage uninstall {piapps_entry.get()}; exec bash\"'"
@@ -3515,6 +3550,15 @@ class Software_Tab(ttk.Frame):
                     else:
                         piapps_pkg_uninst.config(state=DISABLED)
                         piapps_pkg_inst.config(state=NORMAL)
+
+            piapps_pkg_status.config(
+                text="Not Installed",
+                compound="left",
+                justify="left",
+                image=self.not_ok_installed,
+                anchor="w",
+                width=150,
+            )
 
         def update_piapps(piapps_data):
             piapps_list_box.delete(0, END)
@@ -3893,6 +3937,15 @@ class Software_Tab(ttk.Frame):
                     flatpak_pkg_uninst.config(state=NORMAL)
                     flatpak_pkg_inst.config(state=DISABLED)
 
+            flatpak_pkg_status.config(
+                text="Installed",
+                compound="left",
+                justify="left",
+                image=self.ok_installed,
+                anchor="w",
+                width=150,
+            )
+
         def flatpak_uninstall():
             global pigro_skript_name
             pigro_skript_name = f"Uninstalling... {flatpak_entry.get()}"
@@ -3907,6 +3960,15 @@ class Software_Tab(ttk.Frame):
                     del flat_uninstalled_dict[key]
                     flatpak_pkg_uninst.config(state=DISABLED)
                     flatpak_pkg_inst.config(state=NORMAL)
+
+            flatpak_pkg_status.config(
+                text="Not Installed",
+                compound="left",
+                justify="left",
+                image=self.not_ok_installed,
+                anchor="w",
+                width=150,
+            )
 
         def update_flatpak(flatpak_data):
             flatpak_data = sorted(flatpak_data)
@@ -4996,14 +5058,29 @@ class Git_More_Tab(ttk.Frame):
             highlightthickness=0,
             highlightcolor="white",
             relief=GROOVE,
-            pady=20,
-            padx=20,
+
         )
         self.link_right.pack(expand=True, fill=BOTH, padx=20)
-        self.link_right["background"] = frame_color
+        self.link_right["background"] = maincolor
+
+        self.g2h_discription = LabelFrame(
+            self.link_right,
+            text="Discription",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=10,
+            padx=10,
+            width=300,
+        )
+        self.g2h_discription.pack(fill="both",expand=True)  #
+        self.g2h_discription["background"] = frame_color
 
         self.appname_header = Label(
-            self.link_right,
+            self.g2h_discription,
             text=" ",
             width=50,
             highlightthickness=0,
@@ -5016,8 +5093,20 @@ class Git_More_Tab(ttk.Frame):
         )
         self.appname_header.pack(anchor="w", pady=10)
 
+        self.web_link = tk.Label(
+            self.g2h_discription,
+            text=r" ",
+            width=50,
+            background=frame_color,
+            foreground="blue",
+            cursor="hand2",
+            anchor="w",
+        )
+        self.web_link.pack(anchor="w", pady=10)
+        self.web_link.bind("<Button-1>", callback)
+
         self.app_disc = Label(
-            self.link_right,
+            self.g2h_discription,
             justify="left",
             text=" ",
             width=50,
@@ -5030,20 +5119,9 @@ class Git_More_Tab(ttk.Frame):
         )
         self.app_disc.pack(anchor="w")
 
-        self.web_link = tk.Label(
-            self.link_right,
-            text=r" ",
-            width=50,
-            background=frame_color,
-            foreground="blue",
-            cursor="hand2",
-            anchor="w",
-        )
-        self.web_link.pack(anchor="w", pady=10)
-        self.web_link.bind("<Button-1>", callback)
 
         self.app_pic = Label(
-            self.link_right,
+            self.g2h_discription,
             justify="left",
             text=" ",
             image=self.place_holder,
@@ -5056,12 +5134,29 @@ class Git_More_Tab(ttk.Frame):
         )
         self.app_pic.pack(anchor="w")
 
-        self.app_inst = Text(
+        self.g2h_command = LabelFrame(
             self.link_right,
+            text="Command",
+            font=font_16,
+            foreground=label_frame_color,
+            borderwidth=0,
+            highlightthickness=0,
+            highlightcolor="white",
+            relief=GROOVE,
+            pady=10,
+            padx=10,
+            width=300,
+        )
+        self.g2h_command.pack(pady=20, fill="both",expand=True)  #
+        self.g2h_command["background"] = frame_color
+
+        self.app_inst = Text(
+            self.g2h_command,
             wrap="word",
             width=150,
             height=50,
             borderwidth=0,
+            highlightthickness=0,
             bg=frame_color,
             fg=main_font,
         )
@@ -5113,6 +5208,21 @@ class Look_Tab(ttk.Frame):
                 done_1()
 
         def color_selected():
+            conf_file = f"{home}/.pigro/pigro.conf"
+            new_theme = select_clicked.get()
+
+            with open(conf_file, 'r') as f:
+                lines = f.readlines()
+
+            with open(conf_file, 'w') as f:
+                for line in lines:
+                    if "theme =" in line:
+                        f.write(f"theme = {new_theme}\n")
+                    else:
+                        f.write(line)
+            done_1()
+
+        def color_selected1():
             if select_clicked.get() == "Light Theme":
                 file = open(f"{home}/.pigro/pigro.conf", "rt")
                 data = file.read()
@@ -5419,11 +5529,15 @@ exit
                 activebackground=ext_btn,
             )
             self.pixel_button_x.grid(row=conf_row, column=conf_column, padx=5, pady=5)
+            self.pixel_button_x.configure(state=DISABLED)
             pixel_settings_btn_list1.append(self.pixel_button_x)
             conf_column = conf_column + 1
             if conf_column == 7:
                 conf_row = conf_row + 1
                 conf_column = 0
+
+            if get_de == "LXDE":
+                self.pixel_button_x.configure(state=NORMAL)
             if pixel_settings_btn == "LXAppearance":
                 self.pixel_button_x.config(image=self.ico_m)
             if pixel_settings_btn == "OpenBox Conf":
@@ -5465,8 +5579,12 @@ exit
         )
         theme_select_frame.grid(row=0, column=0)
         options = [
-            "Dark Theme",
-            "Light Theme",
+            "dark",
+            "light",
+            "fluff",
+            "mint",
+            "ubibui"
+
         ]
         global select_clicked
         select_clicked = StringVar()

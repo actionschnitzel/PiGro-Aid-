@@ -207,8 +207,26 @@ conf_file.close()
 
 
 for line in read_conf:
+    
+    if distro_get == "ubuntu":
+            print("[Info]: Ubuntu Theme")
+            # global maincolor
+            maincolor = "#2b2b2b"
+            # global nav_color
+            nav_color = "#2b2b2b"
+            # global frame_color
+            frame_color = "#383838"
+            # global main_font
+            main_font = "white"
+            # global info_color
+            info_color = "yellow"
+            # global ext_btn
+            ext_btn = "#E95420"
+            # global label_frame_color
+            label_frame_color = "#E95420"       
+    
     # Dark Theme Settings
-    if str("theme = dark") in line:
+    elif str("theme = dark") in line:
         print("[Info]: Dark Theme")
         # global maincolor
         maincolor = "#404040"
@@ -224,16 +242,9 @@ for line in read_conf:
         ext_btn = "#007acc"
         # global label_frame_color
         label_frame_color = "#d4244d"
-        if distro_get == "ubuntu":
-            maincolor = "#333333"
-            nav_color = "#272727"
-            frame_color = "#333333"
-            main_font = "white"
-            info_color = "yellow"
-            ext_btn = "#333333"
 
     # Light Theme Settings
-    if str("theme = light") in line:
+    elif str("theme = light") in line:
         print("[Info]: Light Theme")
         maincolor = "#f5f5f5"
         nav_color = "#e8e8e8"
@@ -242,13 +253,55 @@ for line in read_conf:
         info_color = "#0075b7"
         ext_btn = "#c5c5c5"
         label_frame_color = "#0075b7"
-        if distro_get == "ubuntu":
-            maincolor = "#fafafa"
-            nav_color = "#ffffff"
-            frame_color = "#fafafa"
-            main_font = "black"
-            info_color = "#0075b7"
-            ext_btn = "#fafafa"
+
+    # Fluff Theme Settings
+    elif str("theme = fluff") in line:
+        print("[Info]: Fluff Theme")
+        maincolor = "#ffe7e7"
+        nav_color = "#ff9e9e"
+        frame_color = "#ffbbbb"
+        main_font = "black"
+        info_color = "#0075b7"
+        ext_btn = "#FF6060"
+        label_frame_color = "#C300CC"
+
+    # Mint Theme Settings
+    elif str("theme = mint") in line:
+        print("[Info]: Mint Theme")
+        # global maincolor
+        maincolor = "#404040"
+        # global nav_color
+        nav_color = "#2b2b2b"
+        # global frame_color
+        frame_color = "#383838"
+        # global main_font
+        main_font = "white"
+        # global info_color
+        info_color = "yellow"
+        # global ext_btn
+        ext_btn = "#10a37f"
+        # global label_frame_color
+        label_frame_color = "#10a37f"
+
+    # Dark Theme Settings
+    elif str("theme = ubibui") in line:
+        print("[Info]: Ubuntu Theme")
+        # global maincolor
+        maincolor = "#404040"
+        # global nav_color
+        nav_color = "#2b2b2b"
+        # global frame_color
+        frame_color = "#383838"
+        # global main_font
+        main_font = "white"
+        # global info_color
+        info_color = "yellow"
+        # global ext_btn
+        ext_btn = "#E95420"
+        # global label_frame_color
+        label_frame_color = "#E95420"
+
+ 
 
 # Font Definition Vars
 # global font_20
