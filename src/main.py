@@ -79,49 +79,106 @@ class MainApplication(tk.Tk):
         self.Git_More_Tab = Git_More_Tab(self.notebook)
 
         # Notebook Icons
-        self.status_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/dash_dark_24x24.png"
-        )
-        self.system_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/sys_dark_24x24.png"
-        )
-        self.update_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/update_dark_24x24.png"
-        )
-        self.install_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/software_dark_24x24.png"
-        )
-        self.look_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/look_dark_24x24.png"
-        )
-        self.tuning_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/tuning_dark_24x24.png"
-        )
-        self.links_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/links_dark_24x24.png"
-        )
-        self.support_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/about_dark_24x24.png"
-        )
-        self.cam_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png"
-        )
-        self.ubuntu_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
-        )
-        self.auto_start = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/auto_dark_24x24.png"
-        )
-        self.kill_proc = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/tasks_dark_24x24.png"
-        )
-        self.git_more = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/g2h_dark_24x24.png"
-        )
+        conf_file2 = open(f"{home}/.pigro/pigro.conf", "r")
+        read_conf2 = conf_file2.readlines()
+        conf_file2.close()
 
-        self.deb_pack = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/backup_dark_24x24.png"
-        )
+        for line in read_conf2:
+            if str("theme = light") in line or str("theme = flausch") in line:
+                self.status_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/dash_light_24x24.png"
+                )
+                self.system_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/sys_light_24x24.png"
+                )
+                self.update_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/update_light_24x24.png"
+                )
+                self.install_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/software_light_24x24.png"
+                )
+                self.look_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/look_light_24x24.png"
+                )
+                self.tuning_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/tuning_light_24x24.png"
+                )
+                self.links_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/links_light_24x24.png"
+                )
+                self.support_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/about_light_24x24.png"
+                )
+                self.cam_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png"
+                )
+                self.ubuntu_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
+                )
+                self.auto_start = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/auto_light_24x24.png"
+                )
+                self.kill_proc = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/tasks_light_24x24.png"
+                )
+                self.git_more = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/g2h_light_24x24.png"
+                )
+
+                self.deb_pack = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/backup_light_24x24.png"
+                )
+
+            elif (
+                str("theme = light") in line
+                or str("theme = flausch") in line
+                or str("theme = dark") in line
+                or str("theme = mint") in line
+                or str("theme = ubibui") in line
+            ):
+                self.status_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/dash_dark_24x24.png"
+                )
+                self.system_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/sys_dark_24x24.png"
+                )
+                self.update_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/update_dark_24x24.png"
+                )
+                self.install_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/software_dark_24x24.png"
+                )
+                self.look_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/look_dark_24x24.png"
+                )
+                self.tuning_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/tuning_dark_24x24.png"
+                )
+                self.links_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/links_dark_24x24.png"
+                )
+                self.support_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/about_dark_24x24.png"
+                )
+                self.cam_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png"
+                )
+                self.ubuntu_icon = PhotoImage(
+                    file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
+                )
+                self.auto_start = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/auto_dark_24x24.png"
+                )
+                self.kill_proc = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/tasks_dark_24x24.png"
+                )
+                self.git_more = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/g2h_dark_24x24.png"
+                )
+
+                self.deb_pack = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/backup_dark_24x24.png"
+                )
 
         # Puts tabs in nav bar
         self.notebook.add(
@@ -190,7 +247,7 @@ class MainApplication(tk.Tk):
         # Notebook Theming
         global noteStyler
         noteStyler = ttk.Style(self)
-        # noteStyler.theme_use('alt')
+        # noteStyler.theme_use('clam')
         noteStyler.configure(
             "TNotebook",
             borderwidth=0,
@@ -257,8 +314,8 @@ class MainApplication(tk.Tk):
 
         # Seperator Theme
         noteStyler.configure("Line.TSeparator", background="grey", rekief="sunken")
-        # Compbox Theme
 
+        # Compbox Theme
         noteStyler.configure(
             "TCombobox",
             background=ext_btn,
@@ -512,7 +569,6 @@ class Dash_Tab(ttk.Frame):
             height=100,
         )
 
-        # .place(x=120, y=750, width=885)
         self.usage_frame.pack(pady=20)
         self.usage_frame.pack_propagate(0)
         self.usage_frame["background"] = frame_color
@@ -526,7 +582,6 @@ class Dash_Tab(ttk.Frame):
             relief=GROOVE,
         )
 
-        # .place(x=120, y=750, width=885)
         self.useage_container.pack()
         self.useage_container["background"] = frame_color
 
@@ -636,7 +691,7 @@ class Dash_Tab(ttk.Frame):
             padx=10,
         )
 
-        self.info_main_frame.pack()  # .place(x=120, y=240, width=885)
+        self.info_main_frame.pack()
         self.info_main_frame["background"] = frame_color
 
         ### LEFT INFO FRAME AND ALL BELOW ###
@@ -1123,7 +1178,6 @@ class Dash_Tab(ttk.Frame):
             borderwidth=0,
             background=frame_color,
             foreground=main_font,
-            # width=30,
             anchor=W,
         )
         self.sys_soft.pack(anchor=W)
@@ -1137,7 +1191,6 @@ class Dash_Tab(ttk.Frame):
             borderwidth=0,
             background=frame_color,
             foreground=main_font,
-            # width=30,
             anchor=W,
         )
         self.sys_flat.pack(anchor=W)
@@ -1154,7 +1207,6 @@ class Dash_Tab(ttk.Frame):
             borderwidth=0,
             background=frame_color,
             foreground=main_font,
-            # width=35,
             anchor=W,
         )
         system_place_holder_label.pack(anchor=W)
@@ -1266,7 +1318,6 @@ class Dash_Tab(ttk.Frame):
             height=80,
         )
 
-        # .place(x=120, y=750, width=885)
         self.info_main_Update_Tab.pack(pady=20)
         self.info_main_Update_Tab.pack_propagate(0)
         self.info_main_Update_Tab["background"] = frame_color
@@ -1294,8 +1345,6 @@ class Dash_Tab(ttk.Frame):
             command=Simpletoggle,
         )
         self.toggle_button.pack(anchor="w")
-
-        #
 
         web_check = Label(
             self,
@@ -1371,9 +1420,7 @@ class Update_Tab(ttk.Frame):
             pady=20,
         )
 
-        self.off_rep_frame.pack(
-            side="left", fill=BOTH, expand=True
-        )  # .grid(row=0, column=0)
+        self.off_rep_frame.pack(side="left", fill=BOTH, expand=True)
         self.off_rep_frame["background"] = frame_color
 
         self.tu_info = Label(
@@ -1434,7 +1481,7 @@ class Update_Tab(ttk.Frame):
             padx=30,
         )
 
-        self.man_rep_frame.pack()  # .grid(row=0, column=1, sticky="ne")
+        self.man_rep_frame.pack()
         self.man_rep_frame["background"] = frame_color
 
         def open_ppa(text):
@@ -1811,7 +1858,7 @@ class System_Tab(ttk.Frame):
             pady=10,
             padx=10,
         )
-        self.pi_set.pack(pady=20, padx=40, fill="both")  #
+        self.pi_set.pack(pady=20, padx=40, fill="both")
         self.pi_set["background"] = frame_color
 
         pi_settings_btn_list = [
@@ -1893,7 +1940,7 @@ class System_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.device_set.pack(pady=20, padx=40, fill="both")  #
+        self.device_set.pack(pady=20, padx=40, fill="both")
         self.device_set["background"] = frame_color
 
         device_settings_btn_list = [
@@ -2413,7 +2460,7 @@ class Autostarts_Tab(ttk.Frame):
             pady=10,
             padx=10,
         )
-        self.auto_set.pack(pady=20, padx=40, fill="both")  #
+        self.auto_set.pack(pady=20, padx=40, fill="both")
         self.auto_set["background"] = frame_color
 
         self.treeview = ttk.Treeview(self.auto_set)
@@ -2511,7 +2558,7 @@ class Autostarts_Tab(ttk.Frame):
             pady=10,
             padx=10,
         )
-        self.auto_add.pack(pady=20, padx=40, fill="both")  #
+        self.auto_add.pack(pady=20, padx=40, fill="both")
         self.auto_add["background"] = frame_color
 
         # Create label and entry for autostart file name
@@ -2572,8 +2619,6 @@ class Autostarts_Tab(ttk.Frame):
             f.write(f"Name={filename}\n")
             f.write(f"Exec={command}\n")
             f.write("X-GNOME-Autostart-enabled=true\n")
-        # new_deskfile.close()
-        # Close Toplevel
         self.populate_treeview()
 
 
@@ -3093,21 +3138,49 @@ class Software_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/pigro_icons/not_ok_16x16.png"
         )
 
-        self.deb_nav = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/debian_dark_24x24.png"
-        )
+        conf_file2 = open(f"{home}/.pigro/pigro.conf", "r")
+        read_conf2 = conf_file2.readlines()
+        conf_file2.close()
 
-        self.piapps_nav = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/piapps_dark_24x24.png"
-        )
+        for line in read_conf2:
+            if str("theme = light") in line or str("theme = flausch") in line:
+                self.deb_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/debian_light_24x24.png"
+                )
 
-        self.flatpak_nav = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
-        )
+                self.piapps_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/piapps_light_24x24.png"
+                )
 
-        self.oneclick_nav = PhotoImage(
-            file=f"{Application_path}/images/icons/nav_bar/1click_dark_24x24.png"
-        )
+                self.flatpak_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/flatpak_light_24x24.png"
+                )
+
+                self.oneclick_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/1click_light_24x24.png"
+                )
+            elif (
+                str("theme = light") in line
+                or str("theme = flausch") in line
+                or str("theme = dark") in line
+                or str("theme = mint") in line
+                or str("theme = ubibui") in line
+            ):
+                self.deb_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/debian_dark_24x24.png"
+                )
+
+                self.piapps_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/piapps_dark_24x24.png"
+                )
+
+                self.flatpak_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
+                )
+
+                self.oneclick_nav = PhotoImage(
+                    file=f"{Application_path}/images/icons/nav_bar/1click_dark_24x24.png"
+                )
 
         # create frames
         apt_frame = ttk.Frame(self.inst_notebook)
@@ -3122,10 +3195,16 @@ class Software_Tab(ttk.Frame):
 
         # add frames to notebook
 
-        self.inst_notebook.add(apt_frame, compound=LEFT, text="APT",image=self.deb_nav)
-        self.inst_notebook.add(piapps_frame, compound=LEFT, text="Pi Apps",image=self.piapps_nav)
-        self.inst_notebook.add(flat_frame, compound=LEFT, text="Flatpak",image=self.flatpak_nav)
-        self.inst_notebook.add(repo_frame, compound=LEFT, text="1 Click",image=self.oneclick_nav)
+        self.inst_notebook.add(apt_frame, compound=LEFT, text="APT", image=self.deb_nav)
+        self.inst_notebook.add(
+            piapps_frame, compound=LEFT, text="Pi Apps", image=self.piapps_nav
+        )
+        self.inst_notebook.add(
+            flat_frame, compound=LEFT, text="Flatpak", image=self.flatpak_nav
+        )
+        self.inst_notebook.add(
+            repo_frame, compound=LEFT, text="1 Click", image=self.oneclick_nav
+        )
 
         def error_mass_0():
             e_mass = Error_Mass(self)
@@ -3245,8 +3324,6 @@ class Software_Tab(ttk.Frame):
                     for link in soup.find_all("a")
                     if link.get("href").endswith(".png")
                 ]
-                # Print the links
-                # print(f"https://screenshots.debian.net{str(links[1])}")
 
                 url_output = f"https://screenshots.debian.net{str(links[1])}"
                 with urlopen(url_output) as url_output:
@@ -3346,9 +3423,7 @@ class Software_Tab(ttk.Frame):
         apt_cache_output = subprocess.check_output(apt_cache_cmd, shell=True)
         apt_cache_packages = apt_cache_output.decode().split("\n")
 
-        # apt_cache = os.popen("apt-cache pkgnames")
-
-        apt_cache_content = apt_cache_packages  # .readlines()
+        apt_cache_content = apt_cache_packages
         for i, s in enumerate(apt_cache_content):
             apt_cache_content[i] = s.strip()
 
@@ -3632,7 +3707,7 @@ class Software_Tab(ttk.Frame):
 
                 app_string = f"{piapps_entry.get()}"
                 app_string_web = app_string.replace(" ", "%20")
-                # print(app_string_web)
+
                 self.piapps_select_icon = PhotoImage(
                     file=f"~/pi-apps/apps/{piapps_entry.get()}/icon-64.png"
                 )
@@ -3712,7 +3787,7 @@ class Software_Tab(ttk.Frame):
                 piapps_cache_content[i] = s.strip()
 
             piapps_installed = pi_apps_installed_list
-            piapps_installed_content = piapps_installed  # .readlines()
+            piapps_installed_content = piapps_installed
             for i, s in enumerate(piapps_installed_content):
                 piapps_installed_content[i] = s.strip()
             update_piapps(piapps_cache_content)
@@ -3857,7 +3932,6 @@ class Software_Tab(ttk.Frame):
 
         piapps_app_open = Button(
             piapps_configs_frame,
-            # text="1",
             justify="left",
             imag=self.pi_appsopen_icon,
             background=frame_color,
@@ -4211,8 +4285,6 @@ class Software_Tab(ttk.Frame):
 
             # print(Flat_remote_dict)
 
-            # var_material = tk.StringVar()
-
             fu1 = "flatpak list --columns=name"
             fu2 = "flatpak list --columns=application"
 
@@ -4237,7 +4309,6 @@ class Software_Tab(ttk.Frame):
             update_flatpak(Flat_remote_dict.keys())
             # print(flat_uninstalled_dict)
 
-            # un_var_material = tk.StringVar()
         else:
             flatpak_search_btn.config(state=DISABLED)
             flatpak_entry.insert(0, "Flatpak is not installed")
@@ -4535,9 +4606,7 @@ class Software_Tab(ttk.Frame):
                 custom_pop.grab_set()
 
             if text == "Bleach Bit":
-                # global pigro_skript_name
                 pigro_skript_name = "Installing... bleachbit"
-                # global pigro_skript
                 pigro_skript = f"{legit} apt install bleachbit -y && exit"
                 custom_pop = Custom_Installer(self)
                 custom_pop.grab_set()
@@ -5092,7 +5161,7 @@ class Git_More_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.g2h_discription.pack(fill="both", expand=True)  #
+        self.g2h_discription.pack(fill="both", expand=True)
         self.g2h_discription["background"] = frame_color
 
         self.appname_header = Label(
@@ -5162,7 +5231,7 @@ class Git_More_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.g2h_command.pack(pady=20, fill="both", expand=True)  #
+        self.g2h_command.pack(pady=20, fill="both", expand=True)
         self.g2h_command["background"] = frame_color
 
         self.app_inst = Text(
@@ -5335,7 +5404,7 @@ class Look_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.gui_set.pack(pady=20, padx=40, fill="both")  #
+        self.gui_set.pack(pady=20, padx=40, fill="both")
         self.gui_set["background"] = frame_color
 
         gui_settings_btn_list = [
@@ -5423,7 +5492,7 @@ exit
             padx=10,
             width=300,
         )
-        self.xfce4_set.pack(pady=20, padx=40, fill="both")  #
+        self.xfce4_set.pack(pady=20, padx=40, fill="both")
         self.xfce4_set["background"] = frame_color
 
         xfce4_settings_btn_list = [
@@ -5513,7 +5582,7 @@ exit
             padx=10,
             width=300,
         )
-        self.pixel_set.pack(pady=20, padx=40, fill="both")  #
+        self.pixel_set.pack(pady=20, padx=40, fill="both")
         self.pixel_set["background"] = frame_color
 
         pixel_settings_btn_list = [
@@ -5593,7 +5662,7 @@ exit
             self.rahmen43, highlightthickness=0, borderwidth=0, background=maincolor
         )
         theme_select_frame.grid(row=0, column=0)
-        options = ["dark", "light", "fluff", "mint", "ubibui"]
+        options = ["dark", "light", "flausch", "mint", "ubibui"]
         global select_clicked
         select_clicked = StringVar()
         select_clicked.set("Select Theme")
@@ -5699,17 +5768,11 @@ class Update_Pop(tk.Toplevel):
         self.config(bg=maincolor)
 
         def get_info_version():
-            # MUST BE UPDATED WITH EVER NEW RELEASE!
-
             url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
             r = requests.get(url)
 
             github_release = r.url.split("/")[-1]
-            # Check line 338-441: [1:-2] MUST BE REMOVED BEFORE 32.01 RELEASE!!!!!!!!!!!!!!!!!!!!!
             github_release = str(github_release)
-            # return github_release
-            # print(current_version)
-            # print(github_release)
 
             GLabel_0.config(
                 text=f"Latest Version: {github_release}\nYour Version: {current_version}"
@@ -6137,7 +6200,6 @@ class Tuning_Tab(ttk.Frame):
         self.pigro_t_info = Label(
             self.ov_buttons,
             anchor="w",
-            # justify=LEFT,
             text="To unlock the overclocking options\non 'first use' click on:\nReset Overclocking",
             highlightthickness=0,
             borderwidth=2,
@@ -6697,7 +6759,6 @@ class Tuning_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            # padx=200,
             pady=10,
         )
         self.custom_main_frame.pack(anchor="n", pady=20, padx=10, fill=BOTH)
@@ -6709,14 +6770,12 @@ class Tuning_Tab(ttk.Frame):
             borderwidth=0,
             highlightthickness=0,
             relief=GROOVE,
-            # padx=200,
             pady=10,
         )
         self.custom_settings_frame.pack()
         self.custom_settings_frame["background"] = frame_color
 
         # Additional Infos
-        # +üpp
 
         self.ov_helps_frame = Frame(
             self.ov_state_display_frame,
@@ -6935,7 +6994,7 @@ class Tuning_Tab(ttk.Frame):
         )
         self.chromium_drm.pack(anchor="n", padx=10, fill=BOTH)
         self.chromium_drm["background"] = frame_color
-        #
+
         options = [
             "Chromium 32",
             "Chromium 64",
@@ -6943,7 +7002,7 @@ class Tuning_Tab(ttk.Frame):
 
         add_path_lbl = Label(
             self.chromium_drm,
-            text="Chromium 64Bit has not but 32Bit has",
+            text="Select Chromium 32Bit to enable DRM support.",
             justify="left",
             anchor="w",
             background=frame_color,
@@ -7944,6 +8003,5 @@ class Loading_Throbber(Label):
 
 # [End Of The Line]
 if __name__ == "__main__":
-    # Get_Sys_Info()
     app = MainApplication()
     app.mainloop()

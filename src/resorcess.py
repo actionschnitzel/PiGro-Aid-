@@ -8,18 +8,16 @@ from os.path import isfile, join
 import distro
 from pathlib import Path
 
-# #global current_version
+
 current_version = "23.02"
 
 # Get User Name
-# global user
 user = os.environ["USER"]
 print(f"[Info]: Hi,{user} waz uuuuup?!")
 
 
 # Get Home Path
-# global home
-home = os.environ["HOME"]  # str(Path.home())
+home = os.environ["HOME"]
 print(f"[Info]: {home} is your home directory!")
 
 # set the directory autostart path
@@ -35,7 +33,6 @@ else:
 
 
 # Gets path to PiGro
-# global Application_path
 if not os.path.exists(f"/home/{user}/PiGro-Aid-"):
     Application_path = "/opt/PiGro-Aid-"
 else:
@@ -92,25 +89,21 @@ read_check = legit_check.readlines()
 legit_check.close()
 for line in read_check:
     if str("perm = true") in line:
-        # global legit
         legit = "pkexec"
     else:
         legit = "sudo"
 
 # get Distro name
-# global distro_get
 distro_get = distro.id()
 print("[Info]: Your Distro is: " + str(distro_get))
 
 
 # Gets nice Distro name
-# global nice_name
 nice_name = popen("egrep '^(PRETTY_NAME)=' /etc/os-release")
 nice_name = nice_name.read()
 
 
 # Location of config.txt
-# global config_path
 if os.path.exists("/boot/config.txt"):
     config_path = "/boot/config.txt"
 elif os.path.exists("/boot/firmware/usercfg.txt"):
@@ -122,20 +115,17 @@ else:
 
 
 # Get Desktop Environment
-# global get_de
 get_de = os.environ.get("XDG_CURRENT_DESKTOP")
 print("[Info]: Your DE is: " + str(get_de))
 
 
 # Checks if pi-apps is installed an imports the app list
 open(f"{home}/.pigro/pi-apps_installed.list", "w").close()
-# global piapps_path
 piapps_path = os.path.exists(f"{home}/pi-apps")
 if piapps_path == False:
     print("[Info]: Pi-Apps not found")
 if piapps_path == True:
     print("[Info]: Pi-Apps is installed list will be added")
-    # global pi_apps_installed_list
     pi_apps_installed_list = []
     for installed_pi_apps in os.listdir(f"{home}/pi-apps/data/status"):
         pi_apps_status = open(
@@ -165,12 +155,9 @@ os_arch_output = os_arch.read()
 
 
 # Checks if flatpak exists
-
-# global flatpak_path
 flatpak_path = os.path.exists("/bin/flatpak")
 if flatpak_path == True:
     print("[Info]: Flatpak is installed")
-    # global flat_counted
     flat_count = popen("flatpak list | wc --lines")
     flat_counted = flat_count.read()
     flat_count.close()
@@ -194,7 +181,6 @@ else:
 
 # Counts installed .DEBs
 deb_count = popen("dpkg --list | wc --lines")
-# global deb_counted
 deb_counted = deb_count.read()
 deb_count.close()
 print(f"[Info]: {deb_counted[:-1]} .deb Packages Installed")
@@ -207,40 +193,25 @@ conf_file.close()
 
 
 for line in read_conf:
-    
     if distro_get == "ubuntu":
-            print("[Info]: Ubuntu Theme")
-            # global maincolor
-            maincolor = "#2b2b2b"
-            # global nav_color
-            nav_color = "#2b2b2b"
-            # global frame_color
-            frame_color = "#383838"
-            # global main_font
-            main_font = "white"
-            # global info_color
-            info_color = "yellow"
-            # global ext_btn
-            ext_btn = "#E95420"
-            # global label_frame_color
-            label_frame_color = "#E95420"       
-    
+        print("[Info]: Ubuntu Theme")
+        maincolor = "#2b2b2b"
+        nav_color = "#2b2b2b"
+        frame_color = "#383838"
+        main_font = "white"
+        info_color = "yellow"
+        ext_btn = "#E95420"
+        label_frame_color = "#E95420"
+
     # Dark Theme Settings
     elif str("theme = dark") in line:
         print("[Info]: Dark Theme")
-        # global maincolor
         maincolor = "#404040"
-        # global nav_color
         nav_color = "#2b2b2b"
-        # global frame_color
         frame_color = "#383838"
-        # global main_font
         main_font = "white"
-        # global info_color
         info_color = "yellow"
-        # global ext_btn
         ext_btn = "#007acc"
-        # global label_frame_color
         label_frame_color = "#d4244d"
 
     # Light Theme Settings
@@ -254,9 +225,9 @@ for line in read_conf:
         ext_btn = "#c5c5c5"
         label_frame_color = "#0075b7"
 
-    # Fluff Theme Settings
-    elif str("theme = fluff") in line:
-        print("[Info]: Fluff Theme")
+    # flausch Theme Settings
+    elif str("theme = flausch") in line:
+        print("[Info]: flausch Theme")
         maincolor = "#ffe7e7"
         nav_color = "#ff9e9e"
         frame_color = "#ffbbbb"
@@ -268,61 +239,35 @@ for line in read_conf:
     # Mint Theme Settings
     elif str("theme = mint") in line:
         print("[Info]: Mint Theme")
-        # global maincolor
         maincolor = "#404040"
-        # global nav_color
         nav_color = "#2b2b2b"
-        # global frame_color
         frame_color = "#383838"
-        # global main_font
         main_font = "white"
-        # global info_color
         info_color = "yellow"
-        # global ext_btn
         ext_btn = "#10a37f"
-        # global label_frame_color
         label_frame_color = "#10a37f"
 
     # Dark Theme Settings
     elif str("theme = ubibui") in line:
         print("[Info]: Ubuntu Theme")
-        # global maincolor
         maincolor = "#404040"
-        # global nav_color
         nav_color = "#2b2b2b"
-        # global frame_color
         frame_color = "#383838"
-        # global main_font
         main_font = "white"
-        # global info_color
         info_color = "yellow"
-        # global ext_btn
         ext_btn = "#E95420"
-        # global label_frame_color
         label_frame_color = "#E95420"
 
- 
 
 # Font Definition Vars
-# global font_20
 font_20 = ("Sans", 20)
-# global font_16
 font_16 = ("Sans", 16)
-# global font_14
 font_14 = ("Sans", 14)
-# global font_12_b
 font_12_b = ("Sans", 12, "bold")
-# global font_12
 font_12 = ("Sans", 12)
-# global font_10
 font_10 = ("Sans", 10)
-# global font_10_b
 font_10_b = ("Sans", 10, "bold")
-# global font_9_b
 font_9_b = ("Sans", 9, "bold")
-# global font_9
 font_9 = ("Sans", 9)
-# global font_8_b
 font_8_b = ("Sans", 8, "bold")
-# global font_8
 font_8 = ("Sans", 8)
