@@ -80,28 +80,28 @@ class MainApplication(tk.Tk):
 
         # Notebook Icons
         self.status_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/com.github.hannesschulze.optimizer.png"
+            file=f"{Application_path}/images/icons/nav_bar/dash_dark_24x24.png"
         )
         self.system_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/kcontrol.png"
+            file=f"{Application_path}/images/icons/nav_bar/sys_dark_24x24.png"
         )
         self.update_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/aptdaemon-upgrade.png"
+            file=f"{Application_path}/images/icons/nav_bar/update_dark_24x24.png"
         )
         self.install_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/softwarecenter.png"
+            file=f"{Application_path}/images/icons/nav_bar/software_dark_24x24.png"
         )
         self.look_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/com.github.cassidyjames.palette.png"
+            file=f"{Application_path}/images/icons/nav_bar/look_dark_24x24.png"
         )
         self.tuning_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/blackmagicraw-speedtest.png"
+            file=f"{Application_path}/images/icons/nav_bar/tuning_dark_24x24.png"
         )
         self.links_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/applications-webapps.png"
+            file=f"{Application_path}/images/icons/nav_bar/links_dark_24x24.png"
         )
         self.support_icon = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/4137_winhlp32.0.png"
+            file=f"{Application_path}/images/icons/nav_bar/about_dark_24x24.png"
         )
         self.cam_icon = PhotoImage(
             file=f"{Application_path}/images/icons/papirus/48x48/gtkam-camera.png"
@@ -110,17 +110,17 @@ class MainApplication(tk.Tk):
             file=f"{Application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
         )
         self.auto_start = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/cs-startup-programs.png"
+            file=f"{Application_path}/images/icons/nav_bar/auto_dark_24x24.png"
         )
         self.kill_proc = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/appimagekit-gqrx.png"
+            file=f"{Application_path}/images/icons/nav_bar/tasks_dark_24x24.png"
         )
         self.git_more = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/desktop-effects.png"
+            file=f"{Application_path}/images/icons/nav_bar/g2h_dark_24x24.png"
         )
 
         self.deb_pack = PhotoImage(
-            file=f"{Application_path}/images/icons/papirus/48x48/debian-logo.png"
+            file=f"{Application_path}/images/icons/nav_bar/backup_dark_24x24.png"
         )
 
         # Puts tabs in nav bar
@@ -178,8 +178,8 @@ class MainApplication(tk.Tk):
         self.notebook.pack(fill="both", expand=True, anchor=W)
 
         # Hides Ubuntu settings when distro is debian
-        #if distro_get == "debian" or distro_get == "raspbian":
-        #    self.notebook.hide(self.System_Ubuntu_Tab)
+        if distro_get == "debian" or distro_get == "raspbian":
+            self.notebook.hide(self.System_Ubuntu_Tab)
 
         # Hides RPi OS settings when distro is Ubuntu
         if distro_get == "ubuntu":
@@ -1421,7 +1421,7 @@ class Update_Tab(ttk.Frame):
                 )
         except:
             pass
-        
+
         self.man_rep_frame = LabelFrame(
             self.rep_main_frame,
             text="Integrated Source",
@@ -2313,7 +2313,7 @@ class System_Ubuntu_Tab(ttk.Frame):
             "Gnome Extensions",
             "Software\nUpdates",
             "Update\nSettings",
-            "Settings"
+            "Settings",
         ]
 
         pi_ubu_settings_btn_list1 = []
@@ -3093,6 +3093,22 @@ class Software_Tab(ttk.Frame):
             file=f"{Application_path}/images/icons/pigro_icons/not_ok_16x16.png"
         )
 
+        self.deb_nav = PhotoImage(
+            file=f"{Application_path}/images/icons/nav_bar/debian_dark_24x24.png"
+        )
+
+        self.piapps_nav = PhotoImage(
+            file=f"{Application_path}/images/icons/nav_bar/piapps_dark_24x24.png"
+        )
+
+        self.flatpak_nav = PhotoImage(
+            file=f"{Application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
+        )
+
+        self.oneclick_nav = PhotoImage(
+            file=f"{Application_path}/images/icons/nav_bar/1click_dark_24x24.png"
+        )
+
         # create frames
         apt_frame = ttk.Frame(self.inst_notebook)
         piapps_frame = ttk.Frame(self.inst_notebook)
@@ -3106,10 +3122,10 @@ class Software_Tab(ttk.Frame):
 
         # add frames to notebook
 
-        self.inst_notebook.add(apt_frame, text="APT")
-        self.inst_notebook.add(piapps_frame, text="Pi Apps")
-        self.inst_notebook.add(flat_frame, text="Flatpak")
-        self.inst_notebook.add(repo_frame, text="1 Click", compound=BOTTOM)
+        self.inst_notebook.add(apt_frame, compound=LEFT, text="APT",image=self.deb_nav)
+        self.inst_notebook.add(piapps_frame, compound=LEFT, text="Pi Apps",image=self.piapps_nav)
+        self.inst_notebook.add(flat_frame, compound=LEFT, text="Flatpak",image=self.flatpak_nav)
+        self.inst_notebook.add(repo_frame, compound=LEFT, text="1 Click",image=self.oneclick_nav)
 
         def error_mass_0():
             e_mass = Error_Mass(self)
@@ -3140,6 +3156,7 @@ class Software_Tab(ttk.Frame):
                 anchor="w",
                 width=150,
             )
+
         def apt_uninstall():
             global pigro_skript_name
             pigro_skript_name = f"Uninstalling... {apt_entry.get()}"
@@ -5058,7 +5075,6 @@ class Git_More_Tab(ttk.Frame):
             highlightthickness=0,
             highlightcolor="white",
             relief=GROOVE,
-
         )
         self.link_right.pack(expand=True, fill=BOTH, padx=20)
         self.link_right["background"] = maincolor
@@ -5076,7 +5092,7 @@ class Git_More_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.g2h_discription.pack(fill="both",expand=True)  #
+        self.g2h_discription.pack(fill="both", expand=True)  #
         self.g2h_discription["background"] = frame_color
 
         self.appname_header = Label(
@@ -5119,7 +5135,6 @@ class Git_More_Tab(ttk.Frame):
         )
         self.app_disc.pack(anchor="w")
 
-
         self.app_pic = Label(
             self.g2h_discription,
             justify="left",
@@ -5147,7 +5162,7 @@ class Git_More_Tab(ttk.Frame):
             padx=10,
             width=300,
         )
-        self.g2h_command.pack(pady=20, fill="both",expand=True)  #
+        self.g2h_command.pack(pady=20, fill="both", expand=True)  #
         self.g2h_command["background"] = frame_color
 
         self.app_inst = Text(
@@ -5211,10 +5226,10 @@ class Look_Tab(ttk.Frame):
             conf_file = f"{home}/.pigro/pigro.conf"
             new_theme = select_clicked.get()
 
-            with open(conf_file, 'r') as f:
+            with open(conf_file, "r") as f:
                 lines = f.readlines()
 
-            with open(conf_file, 'w') as f:
+            with open(conf_file, "w") as f:
                 for line in lines:
                     if "theme =" in line:
                         f.write(f"theme = {new_theme}\n")
@@ -5578,14 +5593,7 @@ exit
             self.rahmen43, highlightthickness=0, borderwidth=0, background=maincolor
         )
         theme_select_frame.grid(row=0, column=0)
-        options = [
-            "dark",
-            "light",
-            "fluff",
-            "mint",
-            "ubibui"
-
-        ]
+        options = ["dark", "light", "fluff", "mint", "ubibui"]
         global select_clicked
         select_clicked = StringVar()
         select_clicked.set("Select Theme")
