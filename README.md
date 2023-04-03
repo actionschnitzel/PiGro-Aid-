@@ -22,17 +22,29 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 ---
 
-# :floppy_disk: Install
-
-Download:
-
-[Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases)
-
-OR:
-
+# :floppy_disk: Installation
+    
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
+    
+### OR:
+    
+Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
+    
+### OR:
+     
+Add The Official [PPA](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
+```
+curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
+sudo curl -s --compressed -o /etc/apt/sources.list.d/actionschnitzel-repo.list "https://actionschnitzel.github.io/actionschnitzel-repo/actionschnitzel-repo.list"
+sudo apt update
+```
 
-#### Supported systems:
+
+
+
+
+
+### Supported systems:
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
 - [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All)
