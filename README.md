@@ -48,6 +48,7 @@ sudo apt update
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
 - [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All)
+- [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
 - Debian based distros in general
 
 #### :exclamation: Installation Process & Updates
