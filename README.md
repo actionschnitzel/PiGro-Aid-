@@ -40,19 +40,21 @@ Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo)
 curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
 sudo curl -s --compressed -o /etc/apt/sources.list.d/actionschnitzel-repo.list "https://actionschnitzel.github.io/actionschnitzel-repo/actionschnitzel-repo.list"
 sudo apt update
+sudo apt install pigro
 ```
 
 ### Supported systems:
 
-- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
-- [Ubuntu] and XFCE4 (https://ubuntu.com/download/raspberry-pi) (64-bit) (All)
+- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)(PIXEL & XFCE4)
+- [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All & XFCE4)
 - [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
-- Debian based distros in general
+- Debian based distros for Raspberry Pi in general
 
 #### :exclamation: Installation Process & Updates
 
-If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use
+- If you have installed PiGro via Pi-Apps, you will automatically receive an update notification.
+- If you have installed PiGro via Package you can check for updates in the About TAB.
+- If you have installed PiGro via the official Repo APT will handle the updates.
 
 ---
 
