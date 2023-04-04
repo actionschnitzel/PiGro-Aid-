@@ -53,21 +53,26 @@ sudo apt update
 #### :exclamation: Installation Process & Updates
 
 If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use:
+If you install PiGro using the script, you can simply use    
+    
+---
 
+# :exclamation: Important
+
+#### ```Pigro will install xterm```. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
+
+Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
+    
+#### ```Diet-Pi```: PiGro wouln't start because Wifi adapter is not set up:
+```dietpi-config``` > 7:Network Adapters > Wifi (This enables Wifi adapter)    
+    
 ---
 
 # :hamburger: Latest Changes
 
 [Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)
 
----
 
-# :exclamation: Important
-
-#### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
-
-Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
 
 ---
 
