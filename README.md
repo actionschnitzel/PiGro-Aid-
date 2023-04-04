@@ -30,11 +30,11 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
 
-If you have already installed Pigro via the script, remove: `~/pigrro-aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
+If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
 
 ### OR:
 
-Add The Official [PPA](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
+Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
 
 ```
 curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
