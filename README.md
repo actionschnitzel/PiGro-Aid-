@@ -4,8 +4,7 @@
     </a>
 </p>
 
-
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9_2.png)
+![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/23_02_header.png?raw=true)
 
 ---
 
@@ -17,48 +16,57 @@
 
 #### :heavy_check_mark: Link Collection
 
-PiGro - Just Click it! is a comprehensive GUI application that simplifies managing all your Raspberry Pi settings in one place. With PiGro, you can easily keep your software up-to-date, manage APT installer, Pi-Apps App Store, and Flatpak, configure autostarts, overclock your Pi, monitor the system, back up your applications, install desktop environments, and theme your OS.
+PiGro - Just Click it! is an all-inclusive graphical user interface (GUI) software that streamlines the process of managing all your Raspberry Pi settings from one convenient location. With PiGro, you can easily keep your software up-to-date, oversee the APT installer, Pi-Apps App Store, and Flatpak, configure autostarts, overclock your Pi, monitor the system's performance, back up your applications, install desktop environments, and customize your OS theme.
 
-PiGro is designed to be user-friendly and accessible for users of all levels of experience. The intuitive interface and straightforward controls make it easy to access and adjust any setting you need.
-
-You can quickly and easily update your software with PiGro, ensuring you're always running the latest versions. PiGro also simplifies app management by allowing you to install and manage apps from the Pi-Apps App Store and Flatpak.
-
-In addition to these features, PiGro includes tools for configuring autostarts, overclocking your system, monitoring system resources, and backing up your applications. You can also use PiGro to install desktop environments and theme your OS, giving you complete control over the look and feel of your Raspberry Pi.
-    
----
-# :fire: Preview for PiGro 23.02_BETA1
-
-[Test ME!](https://github.com/actionschnitzel/PiGro-Aid-/releases/tag/23.02)
-
+Designed with user-friendliness in mind, PiGro is easily accessible to users of all levels of expertise. Its intuitive interface and straightforward controls make it effortless to access and modify any settings you require.
 
 ---
 
-# :floppy_disk: Install
-
-Open a terminal and run this command:
-
-```
-wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
-```
-
-OR:
+# :floppy_disk: Installation
 
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
 
-#### Supported systems:
+### OR:
 
-- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
-- Debian based distros in general
+Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
 
+If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
+
+### OR:
+
+Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
+
+```
+curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
+sudo curl -s --compressed -o /etc/apt/sources.list.d/actionschnitzel-repo.list "https://actionschnitzel.github.io/actionschnitzel-repo/actionschnitzel-repo.list"
+sudo apt update
+sudo apt install pigro
+```
+
+### Supported systems:
+
+- [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)(PIXEL & XFCE4)
+- [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All & XFCE4)
+- [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
+- Debian based distros for Raspberry Pi in general
 
 #### :exclamation: Installation Process & Updates
 
-If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use:
+- If you have installed PiGro via Pi-Apps, you will automatically receive an update notification.
+- If you have installed PiGro via Package you can check for updates in the About TAB.
+- If you have installed PiGro via the official Repo APT will handle the updates.
 
-```
-wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
-```
+---
+
+# :exclamation: Important
+
+#### `Pigro will install xterm`. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
+
+Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
+
+#### `Diet-Pi`: PiGro wouln't start because Wifi adapter is not set up:
+
+`dietpi-config` > 7:Network Adapters > Wifi (This enables Wifi adapter)
 
 ---
 
@@ -68,29 +76,14 @@ wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer
 
 ---
 
-
-# :exclamation: Important
-
-
-
-#### Pigro will install xterm. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
-
-Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
-
-
-
----
-
 # :doughnut: Showcase
 
 ![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/showcase_9.png)
-
-
 
 ---
 
 ### :two_hearts: You want support me?
 
-PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me    
-    
+PiGro is completely free. I put up to three hours into improvements and updates every day. Not to forget the countless hours I spend reading manuals and reference books. If you like my work, you can support me
+
 [![badge](https://github.com/actionschnitzel/tingsandstuff/blob/main/PayPal_donation.png?raw=true)](https://www.paypal.com/paypalme/actionschnitzel)
