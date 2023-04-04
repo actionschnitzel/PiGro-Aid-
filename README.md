@@ -4,7 +4,7 @@
     </a>
 </p>
 
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/9/header_SM9_2.png)
+![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/23_02_header.png?raw=true)
 
 ---
 
@@ -23,57 +23,52 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 ---
 
 # :floppy_disk: Installation
-    
+
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
-    
+
 ### OR:
-    
+
 Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
-    
+
 ### OR:
-     
+
 Add The Official [PPA](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
+
 ```
 curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
 sudo curl -s --compressed -o /etc/apt/sources.list.d/actionschnitzel-repo.list "https://actionschnitzel.github.io/actionschnitzel-repo/actionschnitzel-repo.list"
 sudo apt update
 ```
 
-
-
-
-
-
 ### Supported systems:
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)
-- [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All)
+- [Ubuntu] and XFCE4 (https://ubuntu.com/download/raspberry-pi) (64-bit) (All)
 - [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
 - Debian based distros in general
 
 #### :exclamation: Installation Process & Updates
 
 If you install PiGro via Pi-Apps, you will automatically receive an update notification.  
-If you install PiGro using the script, you can simply use    
-    
+If you install PiGro using the script, you can simply use
+
 ---
 
 # :exclamation: Important
 
-#### ```Pigro will install xterm```. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
+#### `Pigro will install xterm`. For some reason, Xterm is then selected as default terminal emulator. You can change that by:
 
 Open the Terminal and type `sudo update-alternatives --config x-terminal-emulator`. All available terminal emulators are listed. `lxterminal` is the default.
-    
-#### ```Diet-Pi```: PiGro wouln't start because Wifi adapter is not set up:
-```dietpi-config``` > 7:Network Adapters > Wifi (This enables Wifi adapter)    
-    
+
+#### `Diet-Pi`: PiGro wouln't start because Wifi adapter is not set up:
+
+`dietpi-config` > 7:Network Adapters > Wifi (This enables Wifi adapter)
+
 ---
 
 # :hamburger: Latest Changes
 
 [Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)
-
-
 
 ---
 

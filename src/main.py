@@ -239,7 +239,9 @@ class MainApplication(tk.Tk):
             self.notebook.hide(self.System_Ubuntu_Tab)
 
         # Hides RPi OS settings when distro is Ubuntu
-        if distro_get == "ubuntu":
+        if distro_get == "ubuntu" and get_de == "XFCE":
+            self.notebook.hide(self.System_Tab)
+        elif distro_get == "ubuntu":
             self.notebook.hide(self.System_Tab)
             self.notebook.hide(self.Update_Tab)
             self.notebook.hide(self.Tasks_Tab)
@@ -5637,7 +5639,9 @@ exit
             if pixel_settings_btn == "Restart\nPanel":
                 self.pixel_button_x.config(image=self.ico_m)
 
-        if distro_get == "ubuntu":
+        if distro_get == "ubuntu" and get_de == "XFCE":
+            self.pixel_set.forget()
+        elif distro_get == "ubuntu":
             self.pixel_set.forget()
             self.xfce4_set.forget()
 
