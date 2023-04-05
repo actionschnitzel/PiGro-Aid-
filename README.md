@@ -47,6 +47,7 @@ sudo apt install pigro
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)(PIXEL & XFCE4)
 - [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All & XFCE4)
+- [Ubuntu Mate](https://ubuntu-mate.org/download/) (All)
 - [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
 - Debian based distros for Raspberry Pi in general
 
