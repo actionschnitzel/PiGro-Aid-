@@ -5,7 +5,7 @@
 </p>
 
 ![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/23_02_header.png?raw=true)
-
+[![yt](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/pigro_youtube.png?raw=true)](https://www.youtube.com/watch?v=QuPMnwFemoE)
 ---
 
 # :bento: All Settings In One Place!
