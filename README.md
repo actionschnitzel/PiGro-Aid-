@@ -24,15 +24,20 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 # :floppy_disk: Installation
 
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
-
-### OR:
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)    
+    
+### Via Script:
+```
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
+```   
+   
+### Via APT:
 
 Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
 
 If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
 
-### OR:
+OR:
 
 Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
 
