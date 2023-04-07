@@ -58,9 +58,6 @@ class MainApplication(tk.Tk):
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        # self.attributes('-zoomed', True)
-        # self.wait_visibility(self)
-        # self.wm_attributes("-alpha", translate_p)
 
         # Notebook Definition
         self.notebook = ttk.Notebook(self)
@@ -238,7 +235,7 @@ class MainApplication(tk.Tk):
         if distro_get == "debian" or distro_get == "raspbian":
             self.notebook.hide(self.System_Ubuntu_Tab)
 
-        # Hides RPi OS settings when distro is Ubuntu
+        # Hides RPi OS settings when distro is Ubuntu + XFCE
         if distro_get == "ubuntu" and get_de == "XFCE":
             self.notebook.hide(self.System_Tab)
         elif distro_get == "ubuntu":
