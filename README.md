@@ -6,7 +6,6 @@
 
 ![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/23_02_header.png?raw=true)
 [![yt](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/pigro_youtube.png?raw=true)](https://www.youtube.com/watch?v=QuPMnwFemoE)
-
 ---
 
 # :bento: All Settings In One Place!
@@ -25,14 +24,13 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 # :floppy_disk: Installation
 
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
-
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)    
+    
 ### Via Script:
-
 ```
 wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
-```
-
+```   
+   
 ### Via APT:
 
 Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
