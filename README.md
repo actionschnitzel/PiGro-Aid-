@@ -5,6 +5,7 @@
 </p>
 
 ![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/23_02_header.png?raw=true)
+[![yt](https://github.com/actionschnitzel/tingsandstuff/blob/main/23_02/pigro_youtube.png?raw=true)](https://www.youtube.com/watch?v=QuPMnwFemoE)
 
 ---
 
@@ -26,13 +27,19 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)
 
-### OR:
+### Via Script:
+
+```
+wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
+```
+
+### Via APT:
 
 Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
 
 If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
 
-### OR:
+OR:
 
 Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
 
@@ -47,6 +54,7 @@ sudo apt install pigro
 
 - [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (32-bit/64-bit) (Buster/Bullseye)(PIXEL & XFCE4)
 - [Ubuntu](https://ubuntu.com/download/raspberry-pi) (64-bit) (All & XFCE4)
+- [Ubuntu Mate](https://ubuntu-mate.org/download/) (All)
 - [Diet-Pi](https://dietpi.com/#downloadinfo) (Scroll down to Important!)
 - Debian based distros for Raspberry Pi in general
 
