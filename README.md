@@ -37,16 +37,7 @@ Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Dow
 
 If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
 
-OR:
 
-Add The Official [Repo](https://github.com/actionschnitzel/actionschnitzel-repo) (Install & Update with APT):
-
-```
-curl -s --compressed "https://actionschnitzel.github.io/actionschnitzel-repo/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/actionschnitzel-repo.gpg >/dev/null
-sudo curl -s --compressed -o /etc/apt/sources.list.d/actionschnitzel-repo.list "https://actionschnitzel.github.io/actionschnitzel-repo/actionschnitzel-repo.list"
-sudo apt update
-sudo apt install pigro
-```
 
 ### Supported systems:
 
