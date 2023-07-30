@@ -53,6 +53,14 @@ If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and 
 - If you have installed PiGro via Package you can check for updates in the About TAB.
 - If you have installed PiGro via the official Repo APT will handle the updates.
 
+#### Work on the next major update takes more time than expected.
+-Many backend changes    
+-Comfortable and simpler UI    
+-More functions    
+    
+#### Hope in January '24 everything is done. As always, bug fixes & smaller patches for the latest version come as soon as possible.
+
+
 ---
 
 # :exclamation: Important
