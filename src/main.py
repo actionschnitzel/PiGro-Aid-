@@ -4105,40 +4105,35 @@ class Software_Tab(ttk.Frame):
                 flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
 
         def get_flatpak_screenshot():
-            flathub_url = "https://beta.flathub.org/en-GB"
+            url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+            try:
+                # Send an HTTP GET request to the URL
+                response = requests.get(url)
+                response.raise_for_status()  # Check if the request was successful
 
-            response = requests.head(flathub_url)
+                # Parse the HTML content using BeautifulSoup
+                soup = BeautifulSoup(response.text, 'html.parser')
 
-            if response.status_code == 200:
-                print(f"{flathub_url} exists!")
-                url = f"https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
-                if url_exists(url):
-                    response = requests.get(url)
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    url_output = soup.find("img", alt="Bildschirmfoto")
-                    print(url_output["src"])
-                    with urlopen(url_output["src"]) as url_output:
+                # Find the meta tag with property="og:image"
+                og_image_tag = soup.find("meta", property="og:image")
+
+                # Extract the content of the og:image tag if it exists
+                if og_image_tag:
+                    og_image_content = og_image_tag.get("content")
+                    #return og_image_content
+                    with urlopen(og_image_content) as url_output:
                         self.img = Image.open(url_output)
                     self.img = resize(self.img)
                     self.img = ImageTk.PhotoImage(self.img)
-                    flatpak_panel.config(image=self.img)
-                else:
-                    flatpak_panel.config(self.no_img)
+                    flatpak_panel.config(image=self.img)                    
 
-            else:
-                url = f"https://flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
-                if url_exists(url):
-                    response = requests.get(url)
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    url_output = soup.find("img", alt="Bildschirmfoto")
-                    print(url_output["src"])
-                    with urlopen(url_output["src"]) as url_output:
-                        self.img = Image.open(url_output)
-                    self.img = resize(self.img)
-                    self.img = ImageTk.PhotoImage(self.img)
-                    flatpak_panel.config(image=self.img)
+                
                 else:
+                    print("No og:image meta property found.")
                     flatpak_panel.config(self.no_img)
+            except requests.exceptions.RequestException as e:
+                print("Error fetching URL:", e)
+                return None
 
         def get_flatpak_discription():
             flathub_url = "https://beta.flathub.org/en-GB"
