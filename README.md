@@ -22,6 +22,8 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 ---
 
+# [READ FIRST | PiOS Boookworm](https://github.com/actionschnitzel/PiGro-Aid-/issues/73)
+
 # :floppy_disk: Installation
 
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)    
