@@ -9,7 +9,7 @@ import distro
 from pathlib import Path
 
 
-current_version = "23.02"
+current_version = "23.04"
 
 # Get User Name
 user = os.environ["USER"]

@@ -3559,7 +3559,7 @@ class Software_Tab(ttk.Frame):
 
         apt_pkg_info_frame = LabelFrame(
             apt_info_frame,
-            text="Discription",
+            text="Description",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
@@ -3978,7 +3978,7 @@ class Software_Tab(ttk.Frame):
 
         piapps_pkg_info_frame = LabelFrame(
             piapps_info_frame,
-            text="Discription",
+            text="Description",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
@@ -4105,29 +4105,47 @@ class Software_Tab(ttk.Frame):
                 flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
 
         def get_flatpak_screenshot():
-            url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+            url = (
+                f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+            )
+            # if url_exists(url):
+            #    response = requests.get(url)
+            #    soup = BeautifulSoup(response.text, "html.parser")
+            #   url_output = soup.find("img", alt="Screenshot")
+            #    print(url_output["src"])
+            #    with urlopen(url_output["src"]) as url_output:
+            #        self.img = Image.open(url_output)
+            #    self.img = resize(self.img)
+            #    self.img = ImageTk.PhotoImage(self.img)
+            #    flatpak_panel.config(image=self.img)
+            # else:
+            #    flatpak_panel.config(self.no_img)
+
             try:
-                # Send an HTTP GET request to the URL
-                response = requests.get(url)
-                response.raise_for_status()  # Check if the request was successful
+                # Die URL der Webseite
+                # url = "https://flathub.org/de/apps/de.k_bo.Televido"
 
-                # Parse the HTML content using BeautifulSoup
-                soup = BeautifulSoup(response.text, 'html.parser')
+                # Der zu suchende Teilinhalt
+                desired_content = f"https://dl.flathub.org/repo/screenshots/{Flat_remote_dict[flatpak_entry.get()]}-stable/752x423/"
 
-                # Find the meta tag with property="og:image"
-                og_image_tag = soup.find("meta", property="og:image")
+                # Die Webseite herunterladen
+                web_content = requests.get(url).text
 
-                # Extract the content of the og:image tag if it exists
-                if og_image_tag:
-                    og_image_content = og_image_tag.get("content")
-                    #return og_image_content
+                # Verwenden von re (regulären Ausdrücken), um die gewünschte URL zu extrahieren
+                match = re.search(rf'({desired_content}[^"\s]+)', web_content)
+
+                # Überprüfen, ob der gewünschte Inhalt gefunden wurde
+                if match:
+                    extracted_url = match.group(1)
+                    print("Gefundener Teilinhalt:", extracted_url)
+                    og_image_content = extracted_url
+                    # return og_image_content
                     with urlopen(og_image_content) as url_output:
                         self.img = Image.open(url_output)
                     self.img = resize(self.img)
                     self.img = ImageTk.PhotoImage(self.img)
-                    flatpak_panel.config(image=self.img)                    
+                    flatpak_panel.config(image=self.img)
 
-                
                 else:
                     print("No og:image meta property found.")
                     flatpak_panel.config(self.no_img)
@@ -4136,40 +4154,19 @@ class Software_Tab(ttk.Frame):
                 return None
 
         def get_flatpak_discription():
-            flathub_url = "https://beta.flathub.org/en-GB"
-
-            response = requests.head(flathub_url)
-
-            if response.status_code == 200:
-                print(f"{flathub_url} exists!")
-                url = f"https://beta.flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
-                # Send a GET request to the URL
-                response = requests.get(url)
-                # Use BeautifulSoup to parse the HTML content of the response
-                soup = BeautifulSoup(response.content, "html.parser")
-                # Find the HTML element with the specified class
-                prose_element = soup.find(
-                    "div", {"class": "prose dark:prose-invert xl:max-w-[75%]"}
-                )
-                # Print the contents of the element
-                # print(prose_element.text)
-                flatpak_discription_text.delete("1.0", "end")
-                flatpak_discription_text.insert(tk.END, prose_element.text)
-            else:
-                print(f"{flathub_url} exists!")
-                url = f"https://flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
-                # Send a GET request to the URL
-                response = requests.get(url)
-                # Use BeautifulSoup to parse the HTML content of the response
-                soup = BeautifulSoup(response.content, "html.parser")
-                # Find the HTML element with the specified class
-                prose_element = soup.find(
-                    "div", {"class": "prose dark:prose-invert xl:max-w-[75%]"}
-                )
-                # Print the contents of the element
-                # print(prose_element.text)
-                flatpak_discription_text.delete("1.0", "end")
-                flatpak_discription_text.insert(tk.END, prose_element.text)
+            url = f"https://flathub.org/de/apps/{Flat_remote_dict[flatpak_entry.get()]}"
+            # Send a GET request to the URL
+            response = requests.get(url)
+            # Use BeautifulSoup to parse the HTML content of the response
+            soup = BeautifulSoup(response.content, "html.parser")
+            # Find the HTML element with the specified class
+            prose_element = soup.find(
+                "div", {"class": "prose dark:prose-invert xl:max-w-[75%]"}
+            )
+            # Print the contents of the element
+            # print(prose_element.text)
+            flatpak_discription_text.delete("1.0", "end")
+            flatpak_discription_text.insert(tk.END, prose_element.text)
 
         def flatpak_search():
             flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
@@ -4450,7 +4447,7 @@ class Software_Tab(ttk.Frame):
 
         flatpak_pkg_info_frame = LabelFrame(
             flatpak_info_frame,
-            text="Discription",
+            text="Description",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
@@ -5144,7 +5141,7 @@ class Git_More_Tab(ttk.Frame):
 
         self.g2h_discription = LabelFrame(
             self.link_right,
-            text="Discription",
+            text="Description",
             font=font_16,
             foreground=label_frame_color,
             borderwidth=0,
