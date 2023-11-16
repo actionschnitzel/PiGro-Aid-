@@ -15,7 +15,7 @@ git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
 cd PiGro-Aid- || error "Failed to enter directory!"
 chmod +x start.sh
 
-cp -f $HOME/PiGro-Aid-/images/icons/logo.png $HOME/.local/share/icons/pi-apps.png
+cp -f $HOME/PiGro-Aid-/images/icons/logo.png $HOME/.local/share/icons/pigro-logo.png
 
 mkdir -p $HOME/Desktop $HOME/.local/share/applications
 echo "[Desktop Entry]
