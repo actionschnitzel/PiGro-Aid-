@@ -90,5 +90,4 @@ dpkg-deb --build debian
 mv debian.deb $PACKAGE_NAME-$VERSION.deb
 
 # Clean up the temporary files
-#rm -rf debian
-
+rm -rf debian
