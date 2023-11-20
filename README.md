@@ -22,9 +22,8 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
     
 ---
 # Reviews
-#### "Swiss Knife For The Pi"    
-https://jhmulder.nl/zwitsers-zakmes-pigro/
 
+> [Blog by **https://jhmulder.nl**](https://jhmulder.nl/zwitsers-zakmes-pigro/): "Swiss Knife For The Pi."
 
 ---
 
