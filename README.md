@@ -18,7 +18,13 @@
 
 PiGro - Just Click it! is an all-inclusive graphical user interface (GUI) software that streamlines the process of managing all your Raspberry Pi settings from one convenient location. With PiGro, you can easily keep your software up-to-date, oversee the APT installer, Pi-Apps App Store, and Flatpak, configure autostarts, overclock your Pi, monitor the system's performance, back up your applications, install desktop environments, and customize your OS theme.
 
-Designed with user-friendliness in mind, PiGro is easily accessible to users of all levels of expertise. Its intuitive interface and straightforward controls make it effortless to access and modify any settings you require.
+Designed with user-friendliness in mind, PiGro is easily accessible to users of all levels of expertise. Its intuitive interface and straightforward controls make it effortless to access and modify any settings you require.    
+    
+---
+# Reviews
+#### "Swiss Knife For The Pi"    
+https://jhmulder.nl/zwitsers-zakmes-pigro/
+
 
 ---
 
