@@ -85,9 +85,7 @@ Open the Terminal and type `sudo update-alternatives --config x-terminal-emulato
 # :hamburger: Latest Changes
 
 [Changelog](https://github.com/actionschnitzel/PiGro-Aid-/wiki/Change-Log)    
-    
-![GUI](https://github.com/actionschnitzel/tingsandstuff/blob/main/Download%20(1).jpeg?raw=true)    
-    
+
 ---
 
 # :doughnut: Showcase
