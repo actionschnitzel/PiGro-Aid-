@@ -58,7 +58,6 @@ If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and 
 
 - If you have installed PiGro via Pi-Apps, you will automatically receive an update notification.
 - If you have installed PiGro via Package you can check for updates in the About TAB.
-- If you have installed PiGro via the official Repo APT will handle the updates.
 
 #### Work on the next major update takes more time than expected.
 -Many backend changes    
