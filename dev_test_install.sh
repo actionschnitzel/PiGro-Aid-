@@ -23,9 +23,9 @@ printf "${RED}
 █▄▀ ██▄ █▀▀ ██▄ █░▀█ █▄▀ ██▄ █░▀█ █▄▄ █ ██▄ ▄█
 ${NC}\n\n"
 echo  -e "\033[33;5mInstalling...\033[0m"
-echo "xterm python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distro python3-bs4 python3-dev python3-requests mpg123 lolcat wmctrl gdebi mousepad"
+echo "git xterm python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distro python3-bs4 python3-dev python3-requests mpg123 lolcat wmctrl gdebi mousepad"
 > /dev/null 2>&1 sudo apt-get update
-> /dev/null 2>&1 sudo apt-get install xterm python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distro python3-bs4 python3-dev python3-requests mpg123 lolcat wmctrl gdebi mousepad -y 
+> /dev/null 2>&1 sudo apt-get install git xterm python3-pil python3-pil.imagetk python3-pip python3-psutil python3-distro python3-bs4 python3-dev python3-requests mpg123 lolcat wmctrl gdebi mousepad -y 
 
 
 
