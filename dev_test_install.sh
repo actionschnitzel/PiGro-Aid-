@@ -65,20 +65,6 @@ if [ -z "$DIRECTORY" ] || [ "$DIRECTORY" == "$HOME" ] || [ "$DIRECTORY" == bash 
   DIRECTORY="$HOME/PiGro-Aid-"
 fi
 
-echo "[Desktop Entry]
-Version=2.1
-Exec=${DIRECTORY}/start.sh
-Name=PiGro
-GenericName=PiGro
-Encoding=UTF-8
-Terminal=false
-Type=Application
-Categories=System
-Icon=${DIRECTORY}/images/icons/logo.png
-Path=${DIRECTORY}/" > ~/Desktop/pigro.desktop
-
-sudo chmod +x ~/Desktop/pigro.desktop
-
 
 echo "[Desktop Entry]
 Version=2.1
