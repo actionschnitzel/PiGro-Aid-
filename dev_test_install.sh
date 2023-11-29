@@ -55,6 +55,7 @@ ${GREEN}I will now install PiGro\n\n${NC}"
     > /dev/null 2>&1 git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
     > /dev/null 2>&1 cd PiGro-Aid-
 fi
+sudo cp ~/PiGro-Aid-/images/icons/logo.png /usr/share/icons/hicolor/256x256/apps/pigro-logo.png
 
 clear
 
