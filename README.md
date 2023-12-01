@@ -31,20 +31,17 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 # :floppy_disk: Installation
 
+### App Center:
+
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge-light.png?raw=true)](https://github.com/Botspot/pi-apps)    
     
-### Via Script:
-```
-wget -qO- https://raw.githubusercontent.com/actionschnitzel/PiGro-Aid-/installer/install.sh |bash
-```   
-   
-### Via APT:
+### As DEBIAN Package:
 
-Via [Debian Package](https://github.com/actionschnitzel/PiGro-Aid-/releases) Download
+Download [latest](https://github.com/actionschnitzel/PiGro-Aid-/releases).
 
 If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and `~/.local/Share/Applications/Pigro.Desktop`. Then Install the Debian Package.
 
-
+---
 
 ### Supported systems:
 
@@ -58,13 +55,6 @@ If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and 
 
 - If you have installed PiGro via Pi-Apps, you will automatically receive an update notification.
 - If you have installed PiGro via Package you can check for updates in the About TAB.
-
-#### Work on the next major update takes more time than expected.
--Many backend changes    
--Comfortable and simpler UI    
--More functions    
-    
-#### Hope in January '24 everything is done. As always, bug fixes & smaller patches for the latest version come as soon as possible.
 
 
 ---
