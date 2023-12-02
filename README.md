@@ -20,7 +20,7 @@ PiGro - Just Click it! is an all-inclusive graphical user interface (GUI) softwa
 
 Designed with user-friendliness in mind, PiGro is easily accessible to users of all levels of expertise. Its intuitive interface and straightforward controls make it effortless to access and modify any settings you require.    
 
-
+<a href='https://github.com/shivamkapasia0' target="_blank"><img alt=' ' src='https://img.shields.io/badge/Images_Flashed Since Last Release-20-100000?style=for-the-badge&logo= &logoColor=white&labelColor=42A2E4&color=38C336'/></a>
 
 ---
 # Reviews
