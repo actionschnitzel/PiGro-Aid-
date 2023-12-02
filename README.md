@@ -9,7 +9,7 @@
 ---
 
 # :bento: All Settings In One Place!
-
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white) ![MX Linux](https://img.shields.io/badge/-MX%20Linux-%23000000?style=for-the-badge&logo=MXlinux&logoColor=white) ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white) 
 #### :heavy_check_mark: System Monitoring :heavy_check_mark: System Configuration :heavy_check_mark: Autostarts :heavy_check_mark: Process Monitor & Killer
 
 #### :heavy_check_mark: Update & Upgrade GUI :heavy_check_mark:Multi Install GUI :heavy_check_mark: Change & Customize DE :heavy_check_mark: Overclocking
@@ -19,7 +19,9 @@
 PiGro - Just Click it! is an all-inclusive graphical user interface (GUI) software that streamlines the process of managing all your Raspberry Pi settings from one convenient location. With PiGro, you can easily keep your software up-to-date, oversee the APT installer, Pi-Apps App Store, and Flatpak, configure autostarts, overclock your Pi, monitor the system's performance, back up your applications, install desktop environments, and customize your OS theme.
 
 Designed with user-friendliness in mind, PiGro is easily accessible to users of all levels of expertise. Its intuitive interface and straightforward controls make it effortless to access and modify any settings you require.    
-    
+
+
+
 ---
 # Reviews
 
