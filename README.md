@@ -10,5 +10,8 @@ sudo apt install git python3-dev python3-psutil python3-distro python3-bs4 pytho
 
 git clone -b dev https://github.com/actionschnitzel/PiGro-Aid-.git
 
+find ~/PiGro-Aid-/PiGro-JCI/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
+
+
 python3 ~/PiGro-Aid-/PiGro-JCI/src/main.py
 ```
