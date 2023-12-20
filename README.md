@@ -1,4 +1,5 @@
-
+<a href='https://github.com/shivamkapasia0' target="_blank"><img alt=' ' src='https://img.shields.io/badge/Since_Version 23.04-100000?style=flat&logo= &logoColor=white&labelColor=00FEEF&color=00FEEF'/></a>
+[![Github All Releases](https://img.shields.io/github/downloads/actionschnitzel/PiGro-Aid-/total.svg)]()
 
 # :floppy_disk: Install
 
