@@ -76,17 +76,7 @@ If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and 
 
 # :exclamation: Important
 
-### Raspberry Pi OS
 
-At the moment the theming option is disabled for PiOS Bookworm. Under X11 and Wayland, any attempt to change the icons or theme will cause the window manager to break.
-
-### Rhino Linux
-
-The file `/home/rhino/.config/autostarts/rhino-setup.desktop` makes PiGro crash. This file is empty. To use PiGro it must be deleted.
-
-### Xfce4
-
-Ricing of Xfce is not jet implemented. Please use `xfce-settings`
 
 ---
 
