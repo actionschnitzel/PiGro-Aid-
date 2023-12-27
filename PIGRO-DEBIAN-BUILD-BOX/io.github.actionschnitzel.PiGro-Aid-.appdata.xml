@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>io.github.actionschnitzel.PiGro-Aid-</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+  <name>PiGro - Just Click It!</name>
+  <summary>A system control tool for Raspberry Pi</summary>
+  <description>
+    <![CDATA[
+      <p>PiGro - Just Click It! is a system control tool for Raspberry Pi, allowing you to manage various aspects of your system.</p>
+      <ul>
+        <li>Overclocking</li>
+      </ul>
+    ]]>
+  </description>
+  <url type="homepage">https://zestful-pigroxtrmo.wordpress.com/</url>
+  <launchable type="desktop-id">pigro-jci.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/actionschnitzel/tingsandstuff/main/pigro_24_gihub.png</image>
+      <caption>PiGro Interface</caption>
+    </screenshot>
+  </screenshots>
+  <update_contact>pigroxtrmo@gmail.com</update_contact>
+  <translation type="gettext">pigro-jci</translation>
+  <provides>
+    <binary>pigro-jci</binary>
+  </provides>
+</component>

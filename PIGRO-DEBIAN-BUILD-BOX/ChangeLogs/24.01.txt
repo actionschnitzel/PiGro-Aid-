@@ -1,0 +1,79 @@
+Changes:
+- Better file structure for easier maintanence
+- Improved GUI for better user expieriance
+- More tool implimentationen
+Show full ChangeLog
+
+
+## Changes Version (BETA)24.0
+
+- All classes in `main.py` have been moved to logical modules. Further refinement is planned for the future.
+- Added support for Raspberry Pi OS Bookworm.
+- Added support for Raspberry Pi 5.
+- Improved support for Ubuntu.
+- MX Linux Support
+- Rhino Linux Support
+- Supported DEs: PIXEL, XFCE, GNOME, MATE, KDE
+- Added: /bin/pigro-jci
+    
+:no_entry_sign: Changing the  de/wm theme is disabled on PiOS / not possible without breaking the wm/de
+
+**GUI**
+- Added Light/Dark-Mode depending on your theme.
+- Removed PiGro-Themes.
+- Removed Sudoless-Option (pkexec only).
+- Geometry set to 1200x900 (smaller).
+- Font-Size 11 (was 12).
+- Focus on gsettings.
+
+**Dash**
+- New Dashboard.
+- Added Window-Manager (wmctrl).
+- Removed config.txt (redundant).
+- Added Distro-Logo (Ubuntu/Debian/PiOS) with more to come.
+
+**Update**
+- Source-List moved to its own Tab.
+- Arrangement: Vertical left to right.
+- Added Fix Missing.
+- Added Fix Broken.
+- Removed dpki -i Button.
+- Added Install Local .DEB Button with File-Dialog + Gdebi.
+- Added Nala support (update, upgrade, fetch).
+- Added Flatpak remove unused.
+- Added Snap update.
+
+**System**
+- Merged: Ubuntu-Sys-Tab and PiOS.Sys-Tab.
+- Removed upgrade Kernel Button.
+- Removed Xfce4 Autostart Button.
+
+**Look & Feel**
+- Flushed all.
+- Added New Theme Tool (works on Ubuntu).
+- Added Papirus Installer and Color Changer.
+- Added Wallpaper Gallery and Chooser.
+- Xfce4 Support
+
+**Autostart**
+- Flushed All.
+- Rewritten UI.
+- Fixed Flatpak autostart errors.
+
+**Tasks**
+- Nothing new.
+- Slight redesign.
+
+**Software**
+- Removed One-Click-Tab.
+- Added APT Queue install.
+- Info-Frame expands on search.
+- Software Listbox-Select > SingleClick
+- Software Listbox-Select > DoubleClick to schow info
+
+**Tuning**
+- If buttons don't match OS or Pi-Model, they are not clickable.
+- Added over_voltage_delta Option.
+- Added Swap Resizer.
+- Added Preload Installer.
+

@@ -1,0 +1,7 @@
+# Specify filepatterns you want git to ignore.
+
+/PiGro-JCI/.vscode
+/PiGro-JCI/src/__pycache__
+/PiGro-JCI/src/tabs/__pycache__
+*.log
+*.pyc
