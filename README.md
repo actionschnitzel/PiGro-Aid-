@@ -31,6 +31,8 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 ---
 
 # Reviews
+> [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+
 
 > [Blog by **https://jhmulder.nl**](https://jhmulder.nl/zwitsers-zakmes-pigro/): "Swiss Knife For The Pi."
 
