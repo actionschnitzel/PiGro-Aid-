@@ -4,7 +4,7 @@
 
 # Define the package name and version
 PACKAGE_NAME="pigro-jci"
-VERSION="24.01"
+VERSION="24.02"
 
 # Define the dependencies
 DEPENDENCIES="python3-dev, python3-psutil, python3-distro, python3-bs4, python3-requests, python3-pil, python3-pil.imagetk, xterm, mpg123, lolcat, wmctrl, gdebi, mousepad, pkexec | policykit-1"
