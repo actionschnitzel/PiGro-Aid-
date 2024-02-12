@@ -76,15 +76,28 @@ os_arch = popen(arch_bash)
 os_arch_output = os_arch.read()
 
 
-if os.path.exists("/boot/config.txt"):
+def get_lsb_codename():
+    try:
+        output = subprocess.check_output(['lsb_release', '-a']).decode('utf-8')
+        
+        lines = output.split('\n')
+        
+        for line in lines:
+            if 'Codename:' in line:
+                return line.split(':')[1].strip()
+        
+        return None
+    
+    except subprocess.CalledProcessError:
+        return None
+
+codename = get_lsb_codename()
+
+if codename == "bullseye":
     config_path = "/boot/config.txt"
-elif os.path.exists("/boot/firmware/usercfg.txt"):
-    config_path = "/boot/firmware/usercfg.txt"
-elif os.path.exists("/boot/firmware/config.txt"):
-    config_path = "/boot/firmware/config.txt"
 else:
-    print(f"[Info] Can't find config.txt")
-    config_path = f"{home}/config.txt"  # DEV DUMMY
+    config_path = "/boot/firmware/config.txt"    
+
 
 
 def get_desktop_environment():
