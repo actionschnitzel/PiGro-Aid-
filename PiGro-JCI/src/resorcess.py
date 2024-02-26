@@ -124,7 +124,7 @@ def get_lxde_theme_name():
         os.makedirs(os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf"))
         pixel_conf = config_file_path
         pixel_conf = open(pixel_conf, 'a+')
-        pixel_conf.write('Stuff') # Config needs to be added
+        pixel_conf.write('[GTK]\nsNet/ThemeName=PiXflat') # Config needs to be tested
         pixel_conf.close()
                             
 
