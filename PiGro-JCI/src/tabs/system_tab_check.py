@@ -83,3 +83,7 @@ def check_pipanel():
 
 def check_zram():
     return check_file_exists("/bin/zram.sh")
+
+#For Testing
+def check_config_x11_pixel():
+    return check_file_exists("~/.config/lxsession/LXDE-pi/desktop.conf")
