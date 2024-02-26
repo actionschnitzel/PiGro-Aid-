@@ -120,12 +120,21 @@ def get_desktop_environment():
 
 def get_lxde_theme_name():
     config_file_path = os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf")
+    if not os.path.exists(config_file_path):
+        os.makedirs(os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf"))
+        pixel_conf = config_file_path
+        pixel_conf = open(pixel_conf, 'a+')
+        pixel_conf.write('Stuff') # Config needs to be added
+        pixel_conf.close()
+                            
 
-    with open(config_file_path, "r") as file:
-        for line in file:
-            if "sNet/ThemeName=" in line:
-                theme_name = line.split("=")[1].strip()
-                return theme_name
+
+    else:
+        with open(config_file_path, "r") as file:
+            for line in file:
+                if "sNet/ThemeName=" in line:
+                    theme_name = line.split("=")[1].strip()
+                    return theme_name
 
 
 def get_theme():
