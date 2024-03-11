@@ -78,7 +78,10 @@ If you have already installed Pigro via the script, remove: `~/-PiGro-Aid-` and 
 
 # :exclamation: Important
 
-[If PiGro does not start after switching from Wayland to X11](https://github.com/actionschnitzel/PiGro-Aid-/issues/84)
+- [If PiGro does not start after switching from Wayland to X11](https://github.com/actionschnitzel/PiGro-Aid-/issues/84)
+- Bullseye is NOT supported anymore!
+- XWayland Window Decorations wouldn't work when you change the Pixel Theme or Icon Theme [PiXnoir is an exception].
+- Overclocking at your own risk.
 
 ---
 
