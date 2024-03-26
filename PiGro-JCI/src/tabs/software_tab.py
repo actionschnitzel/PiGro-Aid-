@@ -380,12 +380,10 @@ class AptSearchPanel(tk.Frame):
                 if apt_entry.get() in apt_flatpak_matches:
                     try:
                         app_id = Flat_remote_dict[flatpak_entry.get()]
-
                         screenshot_url = extract_default_screenshot_url(app_id)
                         if screenshot_url:
                             print("Screenshot-URL {}:".format(app_id))
                             print(screenshot_url)
-
                         else:
                             print("No Screenshot Found {}.".format(app_id))
 
@@ -397,8 +395,29 @@ class AptSearchPanel(tk.Frame):
 
                     except requests.exceptions.RequestException as e:
                         print("Error fetching URL:", e)
-                        # return None
                         apt_panel.config(self.no_img)
+
+                    except subprocess.CalledProcessError as err:
+                        print("Command returned non-zero exit status:", err)
+                        if "returned non-zero exit status 4" in str(err):
+                            try:
+                                app_id += ".desktop"
+                                screenshot_url = extract_default_screenshot_url(app_id)
+                                if screenshot_url:
+                                    print("Screenshot-URL {}:".format(app_id))
+                                    print(screenshot_url)
+                                else:
+                                    print("No Screenshot Found {}.".format(app_id))
+
+                                with urlopen(screenshot_url) as url_output:
+                                    self.img = Image.open(url_output)
+                                self.img = resize(self.img)
+                                self.img = ImageTk.PhotoImage(self.img)
+                                apt_panel.config(image=self.img)
+
+                            except subprocess.CalledProcessError as err:
+                                print("Command returned non-zero exit status again:", err)
+                                apt_panel.config(self.no_img)
 
         def put_apt_description():
             pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
@@ -1442,12 +1461,10 @@ class FlatpakSearchPanel(tk.Frame):
         def get_flatpak_screenshot():
             try:
                 app_id = Flat_remote_dict[flatpak_entry.get()]
-
                 screenshot_url = extract_default_screenshot_url(app_id)
                 if screenshot_url:
                     print("Screenshot-URL {}:".format(app_id))
                     print(screenshot_url)
-
                 else:
                     print("No Screenshot Found {}.".format(app_id))
 
@@ -1459,8 +1476,31 @@ class FlatpakSearchPanel(tk.Frame):
 
             except requests.exceptions.RequestException as e:
                 print("Error fetching URL:", e)
-                # return None
                 flatpak_panel.config(self.no_img)
+
+            except subprocess.CalledProcessError as err:
+                print("Command returned non-zero exit status:", err)
+                if "returned non-zero exit status 4" in str(err):
+                    try:
+                        app_id += ".desktop"
+                        screenshot_url = extract_default_screenshot_url(app_id)
+                        if screenshot_url:
+                            print("Screenshot-URL {}:".format(app_id))
+                            print(screenshot_url)
+                        else:
+                            print("No Screenshot Found {}.".format(app_id))
+
+                        with urlopen(screenshot_url) as url_output:
+                            self.img = Image.open(url_output)
+                        self.img = resize(self.img)
+                        self.img = ImageTk.PhotoImage(self.img)
+                        flatpak_panel.config(image=self.img)
+
+                    except subprocess.CalledProcessError as err:
+                        print("Command returned non-zero exit status again:", err)
+                        flatpak_panel.config(self.no_img)
+
+
 
         def get_flatpak_description():
             url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
