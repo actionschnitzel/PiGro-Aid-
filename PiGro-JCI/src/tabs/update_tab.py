@@ -114,7 +114,7 @@ class UpdateTab(ttk.Frame):
             if text == "Update & Upgrade":
                 if pi_identify() == "pi_os":
                     os.popen(
-                        f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt update -y |lolcat && {permit} apt upgrade |lolcat && sleep 5 && exit ; exec bash"'
+                        f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt update -y |lolcat && {permit} apt upgrade -y |lolcat && sleep 5 && exit ; exec bash"'
                         % wid
                     )
                 else:
@@ -258,9 +258,6 @@ class UpdateTab(ttk.Frame):
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Update & Upgrade":
                 self.up_button_x.config(image=self.gup_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Full Upgrade":
-                self.up_button_x.config(image=self.fup_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Autoremove":
                 self.up_button_x.config(image=self.arm_icon)
