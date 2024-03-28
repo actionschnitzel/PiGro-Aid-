@@ -206,10 +206,6 @@ class PiAppsOneClicks:
             "Package": "Nemo",
             "Description": "File manager for Cinnamon desktop.",
         },
-        "piKiss": {
-            "Package": "piKiss",
-            "Description": "Management script for Raspberry Pi applications.",
-        },
         "Pi Power Tools": {
             "Package": "Pi Power Tools",
             "Description": "Set of tools for managing Raspberry Pi.",
