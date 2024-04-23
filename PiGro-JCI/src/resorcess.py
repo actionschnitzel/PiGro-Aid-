@@ -121,11 +121,17 @@ def get_desktop_environment():
 def get_lxde_theme_name():
     config_file_path = os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf")
 
-    with open(config_file_path, "r") as file:
-        for line in file:
-            if "sNet/ThemeName=" in line:
-                theme_name = line.split("=")[1].strip()
-                return theme_name
+    if not os.path.exists(config_file_path):
+        theme_name = "PiXflat"
+        return theme_name
+
+
+    else:
+        with open(config_file_path, "r") as file:
+            for line in file:
+                if "sNet/ThemeName=" in line:
+                    theme_name = line.split("=")[1].strip()
+                    return theme_name
 
 
 def get_theme():
