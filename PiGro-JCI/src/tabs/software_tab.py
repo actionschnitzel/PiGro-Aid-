@@ -45,7 +45,7 @@ def resize2(img):
 
 
 def get_app_summary(appstream_id):
-    command = f"appstreamcli dump {appstream_id} | grep -m 1 -oP '<summary>\K[^<]*'"
+    command = f"appstreamcli dump {appstream_id} | grep -m 1 -oP '<summary>\\K[^<]*'"
     try:
         result = subprocess.run(
             command, shell=True, check=True, capture_output=True, text=True
@@ -808,7 +808,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = piapps_entry.get()
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"cd && ~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
@@ -824,7 +824,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = piapps_entry.get()
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"cd && ~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
                 )
@@ -1283,7 +1283,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = package
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
