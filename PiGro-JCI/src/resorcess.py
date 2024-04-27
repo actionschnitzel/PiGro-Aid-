@@ -119,13 +119,27 @@ def get_desktop_environment():
 
 
 def get_lxde_theme_name():
-    config_file_path = os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf")
+    #config_file_path = os.path.expanduser("~/.config/lxsession/LXDE-pi/desktop.conf")
 
-    if not os.path.exists(config_file_path):
-        theme_name = "PiXflat"
-        return theme_name
+    directory_path = os.path.expanduser("~/.config/lxsession/LXDE-pi/")
+    # File path
+    config_file_path = os.path.join(directory_path, "desktop.conf")
 
+    #Enshure ~/.config/lxsession/LXDE-pi/desktop.conf exists
+    # Check if directory exists, if not create it
+    if not os.path.exists(directory_path):
+        print("Directory does not exist. Creating", directory_path)
+        os.makedirs(directory_path)
+        with open(config_file_path, 'w') as f:
+            f.write("""[GTK]
+sNet/ThemeName=PiXflat
+sGtk/ColorScheme=selected_bg_color:#87919B\nselected_fg_color:#F0F0F0\nbar_bg_color:#EDECEB\nbar_fg_color:#000000\n
+sGtk/FontName=PibotoLt 12
+iGtk/ToolbarIconSize=3
+sGtk/IconSizes=gtk-large-toolbar=24,24
+iGtk/CursorThemeSize=24""")
 
+        return "PiXflat"
     else:
         with open(config_file_path, "r") as file:
             for line in file:
