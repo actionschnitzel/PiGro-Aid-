@@ -206,10 +206,6 @@ class PiAppsOneClicks:
             "Package": "Nemo",
             "Description": "File manager for Cinnamon desktop.",
         },
-        "piKiss": {
-            "Package": "piKiss",
-            "Description": "Management script for Raspberry Pi applications.",
-        },
         "Pi Power Tools": {
             "Package": "Pi Power Tools",
             "Description": "Set of tools for managing Raspberry Pi.",
@@ -247,7 +243,6 @@ class Update_Tab_Buttons:
         "Update": "Command for updating the package list.",
         "Update & Upgrade": "Command for updating the package list and upgrading installed packages.",
         "Show Upgradable": "Command for displaying upgradable packages.",
-        "Full Upgrade": "Command for performing a full system upgrade.",
         "Fix Missing": "Command for fixing missing dependencies.",
         "Fix Broken": "Command for fixing broken packages.",
         "Autoremove": "Command for removing automatically installed but no longer required packages.",

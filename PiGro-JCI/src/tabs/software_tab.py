@@ -10,6 +10,7 @@ from PIL import ImageTk, Image
 from urllib.request import urlopen
 import urllib.error
 import requests
+import xml.etree.ElementTree as ET
 import apt
 from bs4 import BeautifulSoup
 from resorcess import *
@@ -44,7 +45,7 @@ def resize2(img):
 
 
 def get_app_summary(appstream_id):
-    command = f"appstreamcli dump {appstream_id} | grep -m 1 -oP '<summary>\K[^<]*'"
+    command = f"appstreamcli dump {appstream_id} | grep -m 1 -oP '<summary>\\K[^<]*'"
     try:
         result = subprocess.run(
             command, shell=True, check=True, capture_output=True, text=True
@@ -55,18 +56,36 @@ def get_app_summary(appstream_id):
         return ""
 
 
-def get_source_image_url(appstream_id):
-    command = (
-        f"appstreamcli dump {appstream_id} | grep -oP '<image type=\"source\">\\K[^<]*'"
+def extract_default_screenshot_url(application_id):
+    output = subprocess.check_output(
+        ["appstreamcli", "dump", application_id], text=True
     )
-    try:
-        result = subprocess.run(
-            command, shell=True, check=True, capture_output=True, text=True
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing the command: {e.stderr}")
-        return ""
+
+    start_index = output.find("<screenshots>")
+    end_index = output.find("</screenshots>") + len("</screenshots>")
+
+    xml_part = output[start_index:end_index]
+
+    root = ET.fromstring(xml_part)
+
+    for screenshot in root.findall(
+        ".//screenshot[@type='default']/image[@type='source']"
+    ):
+        return screenshot.text
+
+    return None
+
+
+def build_screenshot_url():
+    app_id = Flat_remote_dict[flatpak_entry.get()]
+
+    screenshot_url = extract_default_screenshot_url(app_id)
+    if screenshot_url:
+        print("Standard-Screenshot-URL für {}:".format(app_id))
+        print(screenshot_url)
+
+    else:
+        print("Kein Standard-Screenshot gefunden für {}.".format(app_id))
 
 
 class SoftwareTab(ttk.Frame):
@@ -359,30 +378,46 @@ class AptSearchPanel(tk.Frame):
             except IndexError as e:
                 print(f"{e}")
                 if apt_entry.get() in apt_flatpak_matches:
-                    url = f"https://flathub.org/apps/{apt_flatpak_matches[apt_entry.get()]}"
-
                     try:
-                        desired_content = f"https://dl.flathub.org/repo/screenshots/{apt_flatpak_matches[apt_entry.get()]}-stable/752x423/"
-
-                        web_content = requests.get(url).text
-
-                        match = re.search(rf'({desired_content}[^"\s]+)', web_content)
-
-                        if match:
-                            extracted_url = match.group(1)
-                            og_image_content = extracted_url
-                            with urlopen(og_image_content) as url_output:
-                                self.img = Image.open(url_output)
-                            self.img = resize(self.img)
-                            self.img = ImageTk.PhotoImage(self.img)
-                            apt_panel.config(image=self.img)
-
+                        app_id = Flat_remote_dict[flatpak_entry.get()]
+                        screenshot_url = extract_default_screenshot_url(app_id)
+                        if screenshot_url:
+                            print("Screenshot-URL {}:".format(app_id))
+                            print(screenshot_url)
                         else:
-                            print("No og:image meta property found.")
-                            apt_panel.config(image=self.no_img)
+                            print("No Screenshot Found {}.".format(app_id))
+
+                        with urlopen(screenshot_url) as url_output:
+                            self.img = Image.open(url_output)
+                        self.img = resize(self.img)
+                        self.img = ImageTk.PhotoImage(self.img)
+                        apt_panel.config(image=self.img)
+
                     except requests.exceptions.RequestException as e:
                         print("Error fetching URL:", e)
-                        return None
+                        apt_panel.config(self.no_img)
+
+                    except subprocess.CalledProcessError as err:
+                        print("Command returned non-zero exit status:", err)
+                        if "returned non-zero exit status 4" in str(err):
+                            try:
+                                app_id += ".desktop"
+                                screenshot_url = extract_default_screenshot_url(app_id)
+                                if screenshot_url:
+                                    print("Screenshot-URL {}:".format(app_id))
+                                    print(screenshot_url)
+                                else:
+                                    print("No Screenshot Found {}.".format(app_id))
+
+                                with urlopen(screenshot_url) as url_output:
+                                    self.img = Image.open(url_output)
+                                self.img = resize(self.img)
+                                self.img = ImageTk.PhotoImage(self.img)
+                                apt_panel.config(image=self.img)
+
+                            except subprocess.CalledProcessError as err:
+                                print("Command returned non-zero exit status again:", err)
+                                apt_panel.config(self.no_img)
 
         def put_apt_description():
             pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
@@ -485,7 +520,7 @@ class AptSearchPanel(tk.Frame):
             fg=main_font,
             borderwidth=0,
             highlightthickness=0,
-            #command=apt_show_infos,
+            # command=apt_show_infos,
         )
         apt_search_btn.pack(side="left", fill="both")
 
@@ -493,10 +528,10 @@ class AptSearchPanel(tk.Frame):
             apt_search_field, font=("Sans", 15), borderwidth=0, highlightthickness=0
         )
         listbox_ttp = CreateToolTip(
-                    apt_entry, " - Typ to finde a package\n\n - Single click on a listbox item to show more infos"
-                )
+            apt_entry,
+            " - Typ to finde a package\n\n - Single click on a listbox item to show more infos",
+        )
         apt_entry.pack(fill="x", expand=True, side="left")
-
 
         apt_list_box = Listbox(
             apt_search_container,
@@ -773,7 +808,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = piapps_entry.get()
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"cd && ~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
@@ -789,7 +824,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = piapps_entry.get()
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"cd && ~/pi-apps/manage uninstall {replace_space}; exec bash\"'"
                 )
@@ -1003,7 +1038,7 @@ class PiAppsSearchPanel(tk.Frame):
             fg=main_font,
             borderwidth=0,
             highlightthickness=0,
-            #command=piapps_show_infos,
+            # command=piapps_show_infos,
         )
         piapps_search_btn.pack(side="left", fill=BOTH)
 
@@ -1015,10 +1050,9 @@ class PiAppsSearchPanel(tk.Frame):
         )
         piapps_entry.pack(fill="x", expand=True, side="left")
         listbox_ttp = CreateToolTip(
-                    piapps_entry, " - Typ to finde a package\n\n - Single click on a listbox item to show more infos"
-                )
-
-
+            piapps_entry,
+            " - Typ to finde a package\n\n - Single click on a listbox item to show more infos",
+        )
 
         piapps_list_box = Listbox(
             piapps_search_frame,
@@ -1249,7 +1283,7 @@ class PiAppsSearchPanel(tk.Frame):
             fullstring = package
             substring = " "
             if substring in fullstring:
-                replace_space = fullstring.replace(" ", "\ ")
+                replace_space = fullstring.replace(" ", "\\ ")
                 popen(
                     f"x-terminal-emulator -e 'bash -c \"~/pi-apps/manage install {replace_space}; exec bash\"'"
                 )
@@ -1425,30 +1459,48 @@ class FlatpakSearchPanel(tk.Frame):
                 flatpak_pkg_icon.config(image=self.flatpak_appsinstall_icon)
 
         def get_flatpak_screenshot():
-            url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
-
             try:
-                desired_content = f"https://dl.flathub.org/repo/screenshots/{Flat_remote_dict[flatpak_entry.get()]}-stable/752x423/"
-
-                web_content = requests.get(url).text
-
-                match = re.search(rf'({desired_content}[^"\s]+)', web_content)
-
-                if match:
-                    extracted_url = match.group(1)
-                    og_image_content = extracted_url
-                    with urlopen(og_image_content) as url_output:
-                        self.img = Image.open(url_output)
-                    self.img = resize(self.img)
-                    self.img = ImageTk.PhotoImage(self.img)
-                    flatpak_panel.config(image=self.img)
-
+                app_id = Flat_remote_dict[flatpak_entry.get()]
+                screenshot_url = extract_default_screenshot_url(app_id)
+                if screenshot_url:
+                    print("Screenshot-URL {}:".format(app_id))
+                    print(screenshot_url)
                 else:
-                    print("No og:image meta property found.")
-                    flatpak_panel.config(self.no_img)
+                    print("No Screenshot Found {}.".format(app_id))
+
+                with urlopen(screenshot_url) as url_output:
+                    self.img = Image.open(url_output)
+                self.img = resize(self.img)
+                self.img = ImageTk.PhotoImage(self.img)
+                flatpak_panel.config(image=self.img)
+
             except requests.exceptions.RequestException as e:
                 print("Error fetching URL:", e)
-                return None
+                flatpak_panel.config(self.no_img)
+
+            except subprocess.CalledProcessError as err:
+                print("Command returned non-zero exit status:", err)
+                if "returned non-zero exit status 4" in str(err):
+                    try:
+                        app_id += ".desktop"
+                        screenshot_url = extract_default_screenshot_url(app_id)
+                        if screenshot_url:
+                            print("Screenshot-URL {}:".format(app_id))
+                            print(screenshot_url)
+                        else:
+                            print("No Screenshot Found {}.".format(app_id))
+
+                        with urlopen(screenshot_url) as url_output:
+                            self.img = Image.open(url_output)
+                        self.img = resize(self.img)
+                        self.img = ImageTk.PhotoImage(self.img)
+                        flatpak_panel.config(image=self.img)
+
+                    except subprocess.CalledProcessError as err:
+                        print("Command returned non-zero exit status again:", err)
+                        flatpak_panel.config(self.no_img)
+
+
 
         def get_flatpak_description():
             url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
@@ -1570,7 +1622,7 @@ class FlatpakSearchPanel(tk.Frame):
             fg=main_font,
             borderwidth=0,
             highlightthickness=0,
-            #command=flatpak_show_infos,
+            # command=flatpak_show_infos,
         )
         flatpak_search_btn.pack(side="left", fill=BOTH)
 
@@ -1582,10 +1634,9 @@ class FlatpakSearchPanel(tk.Frame):
         )
         flatpak_entry.pack(fill="x", expand=True, side="left")
         listbox_ttp = CreateToolTip(
-                    flatpak_entry, " - Typ to finde a package\n\n - Single click on a listbox item to show more infos"
-                )
-
-
+            flatpak_entry,
+            " - Typ to finde a package\n\n - Single click on a listbox item to show more infos",
+        )
 
         flatpak_list_box = Listbox(
             flatpak_search_frame,

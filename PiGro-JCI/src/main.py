@@ -24,7 +24,7 @@ from tabs.about_tab import AboutTab
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__(className="PiGro")
-        self.title("PiGro - Just Click It! (Odio i vermi!)")
+        self.title("PiGro - Just Click It! (Il re dei marsupiali)")
         self["background"] = maincolor
         app_width = 1200
         app_height = 900
