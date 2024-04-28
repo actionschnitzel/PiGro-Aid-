@@ -25,7 +25,7 @@ ping_github()
 user = os.environ["USER"]
 
 
-current_version = "24.03"
+current_version = "24.04"
 
 print(f"[Info] You are using PiGro {current_version}")
 
