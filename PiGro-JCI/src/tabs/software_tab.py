@@ -909,12 +909,6 @@ class PiAppsSearchPanel(tk.Frame):
             app_string_web = app_string.replace(" ", "%20")
 
         def piapps_get_description():
-            if piapps_entry.get() in piapps_flatpak_matches:
-                appstream_id = piapps_flatpak_matches[piapps_entry.get()]
-                piapps_summary = get_app_summary(appstream_id)
-                piapps_pkg_status.config(text=piapps_summary)
-            else:
-                piapps_pkg_status.config(text=" ")
 
             piapps_pkg_infos = open(
                 f"{home}/pi-apps/apps/{piapps_entry.get()}/description",
