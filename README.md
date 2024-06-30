@@ -25,6 +25,12 @@ Designed with user-friendliness in mind, PiGro is easily accessible to users of 
 
 
 ### **_Special thanks to the entire [Pi-Apps-Team](https://github.com/Botspot/pi-apps)_**
+**Users on Pi-Apps**
+
+[![Piapps-users](https://img.shields.io/badge/Users%20on%20PiApps-+14k-blue.svg)]()
+
+**Since Version 23.04**   
+[![Github All Releases](https://img.shields.io/github/downloads/actionschnitzel/PiGro-Aid-/total.svg)]()
 
 ## ![HEADER2](https://github.com/actionschnitzel/tingsandstuff/blob/main/pigro_24_gihub.png?raw=true)
 
