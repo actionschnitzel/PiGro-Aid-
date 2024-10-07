@@ -479,17 +479,14 @@ class LookTab(ttk.Frame):
         )
         self.papirus_icons_frame.pack(pady=20, padx=40, fill="x", anchor="n")
 
-        self.install_button = Button(
+        self.install_button = ttk.Button(
             self.papirus_icons_frame,
             text="Install Papirus + Folders",
-            borderwidth=0,
-            highlightthickness=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             command=install_papirus,
+            style="Custom.TButton"
         )
         self.install_button.grid(
-            row=1, column=0, columnspan=4, padx=10, pady=10, sticky="we"
+            row=1, column=0, columnspan=5, padx=10, pady=10, sticky="we"
         )
 
         self.icon_themes = [
@@ -540,14 +537,11 @@ class LookTab(ttk.Frame):
         )
         self.papirus_version_combobox.set("Select a Version")
 
-        self.set_button = Button(
+        self.set_button = ttk.Button(
             self.papirus_icons_frame,
             text="Set",
-            borderwidth=0,
-            highlightthickness=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             command=set_icon_theme,
+            style="Custom.TButton"
         )
         self.set_button.grid(row=2, column=4, padx=10, pady=10)
 
