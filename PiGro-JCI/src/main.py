@@ -25,7 +25,7 @@ class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__(className="PiGro")
         self.title("PiGro - Just Click It! (Biancaneve)")
-        self.tk.call("source", r"src/Azure-ttk-theme-2.1.0/azure.tcl")
+        
 
         #self["background"] = maincolor
         app_width = 1200
@@ -44,58 +44,106 @@ class MainApplication(tk.Tk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
         # Notebook Icons
-        if "dark" or "noir" in theme_name():
+        self.tk.call("source", f"{application_path}/src/Azure-ttk-theme-2.1.0/azure.tcl")
+        if "dark" in get_theme() or "noir" in get_theme():
             self.tk.call("set_theme", "dark")
+            self.status_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/dash_dark_24x24.png"
+            )
+
+            self.system_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/sys_dark_24x24.png"
+            )
+            self.update_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/update_dark_24x24.png"
+            )
+            self.install_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/software_dark_24x24.png"
+            )
+            self.look_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/look_dark_24x24.png"
+            )
+            self.tuning_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/tuning_dark_24x24.png"
+            )
+            self.links_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/links_dark_24x24.png"
+            )
+            self.support_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/about_dark_24x24.png"
+            )
+            self.cam_icon = PhotoImage(
+                file=f"{application_path}/images/icons/papirus/48x48/gtkam-camera.png"
+            )
+            self.ubuntu_icon = PhotoImage(
+                file=f"{application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
+            )
+            self.auto_start = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/auto_dark_24x24.png"
+            )
+            self.kill_proc = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/tasks_dark_24x24.png"
+            )
+            self.git_more = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/g2h_dark_24x24.png"
+            )
+
+            self.deb_pack = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/backup_dark_24x24.png"
+            )
+            self.source_lists = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/sources_dark_16x16.png"
+            )
+
         else:
             self.tk.call("set_theme", "light")
+            self.status_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/dash_light_24x24.png"
+            )
+            self.system_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/sys_light_24x24.png"
+            )
+            self.update_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/update_light_24x24.png"
+            )
+            self.install_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/software_light_24x24.png"
+            )
+            self.look_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/look_light_24x24.png"
+            )
+            self.tuning_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/tuning_light_24x24.png"
+            )
+            self.links_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/links_light_24x24.png"
+            )
+            self.support_icon = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/about_light_24x24.png"
+            )
+            self.cam_icon = PhotoImage(
+                file=f"{application_path}/images/icons/papirus/48x48/gtkam-camera.png"
+            )
+            self.ubuntu_icon = PhotoImage(
+                file=f"{application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
+            )
+            self.auto_start = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/auto_light_24x24.png"
+            )
+            self.kill_proc = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/tasks_light_24x24.png"
+            )
+            self.git_more = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/g2h_light_24x24.png"
+            )
 
- 
-        self.status_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/dash_light_24x24.png"
-        )
-        self.system_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/sys_light_24x24.png"
-        )
-        self.update_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/update_light_24x24.png"
-        )
-        self.install_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/software_light_24x24.png"
-        )
-        self.look_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/look_light_24x24.png"
-        )
-        self.tuning_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/tuning_light_24x24.png"
-        )
-        self.links_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/links_light_24x24.png"
-        )
-        self.support_icon = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/about_light_24x24.png"
-        )
-        self.cam_icon = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/48x48/gtkam-camera.png"
-        )
-        self.ubuntu_icon = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/48x48/distributor-logo-ubuntu.png"
-        )
-        self.auto_start = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/auto_light_24x24.png"
-        )
-        self.kill_proc = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/tasks_light_24x24.png"
-        )
-        self.git_more = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/g2h_light_24x24.png"
-        )
+            self.deb_pack = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/backup_light_24x24.png"
+            )
+            self.source_lists = PhotoImage(
+                file=f"{application_path}/images/icons/nav_bar/sources_light_16x16.png"
+            )
 
-        self.deb_pack = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/backup_light_24x24.png"
-        )
-        self.source_lists = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/sources_light_16x16.png"
-        )
 
         self.notebook = ttk.Notebook(self, width=app_width, height=app_height)
         self.notebook.grid(row=0, column=0, sticky="nsew")

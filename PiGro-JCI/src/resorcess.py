@@ -223,7 +223,7 @@ def get_theme():
 
 # Example usage:
 theme_name = get_theme()
-#print(f"Current theme: {theme_name}")
+print(f"Current theme: {theme_name}")
 
 
 
