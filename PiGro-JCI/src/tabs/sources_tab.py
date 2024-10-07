@@ -99,8 +99,9 @@ class SourcesTab(ttk.Frame):
                 popen(f"sudo pcmanfm /etc/apt/sources.list.d")
                 print("[Info] With great power comes great responsibility")
             else:
+                # Ubuntu | Needs to be improved
                 popen(
-                    f"pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xdg-open /etc/apt/sources.list.d"
+                    f"nautilus admin:/etc/apt/sources.list.d"
                 )
 
         self.open_source_folder = ttk.Button(
