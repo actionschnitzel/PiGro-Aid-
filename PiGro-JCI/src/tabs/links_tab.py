@@ -11,14 +11,10 @@ class LinksTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
-        if "dark" in theme or "noir" in theme:
-            self.link = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/web.png"
-            )
-        else:
-            self.link = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/web_light.png"
-            )
+
+        self.link = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/web_light.png"
+        )
 
         def link_tab(text):
             if text == "Mankier.com (Commandline Database)":
@@ -70,17 +66,21 @@ class LinksTab(ttk.Frame):
             if text == "OMG Linux":
                 popen("xdg-open https://www.omglinux.com/")
 
-        self.link_left = Frame(
+        self.link_left = ttk.Frame(
             self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            padx=20,
-            pady=20,
+            padding=20
         )
-        self.link_left.pack(padx=40)
-        self.link_left["background"] = maincolor
+        self.link_left.pack(padx=40,fill=BOTH)
+
+        # Konfiguriere jede Spalte so, dass sie expandiert
+        self.link_left.grid_columnconfigure(0, weight=1)
+        self.link_left.grid_columnconfigure(1, weight=1)
+
+        # Keine Gewichtung für die Zeilen, sodass sie nicht expandieren
+        self.link_left.grid_rowconfigure(0, weight=0)
+        self.link_left.grid_rowconfigure(1, weight=0)
+
+
 
         sources_d = [
             "Chat GPT",
@@ -111,20 +111,13 @@ class LinksTab(ttk.Frame):
         conf_column = 0
 
         for file in sources_d:
-            self.choice_link1 = Button(
+            self.choice_link1 = ttk.Button(
                 self.link_left,
-                anchor="w",
-                justify="left",
-                width=400,
+                #width=400,
                 compound="left",
                 text=file,
                 image=self.link,
                 command=lambda text=file: link_tab(text),
-                borderwidth=0,
-                highlightthickness=0,
-                background=ext_btn,
-                foreground=ext_btn_font,
-                font=font_10,
             ).grid(row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew")
             sources_d1.append(self.choice_link1)
 

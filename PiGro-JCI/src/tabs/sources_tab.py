@@ -17,37 +17,24 @@ class SourcesTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-        self.background = maincolor
 
-        self.rep_main_frame = Frame(
-            self, borderwidth=0, highlightthickness=0, relief=GROOVE
+        self.rep_main_frame = ttk.Frame(
+            self
         )
-        self.rep_main_frame.pack(fill=BOTH, expand=True, pady=20, padx=30)
-        self.rep_main_frame["background"] = frame_color
+        self.rep_main_frame.pack(fill=BOTH, expand=True, pady=20, padx=20)
 
-        self.off_rep_frame = LabelFrame(
+        self.off_rep_frame = ttk.LabelFrame(
             self.rep_main_frame,
             text="Official Repository",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            padx=20,
-            pady=20,
+            padding=20
         )
 
         self.off_rep_frame.pack(fill=BOTH, expand=True)
-        self.off_rep_frame["background"] = frame_color
 
-        self.tu_info = Label(
+        self.tu_info = ttk.Label(
             self.off_rep_frame,
             text="Info: Never edit the source lists unless you know exactly what you are doing.\n",
-            font=font_8_b,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=info_color,
+
         ).pack()
 
         self.tree = ttk.Treeview(self.off_rep_frame)
@@ -61,10 +48,10 @@ class SourcesTab(ttk.Frame):
         self.tree.column("three", width=350, minwidth=100)
 
         # add column headings
-        self.tree.heading("#0", text="Nr.", anchor=tk.W)
-        self.tree.heading("one", text="Type", anchor=tk.W)
-        self.tree.heading("two", text="Source URL", anchor=tk.W)
-        self.tree.heading("three", text="Source Parameters", anchor=tk.W)
+        self.tree.heading("#0", text="Nr.",)
+        self.tree.heading("one", text="Type")
+        self.tree.heading("two", text="Source URL")
+        self.tree.heading("three", text="Source Parameters")
 
         try:
             with open("/etc/apt/sources.list", "r") as f:
@@ -82,21 +69,14 @@ class SourcesTab(ttk.Frame):
         except:
             pass
 
-        self.added_repositories = LabelFrame(
+        self.added_repositories = ttk.LabelFrame(
             self.rep_main_frame,
             text="Added Repository",
-            font=font_16,
-            foreground=label_frame_color,
-            background=maincolor,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            padx=20,
-            pady=20,
+            padding=20
         )
         self.added_repositories.pack(fill="both", expand=True)
 
-        self.added_tree_frame = tk.Frame(self.added_repositories, background=maincolor)
+        self.added_tree_frame = tk.Frame(self.added_repositories)
         self.added_tree_frame.pack(fill="both", expand=True)
 
         self.added_treeview = ttk.Treeview(
@@ -123,15 +103,12 @@ class SourcesTab(ttk.Frame):
                     f"pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xdg-open /etc/apt/sources.list.d"
                 )
 
-        self.open_source_folder = Button(
+        self.open_source_folder = ttk.Button(
             self.rep_main_frame,
             text="Open sources.list.d",
-            highlightthickness=0,
-            borderwidth=0,
-            font=font_10,
             command=open_source_f_d,
-            foreground=ext_btn_font,
-            background=ext_btn,
+            style="Custom.TButton"
+
         )
         self.open_source_folder.pack(padx=20, expand=True, fill="x")
 

@@ -227,7 +227,7 @@ class SystemTab(ttk.Frame):
             self,
             text="Raspberry Pi Settings",
             font=font_16,
-            foreground=label_frame_color,
+            #foreground=label_frame_color,
             borderwidth=0,
             highlightthickness=0,
             highlightcolor="white",
@@ -236,7 +236,7 @@ class SystemTab(ttk.Frame):
             padx=10,
         )
         self.pi_set.pack(pady=20, padx=40, fill="both")
-        self.pi_set["background"] = frame_color
+        #self.pi_set["background"] = frame_color
 
         pi_settings_btn_list = [
             "Bash History",
@@ -281,7 +281,7 @@ class SystemTab(ttk.Frame):
                 command=lambda text=pi_settings_btn: pi_settings(text),
                 highlightthickness=0,
                 borderwidth=0,
-                background=frame_color,
+                #background=frame_color,
                 foreground=main_font,
                 compound=TOP,
                 activebackground=ext_btn,

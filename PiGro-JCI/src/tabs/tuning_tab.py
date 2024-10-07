@@ -15,7 +15,7 @@ from tabs.system_tab_check import check_zram
 class TuningTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
-        self.grid(row=0, column=0, sticky="nsew")
+        self.grid(row=0, column=0, sticky="nsew",padx=20)
 
         # Current OV settings
 
@@ -142,154 +142,80 @@ class TuningTab(ttk.Frame):
             tu_btn4.config(state=DISABLED)
 
         # OV_Button_Frame
-        self.ov_buttons = LabelFrame(
+        self.ov_buttons = ttk.LabelFrame(
             self,
             text="Pi4 Tuning Presets",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            pady=20,
+            padding=20
         )
-        self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH)
-        self.ov_buttons["background"] = frame_color
+        self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH,expand=TRUE)
+        self.ov_buttons.columnconfigure(0, weight=1)
 
         # Tuning_Button_Frame
 
-        self.tu_reset = Button(
+        self.tu_reset = ttk.Button(
             self.ov_buttons,
-            justify="left",
             image=self.rm_ov_icon,
             text="Default Settings",
-            font=font_10,
-            anchor="w",
             command=set_default,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             compound=LEFT,
-            width=250,
+
         )
-        self.tu_reset.grid(column=0, row=2, pady=10)
+        self.tu_reset.grid(column=0, row=2, pady=10,sticky="ew")
+
 
         global tu_btn1
-        tu_btn1 = Button(
+        tu_btn1 = ttk.Button(
             self.ov_buttons,
-            justify="left",
             image=self.ov1_icon,
             text="Crank It Up",
-            font=font_10,
-            anchor="w",
             command=ov_2000,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             compound=LEFT,
-            width=250,
+
         )
-        tu_btn1.grid(column=0, row=4, pady=10)
+        tu_btn1.grid(column=0, row=4, pady=10,sticky="ew")
 
         global tu_btn2
-        tu_btn2 = Button(
+        tu_btn2 = ttk.Button(
             self.ov_buttons,
-            justify="left",
             image=self.ov2_icon,
             text="You Sir... Need A Fan!",
-            font=font_10,
-            anchor="w",
             command=ov_2147,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             compound=LEFT,
-            width=250,
+
         )
-        tu_btn2.grid(column=0, row=6, pady=10)
+        tu_btn2.grid(column=0, row=6, pady=10,sticky="ew")
 
         global tu_btn3
-        tu_btn3 = Button(
+        tu_btn3 = ttk.Button(
             self.ov_buttons,
-            justify="left",
             image=self.ov3_icon,
             text="Take It To The Max!",
-            font=font_10,
-            anchor="w",
             command=ov_2200,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
+
             compound=LEFT,
-            width=250,
         )
-        tu_btn3.grid(column=0, row=8, pady=10)
+        tu_btn3.grid(column=0, row=8, pady=10,sticky="ew")
 
         global tu_btn4
-        tu_btn4 = Button(
+        tu_btn4 = ttk.Button(
             self.ov_buttons,
-            justify="left",
             image=self.ov4_icon,
             text="Honey,\nthe fuse blew again!",
-            font=font_10,
-            anchor="w",
             command=ov_2300,
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             compound=LEFT,
-            width=250,
         )
-        tu_btn4.grid(column=0, row=9, pady=10)
+        tu_btn4.grid(column=0, row=9, pady=10,sticky="ew")
 
-        self.tu_legende = Button(
+        self.tu_legende = ttk.Button(
             self.ov_buttons,
-            justify="left",
             text="Preset Info",
-            font=font_10,
-            highlightthickness=0,
-            borderwidth=0,
-            background="#f04a50",
-            foreground=ext_btn_font,
-            anchor="w",
             command=tuning_legende,
             image=self.tu_legend_ico,
             compound=LEFT,
-            width=250,
-        ).grid(column=0, row=13, pady=10)
 
-        # Overclocking State Main Frame
-        self.ov_state_display_frame = Frame(
-            self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-        )
-        self.ov_state_display_frame.pack(
-            anchor="n", padx=10, pady=20, fill=BOTH, expand=True
-        )
-        self.ov_state_display_frame["background"] = maincolor
+        ).grid(column=0, row=10, pady=10,sticky="ew")
 
-        # Custom Settings
-        self.custom_settings = LabelFrame(
-            self.ov_state_display_frame,
-            text="Custom Settings",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            pady=20,
-            padx=10,
-        )
-        self.custom_settings.pack(anchor="n", padx=10, fill="x")
-        self.custom_settings["background"] = frame_color
+
 
         def set_arm_freq():
             if arm_freq_spinbox.get().isdigit():
@@ -389,47 +315,59 @@ class TuningTab(ttk.Frame):
         def reboot_n():
             popen(f"{permit} reboot")
 
-        # Expert Frame
-        x_mode_frame = Frame(self.custom_settings, bg=frame_color)
-        x_mode_frame.pack(fill="x", expand=True)
+        # Overclocking State Main Frame
+        self.ov_state_display_frame = ttk.Frame(
+            self,
 
-        arm_freq_label = tk.Label(
+        )
+        self.ov_state_display_frame.pack(padx=20, pady=20, fill=BOTH, expand=True
+        )
+        self.ov_state_display_frame.columnconfigure(0, weight=1)
+
+
+        # Custom Settings
+        self.custom_settings = ttk.LabelFrame(
+            self.ov_state_display_frame,
+            text="Custom Settings",
+            padding=20
+        )
+        self.custom_settings.grid(column=0, row=0,sticky="ew")
+
+
+
+        # Expert Frame
+        x_mode_frame = ttk.Frame(self.custom_settings)
+        x_mode_frame.pack(fill=BOTH, expand=True)
+
+        arm_freq_label = ttk.Label(
             x_mode_frame,
             text="arm_freq ",
             justify="right",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+
         )
         arm_freq_label.grid(row=0, column=0, sticky="ew", padx=5)
 
         arm_freq_spinbox = ttk.Entry(x_mode_frame)
-        arm_freq_spinbox.grid(row=0, column=1, sticky="ewsn", pady=5, padx=5)
+        arm_freq_spinbox.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
 
         arm_freq_set_button = tk.Button(
             x_mode_frame,
             text="Set",
             command=set_arm_freq,
             image=self.toggle_off,
-            foreground=ext_btn_font,
-            background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
             borderwidth=0,
+            activebackground="#f7f7f7",
         )
-        arm_freq_set_button.grid(row=0, column=2, pady=5, sticky="ew", padx=5)
+        arm_freq_set_button.grid(row=0, column=2, sticky="ew", padx=5)
 
         global arm_f_display
-        arm_f_display = Label(
+        arm_f_display = ttk.Label(
             x_mode_frame,
             anchor="w",
             justify=LEFT,
             text="State: Default",
-            highlightthickness=0,
-            borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
-            font=font_10,
             width=25,
         )
         arm_f_display.grid(column=4, row=0, padx=5)
@@ -448,7 +386,7 @@ class TuningTab(ttk.Frame):
         gpu_freq_spinbox = ttk.Entry(
             x_mode_frame,
         )
-        gpu_freq_spinbox.grid(row=1, column=1, sticky="ewsn", pady=5, padx=5)
+        gpu_freq_spinbox.grid(row=1, column=1, sticky="ew", pady=5, padx=5)
 
         gpu_freq_set_button = tk.Button(
             x_mode_frame,
@@ -491,7 +429,7 @@ class TuningTab(ttk.Frame):
         gpu_mem_spinbox = ttk.Entry(
             x_mode_frame,
         )
-        gpu_mem_spinbox.grid(row=2, column=1, sticky="ewsn", pady=5, padx=5)
+        gpu_mem_spinbox.grid(row=2, column=1, sticky="ew", pady=5, padx=5)
 
         gpu_mem_set_button = tk.Button(
             x_mode_frame,
@@ -534,7 +472,7 @@ class TuningTab(ttk.Frame):
         over_voltage_spinbox = ttk.Entry(
             x_mode_frame,
         )
-        over_voltage_spinbox.grid(row=3, column=1, sticky="ewsn", pady=5, padx=5)
+        over_voltage_spinbox.grid(row=3, column=1, sticky="ew", pady=5, padx=5)
 
         over_voltage_set_button = tk.Button(
             x_mode_frame,
@@ -575,7 +513,7 @@ class TuningTab(ttk.Frame):
         over_voltage_delta_delta_label.grid(row=4, column=0, sticky="ew", padx=5)
 
         over_voltage_delta_spinbox = ttk.Entry(x_mode_frame)
-        over_voltage_delta_spinbox.grid(row=4, column=1, sticky="ewsn", pady=5, padx=5)
+        over_voltage_delta_spinbox.grid(row=4, column=1, sticky="ew", pady=5, padx=5)
 
         over_voltage_delta_set_button = tk.Button(
             x_mode_frame,
@@ -651,14 +589,12 @@ class TuningTab(ttk.Frame):
         )
         force_t_display.grid(row=5, column=4, sticky="ew", padx=5)
 
-        reboot_button = tk.Button(
+        reboot_button = ttk.Button(
             x_mode_frame,
             text="Reboot System",
             command=reboot_n,
-            foreground=ext_btn_font,
-            background=ext_btn,
-            highlightthickness=0,
-            borderwidth=0,
+            style="Custom.TButton"
+
         )
         reboot_button.grid(row=6, column=0, columnspan=3, sticky="ew", pady=5, padx=5)
 
@@ -677,42 +613,30 @@ class TuningTab(ttk.Frame):
             check_z_ram_button_state()
             done_msg()
 
-        self.swap_frame = LabelFrame(
+        self.swap_frame = ttk.LabelFrame(
             self.ov_state_display_frame,
             text="Use Zram [More Ram]",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=FLAT,
-            background=maincolor,
-            pady=20,
+            padding=20
         )
-        self.swap_frame.pack(anchor="n", padx=10, fill="x", expand=True)
-        zram_text = """Setup of ZRAM (compressed RAM) to enhance memory usage and performance. It disables existing swap services, loads the ZRAM kernel module, and creates a systemd service for ZRAM to run on startup.\n\nTaken From Pi-Apps(BotSpot)"""
+        self.swap_frame.grid(column=0, row=1, pady=10,sticky="ew")
+
+        zram_text = """Setup of ZRAM (compressed RAM) to enhance memory usage and performance. It disables existing swap services, loads the ZRAM kernel module, and creates a systemd service for ZRAM to run on startup.[Taken From Pi-Apps(BotSpot)]"""
+        
         self.z_info = Label(
             self.swap_frame,
             text=zram_text,
-            font=font_10,
             justify="left",
             anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-            wraplength=550,
+            wraplength=600,
         ).pack(padx=10, fill="x", expand=True)
 
         # Create a Button next to the Combobox
-        self.zram_button = Button(
+        self.zram_button = ttk.Button(
             self.swap_frame,
-            foreground=ext_btn_font,
-            background=ext_btn,
-            highlightthickness=0,
-            borderwidth=0,
+            style="Custom.TButton"
+
         )
-        self.zram_button.pack(padx=10, pady=10, anchor="w")
+        self.zram_button.pack(padx=10, pady=10, anchor="w", fill="x")
 
         def check_z_ram_button_state():
             if check_zram() is True:
@@ -742,42 +666,30 @@ class TuningTab(ttk.Frame):
 
             os.system(command)
 
-        preload_text = """Preload is a Linux tool designed to improve system responsiveness by\npredicting and preloading frequently used dynamic libraries into memory,\nreducing application startup times. It analyzes the user's behavior and\noptimizes resource utilization to enhance overall system performance."""
+        preload_text = """Preload is a Linux tool designed to improve system responsiveness by predicting and preloading
+frequently used dynamic libraries into memory, reducing application startup times.
+It analyzes the user's behavior and optimizesresource utilization to enhance overall system performance."""
 
-        self.preload_frame = LabelFrame(
+        self.preload_frame = ttk.LabelFrame(
             self.ov_state_display_frame,
             text="Preload",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            background=maincolor,
-            relief=FLAT,
+            padding=20
         )
-        self.preload_frame.pack(anchor="n", padx=10, fill="x", expand=True)
+        self.preload_frame.grid(column=0, row=2,sticky="nesw")
 
-        self.tu_info = Label(
+        self.tu_info = ttk.Label(
             self.preload_frame,
             text=preload_text,
-            font=font_10,
             justify="left",
             anchor="w",
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
         ).pack(padx=10, fill="x", expand=True)
 
         # Create a Button next to the Combobox
-        self.preload_button = Button(
+        self.preload_button = ttk.Button(
             self.preload_frame,
-            foreground=ext_btn_font,
-            background=ext_btn,
-            highlightthickness=0,
-            borderwidth=0,
+            style="Custom.TButton"
         )
-        self.preload_button.pack(padx=10, pady=10, anchor="w")
+        self.preload_button.pack(padx=10, pady=10, anchor="w",fill="x")
 
         def ov_display():
             with open("/proc/device-tree/model", "r") as model_file:
@@ -808,7 +720,6 @@ class TuningTab(ttk.Frame):
 
                         arm_freq_set_button.config(
                             text="Reset",
-                            background=maincolor,
                             image=self.toggle_on,
                             command=reset_arm_freq,
                         )
@@ -829,7 +740,6 @@ class TuningTab(ttk.Frame):
                 else:
                     arm_freq_set_button.config(
                         text="Set",
-                        background=maincolor,
                         image=self.toggle_off,
                         command=set_arm_freq,
                     )

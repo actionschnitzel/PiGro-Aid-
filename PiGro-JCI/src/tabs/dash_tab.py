@@ -54,25 +54,21 @@ class DashTab(ttk.Frame):
             Image.open(f"{application_path}/images/icons/debian_logo_dash.png")
         )
 
-        self.dash_pigro_logo_frame = Frame(
+        self.dash_pigro_logo_frame = ttk.Frame(
             self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
         )
 
-        self.dash_pigro_logo_frame.pack()
-        self.dash_pigro_logo_frame["background"] = maincolor
+        self.dash_pigro_logo_frame.pack(fill=BOTH)
+        #self.dash_pigro_logo_frame["background"] = maincolor
 
         # Sys Info Labels
         self.logo_btn = Button(
             self.dash_pigro_logo_frame,
             borderwidth=0,
-            bg=frame_color,
+            #bg=frame_color,
             highlightthickness=0,
             command=pigro_sound,
-            activebackground=frame_color,
+            activebackground="#ffffff",
         )
         self.logo_btn.pack(pady=20)
         self.logo_btn_ttp = CreateToolTip(
@@ -107,172 +103,165 @@ class DashTab(ttk.Frame):
             print("An error occurred:", str(e))
 
         # Create a frame to hold the progress bars
-        self.usage_frame = tk.Frame(
+        self.usage_frame = ttk.LabelFrame(
             self,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-            pady=20,
-            padx=10,
-            width=885,
-            height=100,
+            text="System Usage",
         )
+        self.usage_frame.pack(fill=BOTH,pady=20,padx=60)
+        #self.usage_frame.pack_propagate(0)
 
-        self.usage_frame.pack(pady=20)
-        self.usage_frame.pack_propagate(0)
-        self.usage_frame["background"] = frame_color
 
         # Create a frame to hold the progress bars
-        self.useage_container = tk.Frame(
+        self.useage_container = ttk.Frame(
             self.usage_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
+
         )
 
-        self.useage_container.pack()
-        self.useage_container["background"] = frame_color
+        self.useage_container.pack(fill=BOTH,expand=True)
+
+
 
         # Create a label and progress bar for CPU usage
-        cpu_label = Label(
+        cpu_label = tk.Label(
             self.useage_container,
             text="CPU",
             font=font_12,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=label_frame_color,
-            width=20,
-        )
-        cpu_label.grid(row=1, column=0)
 
-        self.cpu_percent = Label(
+        )
+        cpu_label.grid(row=1, column=0, sticky="nsew")
+
+        self.cpu_percent = tk.Label(
             self.useage_container,
             text="0%",
             font=font_20,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
+
         )
-        self.cpu_percent.grid(row=0, column=0)
+        self.cpu_percent.grid(row=0, column=0, sticky="nsew")
 
         # Create a label and progress bar for CPU usage
-        cpu_temp_label = Label(
+        cpu_temp_label = tk.Label(
             self.useage_container,
             text="CPU Temp",
             font=font_12,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=label_frame_color,
-            width=20,
-        )
-        cpu_temp_label.grid(row=1, column=1)
 
-        self.cpu_temp_percent = Label(
+        )
+        cpu_temp_label.grid(row=1, column=1, sticky="nsew")
+
+        self.cpu_temp_percent = tk.Label(
             self.useage_container,
             text="0%",
             font=font_20,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
+
         )
-        self.cpu_temp_percent.grid(row=0, column=1)
+        self.cpu_temp_percent.grid(row=0, column=1, sticky="nsew")
 
         # Create a label and progress bar for RAM usage
-        ram_label = Label(
+        ram_label = tk.Label(
             self.useage_container,
             text="RAM",
             font=font_12,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=label_frame_color,
-            width=20,
+
         )
-        ram_label.grid(row=1, column=2)
+        ram_label.grid(row=1, column=2, sticky="nsew")
 
         self.ram_percent = Label(
             self.useage_container,
             text="0%",
             font=font_20,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
+
         )
-        self.ram_percent.grid(row=0, column=2)
+        self.ram_percent.grid(row=0, column=2, sticky="nsew")
 
         # Create a label and progress bar for HDD usage
-        hdd_label = Label(
+        hdd_label = tk.Label(
             self.useage_container,
             text="HDD",
             font=font_12,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=label_frame_color,
-            width=20,
-        )
-        hdd_label.grid(row=1, column=3)
 
-        self.hdd_percent = Label(
+        )
+        hdd_label.grid(row=1, column=3, sticky="nsew")
+
+        self.hdd_percent = tk.Label(
             self.useage_container,
             text="0%",
             font=font_20,
-            highlightthickness=0,
-            borderwidth=0,
-            background=frame_color,
-            foreground=main_font,
-        )
-        self.hdd_percent.grid(row=0, column=3)
 
-        self.os_info_frame = LabelFrame(
+        )
+        self.hdd_percent.grid(row=0, column=3, sticky="nsew")
+
+        # Konfiguriere jede Spalte so, dass sie expandiert
+        self.useage_container.grid_columnconfigure(0, weight=1)
+        self.useage_container.grid_columnconfigure(1, weight=1)
+        self.useage_container.grid_columnconfigure(2, weight=1)
+        self.useage_container.grid_columnconfigure(3, weight=1)
+
+        # Keine Gewichtung für die Zeilen, sodass sie nicht expandieren
+        self.useage_container.grid_rowconfigure(0, weight=0)
+        self.useage_container.grid_rowconfigure(1, weight=0)
+
+
+
+        self.os_info_frame = ttk.LabelFrame(
             self,
             text=pi_model,
-            font=font_20,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
-            pady=20,
-            padx=20,
-            width=885,
-            height=600,
+            padding=20,
         )
 
-        self.os_info_frame.pack(pady=20)
-        self.os_info_frame.pack_propagate(0)
-        self.os_info_frame["background"] = frame_color
+        self.os_info_frame.pack(pady=20,fill="x", padx=60)
+        #self.os_info_frame.pack_propagate(0)
 
-        self.info_frame_column_1 = Frame(
+
+
+
+
+        self.info_frame_container = Frame(
             self.os_info_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
+
         )
 
-        self.info_frame_column_1.pack(side=LEFT, fill="both", expand=True)
-        self.info_frame_column_1["background"] = frame_color
+        self.info_frame_container.pack(fill="x",expand=TRUE,anchor="n")
 
-        self.os_label_frame = LabelFrame(
-            self.info_frame_column_1,
+        # Konfiguriere jede Spalte so, dass sie expandiert
+        self.info_frame_container.grid_columnconfigure(0, weight=1)
+        self.info_frame_container.grid_columnconfigure(1, weight=1)
+        self.info_frame_container.grid_columnconfigure(2, weight=1)
+        self.info_frame_container.grid_columnconfigure(3, weight=1)
+
+        # Keine Gewichtung für die Zeilen, sodass sie nicht expandieren
+        self.info_frame_container.grid_rowconfigure(0, weight=0)
+        self.info_frame_container.grid_rowconfigure(1, weight=0)
+
+        self.rp_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
+            text="Raspberry Pi"
+            
+
+        )
+        self.rp_label_frame.grid(column=0,row=0,sticky="nesw")#pack(anchor="n", fill=BOTH, expand=True)
+
+        self.rp_info_list = [
+            "Arm Model:",
+            "Cpu Freq Max.:",
+            "Cpu Freq Current:",
+            "Cpu Freq Min.:",
+        ]
+
+        self.rp_labels = []
+
+        for rp_info in self.rp_info_list:
+            label = tk.Label(self.rp_label_frame, text=rp_info)
+            label.pack(anchor="w", padx=10)
+            self.rp_labels.append(label)
+
+
+        self.os_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
             text="Operating System",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
+
         )
-        self.os_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.os_label_frame["background"] = frame_color
+        self.os_label_frame.grid(column=0,row=1,rowspan=2,sticky="nesw")#pack(anchor="n", fill=BOTH, expand=True)
+
+
 
         self.os_info_list = [
             "Distro:",
@@ -293,57 +282,20 @@ class DashTab(ttk.Frame):
             label.pack(anchor="w", padx=10)
             self.os_labels.append(label)
 
-        self.rp_label_frame = LabelFrame(
-            self.info_frame_column_1,
-            text="Raspberry Pi",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-        )
-        self.rp_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.rp_label_frame["background"] = frame_color
 
-        self.rp_info_list = [
-            "Board:",
-            "Arm Model:",
-            "Cpu Freq Max.:",
-            "Cpu Freq Current:",
-            "Cpu Freq Min.:",
-        ]
-
-        self.rp_labels = []
-
-        for rp_info in self.rp_info_list:
-            label = tk.Label(self.rp_label_frame, text=rp_info)
-            label.pack(anchor="w", padx=10)
-            self.rp_labels.append(label)
 
         self.info_frame_column_2 = Frame(
-            self.os_info_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
+            self.info_frame_container,
         )
 
-        self.info_frame_column_2.pack(side=LEFT, fill="both", expand=True)
-        self.info_frame_column_2["background"] = frame_color
+        #self.info_frame_column_2.grid(column=0,row=2)#pack(side=LEFT, fill="both", expand=True)
 
-        self.mem_label_frame = LabelFrame(
-            self.info_frame_column_2,
+        self.mem_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
             text="Memory",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
+
         )
-        self.mem_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.mem_label_frame["background"] = frame_color
+        self.mem_label_frame.grid(column=1,row=2,sticky="nesw",padx=5)#.pack(anchor="n", fill=BOTH, expand=True)
 
         self.mem_list = [
             "Ram Total:",
@@ -361,18 +313,12 @@ class DashTab(ttk.Frame):
             label.pack(anchor="w", padx=10)
             self.mem_labels.append(label)
 
-        self.net_label_frame = LabelFrame(
-            self.info_frame_column_2,
+        self.net_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
             text="Network",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
+
         )
-        self.net_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.net_label_frame["background"] = frame_color
+        self.net_label_frame.grid(column=1,row=0,sticky="nesw",padx=5)#.pack(anchor="n", fill=BOTH, expand=True)
 
         self.net_list = ["Hostname:", "IP:", "Web:", "Down:", "Up:"]
 
@@ -384,28 +330,18 @@ class DashTab(ttk.Frame):
             self.net_labels.append(label)
 
         self.info_frame_column_0 = Frame(
-            self.os_info_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor=label_frame_color,
-            relief=GROOVE,
+            self.info_frame_container,
+
         )
 
-        self.info_frame_column_0.pack(side=LEFT, fill="both", expand=True)
-        self.info_frame_column_0["background"] = frame_color
+        #self.info_frame_column_0.pack(side=LEFT, fill="both", expand=True)
 
-        self.disk_label_frame = LabelFrame(
-            self.info_frame_column_0,
+        self.disk_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
             text="Disk",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
+
         )
-        self.disk_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.disk_label_frame["background"] = frame_color
+        self.disk_label_frame.grid(column=1,row=1,sticky="nesw",padx=5)#.pack(anchor="n", fill=BOTH, expand=True)
 
         self.disk_list = [
             "Total Size:",
@@ -420,18 +356,12 @@ class DashTab(ttk.Frame):
             label.pack(anchor="w", padx=10)
             self.disk_labels.append(label)
 
-        self.pakage_count_label_frame = LabelFrame(
-            self.info_frame_column_0,
+        self.pakage_count_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
             text="Packages Installed",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
+
         )
-        self.pakage_count_label_frame.pack(anchor="n", fill=BOTH, expand=True)
-        self.pakage_count_label_frame["background"] = frame_color
+        self.pakage_count_label_frame.grid(column=2,columnspan=2,row=0,sticky="nesw")#.pack(anchor="n", fill=BOTH, expand=True)
 
         self.pakage_count_list = ["Debian:", "Flatpak:", "Snap:"]
 
@@ -442,11 +372,16 @@ class DashTab(ttk.Frame):
             label.pack(anchor="w", padx=10)
             self.pakage_count_labels.append(label)
 
+        self.distro_label_frame = ttk.LabelFrame(
+            self.info_frame_container,
+            text="Distro Logo",
+
+        )
+        self.distro_label_frame.grid(column=2,columnspan=2,row=1,rowspan=2,sticky="nesw")#.pack(anchor="n", fill=BOTH, expand=True)
+
+
         self.distro_logo_label = Label(
-            self.info_frame_column_0,
-            borderwidth=0,
-            bg=frame_color,
-            highlightthickness=0,
+            self.distro_label_frame,
             image=self.distro_ubuntu_logo_img,
         )
         self.distro_logo_label.pack(fill=BOTH, expand=True)
@@ -562,13 +497,12 @@ class DashTab(ttk.Frame):
         for label, new_os_info in zip(self.os_labels, update_os_info_data):
             label.config(
                 text=self.os_info_list[self.os_labels.index(label)] + " " + new_os_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
+                #borderwidth=0,
+                #background=frame_color,
+                #foreground=main_font,
             )
 
         update_rp_info_data = [
-            f"{pi_model}",
             f"{get_cpu_model_name()}",
             f"{cpufreq.max:.0f} Mhz",
             f"{cpufreq.current:.0f} Mhz",
@@ -578,9 +512,9 @@ class DashTab(ttk.Frame):
         for label, new_info in zip(self.rp_labels, update_rp_info_data):
             label.config(
                 text=self.rp_info_list[self.rp_labels.index(label)] + " " + new_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
+                #borderwidth=0,
+                #background=frame_color,
+                #foreground=main_font,
             )
 
         update_mem_info_data = [
@@ -595,9 +529,6 @@ class DashTab(ttk.Frame):
         for label, new_mem_info in zip(self.mem_labels, update_mem_info_data):
             label.config(
                 text=self.mem_list[self.mem_labels.index(label)] + " " + new_mem_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
             )
 
         update_disk_info_data = [
@@ -611,9 +542,6 @@ class DashTab(ttk.Frame):
                 text=self.disk_list[self.disk_labels.index(label)]
                 + " "
                 + new_disk_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
             )
 
         update_net_info_data = [
@@ -627,9 +555,7 @@ class DashTab(ttk.Frame):
         for label, new_net_info in zip(self.net_labels, update_net_info_data):
             label.config(
                 text=self.net_list[self.net_labels.index(label)] + " " + new_net_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
+
             )
         self.local_ip.getsockname()[0]
 
@@ -646,9 +572,6 @@ class DashTab(ttk.Frame):
                 text=self.pakage_count_list[self.pakage_count_labels.index(label)]
                 + " "
                 + new_pakage_count_info,
-                borderwidth=0,
-                background=frame_color,
-                foreground=main_font,
             )
 
         self.after(3000, self.update_labels)

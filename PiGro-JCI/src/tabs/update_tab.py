@@ -21,79 +21,46 @@ class UpdateTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
-        if "dark" in theme or "noir" in theme:
-            self.folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/folder_s.png"
-            )
-            self.up_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_up_s.png"
-            )
-            self.gup_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_upg_s.png"
-            )
-            self.recover_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/recover_s.png"
-            )
-            self.fup_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_fupg_s.png"
-            )
-            self.allow_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/allow_s.png"
-            )
-            self.arm_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/del_s.png"
-            )
-            self.confa_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/confa_s.png"
-            )
-            self.re_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/re_s.png"
-            )
-            self.inst_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/debinst_s.png"
-            )
-            self.term_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/terminal_s.png"
-            )
-        else:
-            self.folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
-            )
-            self.up_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_up_s_light.png"
-            )
-            self.gup_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_upg_s_light.png"
-            )
-            self.recover_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/recover_s_light.png"
-            )
-            self.fup_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/pack_fupg_s_light.png"
-            )
-            self.allow_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/allow_s_light.png"
-            )
-            self.arm_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/del_s_light.png"
-            )
-            self.confa_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/confa_s_light.png"
-            )
-            self.re_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/re_s_light.png"
-            )
-            self.inst_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/debinst_s_light.png"
-            )
-            self.term_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/terminal_s_light.png"
-            )
+
+
+        self.folder_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
+        )
+        self.up_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/pack_up_s_light.png"
+        )
+        self.gup_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/pack_upg_s_light.png"
+        )
+        self.recover_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/recover_s_light.png"
+        )
+        self.fup_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/pack_fupg_s_light.png"
+        )
+        self.allow_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/allow_s_light.png"
+        )
+        self.arm_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/del_s_light.png"
+        )
+        self.confa_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/confa_s_light.png"
+        )
+        self.re_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/re_s_light.png"
+        )
+        self.inst_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/debinst_s_light.png"
+        )
+        self.term_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/terminal_s_light.png"
+        )
 
         self.term_logo = PhotoImage(
             file=f"{application_path}/images/icons/papirus/goterminal.png"
         )
-        self.background = maincolor
+        #self.background = maincolor
 
         def up_action(text):
             """Passes commands du auto generated buttons"""
@@ -175,42 +142,39 @@ class UpdateTab(ttk.Frame):
                         % wid
                     )
 
-        self.update_btn_frame = Frame(
+        self.update_btn_frame = ttk.Frame(
             self,
-            borderwidth=0,
-            relief=GROOVE,
-            highlightthickness=0,
         )
-        self.update_btn_frame.pack(padx=28, pady=10, anchor="n", fill="x", side="left")
-        self.update_btn_frame["background"] = frame_color
+        self.update_btn_frame.pack(padx=20, pady=20, anchor="n", fill="x", side="left")
+        #self.update_btn_frame["background"] = frame_color
 
-        self.termf = Frame(
+        self.termf = ttk.LabelFrame(
             self,
-            highlightthickness=0,
-            borderwidth=0,
+            text="Progress"
+
         )
 
         self.term_logo_label = Label(
-            self.termf, image=self.term_logo, background=frame_color
+            self.termf, image=self.term_logo, #background=frame_color
         )
         self.term_logo_label.pack(fill=BOTH, expand=True)
 
-        self.termf.pack(fill=BOTH, expand=True, pady=50, padx=30)
+        self.termf.pack(fill=BOTH, expand=True, pady=20, padx=20)
 
         global wid
         wid = self.termf.winfo_id()
-        self.termf["background"] = frame_color
+        #self.termf["background"] = frame_color
 
-        self.btn_frame = LabelFrame(
+        self.btn_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="APT Options",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            relief=GROOVE,
-            highlightthickness=0,
-            background=frame_color,
-            pady=10,
+            #font=font_16,
+            #foreground=label_frame_color,
+            #borderwidth=0,
+            #relief=GROOVE,
+            #highlightthickness=0,
+            #background=frame_color,
+            #pady=10,
         )
         self.btn_frame.pack(anchor="n")
 
@@ -221,17 +185,19 @@ class UpdateTab(ttk.Frame):
         conf_column = 0
 
         for up_button, description in up_button_dict.items():
-            self.up_button_x = Button(
+            self.up_button_x = ttk.Button(
                 self.btn_frame,
-                justify="left",
+                #justify="left",
                 compound="left",
-                anchor="w",
+                #anchor="w",
                 text=up_button,
                 command=lambda text=up_button: up_action(text),
-                borderwidth=0,
-                highlightthickness=0,
-                background=ext_btn,
-                foreground=ext_btn_font,
+                #borderwidth=0,
+                #highlightthickness=0,
+                #background=ext_btn,
+                #foreground=ext_btn_font,
+                width=20,
+                
             )
 
             self.up_button_x.grid(
@@ -299,16 +265,16 @@ class UpdateTab(ttk.Frame):
                     % wid
                 )
 
-        self.nala_frame = LabelFrame(
+        self.nala_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Nala Options",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            relief=GROOVE,
-            highlightthickness=0,
-            background=frame_color,
-            pady=10,
+            #font=font_16,
+            #foreground=label_frame_color,
+            #borderwidth=0,
+            #relief=GROOVE,
+            #highlightthickness=0,
+            #background=frame_color,
+            #pady=10,
         )
         self.nala_frame.pack(anchor="n", fill="x")
 
@@ -338,18 +304,20 @@ class UpdateTab(ttk.Frame):
         conf_column = 0
 
         for nala_button, config in nala_button_dict.items():
-            self.nala_button_x = Button(
+            self.nala_button_x = ttk.Button(
                 self.nala_frame,
-                justify="left",
+                #justify="left",
                 compound="left",
-                anchor="w",
+                #anchor="w",
                 text=nala_button,
                 command=lambda btn=nala_button: nala_action(btn),
-                borderwidth=0,
-                highlightthickness=0,
-                background=ext_btn,
-                foreground=ext_btn_font,
+                #borderwidth=0,
+                #highlightthickness=0,
+                #background=ext_btn,
+                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
+                width=20,
+
             )
 
             self.nala_button_x.grid(
@@ -389,16 +357,16 @@ class UpdateTab(ttk.Frame):
                     % wid
                 )
 
-        self.flatpak_frame = LabelFrame(
+        self.flatpak_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Flatpak Options",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            relief=GROOVE,
-            highlightthickness=0,
-            background=frame_color,
-            pady=10,
+            #font=font_16,
+            #foreground=label_frame_color,
+            #borderwidth=0,
+            #relief=GROOVE,
+            #highlightthickness=0,
+            #background=frame_color,
+            #pady=10,
         )
         self.flatpak_frame.pack(anchor="n", fill="x")
 
@@ -423,18 +391,19 @@ class UpdateTab(ttk.Frame):
         conf_column = 0
 
         for flatpak_button, config in flatpak_button_dict.items():
-            self.flatpak_button_x = Button(
+            self.flatpak_button_x = ttk.Button(
                 self.flatpak_frame,
-                justify="left",
+                #justify="left",
                 compound="left",
-                anchor="w",
+                #anchor="w",
                 text=flatpak_button,
                 command=lambda btn=flatpak_button: flatpak_action(btn),
-                borderwidth=0,
-                highlightthickness=0,
-                background=ext_btn,
-                foreground=ext_btn_font,
+                #borderwidth=0,
+                #highlightthickness=0,
+                #background=ext_btn,
+                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
+                width=20
             )
             self.flatpak_button_x.grid(
                 row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
@@ -468,16 +437,16 @@ class UpdateTab(ttk.Frame):
                     % wid
                 )
 
-        self.snap_frame = LabelFrame(
+        self.snap_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Snap Options",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            relief=GROOVE,
-            highlightthickness=0,
-            background=frame_color,
-            pady=10,
+            #font=font_16,
+            #foreground=label_frame_color,
+            #borderwidth=0,
+            #relief=GROOVE,
+            #highlightthickness=0,
+            #background=frame_color,
+            #pady=10,
         )
         self.snap_frame.pack(anchor="n", fill="x", expand=True)
 
@@ -496,18 +465,19 @@ class UpdateTab(ttk.Frame):
         conf_column = 0
 
         for snap_button, config in snap_button_dict.items():
-            self.snap_button_x = Button(
+            self.snap_button_x = ttk.Button(
                 self.snap_frame,
-                justify="left",
+                #justify="left",
                 compound="left",
-                anchor="w",
+                #anchor="w",
                 text=snap_button,
                 command=lambda btn=snap_button: snap_action(btn),
-                borderwidth=0,
-                highlightthickness=0,
-                background=ext_btn,
-                foreground=ext_btn_font,
+                #borderwidth=0,
+                #highlightthickness=0,
+                #background=ext_btn,
+                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
+                width=20
             )
             self.snap_button_x.grid(
                 row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"

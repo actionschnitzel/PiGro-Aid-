@@ -21,52 +21,29 @@ class LookTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-        if "dark" in theme or "noir" in theme:
-            self.folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/folder_s.png"
-            )
-            self.icon_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/start_here_s.png"
-            )
-            self.cursor_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/cursor_s.png"
-            )
-            self.theme_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/theme_s.png"
-            )
-            self.refresh_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/fresh_s.png"
-            )
-        else:
-            self.folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
-            )
-            self.icon_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/start_here_s_light.png"
-            )
-            self.cursor_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/cursor_s_light.png"
-            )
-            self.theme_folder_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/theme_s_light.png"
-            )
-            self.refresh_icon = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/fresh_s_light.png"
-            )
-        self.pixel_set = LabelFrame(
+
+        self.folder_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
+        )
+        self.icon_folder_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/start_here_s_light.png"
+        )
+        self.cursor_folder_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/cursor_s_light.png"
+        )
+        self.theme_folder_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/theme_s_light.png"
+        )
+        self.refresh_icon = PhotoImage(
+            file=f"{application_path}/images/icons/pigro_icons/fresh_s_light.png"
+        )
+
+        self.pixel_set = ttk.LabelFrame(
             self,
             text="Theme Your Desktop",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            pady=10,
-            padx=0,
+            padding=10
         )
         self.pixel_set.pack(pady=20, padx=40, fill="x", anchor="n")
-        self.pixel_set["background"] = frame_color
         self.pixel_set.columnconfigure(0, weight=1)
         self.pixel_set.rowconfigure(0, weight=1)
 
@@ -345,136 +322,99 @@ class LookTab(ttk.Frame):
         )
         cursor_combobox.set("Press Refresh")
 
-        theme_button = tk.Button(
+        theme_button = ttk.Button(
             self.pixel_set,
             text="Set Theme",
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.theme_folder_icon,
             command=set_theme,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#F2799B",
-            foreground=ext_btn_font,
+            width=20
+
         )
         theme_button.grid(row=1, column=3, padx=10, pady=5, sticky="ew")
 
-        icon_button = tk.Button(
+        icon_button = ttk.Button(
             self.pixel_set,
             text="Set Icon",
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.icon_folder_icon,
             command=set_icon,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#FCB55C",
-            foreground=ext_btn_font,
+            width=20
+
         )
         icon_button.grid(row=2, column=3, padx=10, pady=5, sticky="ew")
 
-        cursor_button = tk.Button(
+        cursor_button = ttk.Button(
             self.pixel_set,
             text="Set Cursor",
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.cursor_folder_icon,
             command=set_cursor,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#86C548",
-            foreground=ext_btn_font,
+            width=20
+
         )
         cursor_button.grid(row=3, column=3, padx=10, pady=5, sticky="ew")
 
-        theme_refresh_button = tk.Button(
+        theme_refresh_button = ttk.Button(
             self.pixel_set,
             text="Refresh",
             compound="left",
-            justify="left",
             image=self.refresh_icon,
             command=update_theme_combobox,
-            borderwidth=0,
-            highlightthickness=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
+            width=20,
+            style="Custom.TButton"
         )
         theme_refresh_button.grid(
             row=4, column=0, columnspan=3, padx=10, pady=5, sticky="ew"
         )
 
-        theme_legacy_button = tk.Button(
+        theme_legacy_button = ttk.Button(
             self.pixel_set,
             text="Legacy Theme Bullseye",
-            borderwidth=0,
-            highlightthickness=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
             command=open_lxappearance,
+            style="Custom.TButton",
             state=DISABLED,
+            width=20
         )
         theme_legacy_button.grid(row=4, column=3, padx=10, pady=5, sticky="ewns")
 
-        theme_folder_button = tk.Button(
+        theme_folder_button = ttk.Button(
             self.pixel_set,
             text="Theme Folder",
-            compound="left",
-            justify="left",
-            anchor="w",
             image=self.folder_icon,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#F2799B",
-            foreground=ext_btn_font,
+            compound="left",
             command=open_theme_folder,
+            width=20
         )
         theme_folder_button.grid(row=1, column=4, padx=10, pady=5, sticky="ew")
 
-        icon_folder_button = tk.Button(
+        icon_folder_button = ttk.Button(
             self.pixel_set,
             text="Icon Folder",
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.folder_icon,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#FCB55C",
-            foreground=ext_btn_font,
             command=open_icon_folder,
+            width=20
         )
         icon_folder_button.grid(row=2, column=4, padx=10, pady=5, sticky="ew")
 
-        cursor_folder_button = tk.Button(
+        cursor_folder_button = ttk.Button(
             self.pixel_set,
             text="Cursor Folder",
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.folder_icon,
-            borderwidth=0,
-            highlightthickness=0,
-            background="#86C548",
-            foreground=ext_btn_font,
             command=open_icon_folder,
+            width=20
         )
         cursor_folder_button.grid(row=3, column=4, padx=10, pady=5, sticky="ew")
 
-        wp_folder_button = tk.Button(
+        wp_folder_button = ttk.Button(
             self.pixel_set,
             text="Set Wallpaper Folder",
-            borderwidth=0,
-            highlightthickness=0,
             compound="left",
-            justify="left",
-            anchor="w",
             image=self.folder_icon,
-            background=ext_btn,
-            foreground=ext_btn_font,
             command=self.select_wallpaper_directory,
+            width=20
         )
         wp_folder_button.grid(row=4, column=4, padx=10, pady=5, sticky="ew")
 
@@ -532,18 +472,10 @@ class LookTab(ttk.Frame):
                 print("Please select a valid icon theme.")
             done_message_0()
 
-        self.papirus_icons_frame = LabelFrame(
+        self.papirus_icons_frame = ttk.LabelFrame(
             self,
             text="Papirus Icons",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            pady=10,
-            padx=0,
-            background=maincolor,
+            padding=10
         )
         self.papirus_icons_frame.pack(pady=20, padx=40, fill="x", anchor="n")
 
@@ -626,7 +558,7 @@ class LookTab(ttk.Frame):
 
         if get_desktop_environment() not in [
             "xfce",
-            "gnome",
+            "GNOME",
             "mate",
             "lxde",
             "lxde-pi-wayfire",
@@ -665,16 +597,11 @@ class LookTab(ttk.Frame):
         if check_papirus() is True:
             self.install_button.config(state=DISABLED)
 
-        self.wp_gallery = LabelFrame(
+        self.wp_gallery = ttk.LabelFrame(
             self,
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
             text="Wallpaper Gallery",
-            background=maincolor,
-            pady=10,
+            padding=10
+
         )
         self.wp_gallery.pack(pady=20, padx=40, fill="both", expand=True, anchor="n")
 
@@ -685,10 +612,10 @@ class LookTab(ttk.Frame):
         # Add a Scrollbar and link it to the Canvas for scrolling
         self.scrollbar = ttk.Scrollbar(self.wp_gallery, command=self.canvas.yview)
         self.scrollbar.pack(side="right", fill="y")
-        self.canvas.config(background=maincolor, yscrollcommand=self.scrollbar.set)
+        self.canvas.config( yscrollcommand=self.scrollbar.set)
 
         # Create wp_frame as a child of the Canvas
-        self.wp_frame = Frame(self.canvas, background=maincolor)
+        self.wp_frame = ttk.Frame(self.canvas)
         self.canvas.create_window((0, 0), window=self.wp_frame, anchor="nw")
 
         # Bind the Canvas to configure the scroll region when the frame size changes
@@ -791,7 +718,7 @@ class LookTab(ttk.Frame):
             if f.lower().endswith((".jpg", ".jpeg", ".png", ".gif"))
         ]
 
-        self.thumbnails_frame = Frame(self.wp_frame, background=maincolor)
+        self.thumbnails_frame = ttk.Frame(self.wp_frame)
         self.thumbnails_frame.pack()
 
         self.row, self.col = 0, 0
@@ -809,7 +736,6 @@ class LookTab(ttk.Frame):
                 self.thumbnails_frame,
                 image=thumbnail,
                 command=lambda path=image_path: self.change_wallpaper(path),
-                background=maincolor,
                 borderwidth=0,
                 highlightthickness=0,
             )

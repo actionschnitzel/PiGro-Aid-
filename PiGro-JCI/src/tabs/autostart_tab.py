@@ -13,91 +13,61 @@ class AutostartsTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.create_autostart_frame = LabelFrame(
+        self.create_autostart_frame = ttk.LabelFrame(
             self,
             text="Create An Autostart File",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            pady=20,
-            padx=40,
-            background=frame_color,
+            padding=20
+
         )
 
         self.create_autostart_frame.pack(pady=20, padx=40, fill="x")
         self.create_autostart_frame.columnconfigure(1, weight=1)
         self.create_autostart_frame.rowconfigure(1, weight=1)
 
-        self.filename_label = tk.Label(
+        self.filename_label = ttk.Label(
             self.create_autostart_frame,
             text="Filename:",
             anchor="w",
             justify=LEFT,
-            foreground=main_font,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
         )
         self.filename_label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
-        self.filename_entry = tk.Entry(
+        self.filename_entry = ttk.Entry(
             self.create_autostart_frame,
-            highlightthickness=0,
-            borderwidth=0,
         )
         self.filename_entry.grid(
             row=0, column=1, columnspan=2, padx=10, pady=5, sticky="ewns"
         )
 
-        self.command_label = tk.Label(
+        self.command_label = ttk.Label(
             self.create_autostart_frame,
             text="Command:",
             anchor="w",
             justify=LEFT,
-            foreground=main_font,
-            highlightthickness=0,
-            borderwidth=0,
-            background=maincolor,
         )
         self.command_label.grid(row=1, column=0, padx=10, pady=5, sticky="w")
 
-        self.command_entry = tk.Entry(
+        self.command_entry = ttk.Entry(
             self.create_autostart_frame,
-            highlightthickness=1,
-            borderwidth=0,
         )
         self.command_entry.grid(
             row=1, column=1, columnspan=2, padx=10, pady=5, sticky="ewns"
         )
 
-        self.create_button = Button(
+        self.create_button = ttk.Button(
             self.create_autostart_frame,
             text="Create Autostart",
             command=self.create_autostart_file,
-            foreground=ext_btn_font,
-            background=ext_btn,
-            borderwidth=0,
-            highlightthickness=0,
+            style="Custom.TButton"
         )
         self.create_button.grid(
             row=2, column=1, columnspan=2, padx=10, pady=5, sticky="ew"
         )
 
-        self.list_autostart_frame = LabelFrame(
+        self.list_autostart_frame = ttk.LabelFrame(
             self,
             text="Existing Autostarts",
-            font=font_16,
-            foreground=label_frame_color,
-            borderwidth=0,
-            highlightthickness=0,
-            highlightcolor="white",
-            relief=GROOVE,
-            pady=20,
-            padx=40,
-            background=frame_color,
+            padding=20
         )
 
         self.list_autostart_frame.pack(pady=20, padx=40, fill="both", expand=True)
@@ -113,14 +83,11 @@ class AutostartsTab(ttk.Frame):
 
         self.populate_treeview()
 
-        self.remove_button = tk.Button(
+        self.remove_button = ttk.Button(
             self.list_autostart_frame,
             text="Remove Selected",
             command=self.remove_autostart,
-            foreground=ext_btn_font,
-            background=ext_btn,
-            borderwidth=0,
-            highlightthickness=0,
+            style="Custom.TButton"
         )
         self.remove_button.pack(pady=10, fill="x")
 
