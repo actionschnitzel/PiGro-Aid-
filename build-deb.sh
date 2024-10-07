@@ -151,6 +151,8 @@ chmod 644 ~/PiGro-Aid-/PIGRO-DEBIAN-BUILD-BOX/debian/usr/share/applications/pigr
 sudo chown -R root:root debian
 
 dpkg-deb --build -Zxz debian
+#dpkg-buildpackage -S -sa -rfakeroot
+
 
 
 # Move the package to the current directory
