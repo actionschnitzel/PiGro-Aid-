@@ -282,9 +282,9 @@ class SystemTab(ttk.Frame):
                 highlightthickness=0,
                 borderwidth=0,
                 #background=frame_color,
-                foreground=main_font,
+                #foreground=main_font,
                 compound=TOP,
-                activebackground=ext_btn,
+                #activebackground=ext_btn,
             )
             self.pi_button_x.grid(
                 row=conf_row, column=conf_column, padx=5, pady=5, sticky="nesw"

@@ -70,6 +70,22 @@ namespace eval ttk::theme::azure-dark {
             }
         }
 
+        ttk::style layout Green.TButton {
+            GreenButton.button -children {
+                GreenButton.padding -children {
+                    GreenButton.label -side left -expand true
+                } 
+            }
+        }
+
+        ttk::style layout Red.TButton {
+            RedButton.button -children {
+                RedButton.padding -children {
+                    RedButton.label -side left -expand true
+                } 
+            }
+        }
+
         ttk::style layout TCheckbutton {
             Checkbutton.button -children {
                 Checkbutton.padding -children {
@@ -267,6 +283,33 @@ namespace eval ttk::theme::azure-dark {
                 active $I(rect-accent-hover) \
                 focus $I(rect-accent-hover) \
             ] -border 4 -sticky ewns
+
+        # AccentGreenButton
+        ttk::style configure Green.TButton -padding {8 4 8 4} -width -10 -anchor center
+
+        ttk::style element create GreenButton.button image \
+            [list $I(rect-accent-green) \
+                {selected disabled} $I(rect-accent-hover-green) \
+                disabled $I(rect-accent-hover-green) \
+                pressed $I(rect-accent-green) \
+                selected $I(rect-accent-green) \
+                active $I(rect-accent-hover-green) \
+                focus $I(rect-accent-hover-green) \
+            ] -border 4 -sticky ewns
+
+        # AccentRedButton
+        ttk::style configure Red.TButton -padding {8 4 8 4} -width -10 -anchor center
+
+        ttk::style element create RedButton.button image \
+            [list $I(rect-accent-red) \
+                {selected disabled} $I(rect-accent-hover-red) \
+                disabled $I(rect-accent-hover-red) \
+                pressed $I(rect-accent-red) \
+                selected $I(rect-accent-red) \
+                active $I(rect-accent-hover-red) \
+                focus $I(rect-accent-hover-red) \
+            ] -border 4 -sticky ewns
+
 
         # Checkbutton
         ttk::style configure TCheckbutton -padding 4

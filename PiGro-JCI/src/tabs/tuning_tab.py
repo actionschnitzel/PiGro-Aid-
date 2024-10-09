@@ -378,8 +378,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         gpu_freq_label.grid(row=1, column=0, sticky="ew", padx=5)
 
@@ -392,10 +392,10 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="Set",
             command=set_gpu_freq,
-            foreground=ext_btn_font,
-            background=maincolor,
+            #foreground=ext_btn_font,
+            #background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
+            #activebackground=maincolor,
             borderwidth=0,
         )
         gpu_freq_set_button.grid(row=1, column=2, pady=5, sticky="ew", padx=5)
@@ -408,8 +408,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -421,8 +421,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         gpu_mem_label.grid(row=2, column=0, sticky="ew", padx=5)
 
@@ -435,10 +435,10 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="Set",
             command=set_gpu_mem,
-            foreground=ext_btn_font,
-            background=maincolor,
+            #foreground=ext_btn_font,
+            #background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
+            #activebackground=maincolor,
             borderwidth=0,
         )
         gpu_mem_set_button.grid(row=2, column=2, pady=5, sticky="ew", padx=5)
@@ -451,8 +451,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -464,8 +464,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         over_voltage_label.grid(row=3, column=0, sticky="ew", padx=5)
 
@@ -478,10 +478,10 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="Set",
             command=set_over_voltage,
-            foreground=ext_btn_font,
-            background=maincolor,
+            #foreground=ext_btn_font,
+            #background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
+            #activebackground=maincolor,
             borderwidth=0,
         )
         over_voltage_set_button.grid(row=3, column=2, pady=5, sticky="ew", padx=5)
@@ -494,8 +494,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -507,8 +507,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         over_voltage_delta_delta_label.grid(row=4, column=0, sticky="ew", padx=5)
 
@@ -519,10 +519,10 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="",
             command=set_over_voltage_delta,
-            foreground=ext_btn_font,
-            background=maincolor,
+            #foreground=ext_btn_font,
+            #background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
+            #activebackground=maincolor,
             borderwidth=0,
         )
         over_voltage_delta_set_button.grid(row=4, column=2, pady=5, sticky="ew", padx=5)
@@ -535,8 +535,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -548,8 +548,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         force_turbo_label.grid(row=5, column=0, sticky="ew", padx=5)
 
@@ -557,10 +557,10 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="Set",
             command=set_force_turbo,
-            foreground=ext_btn_font,
-            background=maincolor,
+            #foreground=ext_btn_font,
+            #background=maincolor,
             highlightthickness=0,
-            activebackground=maincolor,
+            #activebackground=maincolor,
             borderwidth=0,
         )
         force_turbo_set_button.grid(row=5, column=2, padx=5, pady=5, sticky="ew")
@@ -569,8 +569,8 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="",
             width=25,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
         )
         force_turbo_label.grid(row=5, column=1, sticky="ew", padx=5)
 
@@ -582,8 +582,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            background=frame_color,
-            foreground=main_font,
+            #background=frame_color,
+            #foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -777,7 +777,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 else:
                     gpu_freq_set_button.config(
                         text="Set",
-                        background=maincolor,
+                        #background=maincolor,
                         image=self.toggle_off,
                         command=set_gpu_freq,
                     )
@@ -794,7 +794,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                     if "gpu_mem=" in line:
                         gpu_mem_set_button.config(
                             text="Reset",
-                            background=maincolor,
+                            #background=maincolor,
                             image=self.toggle_on,
                             command=reset_gpu_mem,
                         )
@@ -812,7 +812,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 else:
                     gpu_mem_set_button.config(
                         text="Set",
-                        background=maincolor,
+                        #background=maincolor,
                         image=self.toggle_off,
                         command=set_gpu_mem,
                     )
@@ -829,7 +829,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                     if "over_voltage=" in line:
                         over_voltage_set_button.config(
                             text="Reset",
-                            background=maincolor,
+                            #background=maincolor,
                             image=self.toggle_on,
                             command=reset_over_voltage,
                         )
@@ -850,7 +850,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 else:
                     over_voltage_set_button.config(
                         text="Set",
-                        background=maincolor,
+                        #background=maincolor,
                         image=self.toggle_off,
                         command=set_over_voltage,
                     )
@@ -867,7 +867,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                     if "over_voltage_delta=" in line:
                         over_voltage_delta_set_button.config(
                             text="Reset",
-                            background=maincolor,
+                            #background=maincolor,
                             image=self.toggle_on,
                             command=reset_over_voltage_delta,
                         )
@@ -895,7 +895,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                         )
                         over_voltage_delta_set_button.config(
                             text="Set",
-                            background=maincolor,
+                            #background=maincolor,
                             image=self.toggle_off,
                             command=set_over_voltage_delta,
                         )
@@ -904,7 +904,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                     if "force_turbo=" in line:
                         force_turbo_set_button.config(
                             text="Reset",
-                            background=maincolor,
+                            #background=maincolor,
                             image=self.toggle_on,
                             command=reset_force_turbo,
                         )
@@ -926,7 +926,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 else:
                     force_turbo_set_button.config(
                         text="Set",
-                        background=maincolor,
+                        #background=maincolor,
                         image=self.toggle_off,
                         command=set_force_turbo,
                     )

@@ -421,10 +421,10 @@ class LookTab(ttk.Frame):
         info_button = tk.Button(
             self.pixel_set,
             text="Why is everthing DISABLED?",
-            borderwidth=0,
-            highlightthickness=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
+            #borderwidth=0,
+            #highlightthickness=0,
+            #background=ext_btn,
+            #foreground=ext_btn_font,
             command=why_message_0,
         )
 

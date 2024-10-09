@@ -244,14 +244,14 @@ else:
 theme = get_theme().lower()
 
 #if "dark" in theme or "noir" in theme:
-maincolor = "#1e1e1e"
-nav_color = "#242424"
-nav2_color = "#131313"
-frame_color = "#1e1e1e"
-main_font = "white"
-info_color = "yellow"
-ext_btn = "#007acc"
-ext_btn_font = "white"
+#maincolor = "#1e1e1e"
+#nav_color = "#242424"
+#nav2_color = "#131313"
+#frame_color = "#1e1e1e"
+#main_font = "white"
+#info_color = "yellow"
+#ext_btn = "#007acc"
+#ext_btn_font = "white"
 label_frame_color = "#cf274e"
 #else:
 #maincolor = "#f5f5f5"
