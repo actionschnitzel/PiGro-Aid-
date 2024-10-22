@@ -545,6 +545,7 @@ class LookTab(ttk.Frame):
         )
         self.set_button.grid(row=2, column=4, padx=10, pady=10)
 
+
         def xfce_theme_():
             pass
 

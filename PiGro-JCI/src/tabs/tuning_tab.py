@@ -218,21 +218,24 @@ class TuningTab(ttk.Frame):
 
 
         def set_arm_freq():
-            if arm_freq_spinbox.get().isdigit():
-                print("Setting arm_freq to:", arm_freq_spinbox.get())
-                os.system(
-                    f"""{permit} sh -c 'echo "arm_freq={arm_freq_spinbox.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
-            else:
-                int_error_mass()
+            if arm_freq_btn_var.get():
+                if arm_freq_spinbox.get().isdigit():
+                    print("Setting arm_freq to:", arm_freq_spinbox.get())
+                    os.system(
+                        f"""{permit} sh -c 'echo "arm_freq={arm_freq_spinbox.get()}" >> {config_path}'"""
+                    )
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                else:
+                    arm_freq_btn_var.set(False)
+                    int_error_mass()
 
-        def reset_arm_freq():
-            print("Resetting arm_freq to:", arm_freq_spinbox.get())
-            os.system(f"{permit} sed -i '/arm_freq/d' {config_path}")
+            else:
+#        def reset_arm_freq():
+                print("Resetting arm_freq to:", arm_freq_spinbox.get())
+                os.system(f"{permit} sed -i '/arm_freq/d' {config_path}")
 
         def set_gpu_freq():
             if gpu_freq_spinbox.get().isdigit():
@@ -351,16 +354,15 @@ class TuningTab(ttk.Frame):
         arm_freq_spinbox = ttk.Entry(x_mode_frame)
         arm_freq_spinbox.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
 
-        arm_freq_set_button = tk.Button(
-            x_mode_frame,
-            text="Set",
-            command=set_arm_freq,
-            image=self.toggle_off,
-            highlightthickness=0,
-            borderwidth=0,
-            activebackground="#f7f7f7",
-        )
-        arm_freq_set_button.grid(row=0, column=2, sticky="ew", padx=5)
+        arm_freq_btn_var = tk.BooleanVar()
+
+        arm_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=arm_freq_btn_var,command=set_arm_freq)
+        arm_freq_set_button.grid(row=0, column=2, padx=5)
+
+        
+
+        #switch = ttk.Checkbutton(x_mode_frame, text='Switch', style='Switch.TCheckbutton', variable=arm_freq_btn_var,command=set_arm_freq)
+        #switch.grid(row=7, column=0, padx=10, pady=10)
 
         global arm_f_display
         arm_f_display = ttk.Label(
@@ -399,6 +401,8 @@ class TuningTab(ttk.Frame):
             borderwidth=0,
         )
         gpu_freq_set_button.grid(row=1, column=2, pady=5, sticky="ew", padx=5)
+
+
 
         global gpu_f_display
         gpu_f_display = Label(
@@ -598,6 +602,8 @@ class TuningTab(ttk.Frame):
         )
         reboot_button.grid(row=6, column=0, columnspan=3, sticky="ew", pady=5, padx=5)
 
+
+
         def install_zram():
             os.system(
                 f"x-terminal-emulator -e 'bash -c \"cd && wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/apps/More%20RAM/install | bash; exec bash\"'"
@@ -717,19 +723,7 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 for line in f:
                     if "arm_freq=" in line:
                         # print(line)
-
-                        arm_freq_set_button.config(
-                            text="Reset",
-                            image=self.toggle_on,
-                            command=reset_arm_freq,
-                        )
-                        arm_freq_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: arm_freq_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-
+                        arm_freq_btn_var.set(True)
                         arm_f_display.config(text=f"State: {line[9:-1]} MHz")
                         tu_btn1.config(state=DISABLED)
                         tu_btn2.config(state=DISABLED)
@@ -738,18 +732,9 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                         break
 
                 else:
-                    arm_freq_set_button.config(
-                        text="Set",
-                        image=self.toggle_off,
-                        command=set_arm_freq,
-                    )
+                    arm_freq_btn_var.set(False)
                     arm_f_display.config(text="State: Default")
-                    arm_freq_set_button.bind(
-                        "<Enter>",
-                        func=lambda e: arm_freq_set_button.config(
-                            image=self.toggle_off_enter
-                        ),
-                    )
+
 
             with open(f"{config_path}") as f:
                 for line in f:

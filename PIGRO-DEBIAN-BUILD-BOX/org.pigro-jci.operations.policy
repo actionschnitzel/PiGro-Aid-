@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+
+  <vendor>PiGro - Just Click It!</vendor>
+  <vendor_url>https://github.com/actionschnitzel/PiGro-Aid-</vendor_url>
+
+  <action id="PiGro">
+    <description>PiGro needs root access</description>
+    <message>To perform the requested PiGro action, your password is required.</message>
+    <message xml:lang="de">Um die angefordete Aktion des PiGro auszuführen, wird Ihr Passwort benötigt.</message>
+    <icon_name>pigro-logo</icon_name> 
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/home/timo/PiGro-Aid-/PiGro-JCI/src/main.py</annotate>
+  </action>
+
+</policyconfig>

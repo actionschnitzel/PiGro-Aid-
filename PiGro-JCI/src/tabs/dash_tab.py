@@ -17,7 +17,6 @@ from flatpak_alias_list import *
 from tabs.pop_ups import *
 from tool_tipps import CreateToolTip
 
-
 class DashTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)

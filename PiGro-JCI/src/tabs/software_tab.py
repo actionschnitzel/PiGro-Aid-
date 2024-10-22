@@ -1874,7 +1874,7 @@ class Custom_Installer(tk.Toplevel):
             height=1,
             borderwidth=0,
             highlightthickness=0,
-            highlightcolor=main_font,
+            #highlightcolor=main_font,
         )
 
         self.text.grid(row=2, column=1, columnspan=3, sticky="ew")

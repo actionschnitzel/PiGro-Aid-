@@ -21,6 +21,7 @@ from tabs.links_tab import LinksTab
 from tabs.about_tab import AboutTab
 
 
+
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__(className="PiGro")

@@ -608,7 +608,7 @@ class Int_Error_Mass(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        #self["background"] = maincolor
         self.title("Info")
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -626,36 +626,36 @@ class Int_Error_Mass(tk.Toplevel):
 
         self.e_m = PhotoImage(file=f"{application_path}/images/backgrounds/hint.png")
 
-        error_frame = Frame(self, bg=maincolor)
+        error_frame = Frame(self) #bg=maincolor)
         error_frame.pack(pady=20, padx=20)
 
-        error_img = Label(error_frame, image=self.e_m, bg=maincolor)
+        error_img = Label(error_frame, image=self.e_m)#, bg=maincolor)
         error_img.grid(row=0, column=0, rowspan=2)
 
         error_y = Label(
             error_frame,
             text="I'll give you a hint:\nHere should be an INT",
-            foreground=main_font,
+            #foreground=main_font,
             font=font_16,
-            bg=maincolor,
+            #bg=maincolor,
         )
         error_y.grid(row=0, column=1)
         global error_y2
         error_y2 = Label(
             error_frame,
             text="The value entered must be a number",
-            foreground=main_font,
-            bg=maincolor,
+            #foreground=main_font,
+            #bg=maincolor,
         )
         error_y2.grid(row=1, column=1, sticky="n")
 
         error_btn = Button(
             error_frame,
             text="...got It!",
-            foreground=ext_btn_font,
+            #foreground=ext_btn_font,
             borderwidth=0,
             highlightthickness=0,
-            bg="#f04a50",
+            #bg="#f04a50",
             command=cu_error,
         )
         error_btn.grid(row=3, column=0, columnspan=3, sticky="ew", pady=10)
