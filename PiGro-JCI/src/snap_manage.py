@@ -29,7 +29,6 @@ else:
     snap_package_count = "-"
 
 
-import subprocess
 
 def get_installed_snaps():
     command = "snap list"

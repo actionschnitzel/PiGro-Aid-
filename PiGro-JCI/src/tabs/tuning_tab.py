@@ -218,7 +218,7 @@ class TuningTab(ttk.Frame):
 
 
         def set_arm_freq():
-            if arm_freq_btn_var.get():
+            if arm_freq_set_var.get():
                 if arm_freq_spinbox.get().isdigit():
                     print("Setting arm_freq to:", arm_freq_spinbox.get())
                     os.system(
@@ -229,88 +229,89 @@ class TuningTab(ttk.Frame):
                     tu_btn3.config(state=DISABLED)
                     tu_btn4.config(state=DISABLED)
                 else:
-                    arm_freq_btn_var.set(False)
+                    arm_freq_set_var.set(False)
                     int_error_mass()
 
             else:
 #        def reset_arm_freq():
-                print("Resetting arm_freq to:", arm_freq_spinbox.get())
+                print("Resetting arm_freq")
                 os.system(f"{permit} sed -i '/arm_freq/d' {config_path}")
 
         def set_gpu_freq():
-            if gpu_freq_spinbox.get().isdigit():
-                print("Setting gpu_freq to:", gpu_freq_spinbox.get())
-                os.system(
-                    f"""{permit} sh -c 'echo "gpu_freq={gpu_freq_spinbox.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
+            if gpu_freq_set_var.get():
+                if gpu_freq_spinbox.get().isdigit():
+                    print("Setting gpu_freq to:", gpu_freq_spinbox.get())
+                    os.system(
+                        f"""{permit} sh -c 'echo "gpu_freq={gpu_freq_spinbox.get()}" >> {config_path}'"""
+                    )
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                else:
+                    gpu_freq_set_var.set(False)
+                    int_error_mass()
             else:
-                int_error_mass()
-
-        def reset_gpu_freq():
-            print("Resetting gpu_freq to:", gpu_freq_spinbox.get())
-            os.system(f"{permit} sed -i '/gpu_freq/d' {config_path}")
+                print("Resetting gpu_freq")
+                os.system(f"{permit} sed -i '/gpu_freq/d' {config_path}")
 
         def set_gpu_mem():
-            if gpu_mem_spinbox.get().isdigit():
-                print("Setting gpu_mem to:", gpu_mem_spinbox.get())
-                os.system(
-                    f"""{permit} sh -c 'echo "gpu_mem={gpu_mem_spinbox.get()}" >> {config_path}'"""
-                )
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
+            if gpu_mem_set_var.get():
+                if gpu_mem_spinbox.get().isdigit():
+                    print("Setting gpu_mem to:", gpu_mem_spinbox.get())
+                    os.system(
+                        f"""{permit} sh -c 'echo "gpu_mem={gpu_mem_spinbox.get()}" >> {config_path}'"""
+                    )
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                else:
+                    int_error_mass()
             else:
-                int_error_mass()
-
-        def reset_gpu_mem():
-            print("Resetting gpu_mem to:", gpu_mem_spinbox.get())
-            os.system(f"{permit} sed -i '/gpu_mem/d' {config_path}")
+                print("Resetting gpu_mem")
+                os.system(f"{permit} sed -i '/gpu_mem/d' {config_path}")
 
         def set_over_voltage():
-            if over_voltage_spinbox.get().isdigit():
-                print("Setting over_voltage to:", over_voltage_spinbox.get())
-                os.system(
-                    f"""{permit} sh -c 'echo "over_voltage={over_voltage_spinbox.get()}" >> {config_path}'"""
-                )
+            if over_voltage_set_var.get():
+                if over_voltage_spinbox.get().isdigit():
+                    print("Setting over_voltage to:", over_voltage_spinbox.get())
+                    os.system(
+                        f"""{permit} sh -c 'echo "over_voltage={over_voltage_spinbox.get()}" >> {config_path}'"""
+                    )
+                    tu_btn1.config(state=DISABLED)
+                    tu_btn2.config(state=DISABLED)
+                    tu_btn3.config(state=DISABLED)
+                    tu_btn4.config(state=DISABLED)
+                else:
+                    int_error_mass()
+            else:
+                print("Resetting over_voltage")
+                os.system(f"{permit} sed -i '/over_voltage/d' {config_path}")
+
+        def set_over_voltage_delta():
+            if over_voltage_delta_set_var.get():
+                if over_voltage_delta_spinbox.get().isdigit():
+                    print("Setting over_voltage to:", over_voltage_delta_spinbox.get())
+                    os.system(
+                        f"""{permit} sh -c 'echo "over_voltage_delta={over_voltage_delta_spinbox.get()}" >> {config_path}'"""
+                    )
+                else:
+                    int_error_mass()
+            else:
+                print("Resetting over_voltage")
+                os.system(f"{permit} sed -i '/over_voltage_delta/d' {config_path}")
+
+        def set_force_turbo():
+            if force_turbo_set_var.get():
+                os.system(f"""{permit} sh -c 'echo "force_turbo=1" >> {config_path}'""")
                 tu_btn1.config(state=DISABLED)
                 tu_btn2.config(state=DISABLED)
                 tu_btn3.config(state=DISABLED)
                 tu_btn4.config(state=DISABLED)
             else:
-                int_error_mass()
-
-        def reset_over_voltage():
-            print("Resetting over_voltage to:", over_voltage_spinbox.get())
-            os.system(f"{permit} sed -i '/over_voltage/d' {config_path}")
-
-        def set_over_voltage_delta():
-            if over_voltage_delta_spinbox.get().isdigit():
-                print("Setting over_voltage to:", over_voltage_delta_spinbox.get())
-                os.system(
-                    f"""{permit} sh -c 'echo "over_voltage_delta={over_voltage_delta_spinbox.get()}" >> {config_path}'"""
-                )
-            else:
-                int_error_mass()
-
-        def reset_over_voltage_delta():
-            print("Resetting over_voltage to:", over_voltage_delta_spinbox.get())
-            os.system(f"{permit} sed -i '/over_voltage_delta/d' {config_path}")
-
-        def set_force_turbo():
-            os.system(f"""{permit} sh -c 'echo "force_turbo=1" >> {config_path}'""")
-            tu_btn1.config(state=DISABLED)
-            tu_btn2.config(state=DISABLED)
-            tu_btn3.config(state=DISABLED)
-            tu_btn4.config(state=DISABLED)
-
-        def reset_force_turbo():
-            os.system(f"{permit} sed -i '/force_turbo/d' {config_path}")
-            force_t_display.config(text="State: Default")
+                os.system(f"{permit} sed -i '/force_turbo/d' {config_path}")
+                force_t_display.config(text="State: Default")
 
         def lines_that_contain(string, fp):
             return [line for line in fp if string in line]
@@ -354,14 +355,14 @@ class TuningTab(ttk.Frame):
         arm_freq_spinbox = ttk.Entry(x_mode_frame)
         arm_freq_spinbox.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
 
-        arm_freq_btn_var = tk.BooleanVar()
+        arm_freq_set_var = tk.BooleanVar()
 
-        arm_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=arm_freq_btn_var,command=set_arm_freq)
+        arm_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=arm_freq_set_var,command=set_arm_freq)
         arm_freq_set_button.grid(row=0, column=2, padx=5)
 
         
 
-        #switch = ttk.Checkbutton(x_mode_frame, text='Switch', style='Switch.TCheckbutton', variable=arm_freq_btn_var,command=set_arm_freq)
+        #switch = ttk.Checkbutton(x_mode_frame, text='Switch', style='Switch.TCheckbutton', variable=arm_freq_set_var,command=set_arm_freq)
         #switch.grid(row=7, column=0, padx=10, pady=10)
 
         global arm_f_display
@@ -390,18 +391,12 @@ class TuningTab(ttk.Frame):
         )
         gpu_freq_spinbox.grid(row=1, column=1, sticky="ew", pady=5, padx=5)
 
-        gpu_freq_set_button = tk.Button(
-            x_mode_frame,
-            text="Set",
-            command=set_gpu_freq,
-            #foreground=ext_btn_font,
-            #background=maincolor,
-            highlightthickness=0,
-            #activebackground=maincolor,
-            borderwidth=0,
-        )
-        gpu_freq_set_button.grid(row=1, column=2, pady=5, sticky="ew", padx=5)
 
+
+        gpu_freq_set_var = tk.BooleanVar()
+
+        gpu_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=gpu_freq_set_var,command=set_gpu_freq)
+        gpu_freq_set_button.grid(row=1, column=2, padx=5)
 
 
         global gpu_f_display
@@ -435,17 +430,11 @@ class TuningTab(ttk.Frame):
         )
         gpu_mem_spinbox.grid(row=2, column=1, sticky="ew", pady=5, padx=5)
 
-        gpu_mem_set_button = tk.Button(
-            x_mode_frame,
-            text="Set",
-            command=set_gpu_mem,
-            #foreground=ext_btn_font,
-            #background=maincolor,
-            highlightthickness=0,
-            #activebackground=maincolor,
-            borderwidth=0,
-        )
-        gpu_mem_set_button.grid(row=2, column=2, pady=5, sticky="ew", padx=5)
+
+        gpu_mem_set_var = tk.BooleanVar()
+
+        gpu_mem_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=gpu_mem_set_var,command=set_gpu_mem)
+        gpu_mem_set_button.grid(row=2, column=2, padx=5)
 
         global gpu_m_display
         gpu_m_display = Label(
@@ -478,17 +467,12 @@ class TuningTab(ttk.Frame):
         )
         over_voltage_spinbox.grid(row=3, column=1, sticky="ew", pady=5, padx=5)
 
-        over_voltage_set_button = tk.Button(
-            x_mode_frame,
-            text="Set",
-            command=set_over_voltage,
-            #foreground=ext_btn_font,
-            #background=maincolor,
-            highlightthickness=0,
-            #activebackground=maincolor,
-            borderwidth=0,
-        )
-        over_voltage_set_button.grid(row=3, column=2, pady=5, sticky="ew", padx=5)
+
+        over_voltage_set_var = tk.BooleanVar()
+
+        over_voltage_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=over_voltage_set_var,command=set_over_voltage)
+        over_voltage_set_button.grid(row=3, column=2, padx=5)
+
 
         global over_v_display
         over_v_display = Label(
@@ -519,17 +503,12 @@ class TuningTab(ttk.Frame):
         over_voltage_delta_spinbox = ttk.Entry(x_mode_frame)
         over_voltage_delta_spinbox.grid(row=4, column=1, sticky="ew", pady=5, padx=5)
 
-        over_voltage_delta_set_button = tk.Button(
-            x_mode_frame,
-            text="",
-            command=set_over_voltage_delta,
-            #foreground=ext_btn_font,
-            #background=maincolor,
-            highlightthickness=0,
-            #activebackground=maincolor,
-            borderwidth=0,
-        )
-        over_voltage_delta_set_button.grid(row=4, column=2, pady=5, sticky="ew", padx=5)
+
+        over_voltage_delta_set_var = tk.BooleanVar()
+
+        over_voltage_delta_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=over_voltage_delta_set_var,command=set_over_voltage_delta)
+        over_voltage_delta_set_button.grid(row=4, column=2, padx=5)
+
 
         global over_v_d_display
         over_v_d_display = Label(
@@ -568,6 +547,11 @@ class TuningTab(ttk.Frame):
             borderwidth=0,
         )
         force_turbo_set_button.grid(row=5, column=2, padx=5, pady=5, sticky="ew")
+
+        force_turbo_set_var = tk.BooleanVar()
+
+        force_turbo_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=force_turbo_set_var,command=set_force_turbo)
+        force_turbo_set_button.grid(row=5, column=2, padx=5)
 
         force_turbo_label = tk.Label(
             x_mode_frame,
@@ -697,235 +681,89 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
         )
         self.preload_button.pack(padx=10, pady=10, anchor="w",fill="x")
 
+############################################################
         def ov_display():
+            # Lies das Modell der Raspberry Pi und speichere es in der globalen Variable
             with open("/proc/device-tree/model", "r") as model_file:
-                # Read and print the model information
                 global pi_model
                 pi_model = model_file.read().strip()
 
+            # Buttons deaktivieren, wenn Raspberry Pi 5 erkannt wird
             if "Raspberry Pi 5" in pi_model:
-                self.tu_reset.config(state=DISABLED)
-                tu_btn1.config(state=DISABLED)
-                tu_btn2.config(state=DISABLED)
-                tu_btn3.config(state=DISABLED)
-                tu_btn4.config(state=DISABLED)
+                disable_buttons([self.tu_reset, tu_btn1, tu_btn2, tu_btn3, tu_btn4])
             else:
-                with open(f"{config_path}") as f:
-                    for line in f:
-                        if not "#Pigro_Overclocking" in line:
-                            tu_btn1.config(state=NORMAL)
-                            tu_btn2.config(state=NORMAL)
-                            tu_btn3.config(state=NORMAL)
-                            tu_btn4.config(state=NORMAL)
+                with open(config_path) as config_file:
+                    # Buttons aktivieren, wenn "#Pigro_Overclocking" nicht in der Datei steht
+                    for line in config_file:
+                        if "#Pigro_Overclocking" not in line:
+                            enable_buttons([tu_btn1, tu_btn2, tu_btn3, tu_btn4])
                             break
-            # Overclock Display Functions
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "arm_freq=" in line:
-                        # print(line)
-                        arm_freq_btn_var.set(True)
-                        arm_f_display.config(text=f"State: {line[9:-1]} MHz")
-                        tu_btn1.config(state=DISABLED)
-                        tu_btn2.config(state=DISABLED)
-                        tu_btn3.config(state=DISABLED)
-                        tu_btn4.config(state=DISABLED)
-                        break
 
-                else:
-                    arm_freq_btn_var.set(False)
-                    arm_f_display.config(text="State: Default")
+            # Funktionen für das Auslesen und Anzeigen von Overclock-Werten
+            display_config_value("arm_freq=", arm_freq_set_var, arm_f_display, "MHz", [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
+            display_config_value("gpu_freq=", gpu_freq_set_var, gpu_f_display, "MHz", [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
+            display_config_value("gpu_mem=", gpu_mem_set_var, gpu_m_display, "MB")
+            display_config_value("over_voltage=", over_voltage_set_var, over_v_display, None, [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
+            display_config_value("over_voltage_delta=", over_voltage_delta_set_var, over_v_d_display, None, pi_model_specific=True)
 
+            # force_turbo Status anzeigen und Button konfigurieren
+            display_force_turbo()
 
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "gpu_freq=" in line:
-                        gpu_freq_set_button.config(
-                            text="Reset",
-                            background=maincolor,
-                            image=self.toggle_on,
-                            command=reset_gpu_freq,
-                        )
-                        gpu_freq_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: gpu_freq_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-                        gpu_f_display.config(
-                            text=f"State: {line[9:-1]} MHz",
-                        )
-                        tu_btn1.config(state=DISABLED)
-                        tu_btn2.config(state=DISABLED)
-                        tu_btn3.config(state=DISABLED)
-                        tu_btn4.config(state=DISABLED)
-                        break
-                else:
-                    gpu_freq_set_button.config(
-                        text="Set",
-                        #background=maincolor,
-                        image=self.toggle_off,
-                        command=set_gpu_freq,
-                    )
-                    gpu_freq_set_button.bind(
-                        "<Enter>",
-                        func=lambda e: gpu_freq_set_button.config(
-                            image=self.toggle_off_enter
-                        ),
-                    )
-                    gpu_f_display.config(text="State: Default")
-
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "gpu_mem=" in line:
-                        gpu_mem_set_button.config(
-                            text="Reset",
-                            #background=maincolor,
-                            image=self.toggle_on,
-                            command=reset_gpu_mem,
-                        )
-                        gpu_mem_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: gpu_mem_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-                        if "gpu_mem" in line:
-                            gpu_m_display.config(
-                                text=f"State: {line[8:-1]} MB",
-                            )
-                        break
-                else:
-                    gpu_mem_set_button.config(
-                        text="Set",
-                        #background=maincolor,
-                        image=self.toggle_off,
-                        command=set_gpu_mem,
-                    )
-                    gpu_mem_set_button.bind(
-                        "<Enter>",
-                        func=lambda e: gpu_mem_set_button.config(
-                            image=self.toggle_off_enter
-                        ),
-                    )
-                    gpu_m_display.config(text="State: Default")
-
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "over_voltage=" in line:
-                        over_voltage_set_button.config(
-                            text="Reset",
-                            #background=maincolor,
-                            image=self.toggle_on,
-                            command=reset_over_voltage,
-                        )
-                        over_voltage_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: over_voltage_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-                        over_v_display.config(
-                            text=f"State: {line[13:-1]}",
-                        )
-                        tu_btn1.config(state=DISABLED)
-                        tu_btn2.config(state=DISABLED)
-                        tu_btn3.config(state=DISABLED)
-                        tu_btn4.config(state=DISABLED)
-                        break
-                else:
-                    over_voltage_set_button.config(
-                        text="Set",
-                        #background=maincolor,
-                        image=self.toggle_off,
-                        command=set_over_voltage,
-                    )
-                    over_voltage_set_button.bind(
-                        "<Enter>",
-                        func=lambda e: over_voltage_set_button.config(
-                            image=self.toggle_off_enter
-                        ),
-                    )
-                    over_v_display.config(text="State: Default")
-
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "over_voltage_delta=" in line:
-                        over_voltage_delta_set_button.config(
-                            text="Reset",
-                            #background=maincolor,
-                            image=self.toggle_on,
-                            command=reset_over_voltage_delta,
-                        )
-                        over_voltage_delta_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: over_voltage_delta_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-                        over_v_d_display.config(
-                            text=f"State: {line[19:-1]}",
-                        )
-                        break
-                else:
-                    if "Raspberry Pi 4" in pi_model:
-                        over_voltage_delta_set_button.config(state="disabled")
-                        over_v_d_display.config(text="Pi 5 Only")
-                    else:
-                        over_v_d_display.config(text="State: Default")
-                        over_voltage_delta_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: over_voltage_delta_set_button.config(
-                                image=self.toggle_off_enter
-                            ),
-                        )
-                        over_voltage_delta_set_button.config(
-                            text="Set",
-                            #background=maincolor,
-                            image=self.toggle_off,
-                            command=set_over_voltage_delta,
-                        )
-            with open(f"{config_path}") as f:
-                for line in f:
-                    if "force_turbo=" in line:
-                        force_turbo_set_button.config(
-                            text="Reset",
-                            #background=maincolor,
-                            image=self.toggle_on,
-                            command=reset_force_turbo,
-                        )
-                        force_turbo_set_button.bind(
-                            "<Enter>",
-                            func=lambda e: force_turbo_set_button.config(
-                                image=self.toggle_on_enter
-                            ),
-                        )
-                        force_turbo_label.config(text="ENABLED")
-                        force_t_display.config(
-                            text=f"State: {line[12:-1]}",
-                        )
-                        tu_btn1.config(state=DISABLED)
-                        tu_btn2.config(state=DISABLED)
-                        tu_btn3.config(state=DISABLED)
-                        tu_btn4.config(state=DISABLED)
-                        break
-                else:
-                    force_turbo_set_button.config(
-                        text="Set",
-                        #background=maincolor,
-                        image=self.toggle_off,
-                        command=set_force_turbo,
-                    )
-                    force_turbo_set_button.bind(
-                        "<Enter>",
-                        func=lambda e: force_turbo_set_button.config(
-                            image=self.toggle_off_enter
-                        ),
-                    )
-                    force_turbo_label.config(text="DISABLED")
+            # Aktualisiere den Zustand des preload-Buttons
             check_preload_button_state()
 
+        def display_config_value(setting_name, var, display_widget, unit=None, buttons_to_disable=None, pi_model_specific=False):
+            """
+            Zeigt den Wert einer Konfigurationseinstellung an und setzt die zugehörigen Variablen und Buttons.
+            """
+            with open(config_path) as config_file:
+                for line in config_file:
+                    if setting_name in line:
+                        var.set(True)
+                        value = line[len(setting_name):-1]
+                        display_widget.config(text=f"State: {value} {unit}" if unit else f"State: {value}")
+                        if buttons_to_disable:
+                            disable_buttons(buttons_to_disable)
+                        break
+                else:
+                    var.set(False)
+                    if pi_model_specific and "Raspberry Pi 4" in pi_model:
+                        over_voltage_delta_set_button.config(state=DISABLED)
+                        display_widget.config(text="Pi 5 Only")
+                    else:
+                        display_widget.config(text="State: Default")
+
+        def display_force_turbo():
+            """
+            Zeigt den force_turbo Status an und konfiguriert den entsprechenden Button.
+            """
+            with open(config_path) as config_file:
+                for line in config_file:
+                    if "force_turbo=" in line:
+                        force_turbo_set_var.set(True)
+                        force_turbo_label.config(text="ENABLED")
+                        force_t_display.config(text=f"State: {line[12:-1]}")
+                        disable_buttons([tu_btn1, tu_btn2, tu_btn3, tu_btn4])
+                        break
+                else:
+                    force_turbo_set_var.set(False)
+                    force_turbo_label.config(text="DISABLED")
+            force_turbo_set_button.config(command=set_force_turbo)
+
+        def disable_buttons(button_list):
+            """Deaktiviert eine Liste von Buttons."""
+            for button in button_list:
+                button.config(state=DISABLED)
+
+        def enable_buttons(button_list):
+            """Aktiviert eine Liste von Buttons."""
+            for button in button_list:
+                button.config(state=NORMAL)
+
         def refresh_OV_stats():
+            """Aktualisiert regelmäßig die Overclock-Statistiken."""
             ov_display()
             self.after(1000, refresh_OV_stats)
 
+        # Starte das regelmäßige Aktualisieren der Overclock-Statistiken
         refresh_OV_stats()
