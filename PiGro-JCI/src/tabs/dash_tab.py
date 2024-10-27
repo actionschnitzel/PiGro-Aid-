@@ -363,27 +363,34 @@ class DashTab(ttk.Frame):
         self.update_labels()
 
     def update_labels(self):
+        # Screen dimensions
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
 
+        # System information
         my_system = platform.uname()
         cpufreq = psutil.cpu_freq()
         swap = psutil.swap_memory()
         get_shell = os.environ["SHELL"]
         get_xdg_session = os.environ["XDG_SESSION_TYPE"]
 
+        # CPU temperature retrieval
         cpu_temp = self.get_cpu_temperature()
 
+        # Resource usage
         cpu_usage = psutil.cpu_percent()
         ram_usage = psutil.virtual_memory().percent
         hdd_usage = psutil.disk_usage("/").percent
         svmem = psutil.virtual_memory()
 
+        # Update labels for CPU and memory
         self.update_cpu_labels(cpu_usage, cpu_temp, cpufreq)
         self.update_memory_labels(svmem, swap)
 
+        # Network information
         lan_ip, down_rate, up_rate, web_state = self.get_network_info()
 
+        # System hostname and IP
         self.hostname = socket.gethostname()
         self.IPAddr = socket.gethostbyname(self.hostname)
         self.hostname_label.configure(text=f"Hostname: {self.hostname}")
@@ -392,10 +399,16 @@ class DashTab(ttk.Frame):
         self.down_label.configure(text=f"Down: {down_rate} MB/s")
         self.up_label.configure(text=f"Up: {up_rate} MB/s")
 
+        # Update OS information
         self.update_os_labels(my_system)
 
+        # Update disk information
+        self.update_disk_labels()
+
+        # Update package information
         self.update_package_info()
 
+        # Schedule the next update
         self.after(3000, self.update_labels)
 
     def get_cpu_temperature(self):
@@ -419,13 +432,18 @@ class DashTab(ttk.Frame):
         """Update memory-related labels."""
         self.ram_percent["text"] = f"{svmem.percent}%"
         self.ram_total_label.configure(text=f"Ram Total: {self.get_size(svmem.total)}")
-        self.ram_available_label.configure(
-            text=f"Ram Available: {self.get_size(svmem.available)}"
-        )
+        self.ram_available_label.configure(text=f"Ram Available: {self.get_size(svmem.available)}")
         self.ram_used_label.configure(text=f"Ram Used: {self.get_size(svmem.used)}")
         self.swap_total_label.configure(text=f"Swap Total: {self.get_size(swap.total)}")
         self.swap_free_label.configure(text=f"Swap Free: {self.get_size(swap.free)}")
         self.swap_used_label.configure(text=f"Swap Used: {self.get_size(swap.used)}")
+
+    def update_disk_labels(self):
+        """Update disk-related labels."""
+        obj_Disk = psutil.disk_usage("/")
+        self.total_size_label.configure(text=f"Total Size: {obj_Disk.total / (2**30):.2f} GB")
+        self.used_label.configure(text=f"Used: {obj_Disk.used / (2**30):.2f} GB")
+        self.free_label.configure(text=f"Free: {obj_Disk.free / (2**30):.2f} GB")
 
     def get_network_info(self):
         """Get network-related information."""
@@ -453,13 +471,9 @@ class DashTab(ttk.Frame):
         self.kernel_label.configure(text=f"Kernel: {my_system.release}")
         self.shell_label.configure(text=f"Shell: {os.environ['SHELL']}")
         self.desktop_label.configure(text=f"Desktop: {get_desktop_environment()}")
-        self.window_manager_label.configure(
-            text=f"Window Manager: {self.get_window_manager()}"
-        )
+        self.window_manager_label.configure(text=f"Window Manager: {self.get_window_manager()}")
         self.session_label.configure(text=f"Session: {os.environ['XDG_SESSION_TYPE']}")
-        self.resolution_label.configure(
-            text=f"Resolution: {self.winfo_screenwidth()}x{self.winfo_screenheight()}"
-        )
+        self.resolution_label.configure(text=f"Resolution: {self.winfo_screenwidth()}x{self.winfo_screenheight()}")
         self.user_label.configure(text=f"User: {user}")
 
     def update_package_info(self):
@@ -480,9 +494,7 @@ class DashTab(ttk.Frame):
         """Get the CPU model name."""
         command = "lscpu | grep -E 'Model name|Modellname' | awk -F ': ' '{gsub(/^[ \t]+|[ \t]+$/, \"\", $2); print $2}'"
         try:
-            output = subprocess.check_output(
-                command, shell=True, universal_newlines=True
-            )
+            output = subprocess.check_output(command, shell=True, universal_newlines=True)
             return output.strip()
         except subprocess.CalledProcessError:
             return "N/A"
@@ -499,5 +511,5 @@ class DashTab(ttk.Frame):
                     return line.split("Name: ")[1]
         except subprocess.CalledProcessError as e:
             print(f"Error running wmctrl: {e}")
-
+        
         return None
