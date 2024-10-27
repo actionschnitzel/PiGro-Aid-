@@ -92,7 +92,7 @@ if flatpak_path:
             json.dump(flat_remote_dict, json_file, indent=2)
 
         Flat_remote_dict = flat_remote_dict
-        print(f"Added Flatpak cache.")
+        print(f"[Info] Added Flatpak cache.")
     else:
         if os.path.exists(expanded_json_file_path):
             with open(expanded_json_file_path, "r") as json_file:
