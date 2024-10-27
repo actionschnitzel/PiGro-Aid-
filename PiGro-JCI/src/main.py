@@ -44,8 +44,8 @@ class MainApplication(tk.Tk):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-        # Notebook Icons
-        self.tk.call("source", f"{application_path}/src/Azure-ttk-theme-2.1.0/azure.tcl")
+
+        self.tk.call("source", f"{application_path}/src/azure-adwaita-ttk/azure.tcl")
         if "dark" in get_theme() or "noir" in get_theme():
             self.tk.call("set_theme", "dark")
             self.status_icon = PhotoImage(

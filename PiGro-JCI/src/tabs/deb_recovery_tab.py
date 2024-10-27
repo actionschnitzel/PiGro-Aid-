@@ -17,19 +17,32 @@ class DebRecoverTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-
-        self.folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
-        )
-        self.backup_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/backup_s_light.png"
-        )
-        self.deb_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/deb_s_light.png"
-        )
-        self.recover_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/recover_s_light.png"
-        )
+        if "dark" in get_theme() or "noir" in get_theme():
+            self.folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/folder_s.png"
+            )
+            self.backup_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/backup_s.png"
+            )
+            self.deb_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/deb_s.png"
+            )
+            self.recover_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/recover_s.png"
+            )
+        else:
+            self.folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
+            )
+            self.backup_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/backup_s_light.png"
+            )
+            self.deb_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/deb_s_light.png"
+            )
+            self.recover_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/recover_s_light.png"
+            )
 
         def get_dir():
             self.filename = filedialog.askdirectory(

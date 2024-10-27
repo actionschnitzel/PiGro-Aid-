@@ -21,22 +21,38 @@ class LookTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-
-        self.folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
-        )
-        self.icon_folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/start_here_s_light.png"
-        )
-        self.cursor_folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/cursor_s_light.png"
-        )
-        self.theme_folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/theme_s_light.png"
-        )
-        self.refresh_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/fresh_s_light.png"
-        )
+        if "dark" in get_theme() or "noir" in get_theme():
+            self.folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/folder_s.png"
+            )
+            self.icon_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/start_here_s.png"
+            )
+            self.cursor_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/cursor_s.png"
+            )
+            self.theme_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/theme_s.png"
+            )
+            self.refresh_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/fresh_s.png"
+            )
+        else:
+            self.folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
+            )
+            self.icon_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/start_here_s_light.png"
+            )
+            self.cursor_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/cursor_s_light.png"
+            )
+            self.theme_folder_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/theme_s_light.png"
+            )
+            self.refresh_icon = PhotoImage(
+                file=f"{application_path}/images/icons/pigro_icons/fresh_s_light.png"
+            )
 
         self.pixel_set = ttk.LabelFrame(
             self,
