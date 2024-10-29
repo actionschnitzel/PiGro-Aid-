@@ -111,29 +111,13 @@ def run_command(command):
         return None
 
 def get_desktop_environment():
-    xdg_current_desktop = os.environ.get("XDG_CURRENT_DESKTOP").lower()
-    #print(xdg_current_desktop)
-    # Check for specific desktop environments
-    if xdg_current_desktop == "x-cinnamon" or xdg_current_desktop == "cinnamon":
-        return "CINNAMON"
-    elif xdg_current_desktop == "unity":
-        return "UNITY"
-    elif xdg_current_desktop == "ubuntu:gnome":
-        return "GNOME"
-    elif "gnome" in xdg_current_desktop:
-        return "GNOME"
-    elif "plasma" == xdg_current_desktop or "kde" == xdg_current_desktop:
-        return "KDE"
-    elif "xfce" == xdg_current_desktop:
-        return "XFCE"
-    elif "lxde" == xdg_current_desktop:
-        return "LXDE"
-    elif "lxde-pi-wayfire" == xdg_current_desktop:
-        return "PI-WAYFIRE"
-    elif "mate" == xdg_current_desktop:
-        return "MATE"
+    xdg_current_desktop = os.environ.get("XDG_CURRENT_DESKTOP")
+    desktop_session = os.environ.get("DESKTOP_SESSION")
+    if desktop_session == "LXDE-pi-labwc" or desktop_session == "LXDE-pi-wayfire" or desktop_session == "LXDE-pi":
+        return desktop_session
     else:
-        return "Unknown"
+        return xdg_current_desktop
+print(get_desktop_environment())        
 
 
 
@@ -190,7 +174,7 @@ def get_theme():
     #    return theme.strip("'") if theme else "Theme not found."
 
     # Mate
-    elif "UNITY" in de:
+    elif "Unity" in de:
         theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
         return theme.strip("'") if theme else "Theme not found."
 
@@ -202,7 +186,7 @@ def get_theme():
         theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
         return theme.strip("'") if theme else "Theme not found."
 
-    elif "PI-WAYFIRE" in de:
+    elif "LXDE-pi-wayfire" in de or "LXDE-pi-labwc" in de:
         theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
         return theme.strip("'") if theme else "Theme not found."
 
@@ -217,7 +201,7 @@ def get_theme():
         return theme.strip("'") if theme else "Theme not found."
 
     # LXDE
-    elif "LXDE" in de or "LXDE-PI" in de:
+    elif "LXDE" in de or "LXDE-pi" in de:
         return get_lxde_theme_name()
 
     # Fallback for unknown DE

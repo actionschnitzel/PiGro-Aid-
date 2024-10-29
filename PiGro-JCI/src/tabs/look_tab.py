@@ -184,7 +184,7 @@ class LookTab(ttk.Frame):
             selected_theme = theme_combobox.get()
 
             if selected_theme != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -207,7 +207,7 @@ class LookTab(ttk.Frame):
                             selected_theme,
                         ]
                     )
-                if get_desktop_environment() == "mate":
+                if get_desktop_environment() == "MATE":
                     subprocess.run(
                         [
                             "gsettings",
@@ -217,7 +217,7 @@ class LookTab(ttk.Frame):
                             selected_theme,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_theme_config(selected_theme)
 
                 else:
@@ -245,7 +245,7 @@ class LookTab(ttk.Frame):
             selected_icon = icon_combobox.get()
 
             if selected_icon != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -257,7 +257,7 @@ class LookTab(ttk.Frame):
                             selected_icon,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_icons_config(selected_icon)
                 else:
                     subprocess.run(
@@ -275,7 +275,7 @@ class LookTab(ttk.Frame):
             selected_cursor = cursor_combobox.get()
 
             if selected_cursor != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -287,7 +287,7 @@ class LookTab(ttk.Frame):
                             selected_cursor,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_cursor_config(selected_cursor)
                 else:
                     subprocess.run(
