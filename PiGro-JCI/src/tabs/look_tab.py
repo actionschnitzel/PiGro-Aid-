@@ -191,7 +191,7 @@ class LookTab(ttk.Frame):
             selected_theme = theme_combobox.get()
 
             if selected_theme != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -214,7 +214,7 @@ class LookTab(ttk.Frame):
                             selected_theme,
                         ]
                     )
-                if get_desktop_environment() == "mate":
+                if get_desktop_environment() == "MATE":
                     subprocess.run(
                         [
                             "gsettings",
@@ -224,7 +224,7 @@ class LookTab(ttk.Frame):
                             selected_theme,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_theme_config(selected_theme)
 
                 else:
@@ -252,7 +252,7 @@ class LookTab(ttk.Frame):
             selected_icon = icon_combobox.get()
 
             if selected_icon != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -264,7 +264,7 @@ class LookTab(ttk.Frame):
                             selected_icon,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_icons_config(selected_icon)
                 else:
                     subprocess.run(
@@ -282,7 +282,7 @@ class LookTab(ttk.Frame):
             selected_cursor = cursor_combobox.get()
 
             if selected_cursor != "Press Refresh":
-                if get_desktop_environment() == "xfce":
+                if get_desktop_environment() == "XFCE":
                     subprocess.run(
                         [
                             "xfconf-query",
@@ -294,7 +294,7 @@ class LookTab(ttk.Frame):
                             selected_cursor,
                         ]
                     )
-                if get_desktop_environment() == "lxde":
+                if get_desktop_environment() == "LXDE-pi":
                     update_lxde_cursor_config(selected_cursor)
                 else:
                     subprocess.run(
@@ -625,11 +625,13 @@ class LookTab(ttk.Frame):
         update_theme_combobox()
 
         if get_desktop_environment() not in [
-            "xfce",
-            "gnome",
-            "mate",
-            "lxde",
-            "lxde-pi-wayfire",
+            "XFCE",
+            "GNOME",
+            "ubuntu:GNOME",
+            "MATE",
+            "LXDE-pi",
+            "LXDE-pi-wayfire",
+            "LXDE-pi-labwc"
         ]:
             theme_button.config(state=tk.DISABLED)
             icon_button.config(state=tk.DISABLED)
@@ -645,8 +647,8 @@ class LookTab(ttk.Frame):
             info_button.grid(row=5, column=4, padx=10, pady=5, sticky="ew")
 
         if (
-            get_desktop_environment() == "lxde-pi"
-            or get_desktop_environment() == "lxde"
+            get_desktop_environment() == "LXDE-pi"
+            or get_desktop_environment() == "LXDE"
         ):
             theme_legacy_button.config(state=tk.NORMAL)
             self.papirus_theme_combobox.config(state=tk.NORMAL)
@@ -654,7 +656,7 @@ class LookTab(ttk.Frame):
             self.set_button.config(state=tk.NORMAL)
             self.install_button.config(state=tk.NORMAL)
 
-        if get_desktop_environment() == "xfce":
+        if get_desktop_environment() == "XFCE":
             theme_legacy_button.config(
                 text="XFCE Theme", state=tk.NORMAL, command=xfce_theme_
             )
@@ -706,15 +708,15 @@ class LookTab(ttk.Frame):
 
     def set_wallpapers(self, image_path):
         try:
-            if get_desktop_environment() == "lxde-pi-wayfire":
+            if get_desktop_environment() == "LXDE-pi-wayfire" or get_desktop_environment() == "LXDE-pi-labwc":
                 os.popen(f"pcmanfm --set-wallpaper {image_path}")
-            elif get_desktop_environment() == "lxde":
+            elif get_desktop_environment() == "LXDE":
                 os.popen(f"pcmanfm --set-wallpaper {image_path}")
-            elif get_desktop_environment() == "xfce":
+            elif get_desktop_environment() == "XFCE":
                 os.popen(
                     f"xfconf-query -c xfce4-desktop -p insert_property_here -s {image_path}"
                 )
-            elif get_desktop_environment() == "mate":
+            elif get_desktop_environment() == "MATE":
                 subprocess.run(
                     [
                         "gsettings",
@@ -724,7 +726,7 @@ class LookTab(ttk.Frame):
                         f"{image_path}",
                     ]
                 )
-            elif get_desktop_environment() == "gnome":
+            elif get_desktop_environment() == "GNOME":
                 subprocess.run(
                     [
                         "gsettings",

@@ -98,24 +98,22 @@ if codename == "bullseye":
 else:
     config_path = "/boot/firmware/config.txt"    
 
-
+def run_command(command):
+    """Helper function to run shell commands and capture output."""
+    try:
+        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return None
 
 def get_desktop_environment():
-    desktop_session = os.environ.get("XDG_CURRENT_DESKTOP")
-    if desktop_session == "xfce":
-        return desktop_session.lower()
-    elif os.environ.get("DESKTOP_SESSION", "").lower() == "lxde-pi-wayfire":
-        return "lxde-pi-wayfire"
-    elif "KDE_SESSION_VERSION" in os.environ:
-        return "kde"
-    elif "GNOME_DESKTOP_SESSION_ID" in os.environ:
-        return "gnome"
-    elif "MATE_DESKTOP_SESSION_ID" in os.environ:
-        return "mate"
-    elif "XDG_CURRENT_DESKTOP" in os.environ:
-        return os.environ["XDG_CURRENT_DESKTOP"].lower()
+    xdg_current_desktop = os.environ.get("XDG_CURRENT_DESKTOP")
+    desktop_session = os.environ.get("DESKTOP_SESSION")
+    if desktop_session == "LXDE-pi-labwc" or desktop_session == "LXDE-pi-wayfire" or desktop_session == "LXDE-pi":
+        return desktop_session
     else:
-        return "unknown"
+        return xdg_current_desktop
+print(get_desktop_environment())  
 
 
 def get_lxde_theme_name():
@@ -149,38 +147,72 @@ iGtk/CursorThemeSize=24""")
 
 
 def get_theme():
-    desktop_environment = get_desktop_environment()
+    """Get the current GTK or KDE theme based on the desktop environment."""
+    de = get_desktop_environment()
 
-    if desktop_environment == "lxde-pi-wayfire":
-        theme = (
-            os.popen("gsettings get org.gnome.desktop.interface gtk-theme")
-            .read()
-            .strip()
-        )
-    elif desktop_environment == "gnome":
-        theme = (
-            os.popen("gsettings get org.gnome.desktop.interface gtk-theme")
-            .read()
-            .strip()
-        )
-    elif desktop_environment == "kde":
-        theme = (
-            os.popen(
-                "kreadconfig5 --file kdeglobals --group General --key 'widgetStyle'"
-            )
-            .read()
-            .strip()
-        )
-    elif desktop_environment == "xfce":
-        theme = os.popen("xfconf-query -c xsettings -p /Net/ThemeName").read().strip()
+    if not de:
+        return "Desktop Environment not detected."
 
-    elif desktop_environment == "lxde":
-        theme = get_lxde_theme_name()
-    else:
-        theme = "Not supported for this desktop environment"
+    # KDE/Plasma
+    if "KDE" in de or "PLASMA" in de:
+        kde_config_file = os.path.expanduser("~/.config/kdeglobals")
+        if os.path.exists(kde_config_file):
+            kde_theme = run_command(f"grep 'Name=' {kde_config_file}")
+            if kde_theme:
+                return kde_theme.split('=')[-1].strip().strip("'")
+        return "KDE theme not found."
 
-    return theme
+    # Cinnamon
+    elif "CINNAMON" in de:
+        theme = run_command("gsettings get org.cinnamon.desktop.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
 
+    # GNOME/Unity/Budgie
+    #elif any(d in de for d in ["GNOME", "UNITY", "BUDGIE"]):
+    #    theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+    #    return theme.strip("'") if theme else "Theme not found."
+
+    # Mate
+    elif "Unity" in de:
+        theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
+
+    elif "GNOME" in de:
+        theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
+
+    elif "ubuntu:GNOME" in de:
+        theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+        
+        return theme.strip("'") if theme else "Theme not found."
+    elif "BUDGIE" in de:
+        theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
+
+    elif "LXDE-pi-wayfire" in de or "LXDE-pi-labwc" in de:
+        theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
+
+    # Mate
+    elif "MATE" in de:
+        theme = run_command("gsettings get org.mate.interface gtk-theme")
+        return theme.strip("'") if theme else "Theme not found."
+
+    # Xfce
+    elif "XFCE" in de:
+        theme = run_command("xfconf-query -c xsettings -p /Net/ThemeName")
+        return theme.strip("'") if theme else "Theme not found."
+
+    # LXDE
+    elif "LXDE" in de or "LXDE-pi" in de:
+        return get_lxde_theme_name()
+
+    # Fallback for unknown DE
+    return "Unsupported Desktop Environment."
+
+# Example usage:
+theme_name = get_theme()
+print(f"[Info] Current theme: {theme_name}")
 
 # Define Permission Method
 def pi_identify():
@@ -196,7 +228,7 @@ if pi_identify() == "pi_os":
 else:
     permit = "pkexec"
 
-theme = get_theme().lower()
+theme = get_theme()
 
 if "dark" in theme or "noir" in theme:
     maincolor = "#2c2c2c"
