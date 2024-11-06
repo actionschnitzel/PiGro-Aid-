@@ -117,7 +117,7 @@ def get_desktop_environment():
         return desktop_session
     else:
         return xdg_current_desktop
-print(get_desktop_environment())        
+print(get_desktop_environment())    
 
 
 

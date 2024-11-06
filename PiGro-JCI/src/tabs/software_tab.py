@@ -72,7 +72,8 @@ def extract_default_screenshot_url(application_id):
         ".//screenshot[@type='default']/image[@type='source']"
     ):
         return screenshot.text
-
+        #print(screenshot.text)
+    
     return None
 
 
@@ -253,6 +254,7 @@ class SoftwareTab(ttk.Frame):
         flatpack_search_panel.pack(fill=tk.BOTH, expand=True)
 
 
+
 class AptSearchPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -265,7 +267,6 @@ class AptSearchPanel(tk.Frame):
             e_mass = Error_Mass(self)
             e_mass.grab_set()
 
-        #self["background"] = maincolor
         if "dark" in theme or "noir" in theme:
             self.deb_butt = PhotoImage(
                 file=f"{application_path}/images/icons/nav_bar/debian_dark_24x24.png"
@@ -301,6 +302,7 @@ class AptSearchPanel(tk.Frame):
             custom_installer.do_task(
                 pigro_skript_task, pigro_skript_task_app, pigro_skript
             )
+            self.master.wait_window(custom_installer)
 
         def apt_uninstall():
             hide_apt_frame()
@@ -312,8 +314,8 @@ class AptSearchPanel(tk.Frame):
             custom_installer.do_task(
                 pigro_skript_task, pigro_skript_task_app, pigro_skript
             )
-
-            apt_search_container.pack(anchor="w", side=LEFT, pady=20, padx=10)
+            self.master.wait_window(custom_installer)
+            apt_search_container.pack(anchor="w", pady=20, padx=10)
 
         def update_apt_list(apt_data):
             apt_data = sorted(apt_data)
@@ -453,26 +455,14 @@ class AptSearchPanel(tk.Frame):
                 if apt_entry.get() in get_installed_apt_pkgs():
                     apt_pkg_inst.config(
                         text="Uninstall",
-                        #justify="left",
                         width=10,
-                        #background="#f04a50",
-                        #foreground=ext_btn_font,
-                        #font=font_10_b,
-                        #borderwidth=0,
-                        #highlightthickness=0,
                         command=apt_uninstall,
                         style='Red.TButton'
                     )
                 else:
                     apt_pkg_inst.config(
                         text="Install",
-                        #justify="left",
                         width=10,
-                        #background="#6abd43",
-                        #foreground=ext_btn_font,
-                        #font=font_10,
-                        #borderwidth=0,
-                        #highlightthickness=0,
                         command=apt_install,
                         style='Green.TButton'
                     )
@@ -486,7 +476,7 @@ class AptSearchPanel(tk.Frame):
 
         def hide_apt_frame():
             apt_info_container.pack_forget()
-            apt_search_container.pack(anchor="w", side=LEFT, pady=20, padx=10)
+            apt_search_container.pack(anchor="w", pady=20, padx=10,fill=BOTH, expand=True)
             apt_info_throber_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
         apt_main_container = Frame(self)
@@ -496,15 +486,13 @@ class AptSearchPanel(tk.Frame):
             apt_main_container,
             text="Search",
             padding=20
-            #background=frame_color,
         )
-        apt_search_container.pack(anchor="w", side=LEFT, pady=20, padx=10)
+        apt_search_container.pack(anchor="w", pady=20, padx=10,fill="both", expand=True)
 
         apt_search_field = Frame(
             apt_search_container,
             borderwidth=0,
             highlightthickness=0,
-            #background=frame_color,
         )
         apt_search_field.pack(fill="x", pady=5)
 
@@ -513,7 +501,6 @@ class AptSearchPanel(tk.Frame):
             image=self.search_btn,
 
         )
-        #apt_search_btn.pack(side="left", fill="both")
 
         apt_entry = ttk.Entry(
             apt_search_field, font=("Sans", 15)
@@ -526,8 +513,6 @@ class AptSearchPanel(tk.Frame):
 
         apt_list_box = Listbox(
             apt_search_container,
-            height=59,
-            width=40,
             borderwidth=0,
             highlightthickness=0,
             selectmode=tk.SINGLE,
@@ -536,7 +521,7 @@ class AptSearchPanel(tk.Frame):
         apt_list_box_scrollbar.pack(side=RIGHT, fill=Y)
         apt_list_box.config(yscrollcommand=apt_list_box_scrollbar.set)
         apt_list_box_scrollbar.config(command=apt_list_box.yview)
-        apt_list_box.pack(fill=BOTH)
+        apt_list_box.pack(fill=BOTH,expand=True)
 
         update_apt_list(get_apt_cache())
 
@@ -553,7 +538,6 @@ class AptSearchPanel(tk.Frame):
             text="One Click Install",
             padding=20
         )
-        #self.repo_sec_frame["background"] = frame_color
         self.repo_sec_frame.pack(fill="x")
 
         apt_one_click_dict = OneClicks.apt_one_click_dict
@@ -594,41 +578,32 @@ class AptSearchPanel(tk.Frame):
             apt_one_click_dict1.append(apt_one_click_button_x)
             conf_column += 1
 
-            if conf_column == 2:
+            if conf_column == 4:
                 conf_row += 1
                 conf_column = 0
 
         for col in range(2):
             self.repo_sec_frame.grid_columnconfigure(col, weight=1, uniform="columns")
 
-        apt_info_container = Frame(apt_main_container)
+        apt_info_container = ttk.Frame(apt_main_container,padding=20)
+        apt_info_container.columnconfigure(0, weight=1)
+        apt_info_container.rowconfigure(2, weight=1)
 
-        apt_exit = Button(
+        apt_exit = ttk.Button(
             apt_info_container,
             text="Back",
             image=self.exit_btn,
-            #background=nav2_color,
-            foreground="white",
-            borderwidth=0,
-            highlightthickness=0,
             compound=LEFT,
-            font=font_10_b,
             command=hide_apt_frame,
-            anchor="w",
-            padx=10,
         )
-        apt_exit.pack(fill="x")
+        apt_exit.grid(row=0,column=0,sticky="ew")
 
-        apt_pkg_header_1 = Frame(
+        apt_pkg_header_1 = ttk.LabelFrame(
             apt_info_container,
-            borderwidth=0,
-            highlightthickness=0,
-            relief=GROOVE,
-            pady=20,
-            padx=20,
-            ##background=nav_color,
+            text="Application",
+            padding=20
         )
-        apt_pkg_header_1.pack(anchor="n", fill="x")
+        apt_pkg_header_1.grid(row=1,column=0,sticky="ew")
 
         apt_pkg_header_1_1 = Frame(
             apt_pkg_header_1, borderwidth=0, highlightthickness=0
@@ -641,8 +616,6 @@ class AptSearchPanel(tk.Frame):
             image=self.debinstall_icon,
             font=font_10_b,
             justify="left",
-            ##background=nav_color,
-            #foreground=main_font,
             padx=10,
         )
         apt_pkg_icon.grid(row=0, rowspan=2, column=0)
@@ -652,8 +625,6 @@ class AptSearchPanel(tk.Frame):
             text="",
             font=font_20,
             justify="left",
-            ##background=nav_color,
-            #foreground=main_font,
             anchor="w",
             padx=20,
         )
@@ -664,8 +635,6 @@ class AptSearchPanel(tk.Frame):
             text="",
             font=font_8,
             justify="left",
-            #background=nav_color,
-            #foreground=main_font,
             anchor="w",
             padx=20,
         )
@@ -674,66 +643,60 @@ class AptSearchPanel(tk.Frame):
         apt_pkg_inst = ttk.Button(
             apt_pkg_header_1_1,
             text="Install",
-            #justify="left",
             width=10,
-            #background="#6abd43",
-            #foreground=ext_btn_font,
-            #font=font_10,
-            #borderwidth=0,
-            #highlightthickness=0,
             command=apt_install,
             style='Green.TButton'
         )
         apt_pkg_inst.grid(row=0, column=2, sticky="e")
 
-        def on_configure(event):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-            update_canvas()
 
-        def on_mousewheel(event):
-            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        apt_detail_frame = ttk.LabelFrame(apt_info_container, text="Details", padding=20)
+        apt_detail_frame.grid(row=2, column=0, sticky="nsew")
 
-        def update_canvas():
-            canvas_width = canvas.winfo_width()
-            frame_width = canvas_frame.winfo_reqwidth()
-            x_offset = max((canvas_width - frame_width) // 2, 0)
-            canvas.coords("frame", x_offset, 0)
 
-        canvas_container = Frame(apt_info_container, width=869)
-        canvas_container.pack(side=LEFT, fill="both", expand=True)
+        apt_detail_frame.columnconfigure(0, weight=1)
+        apt_detail_frame.rowconfigure(0, weight=1)
 
-        canvas = Canvas(canvas_container, highlightthickness=0)
-        canvas.pack(fill="both", expand=True, side=RIGHT)
-        canvas.pack_propagate(False)
+        apt_canvas = Canvas(
+            apt_detail_frame,
+            borderwidth=0,
+            highlightthickness=0
+        )
+        apt_canvas.grid(row=0, column=0, sticky="nsew")
 
-        canvas_frame = tk.Frame(canvas, padx=120)
-        canvas.create_window((0, 0), window=canvas_frame, anchor="n", tags="frame")
+        apt_canvas_scrollbar = ttk.Scrollbar(
+            apt_detail_frame,
+            orient="vertical",
+            command=apt_canvas.yview
+        )
+        apt_canvas_scrollbar.grid(row=0, column=1, sticky="ns")
 
-        apt_panel = Label(canvas_frame, text="Apartment Panel")
-        apt_panel.pack(anchor="n", pady=20)
+        apt_canvas.configure(yscrollcommand=apt_canvas_scrollbar.set)
+
+        apt_canvas_frame = Frame(apt_canvas)
+        apt_canvas.create_window((0, 0), window=apt_canvas_frame, anchor="nw")
+
+        apt_canvas_frame.bind("<Configure>", lambda e: apt_canvas.configure(scrollregion=apt_canvas.bbox("all")))
+
+        apt_panel = Label(apt_canvas_frame)
+        apt_panel.grid(row=0, column=0, columnspan=2, pady=20)
 
         description_text = Text(
-            canvas_frame,
+            apt_canvas_frame,
             borderwidth=0,
             highlightthickness=0,
-            #background=frame_color,
-            #foreground=main_font,
             font=("Sans", 9),
-            height=100,
-            width=80,
             wrap=WORD,
             padx=20,
         )
-        description_text.pack(side=LEFT, fill=BOTH, expand=True, padx=20)
+        description_text.grid(row=1, column=0, sticky="nesw", padx=(20, 0))
 
-        scrollbar = ttk.Scrollbar(
-            apt_info_container, orient=VERTICAL, command=canvas.yview
-        )
-        scrollbar.pack(side=RIGHT, fill=Y)
-        canvas.config(yscrollcommand=scrollbar.set)
+        apt_canvas_frame.columnconfigure(0, weight=1)
+        apt_canvas_frame.rowconfigure(1, weight=1)
 
-        canvas_frame.bind("<Configure>", on_configure)
-        canvas_frame.bind_all("<MouseWheel>", on_mousewheel)
+        apt_info_container.columnconfigure(0, weight=1)
+        apt_info_container.rowconfigure(2, weight=1)
+
 
 
 class PiAppsSearchPanel(tk.Frame):
@@ -781,7 +744,7 @@ class PiAppsSearchPanel(tk.Frame):
 
         def hide_piapps_frame():
             piapps_info_frame.pack_forget()
-            piapps_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
+            piapps_search_frame.pack(anchor="w", pady=20, padx=10,fill="both", expand=True)
             piapps_info_throber_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
         def piapps_install():
@@ -913,25 +876,13 @@ class PiAppsSearchPanel(tk.Frame):
                 if piapps_entry.get() in refresh_piapps_installs():
                     piapps_pkg_inst.config(
                         text="Uninstall",
-                        #justify="left",
                         width=10,
-                        #background="#f04a50",
-                        #foreground=ext_btn_font,
-                        #font=font_10_b,
-                        #borderwidth=0,
-                        #highlightthickness=0,
                         command=piapps_uninstall,
                     )
                 else:
                     piapps_pkg_inst.config(
                         text="Install",
-                        #justify="left",
                         width=10,
-                        #background="#6abd43",
-                        #foreground=ext_btn_font,
-                        #font=font_10,
-                        #borderwidth=0,
-                        #highlightthickness=0,
                         command=piapps_install,
                     )
 
@@ -940,8 +891,7 @@ class PiAppsSearchPanel(tk.Frame):
                 piapps_get_screenshot()
                 piapps_get_description()
 
-        pi_apps_main_container = Frame(self)
-        pi_apps_main_container.pack(fill="both", expand=True)
+
 
         def install_piapps_apt():
             os.system(
@@ -963,37 +913,31 @@ class PiAppsSearchPanel(tk.Frame):
                 image=self.pi_apps_big_icon,
                 font=font_10_b,
                 justify="left",
-                #background=maincolor,
-                #foreground=main_font,
             )
             piapps_big_icon.pack(anchor="center", pady=20)
 
             piapps_app_inst = ttk.Button(
                 pi_apps_not_installad_container,
                 text="Install Pi-Apps",
-                #justify="left",
                 width=20,
-                #background=ext_btn,
-                #foreground=ext_btn_font,
-                #font=font_10_b,
-                #borderwidth=0,
-                #highlightthickness=0,
                 command=install_piapps_apt,
             )
             piapps_app_inst.pack()
+
+        pi_apps_main_container = Frame(self)
+        pi_apps_main_container.pack(fill="both", expand=True)
 
         piapps_search_frame = ttk.LabelFrame(
             pi_apps_main_container,
             text="Search",
             padding=20
         )
-        piapps_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
+        piapps_search_frame.pack(anchor="w", pady=20, padx=10,fill="both", expand=True)
 
         piapps_search_field = Frame(
             piapps_search_frame,
             borderwidth=0,
             highlightthickness=0,
-            #background=frame_color,
         )
         piapps_search_field.pack(fill="x", pady=5)
 
@@ -1002,7 +946,6 @@ class PiAppsSearchPanel(tk.Frame):
             image=self.search_btn,
 
         )
-        #piapps_search_btn.pack(side="left", fill=BOTH)
 
         piapps_entry = ttk.Entry(
             piapps_search_field,
@@ -1016,8 +959,6 @@ class PiAppsSearchPanel(tk.Frame):
 
         piapps_list_box = Listbox(
             piapps_search_frame,
-            height=50,
-            width=40,
             borderwidth=0,
             highlightthickness=0,
             selectmode=tk.SINGLE,
@@ -1028,7 +969,7 @@ class PiAppsSearchPanel(tk.Frame):
         piapps_list_box.config(yscrollcommand=piapps_list_box_scrollbar.set)
         piapps_list_box_scrollbar.config(command=piapps_list_box.yview)
 
-        piapps_list_box.pack(fill=BOTH)
+        piapps_list_box.pack(fill=BOTH,expand=True)
 
         update_piapps(piapps_cache_content)
 
@@ -1039,192 +980,12 @@ class PiAppsSearchPanel(tk.Frame):
         piapps_info_throber_frame = Frame(pi_apps_main_container)
         piapps_info_throber_frame.pack(fill=BOTH, expand=True, pady=20, padx=10)
 
-        piapps_info_frame = Frame(pi_apps_main_container)
-
-        piapps_exit = Button(
-            piapps_info_frame,
-            text="Back",
-            image=self.exit_btn,
-            #background=nav2_color,
-            foreground="white",
-            borderwidth=0,
-            highlightthickness=0,
-            compound=LEFT,
-            font=font_10_b,
-            command=hide_piapps_frame,
-            anchor="w",
-            padx=10,
-        )
-        piapps_exit.pack(fill="x")
-
-        piapps_pkg_info_frame = ttk.LabelFrame(
-            piapps_info_frame,
-            padding=20
-        )
-        piapps_pkg_info_frame.pack(anchor="n", fill="x")
-
-        piapps_pkg_info_container = Frame(
-            piapps_pkg_info_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            #background=nav_color,
-        )
-        piapps_pkg_info_container.pack(fill="x")
-        piapps_pkg_info_container.columnconfigure(1, weight=2)
-
-        piapps_pkg_icon = Label(
-            piapps_pkg_info_container,
-            image=self.pi_appsinstall_icon,
-            font=font_10_b,
-            justify="left",
-            #background=nav_color,
-            #foreground=main_font,
-        )
-        piapps_pkg_icon.grid(row=0, rowspan=2, column=0)
-
-        piapps_pkg_name = Label(
-            piapps_pkg_info_container,
-            text="",
-            font=font_20,
-            justify="left",
-            #background=nav_color,
-            #foreground=main_font,
-            anchor="w",
-            padx=20,
-        )
-        piapps_pkg_name.grid(row=0, column=1, sticky="ew")
-
-        piapps_pkg_status = Label(
-            piapps_pkg_info_container,
-            text="",
-            font=font_10,
-            justify="left",
-            #background=nav_color,
-            #foreground=main_font,
-            anchor="w",
-            padx=20,
-        )
-        piapps_pkg_status.grid(row=1, column=1, sticky="ew")
-
-        piapps_pkg_inst = ttk.Button(
-            piapps_pkg_info_container,
-            text="Install",
-            #justify="left",
-            width=10,
-            #background="#6abd43",
-            #foreground=ext_btn_font,
-            #font=font_10,
-            #borderwidth=0,
-            #highlightthickness=0,
-            command=piapps_install,
-        )
-        piapps_pkg_inst.grid(row=0, column=2, sticky="e")
-
-        def open_pi_apps():
-            os.system(f"{home}/pi-apps/gui")
-
-        def open_pi_apps_settings():
-            popen(f"{home}/pi-apps/settings")
-
-        piapps_configs_frame = Frame(piapps_pkg_info_container)
-        piapps_configs_frame.grid(row=2, column=1, pady=0)
-
-        piapps_app_open = Button(
-            piapps_configs_frame,
-            justify="left",
-            imag=self.pi_appsopen_icon,
-            #background=nav_color,
-            #foreground=ext_btn_font,
-            font=font_10_b,
-            borderwidth=0,
-            highlightthickness=0,
-            command=open_pi_apps,
-        )
-        piapps_app_open.grid(row=0, column=0, pady=0, padx=5)
-
-        piapps_setting_open = Button(
-            piapps_configs_frame,
-            image=self.pi_appssett_icon,
-            justify="left",
-            #background=nav_color,
-            #foreground=ext_btn_font,
-            font=font_10_b,
-            borderwidth=0,
-            highlightthickness=0,
-            command=open_pi_apps_settings,
-        )
-        piapps_setting_open.grid(row=0, column=1, pady=0, padx=5)
-
-        def on_configure_piapps_canvas(event):
-            piapps_canvas.configure(scrollregion=piapps_canvas.bbox("all"))
-            update_piapps_canvas()
-
-        def on_mousewheel_piapps_canvas(event):
-            piapps_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
-
-        def update_piapps_canvas():
-            piapps_canvas_width = piapps_canvas.winfo_width()
-            frame_width = piapps_canvas_frame.winfo_reqwidth()
-            x_offset = max((piapps_canvas_width - frame_width) // 2, 0)
-            piapps_canvas.coords("frame", x_offset, 0)
-
-        piapps_canvas_container = Frame(
-            piapps_info_frame, width=869
-        )
-        piapps_canvas_container.pack(side=LEFT, fill="both", expand=True)
-
-        piapps_canvas = tk.Canvas(
-            piapps_canvas_container, highlightthickness=0
-        )
-        piapps_canvas.pack(fill=BOTH, expand=True, side=RIGHT)
-        piapps_canvas.pack_propagate(False)
-
-        piapps_canvas_frame = tk.Frame(piapps_canvas, padx=120)
-        piapps_canvas.create_window(
-            (0, 0), window=piapps_canvas_frame, anchor="n", tags="frame"
-        )
-
-        piapps_panel = Label(
-            piapps_canvas_frame, text="Apartment Panel"
-        )
-        piapps_panel.pack(anchor="n", pady=20)
-
-        piapps_description_text = Text(
-            piapps_canvas_frame,
-            borderwidth=0,
-            highlightthickness=0,
-            #background=frame_color,
-            #foreground=main_font,
-            font=("Sans", 9),
-            height=100,
-            width=80,
-            wrap=WORD,
-            padx=20,
-        )
-        piapps_description_text.pack(side=LEFT, fill=BOTH, expand=True, padx=20)
-
-        piapps_scrollbar = ttk.Scrollbar(
-            piapps_info_frame, orient=VERTICAL, command=piapps_canvas.yview
-        )
-        piapps_scrollbar.pack(side=RIGHT, fill=Y)
-        piapps_canvas.config(yscrollcommand=piapps_scrollbar.set)
-
-        piapps_canvas_frame.bind("<Configure>", on_configure_piapps_canvas)
-        piapps_canvas_frame.bind_all("<MouseWheel>", on_mousewheel_piapps_canvas)
-
         # piapps OneClicks
         piapps_one_click_frame = ttk.LabelFrame(
             piapps_info_throber_frame,
             text="One Click Install",
-            #font=font_16,
-            #foreground=label_frame_color,
-            #relief=GROOVE,
-            #borderwidth=0,
-            #highlightthickness=0,
-            #highlightcolor="white",
             padding=20
         )
-        #piapps_one_click_frame["background"] = frame_color
         piapps_one_click_frame.pack(fill="x")
 
         piapps_one_click_dict = PiAppsOneClicks.piapps_one_click_dict
@@ -1275,7 +1036,7 @@ class PiAppsSearchPanel(tk.Frame):
             piapps_one_click_dict1.append(piapps_one_click_button_x)
             conf_column += 1
 
-            if conf_column == 2:
+            if conf_column == 4:
                 conf_row += 1
                 conf_column = 0
 
@@ -1283,6 +1044,162 @@ class PiAppsSearchPanel(tk.Frame):
             piapps_one_click_frame.grid_columnconfigure(
                 col, weight=1, uniform="columns"
             )
+
+
+        piapps_info_frame = Frame(pi_apps_main_container)
+
+        piapps_exit = Button(
+            piapps_info_frame,
+            text="Back",
+            image=self.exit_btn,
+            foreground="white",
+            borderwidth=0,
+            highlightthickness=0,
+            compound=LEFT,
+            font=font_10_b,
+            command=hide_piapps_frame,
+            anchor="w",
+            padx=10,
+        )
+        piapps_exit.pack(fill="x")
+
+        piapps_pkg_info_frame = ttk.LabelFrame(
+            piapps_info_frame,
+            padding=20
+        )
+        piapps_pkg_info_frame.pack(anchor="n", fill="x")
+
+        piapps_pkg_info_container = Frame(
+            piapps_pkg_info_frame,
+            borderwidth=0,
+            highlightthickness=0,
+        )
+        piapps_pkg_info_container.pack(fill="x")
+        piapps_pkg_info_container.columnconfigure(1, weight=2)
+
+        piapps_pkg_icon = Label(
+            piapps_pkg_info_container,
+            image=self.pi_appsinstall_icon,
+            font=font_10_b,
+            justify="left",
+        )
+        piapps_pkg_icon.grid(row=0, rowspan=2, column=0)
+
+        piapps_pkg_name = Label(
+            piapps_pkg_info_container,
+            text="",
+            font=font_20,
+            justify="left",
+            anchor="w",
+            padx=20,
+        )
+        piapps_pkg_name.grid(row=0, column=1, sticky="ew")
+
+        piapps_pkg_status = Label(
+            piapps_pkg_info_container,
+            text="",
+            font=font_10,
+            justify="left",
+            anchor="w",
+            padx=20,
+        )
+        piapps_pkg_status.grid(row=1, column=1, sticky="ew")
+
+        piapps_pkg_inst = ttk.Button(
+            piapps_pkg_info_container,
+            text="Install",
+            width=10,
+            command=piapps_install,
+        )
+        piapps_pkg_inst.grid(row=0, column=2, sticky="e")
+
+        def open_pi_apps():
+            os.system(f"{home}/pi-apps/gui")
+
+        def open_pi_apps_settings():
+            popen(f"{home}/pi-apps/settings")
+
+        piapps_configs_frame = Frame(piapps_pkg_info_container)
+        piapps_configs_frame.grid(row=2, column=1, pady=0)
+
+        piapps_app_open = Button(
+            piapps_configs_frame,
+            justify="left",
+            imag=self.pi_appsopen_icon,
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=open_pi_apps,
+        )
+        piapps_app_open.grid(row=0, column=0, pady=0, padx=5)
+
+        piapps_setting_open = Button(
+            piapps_configs_frame,
+            image=self.pi_appssett_icon,
+            justify="left",
+            font=font_10_b,
+            borderwidth=0,
+            highlightthickness=0,
+            command=open_pi_apps_settings,
+        )
+        piapps_setting_open.grid(row=0, column=1, pady=0, padx=5)
+
+        def on_configure_piapps_canvas(event):
+            piapps_canvas.configure(scrollregion=piapps_canvas.bbox("all"))
+            update_piapps_canvas()
+
+        def on_mousewheel_piapps_canvas(event):
+            piapps_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        def update_piapps_canvas():
+            piapps_canvas_width = piapps_canvas.winfo_width()
+            frame_width = piapps_canvas_frame.winfo_reqwidth()
+            x_offset = max((piapps_canvas_width - frame_width) // 2, 0)
+            piapps_canvas.coords("frame", x_offset, 0)
+
+        piapps_canvas_container = Frame(
+            piapps_info_frame, width=869
+        )
+        piapps_canvas_container.pack(side=LEFT, fill="both", expand=True)
+
+        piapps_canvas = tk.Canvas(
+            piapps_canvas_container, highlightthickness=0
+        )
+        piapps_canvas.pack(fill=BOTH, expand=True, side=RIGHT)
+        piapps_canvas.pack_propagate(False)
+
+        piapps_canvas_frame = tk.Frame(piapps_canvas, padx=120)
+        piapps_canvas.create_window(
+            (0, 0), window=piapps_canvas_frame, anchor="n", tags="frame"
+        )
+
+        piapps_panel = Label(
+            piapps_canvas_frame, text="Apartment Panel"
+        )
+        piapps_panel.pack(anchor="n", pady=20)
+
+        piapps_description_text = Text(
+            piapps_canvas_frame,
+            borderwidth=0,
+            highlightthickness=0,
+            font=("Sans", 9),
+            height=100,
+            width=80,
+            wrap=WORD,
+            padx=20,
+        )
+        piapps_description_text.pack(side=LEFT, fill=BOTH, expand=True, padx=20)
+
+        piapps_scrollbar = ttk.Scrollbar(
+            piapps_info_frame, orient=VERTICAL, command=piapps_canvas.yview
+        )
+        piapps_scrollbar.pack(side=RIGHT, fill=Y)
+        piapps_canvas.config(yscrollcommand=piapps_scrollbar.set)
+
+        piapps_canvas_frame.bind("<Configure>", on_configure_piapps_canvas)
+        piapps_canvas_frame.bind_all("<MouseWheel>", on_mousewheel_piapps_canvas)
+
+
 
 
 class FlatpakSearchPanel(tk.Frame):
@@ -1813,7 +1730,6 @@ class Custom_Installer(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        #self["background"] = maincolor
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
@@ -1825,7 +1741,6 @@ class Custom_Installer(tk.Toplevel):
         y = (screen_height / 2) - (cust_app_height / 2)
         self.geometry(f"{cust_app_width}x{cust_app_height}+{int(x)}+{int(y)}")
         self.title("Software Manager")
-        #self.configure(bg=maincolor)
 
         self.installer_main_frame = Frame(self)
         self.installer_main_frame.pack(padx=20, pady=20, fill="both", expand=True)
@@ -1851,8 +1766,6 @@ class Custom_Installer(tk.Toplevel):
             self.installer_main_frame,
             text="",
             font=("Helvetica", 16),
-            #bg=maincolor,
-            #fg=label_frame_color,
             justify="left",
             anchor="w",
         )
@@ -1861,32 +1774,23 @@ class Custom_Installer(tk.Toplevel):
             self.installer_main_frame,
             text="",
             font=("Helvetica", 16),
-            #bg=maincolor,
-            #fg=main_font,
             justify="left",
             anchor="w",
         )
         self.done_label2.grid(row=1, column=1, sticky="nw")
         self.text = tk.Text(
             self.installer_main_frame,
-            #bg=maincolor,
-            #fg=main_font,
             height=1,
             borderwidth=0,
             highlightthickness=0,
-            #highlightcolor=main_font,
         )
 
         self.text.grid(row=2, column=1, columnspan=3, sticky="ew")
 
-        self.install_button = tk.Button(
+        self.install_button = ttk.Button(
             self.installer_main_frame,
             text="Close",
             command=self.close_btn_command,
-            borderwidth=0,
-            highlightthickness=0,
-            #background=ext_btn,
-            #foreground=ext_btn_font,
             state=DISABLED,
         )
         self.install_button.grid(row=3, column=2, sticky="e", pady=10)
