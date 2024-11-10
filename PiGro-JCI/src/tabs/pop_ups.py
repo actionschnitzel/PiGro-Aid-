@@ -4,7 +4,7 @@ import os
 from os import popen
 import os.path
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, filedialog
 import tkinter as tk
 import tkinter.font as tkFont
 from PIL import ImageTk, Image
@@ -13,6 +13,69 @@ from itertools import count, cycle
 from resorcess import *
 from apt_manage import *
 from flatpak_alias_list import *
+import os
+import subprocess
+from pathlib import Path
+
+
+class FontInstall(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        
+        # Fenster-Icon setzen
+        self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
+        self.tk.call("wm", "iconphoto", self._w, self.icon)
+        
+        # Fenstergröße und Position festlegen
+        self.resizable(0, 0)
+        app_width = 400
+        app_height = 150
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+        self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
+        self.title("Font Installer")
+
+        # Label und Button für die Schriftinstallation
+        label = ttk.Label(self, text="Wählen Sie eine Schriftart zur Installation aus:")
+        label.pack(pady=10)
+
+        install_button = ttk.Button(self, text="Schriftart installieren", command=self.install_font)
+        install_button.pack(pady=10)
+
+    # Funktion zum Installieren der Schriftart
+    def install_font(self):
+        # Dateidialog öffnen, um eine Schriftartdatei auszuwählen
+        font_file = filedialog.askopenfilename(
+            title="Schriftdatei auswählen",
+            filetypes=(("TrueType Fonts", "*.ttf"), ("OpenType Fonts", "*.otf"))
+        )
+
+        if font_file:
+            # Zielpfad für die Schriftarten auf Debian/Ubuntu
+            font_dir = Path("/usr/local/share/fonts")
+            
+            try:
+                # Datei in das Schriftartenverzeichnis kopieren
+                font_file_path = Path(font_file)
+                font_file_path.replace(font_dir / font_file_path.name)
+                
+                # Aktualisieren des Font-Caches
+                subprocess.run(["fc-cache", "-f", "-v"], check=True)
+                
+                # Erfolgsmeldung anzeigen
+                messagebox.showinfo("Erfolg", f"Schriftart erfolgreich installiert: {font_file_path.name}")
+            
+            except PermissionError:
+                # Fehlermeldung, falls die Berechtigungen fehlen
+                messagebox.showerror("Fehler", "Sie benötigen Root-Rechte, um Schriftarten zu installieren.")
+            except Exception as e:
+                # Allgemeine Fehlermeldung
+                messagebox.showerror("Fehler", f"Es gab ein Problem beim Installieren der Schriftart:\n{e}")
+
+
+
 
 
 class Update_Alternatives(tk.Toplevel):
@@ -31,14 +94,14 @@ class Update_Alternatives(tk.Toplevel):
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.title("Update-Alternatives")
-        self["background"] = maincolor
+        #self["background"] = maincolor
 
         def choose_up():
             popen(
                 f"x-terminal-emulator -e 'bash -c \"sudo update-alternatives --config {self.choosen.get()}; exec bash\"'"
             )
 
-        self.up_al_frame = Frame(self, background=maincolor)
+        self.up_al_frame = Frame(self), #background=maincolor)
         self.up_al_frame.pack(padx=20, pady=20)
 
         n1 = tk.StringVar()
@@ -61,12 +124,12 @@ class Update_Alternatives(tk.Toplevel):
         self.choosen_btn3 = Button(
             self.up_al_frame,
             text="Config",
-            highlightthickness=0,
-            borderwidth=0,
-            background=ext_btn,
-            foreground=ext_btn_font,
-            font=font_10,
-            command=choose_up,
+            #highlightthickness=0,
+            #borderwidth=0,
+            #background=ext_btn,
+            #foreground=ext_btn_font,
+            #font=font_10,
+            #command=choose_up,
         )
         self.choosen_btn3.grid(column=1, row=0)
 
@@ -76,7 +139,7 @@ class Tuning_Legende(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        #self["background"] = maincolor
         self.title("Overclocking")
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -105,22 +168,17 @@ class Tuning_Legende(tk.Toplevel):
             file=f"{application_path}/images/icons/pigro_icons/PiGroOV4.png"
         )
 
-        self.tu_main_frame = Frame(self, bg=maincolor)
+        self.tu_main_frame = Frame(self)
         self.tu_main_frame.pack(pady=20, padx=20)
 
-        self.rm_lbl = LabelFrame(
+        self.rm_lbl = ttk.LabelFrame(
             self.tu_main_frame,
             text="Default Settings",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            padding=5
         )
         self.rm_lbl.pack(fill="both", expand=True)
 
-        self.rm_ov = Label(self.rm_lbl, image=self.tu_1, bg=maincolor)
+        self.rm_ov = Label(self.rm_lbl, image=self.tu_1)
         self.rm_ov.grid(
             row=1,
             column=0,
@@ -131,8 +189,8 @@ class Tuning_Legende(tk.Toplevel):
             self.rm_lbl,
             text="Removes all\noverclocking parameters\n\n",
             justify=LEFT,
-            bg=maincolor,
-            foreground=main_font,
+            #bg=maincolor,
+            #foreground=main_font,
         )
         self.rm_text.grid(
             row=1,
@@ -140,20 +198,19 @@ class Tuning_Legende(tk.Toplevel):
             padx=20,
         )
 
-        self.ov1_frame = LabelFrame(
+        self.ov1_frame = ttk.LabelFrame(
             self.tu_main_frame,
             text="Crank It Up!",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            #bg=maincolor,
+            #foreground=label_frame_color,
+            #font=font_14,
+            #borderwidth=0,
+            padding=5
         )
         self.ov1_frame.pack(fill="both", expand=True)
 
         self.ov_1 = Label(
-            self.ov1_frame, image=self.tu_2, bg=maincolor, foreground=main_font
+            self.ov1_frame, image=self.tu_2,
         )
         self.ov_1.grid(
             row=3,
@@ -165,8 +222,8 @@ class Tuning_Legende(tk.Toplevel):
             self.ov1_frame,
             text="arm_freq = 2000\ngpu_freq = 750\nover_voltage = 6\nforce_turbo = 1",
             justify=LEFT,
-            bg=maincolor,
-            foreground=main_font,
+            #bg=maincolor,
+            #foreground=main_font,
         )
         self.ov_1_text.grid(
             row=3,
@@ -174,30 +231,29 @@ class Tuning_Legende(tk.Toplevel):
             padx=20,
         )
 
-        self.ov2_frame = LabelFrame(
+        self.ov2_frame = ttk.LabelFrame(
             self.tu_main_frame,
             text="You Sir, Need A Fan!",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            #bg=maincolor,
+            #foreground=label_frame_color,
+            #font=font_14,
+            #borderwidth=0,
+            padding=5
         )
         self.ov2_frame.pack(fill="both", expand=True)
 
         self.ov2_lbl = Label(
             self.ov2_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg=maincolor,
-            foreground=info_color,
-            font=font_9,
+            #bg=maincolor,
+            #foreground=info_color,
+            #font=font_9,
             justify=LEFT,
         )
         self.ov2_lbl.grid(row=4, column=1)
 
         self.ov_2 = Label(
-            self.ov2_frame, image=self.tu_3, bg=maincolor, foreground=main_font
+            self.ov2_frame, image=self.tu_3, #bg=maincolor, foreground=main_font
         )
         self.ov_2.grid(
             row=5,
@@ -209,35 +265,30 @@ class Tuning_Legende(tk.Toplevel):
             self.ov2_frame,
             text="arm_freq = 2147\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
             justify=LEFT,
-            bg=maincolor,
-            foreground=main_font,
+            #bg=maincolor,
+            #foreground=main_font,
         )
         self.ov_2_text.grid(row=5, column=1)
 
-        self.ov3_frame = LabelFrame(
+        self.ov3_frame = ttk.LabelFrame(
             self.tu_main_frame,
             text="Take It To The Max!",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            padding=5
         )
         self.ov3_frame.pack(fill="both", expand=True)
 
         self.ov3_lbl = Label(
             self.ov3_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg=maincolor,
-            foreground=info_color,
-            font=font_9,
+            #bg=maincolor,
+            #foreground=info_color,
+            #font=font_9,
             justify=LEFT,
         )
         self.ov3_lbl.grid(row=6, column=1)
 
         self.ov_3 = Label(
-            self.ov3_frame, image=self.tu_4, bg=maincolor, foreground=main_font
+            self.ov3_frame, image=self.tu_4, #bg=maincolor, foreground=main_font
         )
         self.ov_3.grid(
             row=7,
@@ -249,34 +300,33 @@ class Tuning_Legende(tk.Toplevel):
             self.ov3_frame,
             text="arm_freq = 2200\ngpu_freq = 750\nover_voltage = 8\nforce_turbo = 1",
             justify=LEFT,
-            bg=maincolor,
-            foreground=main_font,
+            #bg=maincolor,
+            #foreground=main_font,
         )
         self.ov_3_text.grid(row=7, column=1)
 
-        ov4_frame = LabelFrame(
+        ov4_frame = ttk.LabelFrame(
             self.tu_main_frame,
             text="Honey,the fuse blew again!",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            #bg=maincolor,
+            #foreground=label_frame_color,
+            #font=font_14,
+            #borderwidth=0,
+            padding=5
         )
         ov4_frame.pack(fill="both", expand=True)
 
         ov4_lbl_w = Label(
             ov4_frame,
             text="Works for rev. 1.4 & Pi400",
-            bg=maincolor,
-            foreground=info_color,
-            font=font_9,
+            #bg=maincolor,
+            #foreground=info_color,
+            #font=font_9,
             justify=LEFT,
         )
         ov4_lbl_w.grid(row=0, column=1)
 
-        ov_4_i = Label(ov4_frame, image=self.tu_5, bg=maincolor, foreground=main_font)
+        ov_4_i = Label(ov4_frame, image=self.tu_5)
         ov_4_i.grid(
             row=1,
             column=0,
@@ -287,15 +337,15 @@ class Tuning_Legende(tk.Toplevel):
             ov4_frame,
             text="arm_freq = 2300\ngpu_freq = 750\nover_voltage = 14\nforce_turbo = 1",
             justify=LEFT,
-            bg=maincolor,
-            foreground=main_font,
+            #bg=maincolor,
+            #foreground=main_font,
         )
         ov_4_text.grid(row=1, column=1)
 
         info_frame = Frame(
             self.tu_main_frame,
-            bg=maincolor,
-            borderwidth=0,
+            #bg=maincolor,
+            #borderwidth=0,
             padx=20,
             pady=10,
         )
@@ -307,9 +357,9 @@ class Tuning_Legende(tk.Toplevel):
             text="To unlock lock the Presets click on Default Settings\n\nSettings tested with:\n- Raspberry Pi 5 4GB Rev.1.0 + Official Activ Cooler\n- Pi400\n- Rev.1.0 Raspberry Pi 4B 8 GB Rev.1.4 + Ice Tower Cooler\n- Raspberry Pi 4B 4 GB Rev.1.1 + Ice Tower Cooler\nPlease note that overclocking the Pi 5 is a bit of gambling.\nNot all Pi 5s can be overclocked.\nInstead of over_voltage use over_voltage_delta.",
             highlightthickness=0,
             justify=LEFT,
-            borderwidth=2,
-            background=frame_color,
-            foreground=info_color,
+            #borderwidth=2,
+            #background=frame_color,
+            #foreground=info_color,
             font=font_8_b,
         )
         pigro_t_info.grid(column=0, row=0)
@@ -457,7 +507,7 @@ class Update_Pop(tk.Toplevel):
         x = (screen_width / 2) - (app_width / 2)
         y = (screen_height / 2) - (app_height / 2)
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        self.config(bg=maincolor)
+        #self.config(bg=maincolor)
 
         def get_info_version():
             url = "https://github.com/actionschnitzel/PiGro-Aid-/releases/latest"
@@ -511,7 +561,7 @@ class Update_Pop(tk.Toplevel):
         ).pack(pady=20)
 
         self.version_label = Label(
-            self, font=font_14, bg=maincolor, fg=main_font, text=" "
+            self, text=" "
         )
         self.version_label.pack(pady=20)
 
@@ -568,26 +618,22 @@ class Error_Mass(tk.Toplevel):
 
         self.e_m = PhotoImage(file=f"{application_path}/images/backgrounds/yuno.png")
 
-        error_frame = Frame(self, bg=maincolor)
+        error_frame = Frame(self)
         error_frame.pack(pady=20, padx=20)
 
-        error_img = Label(error_frame, image=self.e_m, bg=maincolor)
+        error_img = Label(error_frame, image=self.e_m)
         error_img.grid(row=0, column=0, rowspan=2)
 
         error_y = Label(
             error_frame,
             text="Y U MAKE ERROR?",
-            foreground=main_font,
-            font=font_16,
-            bg=maincolor,
         )
         error_y.grid(row=0, column=1)
 
         error_y2 = Label(
             error_frame,
             text="You did not enter a value!",
-            foreground=main_font,
-            bg=maincolor,
+
         )
         error_y2.grid(row=1, column=1, sticky="n")
 
@@ -705,7 +751,7 @@ class Look_Disabled(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        #self["background"] = maincolor
         self.title("Info")
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -719,22 +765,17 @@ class Look_Disabled(tk.Toplevel):
         self.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
         self.e_m = PhotoImage(file=f"{application_path}/images/backgrounds/yuno.png")
 
-        self.tu_main_frame = Frame(self, bg=maincolor)
+        self.tu_main_frame = Frame(self)
         self.tu_main_frame.pack(pady=20, padx=20)
 
-        self.rm_lbl = LabelFrame(
+        self.rm_lbl = ttk.LabelFrame(
             self.tu_main_frame,
             text="Y U DISABLED?",
-            bg=maincolor,
-            foreground=label_frame_color,
-            font=font_14,
-            borderwidth=0,
-            padx=20,
-            pady=10,
+            padding=5
         )
         self.rm_lbl.pack(fill="both", expand=True)
 
-        self.rm_ov = Label(self.rm_lbl, image=self.e_m, bg=maincolor)
+        self.rm_ov = Label(self.rm_lbl, image=self.e_m)
         self.rm_ov.grid(
             row=0,
             column=0,
@@ -745,9 +786,7 @@ class Look_Disabled(tk.Toplevel):
             self.rm_lbl,
             text="The new Look & Feel tab is tailored to the capabilities of the desktop environment you are using. In Raspberry Pi OS Bookworm, compromises were made. This window is only displayed when you are using the Wayfire variant of the Pixel desktop. Color adjustments can only be made using the tools provided by PiOS, which can be found in the System tab. Currently, only the Pixel theme can be reliably used on Pixel. Changing the desktop environment theme or icon theme may lead to display issues with the Wayfire window manager.\n\nIf you are not satisfied with the performance under Wayland you can switch to X11:\n\nsudo raspi-config > 6 Advanced Options > A6 Wayland > W1 X11",
             wraplength=400,
-            bg=maincolor,
             justify="left",
-            fg=main_font,
         )
         self.rm_ovs.grid(
             row=0,
@@ -779,36 +818,28 @@ class RestartPigroMass(tk.Toplevel):
 
         self.e_m = PhotoImage(file=f"{application_path}/images/icons/logo1.png")
 
-        error_frame = Frame(self, bg=maincolor)
+        error_frame = Frame(self)
         error_frame.pack(pady=20, padx=20)
 
-        error_img = Label(error_frame, image=self.e_m, bg=maincolor)
+        error_img = Label(error_frame, image=self.e_m)
         error_img.grid(row=0, column=0, rowspan=2)
 
         error_y = Label(
             error_frame,
             text="Please restart PiGro",
-            foreground=main_font,
-            font=font_16,
-            bg=maincolor,
         )
         error_y.grid(row=0, column=1)
         global error_y2
         error_y2 = Label(
             error_frame,
             text="After that, the changes come into effect",
-            foreground=main_font,
-            bg=maincolor,
+
         )
         error_y2.grid(row=1, column=1, sticky="n")
 
         error_btn = Button(
             error_frame,
             text="...got It!",
-            foreground=ext_btn_font,
-            borderwidth=0,
-            highlightthickness=0,
-            bg="#f04a50",
             command=cu_error,
         )
         error_btn.grid(row=3, column=0, columnspan=3, sticky="ew", pady=10)

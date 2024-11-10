@@ -1442,17 +1442,18 @@ class FlatpakSearchPanel(tk.Frame):
             )
             flat_big_icon.pack(anchor="center", pady=20)
 
-            flat_app_inst = Button(
+            flat_app_inst = ttk.Button(
                 flat_not_installad_container,
                 text="Install Flatpak",
-                justify="left",
+                #justify="left",
                 width=20,
                 #background=ext_btn,
                 #foreground=ext_btn_font,
-                font=font_10_b,
-                borderwidth=0,
-                highlightthickness=0,
+                #font=font_10_b,
+                #borderwidth=0,
+                #highlightthickness=0,
                 command=install_flatpak_apt,
+                style="Custom.TButton"
             )
             flat_app_inst.pack()
 
@@ -1467,7 +1468,7 @@ class FlatpakSearchPanel(tk.Frame):
             padding=20
             #background=frame_color,
         )
-        flatpak_search_frame.pack(anchor="w", side=LEFT, pady=20, padx=10)
+        flatpak_search_frame.pack(anchor="w", pady=20, padx=10,fill="both", expand=True)
 
         flatpak_search_field = Frame(
             flatpak_search_frame,
@@ -1501,8 +1502,6 @@ class FlatpakSearchPanel(tk.Frame):
 
         flatpak_list_box = Listbox(
             flatpak_search_frame,
-            height=50,
-            width=40,
             borderwidth=0,
             highlightthickness=0,
             selectmode=tk.SINGLE,
@@ -1513,7 +1512,7 @@ class FlatpakSearchPanel(tk.Frame):
         flatpak_list_box.config(yscrollcommand=flatpak_list_scrollbar.set)
         flatpak_list_scrollbar.config(command=flatpak_list_box.yview)
 
-        flatpak_list_box.pack(fill=BOTH)
+        flatpak_list_box.pack(fill=BOTH,expand=True)
 
         update_flatpak(Flat_remote_dict.keys())
 
@@ -1715,7 +1714,7 @@ class FlatpakSearchPanel(tk.Frame):
             flatpak_one_click_dict1.append(flatpak_one_click_button_x)
             conf_column += 1
 
-            if conf_column == 2:
+            if conf_column == 4:
                 conf_row += 1
                 conf_column = 0
 
