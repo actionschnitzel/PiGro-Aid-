@@ -25,7 +25,7 @@ from tabs.about_tab import AboutTab
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__(className="PiGro")
-        self.title("PiGro - Just Click It! (Biancaneve)")
+        self.title("PiGro - Just Click It! (A più di ottomila Accipicchia!)")
         
 
         #self["background"] = maincolor

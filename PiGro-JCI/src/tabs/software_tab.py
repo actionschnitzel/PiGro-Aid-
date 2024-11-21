@@ -540,6 +540,11 @@ class AptSearchPanel(tk.Frame):
         )
         self.repo_sec_frame.pack(fill="x")
 
+        self.repo_sec_frame.grid_columnconfigure(0, weight=1)
+        self.repo_sec_frame.grid_columnconfigure(1, weight=1)
+        self.repo_sec_frame.grid_columnconfigure(2, weight=1)
+        self.repo_sec_frame.grid_columnconfigure(3, weight=1)
+
         apt_one_click_dict = OneClicks.apt_one_click_dict
 
         apt_one_click_dict1 = []
@@ -565,6 +570,7 @@ class AptSearchPanel(tk.Frame):
                 self.repo_sec_frame,
                 image=self.deb_butt,
                 compound="left",
+                width=15,
                 text=software_name,
 
                 command=lambda package=package_name: apt_one_click(package),
@@ -582,8 +588,7 @@ class AptSearchPanel(tk.Frame):
                 conf_row += 1
                 conf_column = 0
 
-        for col in range(2):
-            self.repo_sec_frame.grid_columnconfigure(col, weight=1, uniform="columns")
+
 
         apt_info_container = ttk.Frame(apt_main_container,padding=20)
         apt_info_container.columnconfigure(0, weight=1)
@@ -988,6 +993,11 @@ class PiAppsSearchPanel(tk.Frame):
         )
         piapps_one_click_frame.pack(fill="x")
 
+        piapps_one_click_frame.grid_columnconfigure(0, weight=1)
+        piapps_one_click_frame.grid_columnconfigure(1, weight=1)
+        piapps_one_click_frame.grid_columnconfigure(2, weight=1)
+        piapps_one_click_frame.grid_columnconfigure(3, weight=1)
+
         piapps_one_click_dict = PiAppsOneClicks.piapps_one_click_dict
 
         piapps_one_click_dict1 = []
@@ -1023,6 +1033,7 @@ class PiAppsSearchPanel(tk.Frame):
                 image=self.piapps_butt,
                 compound="left",
                 text=software_name,
+                width=15,
                 command=lambda package=package_name: piapps_one_click(package),
             )
 
@@ -1031,7 +1042,7 @@ class PiAppsSearchPanel(tk.Frame):
             )
 
             piapps_one_click_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
+                row=conf_row, column=conf_column, padx=5, pady=5, sticky="nsew"
             )
             piapps_one_click_dict1.append(piapps_one_click_button_x)
             conf_column += 1
@@ -1040,10 +1051,7 @@ class PiAppsSearchPanel(tk.Frame):
                 conf_row += 1
                 conf_column = 0
 
-        for col in range(2):
-            piapps_one_click_frame.grid_columnconfigure(
-                col, weight=1, uniform="columns"
-            )
+
 
 
         piapps_info_frame = Frame(pi_apps_main_container)
@@ -1672,6 +1680,12 @@ class FlatpakSearchPanel(tk.Frame):
         #flatpak_one_click_frame["background"] = frame_color
         flatpak_one_click_frame.pack(fill="x")
 
+        flatpak_one_click_frame.grid_columnconfigure(0, weight=1)
+        flatpak_one_click_frame.grid_columnconfigure(1, weight=1)
+        flatpak_one_click_frame.grid_columnconfigure(2, weight=1)
+        flatpak_one_click_frame.grid_columnconfigure(3, weight=1)
+
+
         flatpak_one_click_dict = FlatpakOneClicks.flatpak_one_click_dict
 
         flatpak_one_click_dict1 = []
@@ -1701,6 +1715,7 @@ class FlatpakSearchPanel(tk.Frame):
                 #anchor="w",
                 compound="left",
                 text=software_name,
+                width=15,
                 command=lambda package=package_name: flatpak_one_click(package),
             )
 
@@ -1718,10 +1733,7 @@ class FlatpakSearchPanel(tk.Frame):
                 conf_row += 1
                 conf_column = 0
 
-        for col in range(2):  # Assuming 2 columns, adjust as needed
-            flatpak_one_click_frame.grid_columnconfigure(
-                col, weight=1, uniform="columns"
-            )
+
 
 
 class Custom_Installer(tk.Toplevel):
