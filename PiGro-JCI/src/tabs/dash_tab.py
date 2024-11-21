@@ -441,10 +441,13 @@ class DashTab(ttk.Frame):
     def update_disk_labels(self):
         """Update disk-related labels."""
         obj_Disk = psutil.disk_usage("/")
+        hdd_usage = psutil.disk_usage("/").percent
+        self.hdd_percent["text"] = f"{hdd_usage}%"
         self.total_size_label.configure(text=f"Total Size: {obj_Disk.total / (2**30):.2f} GB")
         self.used_label.configure(text=f"Used: {obj_Disk.used / (2**30):.2f} GB")
         self.free_label.configure(text=f"Free: {obj_Disk.free / (2**30):.2f} GB")
-
+        
+        
     def get_network_info(self):
         """Get network-related information."""
         try:
