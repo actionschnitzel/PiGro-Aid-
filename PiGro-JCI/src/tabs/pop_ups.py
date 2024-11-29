@@ -800,7 +800,7 @@ class RestartPigroMass(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self["background"] = maincolor
+        #self["background"] = maincolor
         self.title("Info")
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
@@ -837,7 +837,7 @@ class RestartPigroMass(tk.Toplevel):
         )
         error_y2.grid(row=1, column=1, sticky="n")
 
-        error_btn = Button(
+        error_btn = ttk.Button(
             error_frame,
             text="...got It!",
             command=cu_error,

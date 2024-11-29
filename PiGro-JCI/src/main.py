@@ -51,7 +51,6 @@ class MainApplication(tk.Tk):
             self.status_icon = PhotoImage(
                 file=f"{application_path}/images/icons/nav_bar/dash_dark_24x24.png"
             )
-
             self.system_icon = PhotoImage(
                 file=f"{application_path}/images/icons/nav_bar/sys_dark_24x24.png"
             )

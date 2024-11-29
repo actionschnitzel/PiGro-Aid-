@@ -63,4 +63,12 @@ class SoftwareSys:
             "Action": "x-terminal-emulator -e 'bash -c \"pkexec dpkg-reconfigure locales; exec bash\"'",
             "Path": "Bash History",
         },
+        "sys_8": {
+            "Name": "Raspi Bookshelf",
+            "Description": "Es wird der befehlt 'dpkg-reconfigure locales' ausgeführt. Hiermit lässt sich die System-Sprache ändern.",
+            "Icon": f"{application_path}/images/icons/PiXflat/bookshelf.png",
+            "Action": "rp-bookshelf",
+            "Path": "rp-bookshelf",
+        },
     }
+    
