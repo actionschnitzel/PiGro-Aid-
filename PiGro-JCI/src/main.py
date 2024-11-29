@@ -21,14 +21,12 @@ from tabs.links_tab import LinksTab
 from tabs.about_tab import AboutTab
 
 
-
 class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__(className="PiGro")
         self.title("PiGro - Just Click It! (A più di ottomila Accipicchia!)")
-        
 
-        #self["background"] = maincolor
+        # self["background"] = maincolor
         app_width = 1200
         app_height = 900
         # Define Screen
@@ -144,7 +142,6 @@ class MainApplication(tk.Tk):
                 file=f"{application_path}/images/icons/nav_bar/sources_light_16x16.png"
             )
 
-
         self.notebook = ttk.Notebook(self, width=app_width, height=app_height)
         self.notebook.grid(row=0, column=0, sticky="nsew")
 
@@ -201,7 +198,7 @@ class MainApplication(tk.Tk):
         # Notebook Theming
         global noteStyler
         noteStyler = ttk.Style(self)
-        #noteStyler.theme_use('yaru')
+        # noteStyler.theme_use('yaru')
         noteStyler.configure(
             "TNotebook",
             borderwidth=0,
@@ -216,18 +213,9 @@ class MainApplication(tk.Tk):
             highlightthickness=0,
         )
 
+        noteStyler.configure("TButton", justify="left", anchor="w")
 
-        noteStyler.configure(
-            "TButton",
-            justify="left",
-            anchor="w"
-        )
-
-        noteStyler.configure(
-            "Custom.TButton",
-            justify="center",
-            anchor="center"
-        )
+        noteStyler.configure("Custom.TButton", justify="center", anchor="center")
 
 
 if __name__ == "__main__":

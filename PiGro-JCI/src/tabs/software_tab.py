@@ -1390,7 +1390,8 @@ class FlatpakSearchPanel(tk.Frame):
             padding=20,
         )
         flatpak_search_frame.pack(
-            anchor="n", pady=20, padx=10, fill="both", expand=True, side=TOP)
+            anchor="n", pady=20, padx=10, fill="both", expand=True, side=TOP
+        )
 
         flatpak_search_field = Frame(
             flatpak_search_frame,
@@ -1502,7 +1503,8 @@ class FlatpakSearchPanel(tk.Frame):
         flatpak_exit.grid(row=0, column=0, sticky="e")
 
         flatpak_application_labelframe = ttk.LabelFrame(
-            flatpak_info_frame, text="Application",
+            flatpak_info_frame,
+            text="Application",
             padding=20,
         )
         flatpak_application_labelframe.grid(row=1, column=0, sticky="ew")
@@ -1551,13 +1553,17 @@ class FlatpakSearchPanel(tk.Frame):
         )
         flatpak_pkg_inst.grid(row=0, column=2, sticky="e")
 
-        flatpak_detail_frame = ttk.LabelFrame(flatpak_info_frame, text="Details", padding=20)
+        flatpak_detail_frame = ttk.LabelFrame(
+            flatpak_info_frame, text="Details", padding=20
+        )
         flatpak_detail_frame.grid(row=2, column=0, sticky="nsew")
 
         flatpak_detail_frame.columnconfigure(0, weight=1)
         flatpak_detail_frame.rowconfigure(0, weight=1)
 
-        flatpak_canvas = Canvas(flatpak_detail_frame, borderwidth=0, highlightthickness=0)
+        flatpak_canvas = Canvas(
+            flatpak_detail_frame, borderwidth=0, highlightthickness=0
+        )
         flatpak_canvas.grid(row=0, column=0, sticky="nsew")
 
         flatpak_canvas_scrollbar = ttk.Scrollbar(
