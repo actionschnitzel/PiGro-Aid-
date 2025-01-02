@@ -27,7 +27,7 @@ class AboutTab(ttk.Frame):
             up_chk.grab_set()
 
         def paypal_link():
-            popen("xdg-open https://www.paypal.com/paypalme/actionschnitzel")
+            popen("xdg-open https://ko-fi.com/actionschnitzel#checkoutModal")
 
         self.auto_start = PhotoImage(file=f"{application_path}/images/icons/logo1.png")
 
@@ -35,9 +35,7 @@ class AboutTab(ttk.Frame):
             file=f"{application_path}/images/icons/pigro_icons/PayPal_donation.png"
         )
 
-        self.rahmen102 = ttk.Frame(
-            self,padding=10
-        )
+        self.rahmen102 = ttk.Frame(self, padding=10)
         self.rahmen102.pack(fill=BOTH, padx=50, pady=20)
 
         self.actn_shn = ttk.Label(
@@ -49,15 +47,16 @@ class AboutTab(ttk.Frame):
             self.rahmen102,
             text=f"PiGro - Just Click It!\nVersion: {current_version}",
             font=font_16,
-            padding=5
+            padding=5,
+            justify="center",
         ).pack()
 
         self.change_log = ttk.Button(
             self.rahmen102,
             text="Changelog",
             command=ch_log,
-            style="Custom.TButton", 
-            width=20
+            style="Custom.TButton",
+            width=20,
         )
         self.change_log.pack()
 
@@ -66,7 +65,7 @@ class AboutTab(ttk.Frame):
             text="Check for Update",
             style="Custom.TButton",
             command=update_checker,
-            width=20
+            width=20,
         )
         self.check_for_update.pack(pady=10)
 
@@ -80,8 +79,9 @@ class AboutTab(ttk.Frame):
 
         self.poke_pig_21 = ttk.Label(
             self.rahmen102,
-            text="\n\n\nDeveloped and maintained by:\n\nTimo Westphal\n(Actionschnitzel)\n\nContact:",
-            padding=5
+            text="Developed and maintained by:\nTimo Westphal\n(Actionschnitzel)",
+            padding=5,
+            justify="center",
         ).pack()
 
         self.mail = ttk.Entry(self.rahmen102, width=20)
@@ -93,13 +93,15 @@ class AboutTab(ttk.Frame):
             text="Paypal",
             image=self.paypal_icon,
             command=paypal_link,
+            width=20,
         )
-        self.paypal.pack()
+        self.paypal.pack(pady=5)
 
         self.poke_pig_21 = ttk.Label(
             self.rahmen102,
-            text="\n\n\nThis program comes with ABSOLUTELY NO WARRANTY!\nIt is licensed under the GNU General Public License v3.0\nIcons have been partially adopted and modified from the\nPapirus Icon Theme licensed under the\nGNU General Public License v3.0",
-            padding=5
+            text="This program comes with ABSOLUTELY NO WARRANTY!\nIt is licensed under the GNU General Public License v3.0\nIcons have been partially adopted and modified from the\nPapirus Icon Theme licensed under the\nGNU General Public License v3.0",
+            padding=20,
+            justify="center",
         ).pack()
 
         self.papirus_link = tk.Label(

@@ -26,7 +26,6 @@ class MainApplication(tk.Tk):
         super().__init__(className="PiGro")
         self.title("PiGro - Just Click It! (A più di ottomila Accipicchia!)")
 
-        # self["background"] = maincolor
         app_width = 1200
         app_height = 900
         # Define Screen
