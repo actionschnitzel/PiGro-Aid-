@@ -1,7 +1,6 @@
 from resorcess import *
 
 
-
 class SoftwareSys:
     # Descriptions by ????????????
     sys_dict = {
@@ -22,14 +21,14 @@ class SoftwareSys:
         },
         "sys_2": {
             "Name": "dmesg --follow",
-            "Description": "'dmesg --follow' zeigt neue Kernel-Meldungen in Echtzeit an. Es ist nützlich, um laufend aktuelle Systemereignisse oder Fehler direkt zu überwachen.",            
+            "Description": "'dmesg --follow' zeigt neue Kernel-Meldungen in Echtzeit an. Es ist nützlich, um laufend aktuelle Systemereignisse oder Fehler direkt zu überwachen.",
             "Icon": f"{application_path}/images/icons/papirus/48x48/deepin-log-viewer.png",
             "Action": "x-terminal-emulator -e 'bash -c \"pkexec dmesg --follow; exec bash\"'",
             "Path": "Bash History",
         },
         "sys_3": {
             "Name": "dmesg",
-            "Description": "'dmesg' zeigt die Systemmeldungen des Kernels an, die beim Hochfahren und während des Betriebs gesammelt werden. Diese Meldungen helfen, Probleme mit der Hardware oder dem System zu diagnostizieren und geben Einblick in den aktuellen Systemstatus.",            
+            "Description": "'dmesg' zeigt die Systemmeldungen des Kernels an, die beim Hochfahren und während des Betriebs gesammelt werden. Diese Meldungen helfen, Probleme mit der Hardware oder dem System zu diagnostizieren und geben Einblick in den aktuellen Systemstatus.",
             "Icon": f"{application_path}/images/icons/papirus/48x48/deepin-log-viewer.png",
             "Action": "x-terminal-emulator -e 'bash -c \"pkexec dmesg; exec bash\"'",
             "Path": "Bash History",
@@ -134,4 +133,3 @@ class SoftwareSys:
             "Path": "lxrandr",
         },
     }
-    

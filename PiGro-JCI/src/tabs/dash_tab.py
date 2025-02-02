@@ -16,31 +16,19 @@ from flatpak_manage import count_flatpaks
 from flatpak_alias_list import *
 from tabs.pop_ups import *
 from tool_tipps import CreateToolTip
+from icon_lib import PigroIcons
 
 
 class DashTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
-
+        self.pigro_icons = PigroIcons()
         current_month = strftime("%B")
 
         def pigro_sound():
             popen(
                 f"mpg123 {application_path}/scripts/PiGro-just_click_it.mp3 >/dev/null 2>&1"
             )
-
-        self.pigro_img = ImageTk.PhotoImage(
-            Image.open(f"{application_path}/images/icons/pigro_icons/pigrologo.png")
-        )
-        self.pigroh_img = ImageTk.PhotoImage(
-            Image.open(f"{application_path}/images/icons/pigro_icons/pigrologoh.png")
-        )
-        self.pigrox_img = ImageTk.PhotoImage(
-            Image.open(f"{application_path}/images/icons/pigro_icons/pigrologox.png")
-        )
-        self.pigro_feb_img = ImageTk.PhotoImage(
-            Image.open(f"{application_path}/images/icons/pigro_icons/pigrologo_feb.png")
-        )
 
         self.distro_ubuntu_logo_img = ImageTk.PhotoImage(
             Image.open(f"{application_path}/images/icons/ubuntu_logo_dash.png")
@@ -76,13 +64,13 @@ class DashTab(ttk.Frame):
 
         # Changes Header
         if current_month == "October":
-            self.logo_btn.config(image=self.pigroh_img)
+            self.logo_btn.config(image=self.pigro_icons.pigroh_img)
         elif current_month == "December":
-            self.logo_btn.config(image=self.pigrox_img)
+            self.logo_btn.config(image=self.pigro_icons.pigrox_img)
         elif current_month == "February":
-            self.logo_btn.config(image=self.pigro_feb_img)
+            self.logo_btn.config(image=self.pigro_icons.pigro_feb_img)
         else:
-            self.logo_btn.config(image=self.pigro_img)
+            self.logo_btn.config(image=self.pigro_icons.pigro_img)
 
         # Open the /proc/device-tree/model file for reading
         try:
@@ -226,9 +214,7 @@ class DashTab(ttk.Frame):
             self.info_frame_container,
             text="Operating System",
         )
-        self.os_label_frame.grid(
-            column=0, row=1, rowspan=2, sticky="nesw"
-        )  
+        self.os_label_frame.grid(column=0, row=1, rowspan=2, sticky="nesw")
 
         self.distro_label = tk.Label(self.os_label_frame, text="Distro:")
         self.distro_label.pack(anchor="w", padx=10)
@@ -262,7 +248,6 @@ class DashTab(ttk.Frame):
         self.info_frame_column_2 = Frame(
             self.info_frame_container,
         )
-
 
         self.mem_label_frame = ttk.LabelFrame(
             self.info_frame_container,
@@ -345,7 +330,7 @@ class DashTab(ttk.Frame):
         )
         self.distro_label_frame.grid(
             column=2, columnspan=2, row=1, rowspan=2, sticky="nesw"
-        )  
+        )
 
         self.distro_logo_label = Label(
             self.distro_label_frame,
@@ -432,7 +417,9 @@ class DashTab(ttk.Frame):
         """Update memory-related labels."""
         self.ram_percent["text"] = f"{svmem.percent}%"
         self.ram_total_label.configure(text=f"Ram Total: {self.get_size(svmem.total)}")
-        self.ram_available_label.configure(text=f"Ram Available: {self.get_size(svmem.available)}")
+        self.ram_available_label.configure(
+            text=f"Ram Available: {self.get_size(svmem.available)}"
+        )
         self.ram_used_label.configure(text=f"Ram Used: {self.get_size(svmem.used)}")
         self.swap_total_label.configure(text=f"Swap Total: {self.get_size(swap.total)}")
         self.swap_free_label.configure(text=f"Swap Free: {self.get_size(swap.free)}")
@@ -443,11 +430,12 @@ class DashTab(ttk.Frame):
         obj_Disk = psutil.disk_usage("/")
         hdd_usage = psutil.disk_usage("/").percent
         self.hdd_percent["text"] = f"{hdd_usage}%"
-        self.total_size_label.configure(text=f"Total Size: {obj_Disk.total / (2**30):.2f} GB")
+        self.total_size_label.configure(
+            text=f"Total Size: {obj_Disk.total / (2**30):.2f} GB"
+        )
         self.used_label.configure(text=f"Used: {obj_Disk.used / (2**30):.2f} GB")
         self.free_label.configure(text=f"Free: {obj_Disk.free / (2**30):.2f} GB")
-        
-        
+
     def get_network_info(self):
         """Get network-related information."""
         try:
@@ -474,9 +462,13 @@ class DashTab(ttk.Frame):
         self.kernel_label.configure(text=f"Kernel: {my_system.release}")
         self.shell_label.configure(text=f"Shell: {os.environ['SHELL']}")
         self.desktop_label.configure(text=f"Desktop: {get_desktop_environment()}")
-        self.window_manager_label.configure(text=f"Window Manager: {self.get_window_manager()}")
+        self.window_manager_label.configure(
+            text=f"Window Manager: {self.get_window_manager()}"
+        )
         self.session_label.configure(text=f"Session: {os.environ['XDG_SESSION_TYPE']}")
-        self.resolution_label.configure(text=f"Resolution: {self.winfo_screenwidth()}x{self.winfo_screenheight()}")
+        self.resolution_label.configure(
+            text=f"Resolution: {self.winfo_screenwidth()}x{self.winfo_screenheight()}"
+        )
         self.user_label.configure(text=f"User: {user}")
 
     def update_package_info(self):
@@ -497,7 +489,9 @@ class DashTab(ttk.Frame):
         """Get the CPU model name."""
         command = "lscpu | grep -E 'Model name|Modellname' | awk -F ': ' '{gsub(/^[ \t]+|[ \t]+$/, \"\", $2); print $2}'"
         try:
-            output = subprocess.check_output(command, shell=True, universal_newlines=True)
+            output = subprocess.check_output(
+                command, shell=True, universal_newlines=True
+            )
             return output.strip()
         except subprocess.CalledProcessError:
             return "N/A"
@@ -514,5 +508,5 @@ class DashTab(ttk.Frame):
                     return line.split("Name: ")[1]
         except subprocess.CalledProcessError as e:
             print(f"Error running wmctrl: {e}")
-        
+
         return None

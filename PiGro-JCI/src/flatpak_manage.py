@@ -53,8 +53,6 @@ def refresh_flatpak_installs():
 
     with open(expanded_json_file_path, "r") as json_file:
         flat_uninstalled_dict = json.load(json_file)
-        
-
 
     # print(flat_uninstalled_dict)
     return flat_uninstalled_dict
@@ -93,9 +91,8 @@ if flatpak_path:
         with open(expanded_json_file_path, "w") as json_file:
             json.dump(flat_remote_dict, json_file, indent=2)
 
-
         Flat_remote_dict = flat_remote_dict
-        
+
         print(f"[Info] Added Flatpak cache.")
     else:
         if os.path.exists(expanded_json_file_path):

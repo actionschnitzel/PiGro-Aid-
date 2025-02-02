@@ -1,5 +1,3 @@
-
-
 class PiAppsSearchPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -347,7 +345,7 @@ class PiAppsSearchPanel(tk.Frame):
             text="Back",
             command=hide_piapps_frame,
         )
-        piapps_exit.grid(row=0, column=0,sticky="e")
+        piapps_exit.grid(row=0, column=0, sticky="e")
 
         piapps_application_labelframe = ttk.LabelFrame(
             piapps_info_frame, text="Application", padding=20
@@ -473,7 +471,6 @@ class PiAppsSearchPanel(tk.Frame):
 
         piapps_info_frame.columnconfigure(0, weight=1)
         piapps_info_frame.rowconfigure(2, weight=1)
-
 
 
 class FlatpakSearchPanel(tk.Frame):

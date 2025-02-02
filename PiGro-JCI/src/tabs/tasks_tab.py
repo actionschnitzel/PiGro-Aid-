@@ -12,17 +12,11 @@ class TasksTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-        self.main_frame = ttk.Frame(
-            self
-        )
+        self.main_frame = ttk.Frame(self)
 
         self.main_frame.pack(fill="both", expand=True)
 
-        self.proc_frame = ttk.Frame(
-            self.main_frame,
-            padding=20
-
-        )
+        self.proc_frame = ttk.Frame(self.main_frame, padding=20)
 
         self.proc_frame.pack(fill="both", expand=True)
 
@@ -49,7 +43,7 @@ class TasksTab(ttk.Frame):
             self.main_frame,
             text="Terminate Process",
             command=self.terminate_process,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         self.terminate_button.pack(fill="x", padx=20, pady=10)
 

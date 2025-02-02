@@ -17,16 +17,11 @@ class SourcesTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-
-        self.rep_main_frame = ttk.Frame(
-            self
-        )
+        self.rep_main_frame = ttk.Frame(self)
         self.rep_main_frame.pack(fill=BOTH, expand=True, pady=20, padx=20)
 
         self.off_rep_frame = ttk.LabelFrame(
-            self.rep_main_frame,
-            text="Official Repository",
-            padding=20
+            self.rep_main_frame, text="Official Repository", padding=20
         )
 
         self.off_rep_frame.pack(fill=BOTH, expand=True)
@@ -34,7 +29,6 @@ class SourcesTab(ttk.Frame):
         self.tu_info = ttk.Label(
             self.off_rep_frame,
             text="Info: Never edit the source lists unless you know exactly what you are doing.\n",
-
         ).pack()
 
         self.tree = ttk.Treeview(self.off_rep_frame)
@@ -48,7 +42,10 @@ class SourcesTab(ttk.Frame):
         self.tree.column("three", width=350, minwidth=100)
 
         # add column headings
-        self.tree.heading("#0", text="Nr.",)
+        self.tree.heading(
+            "#0",
+            text="Nr.",
+        )
         self.tree.heading("one", text="Type")
         self.tree.heading("two", text="Source URL")
         self.tree.heading("three", text="Source Parameters")
@@ -70,9 +67,7 @@ class SourcesTab(ttk.Frame):
             pass
 
         self.added_repositories = ttk.LabelFrame(
-            self.rep_main_frame,
-            text="Added Repository",
-            padding=20
+            self.rep_main_frame, text="Added Repository", padding=20
         )
         self.added_repositories.pack(fill="both", expand=True)
 
@@ -100,16 +95,13 @@ class SourcesTab(ttk.Frame):
                 print("[Info] With great power comes great responsibility")
             else:
                 # Ubuntu | Needs to be improved
-                popen(
-                    f"nautilus admin:/etc/apt/sources.list.d"
-                )
+                popen(f"nautilus admin:/etc/apt/sources.list.d")
 
         self.open_source_folder = ttk.Button(
             self.rep_main_frame,
             text="Open sources.list.d",
             command=open_source_f_d,
-            style="Custom.TButton"
-
+            style="Custom.TButton",
         )
         self.open_source_folder.pack(padx=20, expand=True, fill="x")
 

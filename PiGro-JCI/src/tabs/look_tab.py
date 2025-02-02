@@ -54,11 +54,7 @@ class LookTab(ttk.Frame):
                 file=f"{application_path}/images/icons/pigro_icons/fresh_s_light.png"
             )
 
-        self.pixel_set = ttk.LabelFrame(
-            self,
-            text="Theme Your Desktop",
-            padding=10
-        )
+        self.pixel_set = ttk.LabelFrame(self, text="Theme Your Desktop", padding=10)
         self.pixel_set.pack(pady=20, padx=40, fill="x", anchor="n")
         self.pixel_set.columnconfigure(0, weight=1)
         self.pixel_set.rowconfigure(0, weight=1)
@@ -344,8 +340,7 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.theme_folder_icon,
             command=set_theme,
-            width=20
-
+            width=20,
         )
         theme_button.grid(row=1, column=3, padx=10, pady=5, sticky="ew")
 
@@ -355,8 +350,7 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.icon_folder_icon,
             command=set_icon,
-            width=20
-
+            width=20,
         )
         icon_button.grid(row=2, column=3, padx=10, pady=5, sticky="ew")
 
@@ -366,8 +360,7 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.cursor_folder_icon,
             command=set_cursor,
-            width=20
-
+            width=20,
         )
         cursor_button.grid(row=3, column=3, padx=10, pady=5, sticky="ew")
 
@@ -378,7 +371,7 @@ class LookTab(ttk.Frame):
             image=self.refresh_icon,
             command=update_theme_combobox,
             width=20,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         theme_refresh_button.grid(
             row=4, column=0, columnspan=3, padx=10, pady=5, sticky="ew"
@@ -390,7 +383,7 @@ class LookTab(ttk.Frame):
             command=open_lxappearance,
             style="Custom.TButton",
             state=DISABLED,
-            width=20
+            width=20,
         )
         theme_legacy_button.grid(row=4, column=3, padx=10, pady=5, sticky="ewns")
 
@@ -400,7 +393,7 @@ class LookTab(ttk.Frame):
             image=self.folder_icon,
             compound="left",
             command=open_theme_folder,
-            width=20
+            width=20,
         )
         theme_folder_button.grid(row=1, column=4, padx=10, pady=5, sticky="ew")
 
@@ -410,7 +403,7 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.folder_icon,
             command=open_icon_folder,
-            width=20
+            width=20,
         )
         icon_folder_button.grid(row=2, column=4, padx=10, pady=5, sticky="ew")
 
@@ -420,7 +413,7 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.folder_icon,
             command=open_icon_folder,
-            width=20
+            width=20,
         )
         cursor_folder_button.grid(row=3, column=4, padx=10, pady=5, sticky="ew")
 
@@ -430,17 +423,17 @@ class LookTab(ttk.Frame):
             compound="left",
             image=self.folder_icon,
             command=self.select_wallpaper_directory,
-            width=20
+            width=20,
         )
         wp_folder_button.grid(row=4, column=4, padx=10, pady=5, sticky="ew")
 
         info_button = tk.Button(
             self.pixel_set,
             text="Why is everthing DISABLED?",
-            #borderwidth=0,
-            #highlightthickness=0,
-            #background=ext_btn,
-            #foreground=ext_btn_font,
+            # borderwidth=0,
+            # highlightthickness=0,
+            # background=ext_btn,
+            # foreground=ext_btn_font,
             command=why_message_0,
         )
 
@@ -489,9 +482,7 @@ class LookTab(ttk.Frame):
             done_message_0()
 
         self.papirus_icons_frame = ttk.LabelFrame(
-            self,
-            text="Papirus Icons",
-            padding=10
+            self, text="Papirus Icons", padding=10
         )
         self.papirus_icons_frame.pack(pady=20, padx=40, fill="x", anchor="n")
 
@@ -499,7 +490,7 @@ class LookTab(ttk.Frame):
             self.papirus_icons_frame,
             text="Install Papirus + Folders",
             command=install_papirus,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         self.install_button.grid(
             row=1, column=0, columnspan=5, padx=10, pady=10, sticky="we"
@@ -557,10 +548,9 @@ class LookTab(ttk.Frame):
             self.papirus_icons_frame,
             text="Set",
             command=set_icon_theme,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         self.set_button.grid(row=2, column=4, padx=10, pady=10)
-
 
         def xfce_theme_():
             pass
@@ -608,12 +598,7 @@ class LookTab(ttk.Frame):
         if check_papirus() is True:
             self.install_button.config(state=DISABLED)
 
-        self.wp_gallery = ttk.LabelFrame(
-            self,
-            text="Wallpaper Gallery",
-            padding=10
-
-        )
+        self.wp_gallery = ttk.LabelFrame(self, text="Wallpaper Gallery", padding=10)
         self.wp_gallery.pack(pady=20, padx=40, fill="both", expand=True, anchor="n")
 
         # Create a Canvas widget to hold the content of wp_frame
@@ -623,7 +608,7 @@ class LookTab(ttk.Frame):
         # Add a Scrollbar and link it to the Canvas for scrolling
         self.scrollbar = ttk.Scrollbar(self.wp_gallery, command=self.canvas.yview)
         self.scrollbar.pack(side="right", fill="y")
-        self.canvas.config( yscrollcommand=self.scrollbar.set)
+        self.canvas.config(yscrollcommand=self.scrollbar.set)
 
         # Create wp_frame as a child of the Canvas
         self.wp_frame = ttk.Frame(self.canvas)

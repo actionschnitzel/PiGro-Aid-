@@ -14,10 +14,7 @@ class AutostartsTab(ttk.Frame):
         super().__init__(master)
 
         self.create_autostart_frame = ttk.LabelFrame(
-            self,
-            text="Create An Autostart File",
-            padding=20
-
+            self, text="Create An Autostart File", padding=20
         )
 
         self.create_autostart_frame.pack(pady=20, padx=40, fill="x")
@@ -58,16 +55,14 @@ class AutostartsTab(ttk.Frame):
             self.create_autostart_frame,
             text="Create Autostart",
             command=self.create_autostart_file,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         self.create_button.grid(
             row=2, column=1, columnspan=2, padx=10, pady=5, sticky="ew"
         )
 
         self.list_autostart_frame = ttk.LabelFrame(
-            self,
-            text="Existing Autostarts",
-            padding=20
+            self, text="Existing Autostarts", padding=20
         )
 
         self.list_autostart_frame.pack(pady=20, padx=40, fill="both", expand=True)
@@ -87,7 +82,7 @@ class AutostartsTab(ttk.Frame):
             self.list_autostart_frame,
             text="Remove Selected",
             command=self.remove_autostart,
-            style="Custom.TButton"
+            style="Custom.TButton",
         )
         self.remove_button.pack(pady=10, fill="x")
 

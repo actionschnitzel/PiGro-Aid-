@@ -66,11 +66,8 @@ class LinksTab(ttk.Frame):
             if text == "OMG Linux":
                 popen("xdg-open https://www.omglinux.com/")
 
-        self.link_left = ttk.Frame(
-            self,
-            padding=20
-        )
-        self.link_left.pack(padx=40,fill=BOTH)
+        self.link_left = ttk.Frame(self, padding=20)
+        self.link_left.pack(padx=40, fill=BOTH)
 
         # Konfiguriere jede Spalte so, dass sie expandiert
         self.link_left.grid_columnconfigure(0, weight=1)
@@ -79,8 +76,6 @@ class LinksTab(ttk.Frame):
         # Keine Gewichtung für die Zeilen, sodass sie nicht expandieren
         self.link_left.grid_rowconfigure(0, weight=0)
         self.link_left.grid_rowconfigure(1, weight=0)
-
-
 
         sources_d = [
             "Chat GPT",
@@ -113,7 +108,7 @@ class LinksTab(ttk.Frame):
         for file in sources_d:
             self.choice_link1 = ttk.Button(
                 self.link_left,
-                #width=400,
+                # width=400,
                 compound="left",
                 text=file,
                 image=self.link,

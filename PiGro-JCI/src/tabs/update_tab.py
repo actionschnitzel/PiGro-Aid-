@@ -15,6 +15,7 @@ from tool_tipps import TipsText
 from tabs.pop_ups import *
 from tabs.text_dict_lib import Update_Tab_Buttons
 from resorcess import pi_identify
+from icon_lib import UpdateTabIcons
 
 
 class UpdateTab(ttk.Frame):
@@ -22,45 +23,7 @@ class UpdateTab(ttk.Frame):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
 
-
-        self.folder_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/folder_s_light.png"
-        )
-        self.up_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/pack_up_s_light.png"
-        )
-        self.gup_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/pack_upg_s_light.png"
-        )
-        self.recover_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/recover_s_light.png"
-        )
-        self.fup_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/pack_fupg_s_light.png"
-        )
-        self.allow_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/allow_s_light.png"
-        )
-        self.arm_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/del_s_light.png"
-        )
-        self.confa_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/confa_s_light.png"
-        )
-        self.re_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/re_s_light.png"
-        )
-        self.inst_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/debinst_s_light.png"
-        )
-        self.term_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/terminal_s_light.png"
-        )
-
-        self.term_logo = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/goterminal.png"
-        )
-        #self.background = maincolor
+        self.update_tab_icons = UpdateTabIcons()
 
         def up_action(text):
             """Passes commands du auto generated buttons"""
@@ -146,16 +109,12 @@ class UpdateTab(ttk.Frame):
             self,
         )
         self.update_btn_frame.pack(padx=20, pady=20, anchor="n", fill="x", side="left")
-        #self.update_btn_frame["background"] = frame_color
 
-        self.termf = ttk.LabelFrame(
-            self,
-            text="Progress"
-
-        )
+        self.termf = ttk.LabelFrame(self, text="Progress")
 
         self.term_logo_label = Label(
-            self.termf, image=self.term_logo, #background=frame_color
+            self.termf,
+            image=self.update_tab_icons.term_logo,
         )
         self.term_logo_label.pack(fill=BOTH, expand=True)
 
@@ -163,18 +122,10 @@ class UpdateTab(ttk.Frame):
 
         global wid
         wid = self.termf.winfo_id()
-        #self.termf["background"] = frame_color
 
         self.btn_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="APT Options",
-            #font=font_16,
-            #foreground=label_frame_color,
-            #borderwidth=0,
-            #relief=GROOVE,
-            #highlightthickness=0,
-            #background=frame_color,
-            #pady=10,
         )
         self.btn_frame.pack(anchor="n")
 
@@ -187,17 +138,10 @@ class UpdateTab(ttk.Frame):
         for up_button, description in up_button_dict.items():
             self.up_button_x = ttk.Button(
                 self.btn_frame,
-                #justify="left",
                 compound="left",
-                #anchor="w",
                 text=up_button,
                 command=lambda text=up_button: up_action(text),
-                #borderwidth=0,
-                #highlightthickness=0,
-                #background=ext_btn,
-                #foreground=ext_btn_font,
                 width=20,
-                
             )
 
             self.up_button_x.grid(
@@ -211,31 +155,31 @@ class UpdateTab(ttk.Frame):
                 conf_column = 0
 
             if up_button == "Update":
-                self.up_button_x.config(image=self.up_icon)
+                self.up_button_x.config(image=self.update_tab_icons.up_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Show Upgradable":
-                self.up_button_x.config(image=self.up_icon)
+                self.up_button_x.config(image=self.update_tab_icons.up_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Fix Missing":
-                self.up_button_x.config(image=self.up_icon)
+                self.up_button_x.config(image=self.update_tab_icons.up_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Fix Broken":
-                self.up_button_x.config(image=self.up_icon)
+                self.up_button_x.config(image=self.update_tab_icons.up_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Update & Upgrade":
-                self.up_button_x.config(image=self.gup_icon)
+                self.up_button_x.config(image=self.update_tab_icons.gup_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Autoremove":
-                self.up_button_x.config(image=self.arm_icon)
+                self.up_button_x.config(image=self.update_tab_icons.arm_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Install Local .DEB":
-                self.up_button_x.config(image=self.inst_icon)
+                self.up_button_x.config(image=self.update_tab_icons.inst_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "dpkg --configure -a":
-                self.up_button_x.config(image=self.confa_icon)
+                self.up_button_x.config(image=self.update_tab_icons.confa_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
             elif up_button == "Allow Sources":
-                self.up_button_x.config(image=self.gup_icon)
+                self.up_button_x.config(image=self.update_tab_icons.gup_icon)
                 self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
 
         def nala_action(text):
@@ -268,13 +212,6 @@ class UpdateTab(ttk.Frame):
         self.nala_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Nala Options",
-            #font=font_16,
-            #foreground=label_frame_color,
-            #borderwidth=0,
-            #relief=GROOVE,
-            #highlightthickness=0,
-            #background=frame_color,
-            #pady=10,
         )
         self.nala_frame.pack(anchor="n", fill="x")
 
@@ -283,17 +220,17 @@ class UpdateTab(ttk.Frame):
 
         nala_button_dict = {
             "Update": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if nala_path else DISABLED,
                 "tooltip": TipsText.ttip_nala_update,
             },
             "Update & Upgrade": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if nala_path else DISABLED,
                 "tooltip": TipsText.ttip_nala_update,
             },
             "Fetch": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if nala_path else DISABLED,
                 "tooltip": "Which brings us to our next standout feature, nala fetch.This command works similar to how most people use netselect and netselect-apt.nala fetch will check if your distro is either Debian or Ubuntu.Nala will then go get all the mirrors from the respective master list.Once done we test the latency and score each mirror.Nala will choose the fastest 3 mirrors (configurable) and write them to a file.",
             },
@@ -306,18 +243,11 @@ class UpdateTab(ttk.Frame):
         for nala_button, config in nala_button_dict.items():
             self.nala_button_x = ttk.Button(
                 self.nala_frame,
-                #justify="left",
                 compound="left",
-                #anchor="w",
                 text=nala_button,
                 command=lambda btn=nala_button: nala_action(btn),
-                #borderwidth=0,
-                #highlightthickness=0,
-                #background=ext_btn,
-                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
                 width=20,
-
             )
 
             self.nala_button_x.grid(
@@ -360,13 +290,6 @@ class UpdateTab(ttk.Frame):
         self.flatpak_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Flatpak Options",
-            #font=font_16,
-            #foreground=label_frame_color,
-            #borderwidth=0,
-            #relief=GROOVE,
-            #highlightthickness=0,
-            #background=frame_color,
-            #pady=10,
         )
         self.flatpak_frame.pack(anchor="n", fill="x")
 
@@ -375,12 +298,12 @@ class UpdateTab(ttk.Frame):
 
         flatpak_button_dict = {
             "Update": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if flatpak_path else DISABLED,
                 "tooltip": TipsText.ttip_flatpak_update,
             },
             "Tidy Up Unused": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if flatpak_path else DISABLED,
                 "tooltip": TipsText.ttip_flatpak_unused,
             },
@@ -393,17 +316,11 @@ class UpdateTab(ttk.Frame):
         for flatpak_button, config in flatpak_button_dict.items():
             self.flatpak_button_x = ttk.Button(
                 self.flatpak_frame,
-                #justify="left",
                 compound="left",
-                #anchor="w",
                 text=flatpak_button,
                 command=lambda btn=flatpak_button: flatpak_action(btn),
-                #borderwidth=0,
-                #highlightthickness=0,
-                #background=ext_btn,
-                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
-                width=20
+                width=20,
             )
             self.flatpak_button_x.grid(
                 row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
@@ -440,13 +357,6 @@ class UpdateTab(ttk.Frame):
         self.snap_frame = ttk.LabelFrame(
             self.update_btn_frame,
             text="Snap Options",
-            #font=font_16,
-            #foreground=label_frame_color,
-            #borderwidth=0,
-            #relief=GROOVE,
-            #highlightthickness=0,
-            #background=frame_color,
-            #pady=10,
         )
         self.snap_frame.pack(anchor="n", fill="x", expand=True)
 
@@ -455,7 +365,7 @@ class UpdateTab(ttk.Frame):
 
         snap_button_dict = {
             "Update": {
-                "image": self.up_icon,
+                "image": self.update_tab_icons.up_icon,
                 "state": NORMAL if is_snap_installed() else DISABLED,
             },
         }
@@ -467,17 +377,11 @@ class UpdateTab(ttk.Frame):
         for snap_button, config in snap_button_dict.items():
             self.snap_button_x = ttk.Button(
                 self.snap_frame,
-                #justify="left",
                 compound="left",
-                #anchor="w",
                 text=snap_button,
                 command=lambda btn=snap_button: snap_action(btn),
-                #borderwidth=0,
-                #highlightthickness=0,
-                #background=ext_btn,
-                #foreground=ext_btn_font,
                 state=config.get("state", NORMAL),
-                width=20
+                width=20,
             )
             self.snap_button_x.grid(
                 row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"

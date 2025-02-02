@@ -8,9 +8,6 @@ import subprocess
 from tabs.system_tab_check import check_pipanel
 import requests
 
-
-
-
 def ping_github():
     try:
         response = requests.get("https://api.github.com", timeout=5)
@@ -80,45 +77,58 @@ os_arch_output = os_arch.read()
 
 def get_lsb_codename():
     try:
-        output = subprocess.check_output(['lsb_release', '-a']).decode('utf-8')
-        
-        lines = output.split('\n')
-        
+        output = subprocess.check_output(["lsb_release", "-a"]).decode("utf-8")
+
+        lines = output.split("\n")
+
         for line in lines:
-            if 'Codename:' in line:
-                return line.split(':')[1].strip()
-        
+            if "Codename:" in line:
+                return line.split(":")[1].strip()
+
         return None
-    
+
     except subprocess.CalledProcessError:
         return None
+
 
 codename = get_lsb_codename()
 
 if codename == "bullseye":
     config_path = "/boot/config.txt"
 else:
-    config_path = "/boot/firmware/config.txt"    
-
+    config_path = "/boot/firmware/config.txt"
 
 
 def run_command(command):
     """Helper function to run shell commands and capture output."""
     try:
-        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        result = subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
         return result.stdout.strip()
     except subprocess.CalledProcessError:
         return None
 
+
 def get_desktop_environment():
     xdg_current_desktop = os.environ.get("XDG_CURRENT_DESKTOP")
     desktop_session = os.environ.get("DESKTOP_SESSION")
-    if desktop_session == "LXDE-pi-labwc" or desktop_session == "LXDE-pi-wayfire" or desktop_session == "LXDE-pi":
+    if (
+        desktop_session == "LXDE-pi-labwc"
+        or desktop_session == "LXDE-pi-wayfire"
+        or desktop_session == "LXDE-pi"
+    ):
         return desktop_session
     else:
         return xdg_current_desktop
-print(get_desktop_environment())    
 
+
+print(get_desktop_environment())
 
 
 def get_lxde_theme_name():
@@ -130,14 +140,16 @@ def get_lxde_theme_name():
     if not os.path.exists(directory_path):
         print("Directory does not exist. Creating", directory_path)
         os.makedirs(directory_path)
-        with open(config_file_path, 'w') as f:
-            f.write("""[GTK]
+        with open(config_file_path, "w") as f:
+            f.write(
+                """[GTK]
 sNet/ThemeName=PiXflat
 sGtk/ColorScheme=selected_bg_color:#87919B\nselected_fg_color:#F0F0F0\nbar_bg_color:#EDECEB\nbar_fg_color:#000000\n
 sGtk/FontName=PibotoLt 12
 iGtk/ToolbarIconSize=3
 sGtk/IconSizes=gtk-large-toolbar=24,24
-iGtk/CursorThemeSize=24""")
+iGtk/CursorThemeSize=24"""
+            )
         return "PiXflat"
     else:
         with open(config_file_path, "r") as file:
@@ -146,6 +158,7 @@ iGtk/CursorThemeSize=24""")
                     theme_name = line.split("=")[1].strip()
                     return theme_name
         return "Theme not found."
+
 
 def get_theme():
     """Get the current GTK or KDE theme based on the desktop environment."""
@@ -160,7 +173,7 @@ def get_theme():
         if os.path.exists(kde_config_file):
             kde_theme = run_command(f"grep 'Name=' {kde_config_file}")
             if kde_theme:
-                return kde_theme.split('=')[-1].strip().strip("'")
+                return kde_theme.split("=")[-1].strip().strip("'")
         return "KDE theme not found."
 
     # Cinnamon
@@ -169,7 +182,7 @@ def get_theme():
         return theme.strip("'") if theme else "Theme not found."
 
     # GNOME/Unity/Budgie
-    #elif any(d in de for d in ["GNOME", "UNITY", "BUDGIE"]):
+    # elif any(d in de for d in ["GNOME", "UNITY", "BUDGIE"]):
     #    theme = run_command("gsettings get org.gnome.desktop.interface gtk-theme")
     #    return theme.strip("'") if theme else "Theme not found."
 
@@ -207,10 +220,10 @@ def get_theme():
     # Fallback for unknown DE
     return "Unsupported Desktop Environment."
 
+
 # Example usage:
 theme_name = get_theme()
 print(f"[Info] Current theme: {theme_name}")
-
 
 
 # Define Permission Method
@@ -229,26 +242,26 @@ else:
 
 theme = get_theme().lower()
 
-#if "dark" in theme or "noir" in theme:
-#maincolor = "#1e1e1e"
-#nav_color = "#242424"
-#nav2_color = "#131313"
-#frame_color = "#1e1e1e"
-#main_font = "white"
-#info_color = "yellow"
-#ext_btn = "#007acc"
-#ext_btn_font = "white"
+# if "dark" in theme or "noir" in theme:
+# maincolor = "#1e1e1e"
+# nav_color = "#242424"
+# nav2_color = "#131313"
+# frame_color = "#1e1e1e"
+# main_font = "white"
+# info_color = "yellow"
+# ext_btn = "#007acc"
+# ext_btn_font = "white"
 label_frame_color = "#cf274e"
-#else:
-#maincolor = "#f5f5f5"
-#nav_color = "#d3d3d3"
-#nav2_color = "#383838"
-#frame_color = "#f5f5f5"
-#main_font = "#454545"
-#info_color = "#0075b7"
-#ext_btn = "#d3d3d3"
-#ext_btn_font = "#454545"
-#label_frame_color = "#454545"
+# else:
+# maincolor = "#f5f5f5"
+# nav_color = "#d3d3d3"
+# nav2_color = "#383838"
+# frame_color = "#f5f5f5"
+# main_font = "#454545"
+# info_color = "#0075b7"
+# ext_btn = "#d3d3d3"
+# ext_btn_font = "#454545"
+# label_frame_color = "#454545"
 
 
 # Font Definition Vars

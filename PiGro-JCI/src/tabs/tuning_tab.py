@@ -15,7 +15,7 @@ from tabs.system_tab_check import check_zram
 class TuningTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
-        self.grid(row=0, column=0, sticky="nsew",padx=20)
+        self.grid(row=0, column=0, sticky="nsew", padx=20)
 
         # Current OV settings
 
@@ -142,12 +142,8 @@ class TuningTab(ttk.Frame):
             tu_btn4.config(state=DISABLED)
 
         # OV_Button_Frame
-        self.ov_buttons = ttk.LabelFrame(
-            self,
-            text="Pi4 Tuning Presets",
-            padding=20
-        )
-        self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH,expand=TRUE)
+        self.ov_buttons = ttk.LabelFrame(self, text="Pi4 Tuning Presets", padding=20)
+        self.ov_buttons.pack(side=LEFT, pady=20, padx=20, fill=BOTH, expand=TRUE)
         self.ov_buttons.columnconfigure(0, weight=1)
 
         # Tuning_Button_Frame
@@ -158,10 +154,8 @@ class TuningTab(ttk.Frame):
             text="Default Settings",
             command=set_default,
             compound=LEFT,
-
         )
-        self.tu_reset.grid(column=0, row=2, pady=10,sticky="ew")
-
+        self.tu_reset.grid(column=0, row=2, pady=10, sticky="ew")
 
         global tu_btn1
         tu_btn1 = ttk.Button(
@@ -170,9 +164,8 @@ class TuningTab(ttk.Frame):
             text="Crank It Up",
             command=ov_2000,
             compound=LEFT,
-
         )
-        tu_btn1.grid(column=0, row=4, pady=10,sticky="ew")
+        tu_btn1.grid(column=0, row=4, pady=10, sticky="ew")
 
         global tu_btn2
         tu_btn2 = ttk.Button(
@@ -181,9 +174,8 @@ class TuningTab(ttk.Frame):
             text="You Sir... Need A Fan!",
             command=ov_2147,
             compound=LEFT,
-
         )
-        tu_btn2.grid(column=0, row=6, pady=10,sticky="ew")
+        tu_btn2.grid(column=0, row=6, pady=10, sticky="ew")
 
         global tu_btn3
         tu_btn3 = ttk.Button(
@@ -191,10 +183,9 @@ class TuningTab(ttk.Frame):
             image=self.ov3_icon,
             text="Take It To The Max!",
             command=ov_2200,
-
             compound=LEFT,
         )
-        tu_btn3.grid(column=0, row=8, pady=10,sticky="ew")
+        tu_btn3.grid(column=0, row=8, pady=10, sticky="ew")
 
         global tu_btn4
         tu_btn4 = ttk.Button(
@@ -204,7 +195,7 @@ class TuningTab(ttk.Frame):
             command=ov_2300,
             compound=LEFT,
         )
-        tu_btn4.grid(column=0, row=9, pady=10,sticky="ew")
+        tu_btn4.grid(column=0, row=9, pady=10, sticky="ew")
 
         self.tu_legende = ttk.Button(
             self.ov_buttons,
@@ -212,10 +203,7 @@ class TuningTab(ttk.Frame):
             command=tuning_legende,
             image=self.tu_legend_ico,
             compound=LEFT,
-
-        ).grid(column=0, row=10, pady=10,sticky="ew")
-
-
+        ).grid(column=0, row=10, pady=10, sticky="ew")
 
         def set_arm_freq():
             if arm_freq_set_var.get():
@@ -233,7 +221,7 @@ class TuningTab(ttk.Frame):
                     int_error_mass()
 
             else:
-#        def reset_arm_freq():
+                #        def reset_arm_freq():
                 print("Resetting arm_freq")
                 os.system(f"{permit} sed -i '/arm_freq/d' {config_path}")
 
@@ -322,22 +310,15 @@ class TuningTab(ttk.Frame):
         # Overclocking State Main Frame
         self.ov_state_display_frame = ttk.Frame(
             self,
-
         )
-        self.ov_state_display_frame.pack(padx=20, pady=20, fill=BOTH, expand=True
-        )
+        self.ov_state_display_frame.pack(padx=20, pady=20, fill=BOTH, expand=True)
         self.ov_state_display_frame.columnconfigure(0, weight=1)
-
 
         # Custom Settings
         self.custom_settings = ttk.LabelFrame(
-            self.ov_state_display_frame,
-            text="Custom Settings",
-            padding=20
+            self.ov_state_display_frame, text="Custom Settings", padding=20
         )
-        self.custom_settings.grid(column=0, row=0,sticky="ew")
-
-
+        self.custom_settings.grid(column=0, row=0, sticky="ew")
 
         # Expert Frame
         x_mode_frame = ttk.Frame(self.custom_settings)
@@ -348,7 +329,6 @@ class TuningTab(ttk.Frame):
             text="arm_freq ",
             justify="right",
             anchor="w",
-
         )
         arm_freq_label.grid(row=0, column=0, sticky="ew", padx=5)
 
@@ -357,13 +337,16 @@ class TuningTab(ttk.Frame):
 
         arm_freq_set_var = tk.BooleanVar()
 
-        arm_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=arm_freq_set_var,command=set_arm_freq)
+        arm_freq_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=arm_freq_set_var,
+            command=set_arm_freq,
+        )
         arm_freq_set_button.grid(row=0, column=2, padx=5)
 
-        
-
-        #switch = ttk.Checkbutton(x_mode_frame, text='Switch', style='Switch.TCheckbutton', variable=arm_freq_set_var,command=set_arm_freq)
-        #switch.grid(row=7, column=0, padx=10, pady=10)
+        # switch = ttk.Checkbutton(x_mode_frame, text='Switch', style='Switch.TCheckbutton', variable=arm_freq_set_var,command=set_arm_freq)
+        # switch.grid(row=7, column=0, padx=10, pady=10)
 
         global arm_f_display
         arm_f_display = ttk.Label(
@@ -381,8 +364,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         gpu_freq_label.grid(row=1, column=0, sticky="ew", padx=5)
 
@@ -391,13 +374,15 @@ class TuningTab(ttk.Frame):
         )
         gpu_freq_spinbox.grid(row=1, column=1, sticky="ew", pady=5, padx=5)
 
-
-
         gpu_freq_set_var = tk.BooleanVar()
 
-        gpu_freq_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=gpu_freq_set_var,command=set_gpu_freq)
+        gpu_freq_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=gpu_freq_set_var,
+            command=set_gpu_freq,
+        )
         gpu_freq_set_button.grid(row=1, column=2, padx=5)
-
 
         global gpu_f_display
         gpu_f_display = Label(
@@ -407,8 +392,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -420,8 +405,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         gpu_mem_label.grid(row=2, column=0, sticky="ew", padx=5)
 
@@ -430,10 +415,14 @@ class TuningTab(ttk.Frame):
         )
         gpu_mem_spinbox.grid(row=2, column=1, sticky="ew", pady=5, padx=5)
 
-
         gpu_mem_set_var = tk.BooleanVar()
 
-        gpu_mem_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=gpu_mem_set_var,command=set_gpu_mem)
+        gpu_mem_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=gpu_mem_set_var,
+            command=set_gpu_mem,
+        )
         gpu_mem_set_button.grid(row=2, column=2, padx=5)
 
         global gpu_m_display
@@ -444,8 +433,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -457,8 +446,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         over_voltage_label.grid(row=3, column=0, sticky="ew", padx=5)
 
@@ -467,12 +456,15 @@ class TuningTab(ttk.Frame):
         )
         over_voltage_spinbox.grid(row=3, column=1, sticky="ew", pady=5, padx=5)
 
-
         over_voltage_set_var = tk.BooleanVar()
 
-        over_voltage_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=over_voltage_set_var,command=set_over_voltage)
+        over_voltage_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=over_voltage_set_var,
+            command=set_over_voltage,
+        )
         over_voltage_set_button.grid(row=3, column=2, padx=5)
-
 
         global over_v_display
         over_v_display = Label(
@@ -482,8 +474,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -495,20 +487,23 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         over_voltage_delta_delta_label.grid(row=4, column=0, sticky="ew", padx=5)
 
         over_voltage_delta_spinbox = ttk.Entry(x_mode_frame)
         over_voltage_delta_spinbox.grid(row=4, column=1, sticky="ew", pady=5, padx=5)
 
-
         over_voltage_delta_set_var = tk.BooleanVar()
 
-        over_voltage_delta_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=over_voltage_delta_set_var,command=set_over_voltage_delta)
+        over_voltage_delta_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=over_voltage_delta_set_var,
+            command=set_over_voltage_delta,
+        )
         over_voltage_delta_set_button.grid(row=4, column=2, padx=5)
-
 
         global over_v_d_display
         over_v_d_display = Label(
@@ -518,8 +513,8 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
             font=font_10,
             width=25,
         )
@@ -531,8 +526,8 @@ class TuningTab(ttk.Frame):
             justify="right",
             compound="left",
             anchor="w",
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         force_turbo_label.grid(row=5, column=0, sticky="ew", padx=5)
 
@@ -540,25 +535,30 @@ class TuningTab(ttk.Frame):
             x_mode_frame,
             text="Set",
             command=set_force_turbo,
-            #foreground=ext_btn_font,
-            #background=maincolor,
+            # foreground=ext_btn_font,
+            # background=maincolor,
             highlightthickness=0,
-            #activebackground=maincolor,
+            # activebackground=maincolor,
             borderwidth=0,
         )
         force_turbo_set_button.grid(row=5, column=2, padx=5, pady=5, sticky="ew")
 
         force_turbo_set_var = tk.BooleanVar()
 
-        force_turbo_set_button = ttk.Checkbutton(x_mode_frame, style='Switch.TCheckbutton', variable=force_turbo_set_var,command=set_force_turbo)
+        force_turbo_set_button = ttk.Checkbutton(
+            x_mode_frame,
+            style="Switch.TCheckbutton",
+            variable=force_turbo_set_var,
+            command=set_force_turbo,
+        )
         force_turbo_set_button.grid(row=5, column=2, padx=5)
 
         force_turbo_label = tk.Label(
             x_mode_frame,
             text="",
             width=25,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
         )
         force_turbo_label.grid(row=5, column=1, sticky="ew", padx=5)
 
@@ -570,23 +570,17 @@ class TuningTab(ttk.Frame):
             text="State: Default",
             highlightthickness=0,
             borderwidth=2,
-            #background=frame_color,
-            #foreground=main_font,
+            # background=frame_color,
+            # foreground=main_font,
             font=font_10,
             width=25,
         )
         force_t_display.grid(row=5, column=4, sticky="ew", padx=5)
 
         reboot_button = ttk.Button(
-            x_mode_frame,
-            text="Reboot System",
-            command=reboot_n,
-            style="Custom.TButton"
-
+            x_mode_frame, text="Reboot System", command=reboot_n, style="Custom.TButton"
         )
         reboot_button.grid(row=6, column=0, columnspan=3, sticky="ew", pady=5, padx=5)
-
-
 
         def install_zram():
             os.system(
@@ -604,14 +598,12 @@ class TuningTab(ttk.Frame):
             done_msg()
 
         self.swap_frame = ttk.LabelFrame(
-            self.ov_state_display_frame,
-            text="Use Zram [More Ram]",
-            padding=20
+            self.ov_state_display_frame, text="Use Zram [More Ram]", padding=20
         )
-        self.swap_frame.grid(column=0, row=1, pady=10,sticky="ew")
+        self.swap_frame.grid(column=0, row=1, pady=10, sticky="ew")
 
         zram_text = """Setup of ZRAM (compressed RAM) to enhance memory usage and performance. It disables existing swap services, loads the ZRAM kernel module, and creates a systemd service for ZRAM to run on startup.[Taken From Pi-Apps(BotSpot)]"""
-        
+
         self.z_info = Label(
             self.swap_frame,
             text=zram_text,
@@ -621,11 +613,7 @@ class TuningTab(ttk.Frame):
         ).pack(padx=10, fill="x", expand=True)
 
         # Create a Button next to the Combobox
-        self.zram_button = ttk.Button(
-            self.swap_frame,
-            style="Custom.TButton"
-
-        )
+        self.zram_button = ttk.Button(self.swap_frame, style="Custom.TButton")
         self.zram_button.pack(padx=10, pady=10, anchor="w", fill="x")
 
         def check_z_ram_button_state():
@@ -661,11 +649,9 @@ frequently used dynamic libraries into memory, reducing application startup time
 It analyzes the user's behavior and optimizesresource utilization to enhance overall system performance."""
 
         self.preload_frame = ttk.LabelFrame(
-            self.ov_state_display_frame,
-            text="Preload",
-            padding=20
+            self.ov_state_display_frame, text="Preload", padding=20
         )
-        self.preload_frame.grid(column=0, row=2,sticky="nesw")
+        self.preload_frame.grid(column=0, row=2, sticky="nesw")
 
         self.tu_info = ttk.Label(
             self.preload_frame,
@@ -675,13 +661,10 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
         ).pack(padx=10, fill="x", expand=True)
 
         # Create a Button next to the Combobox
-        self.preload_button = ttk.Button(
-            self.preload_frame,
-            style="Custom.TButton"
-        )
-        self.preload_button.pack(padx=10, pady=10, anchor="w",fill="x")
+        self.preload_button = ttk.Button(self.preload_frame, style="Custom.TButton")
+        self.preload_button.pack(padx=10, pady=10, anchor="w", fill="x")
 
-############################################################
+        ############################################################
         def ov_display():
             # Lies das Modell der Raspberry Pi und speichere es in der globalen Variable
             with open("/proc/device-tree/model", "r") as model_file:
@@ -700,11 +683,35 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                             break
 
             # Funktionen für das Auslesen und Anzeigen von Overclock-Werten
-            display_config_value("arm_freq=", arm_freq_set_var, arm_f_display, "MHz", [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
-            display_config_value("gpu_freq=", gpu_freq_set_var, gpu_f_display, "MHz", [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
+            display_config_value(
+                "arm_freq=",
+                arm_freq_set_var,
+                arm_f_display,
+                "MHz",
+                [tu_btn1, tu_btn2, tu_btn3, tu_btn4],
+            )
+            display_config_value(
+                "gpu_freq=",
+                gpu_freq_set_var,
+                gpu_f_display,
+                "MHz",
+                [tu_btn1, tu_btn2, tu_btn3, tu_btn4],
+            )
             display_config_value("gpu_mem=", gpu_mem_set_var, gpu_m_display, "MB")
-            display_config_value("over_voltage=", over_voltage_set_var, over_v_display, None, [tu_btn1, tu_btn2, tu_btn3, tu_btn4])
-            display_config_value("over_voltage_delta=", over_voltage_delta_set_var, over_v_d_display, None, pi_model_specific=True)
+            display_config_value(
+                "over_voltage=",
+                over_voltage_set_var,
+                over_v_display,
+                None,
+                [tu_btn1, tu_btn2, tu_btn3, tu_btn4],
+            )
+            display_config_value(
+                "over_voltage_delta=",
+                over_voltage_delta_set_var,
+                over_v_d_display,
+                None,
+                pi_model_specific=True,
+            )
 
             # force_turbo Status anzeigen und Button konfigurieren
             display_force_turbo()
@@ -712,7 +719,14 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
             # Aktualisiere den Zustand des preload-Buttons
             check_preload_button_state()
 
-        def display_config_value(setting_name, var, display_widget, unit=None, buttons_to_disable=None, pi_model_specific=False):
+        def display_config_value(
+            setting_name,
+            var,
+            display_widget,
+            unit=None,
+            buttons_to_disable=None,
+            pi_model_specific=False,
+        ):
             """
             Zeigt den Wert einer Konfigurationseinstellung an und setzt die zugehörigen Variablen und Buttons.
             """
@@ -720,8 +734,10 @@ It analyzes the user's behavior and optimizesresource utilization to enhance ove
                 for line in config_file:
                     if setting_name in line:
                         var.set(True)
-                        value = line[len(setting_name):-1]
-                        display_widget.config(text=f"State: {value} {unit}" if unit else f"State: {value}")
+                        value = line[len(setting_name) : -1]
+                        display_widget.config(
+                            text=f"State: {value} {unit}" if unit else f"State: {value}"
+                        )
                         if buttons_to_disable:
                             disable_buttons(buttons_to_disable)
                         break

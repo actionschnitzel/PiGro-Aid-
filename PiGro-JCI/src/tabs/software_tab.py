@@ -28,6 +28,7 @@ from subprocess import Popen, PIPE
 from threading import Thread
 from tool_tipps import CreateToolTip
 from tabs.text_dict_lib import OneClicks, PiAppsOneClicks, FlatpakOneClicks
+from icon_lib import *
 
 
 def resize(img):
@@ -97,124 +98,7 @@ class SoftwareTab(ttk.Frame):
         self.inst_notebook = ttk.Notebook(self)
         self.inst_notebook.pack(fill=BOTH, expand=True)
 
-        self.deban_navbar_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/deb_s.png"
-        )
-        self.debinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/64x64/debian-logo.png"
-        )
-        self.pi_appsinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/pi-apps64x64.png"
-        )
-        self.pi_appsopen_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/piapps_logo_24x24.png"
-        )
-        self.pi_appssett_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/piapps_settings_24x24.png"
-        )
-        self.flatpak_appsinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/flathub64x64.png"
-        )
-        self.no_img = PhotoImage(file=f"{application_path}/images/apps/no_image.png")
-
-        self.ok_installed = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/ok_16x16.png"
-        )
-
-        self.not_ok_installed = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/not_ok_16x16.png"
-        )
-
-        self.pi_apps_big_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pi-apps-glogo.png"
-        )
-
-        self.deb_pack_l = PhotoImage(
-            file=f"{application_path}/images/icons/deb_pack_l.png"
-        )
-        self.piapps_pack_l = PhotoImage(
-            file=f"{application_path}/images/icons/piapps_pack_l.png"
-        )
-        self.flat_pack_l = PhotoImage(
-            file=f"{application_path}/images/icons/flat_pack_l.png"
-        )
-        self.deb_butt = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/debian_dark_24x24.png"
-        )
-
-        self.piapps_butt = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/piapps_dark_24x24.png"
-        )
-        self.snap_butt = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/snap_dark_24x24.png"
-        )
-
-        self.flatpak_butt = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
-        )
-
-        if "dark" in theme or "noir" in theme:
-            self.deb_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/debian_dark_24x24.png"
-            )
-
-            self.piapps_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/piapps_dark_24x24.png"
-            )
-            self.snap_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/snap_dark_24x24.png"
-            )
-
-            self.flatpak_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
-            )
-
-            self.oneclick_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/g2h_dark_24x24.png"
-            )
-            self.q_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/apt_queue_dark_24x24.png"
-            )
-            self.exit_btn = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/exit_btn.png"
-            )
-            self.search_btn = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/glass_icon.png"
-            )
-            self.one_click_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/1click_dark_24x24.png"
-            )
-        else:
-            self.deb_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/debian_light_24x24.png"
-            )
-
-            self.piapps_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/piapps_light_24x24.png"
-            )
-
-            self.flatpak_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/flatpak_light_24x24.png"
-            )
-
-            self.oneclick_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/g2h_light_24x24.png"
-            )
-            self.q_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/apt_queue_light_24x24.png"
-            )
-            self.exit_btn = PhotoImage(
-                file=f"{application_path}/images/icons/pigro_icons/exit_btn.png"
-            )
-            self.search_btn = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/glass_icon.png"
-            )
-            self.snap_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/snap_light_24x24.png"
-            )
-            self.one_click_nav = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/1click_light_24x24.png"
-            )
+        self.nav_icons = NavIcons()
 
         apt_frame = ttk.Frame(self.inst_notebook)
         piapps_frame = ttk.Frame(self.inst_notebook)
@@ -224,13 +108,15 @@ class SoftwareTab(ttk.Frame):
         piapps_frame.pack(fill="both", expand=True)
         flat_frame.pack(fill="both", expand=True)
 
-        self.inst_notebook.add(apt_frame, compound=LEFT, text="APT", image=self.deb_nav)
+        self.inst_notebook.add(
+            apt_frame, compound=LEFT, text="APT", image=self.nav_icons.deb_nav
+        )
 
         self.inst_notebook.add(
-            piapps_frame, compound=LEFT, text="Pi Apps", image=self.piapps_nav
+            piapps_frame, compound=LEFT, text="Pi Apps", image=self.nav_icons.piapps_nav
         )
         self.inst_notebook.add(
-            flat_frame, compound=LEFT, text="Flatpak", image=self.flatpak_nav
+            flat_frame, compound=LEFT, text="Flatpak", image=self.nav_icons.flatpak_nav
         )
 
         piapps_frame.columnconfigure(0, weight=1)
@@ -259,6 +145,9 @@ class AptSearchPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
+        self.nav_icons = NavIcons()
+        self.color_icons = ColorIcons()
+
         def error_message_0():
             e_mass = Error_Mass(self)
             e_mass.grab_set()
@@ -266,32 +155,6 @@ class AptSearchPanel(tk.Frame):
         def error_message_1():
             e_mass = Error_Mass(self)
             e_mass.grab_set()
-
-        if "dark" in theme or "noir" in theme:
-            self.deb_butt = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/debian_dark_24x24.png"
-            )
-        else:
-            self.deb_butt = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/debian_light_24x24.png"
-            )
-        self.debinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/64x64/debian-logo.png"
-        )
-        self.no_img = PhotoImage(file=f"{application_path}/images/apps/no_image.png")
-        self.deb_pack_l = PhotoImage(
-            file=f"{application_path}/images/icons/deb_pack_l.png"
-        )
-
-        self.deb_nav = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/debian_light_24x24.png"
-        )
-        self.search_btn = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/glass_icon.png"
-        )
-        self.exit_btn = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/exit_btn.png"
-        )
 
         def apt_install():
             hide_apt_frame()
@@ -347,16 +210,16 @@ class AptSearchPanel(tk.Frame):
                 try:
                     url_output = f"https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/{apt_flatpak_matches[apt_entry.get()]}.png"
                     with urlopen(url_output) as url_output:
-                        self.deban_navbar_icon = Image.open(url_output)
-                    self.deban_navbar_icon = resize2(self.deban_navbar_icon)
+                        self.nav_icons.deb_nav = Image.open(url_output)
+                    self.nav_icons.deb_nav = resize2(self.nav_icons.deb_nav)
 
-                    self.deban_navbar_icon = ImageTk.PhotoImage(self.deban_navbar_icon)
-                    apt_pkg_icon.config(image=self.deban_navbar_icon)
+                    self.nav_icons.deb_nav = ImageTk.PhotoImage(self.nav_icons.deb_nav)
+                    apt_pkg_icon.config(image=self.nav_icons.deb_nav)
                 except urllib.error.HTTPError as e:
                     print(f"{e}")
-                    apt_pkg_icon.config(image=self.debinstall_icon)
+                    apt_pkg_icon.config(image=self.color_icons.debinstall_icon)
             else:
-                apt_pkg_icon.config(image=self.debinstall_icon)
+                apt_pkg_icon.config(image=self.color_icons.debinstall_icon)
 
         def apt_screenshot():
             try:
@@ -381,7 +244,7 @@ class AptSearchPanel(tk.Frame):
                 print(f"{e}")
                 if apt_entry.get() in apt_flatpak_matches:
                     try:
-                        app_id = Flat_remote_dict[flatpak_entry.get()]
+                        app_id = Flat_remote_dict[apt_entry.get()]
                         screenshot_url = extract_default_screenshot_url(app_id)
                         if screenshot_url:
                             print("Screenshot-URL {}:".format(app_id))
@@ -397,7 +260,7 @@ class AptSearchPanel(tk.Frame):
 
                     except requests.exceptions.RequestException as e:
                         print("Error fetching URL:", e)
-                        apt_panel.config(self.no_img)
+                        apt_panel.config(self.color_icons.no_img)
 
                     except subprocess.CalledProcessError as err:
                         print("Command returned non-zero exit status:", err)
@@ -421,7 +284,7 @@ class AptSearchPanel(tk.Frame):
                                 print(
                                     "Command returned non-zero exit status again:", err
                                 )
-                                apt_panel.config(self.no_img)
+                                apt_panel.config(self.color_icons.no_img)
 
         def put_apt_description():
             pkg_infos = os.popen(f"apt show -a {apt_entry.get()}")
@@ -469,7 +332,7 @@ class AptSearchPanel(tk.Frame):
                         style="Green.TButton",
                     )
 
-                apt_panel.config(image=self.no_img)
+                apt_panel.config(image=self.color_icons.no_img)
 
                 hide_apt_search_frame()
                 get_debian_icon()
@@ -495,11 +358,6 @@ class AptSearchPanel(tk.Frame):
             highlightthickness=0,
         )
         apt_search_field.pack(fill="x", pady=5)
-
-        apt_search_btn = Label(
-            apt_search_field,
-            image=self.search_btn,
-        )
 
         apt_entry = ttk.Entry(apt_search_field, font=("Sans", 15))
         listbox_ttp = CreateToolTip(
@@ -563,7 +421,7 @@ class AptSearchPanel(tk.Frame):
 
             apt_one_click_button_x = ttk.Button(
                 self.apt_one_click_frame,
-                image=self.deb_butt,
+                image=self.nav_icons.deb_nav,
                 compound="left",
                 width=15,
                 text=software_name,
@@ -606,7 +464,7 @@ class AptSearchPanel(tk.Frame):
 
         apt_pkg_icon = Label(
             apt_pkg_header_frame,
-            image=self.debinstall_icon,
+            image=self.color_icons.debinstall_icon,
             font=font_10_b,
             justify="left",
             padx=10,
@@ -695,6 +553,9 @@ class PiAppsSearchPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
+        self.nav_icons = NavIcons()
+        self.color_icons = ColorIcons()
+
         def error_message_0():
             e_mass = Error_Mass(self)
             e_mass.grab_set()
@@ -703,7 +564,9 @@ class PiAppsSearchPanel(tk.Frame):
             e_mass = Error_Mass(self)
             e_mass.grab_set()
 
-        self.no_img = PhotoImage(file=f"{application_path}/images/apps/no_image.png")
+        self.color_icons.no_img = PhotoImage(
+            file=f"{application_path}/images/apps/no_image.png"
+        )
 
         if "dark" in theme or "noir" in theme:
             self.piapps_butt = PhotoImage(
@@ -716,12 +579,7 @@ class PiAppsSearchPanel(tk.Frame):
         self.pi_appsinstall_icon = PhotoImage(
             file=f"{application_path}/images/icons/pigro_icons/pi-apps64x64.png"
         )
-        self.search_btn = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/glass_icon.png"
-        )
-        self.exit_btn = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/exit_btn.png"
-        )
+
         self.pi_appsopen_icon = PhotoImage(
             file=f"{application_path}/images/icons/pigro_icons/piapps_logo_24x24.png"
         )
@@ -827,7 +685,7 @@ class PiAppsSearchPanel(tk.Frame):
 
                         else:
                             print("No og:image meta property found.")
-                            piapps_panel.config(image=self.no_img)
+                            piapps_panel.config(image=self.color_icons.no_img)
                     except requests.exceptions.RequestException as e:
                         print("Error fetching URL:", e)
                         return None
@@ -857,7 +715,7 @@ class PiAppsSearchPanel(tk.Frame):
             piapps_description_text.insert(END, insert_piapps_description)
 
         def piapps_show_infos():
-            piapps_panel.config(image=self.no_img)
+            piapps_panel.config(image=self.color_icons.no_img)
             if piapps_entry.get() == "":
                 error_message_0()
             elif piapps_entry.get() not in piapps_cache_content:
@@ -909,11 +767,6 @@ class PiAppsSearchPanel(tk.Frame):
             highlightthickness=0,
         )
         piapps_search_field.pack(fill="x", pady=5)
-
-        piapps_search_btn = Label(
-            piapps_search_field,
-            image=self.search_btn,
-        )
 
         piapps_entry = ttk.Entry(piapps_search_field, font=("Sans", 15))
         piapps_entry.pack(fill="x", expand=True, side="left")
@@ -1148,9 +1001,7 @@ class FlatpakInstallerPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
-        self.flatpak_big_icon = PhotoImage(
-            file=f"{application_path}/images/icons/flatpak-glogo.png"
-        )
+        self.color_icons = ColorIcons()
 
         def install_flatpak_apt():
             os.system(
@@ -1161,7 +1012,7 @@ class FlatpakInstallerPanel(tk.Frame):
 
         self.flat_big_icon = Label(
             self,
-            image=self.flatpak_big_icon,
+            image=self.color_icons.flatpak_big_icon,
             font=font_10_b,
             justify="left",
         )
@@ -1180,32 +1031,8 @@ class FlatpakInstallerPanel(tk.Frame):
 class FlatpakSearchPanel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
-        self.no_img = PhotoImage(file=f"{application_path}/images/apps/no_image.png")
-
-        if "dark" in theme or "noir" in theme:
-            self.flatpak_butt = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/flatpak_dark_24x24.png"
-            )
-        else:
-            self.flatpak_butt = PhotoImage(
-                file=f"{application_path}/images/icons/nav_bar/flatpak_light_24x24.png"
-            )
-        self.flatpak_big_icon = PhotoImage(
-            file=f"{application_path}/images/icons/flatpak-glogo.png"
-        )
-
-        self.debinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/papirus/64x64/debian-logo.png"
-        )
-        self.search_btn = PhotoImage(
-            file=f"{application_path}/images/icons/nav_bar/glass_icon.png"
-        )
-        self.exit_btn = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/exit_btn.png"
-        )
-        self.flatpak_appsinstall_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/flathub64x64.png"
-        )
+        self.nav_icons = NavIcons()
+        self.color_icons = ColorIcons()
 
         def error_message_0():
             e_mass = Error_Mass(self)
@@ -1317,7 +1144,7 @@ class FlatpakSearchPanel(tk.Frame):
 
             except requests.exceptions.RequestException as e:
                 print("Error fetching URL:", e)
-                flatpak_panel.config(self.no_img)
+                flatpak_panel.config(self.color_icons.no_img)
 
             except subprocess.CalledProcessError as err:
                 print("Command returned non-zero exit status:", err)
@@ -1339,7 +1166,7 @@ class FlatpakSearchPanel(tk.Frame):
 
                     except subprocess.CalledProcessError as err:
                         print("Command returned non-zero exit status again:", err)
-                        flatpak_panel.config(self.no_img)
+                        flatpak_panel.config(self.color_icons.no_img)
 
         def get_flatpak_description():
             url = f"https://flathub.org/apps/{Flat_remote_dict[flatpak_entry.get()]}"
@@ -1399,11 +1226,6 @@ class FlatpakSearchPanel(tk.Frame):
             highlightthickness=0,
         )
         flatpak_search_field.pack(fill="x", pady=5)
-
-        flatpak_search_btn = Label(
-            flatpak_search_field,
-            image=self.search_btn,
-        )
 
         flatpak_entry = ttk.Entry(
             flatpak_search_field,
@@ -1470,7 +1292,7 @@ class FlatpakSearchPanel(tk.Frame):
 
             flatpak_one_click_button_x = ttk.Button(
                 flatpak_one_click_frame,
-                image=self.flatpak_butt,
+                image=self.nav_icons.flatpak_nav,
                 compound="left",
                 text=software_name,
                 width=15,
@@ -1519,7 +1341,7 @@ class FlatpakSearchPanel(tk.Frame):
 
         flatpak_pkg_icon = Label(
             flatpak_pkg_header_frame,
-            image=self.debinstall_icon,
+            image=self.color_icons.debinstall_icon,
             font=font_10_b,
             justify="left",
             padx=10,
@@ -1606,6 +1428,7 @@ class Custom_Installer(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.color_icons = ColorIcons()
         self.icon = tk.PhotoImage(file=f"{application_path}/images/icons/logo.png")
         self.tk.call("wm", "iconphoto", self._w, self.icon)
         self.resizable(0, 0)
@@ -1623,17 +1446,9 @@ class Custom_Installer(tk.Toplevel):
         self.installer_main_frame.columnconfigure(1, weight=1)
         self.installer_main_frame.rowconfigure(0, weight=0)
 
-        self.boot_log_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/unpack.png"
+        self.icon_label = tk.Label(
+            self.installer_main_frame, image=self.color_icons.boot_log_icon
         )
-        self.install_ok_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/unpack_ok.png"
-        )
-        self.install_error_icon = PhotoImage(
-            file=f"{application_path}/images/icons/pigro_icons/unpack_error.png"
-        )
-
-        self.icon_label = tk.Label(self.installer_main_frame, image=self.boot_log_icon)
 
         self.icon_label.grid(row=0, rowspan=3, column=0, sticky="w", padx=10, pady=10)
         self.done_label = tk.Label(
@@ -1694,10 +1509,10 @@ class Custom_Installer(tk.Toplevel):
         exit_code = process.returncode
         if exit_code == 0:
             self.done_label.config(text=f"{task_label} Done!")
-            self.icon_label.config(image=self.install_ok_icon)
+            self.icon_label.config(image=self.color_icons.install_ok_icon)
         else:
             self.done_label.config(text=f"Error! (Exit-Code: {exit_code})")
-            self.icon_label.config(image=self.install_error_icon)
+            self.icon_label.config(image=self.color_icons.install_error_icon)
         self.install_button.config(state=NORMAL)
 
     def close_btn_command(self):
