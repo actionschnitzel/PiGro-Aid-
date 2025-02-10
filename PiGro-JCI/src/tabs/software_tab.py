@@ -4,14 +4,12 @@ import os.path
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-import tkinter.font as tkFont
 from threading import Thread
 from PIL import ImageTk, Image
 from urllib.request import urlopen
 import urllib.error
 import requests
 import xml.etree.ElementTree as ET
-import apt
 from bs4 import BeautifulSoup
 from resorcess import *
 from apt_manage import *
@@ -23,7 +21,6 @@ from flatpak_manage import refresh_flatpak_installs
 from flatpak_alias_list import *
 from tabs.pop_ups import *
 import re
-import webbrowser
 from subprocess import Popen, PIPE
 from threading import Thread
 from tool_tipps import CreateToolTip

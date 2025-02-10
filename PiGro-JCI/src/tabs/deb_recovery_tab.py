@@ -1,9 +1,6 @@
-import os
 from os import popen
-import os.path
 from tkinter import *
 from tkinter import ttk
-import tkinter as tk
 from tkinter import filedialog
 from resorcess import *
 from apt_manage import *

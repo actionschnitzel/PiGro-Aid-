@@ -10,8 +10,6 @@ from apt_manage import *
 from flatpak_alias_list import *
 from tabs.pop_ups import *
 from tabs.system_tab_check import *
-from tabs.text_dict_lib import SystemTabDict
-from tool_tipps import CreateToolTip
 from icon_lib import ColorIcons
 
 
