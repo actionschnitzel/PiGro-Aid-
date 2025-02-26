@@ -10,11 +10,11 @@ from apt_manage import *
 from snap_manage import *
 from flatpak_alias_list import *
 from flatpak_manage import *
-from tool_tipps import CreateToolTip
-from tool_tipps import TipsText
 from tabs.pop_ups import *
-from tabs.text_dict_lib import Update_Tab_Buttons
 from resorcess import pi_identify
+import gettext
+import threading
+import subprocess
 from icon_lib import UpdateTabIcons
 
 
@@ -22,375 +22,340 @@ class UpdateTab(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.grid(row=0, column=0, sticky="nsew")
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
 
         self.update_tab_icons = UpdateTabIcons()
 
-        def up_action(text):
-            """Passes commands du auto generated buttons"""
-            frame_width = self.termf.winfo_width()
+        def execute_command(command, event=None):
+            self.term_logo_label.grid_forget()
+            self.terminal.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-            frame_height = self.termf.winfo_height()
-            print(
-                "The width & height of the label is:",
-                frame_width,
-                frame_height,
-                "pixels",
+            self.terminal_scroll.grid(row=0, column=1, sticky="ns")
+            self.terminal.config(yscrollcommand=self.terminal_scroll.set)
+            if command.strip() == "":
+                return
+
+            # Starte den Befehl in einem separaten Thread, um das GUI nicht zu blockieren
+            thread = threading.Thread(target=run_command, args=(command,))
+            thread.start()
+
+        def run_command(command):
+            # Starte den Prozess mit Popen
+            process = subprocess.Popen(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
             )
-            if text == "Update":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt update -y |lolcat && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-            if text == "Update & Upgrade":
-                if pi_identify() == "pi_os":
-                    os.popen(
-                        f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt update -y |lolcat && {permit} apt upgrade -y |lolcat && sleep 5 && exit ; exec bash"'
-                        % wid
-                    )
-                else:
-                    command = (
-                        f"xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "
-                        "\"pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY bash -c 'apt update -y && apt upgrade -y' | lolcat && "
-                        'sleep 5 && exit; exec bash"' % wid
-                    )
-                    os.popen(command)
-            if text == "Fix Missing":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt install --fix-missing |lolcat && sleep 5 && exit; exec bash"'
-                    % wid
-                )
-            if text == "Fix Broken":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt --fix-broken install |lolcat && sleep 5 && exit; exec bash"'
-                    % wid
-                )
-            if text == "Dist Upgrade":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt dist-upgrade -y |lolcat && sleep 5 && exit; exec bash"'
-                    % wid
-                )
-            if text == "Autoremove":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} apt autoremove -y |lolcat && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-            if text == "Install Local .DEB":
-                self.filename = filedialog.askopenfilename(
-                    initialdir="~",
-                    title="Select A File",
-                    filetypes=((".deb files", "*.deb"),),
-                )
-                os.popen(f"gdebi-gtk {self.filename}")
 
-            if text == "dpkg --configure -a":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} dpkg --configure -a |lolcat && sleep 5 && exit; exec bash"'
-                    % wid
-                )
-            if text == "Allow Sources":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{application_path}/scripts/addunsignedrepo.sh && exit; exec bash"'
-                    % wid
-                )
-            if text == "Show Upgradable":
-                if pi_identify() == "pi_os":
-                    subprocess.run(
-                        f"xterm -into {wid} -bg Grey11 -geometry {frame_height}x{frame_width} -e \"{permit} apt list --upgradable |lolcat && read -p 'Press Enter to exit.' && exit ; exec bash\"",
-                        shell=True,
-                    )
-                else:
-                    os.popen(
-                        f"xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "
-                        "\"pkexec apt list --upgradable |lolcat && read -p 'Press Enter to exit.' && exit; exec bash\""
-                        % wid
-                    )
+            # Lese Zeile für Zeile und aktualisiere das Text-Widget
+            for line in iter(process.stdout.readline, ""):
+                self.terminal.insert(tk.END, line)
+                self.terminal.see(tk.END)  # Auto-Scroll
 
-        self.update_btn_frame = ttk.Frame(
-            self,
+            process.stdout.close()
+            process.wait()
+            self.term_quit_button.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+        def kill_term():
+            self.terminal.delete(1.0, tk.END)
+            self.terminal.grid_forget()
+            self.terminal_scroll.grid_forget()
+            self.term_quit_button.grid_forget()
+            self.term_logo_label.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        def all_up_action():
+            allup = f"{permit} {application_path}/scripts/all_up"
+            execute_command(allup)
+
+        def update_action():
+            update_command = f"{permit} {application_path}/scripts/nala_update_wrap"
+            execute_command(update_command)
+
+        def upgrade_action():
+            upgrade_command = f"{permit} {application_path}/scripts/nala_upgrade_wrap"
+            execute_command(upgrade_command)
+
+        def apt_showupgrade_action():
+            show_command = f"{application_path}/scripts/apt_list_upgradeble_wrap"
+            execute_command(show_command)
+
+        def apt_autremove_action():
+            autorm_command = f"pkexec {application_path}/scripts/nala_autopurge_wrap"
+            execute_command(autorm_command)
+
+        def apt_broken_action():
+            fix_broken_action = f"pkexec {application_path}/scripts/apt_fix_broken_wrap"
+            execute_command(fix_broken_action)
+
+        def apt_missing_action():
+            fix_missing_action = (
+                f"pkexec {application_path}/scripts/apt_fix_missing_wrap"
+            )
+            execute_command(fix_missing_action)
+
+        def apt_reconf_action():
+            fix_missing_action = f"pkexec {application_path}/scripts/conf-a_wrap"
+            execute_command(fix_missing_action)
+
+        def flatpak_update_action():
+            flat_up_command = (
+                f"{application_path}/scripts/flatpak_update_wrap && exit ; exec bash"
+            )
+            execute_command(flat_up_command)
+
+        def flatpak_clean_action():
+            flat_clean_command = f"{application_path}/scripts/flatpak_clean_wrap"
+            execute_command(flat_clean_command)
+
+
+        self.update_button_frame = ttk.Frame(self, padding=20)
+        self.update_button_frame.grid(row=0, column=0, sticky="ns")
+
+
+        self.apt_option_frame = ttk.LabelFrame(
+            self.update_button_frame,
+            text="APT-Optionen",
         )
-        self.update_btn_frame.pack(padx=20, pady=20, anchor="n", fill="x", side="left")
+        self.apt_option_frame.pack(pady=10)
 
-        self.termf = ttk.LabelFrame(self, text="Progress")
+        self.apt_update_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Update",
+            image=self.update_tab_icons.up_icon,
+            command=update_action,
+            width=20,
+        )
+
+        self.apt_update_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_upgrade_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Upgrade",
+            image=self.update_tab_icons.gup_icon,
+            command=upgrade_action,
+            width=20,
+        )
+
+        self.apt_upgrade_button.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_showupgrade_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Show Upgradeble",
+            image=self.update_tab_icons.up_icon,
+            command=apt_showupgrade_action,
+            width=20,
+        )
+
+        self.apt_showupgrade_button.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_autoremove_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Autoremove",
+            image=self.update_tab_icons.arm_icon,
+            command=apt_autremove_action,
+            width=20,
+        )
+
+        self.apt_autoremove_button.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_broken_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Fix Broken",
+            image=self.update_tab_icons.up_icon,
+            command=apt_broken_action,
+            width=20,
+        )
+
+        self.apt_broken_button.grid(row=4, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_missing_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="Fix Missing",
+            image=self.update_tab_icons.up_icon,
+            command=apt_missing_action,
+            width=20,
+        )
+
+        self.apt_missing_button.grid(row=5, column=0, padx=5, pady=5, sticky="ew")
+
+        self.apt_cinfigure_a_button = ttk.Button(
+            self.apt_option_frame,
+            compound="left",
+            text="dpkg --configure -a",
+            image=self.update_tab_icons.confa_icon,
+            command=apt_reconf_action,
+            width=20,
+        )
+
+        self.apt_cinfigure_a_button.grid(row=6, column=0, padx=5, pady=5, sticky="ew")
+
+        self.flatpak_option_frame = ttk.LabelFrame(
+            self.update_button_frame,
+            text="Flatpak-Optionen",
+        )
+        self.flatpak_option_frame.pack(pady=10)
+
+        self.flatpak_update_button = ttk.Button(
+            self.flatpak_option_frame,
+            compound="left",
+            text="Update",
+            image=self.update_tab_icons.up_icon,
+            command=flatpak_update_action,
+            width=20,
+        )
+
+        self.flatpak_update_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+
+        self.flatpak_clean_button = ttk.Button(
+            self.flatpak_option_frame,
+            compound="left",
+            text="Tidy Up Unused",
+            image=self.update_tab_icons.arm_icon,
+            command=flatpak_clean_action,
+            width=20,
+        )
+
+        self.flatpak_clean_button.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+
+        self.update_term_frame = ttk.LabelFrame(self, text="Prozess")
+        self.update_term_frame.grid(row=0, column=1, sticky="nesw", padx=20, pady=20)
+        self.update_term_frame.grid_rowconfigure(0, weight=1)
+        self.update_term_frame.grid_columnconfigure(0, weight=1)
 
         self.term_logo_label = Label(
-            self.termf,
+            self.update_term_frame,
             image=self.update_tab_icons.term_logo,
         )
-        self.term_logo_label.pack(fill=BOTH, expand=True)
+        self.term_logo_label.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-        self.termf.pack(fill=BOTH, expand=True, pady=20, padx=20)
-
-        global wid
-        wid = self.termf.winfo_id()
-
-        self.btn_frame = ttk.LabelFrame(
-            self.update_btn_frame,
-            text="APT Options",
+        self.terminal = tk.Text(
+            self.update_term_frame, height=20, borderwidth=0, highlightthickness=0
         )
-        self.btn_frame.pack(anchor="n")
 
-        up_button_dict = Update_Tab_Buttons.up_button_dict
-
-        up_button_list1 = []
-        conf_row = 0
-        conf_column = 0
-
-        for up_button, description in up_button_dict.items():
-            self.up_button_x = ttk.Button(
-                self.btn_frame,
-                compound="left",
-                text=up_button,
-                command=lambda text=up_button: up_action(text),
-                width=20,
-            )
-
-            self.up_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
-            )
-            up_button_list1.append(self.up_button_x)
-            conf_column += 1
-
-            if conf_column == 1:
-                conf_row += 1
-                conf_column = 0
-
-            if up_button == "Update":
-                self.up_button_x.config(image=self.update_tab_icons.up_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Show Upgradable":
-                self.up_button_x.config(image=self.update_tab_icons.up_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Fix Missing":
-                self.up_button_x.config(image=self.update_tab_icons.up_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Fix Broken":
-                self.up_button_x.config(image=self.update_tab_icons.up_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Update & Upgrade":
-                self.up_button_x.config(image=self.update_tab_icons.gup_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Autoremove":
-                self.up_button_x.config(image=self.update_tab_icons.arm_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Install Local .DEB":
-                self.up_button_x.config(image=self.update_tab_icons.inst_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "dpkg --configure -a":
-                self.up_button_x.config(image=self.update_tab_icons.confa_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-            elif up_button == "Allow Sources":
-                self.up_button_x.config(image=self.update_tab_icons.gup_icon)
-                self.up_button_x_ttp = CreateToolTip(self.up_button_x, description)
-
-        def nala_action(text):
-            """Passes commands for auto-generated buttons"""
-            frame_width = self.termf.winfo_width()
-            frame_height = self.termf.winfo_height()
-            print(
-                "The width & height of the label is:",
-                frame_width,
-                frame_height,
-                "pixels",
-            )
-
-            if text == "Fetch":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} nala fetch && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-            elif text == "Update":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} nala update && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-            elif text == "Update & Upgrade":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} nala upgrade && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-
-        self.nala_frame = ttk.LabelFrame(
-            self.update_btn_frame,
-            text="Nala Options",
+        self.terminal_scroll = ttk.Scrollbar(
+            self.update_term_frame, orient="vertical", command=self.terminal.yview
         )
-        self.nala_frame.pack(anchor="n", fill="x")
 
-        self.nala_frame.columnconfigure(0, weight=1)
-        self.nala_frame.rowconfigure(0, weight=1)
-
-        nala_button_dict = {
-            "Update": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if nala_path else DISABLED,
-                "tooltip": TipsText.ttip_nala_update,
-            },
-            "Update & Upgrade": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if nala_path else DISABLED,
-                "tooltip": TipsText.ttip_nala_update,
-            },
-            "Fetch": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if nala_path else DISABLED,
-                "tooltip": "Which brings us to our next standout feature, nala fetch.This command works similar to how most people use netselect and netselect-apt.nala fetch will check if your distro is either Debian or Ubuntu.Nala will then go get all the mirrors from the respective master list.Once done we test the latency and score each mirror.Nala will choose the fastest 3 mirrors (configurable) and write them to a file.",
-            },
-        }
-
-        nala_button_list1 = []
-        conf_row = 0
-        conf_column = 0
-
-        for nala_button, config in nala_button_dict.items():
-            self.nala_button_x = ttk.Button(
-                self.nala_frame,
-                compound="left",
-                text=nala_button,
-                command=lambda btn=nala_button: nala_action(btn),
-                state=config.get("state", NORMAL),
-                width=20,
-            )
-
-            self.nala_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
-            )
-            nala_button_list1.append(self.nala_button_x)
-            conf_column += 1
-
-            if conf_column == 1:
-                conf_row += 1
-                conf_column = 0
-
-            self.nala_button_x.config(image=config["image"], state=config["state"])
-            self.nala_button_x_ttp = CreateToolTip(
-                self.nala_button_x, config["tooltip"]
-            )
-
-        def flatpak_action(text):
-            """Passes commands for auto-generated buttons"""
-            frame_width = self.termf.winfo_width()
-            frame_height = self.termf.winfo_height()
-            print(
-                "The width & height of the label is:",
-                frame_width,
-                frame_height,
-                "pixels",
-            )
-
-            if text == "Update":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "flatpak update -y && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-            elif text == "Tidy Up Unused":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "flatpak uninstall --unused -y && sleep 5 && exit; exec bash"'
-                    % wid
-                )
-
-        self.flatpak_frame = ttk.LabelFrame(
-            self.update_btn_frame,
-            text="Flatpak Options",
+        self.term_quit_button = ttk.Button(
+            self.update_term_frame,
+            text="Beenden",
+            style="Accent.TButton",
+            command=kill_term,
         )
-        self.flatpak_frame.pack(anchor="n", fill="x")
 
-        self.flatpak_frame.columnconfigure(0, weight=1)
-        self.flatpak_frame.rowconfigure(0, weight=1)
-
-        flatpak_button_dict = {
-            "Update": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if flatpak_path else DISABLED,
-                "tooltip": TipsText.ttip_flatpak_update,
-            },
-            "Tidy Up Unused": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if flatpak_path else DISABLED,
-                "tooltip": TipsText.ttip_flatpak_unused,
-            },
-        }
-
-        flatpak_button_list1 = []
-        conf_row = 0
-        conf_column = 0
-
-        for flatpak_button, config in flatpak_button_dict.items():
-            self.flatpak_button_x = ttk.Button(
-                self.flatpak_frame,
-                compound="left",
-                text=flatpak_button,
-                command=lambda btn=flatpak_button: flatpak_action(btn),
-                state=config.get("state", NORMAL),
-                width=20,
-            )
-            self.flatpak_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
-            )
-            flatpak_button_list1.append(self.flatpak_button_x)
-            conf_column += 1
-
-            if conf_column == 1:
-                conf_row += 1
-                conf_column = 0
-
-            self.flatpak_button_x.config(image=config["image"], state=config["state"])
-            self.flatpak_button_x_ttp = CreateToolTip(
-                self.flatpak_button_x, config["tooltip"]
-            )
-
-        def snap_action(text):
-            """Passes commands for auto-generated buttons"""
-            frame_width = self.termf.winfo_width()
-            frame_height = self.termf.winfo_height()
-            print(
-                "The width & height of the label is:",
-                frame_width,
-                frame_height,
-                "pixels",
-            )
-
-            if text == "Update":
-                os.popen(
-                    f'xterm -into %d -bg Grey11 -geometry {frame_height}x{frame_width} -e "{permit} snap refresh && sleep 5 && exit ; exec bash"'
-                    % wid
-                )
-
-        self.snap_frame = ttk.LabelFrame(
-            self.update_btn_frame,
-            text="Snap Options",
+        # Erstelle ein Frame-Widget mit fester Größe
+        self.update_info_frame = ttk.LabelFrame(self, text="Info")
+        self.update_info_frame.grid(
+            row=1, column=0, columnspan=2, sticky="nesw", padx=20, pady=20
         )
-        self.snap_frame.pack(anchor="n", fill="x", expand=True)
 
-        self.snap_frame.columnconfigure(0, weight=1)
-        self.snap_frame.rowconfigure(0, weight=1)
+        # Setze die feste Größe des Frames und deaktiviere die automatische Größenanpassung
+        self.update_info_frame.config(width=900, height=100)
+        self.update_info_frame.pack_propagate(False)
 
-        snap_button_dict = {
-            "Update": {
-                "image": self.update_tab_icons.up_icon,
-                "state": NORMAL if is_snap_installed() else DISABLED,
-            },
-        }
+        # Erstelle ein Label-Widget innerhalb des Frames
+        self.update_info_label = ttk.Label(
+            self.update_info_frame, text="", justify="left", wraplength=880
+        )
+        self.update_info_label.pack(anchor="sw", fill="x", padx=10, pady=5)
 
-        snap_button_list1 = []
-        conf_row = 0
-        conf_column = 0
+        # Binde die Ereignisse an die Buttons
+        self.apt_update_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'apt update' command is executed to refresh the package index. This ensures that the package manager is aware of the latest versions of packages available from the repositories."
+            ),
+        )
+        self.apt_update_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
 
-        for snap_button, config in snap_button_dict.items():
-            self.snap_button_x = ttk.Button(
-                self.snap_frame,
-                compound="left",
-                text=snap_button,
-                command=lambda btn=snap_button: snap_action(btn),
-                state=config.get("state", NORMAL),
-                width=20,
-            )
-            self.snap_button_x.grid(
-                row=conf_row, column=conf_column, padx=5, pady=5, sticky="ew"
-            )
-            snap_button_list1.append(self.snap_button_x)
-            conf_column += 1
+        self.apt_upgrade_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'apt update && apt upgrade' command sequence is executed to first refresh the package index and then upgrade all installed packages to their latest available versions. This ensures that your system is up-to-date with the latest software improvements and security patches."
+            ),
+        )
+        self.apt_upgrade_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
 
-            if conf_column == 1:
-                conf_row += 1
-                conf_column = 0
+        self.apt_showupgrade_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="This command lists all packages that have available upgrades. It provides a summary of the packages that can be updated, allowing you to review them before proceeding with an upgrade."
+            ),
+        )
+        self.apt_showupgrade_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
 
-            self.snap_button_x.config(image=config["image"], state=config["state"])
+        self.apt_autoremove_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'apt autoremove' command removes packages that were automatically installed to satisfy dependencies for other packages and are now no longer needed. This helps to free up disk space and keep your system clean."
+            ),
+        )
+        self.apt_autoremove_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
+
+        self.apt_broken_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'apt --fix-broken install' command attempts to repair broken package dependencies. It installs any missing dependencies and fixes any issues with packages that are in a broken state, ensuring the integrity of your package management system."
+            ),
+        )
+        self.apt_broken_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
+
+        self.apt_missing_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'apt install --fix-missing' command downloads and installs any missing package files that were not successfully downloaded during a previous attempt. This command helps to complete the installation process by fetching the necessary files."
+            ),
+        )
+        self.apt_missing_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
+
+        self.apt_cinfigure_a_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'dpkg --configure -a' command configures all packages that have been unpacked but not yet fully configured. This command is useful for fixing installation issues and ensuring that all packages are properly set up."
+            ),
+        )
+        self.apt_cinfigure_a_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
+
+        self.flatpak_update_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="This command updates all installed Flatpak applications to their latest versions. It ensures that your Flatpak applications are up-to-date with the latest features and security patches."
+            ),
+        )
+        self.flatpak_update_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
+
+        self.flatpak_clean_button.bind(
+            "<Enter>",
+            lambda event: self.update_info_label.configure(
+                text="The 'flatpak clean' command removes any leftover dependencies and temporary files that are no longer needed. This helps to free up disk space and keep your Flatpak environment clean."
+            ),
+        )
+        self.flatpak_clean_button.bind(
+            "<Leave>", lambda event: self.update_info_label.configure(text="")
+        )
