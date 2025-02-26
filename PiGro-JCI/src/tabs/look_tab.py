@@ -302,7 +302,7 @@ class LookTab(ttk.Frame):
                 popen("sudo pcmanfm /usr/share/themes")
             else:
                 popen(
-                    f"{permit} env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xdg-open /usr/share/themes"
+                    f"nautilus admin:/usr/share/themes"
                 )
 
         def open_icon_folder():
@@ -310,7 +310,7 @@ class LookTab(ttk.Frame):
                 popen("sudo pcmanfm /usr/share/icons")
             else:
                 popen(
-                    f"{permit} env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xdg-open /usr/share/icons"
+                    f"nautilus admin:/usr/share/icons"
                 )
 
         def open_lxappearance():
@@ -560,6 +560,7 @@ class LookTab(ttk.Frame):
         if get_desktop_environment() not in [
             "xfce",
             "GNOME",
+            "ubuntu:GNOME",
             "mate",
             "lxde",
             "lxde-pi-wayfire",
