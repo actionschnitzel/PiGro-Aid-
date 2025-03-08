@@ -67,54 +67,50 @@ class UpdateTab(ttk.Frame):
             self.term_quit_button.grid_forget()
             self.term_logo_label.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-        def all_up_action():
-            allup = f"{permit} {application_path}/scripts/all_up"
-            execute_command(allup)
-
         def update_action():
-            update_command = f"{permit} {application_path}/scripts/nala_update_wrap"
+            update_command = (
+                f"{permit} apt update || echo 'ERROR: update failed.'; exit 1"
+            )
             execute_command(update_command)
 
         def upgrade_action():
-            upgrade_command = f"{permit} {application_path}/scripts/nala_upgrade_wrap"
+            upgrade_command = (
+                f"{permit} apt upgrade -y || echo 'ERROR: ugrade failed.'; exit 1"
+            )
             execute_command(upgrade_command)
 
         def apt_showupgrade_action():
-            show_command = f"{application_path}/scripts/apt_list_upgradeble_wrap"
+            show_command = f"{permit} apt list --upgradable || (echo 'ERROR: Listing failed.'; exit 1)"
             execute_command(show_command)
 
         def apt_autremove_action():
-            autorm_command = f"pkexec {application_path}/scripts/nala_autopurge_wrap"
+            autorm_command = f"{permit} apt autoremove -y || echo 'ERROR: apt autoremove failed.'; exit 1"
             execute_command(autorm_command)
 
         def apt_broken_action():
-            fix_broken_action = f"pkexec {application_path}/scripts/apt_fix_broken_wrap"
+            fix_broken_action = f"{permit} apt --fix-broken install -y || echo 'ERROR: apt --fix-broken failed.'; exit 1"
             execute_command(fix_broken_action)
 
         def apt_missing_action():
-            fix_missing_action = (
-                f"pkexec {application_path}/scripts/apt_fix_missing_wrap"
-            )
+            fix_missing_action = f"{permit} apt install --fix-missing -y || echo 'ERROR: apt install --fix-missing failed.'; exit 1"
             execute_command(fix_missing_action)
 
         def apt_reconf_action():
-            fix_missing_action = f"pkexec {application_path}/scripts/conf-a_wrap"
+            fix_missing_action = f"{permit} dpkg --configure -a || echo 'ERROR: dpkg --configure -a failed.'; exit 1"
             execute_command(fix_missing_action)
 
         def flatpak_update_action():
             flat_up_command = (
-                f"{application_path}/scripts/flatpak_update_wrap && exit ; exec bash"
+                f"flatpak update -y || echo 'ERROR: flatpak update fail.'; exit 1"
             )
             execute_command(flat_up_command)
 
         def flatpak_clean_action():
-            flat_clean_command = f"{application_path}/scripts/flatpak_clean_wrap"
+            flat_clean_command = f"flatpak uninstall --unused -y || echo 'ERROR: flatpak uninstall --unused failed.'; exit 1"
             execute_command(flat_clean_command)
-
 
         self.update_button_frame = ttk.Frame(self, padding=20)
         self.update_button_frame.grid(row=0, column=0, sticky="ns")
-
 
         self.apt_option_frame = ttk.LabelFrame(
             self.update_button_frame,

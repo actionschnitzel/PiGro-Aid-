@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Farben definieren
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+# Upgrade und Aufräumen mit nala und flatpak
+nala upgrade -y || { echo "ERROR: nala update failed."; exit 1; }

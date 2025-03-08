@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Upgrade und Aufräumen mit nala und flatpak
+apt --fix-broken install -y || { echo "ERROR: Listing failed."; exit 1; }

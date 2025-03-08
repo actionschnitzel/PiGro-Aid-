@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Upgrade und Aufräumen mit nala und flatpak
+apt update || { echo "ERROR: nala update failed."; exit 1; }
