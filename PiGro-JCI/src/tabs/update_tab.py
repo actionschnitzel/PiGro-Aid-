@@ -109,6 +109,12 @@ class UpdateTab(ttk.Frame):
             flat_clean_command = f"flatpak uninstall --unused -y || echo 'ERROR: flatpak uninstall --unused failed.'; exit 1"
             execute_command(flat_clean_command)
 
+        def snap_update_action():
+            flat_clean_command = f"snap refresh || echo 'ERROR: flatpak uninstall --unused failed.'; exit 1"
+            execute_command(flat_clean_command)
+
+
+
         self.update_button_frame = ttk.Frame(self, padding=20)
         self.update_button_frame.grid(row=0, column=0, sticky="ns")
 
@@ -238,7 +244,7 @@ class UpdateTab(ttk.Frame):
             compound="left",
             text="Update",
             image=self.update_tab_icons.up_icon,
-            command=flatpak_update_action,
+            command=snap_update_action,
             width=20,
         )
 
