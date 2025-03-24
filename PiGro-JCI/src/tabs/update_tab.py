@@ -223,6 +223,10 @@ class UpdateTab(ttk.Frame):
 
         self.flatpak_clean_button.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
 
+        if not flatpak_path:
+            self.flatpak_update_button.state(["disabled"])
+            self.flatpak_clean_button.state(["disabled"])
+
         self.update_term_frame = ttk.LabelFrame(self, text="Prozess")
         self.update_term_frame.grid(row=0, column=1, sticky="nesw", padx=20, pady=20)
         self.update_term_frame.grid_rowconfigure(0, weight=1)
