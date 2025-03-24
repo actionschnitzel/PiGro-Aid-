@@ -114,7 +114,7 @@ class UpdateTab(ttk.Frame):
 
         self.apt_option_frame = ttk.LabelFrame(
             self.update_button_frame,
-            text="APT-Optionen",
+            text="APT-Options",
         )
         self.apt_option_frame.pack(pady=10)
 
@@ -197,7 +197,7 @@ class UpdateTab(ttk.Frame):
 
         self.flatpak_option_frame = ttk.LabelFrame(
             self.update_button_frame,
-            text="Flatpak-Optionen",
+            text="Flatpak-Options",
         )
         self.flatpak_option_frame.pack(pady=10)
 
@@ -226,6 +226,27 @@ class UpdateTab(ttk.Frame):
         if not flatpak_path:
             self.flatpak_update_button.state(["disabled"])
             self.flatpak_clean_button.state(["disabled"])
+
+        self.snap_option_frame = ttk.LabelFrame(
+            self.update_button_frame,
+            text="Snap Options",
+        )
+        self.snap_option_frame.pack(pady=10)
+
+        self.snap_update_button = ttk.Button(
+            self.snap_option_frame,
+            compound="left",
+            text="Update",
+            image=self.update_tab_icons.up_icon,
+            command=flatpak_update_action,
+            width=20,
+        )
+
+        self.snap_update_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+
+        if not is_snap_installed():
+            self.snap_update_button.state(["disabled"])
+
 
         self.update_term_frame = ttk.LabelFrame(self, text="Prozess")
         self.update_term_frame.grid(row=0, column=1, sticky="nesw", padx=20, pady=20)
