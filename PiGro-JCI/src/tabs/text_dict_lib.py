@@ -159,8 +159,8 @@ class FlatpakOneClicks:
             "Package": "org.x.Warpinator",
             "Description": "File transfer tool for local network.",
         },
-        "WhatsApp": {
-            "Package": "com.github.eneshecan.WhatsAppForLinux",
+        "ZapZap": {
+            "Package": "flatpak install flathub com.rtosta.zapzap",
             "Description": "WhatsApp desktop client for Linux.",
         },
     }
