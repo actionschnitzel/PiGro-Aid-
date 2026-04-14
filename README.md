@@ -1,3 +1,7 @@
+
+## Unfortunately, the development of a new PiGro version is taking longer than expected. The porting to GTK4 is very time-consuming. Due to the latest change in PiOS regarding sudo-less-password, it will likely take even longer. I am truly sorry.
+
+
 <div align="center">
   <img src="https://github.com/actionschnitzel/tingsandstuff/raw/main/9/proglogo.png" alt="Bildbeschreibung">
 </div>
